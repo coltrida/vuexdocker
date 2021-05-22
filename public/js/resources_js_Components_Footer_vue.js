@@ -118,7 +118,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-footer",
-    { attrs: { padless: "", absolute: "" } },
+    { attrs: { padless: "", absolute: "", color: "orange", dark: "" } },
     [
       _c("v-col", { staticClass: "text-center", attrs: { cols: "12" } }, [
         _vm._v("\n        " + _vm._s(new Date().getFullYear()) + " — "),

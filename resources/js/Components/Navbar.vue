@@ -1,25 +1,32 @@
 <template>
-
-        <v-toolbar color="blue">
-            <v-img
-                lazy-src="/img/logo-centroudito.png"
-                max-height="100"
-                max-width="208"
-                src="/img/logo-centroudito.png"
-            ></v-img>
+    <v-card
+        color="grey lighten-4"
+        flat
+        tile
+    >
+        <v-toolbar color="indigo darken-4" dark>
+            <router-link :to="{ name: 'home'}">
+                <v-img
+                    lazy-src="/img/logo-centroudito.png"
+                    max-height="50"
+                    max-width="150"
+                    src="/img/logo-centroudito.png"
+                ></v-img>
+            </router-link>
 
             <v-spacer></v-spacer>
 
-            <v-btn text>
-                Login
-            </v-btn>
+            <router-link :to="{ name: 'login'}">
+                <v-btn text>
+                    Login
+                </v-btn>
+            </router-link>
 
             <v-btn text>
-                Registrati
+                Register
             </v-btn>
-
         </v-toolbar>
-
+    </v-card>
 </template>
 
 <script>

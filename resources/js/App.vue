@@ -1,9 +1,11 @@
 <template>
-    <div class="app">
-        <Navbar></Navbar>
-        <router-view></router-view>
+    <v-app>
+        <Navbar style="border: none"></Navbar>
+        <div style="padding: 50px">
+            <router-view></router-view>
+        </div>
         <Footer></Footer>
-    </div>
+    </v-app>
 </template>
 
 <script>

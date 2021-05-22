@@ -35,6 +35,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Navbar"
 });
@@ -130,25 +137,48 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-toolbar",
-    { attrs: { color: "blue" } },
+    "v-card",
+    { attrs: { color: "grey lighten-4", flat: "", tile: "" } },
     [
-      _c("v-img", {
-        attrs: {
-          "lazy-src": "/img/logo-centroudito.png",
-          "max-height": "100",
-          "max-width": "208",
-          src: "/img/logo-centroudito.png"
-        }
-      }),
-      _vm._v(" "),
-      _c("v-spacer"),
-      _vm._v(" "),
-      _c("v-btn", { attrs: { text: "" } }, [_vm._v("\n        Login\n    ")]),
-      _vm._v(" "),
-      _c("v-btn", { attrs: { text: "" } }, [
-        _vm._v("\n        Registrati\n    ")
-      ])
+      _c(
+        "v-toolbar",
+        { attrs: { color: "indigo darken-4", dark: "" } },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: { name: "home" } } },
+            [
+              _c("v-img", {
+                attrs: {
+                  "lazy-src": "/img/logo-centroudito.png",
+                  "max-height": "50",
+                  "max-width": "150",
+                  src: "/img/logo-centroudito.png"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { attrs: { to: { name: "login" } } },
+            [
+              _c("v-btn", { attrs: { text: "" } }, [
+                _vm._v("\n                Login\n            ")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-btn", { attrs: { text: "" } }, [
+            _vm._v("\n            Register\n        ")
+          ])
+        ],
+        1
+      )
     ],
     1
   )
