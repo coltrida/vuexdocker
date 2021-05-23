@@ -16,15 +16,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::insert([
-            [
-                'name' => 'CACAO',
-                'email' => 'cacao@cacao.it',
-                'email_verified_at' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-                'password' => Hash::make('123456'),
-            ],
+        $this->call([
+            FilialeSeeder::class,
+            UserSeeder::class,
+            MarketingSeeder::class,
+            FornitoreSeeder::class,
+            ListinoSeeder::class,
+            RecapitoSeeder::class,
+            FilialeUserSeeder::class,
+            ClientSeeder::class,
+            BudgetSeeder::class,
+            ProductSeeder::class,
+            TipologiaSeeder::class,
+            ProvaSeeder::class,
+            ProductProvaSeeder::class,
+            FatturaSeeder::class
         ]);
     }
 }
