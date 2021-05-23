@@ -11,6 +11,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -45,18 +52,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       show1: false,
-      password: '',
-      email: '',
+      user: {
+        email: '',
+        password: ''
+      },
       rules: {
         required: function required(value) {
           return !!value || 'Campo obbligatorio.';
         },
         min: function min(v) {
-          return v.length >= 8 || 'Minimo 8 caratteri';
+          return v.length >= 6 || 'Minimo 6 caratteri';
         },
         emailMatch: function emailMatch() {
           return "The email and password you entered don't match";
@@ -64,8 +86,26 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getMessaggio: 'getMessaggio',
+    getLogged: 'getLogged'
+  })),
   methods: {
-    login: function login() {}
+    login: function login() {
+      var _this = this;
+
+      //console.log(this.user)
+      this.$store.dispatch('login/login', this.user).then(function () {
+        if (_this.getLogged === true) {
+          _this.$router.push({
+            name: 'home'
+          });
+        }
+      });
+    },
+    resetMessaggio: function resetMessaggio() {
+      this.$store.commit('login/resetMessaggio');
+    }
   }
 });
 
@@ -160,58 +200,106 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-form",
+    "div",
+    { staticStyle: { padding: "50px 100px" } },
     [
-      _c("v-text-field", {
-        staticClass: "input-group--focused ",
-        attrs: {
-          rules: [_vm.rules.required],
-          type: "text",
-          name: "input-10-2",
-          label: "e-mail",
-          hint: "At least 8 characters"
-        },
-        model: {
-          value: _vm.email,
-          callback: function($$v) {
-            _vm.email = $$v
-          },
-          expression: "email"
-        }
-      }),
-      _vm._v(" "),
-      _c("v-text-field", {
-        attrs: {
-          "append-icon": _vm.show1 ? "mdi-eye" : "mdi-eye-off",
-          rules: [_vm.rules.required, _vm.rules.min],
-          type: _vm.show1 ? "text" : "password",
-          name: "input-10-1",
-          label: "password",
-          hint: "At least 8 characters",
-          counter: ""
-        },
-        on: {
-          "click:append": function($event) {
-            _vm.show1 = !_vm.show1
-          }
-        },
-        model: {
-          value: _vm.password,
-          callback: function($$v) {
-            _vm.password = $$v
-          },
-          expression: "password"
-        }
-      }),
+      _vm.getMessaggio
+        ? _c(
+            "v-alert",
+            { attrs: { type: "error" } },
+            [
+              _c(
+                "v-row",
+                { attrs: { align: "center" } },
+                [
+                  _c("v-col", { staticClass: "grow" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.getMessaggio) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { staticClass: "shrink" },
+                    [
+                      _c("v-btn", { on: { click: _vm.resetMessaggio } }, [
+                        _vm._v("Chiudi")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
-        "v-btn",
+        "v-form",
         {
-          staticClass: "mr-4",
-          attrs: { color: "success" },
-          on: { click: _vm.login }
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.login($event)
+            }
+          }
         },
-        [_vm._v("\n        login\n    ")]
+        [
+          _c("v-text-field", {
+            staticClass: "input-group--focused ",
+            attrs: {
+              rules: [_vm.rules.required],
+              type: "text",
+              name: "input-10-2",
+              label: "e-mail"
+            },
+            model: {
+              value: _vm.user.email,
+              callback: function($$v) {
+                _vm.$set(_vm.user, "email", $$v)
+              },
+              expression: "user.email"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              "append-icon": _vm.show1 ? "mdi-eye" : "mdi-eye-off",
+              rules: [_vm.rules.required, _vm.rules.min],
+              type: _vm.show1 ? "text" : "password",
+              name: "input-10-1",
+              label: "password",
+              hint: "minimo 6 caratteri",
+              counter: ""
+            },
+            on: {
+              "click:append": function($event) {
+                _vm.show1 = !_vm.show1
+              }
+            },
+            model: {
+              value: _vm.user.password,
+              callback: function($$v) {
+                _vm.$set(_vm.user, "password", $$v)
+              },
+              expression: "user.password"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              staticClass: "mr-4",
+              attrs: { color: "success", type: "submit" }
+            },
+            [_vm._v("\n        login\n    ")]
+          )
+        ],
+        1
       )
     ],
     1

@@ -1974,26 +1974,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+
+
 var state = function state() {
   return {
-    isLogged: false,
-    user: {}
+    token: localStorage.getItem('user-token') || '',
+    user: localStorage.getItem('user') || '',
+    messaggio: ''
   };
 };
 
 var getters = {
   getLogged: function getLogged(state) {
-    return state.isLogged;
+    return !!state.token;
+  },
+  getUser: function getUser(state) {
+    return !!state.user;
+  },
+  getMessaggio: function getMessaggio(state) {
+    return state.messaggio;
   }
 };
 var actions = {
-  login: function login(_ref) {
+  login: function login(_ref, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -2002,7 +2012,10 @@ var actions = {
             case 0:
               commit = _ref.commit;
               _context.next = 3;
-              return axios.post("");
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklogin), {
+                'email': payload.email,
+                'password': payload.password
+              });
 
             case 3:
               response = _context.sent;
@@ -2015,16 +2028,68 @@ var actions = {
         }
       }, _callee);
     }))();
+  },
+  logout: function logout(_ref2) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklogout));
+
+            case 3:
+              commit('logout');
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  resetMessaggio: function resetMessaggio(_ref3) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              commit('resetMessaggio');
+
+            case 2:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
   }
 };
 var mutations = {
   login: function login(state, payload) {
-    if (payload) {
-      state.isLogged = true;
-      state.user = payload;
+    if (payload.stato === 'successo') {
+      localStorage.setItem('user-token', payload.token);
+      localStorage.setItem('user', payload.user);
+      state.token = localStorage.getItem('user-token');
+      state.user = localStorage.getItem('user');
+      state.messaggio = '';
     } else {
-      state.isLogged = false;
+      state.messaggio = "Credenziali errate";
     }
+  },
+  logout: function logout(state) {
+    localStorage.removeItem('user-token');
+    localStorage.removeItem('user');
+    state.token = '';
+    state.user = '';
+  },
+  resetMessaggio: function resetMessaggio(state) {
+    state.messaggio = '';
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2254,6 +2319,33 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/help.js":
+/*!******************************!*\
+  !*** ./resources/js/help.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var help = function help() {
+  return {
+    linklogin: 'http://localhost/api/login',
+    linklogout: 'http://localhost/api/logout'
+    /*
+            linklogin: 'https://www.tcmontevarchi-prenotazioni.it/api/login',
+    
+      */
+
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (help);
 
 /***/ }),
 

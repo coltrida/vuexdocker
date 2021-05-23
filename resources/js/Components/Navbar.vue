@@ -5,6 +5,7 @@
         tile
     >
         <v-toolbar color="indigo darken-4" dark>
+
             <router-link :to="{ name: 'home'}">
                 <v-img
                     lazy-src="/img/logo-centroudito.png"
@@ -16,22 +17,44 @@
 
             <v-spacer></v-spacer>
 
-            <router-link :to="{ name: 'login'}">
-                <v-btn text>
-                    Login
+            <div v-if="getLogged">
+                <v-btn text @click="logout">
+                    Logout
                 </v-btn>
-            </router-link>
+            </div>
+            <div v-else>
+                <router-link :to="{ name: 'login'}">
+                    <v-btn text>
+                        Login
+                    </v-btn>
+                </router-link>
 
-            <v-btn text>
-                Register
-            </v-btn>
+                <v-btn text>
+                    Register
+                </v-btn>
+            </div>
+
+
         </v-toolbar>
     </v-card>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     export default {
-        name: "Navbar"
+        name: "Navbar",
+
+        computed:{
+            ...mapGetters('login', {
+                getLogged:'getLogged'
+            })
+        },
+
+        methods: {
+            logout() {
+                this.$store.commit('login/logout');
+            },
+        }
     }
 </script>
 

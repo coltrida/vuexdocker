@@ -1,55 +1,86 @@
 <template>
-    <v-form>
+    <div style="padding: 50px 100px">
+        <v-alert type="error" v-if="getMessaggio">
+            <v-row align="center">
+                <v-col class="grow">
+                    {{ getMessaggio }}
+                </v-col>
+                <v-col class="shrink">
+                    <v-btn @click="resetMessaggio">Chiudi</v-btn>
+                </v-col>
+            </v-row>
+        </v-alert>
+
+    <v-form @submit.prevent="login">
         <v-text-field
-            v-model="email"
+            v-model="user.email"
             :rules="[rules.required]"
             type="text"
             name="input-10-2"
             label="e-mail"
-            hint="At least 8 characters"
             class="input-group--focused "
         ></v-text-field>
 
         <v-text-field
-            v-model="password"
+            v-model="user.password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             label="password"
-            hint="At least 8 characters"
+            hint="minimo 6 caratteri"
             counter
             @click:append="show1 = !show1"
         ></v-text-field>
         <v-btn
             color="success"
             class="mr-4"
-            @click="login"
+            type="submit"
         >
             login
         </v-btn>
 
     </v-form>
+    </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     export default {
         data() {
             return {
                 show1: false,
-                password: '',
-                email: '',
+                user: {
+                    email: '',
+                    password: ''
+                },
                 rules: {
                     required: value => !!value || 'Campo obbligatorio.',
-                    min: v => v.length >= 8 || 'Minimo 8 caratteri',
+                    min: v => v.length >= 6 || 'Minimo 6 caratteri',
                     emailMatch: () => (`The email and password you entered don't match`),
                 },
             }
         },
 
+        computed:{
+            ...mapGetters('login', {
+                getMessaggio:'getMessaggio',
+                getLogged:'getLogged',
+            })
+        },
+
         methods: {
             login() {
+                //console.log(this.user)
+                this.$store.dispatch('login/login', this.user).then(() => {
+                    if (this.getLogged === true){
+                        this.$router.push({ name: 'home' });
+                    }
+                });
+            },
 
+            resetMessaggio(){
+                this.$store.commit('login/resetMessaggio');
             }
         }
     }
