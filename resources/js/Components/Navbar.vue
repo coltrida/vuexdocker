@@ -17,10 +17,21 @@
 
             <v-spacer></v-spacer>
 
-            <div v-if="getLogged">
-                <v-btn text @click="logout">
+            <div v-if="getLogged" class="flex justify-end align-center">
+                <nav-bar-admin></nav-bar-admin>
+                <v-btn text @click="logout" color="red">
                     Logout
                 </v-btn>
+                <v-chip
+                    class="ma-2"
+                    color="primary"
+                    label
+                >
+                    <v-icon left>
+                        mdi-account-circle-outline
+                    </v-icon>
+                    {{getUser}}
+                </v-chip>
             </div>
             <div v-else>
                 <router-link :to="{ name: 'login'}">
@@ -41,12 +52,16 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import NavBarAdmin from "./NavBarAdmin";
     export default {
         name: "Navbar",
 
+        components: { NavBarAdmin },
+
         computed:{
             ...mapGetters('login', {
-                getLogged:'getLogged'
+                getLogged:'getLogged',
+                getUser:'getUser',
             })
         },
 
