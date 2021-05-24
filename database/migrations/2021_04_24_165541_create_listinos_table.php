@@ -17,7 +17,7 @@ class CreateListinosTable extends Migration
             $table->id();
             $table->string('nome')->nullable();
             $table->bigInteger('fornitore_id')->nullable();
-            $table->string('categoria')->nullable();
+            $table->bigInteger('categoria_id')->nullable();
             $table->string('costo')->nullable();
             $table->string('prezzolistino')->nullable();
             $table->string('iva')->nullable();

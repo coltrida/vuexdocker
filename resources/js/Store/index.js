@@ -6,6 +6,8 @@ import LoginModule from './module/login';
 import FilialiModule from './module/filiali';
 import MarketingModule from './module/marketing';
 import FornitoriModule from './module/fornitori';
+import ListinoModule from './module/listino';
+import CategorieModule from './module/categorie';
 
 Vue.use(Vuex);
 
@@ -16,6 +18,8 @@ const store = new Vuex.Store({
         filiali:FilialiModule,
         marketing:MarketingModule,
         fornitori:FornitoriModule,
+        listino:ListinoModule,
+        categorie:CategorieModule,
     }
 });
 

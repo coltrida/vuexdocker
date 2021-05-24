@@ -13,6 +13,11 @@ class Listino extends Model
 
     public function fornitore()
     {
-        return $this->belongsTo(Fornitore::class, 'fornitore_id', 'id');
+        return $this->belongsTo(Fornitore::class);
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
     }
 }

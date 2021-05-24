@@ -2,14 +2,21 @@ import help from '../../help';
 
 const state = () => ({
     token: localStorage.getItem('user-token') || '',
-    user: localStorage.getItem('user') || '',
+    username: localStorage.getItem('username') || '',
+    idUser: localStorage.getItem('idUser') || '',
     messaggio: ''
 });
 
 const getters = {
     getLogged: state => !!state.token,
 
-    getUser: state => !!state.user,
+    getIdUser(state){
+        return state.idUser;
+    },
+
+    getUsername(state){
+        return state.username;
+    },
 
     getMessaggio(state){
         return state.messaggio;
@@ -40,10 +47,12 @@ const mutations = {
 
         if (payload.stato === 'successo'){
             localStorage.setItem('user-token', payload.token);
-            localStorage.setItem('user', payload.user);
+            localStorage.setItem('username', payload.user.name);
+            localStorage.setItem('idUser', payload.user.id);
 
             state.token = localStorage.getItem('user-token');
-            state.user = localStorage.getItem('user');
+            state.username = localStorage.getItem('username');
+            state.idUser = localStorage.getItem('idUser');
             state.messaggio = '';
         }else{
             state.messaggio = "Credenziali errate"
@@ -52,9 +61,10 @@ const mutations = {
 
     logout(state){
         localStorage.removeItem('user-token');
-        localStorage.removeItem('user');
+        localStorage.removeItem('username');
+        localStorage.removeItem('idUser');
         state.token = '';
-        state.user = '';
+        state.username = '';
     },
 
     resetMessaggio(state){

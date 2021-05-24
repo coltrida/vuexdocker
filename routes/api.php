@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\api\CategoriaController;
 use App\Http\Controllers\api\FilialiController;
 use App\Http\Controllers\api\FornitoriController;
+use App\Http\Controllers\api\ListinoController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
 use App\Models\User;
@@ -27,3 +29,13 @@ Route::post('/addCanale', [MarketingController::class, 'aggiungi']);
 Route::get('/fornitori', [FornitoriController::class, 'index']);
 Route::delete('/fornitori/{id}', [FornitoriController::class, 'elimina']);
 Route::post('/addFornitore', [FornitoriController::class, 'aggiungi']);
+
+// ---------------- listino -------------------------
+Route::get('/listino', [ListinoController::class, 'index']);
+Route::delete('/listino/{id}', [ListinoController::class, 'elimina']);
+Route::post('/addListino', [ListinoController::class, 'aggiungi']);
+
+// ---------------- categoria -------------------------
+Route::get('/categorie', [CategoriaController::class, 'index']);
+Route::delete('/categoria/{id}', [CategoriaController::class, 'elimina']);
+Route::post('/addCategoria', [CategoriaController::class, 'aggiungi']);

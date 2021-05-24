@@ -220,9 +220,14 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-btn", { on: { click: _vm.aggiungi } }, [
-                _vm._v("\n                Inserisci\n            ")
-              ])
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "indigo", dark: "" },
+                  on: { click: _vm.aggiungi }
+                },
+                [_vm._v("\n                Inserisci\n            ")]
+              )
             ],
             1
           ),

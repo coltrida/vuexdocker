@@ -14,7 +14,7 @@
                         label="Nuovo Canale"
                     ></v-text-field>
                 </v-col>
-                <v-btn @click="aggiungi">
+                <v-btn @click="aggiungi" color="indigo" dark>
                     Inserisci
                 </v-btn>
             </v-row>

@@ -18,7 +18,7 @@ class ListinoSeeder extends Seeder
             [
                 'nome' => 'M90',
                 'fornitore_id' => 1,
-                'categoria' => 'APA',
+                'categoria_id' => 1,
                 'costo' => 1000,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 4000,
@@ -27,7 +27,7 @@ class ListinoSeeder extends Seeder
             [
                 'nome' => 'M70',
                 'fornitore_id' => 1,
-                'categoria' => 'APA',
+                'categoria_id' => 1,
                 'costo' => 800,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 3500,
@@ -36,7 +36,7 @@ class ListinoSeeder extends Seeder
             [
                 'nome' => 'SILVER',
                 'fornitore_id' => 2,
-                'categoria' => 'APA',
+                'categoria_id' => 1,
                 'costo' => 300,
                 'giorniTempoDiReso' => 120,
                 'prezzolistino' => 1500,
@@ -45,7 +45,7 @@ class ListinoSeeder extends Seeder
             [
                 'nome' => 'GET',
                 'fornitore_id' => 3,
-                'categoria' => 'APA',
+                'categoria_id' => 1,
                 'costo' => 150,
                 'giorniTempoDiReso' => 60,
                 'prezzolistino' => 1200,
@@ -54,7 +54,7 @@ class ListinoSeeder extends Seeder
             [
                 'nome' => 'TV LINK',
                 'fornitore_id' => 2,
-                'categoria' => 'ACC',
+                'categoria_id' => 1,
                 'costo' => 200,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 400,

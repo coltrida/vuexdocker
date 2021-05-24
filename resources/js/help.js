@@ -14,7 +14,10 @@ const help = () => {
         linkaddcanale: 'http://vuexdocker.local/api/addCanale',
         linkfornitori: 'http://vuexdocker.local/api/fornitori',
         linkaddfornitore: 'http://vuexdocker.local/api/addFornitore',
-
+        linklistino: 'http://vuexdocker.local/api/listino',
+        linkaddlistino: 'http://vuexdocker.local/api/addListino',
+        linkcategorie: 'http://vuexdocker.local/api/categorie',
+        linkaddcategoria: 'http://vuexdocker.local/api/addCategoria',
     };
 };
 export default help;

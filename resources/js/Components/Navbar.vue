@@ -30,7 +30,7 @@
                     <v-icon left>
                         mdi-account-circle-outline
                     </v-icon>
-                    {{getUser}}
+                    {{getUsername}}
                 </v-chip>
             </div>
             <div v-else>
@@ -61,13 +61,14 @@
         computed:{
             ...mapGetters('login', {
                 getLogged:'getLogged',
-                getUser:'getUser',
+                getUsername:'getUsername',
             })
         },
 
         methods: {
             logout() {
                 this.$store.commit('login/logout');
+                this.$router.push({ name: 'home' });
             },
         }
     }

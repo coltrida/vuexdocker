@@ -68,32 +68,156 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Listino",
   data: function data() {
     return {
-      newCanale: ''
+      search: '',
+      listino: {},
+      headers: [{
+        text: 'Nome',
+        align: 'start',
+        sortable: false,
+        value: 'nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Fornitore',
+        value: 'fornitore',
+        "class": "indigo white--text"
+      }, {
+        text: 'Categoria',
+        value: 'categoria',
+        "class": "indigo white--text"
+      }, {
+        text: 'Costo',
+        value: 'costo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Prezzo',
+        value: 'prezzolistino',
+        "class": "indigo white--text"
+      }, {
+        text: 'iva',
+        value: 'iva',
+        "class": "indigo white--text"
+      }, {
+        text: 'GG Reso',
+        value: 'giorniTempoDiReso',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }]
     };
   },
   mounted: function mounted() {
-    this.fetchCanali();
+    this.fetchListino();
+    this.fetchFornitori();
+    this.fetchCategorie();
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('marketing', {
-    fetchCanali: 'fetchCanali',
-    addCanale: 'addCanale',
-    eliminaCanale: 'eliminaCanale'
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
+    fetchListino: 'fetchListino',
+    addListino: 'addListino',
+    eliminaListino: 'eliminaListino'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
+    fetchFornitori: 'fetchFornitori'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('categorie', {
+    fetchCategorie: 'fetchCategorie'
   })), {}, {
     aggiungi: function aggiungi() {
-      this.addCanale(this.newCanale);
-      this.newCanale = '';
+      this.addListino(this.listino);
+      this.listino = '';
     },
     elimina: function elimina(id) {
-      this.eliminaCanale(id);
+      this.eliminaListino(id);
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('marketing', {
-    getCanali: 'getCanali'
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('listino', {
+    getListino: 'getListino'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('fornitori', {
+    getFornitori: 'getFornitori'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('categorie', {
+    getCategorie: 'getCategorie'
   }))
 });
 
@@ -200,97 +324,215 @@ var render = function() {
             [
               _c(
                 "v-col",
-                { attrs: { cols: "12", sm: "6" } },
+                { attrs: { cols: "2", sm: "2" } },
                 [
                   _c("v-text-field", {
                     attrs: {
                       counter: "25",
                       hint: "Massimo 25 caratteri",
-                      label: "Nuovo Canale"
+                      label: "Nome Prodotto"
                     },
                     model: {
-                      value: _vm.newCanale,
+                      value: _vm.listino.nome,
                       callback: function($$v) {
-                        _vm.newCanale = $$v
+                        _vm.$set(_vm.listino, "nome", $$v)
                       },
-                      expression: "newCanale"
+                      expression: "listino.nome"
                     }
                   })
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("v-btn", { on: { click: _vm.aggiungi } }, [
-                _vm._v("\n                Inserisci\n            ")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            [
               _c(
                 "v-col",
-                { attrs: { cols: "12", sm: "6" } },
+                { attrs: { cols: "2", sm: "2" } },
                 [
-                  _c(
-                    "v-list",
-                    _vm._l(_vm.getCanali, function(canale) {
-                      return _c(
-                        "v-list-item",
-                        {
-                          key: canale.id,
-                          staticStyle: { "border-bottom": "1px solid black" }
-                        },
-                        [
-                          _c(
-                            "v-list-item-content",
-                            [
-                              _c("v-list-item-title", {
-                                domProps: { textContent: _vm._s(canale.name) }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-list-item-action",
-                            [
-                              _c(
-                                "v-btn",
-                                { attrs: { icon: "" } },
-                                [
-                                  _c(
-                                    "v-icon",
-                                    {
-                                      attrs: { color: "red" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.elimina(canale.id)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("mdi-delete")]
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    }),
-                    1
-                  )
+                  _c("v-select", {
+                    attrs: {
+                      "item-value": "id",
+                      "item-text": "nome",
+                      items: _vm.getFornitori,
+                      label: "fornitore"
+                    },
+                    model: {
+                      value: _vm.listino.fornitore_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.listino, "fornitore_id", $$v)
+                      },
+                      expression: "listino.fornitore_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "1", sm: "1" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      "item-value": "id",
+                      "item-text": "nome",
+                      items: _vm.getCategorie,
+                      label: "cat"
+                    },
+                    model: {
+                      value: _vm.listino.categoria_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.listino, "categoria_id", $$v)
+                      },
+                      expression: "listino.categoria_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "2", sm: "2" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      counter: "25",
+                      hint: "Massimo 25 caratteri",
+                      label: "costo"
+                    },
+                    model: {
+                      value: _vm.listino.costo,
+                      callback: function($$v) {
+                        _vm.$set(_vm.listino, "costo", $$v)
+                      },
+                      expression: "listino.costo"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "2", sm: "2" } },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      counter: "25",
+                      hint: "Massimo 25 caratteri",
+                      label: "prezzo listino"
+                    },
+                    model: {
+                      value: _vm.listino.prezzolistino,
+                      callback: function($$v) {
+                        _vm.$set(_vm.listino, "prezzolistino", $$v)
+                      },
+                      expression: "listino.prezzolistino"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "1", sm: "1" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { counter: "25", label: "iva" },
+                    model: {
+                      value: _vm.listino.iva,
+                      callback: function($$v) {
+                        _vm.$set(_vm.listino, "iva", $$v)
+                      },
+                      expression: "listino.iva"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "1", sm: "1" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { counter: "25", label: "gg di reso" },
+                    model: {
+                      value: _vm.listino.giorniTempoDiReso,
+                      callback: function($$v) {
+                        _vm.$set(_vm.listino, "giorniTempoDiReso", $$v)
+                      },
+                      expression: "listino.giorniTempoDiReso"
+                    }
+                  })
                 ],
                 1
               )
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", color: "indigo" },
+              on: { click: _vm.aggiungi }
+            },
+            [_vm._v("\n            Inserisci\n        ")]
+          ),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              "append-icon": "mdi-magnify",
+              label: "Ricerca",
+              "single-line": "",
+              "hide-details": ""
+            },
+            model: {
+              value: _vm.search,
+              callback: function($$v) {
+                _vm.search = $$v
+              },
+              expression: "search"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-data-table", {
+            staticClass: "elevation-1 mt-3",
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.getListino,
+              search: _vm.search,
+              "items-per-page": 10
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "item.actions",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _c(
+                      "v-icon",
+                      {
+                        attrs: { color: "red", small: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.elimina(item.id)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    mdi-delete\n                "
+                        )
+                      ]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
         ],
         1
       )

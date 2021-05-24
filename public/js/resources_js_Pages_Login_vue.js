@@ -94,7 +94,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     login: function login() {
       var _this = this;
 
-      //console.log(this.user)
       this.$store.dispatch('login/login', this.user).then(function () {
         if (_this.getLogged === true) {
           _this.$router.push({

@@ -547,11 +547,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getLogged: 'getLogged',
-    getUser: 'getUser'
+    getUsername: 'getUsername'
   })),
   methods: {
     logout: function logout() {
       this.$store.commit('login/logout');
+      this.$router.push({
+        name: 'home'
+      });
     }
   }
 });
@@ -1995,7 +1998,7 @@ var render = function() {
                       ]),
                       _vm._v(
                         "\n                " +
-                          _vm._s(_vm.getUser) +
+                          _vm._s(_vm.getUsername) +
                           "\n            "
                       )
                     ],

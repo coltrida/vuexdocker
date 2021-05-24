@@ -71,7 +71,6 @@
 
         methods: {
             login() {
-                //console.log(this.user)
                 this.$store.dispatch('login/login', this.user).then(() => {
                     if (this.getLogged === true){
                         this.$router.push({ name: 'home' });
