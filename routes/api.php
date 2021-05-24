@@ -6,16 +6,18 @@ use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\ListinoController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\api\RuoloController;
+use App\Http\Controllers\api\UserController;
 use Illuminate\Support\Facades\Route;
-
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
+
+// ---------------- user -------------------------
+Route::get('/audio', [UserController::class, 'audio']);
+Route::get('/amm', [UserController::class, 'amm']);
+Route::delete('/user/{id}', [UserController::class, 'elimina']);
+Route::post('/addUser', [UserController::class, 'aggiungi']);
 
 // ----------------- filiali -------------------------
 Route::get('/filiali', [FilialiController::class, 'index']);
@@ -39,3 +41,8 @@ Route::post('/addListino', [ListinoController::class, 'aggiungi']);
 Route::get('/categorie', [CategoriaController::class, 'index']);
 Route::delete('/categoria/{id}', [CategoriaController::class, 'elimina']);
 Route::post('/addCategoria', [CategoriaController::class, 'aggiungi']);
+
+// ---------------- ruolo -------------------------
+Route::get('/ruoli', [RuoloController::class, 'index']);
+Route::delete('/ruolo/{id}', [RuoloController::class, 'elimina']);
+Route::post('/addRuolo', [RuoloController::class, 'aggiungi']);

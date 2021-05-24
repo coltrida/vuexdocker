@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <v-menu offset-y>
+        <!--<v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     text
@@ -19,18 +19,24 @@
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item>
             </v-list>
-        </v-menu>
+        </v-menu>-->
+
+        <router-link :to="{ name: 'personale'}">
+            <v-btn text dark>
+                Personale
+            </v-btn>
+        </router-link>
     </div>
 </template>
 
 <script>
     export default {
-        data: () => ({
+        /*data: () => ({
             items: [
                 { title: 'Audioprotesisti' },
                 { title: 'Amministrativi' },
             ],
-        }),
+        }),*/
     }
 </script>
 

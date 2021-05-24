@@ -43,7 +43,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function ruolo()
+    {
+        return $this->belongsTo(Ruolo::class);
+    }
+
+    public function scopeAudio($query)
+    {
+        return $query->whereHas('ruolo', function ($ruolo){
+            $ruolo->where('nome', 'audio');
+        });
+    }
+
+    public function scopeAmm($query)
+    {
+        return $query->whereHas('ruolo', function ($ruolo){
+            $ruolo->where('nome', 'amministrazione');
+        });
+    }
+
     public function getIsAdminAttribute()
+    {
+        return $this->ruolo->nome == 'admin' ? true : false;
+    }
+
+/*    public function getIsAdminAttribute()
     {
         return $this->ruolo == config('enum.ruoli.admin') ? true : false;
     }
@@ -101,5 +125,5 @@ class User extends Authenticatable
     public function client()
     {
         return $this->hasMany(Client::class);
-    }
+    }*/
 }

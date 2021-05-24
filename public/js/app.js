@@ -1945,6 +1945,12 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_Fornitori_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Fornitori */ "./resources/js/Pages/Fornitori.vue"));
   },
   name: 'fornitori'
+}, {
+  path: '/personale',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_Personale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Personale */ "./resources/js/Pages/Personale.vue"));
+  },
+  name: 'personale'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -1961,8 +1967,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -1970,6 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_fornitori__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/fornitori */ "./resources/js/Store/module/fornitori.js");
 /* harmony import */ var _module_listino__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/listino */ "./resources/js/Store/module/listino.js");
 /* harmony import */ var _module_categorie__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/categorie */ "./resources/js/Store/module/categorie.js");
+/* harmony import */ var _module_ruolo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/ruolo */ "./resources/js/Store/module/ruolo.js");
 
 
 
@@ -1979,8 +1986,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_7__.default.use(vuex__WEBPACK_IMPORTED_MODULE_8__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_8__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_8__.default.use(vuex__WEBPACK_IMPORTED_MODULE_9__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_9__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -1988,7 +1996,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_8__.default.Store({
     marketing: _module_marketing__WEBPACK_IMPORTED_MODULE_3__.default,
     fornitori: _module_fornitori__WEBPACK_IMPORTED_MODULE_4__.default,
     listino: _module_listino__WEBPACK_IMPORTED_MODULE_5__.default,
-    categorie: _module_categorie__WEBPACK_IMPORTED_MODULE_6__.default
+    categorie: _module_categorie__WEBPACK_IMPORTED_MODULE_6__.default,
+    ruoli: _module_ruolo__WEBPACK_IMPORTED_MODULE_7__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -2742,6 +2751,134 @@ var mutations = {
 
 /***/ }),
 
+/***/ "./resources/js/Store/module/ruolo.js":
+/*!********************************************!*\
+  !*** ./resources/js/Store/module/ruolo.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    ruoli: []
+  };
+};
+
+var getters = {
+  getRuoli: function getRuoli(state) {
+    return state.ruoli;
+  }
+};
+var actions = {
+  fetchRuoli: function fetchRuoli(_ref) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkruoli));
+
+            case 3:
+              response = _context.sent;
+              commit('fetchRuoli', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  addRuolo: function addRuolo(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddruolo), {
+                'nome': payload.nome
+              });
+
+            case 3:
+              response = _context2.sent;
+              commit('addRuolo', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  eliminaRuolo: function eliminaRuolo(_ref3, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkruoli) + '/' + id);
+
+            case 3:
+              commit('eliminaRuolo', id);
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  }
+};
+var mutations = {
+  fetchRuoli: function fetchRuoli(state, payload) {
+    state.ruoli = payload;
+  },
+  addRuolo: function addRuolo(state, payload) {
+    state.ruoli.unshift(payload);
+  },
+  eliminaRuolo: function eliminaRuolo(state, id) {
+    state.ruoli = state.ruoli.filter(function (u) {
+      return u.id !== id;
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
 /***/ "./resources/js/Store/module/users.js":
 /*!********************************************!*\
   !*** ./resources/js/Store/module/users.js ***!
@@ -2755,32 +2892,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+
+
 var state = function state() {
   return {
-    users: []
+    audio: [],
+    amm: []
   };
 };
 
 var getters = {
-  allusers: function allusers(state) {
-    return state.users;
+  getAudio: function getAudio(state) {
+    return state.audio;
   },
-  userbyId: function userbyId(state) {
-    return function (id) {
-      return state.users.find(function (u) {
-        return u.id === id;
-      });
-    };
+  getAmm: function getAmm(state) {
+    return state.amm;
   }
 };
 var actions = {
-  fetchUsers: function fetchUsers(_ref) {
+  fetchAudio: function fetchAudio(_ref) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -2789,11 +2926,11 @@ var actions = {
             case 0:
               commit = _ref.commit;
               _context.next = 3;
-              return axios.get("https://jsonplaceholder.typicode.com/users");
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudio));
 
             case 3:
               response = _context.sent;
-              commit('saveallusers', response.data);
+              commit('fetchAudio', response.data);
 
             case 5:
             case "end":
@@ -2803,19 +2940,22 @@ var actions = {
       }, _callee);
     }))();
   },
-  saveuser: function saveuser(_ref2, payload) {
+  fetchAmm: function fetchAmm(_ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkamm));
 
-              /* qui si scrive la parte di axios per il salvataggio dei dati */
-              commit('saveuser', payload);
+            case 3:
+              response = _context2.sent;
+              commit('fetchAmm', response.data);
 
-            case 2:
+            case 5:
             case "end":
               return _context2.stop();
           }
@@ -2823,19 +2963,26 @@ var actions = {
       }, _callee2);
     }))();
   },
-  updateuser: function updateuser(_ref3, payload) {
+  addAudio: function addAudio(_ref3, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
+              _context3.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkadduser), {
+                'name': payload.name,
+                'email': payload.email,
+                'ruolo_id': payload.ruolo_id
+              });
 
-              /* qui si scrive la parte di axios per il salvataggio dei dati */
-              commit('updateuser', payload);
+            case 3:
+              response = _context3.sent;
+              commit('addAudio', response.data);
 
-            case 2:
+            case 5:
             case "end":
               return _context3.stop();
           }
@@ -2843,43 +2990,98 @@ var actions = {
       }, _callee3);
     }))();
   },
-  deleteUser: function deleteUser(_ref4, id) {
+  addAmm: function addAmm(_ref4, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
+              _context4.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkadduser), {
+                'name': payload.name,
+                'email': payload.email,
+                'ruolo_id': payload.ruolo_id
+              });
 
-              /* qui si scrive la parte di axios per la cancellazione dei dati */
-              commit('deleteUser', id);
+            case 3:
+              response = _context4.sent;
+              commit('addAmm', response.data);
 
-            case 2:
+            case 5:
             case "end":
               return _context4.stop();
           }
         }
       }, _callee4);
     }))();
+  },
+  eliminaAudio: function eliminaAudio(_ref5, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuser) + '/' + id);
+
+            case 3:
+              commit('eliminaAudio', id);
+
+            case 4:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  },
+  eliminaAmm: function eliminaAmm(_ref6, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context6.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuser) + '/' + id);
+
+            case 3:
+              commit('eliminaAmm', id);
+
+            case 4:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
   }
 };
 var mutations = {
-  saveallusers: function saveallusers(state, payload) {
-    state.users = payload;
+  fetchAudio: function fetchAudio(state, payload) {
+    state.audio = payload;
   },
-  saveuser: function saveuser(state, payload) {
-    payload.id = state.users.length + 1;
-    state.users.unshift(payload);
+  fetchAmm: function fetchAmm(state, payload) {
+    state.amm = payload;
   },
-  updateuser: function updateuser(state, payload) {
-    state.users = state.users.filter(function (u) {
-      return u.id !== payload.id;
+  addAudio: function addAudio(state, payload) {
+    state.audio.unshift(payload);
+  },
+  addAmm: function addAmm(state, payload) {
+    state.amm.unshift(payload);
+  },
+  eliminaAudio: function eliminaAudio(state, id) {
+    state.audio = state.audio.filter(function (u) {
+      return u.id !== id;
     });
-    state.users.unshift(payload);
   },
-  deleteUser: function deleteUser(state, id) {
-    state.users = state.users.filter(function (u) {
+  eliminaAmm: function eliminaAmm(state, id) {
+    state.amm = state.amm.filter(function (u) {
       return u.id !== id;
     });
   }
@@ -2990,7 +3192,13 @@ var help = function help() {
     linklistino: 'http://vuexdocker.local/api/listino',
     linkaddlistino: 'http://vuexdocker.local/api/addListino',
     linkcategorie: 'http://vuexdocker.local/api/categorie',
-    linkaddcategoria: 'http://vuexdocker.local/api/addCategoria'
+    linkaddcategoria: 'http://vuexdocker.local/api/addCategoria',
+    linkruoli: 'http://vuexdocker.local/api/ruoli',
+    linkaddruolo: 'http://vuexdocker.local/api/addRuolo',
+    linkaudio: 'http://vuexdocker.local/api/audio',
+    linkamm: 'http://vuexdocker.local/api/amm',
+    linkuser: 'http://vuexdocker.local/api/user',
+    linkadduser: 'http://vuexdocker.local/api/addUser'
   };
 };
 
@@ -83171,7 +83379,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_Home_vue":1,"resources_js_Pages_Login_vue":1,"resources_js_Pages_Marketing_vue":1,"resources_js_Pages_Listino_vue":1,"resources_js_Pages_Fornitori_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_Home_vue":1,"resources_js_Pages_Login_vue":1,"resources_js_Pages_Marketing_vue":1,"resources_js_Pages_Listino_vue":1,"resources_js_Pages_Fornitori_vue":1,"resources_js_Pages_Personale_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

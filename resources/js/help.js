@@ -18,6 +18,13 @@ const help = () => {
         linkaddlistino: 'http://vuexdocker.local/api/addListino',
         linkcategorie: 'http://vuexdocker.local/api/categorie',
         linkaddcategoria: 'http://vuexdocker.local/api/addCategoria',
+        linkruoli: 'http://vuexdocker.local/api/ruoli',
+        linkaddruolo: 'http://vuexdocker.local/api/addRuolo',
+        linkaudio: 'http://vuexdocker.local/api/audio',
+        linkamm: 'http://vuexdocker.local/api/amm',
+        linkuser: 'http://vuexdocker.local/api/user',
+        linkadduser: 'http://vuexdocker.local/api/addUser',
+
     };
 };
 export default help;

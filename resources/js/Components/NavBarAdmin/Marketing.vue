@@ -33,11 +33,11 @@
 
 <script>
     export default {
-        data: () => ({
+        /*data: () => ({
             items: [
                 { title: 'Lista' },
             ],
-        }),
+        }),*/
     }
 </script>
 

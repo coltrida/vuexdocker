@@ -308,13 +308,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      items: [{
-        title: 'Lista'
-      }]
-    };
-  }
+  /*data: () => ({
+      items: [
+          { title: 'Lista' },
+      ],
+  }),*/
 });
 
 /***/ }),
@@ -355,16 +353,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      items: [{
-        title: 'Audioprotesisti'
-      }, {
-        title: 'Amministrativi'
-      }]
-    };
-  }
+  /*data: () => ({
+      items: [
+          { title: 'Audioprotesisti' },
+          { title: 'Amministrativi' },
+      ],
+  }),*/
 });
 
 /***/ }),
@@ -1716,48 +1717,12 @@ var render = function() {
     { staticClass: "text-center" },
     [
       _c(
-        "v-menu",
-        {
-          attrs: { "offset-y": "" },
-          scopedSlots: _vm._u([
-            {
-              key: "activator",
-              fn: function(ref) {
-                var on = ref.on
-                var attrs = ref.attrs
-                return [
-                  _c(
-                    "v-btn",
-                    _vm._g(
-                      _vm._b(
-                        { attrs: { text: "", dark: "" } },
-                        "v-btn",
-                        attrs,
-                        false
-                      ),
-                      on
-                    ),
-                    [_vm._v("\n                Personale\n            ")]
-                  )
-                ]
-              }
-            }
-          ])
-        },
+        "router-link",
+        { attrs: { to: { name: "personale" } } },
         [
-          _vm._v(" "),
-          _c(
-            "v-list",
-            _vm._l(_vm.items, function(item, index) {
-              return _c(
-                "v-list-item",
-                { key: index },
-                [_c("v-list-item-title", [_vm._v(_vm._s(item.title))])],
-                1
-              )
-            }),
-            1
-          )
+          _c("v-btn", { attrs: { text: "", dark: "" } }, [
+            _vm._v("\n            Personale\n        ")
+          ])
         ],
         1
       )

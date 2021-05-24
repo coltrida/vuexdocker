@@ -1,57 +1,83 @@
+import help from "../../help";
+
 const state = () => ({
-    users: []
+    audio: [],
+    amm: []
 });
 
 const getters = {
-    allusers(state){
-        return state.users;
+    getAudio(state){
+        return state.audio;
     },
-    userbyId(state){
-        return (id) => {
-            return state.users.find(u => u.id === id);
-        }
-    }
+
+    getAmm(state){
+        return state.amm;
+    },
 };
 
 const actions = {
-    async fetchUsers({commit}){
-        const response = await axios.get("https://jsonplaceholder.typicode.com/users");
-        commit('saveallusers', response.data);
+    async fetchAudio({commit}){
+        const response = await axios.get(`${help().linkaudio}`);
+        commit('fetchAudio', response.data);
     },
 
-    async saveuser({commit}, payload){
-        /* qui si scrive la parte di axios per il salvataggio dei dati */
-        commit('saveuser', payload);
+    async fetchAmm({commit}){
+        const response = await axios.get(`${help().linkamm}`);
+        commit('fetchAmm', response.data);
     },
 
-    async updateuser({commit}, payload){
-        /* qui si scrive la parte di axios per il salvataggio dei dati */
-        commit('updateuser', payload);
+    async addAudio({commit}, payload){
+        const response = await axios.post(`${help().linkadduser}`, {
+            'name': payload.name,
+            'email': payload.email,
+            'ruolo_id': payload.ruolo_id,
+        });
+        commit('addAudio', response.data);
     },
 
-    async deleteUser({commit}, id){
-        /* qui si scrive la parte di axios per la cancellazione dei dati */
-        commit('deleteUser', id);
+    async addAmm({commit}, payload){
+        const response = await axios.post(`${help().linkadduser}`, {
+            'name': payload.name,
+            'email': payload.email,
+            'ruolo_id': payload.ruolo_id,
+        });
+        commit('addAmm', response.data);
+    },
+
+    async eliminaAudio({commit}, id){
+        await axios.delete(`${help().linkuser}`+'/'+id);
+        commit('eliminaAudio', id);
+    },
+
+    async eliminaAmm({commit}, id){
+        await axios.delete(`${help().linkuser}`+'/'+id);
+        commit('eliminaAmm', id);
     },
 };
 
 const mutations = {
-    saveallusers(state, payload){
-        state.users = payload;
+    fetchAudio(state, payload){
+        state.audio = payload;
     },
 
-    saveuser(state, payload){
-        payload.id = (state.users.length + 1);
-        state.users.unshift(payload);
+    fetchAmm(state, payload){
+        state.amm = payload;
     },
 
-    updateuser(state, payload){
-        state.users = state.users.filter(u => u.id !== payload.id);
-        state.users.unshift(payload);
+    addAudio(state, payload){
+        state.audio.unshift(payload);
     },
 
-    deleteUser(state, id){
-        state.users = state.users.filter(u => u.id !== id);
+    addAmm(state, payload){
+        state.amm.unshift(payload);
+    },
+
+    eliminaAudio(state, id){
+        state.audio = state.audio.filter(u => u.id !== id);
+    },
+
+    eliminaAmm(state, id){
+        state.amm = state.amm.filter(u => u.id !== id);
     },
 };
 

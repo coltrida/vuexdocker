@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'CACAO',
                 'email' => 'cacao@cacao.it',
-                'ruolo' => 'admin',
+                'ruolo_id' => 1,
                 'budget_id' => null,
                 'email_verified_at' => now(),
                 'created_at' => now(),
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Davide Coltrioli',
                 'email' => 'audio@audio.it',
-                'ruolo' => 'audio',
+                'ruolo' => 2,
                 'budget_id' => 1,
                 'email_verified_at' => now(),
                 'created_at' => now(),
@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Cecchi Massimiliano',
                 'email' => 'audio2@audio.it',
-                'ruolo' => 'audio',
+                'ruolo' => 2,
                 'budget_id' => 2,
                 'email_verified_at' => now(),
                 'created_at' => now(),
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'audio3',
                 'email' => 'audio3@audio.it',
-                'ruolo' => 'audio',
+                'ruolo' => 2,
                 'budget_id' => 3,
                 'email_verified_at' => now(),
                 'created_at' => now(),
@@ -60,7 +60,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'amministrativo',
                 'email' => 'amm@amm.it',
-                'ruolo' => 'segreteria',
+                'ruolo' => 3,
                 'budget_id' => null,
                 'email_verified_at' => now(),
                 'created_at' => now(),
