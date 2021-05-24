@@ -5,6 +5,7 @@ import UsersModule from './module/users';
 import LoginModule from './module/login';
 import FilialiModule from './module/filiali';
 import MarketingModule from './module/marketing';
+import FornitoriModule from './module/fornitori';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ const store = new Vuex.Store({
         login:LoginModule,
         filiali:FilialiModule,
         marketing:MarketingModule,
+        fornitori:FornitoriModule,
     }
 });
 

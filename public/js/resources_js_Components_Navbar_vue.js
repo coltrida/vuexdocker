@@ -196,15 +196,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      items: [{
-        title: 'Lista'
-      }]
-    };
-  }
-});
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
 
@@ -1523,7 +1520,7 @@ var render = function() {
                       ),
                       on
                     ),
-                    [_vm._v("\n                Listino\n            ")]
+                    [_vm._v("\n                Fornitori\n            ")]
                   )
                 ]
               }
@@ -1534,14 +1531,33 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-list",
-            _vm._l(_vm.items, function(item, index) {
-              return _c(
-                "v-list-item",
-                { key: index },
-                [_c("v-list-item-title", [_vm._v(_vm._s(item.title))])],
+            [
+              _c(
+                "router-link",
+                { attrs: { to: { name: "fornitori" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Lista")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "listino" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Listino")])],
+                    1
+                  )
+                ],
                 1
               )
-            }),
+            ],
             1
           )
         ],

@@ -8,16 +8,21 @@
                     v-bind="attrs"
                     v-on="on"
                 >
-                    Listino
+                    Fornitori
                 </v-btn>
             </template>
             <v-list>
-                <v-list-item
-                    v-for="(item, index) in items"
-                    :key="index"
-                >
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item>
+                <router-link :to="{ name: 'fornitori'}">
+                    <v-list-item>
+                        <v-list-item-title>Lista</v-list-item-title>
+                    </v-list-item>
+                </router-link>
+
+                <router-link :to="{ name: 'listino'}">
+                    <v-list-item>
+                        <v-list-item-title>Listino</v-list-item-title>
+                    </v-list-item>
+                </router-link>
             </v-list>
         </v-menu>
     </div>
@@ -25,11 +30,7 @@
 
 <script>
     export default {
-        data: () => ({
-            items: [
-                { title: 'Lista' },
-            ],
-        }),
+
     }
 </script>
 
