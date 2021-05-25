@@ -6,6 +6,7 @@ use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\ListinoController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
+use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\RecapitiController;
 use App\Http\Controllers\api\RuoloController;
 use App\Http\Controllers\api\UserController;
@@ -56,4 +57,6 @@ Route::delete('/ruolo/{id}', [RuoloController::class, 'elimina']);
 Route::post('/addRuolo', [RuoloController::class, 'aggiungi']);
 
 // ---------------- magazzino -------------------------
-Route::get('/magazzino/{id}', [RuoloController::class, 'index']);
+Route::get('/filiali/{id}/presenti', [ProductController::class, 'presenti']);
+Route::get('/filiali/{id}/inProva', [ProductController::class, 'inProva']);
+Route::get('/filiali/{id}/richiesti', [ProductController::class, 'richiesti']);

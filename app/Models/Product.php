@@ -28,6 +28,32 @@ class Product extends Model
         return $this->belongsTo(Filiale::class);
     }
 
+    public function stato()
+    {
+        return $this->belongsTo(StatoApa::class, 'stato_id', 'id');
+    }
+
+    public function scopeFiliale($query)
+    {
+        return $query->whereHas('stato', function ($stato){
+            $stato->where('nome', 'FILIALE');
+        });
+    }
+
+    public function scopeProva($query)
+    {
+        return $query->whereHas('stato', function ($stato){
+            $stato->where('nome', 'PROVA');
+        });
+    }
+
+    public function scopeRichiesto($query)
+    {
+        return $query->whereHas('stato', function ($stato){
+            $stato->where('nome', 'RICHIESTO');
+        });
+    }
+
     public function fornitore()
     {
         return $this->belongsTo(Fornitore::class);

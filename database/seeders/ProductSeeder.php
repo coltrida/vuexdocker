@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
         Product::insert([
             [
                 'matricola' => '123',
-                'stato' => config('enum.statoAPA.filiale'),
+                'stato_id' => 5,
                 'filiale_id' => 2,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -32,7 +32,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => '234',
-                'stato' => config('enum.statoAPA.filiale'),
+                'stato_id' => 5,
                 'filiale_id' => 2,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -45,7 +45,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => '456',
-                'stato' => config('enum.statoAPA.filiale'),
+                'stato_id' => 5,
                 'filiale_id' => 2,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -58,7 +58,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => '567',
-                'stato' => config('enum.statoAPA.filiale'),
+                'stato_id' => 5,
                 'filiale_id' => 2,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -72,7 +72,7 @@ class ProductSeeder extends Seeder
 
             [
                 'matricola' => 'sadf',
-                'stato' => config('enum.statoAPA.fattura'),
+                'stato_id' => 4,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -85,7 +85,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => 'sghggfadf',
-                'stato' => config('enum.statoAPA.fattura'),
+                'stato_id' => 4,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -98,7 +98,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => 'jjjjj',
-                'stato' => config('enum.statoAPA.fattura'),
+                'stato_id' => 4,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -111,7 +111,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => 'ssdghrrr',
-                'stato' => config('enum.statoAPA.fattura'),
+                'stato_id' => 4,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -124,7 +124,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => 'jjhggfhdfgjjj',
-                'stato' => config('enum.statoAPA.fattura'),
+                'stato_id' => 4,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -137,7 +137,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => 'ssdjhkhjkkghrrr',
-                'stato' => config('enum.statoAPA.fattura'),
+                'stato_id' => 4,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -150,7 +150,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => 'jj555jjj',
-                'stato' => config('enum.statoAPA.filiale'),
+                'stato_id' => 5,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 3,
@@ -163,7 +163,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => 'ffhghrrr',
-                'stato' => config('enum.statoAPA.filiale'),
+                'stato_id' => 5,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 3,

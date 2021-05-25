@@ -248,6 +248,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
@@ -1638,13 +1640,33 @@ var render = function() {
             "v-list",
             _vm._l(_vm.getFiliali, function(item, index) {
               return _c(
-                "v-list-item",
+                "div",
                 { key: index },
-                [_c("v-list-item-title", [_vm._v(_vm._s(item.nome))])],
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "magazzino",
+                          params: { filialeId: item.id }
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v(_vm._s(item.nome))])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
                 1
               )
             }),
-            1
+            0
           )
         ],
         1

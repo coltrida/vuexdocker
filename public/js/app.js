@@ -1963,6 +1963,12 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_strutture_Recapiti_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/strutture/Recapiti */ "./resources/js/Pages/strutture/Recapiti.vue"));
   },
   name: 'recapiti'
+}, {
+  path: '/magazzino/:filialeId',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_magazzino_MagazzinoFiliale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/magazzino/MagazzinoFiliale */ "./resources/js/Pages/magazzino/MagazzinoFiliale.vue"));
+  },
+  name: 'magazzino'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -1979,8 +1985,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -1990,6 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_listino__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/listino */ "./resources/js/Store/module/listino.js");
 /* harmony import */ var _module_categorie__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/categorie */ "./resources/js/Store/module/categorie.js");
 /* harmony import */ var _module_ruolo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./module/ruolo */ "./resources/js/Store/module/ruolo.js");
+/* harmony import */ var _module_product__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./module/product */ "./resources/js/Store/module/product.js");
 
 
 
@@ -2001,8 +2008,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_9__.default.use(vuex__WEBPACK_IMPORTED_MODULE_10__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_10__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_10__.default.use(vuex__WEBPACK_IMPORTED_MODULE_11__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_11__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2012,7 +2020,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_10__.default.Store({
     fornitori: _module_fornitori__WEBPACK_IMPORTED_MODULE_5__.default,
     listino: _module_listino__WEBPACK_IMPORTED_MODULE_6__.default,
     categorie: _module_categorie__WEBPACK_IMPORTED_MODULE_7__.default,
-    ruoli: _module_ruolo__WEBPACK_IMPORTED_MODULE_8__.default
+    ruoli: _module_ruolo__WEBPACK_IMPORTED_MODULE_8__.default,
+    product: _module_product__WEBPACK_IMPORTED_MODULE_9__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -2814,6 +2823,139 @@ var mutations = {
     state.canali = state.canali.filter(function (u) {
       return u.id !== id;
     });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/Store/module/product.js":
+/*!**********************************************!*\
+  !*** ./resources/js/Store/module/product.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    inFiliale: [],
+    inProva: [],
+    richiesti: []
+  };
+};
+
+var getters = {
+  getInFiliale: function getInFiliale(state) {
+    return state.inFiliale;
+  },
+  getInProva: function getInProva(state) {
+    return state.inProva;
+  },
+  getRichiesti: function getRichiesti(state) {
+    return state.richiesti;
+  }
+};
+var actions = {
+  fetchInFiliale: function fetchInFiliale(_ref, idFiliale) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/presenti');
+
+            case 3:
+              response = _context.sent;
+              commit('fetchInFiliale', response.data.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  fetchInProva: function fetchInProva(_ref2, idFiliale) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inProva');
+
+            case 3:
+              response = _context2.sent;
+              commit('fetchInProva', response.data.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  fetchRichiesti: function fetchRichiesti(_ref3, idFiliale) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/richiesti');
+
+            case 3:
+              response = _context3.sent;
+              commit('fetchRichiesti', response.data.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  }
+};
+var mutations = {
+  fetchInFiliale: function fetchInFiliale(state, payload) {
+    state.inFiliale = payload;
+  },
+  fetchInProva: function fetchInProva(state, payload) {
+    state.inProva = payload;
+  },
+  fetchRichiesti: function fetchRichiesti(state, payload) {
+    state.richiesti = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -83592,7 +83734,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

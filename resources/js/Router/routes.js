@@ -7,6 +7,7 @@ const routes = [
     { path: '/personale', component: () => import('../Pages/personale/Personale'), name: 'personale' },
     { path: '/filiali', component: () => import('../Pages/strutture/Filiali'), name: 'filiali' },
     { path: '/recapiti', component: () => import('../Pages/strutture/Recapiti'), name: 'recapiti' },
+    { path: '/magazzino/:filialeId', component: () => import('../Pages/magazzino/MagazzinoFiliale'), name: 'magazzino' },
 ];
 
 export default routes;
