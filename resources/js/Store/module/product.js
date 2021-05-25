@@ -3,7 +3,8 @@ import help from "../../help";
 const state = () => ({
     inFiliale: [],
     inProva: [],
-    richiesti: []
+    richiesti: [],
+    inArrivo: []
 });
 
 const getters = {
@@ -17,6 +18,10 @@ const getters = {
 
     getRichiesti(state){
         return state.richiesti;
+    },
+
+    getInArrivo(state){
+        return state.inArrivo;
     },
 };
 
@@ -36,6 +41,16 @@ const actions = {
         const response = await axios.get(`${help().linkfiliali}`+'/'+idFiliale+'/richiesti');
         commit('fetchRichiesti', response.data.data);
     },
+
+    async fetchInArrivo({commit}, idFiliale){
+        const response = await axios.get(`${help().linkfiliali}`+'/'+idFiliale+'/inArrivo');
+        commit('fetchInArrivo', response.data.data);
+    },
+
+    async richiediProduct({commit}, payload){
+        const response = await axios.post(`${help().linkrichiestaprodotti}`, payload);
+        commit('richiediProduct', response.data.data);
+    },
 };
 
 const mutations = {
@@ -49,6 +64,18 @@ const mutations = {
 
     fetchRichiesti(state, payload){
         state.richiesti = payload;
+    },
+
+    fetchInArrivo(state, payload){
+        state.inArrivo = payload;
+    },
+
+    richiediProduct(state, payload){
+       // console.log(payload);
+        payload.forEach(ele => {
+            state.richiesti.push(ele);
+        })
+        //state.richiesti.unshift(payload);
     },
 };
 

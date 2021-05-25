@@ -20,4 +20,9 @@ class Listino extends Model
     {
         return $this->belongsTo(Categoria::class);
     }
+
+    public function scopeFromfornitore($query, $idFornitore)
+    {
+        return $query->where('fornitore_id', $idFornitore);
+    }
 }

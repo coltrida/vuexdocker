@@ -11,6 +11,7 @@ import ListinoModule from './module/listino';
 import CategorieModule from './module/categorie';
 import RuoliModule from './module/ruolo';
 import ProductModule from './module/product';
+import ClientsModule from './module/clients';
 
 Vue.use(Vuex);
 
@@ -26,6 +27,7 @@ const store = new Vuex.Store({
         categorie:CategorieModule,
         ruoli:RuoliModule,
         product:ProductModule,
+        clients:ClientsModule,
     }
 });
 

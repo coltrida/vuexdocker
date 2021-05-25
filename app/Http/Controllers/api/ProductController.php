@@ -24,4 +24,14 @@ class ProductController extends Controller
     {
         return ProductResource::collection($productService->richiesti($id));
     }
+
+    public function inArrivo($id, ProductService $productService)
+    {
+        return ProductResource::collection($productService->inArrivo($id));
+    }
+
+    public function richiestaProdotti(Request $request, ProductService $productService)
+    {
+        return ProductResource::collection($productService->richiestaProdotti($request));
+    }
 }

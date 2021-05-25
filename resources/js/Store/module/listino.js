@@ -17,6 +17,11 @@ const actions = {
         commit('fetchListino', response.data.data);
     },
 
+    async fetchListinoFromFornitore({commit}, idFornitore){
+        const response = await axios.get(`${help().linklistino}`+'/'+idFornitore);
+        commit('fetchListinoFromFornitore', response.data);
+    },
+
     async addListino({commit}, payload){
         const response = await axios.post(`${help().linkaddlistino}`, {
             'nome': payload.nome,
@@ -38,6 +43,10 @@ const actions = {
 
 const mutations = {
     fetchListino(state, payload){
+        state.listino = payload;
+    },
+
+    fetchListinoFromFornitore(state, payload){
         state.listino = payload;
     },
 

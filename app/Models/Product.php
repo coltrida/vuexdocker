@@ -54,6 +54,13 @@ class Product extends Model
         });
     }
 
+    public function scopeArrivo($query)
+    {
+        return $query->whereHas('stato', function ($stato){
+            $stato->where('nome', 'DDT');
+        });
+    }
+
     public function fornitore()
     {
         return $this->belongsTo(Fornitore::class);

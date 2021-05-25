@@ -124,78 +124,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
   data: function data() {
     return {
-      product: {},
+      productRichiesto: {},
       headers1: [{
         text: 'Fornitore',
         align: 'start',
@@ -272,6 +206,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Cliente',
         value: 'cliente',
         "class": "indigo white--text"
+      }],
+      headers3: [{
+        text: 'Fornitore',
+        align: 'start',
+        value: 'fornitore',
+        "class": "indigo white--text"
+      }, {
+        text: 'Nome',
+        value: 'nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Categoria',
+        value: 'categoria',
+        "class": "indigo white--text"
+      }, {
+        text: 'Costo',
+        value: 'costo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Prezzo',
+        value: 'prezzolistino',
+        "class": "indigo white--text"
+      }, {
+        text: 'Iva',
+        value: 'iva',
+        "class": "indigo white--text"
+      }, {
+        text: 'GG reso',
+        value: 'giorniTempoDiReso',
+        "class": "indigo white--text"
+      }, {
+        text: 'Matricola',
+        value: 'matricola',
+        "class": "indigo white--text"
       }]
     };
   },
@@ -279,21 +247,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchInFiliale(this.rottaIdFiliale);
     this.fetchInProva(this.rottaIdFiliale);
     this.fetchRichiesti(this.rottaIdFiliale);
+    this.fetchInArrivo(this.rottaIdFiliale);
+    this.fetchFornitori();
   },
   watch: {
     rottaIdFiliale: function rottaIdFiliale() {
       this.fetchInFiliale(this.rottaIdFiliale);
     }
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('product', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('product', {
     fetchInFiliale: 'fetchInFiliale',
     fetchInProva: 'fetchInProva',
-    fetchRichiesti: 'fetchRichiesti'
-  })),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
+    fetchRichiesti: 'fetchRichiesti',
+    fetchInArrivo: 'fetchInArrivo',
+    richiediProduct: 'richiediProduct'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
+    fetchFornitori: 'fetchFornitori'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
+    fetchListinoFromFornitore: 'fetchListinoFromFornitore'
+  })), {}, {
+    caricaProdotti: function caricaProdotti() {
+      if (this.productRichiesto.fornitore_id) {
+        this.fetchListinoFromFornitore(this.productRichiesto.fornitore_id);
+      }
+    },
+    richiedi: function richiedi() {
+      this.productRichiesto.filiale_id = this.rottaIdFiliale;
+      this.productRichiesto.stato_id = 6;
+      this.richiediProduct(this.productRichiesto);
+      this.productRichiesto = {};
+    }
+  }),
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
     getInFiliale: 'getInFiliale',
     getInProva: 'getInProva',
-    getRichiesti: 'getRichiesti'
+    getRichiesti: 'getRichiesti',
+    getInArrivo: 'getInArrivo'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('fornitori', {
+    getFornitori: 'getFornitori'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('listino', {
+    getListino: 'getListino'
   })), {}, {
     rottaIdFiliale: function rottaIdFiliale() {
       return this.$route.params.filialeId;
@@ -399,6 +392,90 @@ var render = function() {
       _c(
         "v-container",
         [
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "3", sm: "3" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      "item-value": "id",
+                      "item-text": "nome",
+                      items: _vm.getFornitori,
+                      label: "fornitore"
+                    },
+                    on: {
+                      change: function($event) {
+                        return _vm.caricaProdotti()
+                      }
+                    },
+                    model: {
+                      value: _vm.productRichiesto.fornitore_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.productRichiesto, "fornitore_id", $$v)
+                      },
+                      expression: "productRichiesto.fornitore_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "3", sm: "3" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      "item-value": "id",
+                      "item-text": "nome",
+                      items: _vm.getListino,
+                      label: "listino"
+                    },
+                    model: {
+                      value: _vm.productRichiesto.listino_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.productRichiesto, "listino_id", $$v)
+                      },
+                      expression: "productRichiesto.listino_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "3", sm: "3" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "quantita" },
+                    model: {
+                      value: _vm.productRichiesto.quantita,
+                      callback: function($$v) {
+                        _vm.$set(_vm.productRichiesto, "quantita", $$v)
+                      },
+                      expression: "productRichiesto.quantita"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "success", dark: "" },
+              on: { click: _vm.richiedi }
+            },
+            [_vm._v("\n            Richiedi\n        ")]
+          ),
+          _vm._v(" "),
           _c("h3", [_vm._v("Presenti")]),
           _vm._v(" "),
           _c("v-data-table", {
@@ -426,7 +503,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                        mdi-delete\n                    "
+                          "\n                    mdi-delete\n                "
                         )
                       ]
                     )
@@ -474,7 +551,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                        mdi-delete\n                    "
+                          "\n                    mdi-delete\n                "
                         )
                       ]
                     )
@@ -482,6 +559,17 @@ var render = function() {
                 }
               }
             ])
+          }),
+          _vm._v(" "),
+          _c("h3", [_vm._v("In Arrivo")]),
+          _vm._v(" "),
+          _c("v-data-table", {
+            staticClass: "elevation-1 mt-3",
+            attrs: {
+              headers: _vm.headers3,
+              items: _vm.getInArrivo,
+              "items-per-page": 10
+            }
           })
         ],
         1

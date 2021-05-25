@@ -14,6 +14,11 @@ class ListinoService
         return Listino::with('categoria', 'fornitore:id,nome')->orderBy('fornitore_id')->orderBy('categoria_id')->get();
     }
 
+    public function listinoFromFornitore($idFornitore)
+    {
+        return Listino::fromfornitore($idFornitore)->orderBy('categoria_id')->get();
+    }
+
     public function inserisci($request)
     {
         $listino = new Listino();

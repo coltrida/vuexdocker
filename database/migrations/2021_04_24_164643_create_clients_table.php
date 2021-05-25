@@ -23,7 +23,7 @@ class CreateClientsTable extends Migration
             $table->string('cap');
             $table->string('provincia');
             $table->string('telefono');
-            $table->string('tipo');
+            $table->bigInteger('tipologia_id');
             $table->string('mail')->nullable();
             $table->char('recall')->nullable();
             $table->date('datarecall')->nullable();

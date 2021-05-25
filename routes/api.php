@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\CategoriaController;
+use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\FilialiController;
 use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\ListinoController;
@@ -45,6 +46,7 @@ Route::post('/addFornitore', [FornitoriController::class, 'aggiungi']);
 Route::get('/listino', [ListinoController::class, 'index']);
 Route::delete('/listino/{id}', [ListinoController::class, 'elimina']);
 Route::post('/addListino', [ListinoController::class, 'aggiungi']);
+Route::get('/listino/{idFornitore}', [ListinoController::class, 'productFromFornitore']);
 
 // ---------------- categoria -------------------------
 Route::get('/categorie', [CategoriaController::class, 'index']);
@@ -56,7 +58,14 @@ Route::get('/ruoli', [RuoloController::class, 'index']);
 Route::delete('/ruolo/{id}', [RuoloController::class, 'elimina']);
 Route::post('/addRuolo', [RuoloController::class, 'aggiungi']);
 
-// ---------------- magazzino -------------------------
+// ---------------- magazzino - prodotti -------------------------
 Route::get('/filiali/{id}/presenti', [ProductController::class, 'presenti']);
 Route::get('/filiali/{id}/inProva', [ProductController::class, 'inProva']);
 Route::get('/filiali/{id}/richiesti', [ProductController::class, 'richiesti']);
+Route::get('/filiali/{id}/inArrivo', [ProductController::class, 'inArrivo']);
+Route::post('/richiestaProdotti', [ProductController::class, 'richiestaProdotti']);
+
+// ---------------- client -------------------------
+Route::get('/clients', [ClientController::class, 'index']);
+Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
+Route::post('/addClient', [ClientController::class, 'aggiungi']);

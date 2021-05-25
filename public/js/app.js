@@ -1964,6 +1964,12 @@ var routes = [{
   },
   name: 'recapiti'
 }, {
+  path: '/clients',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_clients_Clients_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/clients/Clients */ "./resources/js/Pages/clients/Clients.vue"));
+  },
+  name: 'clients'
+}, {
   path: '/magazzino/:filialeId',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_magazzino_MagazzinoFiliale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/magazzino/MagazzinoFiliale */ "./resources/js/Pages/magazzino/MagazzinoFiliale.vue"));
@@ -1985,8 +1991,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -1997,6 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_categorie__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/categorie */ "./resources/js/Store/module/categorie.js");
 /* harmony import */ var _module_ruolo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./module/ruolo */ "./resources/js/Store/module/ruolo.js");
 /* harmony import */ var _module_product__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./module/product */ "./resources/js/Store/module/product.js");
+/* harmony import */ var _module_clients__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./module/clients */ "./resources/js/Store/module/clients.js");
 
 
 
@@ -2009,8 +2016,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_10__.default.use(vuex__WEBPACK_IMPORTED_MODULE_11__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_11__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_11__.default.use(vuex__WEBPACK_IMPORTED_MODULE_12__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_12__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2021,7 +2029,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_11__.default.Store({
     listino: _module_listino__WEBPACK_IMPORTED_MODULE_6__.default,
     categorie: _module_categorie__WEBPACK_IMPORTED_MODULE_7__.default,
     ruoli: _module_ruolo__WEBPACK_IMPORTED_MODULE_8__.default,
-    product: _module_product__WEBPACK_IMPORTED_MODULE_9__.default
+    product: _module_product__WEBPACK_IMPORTED_MODULE_9__.default,
+    clients: _module_clients__WEBPACK_IMPORTED_MODULE_10__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -2142,6 +2151,132 @@ var mutations = {
   },
   eliminaCategoria: function eliminaCategoria(state, id) {
     state.categorie = state.categorie.filter(function (u) {
+      return u.id !== id;
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/Store/module/clients.js":
+/*!**********************************************!*\
+  !*** ./resources/js/Store/module/clients.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    clients: []
+  };
+};
+
+var getters = {
+  getClients: function getClients(state) {
+    return state.clients;
+  }
+};
+var actions = {
+  fetchClients: function fetchClients(_ref) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients));
+
+            case 3:
+              response = _context.sent;
+              commit('fetchClients', response.data.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  addClient: function addClient(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddclient), payload);
+
+            case 3:
+              response = _context2.sent;
+              commit('addClient', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  eliminaClient: function eliminaClient(_ref3, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients) + '/' + id);
+
+            case 3:
+              commit('eliminaClient', payload);
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  }
+};
+var mutations = {
+  fetchClients: function fetchClients(state, payload) {
+    state.clients = payload;
+  },
+  addClient: function addClient(state, payload) {
+    state.clients.unshift(payload);
+  },
+  eliminaClient: function eliminaClient(state, id) {
+    state.clients = state.clients.filter(function (u) {
       return u.id !== id;
     });
   }
@@ -2482,7 +2617,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  addListino: function addListino(_ref2, payload) {
+  fetchListinoFromFornitore: function fetchListinoFromFornitore(_ref2, idFornitore) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -2491,6 +2626,29 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistino) + '/' + idFornitore);
+
+            case 3:
+              response = _context2.sent;
+              commit('fetchListinoFromFornitore', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  addListino: function addListino(_ref3, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddlistino), {
                 'nome': payload.nome,
                 'fornitore_id': payload.fornitore_id,
@@ -2502,26 +2660,26 @@ var actions = {
               });
 
             case 3:
-              response = _context2.sent;
+              response = _context3.sent;
               commit('addListino', response.data.data);
 
             case 5:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   },
-  eliminaListino: function eliminaListino(_ref3, id) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+  eliminaListino: function eliminaListino(_ref4, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              commit = _ref3.commit;
-              _context3.next = 3;
+              commit = _ref4.commit;
+              _context4.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistino) + '/' + id);
 
             case 3:
@@ -2529,15 +2687,18 @@ var actions = {
 
             case 4:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   }
 };
 var mutations = {
   fetchListino: function fetchListino(state, payload) {
+    state.listino = payload;
+  },
+  fetchListinoFromFornitore: function fetchListinoFromFornitore(state, payload) {
     state.listino = payload;
   },
   addListino: function addListino(state, payload) {
@@ -2861,7 +3022,8 @@ var state = function state() {
   return {
     inFiliale: [],
     inProva: [],
-    richiesti: []
+    richiesti: [],
+    inArrivo: []
   };
 };
 
@@ -2874,6 +3036,9 @@ var getters = {
   },
   getRichiesti: function getRichiesti(state) {
     return state.richiesti;
+  },
+  getInArrivo: function getInArrivo(state) {
+    return state.inArrivo;
   }
 };
 var actions = {
@@ -2945,6 +3110,52 @@ var actions = {
         }
       }, _callee3);
     }))();
+  },
+  fetchInArrivo: function fetchInArrivo(_ref4, idFiliale) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inArrivo');
+
+            case 3:
+              response = _context4.sent;
+              commit('fetchInArrivo', response.data.data);
+
+            case 5:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  richiediProduct: function richiediProduct(_ref5, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrichiestaprodotti), payload);
+
+            case 3:
+              response = _context5.sent;
+              commit('richiediProduct', response.data.data);
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
   }
 };
 var mutations = {
@@ -2956,6 +3167,15 @@ var mutations = {
   },
   fetchRichiesti: function fetchRichiesti(state, payload) {
     state.richiesti = payload;
+  },
+  fetchInArrivo: function fetchInArrivo(state, payload) {
+    state.inArrivo = payload;
+  },
+  richiediProduct: function richiediProduct(state, payload) {
+    // console.log(payload);
+    payload.forEach(function (ele) {
+      state.richiesti.push(ele);
+    }); //state.richiesti.unshift(payload);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3553,7 +3773,10 @@ var help = function help() {
     linkfiliali: 'http://vuexdocker.local/api/filiali',
     linkaddfiliale: 'http://vuexdocker.local/api/addFiliale',
     linkrecapiti: 'http://vuexdocker.local/api/recapiti',
-    linkaddrecapito: 'http://vuexdocker.local/api/addRecapito'
+    linkaddrecapito: 'http://vuexdocker.local/api/addRecapito',
+    linkrichiestaprodotti: 'http://vuexdocker.local/api/richiestaProdotti',
+    linkclients: 'http://vuexdocker.local/api/clients',
+    linkaddclient: 'http://vuexdocker.local/api/addClient'
   };
 };
 
@@ -83734,7 +83957,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

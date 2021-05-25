@@ -24,4 +24,9 @@ class ListinoController extends Controller
     {
         return $listinoService->rimuovi($id);
     }
+
+    public function productFromFornitore($idFornitore, ListinoService $listinoService)
+    {
+        return $listinoService->listinoFromFornitore($idFornitore);
+    }
 }

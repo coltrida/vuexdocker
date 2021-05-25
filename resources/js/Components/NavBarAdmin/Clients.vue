@@ -12,12 +12,14 @@
                 </v-btn>
             </template>
             <v-list>
-                <v-list-item
-                    v-for="(item, index) in items"
-                    :key="index"
-                >
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item>
+                <div v-for="(item, index) in items"
+                     :key="index">
+                    <router-link :to="{ name: item.link}">
+                        <v-list-item>
+                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                        </v-list-item>
+                    </router-link>
+                </div>
             </v-list>
         </v-menu>
     </div>
@@ -27,8 +29,8 @@
     export default {
         data: () => ({
             items: [
-                { title: 'Inserisci' },
-                { title: 'Lista' },
+                { title: 'Inserisci', link: 'inserisciClient'},
+                { title: 'Lista', link: 'clients' },
             ],
         }),
     }

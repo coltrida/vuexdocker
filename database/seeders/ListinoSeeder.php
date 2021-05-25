@@ -54,7 +54,7 @@ class ListinoSeeder extends Seeder
             [
                 'nome' => 'TV LINK',
                 'fornitore_id' => 2,
-                'categoria_id' => 1,
+                'categoria_id' => 2,
                 'costo' => 200,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 400,

@@ -27,6 +27,9 @@ const help = () => {
         linkaddfiliale: 'http://vuexdocker.local/api/addFiliale',
         linkrecapiti: 'http://vuexdocker.local/api/recapiti',
         linkaddrecapito: 'http://vuexdocker.local/api/addRecapito',
+        linkrichiestaprodotti: 'http://vuexdocker.local/api/richiestaProdotti',
+        linkclients: 'http://vuexdocker.local/api/clients',
+        linkaddclient: 'http://vuexdocker.local/api/addClient',
 
     };
 };
