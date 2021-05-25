@@ -122,7 +122,7 @@ var render = function() {
     [
       _c("v-col", { staticClass: "text-center", attrs: { cols: "12" } }, [
         _vm._v("\n        " + _vm._s(new Date().getFullYear()) + " — "),
-        _c("strong", [_vm._v("Vuetify")])
+        _c("strong", [_vm._v("ColtriCat")])
       ])
     ],
     1

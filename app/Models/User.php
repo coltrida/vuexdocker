@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->belongsTo(Ruolo::class);
     }
 
+    public function recapito()
+    {
+        return $this->hasMany(Recapito::class);
+    }
+
     public function scopeAudio($query)
     {
         return $query->whereHas('ruolo', function ($ruolo){

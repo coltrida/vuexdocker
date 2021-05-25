@@ -1918,39 +1918,51 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   path: '/',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_Pages_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Home */ "./resources/js/Pages/Home.vue"));
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_home_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/home/Home */ "./resources/js/Pages/home/Home.vue"));
   },
   name: 'home'
 }, {
   path: '/login',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_Pages_Login_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Login */ "./resources/js/Pages/Login.vue"));
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_login_Login_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/login/Login */ "./resources/js/Pages/login/Login.vue"));
   },
   name: 'login'
 }, {
   path: '/marketing',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_Pages_Marketing_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Marketing */ "./resources/js/Pages/Marketing.vue"));
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_marketing_Marketing_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/marketing/Marketing */ "./resources/js/Pages/marketing/Marketing.vue"));
   },
   name: 'marketing'
 }, {
   path: '/listino',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_Pages_Listino_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Listino */ "./resources/js/Pages/Listino.vue"));
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_fornitori_Listino_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/fornitori/Listino */ "./resources/js/Pages/fornitori/Listino.vue"));
   },
   name: 'listino'
 }, {
   path: '/fornitori',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_Pages_Fornitori_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Fornitori */ "./resources/js/Pages/Fornitori.vue"));
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_fornitori_Fornitori_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/fornitori/Fornitori */ "./resources/js/Pages/fornitori/Fornitori.vue"));
   },
   name: 'fornitori'
 }, {
   path: '/personale',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_Pages_Personale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Personale */ "./resources/js/Pages/Personale.vue"));
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_personale_Personale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/personale/Personale */ "./resources/js/Pages/personale/Personale.vue"));
   },
   name: 'personale'
+}, {
+  path: '/filiali',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_strutture_Filiali_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/strutture/Filiali */ "./resources/js/Pages/strutture/Filiali.vue"));
+  },
+  name: 'filiali'
+}, {
+  path: '/recapiti',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_strutture_Recapiti_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/strutture/Recapiti */ "./resources/js/Pages/strutture/Recapiti.vue"));
+  },
+  name: 'recapiti'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -1967,16 +1979,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
-/* harmony import */ var _module_marketing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/marketing */ "./resources/js/Store/module/marketing.js");
-/* harmony import */ var _module_fornitori__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/fornitori */ "./resources/js/Store/module/fornitori.js");
-/* harmony import */ var _module_listino__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/listino */ "./resources/js/Store/module/listino.js");
-/* harmony import */ var _module_categorie__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/categorie */ "./resources/js/Store/module/categorie.js");
-/* harmony import */ var _module_ruolo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/ruolo */ "./resources/js/Store/module/ruolo.js");
+/* harmony import */ var _module_recapiti__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./module/recapiti */ "./resources/js/Store/module/recapiti.js");
+/* harmony import */ var _module_marketing__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./module/marketing */ "./resources/js/Store/module/marketing.js");
+/* harmony import */ var _module_fornitori__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./module/fornitori */ "./resources/js/Store/module/fornitori.js");
+/* harmony import */ var _module_listino__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./module/listino */ "./resources/js/Store/module/listino.js");
+/* harmony import */ var _module_categorie__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./module/categorie */ "./resources/js/Store/module/categorie.js");
+/* harmony import */ var _module_ruolo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./module/ruolo */ "./resources/js/Store/module/ruolo.js");
 
 
 
@@ -1987,17 +2000,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_8__.default.use(vuex__WEBPACK_IMPORTED_MODULE_9__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_9__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_9__.default.use(vuex__WEBPACK_IMPORTED_MODULE_10__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_10__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
     filiali: _module_filiali__WEBPACK_IMPORTED_MODULE_2__.default,
-    marketing: _module_marketing__WEBPACK_IMPORTED_MODULE_3__.default,
-    fornitori: _module_fornitori__WEBPACK_IMPORTED_MODULE_4__.default,
-    listino: _module_listino__WEBPACK_IMPORTED_MODULE_5__.default,
-    categorie: _module_categorie__WEBPACK_IMPORTED_MODULE_6__.default,
-    ruoli: _module_ruolo__WEBPACK_IMPORTED_MODULE_7__.default
+    recapiti: _module_recapiti__WEBPACK_IMPORTED_MODULE_3__.default,
+    marketing: _module_marketing__WEBPACK_IMPORTED_MODULE_4__.default,
+    fornitori: _module_fornitori__WEBPACK_IMPORTED_MODULE_5__.default,
+    listino: _module_listino__WEBPACK_IMPORTED_MODULE_6__.default,
+    categorie: _module_categorie__WEBPACK_IMPORTED_MODULE_7__.default,
+    ruoli: _module_ruolo__WEBPACK_IMPORTED_MODULE_8__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -2188,11 +2203,71 @@ var actions = {
         }
       }, _callee);
     }))();
+  },
+  addFiliale: function addFiliale(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddfiliale), {
+                'nome': payload.nome,
+                'indirizzo': payload.indirizzo,
+                'citta': payload.citta,
+                'telefono': payload.telefono,
+                'cap': payload.cap,
+                'provincia': payload.provincia
+              });
+
+            case 3:
+              response = _context2.sent;
+              commit('addFiliale', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  eliminaFiliale: function eliminaFiliale(_ref3, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + id);
+
+            case 3:
+              commit('eliminaFiliale', id);
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
   }
 };
 var mutations = {
   fetchFiliali: function fetchFiliali(state, payload) {
     state.filiali = payload;
+  },
+  addFiliale: function addFiliale(state, payload) {
+    state.filiali.unshift(payload);
+  },
+  eliminaFiliale: function eliminaFiliale(state, id) {
+    state.filiali = state.filiali.filter(function (u) {
+      return u.id !== id;
+    });
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2751,6 +2826,141 @@ var mutations = {
 
 /***/ }),
 
+/***/ "./resources/js/Store/module/recapiti.js":
+/*!***********************************************!*\
+  !*** ./resources/js/Store/module/recapiti.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    recapiti: []
+  };
+};
+
+var getters = {
+  getRecapiti: function getRecapiti(state) {
+    return state.recapiti;
+  }
+};
+var actions = {
+  fetchRecapiti: function fetchRecapiti(_ref) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecapiti));
+
+            case 3:
+              response = _context.sent;
+              commit('fetchRecapiti', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  addRecapito: function addRecapito(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddrecapito), {
+                'nome': payload.nome,
+                'indirizzo': payload.indirizzo,
+                'citta': payload.citta,
+                'telefono': payload.telefono,
+                'user_id': payload.user_id,
+                'provincia': payload.provincia
+              });
+
+            case 3:
+              response = _context2.sent;
+              commit('addRecapito', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  eliminaRecapito: function eliminaRecapito(_ref3, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecapiti) + '/' + payload.id);
+
+            case 3:
+              commit('eliminaRecapito', payload);
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  }
+};
+var mutations = {
+  fetchRecapiti: function fetchRecapiti(state, payload) {
+    state.recapiti = payload;
+  },
+  addRecapito: function addRecapito(state, payload) {
+    state.recapiti.find(function (u) {
+      return u.id === payload.user_id;
+    }).recapito.unshift(payload);
+  },
+  eliminaRecapito: function eliminaRecapito(state, payload) {
+    state.recapiti.find(function (u) {
+      return u.id === payload.idUser;
+    }).recapito.splice(payload.indice, 1);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
 /***/ "./resources/js/Store/module/ruolo.js":
 /*!********************************************!*\
   !*** ./resources/js/Store/module/ruolo.js ***!
@@ -3184,7 +3394,6 @@ var help = function help() {
             linkaddcanale: 'http://localhost/api/addCanale',*/
     linklogin: 'http://vuexdocker.local/api/login',
     linklogout: 'http://vuexdocker.local/api/logout',
-    linkfiliali: 'http://vuexdocker.local/api/filiali',
     linkcanali: 'http://vuexdocker.local/api/canali',
     linkaddcanale: 'http://vuexdocker.local/api/addCanale',
     linkfornitori: 'http://vuexdocker.local/api/fornitori',
@@ -3198,7 +3407,11 @@ var help = function help() {
     linkaudio: 'http://vuexdocker.local/api/audio',
     linkamm: 'http://vuexdocker.local/api/amm',
     linkuser: 'http://vuexdocker.local/api/user',
-    linkadduser: 'http://vuexdocker.local/api/addUser'
+    linkadduser: 'http://vuexdocker.local/api/addUser',
+    linkfiliali: 'http://vuexdocker.local/api/filiali',
+    linkaddfiliale: 'http://vuexdocker.local/api/addFiliale',
+    linkrecapiti: 'http://vuexdocker.local/api/recapiti',
+    linkaddrecapito: 'http://vuexdocker.local/api/addRecapito'
   };
 };
 
@@ -83379,7 +83592,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_Home_vue":1,"resources_js_Pages_Login_vue":1,"resources_js_Pages_Marketing_vue":1,"resources_js_Pages_Listino_vue":1,"resources_js_Pages_Fornitori_vue":1,"resources_js_Pages_Personale_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

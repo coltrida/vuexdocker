@@ -6,6 +6,7 @@ use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\ListinoController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
+use App\Http\Controllers\api\RecapitiController;
 use App\Http\Controllers\api\RuoloController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,13 @@ Route::post('/addUser', [UserController::class, 'aggiungi']);
 
 // ----------------- filiali -------------------------
 Route::get('/filiali', [FilialiController::class, 'index']);
+Route::delete('/filiali/{id}', [FilialiController::class, 'elimina']);
+Route::post('/addFiliale', [FilialiController::class, 'aggiungi']);
+
+// ----------------- recapiti -------------------------
+Route::get('/recapiti', [RecapitiController::class, 'index']);
+Route::delete('/recapiti/{id}', [RecapitiController::class, 'elimina']);
+Route::post('/addRecapito', [RecapitiController::class, 'aggiungi']);
 
 // ----------------- marketing -----------------------
 Route::get('/canali', [MarketingController::class, 'index']);
@@ -46,3 +54,6 @@ Route::post('/addCategoria', [CategoriaController::class, 'aggiungi']);
 Route::get('/ruoli', [RuoloController::class, 'index']);
 Route::delete('/ruolo/{id}', [RuoloController::class, 'elimina']);
 Route::post('/addRuolo', [RuoloController::class, 'aggiungi']);
+
+// ---------------- magazzino -------------------------
+Route::get('/magazzino/{id}', [RuoloController::class, 'index']);

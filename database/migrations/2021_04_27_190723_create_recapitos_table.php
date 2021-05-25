@@ -20,6 +20,7 @@ class CreateRecapitosTable extends Migration
             $table->string('citta')->nullable();
             $table->string('provincia')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->timestamps();
         });
     }
 

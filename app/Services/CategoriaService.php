@@ -5,6 +5,8 @@ namespace App\Services;
 
 
 use App\Models\Categoria;
+use Illuminate\Support\Str;
+use function trim;
 
 class CategoriaService
 {
@@ -16,7 +18,7 @@ class CategoriaService
     public function aggiungi($request)
     {
         $new = new Categoria();
-        $new->nome = $request->nome;
+        $new->nome = trim(Str::upper($request->nome));
         $new->save();
         return $new;
     }

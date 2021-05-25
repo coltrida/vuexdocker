@@ -4,6 +4,8 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Str;
+use function trim;
 
 class UserService
 {
@@ -20,8 +22,8 @@ class UserService
     public function aggiungi($request)
     {
         $new = new User();
-        $new->name = $request->name;
-        $new->email = $request->email;
+        $new->name = trim(Str::upper($request->name));
+        $new->email = trim(Str::upper($request->email));
         $new->ruolo_id = $request->ruolo_id;
         $new->save();
         return $new;

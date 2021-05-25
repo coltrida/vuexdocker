@@ -5,6 +5,8 @@ namespace App\Services;
 
 
 use App\Models\Marketing;
+use Illuminate\Support\Str;
+use function trim;
 
 class MarketingService
 {
@@ -16,7 +18,7 @@ class MarketingService
     public function addCanale($request)
     {
         $newCanale = new Marketing();
-        $newCanale->name = $request->newCanale;
+        $newCanale->name = trim(Str::upper($request->newCanale));
         $newCanale->save();
         return $newCanale;
     }

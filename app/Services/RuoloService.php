@@ -5,6 +5,8 @@ namespace App\Services;
 
 
 use App\Models\Ruolo;
+use Illuminate\Support\Str;
+use function trim;
 
 class RuoloService
 {
@@ -16,7 +18,7 @@ class RuoloService
     public function aggiungi($request)
     {
         $new = new Ruolo();
-        $new->nome = $request->nome;
+        $new->nome = trim(Str::upper($request->nome));
         $new->save();
         return $new;
     }

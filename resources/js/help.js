@@ -9,7 +9,6 @@ const help = () => {
 
         linklogin: 'http://vuexdocker.local/api/login',
         linklogout: 'http://vuexdocker.local/api/logout',
-        linkfiliali: 'http://vuexdocker.local/api/filiali',
         linkcanali: 'http://vuexdocker.local/api/canali',
         linkaddcanale: 'http://vuexdocker.local/api/addCanale',
         linkfornitori: 'http://vuexdocker.local/api/fornitori',
@@ -24,6 +23,10 @@ const help = () => {
         linkamm: 'http://vuexdocker.local/api/amm',
         linkuser: 'http://vuexdocker.local/api/user',
         linkadduser: 'http://vuexdocker.local/api/addUser',
+        linkfiliali: 'http://vuexdocker.local/api/filiali',
+        linkaddfiliale: 'http://vuexdocker.local/api/addFiliale',
+        linkrecapiti: 'http://vuexdocker.local/api/recapiti',
+        linkaddrecapito: 'http://vuexdocker.local/api/addRecapito',
 
     };
 };
