@@ -201,8 +201,8 @@
                 </v-col>
             </v-row>
 
-            <v-btn @click="aggiungi" color="success" dark>
-                Inserisci
+            <v-btn @click="aggiungiModifica" color="success" dark>
+                {{nomeBtn}}
             </v-btn>
 
         </v-container>
@@ -229,11 +229,28 @@
             this.fetchAudio();
             this.fetchFiliali();
             this.fetchRecapiti();
+            if (this.rottaIdClient){
+                this.fetchClient(this.rottaIdClient).then(() => {
+                    this.newClient = this.getClient;
+                });
+            }
+        },
+
+        watch:{
+            rottaIdClient(){
+                if (this.rottaIdClient){
+                    this.fetchClient(this.rottaIdClient).then(() => {
+                        this.newClient = this.getClient;
+                    });
+                }
+            }
         },
 
         methods:{
             ...mapActions('clients', {
                 addClient:'addClient',
+                modificaClient:'modificaClient',
+                fetchClient:'fetchClient',
             }),
 
             ...mapActions('tipologie', {
@@ -256,17 +273,29 @@
                 fetchRecapiti:'fetchRecapiti',
             }),
 
-            aggiungi(){
-                this.addClient(this.newClient).then(() => {
-                    this.newClient = {};
-                    this.$router.push({ name: 'clients' });
-                });
+            aggiungiModifica(){
+                if (this.getClient) {
+                    this.newClient.id = this.getClient.id;
+                    this.modificaClient(this.newClient).then(() => {
+                        this.newClient = {};
+                        this.$router.push({ name: 'clients' });
+                    });
+                } else {
+                    this.addClient(this.newClient).then(() => {
+                        this.newClient = {};
+                        this.$router.push({ name: 'clients' });
+                    });
+                }
 
             },
 
         },
 
         computed:{
+            ...mapGetters('clients', {
+                getClient:'getClient',
+            }),
+
             ...mapGetters('tipologie', {
                 getTipologie:'getTipologie',
             }),
@@ -286,6 +315,14 @@
             ...mapGetters('recapiti', {
                 getRecapiti:'getRecapiti',
             }),
+
+            rottaIdClient(){
+                return this.$route.params.clientId ? this.$route.params.clientId : null;
+            },
+
+            nomeBtn(){
+                return this.$route.params.clientId ? 'Modifica' : 'Inserisci';
+            }
         },
     }
 </script>

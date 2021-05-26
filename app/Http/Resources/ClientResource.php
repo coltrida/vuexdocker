@@ -26,9 +26,16 @@ class ClientResource extends JsonResource
             'provincia' => $this->provincia,
             'telefono' => $this->telefono,
             'tipologia' => $this->tipologia->nome,
-            'marketing' => $this->marketing->nome,
+            'tipologia_id' => $this->tipologia_id,
+            'marketing' => $this->marketing->name,
+            'marketing_id' => $this->marketing_id,
             'user' => $this->user->name,
+            'user_id' => $this->user_id,
             'filiale' => $this->filiale->nome,
+            'filiale_id' => $this->filiale_id,
+            'recapito' => isset($this->recapito->nome) ? $this->recapito->nome : null,
+            'recapito_id' => $this->recapito_id,
+            'datanascita' => $this->datanascita,
         ];
     }
 }

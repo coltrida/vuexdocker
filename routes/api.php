@@ -69,8 +69,10 @@ Route::post('/richiestaProdotti', [ProductController::class, 'richiestaProdotti'
 
 // ---------------- client -------------------------
 Route::get('/clients', [ClientController::class, 'index']);
+Route::get('/clients/{id}', [ClientController::class, 'cliente']);
 Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
 Route::post('/addClient', [ClientController::class, 'aggiungi']);
+Route::post('/modificaClient', [ClientController::class, 'modifica']);
 
 // ----------------- tipologia -------------------------
 Route::get('/tipologie', [TipologiaController::class, 'index']);

@@ -240,14 +240,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.fetchTipologie();
     this.fetchCanali();
     this.fetchAudio();
     this.fetchFiliali();
     this.fetchRecapiti();
+
+    if (this.rottaIdClient) {
+      this.fetchClient(this.rottaIdClient).then(function () {
+        _this.newClient = _this.getClient;
+      });
+    }
+  },
+  watch: {
+    rottaIdClient: function rottaIdClient() {
+      var _this2 = this;
+
+      if (this.rottaIdClient) {
+        this.fetchClient(this.rottaIdClient).then(function () {
+          _this2.newClient = _this2.getClient;
+        });
+      }
+    }
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
-    addClient: 'addClient'
+    addClient: 'addClient',
+    modificaClient: 'modificaClient',
+    fetchClient: 'fetchClient'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('tipologie', {
     fetchTipologie: 'fetchTipologie'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('marketing', {
@@ -259,19 +280,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
     fetchRecapiti: 'fetchRecapiti'
   })), {}, {
-    aggiungi: function aggiungi() {
-      var _this = this;
+    aggiungiModifica: function aggiungiModifica() {
+      var _this3 = this;
 
-      this.addClient(this.newClient).then(function () {
-        _this.newClient = {};
+      if (this.getClient) {
+        this.newClient.id = this.getClient.id;
+        this.modificaClient(this.newClient).then(function () {
+          _this3.newClient = {};
 
-        _this.$router.push({
-          name: 'clients'
+          _this3.$router.push({
+            name: 'clients'
+          });
         });
-      });
+      } else {
+        this.addClient(this.newClient).then(function () {
+          _this3.newClient = {};
+
+          _this3.$router.push({
+            name: 'clients'
+          });
+        });
+      }
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('tipologie', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+    getClient: 'getClient'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('tipologie', {
     getTipologie: 'getTipologie'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('marketing', {
     getCanali: 'getCanali'
@@ -281,7 +315,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getFiliali: 'getFiliali'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
     getRecapiti: 'getRecapiti'
-  }))
+  })), {}, {
+    rottaIdClient: function rottaIdClient() {
+      return this.$route.params.clientId ? this.$route.params.clientId : null;
+    },
+    nomeBtn: function nomeBtn() {
+      return this.$route.params.clientId ? 'Modifica' : 'Inserisci';
+    }
+  })
 });
 
 /***/ }),
@@ -796,9 +837,9 @@ var render = function() {
             "v-btn",
             {
               attrs: { color: "success", dark: "" },
-              on: { click: _vm.aggiungi }
+              on: { click: _vm.aggiungiModifica }
             },
-            [_vm._v("\n            Inserisci\n        ")]
+            [_vm._v("\n            " + _vm._s(_vm.nomeBtn) + "\n        ")]
           )
         ],
         1

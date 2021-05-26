@@ -114,6 +114,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Clients",
@@ -375,7 +376,7 @@ var render = function() {
                                     ),
                                     [
                                       _vm._v(
-                                        "\n                    mdi-delete\n                "
+                                        "\n                            mdi-delete\n                        "
                                       )
                                     ]
                                   )
@@ -403,28 +404,40 @@ var render = function() {
                                 var attrs = ref.attrs
                                 return [
                                   _c(
-                                    "v-icon",
-                                    _vm._g(
-                                      _vm._b(
-                                        {
-                                          attrs: { color: "blue", small: "" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.elimina(item.id)
-                                            }
-                                          }
-                                        },
-                                        "v-icon",
-                                        attrs,
-                                        false
-                                      ),
-                                      on
-                                    ),
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to: {
+                                          name: "clientsInserisci",
+                                          params: { clientId: item.id }
+                                        }
+                                      }
+                                    },
                                     [
-                                      _vm._v(
-                                        "\n                    mdi-pencil\n                "
+                                      _c(
+                                        "v-icon",
+                                        _vm._g(
+                                          _vm._b(
+                                            {
+                                              attrs: {
+                                                color: "blue",
+                                                small: ""
+                                              }
+                                            },
+                                            "v-icon",
+                                            attrs,
+                                            false
+                                          ),
+                                          on
+                                        ),
+                                        [
+                                          _vm._v(
+                                            "\n                                mdi-pencil\n                            "
+                                          )
+                                        ]
                                       )
-                                    ]
+                                    ],
+                                    1
                                   )
                                 ]
                               }
@@ -469,7 +482,7 @@ var render = function() {
                                     ),
                                     [
                                       _vm._v(
-                                        "\n                    mdi-headphones-settings\n                "
+                                        "\n                            mdi-headphones-settings\n                        "
                                       )
                                     ]
                                   )
@@ -516,7 +529,7 @@ var render = function() {
                                     ),
                                     [
                                       _vm._v(
-                                        "\n                    mdi-ear-hearing\n                "
+                                        "\n                            mdi-ear-hearing\n                        "
                                       )
                                     ]
                                   )

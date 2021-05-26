@@ -31,6 +31,7 @@ const help = () => {
         linkrichiestaprodotti: 'http://vuexdocker.local/api/richiestaProdotti',
         linkclients: 'http://vuexdocker.local/api/clients',
         linkaddclient: 'http://vuexdocker.local/api/addClient',
+        linkmodificaclient: 'http://vuexdocker.local/api/modificaClient',
         linktipologie: 'http://vuexdocker.local/api/tipologie',
         linkaddtipologia: 'http://vuexdocker.local/api/addTipologia',
 

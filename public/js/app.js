@@ -1970,7 +1970,7 @@ var routes = [{
   },
   name: 'clients'
 }, {
-  path: '/clients/inserisci',
+  path: '/clients/inserisci/:clientId?',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_clients_Inserisci_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/clients/Inserisci */ "./resources/js/Pages/clients/Inserisci.vue"));
   },
@@ -2198,13 +2198,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = function state() {
   return {
-    clients: []
+    clients: [],
+    client: {}
   };
 };
 
 var getters = {
   getClients: function getClients(state) {
     return state.clients;
+  },
+  getClient: function getClient(state) {
+    return state.client;
   }
 };
 var actions = {
@@ -2231,7 +2235,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  addClient: function addClient(_ref2, payload) {
+  fetchClient: function fetchClient(_ref2, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -2240,11 +2244,11 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddclient), payload);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients) + '/' + id);
 
             case 3:
               response = _context2.sent;
-              commit('addClient', response.data);
+              commit('fetchClient', response.data.data);
 
             case 5:
             case "end":
@@ -2254,15 +2258,61 @@ var actions = {
       }, _callee2);
     }))();
   },
-  eliminaClient: function eliminaClient(_ref3, id) {
+  addClient: function addClient(_ref3, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddclient), payload);
+
+            case 3:
+              response = _context3.sent;
+              commit('addClient', response.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  modificaClient: function modificaClient(_ref4, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificaclient), payload);
+
+            case 3:
+              response = _context4.sent;
+              commit('modificaClient', response.data);
+
+            case 5:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  eliminaClient: function eliminaClient(_ref5, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients) + '/' + id);
 
             case 3:
@@ -2270,10 +2320,10 @@ var actions = {
 
             case 4:
             case "end":
-              return _context3.stop();
+              return _context5.stop();
           }
         }
-      }, _callee3);
+      }, _callee5);
     }))();
   }
 };
@@ -2281,7 +2331,16 @@ var mutations = {
   fetchClients: function fetchClients(state, payload) {
     state.clients = payload;
   },
+  fetchClient: function fetchClient(state, payload) {
+    state.client = payload;
+  },
   addClient: function addClient(state, payload) {
+    state.clients.unshift(payload);
+  },
+  modificaClient: function modificaClient(state, payload) {
+    state.clients = state.clients.filter(function (u) {
+      return u.id !== payload.id;
+    });
     state.clients.unshift(payload);
   },
   eliminaClient: function eliminaClient(state, id) {
@@ -3936,6 +3995,7 @@ var help = function help() {
     linkrichiestaprodotti: 'http://vuexdocker.local/api/richiestaProdotti',
     linkclients: 'http://vuexdocker.local/api/clients',
     linkaddclient: 'http://vuexdocker.local/api/addClient',
+    linkmodificaclient: 'http://vuexdocker.local/api/modificaClient',
     linktipologie: 'http://vuexdocker.local/api/tipologie',
     linkaddtipologia: 'http://vuexdocker.local/api/addTipologia'
   };

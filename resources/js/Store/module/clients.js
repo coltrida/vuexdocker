@@ -1,12 +1,17 @@
 import help from "../../help";
 
 const state = () => ({
-    clients: []
+    clients: [],
+    client: {}
 });
 
 const getters = {
     getClients(state){
         return state.clients;
+    },
+
+    getClient(state){
+        return state.client;
     },
 
 };
@@ -17,9 +22,19 @@ const actions = {
         commit('fetchClients', response.data.data);
     },
 
+    async fetchClient({commit}, id){
+        const response = await axios.get(`${help().linkclients}`+'/'+id);
+        commit('fetchClient', response.data.data);
+    },
+
     async addClient({commit}, payload){
         const response = await axios.post(`${help().linkaddclient}`, payload);
         commit('addClient', response.data);
+    },
+
+    async modificaClient({commit}, payload){
+        const response = await axios.post(`${help().linkmodificaclient}`, payload);
+        commit('modificaClient', response.data);
     },
 
     async eliminaClient({commit}, id){
@@ -33,7 +48,16 @@ const mutations = {
         state.clients = payload;
     },
 
+    fetchClient(state, payload){
+        state.client = payload;
+    },
+
     addClient(state, payload){
+        state.clients.unshift(payload);
+    },
+
+    modificaClient(state, payload){
+        state.clients = state.clients.filter(u => u.id !== payload.id);
         state.clients.unshift(payload);
     },
 
