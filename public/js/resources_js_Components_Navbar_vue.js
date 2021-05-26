@@ -146,17 +146,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       items: [{
-        title: 'Associa Filiale Personale'
+        title: 'Associa Filiale Personale',
+        link: 'associaPersonale'
       }, {
-        title: 'Assegna Budget'
+        title: 'Assegna Budget',
+        link: 'assegnaBudget'
       }, {
-        title: 'Tempi Recall'
+        title: 'Tempi Recall',
+        link: 'tempiRecall'
       }, {
-        title: 'Invio sms'
+        title: 'Invio sms',
+        link: 'invioSms'
       }]
     };
   }
@@ -1484,13 +1491,26 @@ var render = function() {
             "v-list",
             _vm._l(_vm.items, function(item, index) {
               return _c(
-                "v-list-item",
+                "div",
                 { key: index },
-                [_c("v-list-item-title", [_vm._v(_vm._s(item.title))])],
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: item.link } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v(_vm._s(item.title))])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
                 1
               )
             }),
-            1
+            0
           )
         ],
         1

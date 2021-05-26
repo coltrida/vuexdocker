@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Filiale;
+use App\Models\FilialeUser;
 use Illuminate\Support\Str;
 
 class FilialeService
@@ -30,5 +31,35 @@ class FilialeService
     public function elimina($id)
     {
         return Filiale::find($id)->delete();
+    }
+
+    public function associazioni()
+    {
+        return Filiale::with('users:id,name')->orderBy('nome')->get();
+    }
+
+    public function aggiungiAssociazione($request)
+    {
+        foreach($request->Audio as $audio){
+            $associazione = new FilialeUser();
+            $associazione->user_id = $audio['id'];
+            $associazione->filiale_id = $request->idFiliale;
+            $associazione->save();
+        }
+
+        foreach($request->Amm as $amm){
+            $associazione = new FilialeUser();
+            $associazione->user_id = $amm['id'];
+            $associazione->filiale_id = $request->idFiliale;
+            $associazione->save();
+        }
+
+        return Filiale::with('users:id,name')->orderBy('nome')->get();
+    }
+
+    public function eliminaAssociazione($id)
+    {
+        FilialeUser::find($id)->delete();
+        return Filiale::with('users:id,name')->orderBy('nome')->get();
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\api\CategoriaController;
 use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\FilialiController;
 use App\Http\Controllers\api\FornitoriController;
+use App\Http\Controllers\api\GestioneController;
 use App\Http\Controllers\api\ListinoController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
@@ -78,3 +79,8 @@ Route::post('/modificaClient', [ClientController::class, 'modifica']);
 Route::get('/tipologie', [TipologiaController::class, 'index']);
 Route::delete('/tipologie/{id}', [TipologiaController::class, 'elimina']);
 Route::post('/addTipologia', [TipologiaController::class, 'aggiungi']);
+
+// ----------------- gestione -------------------------
+Route::get('/associazioniPersonale', [GestioneController::class, 'associazioniPersonale']);
+Route::post('/addAssocia', [GestioneController::class, 'aggiungiAssociazione']);
+Route::get('/eliminaAssocia/{id}', [GestioneController::class, 'eliminaAssociazione']);

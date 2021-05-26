@@ -10,6 +10,7 @@ const routes = [
     { path: '/clients', component: () => import('../Pages/clients/Clients'), name: 'clients' },
     { path: '/clients/inserisci/:clientId?', component: () => import('../Pages/clients/Inserisci'), name: 'clientsInserisci' },
     { path: '/magazzino/:filialeId', component: () => import('../Pages/magazzino/MagazzinoFiliale'), name: 'magazzino' },
+    { path: '/associaPersonale', component: () => import('../Pages/gestione/AssociaPersonale'), name: 'associaPersonale' },
 ];
 
 export default routes;

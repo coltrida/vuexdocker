@@ -34,7 +34,9 @@ const help = () => {
         linkmodificaclient: 'http://vuexdocker.local/api/modificaClient',
         linktipologie: 'http://vuexdocker.local/api/tipologie',
         linkaddtipologia: 'http://vuexdocker.local/api/addTipologia',
-
+        linkassociazioniPersonale: 'http://vuexdocker.local/api/associazioniPersonale',
+        linkaggiungiAssociazione: 'http://vuexdocker.local/api/addAssocia',
+        linkeliminaAssociazione: 'http://vuexdocker.local/api/eliminaAssocia',
     };
 };
 export default help;

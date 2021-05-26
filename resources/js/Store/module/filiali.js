@@ -1,12 +1,17 @@
 import help from "../../help";
 
 const state = () => ({
-    filiali: []
+    filiali: [],
+    associazioni: []
 });
 
 const getters = {
     getFiliali(state){
         return state.filiali;
+    },
+
+    getAssociazioni(state){
+        return state.associazioni;
     },
 
 };
@@ -15,6 +20,21 @@ const actions = {
     async fetchFiliali({commit}){
         const response = await axios.get(`${help().linkfiliali}`);
         commit('fetchFiliali', response.data);
+    },
+
+    async fetchAssociazioni({commit}){
+        const response = await axios.get(`${help().linkassociazioniPersonale}`);
+        commit('fetchAssociazioni', response.data);
+    },
+
+    async fetchAssocia({commit}, payload){
+        const response = await axios.post(`${help().linkaggiungiAssociazione}`, payload);
+        commit('fetchAssocia', response.data);
+    },
+
+    async fetchDissocia({commit}, id){
+        const response = await axios.get(`${help().linkeliminaAssociazione}`+'/'+id);
+        commit('fetchDissocia', response.data);
     },
 
     async addFiliale({commit}, payload){
@@ -36,6 +56,18 @@ const actions = {
 };
 
 const mutations = {
+    fetchAssociazioni(state, payload){
+        state.associazioni = payload;
+    },
+
+    fetchAssocia(state, payload){
+        state.associazioni = payload;
+    },
+
+    fetchDissocia(state, payload){
+        state.associazioni = payload;
+    },
+
     fetchFiliali(state, payload){
         state.filiali = payload;
     },
