@@ -29,7 +29,7 @@
     export default {
         data: () => ({
             items: [
-                { title: 'Inserisci', link: 'inserisciClient'},
+                { title: 'Inserisci', link: 'clientsInserisci'},
                 { title: 'Lista', link: 'clients' },
             ],
         }),

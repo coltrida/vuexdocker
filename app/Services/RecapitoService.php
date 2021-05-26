@@ -13,6 +13,11 @@ class RecapitoService
 {
     public function lista()
     {
+        return Recapito::orderBy('nome')->get();
+    }
+
+    public function listaPerAudio()
+    {
         return User::audio()->with(['recapito' => function($recapito){
             $recapito->orderBy('provincia');
         }])->orderBy('name')->get();

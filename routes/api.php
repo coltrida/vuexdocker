@@ -10,6 +10,7 @@ use App\Http\Controllers\api\MarketingController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\RecapitiController;
 use App\Http\Controllers\api\RuoloController;
+use App\Http\Controllers\api\TipologiaController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::post('/addFiliale', [FilialiController::class, 'aggiungi']);
 
 // ----------------- recapiti -------------------------
 Route::get('/recapiti', [RecapitiController::class, 'index']);
+Route::get('/recapitiPerAudio', [RecapitiController::class, 'listaPerAudio']);
 Route::delete('/recapiti/{id}', [RecapitiController::class, 'elimina']);
 Route::post('/addRecapito', [RecapitiController::class, 'aggiungi']);
 
@@ -69,3 +71,8 @@ Route::post('/richiestaProdotti', [ProductController::class, 'richiestaProdotti'
 Route::get('/clients', [ClientController::class, 'index']);
 Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
 Route::post('/addClient', [ClientController::class, 'aggiungi']);
+
+// ----------------- tipologia -------------------------
+Route::get('/tipologie', [TipologiaController::class, 'index']);
+Route::delete('/tipologie/{id}', [TipologiaController::class, 'elimina']);
+Route::post('/addTipologia', [TipologiaController::class, 'aggiungi']);

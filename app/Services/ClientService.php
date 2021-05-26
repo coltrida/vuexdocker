@@ -15,7 +15,7 @@ class ClientService
     public function lista()
     {
         return Client::with('tipologia:id,nome',
-            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome')->orderBy('nome')->get();
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome')->orderBy('cognome')->get();
     }
 
     public function aggiungi($request)

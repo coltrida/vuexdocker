@@ -26,10 +26,13 @@ const help = () => {
         linkfiliali: 'http://vuexdocker.local/api/filiali',
         linkaddfiliale: 'http://vuexdocker.local/api/addFiliale',
         linkrecapiti: 'http://vuexdocker.local/api/recapiti',
+        linkrecapitiperaudio: 'http://vuexdocker.local/api/recapitiPerAudio',
         linkaddrecapito: 'http://vuexdocker.local/api/addRecapito',
         linkrichiestaprodotti: 'http://vuexdocker.local/api/richiestaProdotti',
         linkclients: 'http://vuexdocker.local/api/clients',
         linkaddclient: 'http://vuexdocker.local/api/addClient',
+        linktipologie: 'http://vuexdocker.local/api/tipologie',
+        linkaddtipologia: 'http://vuexdocker.local/api/addTipologia',
 
     };
 };

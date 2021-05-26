@@ -12,6 +12,7 @@ import CategorieModule from './module/categorie';
 import RuoliModule from './module/ruolo';
 import ProductModule from './module/product';
 import ClientsModule from './module/clients';
+import TipologieModule from './module/tipologie';
 
 Vue.use(Vuex);
 
@@ -28,6 +29,7 @@ const store = new Vuex.Store({
         ruoli:RuoliModule,
         product:ProductModule,
         clients:ClientsModule,
+        tipologie:TipologieModule,
     }
 });
 

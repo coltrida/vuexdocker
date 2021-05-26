@@ -115,13 +115,13 @@
         },
 
         mounted(){
-            this.fetchRecapiti();
+            this.fetchRecapitiPerAudio();
             this.fetchAudio();
         },
 
         methods:{
             ...mapActions('recapiti', {
-                fetchRecapiti:'fetchRecapiti',
+                fetchRecapitiPerAudio:'fetchRecapitiPerAudio',
                 addRecapito:'addRecapito',
                 eliminaRecapito:'eliminaRecapito',
             }),

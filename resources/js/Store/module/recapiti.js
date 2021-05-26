@@ -17,6 +17,11 @@ const actions = {
         commit('fetchRecapiti', response.data);
     },
 
+    async fetchRecapitiPerAudio({commit}){
+        const response = await axios.get(`${help().linkrecapitiperaudio}`);
+        commit('fetchRecapiti', response.data);
+    },
+
     async addRecapito({commit}, payload){
         const response = await axios.post(`${help().linkaddrecapito}`, {
             'nome': payload.nome,

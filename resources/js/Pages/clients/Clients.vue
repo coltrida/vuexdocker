@@ -2,7 +2,11 @@
     <div>
         <div class="flex justify-start align-center mt-2">
             <div><h2>Clienti</h2></div>
-            <div class="ml-4"><v-btn dark color="indigo">Inserisci</v-btn></div>
+            <div class="ml-4">
+                <router-link :to="{ name: 'clientsInserisci'}">
+                    <v-btn dark color="indigo">Inserisci</v-btn>
+                </router-link>
+            </div>
         </div>
 
         <v-container>
@@ -102,8 +106,8 @@
                 listino:{},
                 headers: [
                     { text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text" },
-                    { text: 'Nome', align: 'start', value: 'nome', class: "indigo white--text"},
-                    { text: 'Cognome', value: 'cognome', class: "indigo white--text" },
+                    { text: 'Cognome', align: 'start', value: 'cognome', class: "indigo white--text" },
+                    { text: 'Nome', value: 'nome', class: "indigo white--text"},
                     { text: 'Indirizzo', value: 'indirizzo', class: "indigo white--text" },
                     { text: 'Città', value: 'citta', class: "indigo white--text" },
                     { text: 'cap', value: 'cap', class: "indigo white--text" },

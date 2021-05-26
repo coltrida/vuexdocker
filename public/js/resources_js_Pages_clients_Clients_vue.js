@@ -110,6 +110,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Clients",
@@ -124,13 +128,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         sortable: false,
         "class": "indigo white--text"
       }, {
-        text: 'Nome',
+        text: 'Cognome',
         align: 'start',
-        value: 'nome',
+        value: 'cognome',
         "class": "indigo white--text"
       }, {
-        text: 'Cognome',
-        value: 'cognome',
+        text: 'Nome',
+        value: 'nome',
         "class": "indigo white--text"
       }, {
         text: 'Indirizzo',
@@ -291,9 +295,16 @@ var render = function() {
           "div",
           { staticClass: "ml-4" },
           [
-            _c("v-btn", { attrs: { dark: "", color: "indigo" } }, [
-              _vm._v("Inserisci")
-            ])
+            _c(
+              "router-link",
+              { attrs: { to: { name: "clientsInserisci" } } },
+              [
+                _c("v-btn", { attrs: { dark: "", color: "indigo" } }, [
+                  _vm._v("Inserisci")
+                ])
+              ],
+              1
+            )
           ],
           1
         )

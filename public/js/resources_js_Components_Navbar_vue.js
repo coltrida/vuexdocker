@@ -99,7 +99,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       items: [{
         title: 'Inserisci',
-        link: 'inserisciClient'
+        link: 'clientsInserisci'
       }, {
         title: 'Lista',
         link: 'clients'

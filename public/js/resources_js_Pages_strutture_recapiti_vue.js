@@ -142,11 +142,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchRecapiti();
+    this.fetchRecapitiPerAudio();
     this.fetchAudio();
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
-    fetchRecapiti: 'fetchRecapiti',
+    fetchRecapitiPerAudio: 'fetchRecapitiPerAudio',
     addRecapito: 'addRecapito',
     eliminaRecapito: 'eliminaRecapito'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
