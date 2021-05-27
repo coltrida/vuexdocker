@@ -9,6 +9,12 @@
                 @cancellaMessaggio = "cancellaMessaggio"
             ></messaggio>
 
+            <audiogramma
+                v-if="openAudiogramma"
+                :audiogrammaUser="audiogrammaUser"
+                @chiudiAudiogramma = "chiudiAudiogramma"
+            ></audiogramma>
+
             <div class="ml-4">
                 <router-link :to="{ name: 'clientsInserisci'}">
                     <v-btn dark color="indigo">Inserisci</v-btn>
@@ -69,7 +75,7 @@
                             <v-icon
                                 color="green"
                                 small
-                                @click="elimina(item.id)"
+                                @click="audiogramma(item)"
                                 v-bind="attrs"
                                 v-on="on"
                             >
@@ -84,7 +90,6 @@
                             <v-icon
                                 color="orange"
                                 small
-                                @click="elimina(item.id)"
                                 v-bind="attrs"
                                 v-on="on"
                             >
@@ -105,13 +110,16 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     import Messaggio from "../../Components/Messaggio";
+    import Audiogramma from "../../Components/btnClients/Audiogramma";
 
     export default {
         name: "Clients",
-        components: {Messaggio},
+        components: {Audiogramma, Messaggio},
         data() {
             return {
                 textMessaggio: null,
+                openAudiogramma: false,
+                audiogrammaUser: {},
                 search: '',
                 listino: {},
                 headers: [
@@ -149,6 +157,16 @@
 
             cancellaMessaggio(){
                 this.textMessaggio = '';
+            },
+
+            audiogramma(user){
+                this.openAudiogramma = true;
+                this.audiogrammaUser = user;
+            },
+
+            chiudiAudiogramma(){
+                this.openAudiogramma = false;
+                this.audiogrammaUser = {};
             }
         },
 
@@ -156,7 +174,6 @@
             ...mapGetters('clients', {
                 getClients: 'getClients',
             }),
-
         },
     }
 </script>
