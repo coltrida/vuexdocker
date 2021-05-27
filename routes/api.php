@@ -87,4 +87,5 @@ Route::post('/addTipologia', [TipologiaController::class, 'aggiungi']);
 Route::get('/associazioniPersonale', [GestioneController::class, 'associazioniPersonale']);
 Route::post('/addAssocia', [GestioneController::class, 'aggiungiAssociazione']);
 Route::post('/assegnaBgt', [GestioneController::class, 'assegnaBgt']);
+Route::post('/modificaBgt', [GestioneController::class, 'modificaBgt']);
 Route::get('/eliminaAssocia/{id}', [GestioneController::class, 'eliminaAssociazione']);

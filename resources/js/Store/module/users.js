@@ -78,6 +78,11 @@ const actions = {
         const response = await axios.post(`${help().linkassegnabgt}`, payload);
         commit('assegnaBgt', response.data);
     },
+
+    async modificaBgt({commit}, payload){
+        const response = await axios.post(`${help().linkmodificabgt}`, payload);
+        commit('modificaBgt', response.data);
+    },
 };
 
 const mutations = {
@@ -114,6 +119,11 @@ const mutations = {
     },
 
     assegnaBgt(state, payload){
+        state.audioSenzaBgt = state.audioSenzaBgt.filter(u => u.id !== payload.id);
+        state.audioConBgt.unshift(payload);
+    },
+
+    modificaBgt(state, payload){
         state.audioSenzaBgt = state.audioSenzaBgt.filter(u => u.id !== payload.id);
         state.audioConBgt.unshift(payload);
     },

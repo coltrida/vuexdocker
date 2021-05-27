@@ -41,6 +41,7 @@ const help = () => {
         linkaggiungiAssociazione: 'http://vuexdocker.local/api/addAssocia',
         linkeliminaAssociazione: 'http://vuexdocker.local/api/eliminaAssocia',
         linkassegnabgt: 'http://vuexdocker.local/api/assegnaBgt',
+        linkmodificabgt: 'http://vuexdocker.local/api/modificaBgt',
     };
 };
 export default help;

@@ -124,15 +124,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
   data: function data() {
     return {
       AudioSelected: [],
+      "switch": 0,
       singleSelect: true,
       headers: [{
         text: 'Nome',
@@ -243,22 +241,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudioConBgt: 'fetchAudioConBgt',
     fetchAudioSenzaBgt: 'fetchAudioSenzaBgt',
-    assegnaBgt: 'assegnaBgt'
+    assegnaBgt: 'assegnaBgt',
+    modificaBgt: 'modificaBgt'
   })), {}, {
     assegnaBudget: function assegnaBudget() {
       var _this = this;
 
       this.assegna.idAudio = this.AudioSelected[0].id;
-      this.assegnaBgt(this.assegna).then(function () {
-        _this.assegna = {
-          budgetAnno: 0,
-          stipendio: 0,
-          provvigione: 0,
-          mese: []
-        };
-      });
+
+      if (this["switch"]) {
+        this.modificaBgt(this.assegna).then(function () {
+          _this["switch"] = 0;
+          _this.assegna = {
+            budgetAnno: 0,
+            stipendio: 0,
+            provvigione: 0,
+            mese: []
+          };
+        });
+      } else {
+        this.assegnaBgt(this.assegna).then(function () {
+          _this["switch"] = 0;
+          _this.assegna = {
+            budgetAnno: 0,
+            stipendio: 0,
+            provvigione: 0,
+            mese: []
+          };
+        });
+      }
     },
-    modifica: function modifica(item) {}
+    modifica: function modifica(item, indice) {
+      this["switch"] = 1;
+      this.assegna.idBudget = item.budget.id;
+      this.AudioSelected = [];
+      this.getAudioSenzaBgt.unshift(item);
+      this.getAudioConBgt.splice(indice, 1);
+      this.AudioSelected.unshift(item);
+      this.assegna.budgetAnno = item.budget.budgetAnno;
+      this.assegna.stipendio = item.budget.stipendio;
+      this.assegna.provvigione = item.budget.provvigione;
+      this.assegna.mese[1] = item.budget.gennaio;
+      this.assegna.mese[2] = item.budget.febbraio;
+      this.assegna.mese[3] = item.budget.marzo;
+      this.assegna.mese[4] = item.budget.aprile;
+      this.assegna.mese[5] = item.budget.maggio;
+      this.assegna.mese[6] = item.budget.giugno;
+      this.assegna.mese[7] = item.budget.luglio;
+      this.assegna.mese[8] = item.budget.agosto;
+      this.assegna.mese[9] = item.budget.settembre;
+      this.assegna.mese[10] = item.budget.ottobre;
+      this.assegna.mese[11] = item.budget.novembre;
+      this.assegna.mese[12] = item.budget.dicembre;
+    }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getAudioConBgt: 'getAudioConBgt',
@@ -274,6 +309,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     utile: function utile() {
       return parseFloat(this.assegna.budgetAnno) - parseFloat(this.assegna.stipendio) * 12 - parseFloat(this.assegna.budgetAnno) * parseFloat(this.assegna.provvigione) / 100;
+    },
+    textBtn: function textBtn() {
+      return this["switch"] ? 'modifica' : 'inserisci';
     }
   })
 });
@@ -379,7 +417,7 @@ var render = function() {
           attrs: { color: "success", dark: "" },
           on: { click: _vm.assegnaBudget }
         },
-        [_vm._v("\n        Assegna\n    ")]
+        [_vm._v("\n        " + _vm._s(_vm.textBtn) + "\n    ")]
       ),
       _vm._v(" "),
       _c(
@@ -612,7 +650,14 @@ var render = function() {
                         attrs: { color: "blue", small: "" },
                         on: {
                           click: function($event) {
-                            return _vm.modifica(item)
+                            _vm.modifica(
+                              item,
+                              _vm.getAudioConBgt
+                                .map(function(x) {
+                                  return x.id
+                                })
+                                .indexOf(item.id)
+                            )
                           }
                         }
                       },

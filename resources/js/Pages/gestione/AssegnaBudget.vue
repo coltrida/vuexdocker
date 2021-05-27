@@ -2,7 +2,7 @@
     <div>
         <h2>Assegna Budget</h2>
         <v-btn @click="assegnaBudget" color="success" dark>
-            Assegna
+            {{textBtn}}
         </v-btn>
         <v-container>
             <v-row>
@@ -74,9 +74,6 @@
                         :label="'Bgt '+mese"
                     ></v-text-field>
 
-                    <!--<v-alert type="info" v-if="assegna.mese[mese] && assegna.budget">
-                        {{ ( parseFloat(assegna.budget) * parseFloat(assegna.mese[mese]) ) / 100 }}
-                    </v-alert>-->
                     <v-chip class="ma-2" color="primary" text-color="white"
                             v-if="assegna.mese[mese] && assegna.budget"
                     >
@@ -96,7 +93,7 @@
                     <v-icon
                         color="blue"
                         small
-                        @click="modifica(item)"
+                        @click="modifica(item, getAudioConBgt.map(function(x) {return x.id; }).indexOf(item.id))"
                     >
                         mdi-pencil
                     </v-icon>
@@ -115,6 +112,7 @@
         data(){
             return {
                 AudioSelected: [],
+                switch: 0,
                 singleSelect: true,
                 headers: [
                     { text: 'Nome', align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
@@ -157,22 +155,57 @@
                 fetchAudioConBgt:'fetchAudioConBgt',
                 fetchAudioSenzaBgt:'fetchAudioSenzaBgt',
                 assegnaBgt:'assegnaBgt',
+                modificaBgt:'modificaBgt',
             }),
 
             assegnaBudget(){
                 this.assegna.idAudio = this.AudioSelected[0].id;
-                this.assegnaBgt(this.assegna).then(() => {
-                    this.assegna ={
-                        budgetAnno:0,
-                        stipendio: 0,
-                        provvigione: 0,
-                        mese: []
-                    }
-                });
+                if (this.switch){
+                    this.modificaBgt(this.assegna).then(() => {
+                        this.switch = 0;
+                        this.assegna ={
+                            budgetAnno:0,
+                            stipendio: 0,
+                            provvigione: 0,
+                            mese: []
+                        }
+                    });
+                } else {
+                    this.assegnaBgt(this.assegna).then(() => {
+                        this.switch = 0;
+                        this.assegna ={
+                            budgetAnno:0,
+                            stipendio: 0,
+                            provvigione: 0,
+                            mese: []
+                        }
+                    });
+                }
+
             },
 
-            modifica(item){
-
+            modifica(item, indice){
+                this.switch = 1;
+                this.assegna.idBudget = item.budget.id;
+                this.AudioSelected = [];
+                this.getAudioSenzaBgt.unshift(item);
+                this.getAudioConBgt.splice(indice, 1);
+                this.AudioSelected.unshift(item);
+                this.assegna.budgetAnno = item.budget.budgetAnno;
+                this.assegna.stipendio = item.budget.stipendio;
+                this.assegna.provvigione = item.budget.provvigione;
+                this.assegna.mese[1] = item.budget.gennaio;
+                this.assegna.mese[2] = item.budget.febbraio;
+                this.assegna.mese[3] = item.budget.marzo;
+                this.assegna.mese[4] = item.budget.aprile;
+                this.assegna.mese[5] = item.budget.maggio;
+                this.assegna.mese[6] = item.budget.giugno;
+                this.assegna.mese[7] = item.budget.luglio;
+                this.assegna.mese[8] = item.budget.agosto;
+                this.assegna.mese[9] = item.budget.settembre;
+                this.assegna.mese[10] = item.budget.ottobre;
+                this.assegna.mese[11] = item.budget.novembre;
+                this.assegna.mese[12] = item.budget.dicembre;
             }
         },
 
@@ -194,6 +227,10 @@
                 return parseFloat(this.assegna.budgetAnno) -
                     ( parseFloat(this.assegna.stipendio) * 12 ) -
                     ( ( parseFloat(this.assegna.budgetAnno) * parseFloat(this.assegna.provvigione) ) / 100 );
+            },
+
+            textBtn(){
+                return this.switch ? 'modifica' : 'inserisci';
             }
         }
     }

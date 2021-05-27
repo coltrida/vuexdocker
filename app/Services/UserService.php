@@ -72,4 +72,27 @@ class UserService
         $user->save();
         return User::with('budget')->find($user->id);
     }
+
+    public function modificaBgt($request)
+    {
+        $budget = Budget::find($request->idBudget);
+        $budget->budgetAnno = $request->budgetAnno;
+        $budget->stipendio = $request->stipendio;
+        $budget->provvigione = $request->provvigione;
+        $budget->gennaio =$request->mese[1];
+        $budget->febbraio = $request->mese[2];
+        $budget->marzo = $request->mese[3];
+        $budget->aprile = $request->mese[4];
+        $budget->maggio = $request->mese[5];
+        $budget->giugno = $request->mese[6];
+        $budget->luglio = $request->mese[7];
+        $budget->agosto = $request->mese[8];
+        $budget->settembre = $request->mese[9];
+        $budget->ottobre = $request->mese[10];
+        $budget->novembre = $request->mese[11];
+        $budget->dicembre = $request->mese[12];
+        $budget->save();
+
+        return User::with('budget')->find($request->idAudio);
+    }
 }

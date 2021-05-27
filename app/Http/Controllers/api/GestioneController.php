@@ -28,4 +28,9 @@ class GestioneController extends Controller
     {
         return $userService->assegnaBgt($request);
     }
+
+    public function modificaBgt(Request $request, UserService $userService)
+    {
+        return $userService->modificaBgt($request);
+    }
 }

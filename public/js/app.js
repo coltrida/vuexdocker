@@ -4053,6 +4053,29 @@ var actions = {
         }
       }, _callee9);
     }))();
+  },
+  modificaBgt: function modificaBgt(_ref10, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              commit = _ref10.commit;
+              _context10.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificabgt), payload);
+
+            case 3:
+              response = _context10.sent;
+              commit('modificaBgt', response.data);
+
+            case 5:
+            case "end":
+              return _context10.stop();
+          }
+        }
+      }, _callee10);
+    }))();
   }
 };
 var mutations = {
@@ -4085,6 +4108,12 @@ var mutations = {
     });
   },
   assegnaBgt: function assegnaBgt(state, payload) {
+    state.audioSenzaBgt = state.audioSenzaBgt.filter(function (u) {
+      return u.id !== payload.id;
+    });
+    state.audioConBgt.unshift(payload);
+  },
+  modificaBgt: function modificaBgt(state, payload) {
     state.audioSenzaBgt = state.audioSenzaBgt.filter(function (u) {
       return u.id !== payload.id;
     });
@@ -4220,7 +4249,8 @@ var help = function help() {
     linkassociazioniPersonale: 'http://vuexdocker.local/api/associazioniPersonale',
     linkaggiungiAssociazione: 'http://vuexdocker.local/api/addAssocia',
     linkeliminaAssociazione: 'http://vuexdocker.local/api/eliminaAssocia',
-    linkassegnabgt: 'http://vuexdocker.local/api/assegnaBgt'
+    linkassegnabgt: 'http://vuexdocker.local/api/assegnaBgt',
+    linkmodificabgt: 'http://vuexdocker.local/api/modificaBgt'
   };
 };
 
