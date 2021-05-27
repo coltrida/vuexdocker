@@ -2,6 +2,13 @@
     <div>
         <div class="flex justify-start align-center mt-2">
             <div><h2>Clienti</h2></div>
+
+            <messaggio
+                v-if="textMessaggio"
+                :textMessaggio="textMessaggio"
+                @cancellaMessaggio = "cancellaMessaggio"
+            ></messaggio>
+
             <div class="ml-4">
                 <router-link :to="{ name: 'clientsInserisci'}">
                     <v-btn dark color="indigo">Inserisci</v-btn>
@@ -97,12 +104,14 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import Messaggio from "../../Components/Messaggio";
 
     export default {
         name: "Clients",
-
+        components: {Messaggio},
         data() {
             return {
+                textMessaggio: null,
                 search: '',
                 listino: {},
                 headers: [
@@ -136,6 +145,10 @@
 
             elimina(id) {
                 this.eliminaClient(id)
+            },
+
+            cancellaMessaggio(){
+                this.textMessaggio = '';
             }
         },
 

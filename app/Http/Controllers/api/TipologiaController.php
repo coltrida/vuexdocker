@@ -13,6 +13,11 @@ class TipologiaController extends Controller
         return $tipologiaService->lista();
     }
 
+    public function modifica(Request $request, TipologiaService $tipologiaService)
+    {
+        return $tipologiaService->modifica($request);
+    }
+
     public function aggiungi(Request $request, TipologiaService $tipologiaService)
     {
         return $tipologiaService->aggiungi($request);

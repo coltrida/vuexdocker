@@ -15,6 +15,15 @@ class TipologiaService
         return Tipologia::orderBy('nome')->get();
     }
 
+    public function modifica($request)
+    {
+        $new = Tipologia::find($request->id);
+        $new->nome = trim(Str::upper($request->nome));
+        $new->recall = $request->recall;
+        $new->save();
+        return Tipologia::orderBy('nome')->get();
+    }
+
     public function aggiungi($request)
     {
         $new = new Tipologia();

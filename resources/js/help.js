@@ -20,6 +20,8 @@ const help = () => {
         linkruoli: 'http://vuexdocker.local/api/ruoli',
         linkaddruolo: 'http://vuexdocker.local/api/addRuolo',
         linkaudio: 'http://vuexdocker.local/api/audio',
+        linkaudioconbgt: 'http://vuexdocker.local/api/audioConBgt',
+        linkaudiosenzabgt: 'http://vuexdocker.local/api/audioSenzaBgt',
         linkamm: 'http://vuexdocker.local/api/amm',
         linkuser: 'http://vuexdocker.local/api/user',
         linkadduser: 'http://vuexdocker.local/api/addUser',
@@ -34,9 +36,11 @@ const help = () => {
         linkmodificaclient: 'http://vuexdocker.local/api/modificaClient',
         linktipologie: 'http://vuexdocker.local/api/tipologie',
         linkaddtipologia: 'http://vuexdocker.local/api/addTipologia',
+        linkmodificatipologia: 'http://vuexdocker.local/api/modificaTipologia',
         linkassociazioniPersonale: 'http://vuexdocker.local/api/associazioniPersonale',
         linkaggiungiAssociazione: 'http://vuexdocker.local/api/addAssocia',
         linkeliminaAssociazione: 'http://vuexdocker.local/api/eliminaAssocia',
+        linkassegnabgt: 'http://vuexdocker.local/api/assegnaBgt',
     };
 };
 export default help;

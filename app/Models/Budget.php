@@ -10,6 +10,7 @@ class Budget extends Model
     use HasFactory;
 
     protected $table = 'budgets';
+    protected $guarded = [];
 
     public function user()
     {

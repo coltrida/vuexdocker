@@ -1987,6 +1987,18 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_AssociaPersonale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/AssociaPersonale */ "./resources/js/Pages/gestione/AssociaPersonale.vue"));
   },
   name: 'associaPersonale'
+}, {
+  path: '/tempiRecall',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_TempiRecall_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/TempiRecall */ "./resources/js/Pages/gestione/TempiRecall.vue"));
+  },
+  name: 'tempiRecall'
+}, {
+  path: '/assegnaBudget',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_AssegnaBudget_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/AssegnaBudget */ "./resources/js/Pages/gestione/AssegnaBudget.vue"));
+  },
+  name: 'assegnaBudget'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -3654,13 +3666,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = function state() {
   return {
-    tipologie: []
+    tipologie: [],
+    tipo: {}
   };
 };
 
 var getters = {
   getTipologie: function getTipologie(state) {
     return state.tipologie;
+  },
+  getTipo: function getTipo(state) {
+    return state.tipo;
   }
 };
 var actions = {
@@ -3687,7 +3703,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  addTipologia: function addTipologia(_ref2, payload) {
+  modificaTipologia: function modificaTipologia(_ref2, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -3696,11 +3712,11 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddrecapito), payload);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificatipologia), payload);
 
             case 3:
               response = _context2.sent;
-              commit('addTipologia', response.data);
+              commit('fetchTipologie', response.data);
 
             case 5:
             case "end":
@@ -3710,15 +3726,38 @@ var actions = {
       }, _callee2);
     }))();
   },
-  eliminaTipologia: function eliminaTipologia(_ref3, id) {
+  addTipologia: function addTipologia(_ref3, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddtipologia), payload);
+
+            case 3:
+              response = _context3.sent;
+              commit('addTipologia', response.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  eliminaTipologia: function eliminaTipologia(_ref4, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linktipologie) + '/' + id);
 
             case 3:
@@ -3726,10 +3765,10 @@ var actions = {
 
             case 4:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   }
 };
@@ -3781,6 +3820,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = function state() {
   return {
     audio: [],
+    audioConBgt: [],
+    audioSenzaBgt: [],
     amm: []
   };
 };
@@ -3788,6 +3829,12 @@ var state = function state() {
 var getters = {
   getAudio: function getAudio(state) {
     return state.audio;
+  },
+  getAudioConBgt: function getAudioConBgt(state) {
+    return state.audioConBgt;
+  },
+  getAudioSenzaBgt: function getAudioSenzaBgt(state) {
+    return state.audioSenzaBgt;
   },
   getAmm: function getAmm(state) {
     return state.amm;
@@ -3817,7 +3864,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchAmm: function fetchAmm(_ref2) {
+  fetchAudioConBgt: function fetchAudioConBgt(_ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -3826,11 +3873,11 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkamm));
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudioconbgt));
 
             case 3:
               response = _context2.sent;
-              commit('fetchAmm', response.data);
+              commit('fetchAudioConBgt', response.data);
 
             case 5:
             case "end":
@@ -3840,7 +3887,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  addAudio: function addAudio(_ref3, payload) {
+  fetchAudioSenzaBgt: function fetchAudioSenzaBgt(_ref3) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -3849,15 +3896,11 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkadduser), {
-                'name': payload.name,
-                'email': payload.email,
-                'ruolo_id': payload.ruolo_id
-              });
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudiosenzabgt));
 
             case 3:
               response = _context3.sent;
-              commit('addAudio', response.data);
+              commit('fetchAudioSenzaBgt', response.data);
 
             case 5:
             case "end":
@@ -3867,7 +3910,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  addAmm: function addAmm(_ref4, payload) {
+  fetchAmm: function fetchAmm(_ref4) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -3876,15 +3919,11 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkadduser), {
-                'name': payload.name,
-                'email': payload.email,
-                'ruolo_id': payload.ruolo_id
-              });
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkamm));
 
             case 3:
               response = _context4.sent;
-              commit('addAmm', response.data);
+              commit('fetchAmm', response.data);
 
             case 5:
             case "end":
@@ -3894,21 +3933,26 @@ var actions = {
       }, _callee4);
     }))();
   },
-  eliminaAudio: function eliminaAudio(_ref5, id) {
+  addAudio: function addAudio(_ref5, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuser) + '/' + id);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkadduser), {
+                'name': payload.name,
+                'email': payload.email,
+                'ruolo_id': payload.ruolo_id
+              });
 
             case 3:
-              commit('eliminaAudio', id);
+              response = _context5.sent;
+              commit('addAudio', response.data);
 
-            case 4:
+            case 5:
             case "end":
               return _context5.stop();
           }
@@ -3916,15 +3960,64 @@ var actions = {
       }, _callee5);
     }))();
   },
-  eliminaAmm: function eliminaAmm(_ref6, id) {
+  addAmm: function addAmm(_ref6, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkadduser), {
+                'name': payload.name,
+                'email': payload.email,
+                'ruolo_id': payload.ruolo_id
+              });
+
+            case 3:
+              response = _context6.sent;
+              commit('addAmm', response.data);
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+  eliminaAudio: function eliminaAudio(_ref7, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuser) + '/' + id);
+
+            case 3:
+              commit('eliminaAudio', id);
+
+            case 4:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  },
+  eliminaAmm: function eliminaAmm(_ref8, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              commit = _ref8.commit;
+              _context8.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuser) + '/' + id);
 
             case 3:
@@ -3932,16 +4025,45 @@ var actions = {
 
             case 4:
             case "end":
-              return _context6.stop();
+              return _context8.stop();
           }
         }
-      }, _callee6);
+      }, _callee8);
+    }))();
+  },
+  assegnaBgt: function assegnaBgt(_ref9, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              commit = _ref9.commit;
+              _context9.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnabgt), payload);
+
+            case 3:
+              response = _context9.sent;
+              commit('assegnaBgt', response.data);
+
+            case 5:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9);
     }))();
   }
 };
 var mutations = {
   fetchAudio: function fetchAudio(state, payload) {
     state.audio = payload;
+  },
+  fetchAudioConBgt: function fetchAudioConBgt(state, payload) {
+    state.audioConBgt = payload;
+  },
+  fetchAudioSenzaBgt: function fetchAudioSenzaBgt(state, payload) {
+    state.audioSenzaBgt = payload;
   },
   fetchAmm: function fetchAmm(state, payload) {
     state.amm = payload;
@@ -3961,6 +4083,12 @@ var mutations = {
     state.amm = state.amm.filter(function (u) {
       return u.id !== id;
     });
+  },
+  assegnaBgt: function assegnaBgt(state, payload) {
+    state.audioSenzaBgt = state.audioSenzaBgt.filter(function (u) {
+      return u.id !== payload.id;
+    });
+    state.audioConBgt.unshift(payload);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4072,6 +4200,8 @@ var help = function help() {
     linkruoli: 'http://vuexdocker.local/api/ruoli',
     linkaddruolo: 'http://vuexdocker.local/api/addRuolo',
     linkaudio: 'http://vuexdocker.local/api/audio',
+    linkaudioconbgt: 'http://vuexdocker.local/api/audioConBgt',
+    linkaudiosenzabgt: 'http://vuexdocker.local/api/audioSenzaBgt',
     linkamm: 'http://vuexdocker.local/api/amm',
     linkuser: 'http://vuexdocker.local/api/user',
     linkadduser: 'http://vuexdocker.local/api/addUser',
@@ -4086,9 +4216,11 @@ var help = function help() {
     linkmodificaclient: 'http://vuexdocker.local/api/modificaClient',
     linktipologie: 'http://vuexdocker.local/api/tipologie',
     linkaddtipologia: 'http://vuexdocker.local/api/addTipologia',
+    linkmodificatipologia: 'http://vuexdocker.local/api/modificaTipologia',
     linkassociazioniPersonale: 'http://vuexdocker.local/api/associazioniPersonale',
     linkaggiungiAssociazione: 'http://vuexdocker.local/api/addAssocia',
-    linkeliminaAssociazione: 'http://vuexdocker.local/api/eliminaAssocia'
+    linkeliminaAssociazione: 'http://vuexdocker.local/api/eliminaAssocia',
+    linkassegnabgt: 'http://vuexdocker.local/api/assegnaBgt'
   };
 };
 
@@ -84269,7 +84401,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

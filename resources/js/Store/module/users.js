@@ -2,12 +2,22 @@ import help from "../../help";
 
 const state = () => ({
     audio: [],
+    audioConBgt: [],
+    audioSenzaBgt: [],
     amm: []
 });
 
 const getters = {
     getAudio(state){
         return state.audio;
+    },
+
+    getAudioConBgt(state){
+        return state.audioConBgt;
+    },
+
+    getAudioSenzaBgt(state){
+        return state.audioSenzaBgt;
     },
 
     getAmm(state){
@@ -19,6 +29,16 @@ const actions = {
     async fetchAudio({commit}){
         const response = await axios.get(`${help().linkaudio}`);
         commit('fetchAudio', response.data);
+    },
+
+    async fetchAudioConBgt({commit}){
+        const response = await axios.get(`${help().linkaudioconbgt}`);
+        commit('fetchAudioConBgt', response.data);
+    },
+
+    async fetchAudioSenzaBgt({commit}){
+        const response = await axios.get(`${help().linkaudiosenzabgt}`);
+        commit('fetchAudioSenzaBgt', response.data);
     },
 
     async fetchAmm({commit}){
@@ -53,11 +73,24 @@ const actions = {
         await axios.delete(`${help().linkuser}`+'/'+id);
         commit('eliminaAmm', id);
     },
+
+    async assegnaBgt({commit}, payload){
+        const response = await axios.post(`${help().linkassegnabgt}`, payload);
+        commit('assegnaBgt', response.data);
+    },
 };
 
 const mutations = {
     fetchAudio(state, payload){
         state.audio = payload;
+    },
+
+    fetchAudioConBgt(state, payload){
+        state.audioConBgt = payload;
+    },
+
+    fetchAudioSenzaBgt(state, payload){
+        state.audioSenzaBgt = payload;
     },
 
     fetchAmm(state, payload){
@@ -78,6 +111,11 @@ const mutations = {
 
     eliminaAmm(state, id){
         state.amm = state.amm.filter(u => u.id !== id);
+    },
+
+    assegnaBgt(state, payload){
+        state.audioSenzaBgt = state.audioSenzaBgt.filter(u => u.id !== payload.id);
+        state.audioConBgt.unshift(payload);
     },
 };
 

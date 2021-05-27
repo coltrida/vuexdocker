@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Services\FilialeService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class GestioneController extends Controller
@@ -21,5 +22,10 @@ class GestioneController extends Controller
     public function eliminaAssociazione($id, FilialeService $filialeService)
     {
         return $filialeService->eliminaAssociazione($id);
+    }
+
+    public function assegnaBgt(Request $request, UserService $userService)
+    {
+        return $userService->assegnaBgt($request);
     }
 }

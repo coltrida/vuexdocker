@@ -32,7 +32,7 @@
             items: [
                 { title: 'Associa Filiale Personale', link: 'associaPersonale' },
                 { title: 'Assegna Budget', link: 'assegnaBudget' },
-                { title: 'Tempi Recall', link: 'tempiRecall' },
+                { title: 'Tipi e Recall', link: 'tempiRecall' },
                 { title: 'Invio sms', link: 'invioSms' },
             ],
         }),

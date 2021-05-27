@@ -159,7 +159,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Assegna Budget',
         link: 'assegnaBudget'
       }, {
-        title: 'Tempi Recall',
+        title: 'Tipi e Recall',
         link: 'tempiRecall'
       }, {
         title: 'Invio sms',

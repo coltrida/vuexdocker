@@ -13,6 +13,16 @@ class UserController extends Controller
         return $userService->audio();
     }
 
+    public function audioConBgt(UserService $userService)
+    {
+        return $userService->audioConBgt();
+    }
+
+    public function audioSenzaBgt(UserService $userService)
+    {
+        return $userService->audioSenzaBgt();
+    }
+
     public function amm(UserService $userService)
     {
         return $userService->amm();

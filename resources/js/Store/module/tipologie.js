@@ -1,7 +1,8 @@
 import help from "../../help";
 
 const state = () => ({
-    tipologie: []
+    tipologie: [],
+    tipo:{}
 });
 
 const getters = {
@@ -9,6 +10,9 @@ const getters = {
         return state.tipologie;
     },
 
+    getTipo(state){
+        return state.tipo;
+    }
 };
 
 const actions = {
@@ -17,8 +21,13 @@ const actions = {
         commit('fetchTipologie', response.data);
     },
 
+    async modificaTipologia({commit}, payload){
+        const response = await axios.post(`${help().linkmodificatipologia}`, payload);
+        commit('fetchTipologie', response.data);
+    },
+
     async addTipologia({commit}, payload){
-        const response = await axios.post(`${help().linkaddrecapito}`, payload);
+        const response = await axios.post(`${help().linkaddtipologia}`, payload);
         commit('addTipologia', response.data);
     },
 

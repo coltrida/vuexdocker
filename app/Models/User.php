@@ -53,11 +53,22 @@ class User extends Authenticatable
         return $this->hasMany(Recapito::class);
     }
 
-    public function scopeAudio($query)
+    public function scopeAudio($query, $bgt='')
     {
-        return $query->whereHas('ruolo', function ($ruolo){
-            $ruolo->where('nome', 'audio');
-        });
+        if($bgt == ''){
+            return $query->whereHas('ruolo', function ($ruolo){
+                $ruolo->where('nome', 'audio');
+            });
+        } else if ($bgt == 1){
+            return $query->whereHas('ruolo', function ($ruolo){
+                $ruolo->where('nome', 'audio');
+            })->where('budget_id', '!=', '');
+        } else if ($bgt == 2){
+            return $query->whereHas('ruolo', function ($ruolo){
+                $ruolo->where('nome', 'audio');
+            })->where('budget_id', null);;
+        }
+
     }
 
     public function scopeAmm($query)
@@ -70,6 +81,11 @@ class User extends Authenticatable
     public function getIsAdminAttribute()
     {
         return $this->ruolo->nome == 'admin' ? true : false;
+    }
+
+    public function budget()
+    {
+        return $this->belongsTo(Budget::class);
     }
 
 /*    public function getIsAdminAttribute()

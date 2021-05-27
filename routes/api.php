@@ -20,6 +20,8 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 // ---------------- user -------------------------
 Route::get('/audio', [UserController::class, 'audio']);
+Route::get('/audioConBgt', [UserController::class, 'audioConBgt']);
+Route::get('/audioSenzaBgt', [UserController::class, 'audioSenzaBgt']);
 Route::get('/amm', [UserController::class, 'amm']);
 Route::delete('/user/{id}', [UserController::class, 'elimina']);
 Route::post('/addUser', [UserController::class, 'aggiungi']);
@@ -78,9 +80,11 @@ Route::post('/modificaClient', [ClientController::class, 'modifica']);
 // ----------------- tipologia -------------------------
 Route::get('/tipologie', [TipologiaController::class, 'index']);
 Route::delete('/tipologie/{id}', [TipologiaController::class, 'elimina']);
+Route::post('/modificaTipologia', [TipologiaController::class, 'modifica']);
 Route::post('/addTipologia', [TipologiaController::class, 'aggiungi']);
 
 // ----------------- gestione -------------------------
 Route::get('/associazioniPersonale', [GestioneController::class, 'associazioniPersonale']);
 Route::post('/addAssocia', [GestioneController::class, 'aggiungiAssociazione']);
+Route::post('/assegnaBgt', [GestioneController::class, 'assegnaBgt']);
 Route::get('/eliminaAssocia/{id}', [GestioneController::class, 'eliminaAssociazione']);
