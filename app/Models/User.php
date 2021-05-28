@@ -88,6 +88,7 @@ class User extends Authenticatable
         return $this->belongsTo(Budget::class);
     }
 
+
 /*    public function getIsAdminAttribute()
     {
         return $this->ruolo == config('enum.ruoli.admin') ? true : false;

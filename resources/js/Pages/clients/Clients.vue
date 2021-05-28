@@ -11,7 +11,7 @@
 
             <audiogramma
                 v-if="openAudiogramma"
-                :audiogrammaUser="audiogrammaUser"
+                :audiogrammaClient="audiogrammaClient"
                 @chiudiAudiogramma = "chiudiAudiogramma"
             ></audiogramma>
 
@@ -110,7 +110,7 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     import Messaggio from "../../Components/Messaggio";
-    import Audiogramma from "../../Components/btnClients/Audiogramma";
+    import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
 
     export default {
         name: "Clients",
@@ -119,7 +119,7 @@
             return {
                 textMessaggio: null,
                 openAudiogramma: false,
-                audiogrammaUser: {},
+                audiogrammaClient: {},
                 search: '',
                 listino: {},
                 headers: [
@@ -159,9 +159,9 @@
                 this.textMessaggio = '';
             },
 
-            audiogramma(user){
+            audiogramma(client){
                 this.openAudiogramma = true;
-                this.audiogrammaUser = user;
+                this.audiogrammaClient = client;
             },
 
             chiudiAudiogramma(){

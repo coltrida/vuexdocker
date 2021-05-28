@@ -36,6 +36,7 @@ class ClientResource extends JsonResource
             'recapito' => isset($this->recapito->nome) ? $this->recapito->nome : null,
             'recapito_id' => $this->recapito_id,
             'datanascita' => $this->datanascita,
+            'audiometria' => $this->audiometria
         ];
     }
 }
