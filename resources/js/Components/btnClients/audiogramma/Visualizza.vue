@@ -1,33 +1,24 @@
-<template>
-
-</template>
-<!--
-
 <script>
-    import { Bar } from 'vue-chartjs'
-
+    import { Line } from 'vue-chartjs';
     export default {
-        extends: Bar,
-        data: () => ({
+        name: "Visualizza",
+        extends: Line,
+        props: {
             chartdata: {
-                labels: ['January', 'February'],
-                datasets: [
-                    {
-                        label: 'Data One',
-                        backgroundColor: '#f87979',
-                        data: [40, 20]
-                    }
-                ]
+                type: Object,
+                default: null
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false
+                type: Object,
+                default: null
             }
-        }),
-
+        },
         mounted () {
             this.renderChart(this.chartdata, this.options)
         }
     }
 </script>
--->
+
+<style scoped>
+
+</style>

@@ -83,7 +83,7 @@ class Client extends Model
 
     public function audiometria()
     {
-        return $this->hasMany(Audiometria::class);
+        return $this->hasMany(Audiometria::class)->latest();
     }
 
     public function getEtaAttribute()

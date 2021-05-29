@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AudiometriaController;
 use App\Http\Controllers\api\CategoriaController;
 use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\FilialiController;
@@ -89,3 +90,8 @@ Route::post('/addAssocia', [GestioneController::class, 'aggiungiAssociazione']);
 Route::post('/assegnaBgt', [GestioneController::class, 'assegnaBgt']);
 Route::post('/modificaBgt', [GestioneController::class, 'modificaBgt']);
 Route::get('/eliminaAssocia/{id}', [GestioneController::class, 'eliminaAssociazione']);
+
+// ---------------- audiometrie -------------------------
+Route::get('/listaAudiometrie/{idClient}', [AudiometriaController::class, 'index']);
+Route::get('/audiometria/{id}', [AudiometriaController::class, 'seleziona']);
+Route::post('/addAudiometria', [AudiometriaController::class, 'aggiungi']);

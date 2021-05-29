@@ -1,10 +1,16 @@
 <template>
-    <h1>Home</h1>
+    <div>
+        <h1>Home</h1>
+        <LineChart></LineChart>
+    </div>
+
 </template>
 
 <script>
+    import LineChart from "../../Components/btnClients/audiogramma/LineChart";
     export default {
-        name: "Home"
+        name: "Home",
+        components: {LineChart}
     }
 </script>
 

@@ -17,7 +17,7 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 70; $i++){
+        for ($i = 1; $i < 10; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'21',
                 'cognome' => 'COGNOME'.$i.'21',
@@ -34,7 +34,7 @@ class ClientSeeder extends Seeder
             ]);
         }
 
-        for ($i = 1; $i < 70; $i++){
+        for ($i = 1; $i < 10; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'22',
                 'cognome' => 'COGNOME'.$i.'22',
@@ -51,7 +51,7 @@ class ClientSeeder extends Seeder
             ]);
         }
 
-        for ($i = 1; $i < 70; $i++){
+        for ($i = 1; $i < 10; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'23',
                 'cognome' => 'COGNOME'.$i.'23',

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex justify-start align-center mt-2">
-            <div><h2>Clienti</h2></div>
+            <div v-if="showClients"><h2>Clienti</h2></div>
 
             <messaggio
                 v-if="textMessaggio"
@@ -10,19 +10,19 @@
             ></messaggio>
 
             <audiogramma
-                v-if="openAudiogramma"
+                v-if="showAudiogramma"
                 :audiogrammaClient="audiogrammaClient"
                 @chiudiAudiogramma = "chiudiAudiogramma"
             ></audiogramma>
 
-            <div class="ml-4">
+            <div class="ml-4" v-if="showClients">
                 <router-link :to="{ name: 'clientsInserisci'}">
                     <v-btn dark color="indigo">Inserisci</v-btn>
                 </router-link>
             </div>
         </div>
 
-        <v-container>
+        <v-container v-if="showClients">
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -117,6 +117,8 @@
         components: {Audiogramma, Messaggio},
         data() {
             return {
+                showClients: true,
+                showAudiogramma: false,
                 textMessaggio: null,
                 openAudiogramma: false,
                 audiogrammaClient: {},
@@ -161,11 +163,15 @@
 
             audiogramma(client){
                 this.openAudiogramma = true;
+                this.showAudiogramma = true;
+                this.showClients = false;
                 this.audiogrammaClient = client;
             },
 
             chiudiAudiogramma(){
                 this.openAudiogramma = false;
+                this.showAudiogramma = false;
+                this.showClients = true;
                 this.audiogrammaUser = {};
             }
         },

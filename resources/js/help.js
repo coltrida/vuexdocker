@@ -42,6 +42,9 @@ const help = () => {
         linkeliminaAssociazione: 'http://vuexdocker.local/api/eliminaAssocia',
         linkassegnabgt: 'http://vuexdocker.local/api/assegnaBgt',
         linkmodificabgt: 'http://vuexdocker.local/api/modificaBgt',
+        linkaudiometrie: 'http://vuexdocker.local/api/listaAudiometrie',
+        linkaudiometria: 'http://vuexdocker.local/api/audiometria',
+        linkaddaudiometria: 'http://vuexdocker.local/api/addAudiometria',
     };
 };
 export default help;
