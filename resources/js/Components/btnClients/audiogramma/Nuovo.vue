@@ -140,6 +140,7 @@
 
             salva(){
                 this.addAudiometria(this.nuovaAudiometria).then(() =>{
+                    this.$emit('salvaAudiometria', this.getAudiometria);
                     this.chiudi();
                 });
             },
@@ -149,6 +150,12 @@
                 this.destro = [];
                 this.$emit('tornaVisualizza');
             }
+        },
+
+        computed:{
+            ...mapGetters('audiometrie', {
+                getAudiometria: 'getAudiometria',
+            }),
         }
     }
 </script>

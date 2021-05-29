@@ -4,6 +4,7 @@
             <nuovo
                 :client_id = audiogrammaClient.id
                 @tornaVisualizza="tornaVisualizza"
+                @salvaAudiometria="salvaAudiometria"
             />
         </div>
         <div v-else>
@@ -20,8 +21,8 @@
                         </v-btn>
                     </div>
 
-                    <div v-for="audio in audiogrammaClient.audiometria" :key="audio.id">
-                        <v-btn @click="visualizzaAudiogramma(audio)" color="purple" dark class="mt-2">
+                    <div v-for="(audio, index) in audiogrammaClient.audiometria" :key="audio.id">
+                        <v-btn @click="visualizzaAudiogramma(index)" color="purple" dark class="mt-2">
                             {{audio.created_at.substring(0, 10)}}
                         </v-btn>
                     </div>
@@ -52,6 +53,7 @@
         data(){
             return {
                 creaAudiogramma: false,
+                indice: 0,
             }
         },
 
@@ -70,8 +72,13 @@
                 this.creaAudiogramma = false;
             },
 
-            visualizzaAudiogramma(audio){
-                this.audiogramma = audio;
+            visualizzaAudiogramma(index){
+                this.indice = index;
+            },
+
+            salvaAudiometria(audio){
+                this.audiogrammaClient.audiometria.unshift(audio);
+                this.indice = 0;
             }
         },
 
@@ -83,19 +90,21 @@
                         {
                             label: 'Destro',
                             backgroundColor: '#f87979',
-                            tension: 0.1,
+                            borderColor: 'rgb(192,8,0)',
+                            radius: 5,
+                            tension: 0,
                             fill: false,
                             data: [
-                               - parseInt(this.audiogrammaClient.audiometria[0]._125d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._250d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._500d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._1000d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._1500d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._2000d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._3000d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._4000d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._6000d),
-                               - parseInt(this.audiogrammaClient.audiometria[0]._8000d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._125d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._250d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._500d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._1000d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._1500d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._2000d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._3000d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._4000d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._6000d),
+                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._8000d),
                             ]
                         }
                     ]
@@ -108,20 +117,23 @@
                     datasets: [
                         {
                             label: 'Sinistro',
-                            backgroundColor: '#f87979',
-                            tension: 0.1,
+                            backgroundColor: '#a8c3f8',
+                            borderColor: 'rgb(0,1,192)',
+                            pointStyle: 'cross',
+                            radius: 7,
+                            tension: 0,
                             fill: false,
                             data: [
-                                - parseInt(this.audiogrammaClient.audiometria[0]._125s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._250s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._500s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._1000s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._1500s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._2000s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._3000s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._4000s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._6000s),
-                                - parseInt(this.audiogrammaClient.audiometria[0]._8000s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._125s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._250s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._500s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._1000s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._1500s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._2000s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._3000s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._4000s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._6000s),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._8000s),
                             ]
                         }
                     ]
@@ -132,6 +144,16 @@
                 return {
                     responsive: true,
                     maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 10,
+                                min: -120
+                            }
+                        }]
+                    }
+
                 }
             }
         },

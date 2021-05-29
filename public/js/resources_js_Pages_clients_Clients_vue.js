@@ -113,6 +113,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -125,7 +126,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      creaAudiogramma: false
+      creaAudiogramma: false,
+      indice: 0
     };
   },
   props: ['audiogrammaClient'],
@@ -139,8 +141,12 @@ __webpack_require__.r(__webpack_exports__);
     tornaVisualizza: function tornaVisualizza() {
       this.creaAudiogramma = false;
     },
-    visualizzaAudiogramma: function visualizzaAudiogramma(audio) {
-      this.audiogramma = audio;
+    visualizzaAudiogramma: function visualizzaAudiogramma(index) {
+      this.indice = index;
+    },
+    salvaAudiometria: function salvaAudiometria(audio) {
+      this.audiogrammaClient.audiometria.unshift(audio);
+      this.indice = 0;
     }
   },
   computed: {
@@ -150,9 +156,11 @@ __webpack_require__.r(__webpack_exports__);
         datasets: [{
           label: 'Destro',
           backgroundColor: '#f87979',
-          tension: 0.1,
+          borderColor: 'rgb(192,8,0)',
+          radius: 5,
+          tension: 0,
           fill: false,
-          data: [-parseInt(this.audiogrammaClient.audiometria[0]._125d), -parseInt(this.audiogrammaClient.audiometria[0]._250d), -parseInt(this.audiogrammaClient.audiometria[0]._500d), -parseInt(this.audiogrammaClient.audiometria[0]._1000d), -parseInt(this.audiogrammaClient.audiometria[0]._1500d), -parseInt(this.audiogrammaClient.audiometria[0]._2000d), -parseInt(this.audiogrammaClient.audiometria[0]._3000d), -parseInt(this.audiogrammaClient.audiometria[0]._4000d), -parseInt(this.audiogrammaClient.audiometria[0]._6000d), -parseInt(this.audiogrammaClient.audiometria[0]._8000d)]
+          data: [-parseInt(this.audiogrammaClient.audiometria[this.indice]._125d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._250d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._500d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1000d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1500d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._2000d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._3000d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._4000d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._6000d), -parseInt(this.audiogrammaClient.audiometria[this.indice]._8000d)]
         }]
       };
     },
@@ -161,17 +169,29 @@ __webpack_require__.r(__webpack_exports__);
         labels: ['125', '250', '500', '1000', '1500', '2000', '3000', '4000', '6000', '8000'],
         datasets: [{
           label: 'Sinistro',
-          backgroundColor: '#f87979',
-          tension: 0.1,
+          backgroundColor: '#a8c3f8',
+          borderColor: 'rgb(0,1,192)',
+          pointStyle: 'cross',
+          radius: 7,
+          tension: 0,
           fill: false,
-          data: [-parseInt(this.audiogrammaClient.audiometria[0]._125s), -parseInt(this.audiogrammaClient.audiometria[0]._250s), -parseInt(this.audiogrammaClient.audiometria[0]._500s), -parseInt(this.audiogrammaClient.audiometria[0]._1000s), -parseInt(this.audiogrammaClient.audiometria[0]._1500s), -parseInt(this.audiogrammaClient.audiometria[0]._2000s), -parseInt(this.audiogrammaClient.audiometria[0]._3000s), -parseInt(this.audiogrammaClient.audiometria[0]._4000s), -parseInt(this.audiogrammaClient.audiometria[0]._6000s), -parseInt(this.audiogrammaClient.audiometria[0]._8000s)]
+          data: [-parseInt(this.audiogrammaClient.audiometria[this.indice]._125s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._250s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._500s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1000s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1500s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._2000s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._3000s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._4000s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._6000s), -parseInt(this.audiogrammaClient.audiometria[this.indice]._8000s)]
         }]
       };
     },
     chartOptions: function chartOptions() {
       return {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              stepSize: 10,
+              min: -120
+            }
+          }]
+        }
       };
     }
   },
@@ -375,6 +395,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.addAudiometria(this.nuovaAudiometria).then(function () {
+        _this.$emit('salvaAudiometria', _this.getAudiometria);
+
         _this.chiudi();
       });
     },
@@ -383,7 +405,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.destro = [];
       this.$emit('tornaVisualizza');
     }
-  })
+  }),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('audiometrie', {
+    getAudiometria: 'getAudiometria'
+  }))
 });
 
 /***/ }),
@@ -416,6 +441,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.renderChart(this.chartdata, this.options);
+  },
+  watch: {
+    chartdata: function chartdata() {
+      this.renderChart(this.chartdata, this.options);
+    }
   }
 });
 
@@ -39167,7 +39197,10 @@ var render = function() {
           [
             _c("nuovo", {
               attrs: { client_id: _vm.audiogrammaClient.id },
-              on: { tornaVisualizza: _vm.tornaVisualizza }
+              on: {
+                tornaVisualizza: _vm.tornaVisualizza,
+                salvaAudiometria: _vm.salvaAudiometria
+              }
             })
           ],
           1
@@ -39228,7 +39261,10 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _vm._l(_vm.audiogrammaClient.audiometria, function(audio) {
+                _vm._l(_vm.audiogrammaClient.audiometria, function(
+                  audio,
+                  index
+                ) {
                   return _c(
                     "div",
                     { key: audio.id },
@@ -39240,7 +39276,7 @@ var render = function() {
                           attrs: { color: "purple", dark: "" },
                           on: {
                             click: function($event) {
-                              return _vm.visualizzaAudiogramma(audio)
+                              return _vm.visualizzaAudiogramma(index)
                             }
                           }
                         },
