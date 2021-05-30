@@ -15,6 +15,12 @@
                 @chiudiAudiogramma = "chiudiAudiogramma"
             ></audiogramma>
 
+            <prove
+                v-if="showProve"
+                :proveClient="proveClient"
+                @chiudiProve = "chiudiProve"
+            ></prove>
+
             <div class="ml-4" v-if="showClients">
                 <router-link :to="{ name: 'clientsInserisci'}">
                     <v-btn dark color="indigo">Inserisci</v-btn>
@@ -90,6 +96,7 @@
                             <v-icon
                                 color="orange"
                                 small
+                                @click="prove(item)"
                                 v-bind="attrs"
                                 v-on="on"
                             >
@@ -111,17 +118,20 @@
     import {mapActions, mapGetters} from "vuex";
     import Messaggio from "../../Components/Messaggio";
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
+    import Prove from "../../Components/btnClients/prove/Prove";
 
     export default {
         name: "Clients",
-        components: {Audiogramma, Messaggio},
+        components: {Prove, Audiogramma, Messaggio},
         data() {
             return {
                 showClients: true,
+                showProve: false,
                 showAudiogramma: false,
                 textMessaggio: null,
                 openAudiogramma: false,
                 audiogrammaClient: {},
+                proveClient: {},
                 search: '',
                 listino: {},
                 headers: [
@@ -162,18 +172,32 @@
             },
 
             audiogramma(client){
-                this.openAudiogramma = true;
+                this.showProve = false;
                 this.showAudiogramma = true;
                 this.showClients = false;
                 this.audiogrammaClient = client;
             },
 
+            prove(client){
+                this.showProve = true;
+                this.showAudiogramma = false;
+                this.showClients = false;
+                this.proveClient = client;
+            },
+
             chiudiAudiogramma(){
-                this.openAudiogramma = false;
+                this.showProve = false;
                 this.showAudiogramma = false;
                 this.showClients = true;
                 this.audiogrammaUser = {};
-            }
+            },
+
+            chiudiProve(){
+                this.showProve = false;
+                this.showAudiogramma = false;
+                this.showClients = true;
+                this.proveClient = {};
+            },
         },
 
         computed: {

@@ -2886,13 +2886,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = function state() {
   return {
-    listino: []
+    listino: [],
+    eleListino: {}
   };
 };
 
 var getters = {
   getListino: function getListino(state) {
     return state.listino;
+  },
+  getEleListino: function getEleListino(state) {
+    return state.eleListino;
   }
 };
 var actions = {
@@ -2994,6 +2998,29 @@ var actions = {
         }
       }, _callee4);
     }))();
+  },
+  fetchEleListino: function fetchEleListino(_ref5, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkelelistino) + '/' + id);
+
+            case 3:
+              response = _context5.sent;
+              commit('fetchEleListino', response.data);
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
   }
 };
 var mutations = {
@@ -3010,6 +3037,9 @@ var mutations = {
     state.listino = state.listino.filter(function (u) {
       return u.id !== id;
     });
+  },
+  fetchEleListino: function fetchEleListino(state, payload) {
+    state.eleListino = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4357,6 +4387,7 @@ var help = function help() {
     linkfornitori: 'http://vuexdocker.local/api/fornitori',
     linkaddfornitore: 'http://vuexdocker.local/api/addFornitore',
     linklistino: 'http://vuexdocker.local/api/listino',
+    linkelelistino: 'http://vuexdocker.local/api/eleListino',
     linkaddlistino: 'http://vuexdocker.local/api/addListino',
     linkcategorie: 'http://vuexdocker.local/api/categorie',
     linkaddcategoria: 'http://vuexdocker.local/api/addCategoria',

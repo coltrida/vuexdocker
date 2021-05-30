@@ -1,12 +1,17 @@
 import help from "../../help";
 
 const state = () => ({
-    listino: []
+    listino: [],
+    eleListino: {}
 });
 
 const getters = {
     getListino(state){
         return state.listino;
+    },
+
+    getEleListino(state){
+        return state.eleListino;
     },
 };
 
@@ -39,6 +44,11 @@ const actions = {
         await axios.delete(`${help().linklistino}`+'/'+id);
         commit('eliminaListino', id);
     },
+
+    async fetchEleListino({commit}, id){
+        const response = await axios.get(`${help().linkelelistino}`+'/'+id);
+        commit('fetchEleListino', response.data);
+    },
 };
 
 const mutations = {
@@ -56,6 +66,10 @@ const mutations = {
 
     eliminaListino(state, id){
         state.listino = state.listino.filter(u => u.id !== id);
+    },
+
+    fetchEleListino(state, payload){
+        state.eleListino = payload;
     },
 };
 

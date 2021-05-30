@@ -29,4 +29,9 @@ class ListinoController extends Controller
     {
         return $listinoService->listinoFromFornitore($idFornitore);
     }
+
+    public function listinoFromId($idListino, ListinoService $listinoService)
+    {
+        return $listinoService->listinoFromId($idListino);
+    }
 }

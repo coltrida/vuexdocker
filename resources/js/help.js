@@ -14,6 +14,7 @@ const help = () => {
         linkfornitori: 'http://vuexdocker.local/api/fornitori',
         linkaddfornitore: 'http://vuexdocker.local/api/addFornitore',
         linklistino: 'http://vuexdocker.local/api/listino',
+        linkelelistino: 'http://vuexdocker.local/api/eleListino',
         linkaddlistino: 'http://vuexdocker.local/api/addListino',
         linkcategorie: 'http://vuexdocker.local/api/categorie',
         linkaddcategoria: 'http://vuexdocker.local/api/addCategoria',

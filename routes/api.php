@@ -53,6 +53,7 @@ Route::get('/listino', [ListinoController::class, 'index']);
 Route::delete('/listino/{id}', [ListinoController::class, 'elimina']);
 Route::post('/addListino', [ListinoController::class, 'aggiungi']);
 Route::get('/listino/{idFornitore}', [ListinoController::class, 'productFromFornitore']);
+Route::get('/eleListino/{idListino}', [ListinoController::class, 'listinoFromId']);
 
 // ---------------- categoria -------------------------
 Route::get('/categorie', [CategoriaController::class, 'index']);
