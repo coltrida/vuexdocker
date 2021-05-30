@@ -24,7 +24,9 @@ class ProductResource extends JsonResource
             'costo' => '€ '.number_format($this->listino->costo, 0, ',', '.'),
             'prezzolistino' => '€ '.number_format($this->listino->prezzolistino, 0, ',', '.'),
             'iva' => $this->listino->iva.' %',
-            'giorniTempoDiReso' => $this->listino->giorniTempoDiReso
+            'giorniTempoDiReso' => $this->listino->giorniTempoDiReso,
+            'listinoId' => $this->listino->id,
+            'nomeMatricola' => $this->listino->nome.' - '.$this->matricola
         ];
     }
 }

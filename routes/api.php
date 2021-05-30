@@ -67,6 +67,7 @@ Route::post('/addRuolo', [RuoloController::class, 'aggiungi']);
 
 // ---------------- magazzino - prodotti -------------------------
 Route::get('/filiali/{id}/presenti', [ProductController::class, 'presenti']);
+Route::get('/filialeFornitore/{idFiliale}/{idFornitore}', [ProductController::class, 'presentiFornitore']);
 Route::get('/filiali/{id}/inProva', [ProductController::class, 'inProva']);
 Route::get('/filiali/{id}/richiesti', [ProductController::class, 'richiesti']);
 Route::get('/filiali/{id}/inArrivo', [ProductController::class, 'inArrivo']);

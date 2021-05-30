@@ -20,6 +20,15 @@ class ProductService
         }])->find($id)->products;
     }
 
+    public function presentiFromFornitore($idFiliale, $idFornitore)
+    {
+        return Filiale::with(['products' => function($q) use($idFornitore){
+            $q->with(['listino' => function($l){
+                $l->with('fornitore', 'categoria');
+            }])->filiale()->where('fornitore_id', $idFornitore)->orderBy('listino_id');
+        }])->find($idFiliale)->products;
+    }
+
     public function inProva($id)
     {
         return Filiale::with(['products' => function($q){

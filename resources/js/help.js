@@ -46,6 +46,7 @@ const help = () => {
         linkaudiometrie: 'http://vuexdocker.local/api/listaAudiometrie',
         linkaudiometria: 'http://vuexdocker.local/api/audiometria',
         linkaddaudiometria: 'http://vuexdocker.local/api/addAudiometria',
+        linkfilialefornitore: 'http://vuexdocker.local/api/filialeFornitore',
     };
 };
 export default help;

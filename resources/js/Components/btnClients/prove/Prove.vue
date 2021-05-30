@@ -28,11 +28,11 @@
                     >
                         <v-select
                             @change="caricaPrezzoProdotto()"
-                            v-model="nuovaProva.listino_id"
-                            item-value="id"
-                            item-text="nome"
-                            :items="getListino"
-                            label="listino"
+                            v-model="nuovaProva.prodotto"
+                            item-text="nomeMatricola"
+                            :items="getInFiliale"
+                            label="prodotti"
+                            return-object
                         ></v-select>
                     </v-col>
 
@@ -46,17 +46,39 @@
                         ></v-text-field>
                     </v-col>
 
+                    <v-col>
+                        <v-btn color="primary" dark @click="inserisciInProva">
+                            In Prova
+                        </v-btn>
+                    </v-col>
                 </v-row>
 
-                <v-data-table
-                    :headers="headerProve"
-                    :items="proveClient.prove"
-                    :items-per-page="10"
-                    class="elevation-1 mt-3"
-                    hide-default-footer
-                >
+                <v-row>
+                    <v-col cols="6">
+                        <h3>Nuova Prova</h3>
+                        <v-data-table
+                            :headers="headerNuovaProva"
+                            :items="elementiInProva"
+                            :items-per-page="10"
+                            class="elevation-1 mt-3"
+                            hide-default-footer
+                        >
 
-                </v-data-table>
+                        </v-data-table>
+                    </v-col>
+                    <v-col cols="6">
+                        <h3>Prove</h3>
+                        <v-data-table
+                            :headers="headerProve"
+                            :items="proveClient.prove"
+                            :items-per-page="10"
+                            class="elevation-1 mt-3"
+                            hide-default-footer
+                        >
+
+                        </v-data-table>
+                    </v-col>
+                </v-row>
 
             </v-container>
         </div>
@@ -75,9 +97,15 @@
                 nuovaProva: {
                     prezzolistino:'0'
                 },
+                elementiInProva: [],
                 headerProve: [
                     { text: 'Data', align: 'start', sortable: false, value: 'inizio_prova', class: "indigo white--text" },
                     { text: 'Stato', sortable: false, value: 'stato', class: "indigo white--text" },
+                ],
+                headerNuovaProva: [
+                    { text: 'Fornitore', align: 'start', sortable: false, value: 'fornitore_id', class: "indigo white--text" },
+                    { text: 'Prodotto', sortable: false, value: 'prodotto.nome', class: "indigo white--text" },
+                    { text: 'Prezzo', sortable: false, value: 'prodotto.prezzolistino', class: "indigo white--text" },
                 ],
             }
         },
@@ -91,9 +119,8 @@
                 fetchFornitori:'fetchFornitori',
             }),
 
-            ...mapActions('listino', {
-                fetchListinoFromFornitore:'fetchListinoFromFornitore',
-                fetchEleListino:'fetchEleListino',
+            ...mapActions('product', {
+                fetchInFilialeFornitore:'fetchInFilialeFornitore',
             }),
 
             cancella(){
@@ -103,17 +130,22 @@
             caricaProdotti(){
                 if (this.nuovaProva.fornitore_id){
                     this.nuovaProva.prezzolistino = '0';
-                    this.fetchListinoFromFornitore(this.nuovaProva.fornitore_id);
+                    this.fetchInFilialeFornitore({
+                        'idFiliale': this.proveClient.filiale_id,
+                        'idFornitore': this.nuovaProva.fornitore_id
+                    });
                 }
             },
 
             caricaPrezzoProdotto(){
-                if (this.nuovaProva.listino_id){
-                    this.fetchEleListino(this.nuovaProva.listino_id).then(() => {
-                        this.nuovaProva.prezzolistino = this.getEleListino.prezzolistino;
-                    });
+                this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzolistino;
+            },
 
-                }
+            inserisciInProva(){
+                this.elementiInProva.unshift(this.nuovaProva);
+                let posizione = this.getInFiliale.map(function(ele) { return ele.id; }).indexOf(this.nuovaProva.prodotto.id);
+                this.getInFiliale.splice(posizione, 1);
+                this.nuovaProva.prezzolistino = 0;
             }
         },
 
@@ -122,9 +154,8 @@
                 getFornitori: 'getFornitori',
             }),
 
-            ...mapGetters('listino', {
-                getListino: 'getListino',
-                getEleListino: 'getEleListino',
+            ...mapGetters('product', {
+                getInFiliale: 'getInFiliale',
             }),
         },
     }

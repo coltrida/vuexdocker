@@ -15,6 +15,11 @@ class ProductController extends Controller
         return ProductResource::collection($productService->presenti($id));
     }
 
+    public function presentiFornitore($idFilile, $idFornitore, ProductService $productService)
+    {
+        return ProductResource::collection($productService->presentiFromFornitore($idFilile, $idFornitore));
+    }
+
     public function inProva($id, ProductService $productService)
     {
         return ProductInProvaResource::collection($productService->inProva($id));

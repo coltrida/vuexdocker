@@ -32,6 +32,11 @@ const actions = {
         commit('fetchInFiliale', response.data.data);
     },
 
+    async fetchInFilialeFornitore({commit}, payload){
+        const response = await axios.get(`${help().linkfilialefornitore}`+'/'+payload.idFiliale+'/'+payload.idFornitore);
+        commit('fetchInFiliale', response.data.data);
+    },
+
     async fetchInProva({commit}, idFiliale){
         const response = await axios.get(`${help().linkfiliali}`+'/'+idFiliale+'/inProva');
         commit('fetchInProva', response.data.data);

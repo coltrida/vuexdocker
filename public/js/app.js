@@ -3397,7 +3397,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchInProva: function fetchInProva(_ref2, idFiliale) {
+  fetchInFilialeFornitore: function fetchInFilialeFornitore(_ref2, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -3406,11 +3406,11 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inProva');
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfilialefornitore) + '/' + payload.idFiliale + '/' + payload.idFornitore);
 
             case 3:
               response = _context2.sent;
-              commit('fetchInProva', response.data.data);
+              commit('fetchInFiliale', response.data.data);
 
             case 5:
             case "end":
@@ -3420,7 +3420,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  fetchRichiesti: function fetchRichiesti(_ref3, idFiliale) {
+  fetchInProva: function fetchInProva(_ref3, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -3429,11 +3429,11 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/richiesti');
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inProva');
 
             case 3:
               response = _context3.sent;
-              commit('fetchRichiesti', response.data.data);
+              commit('fetchInProva', response.data.data);
 
             case 5:
             case "end":
@@ -3443,7 +3443,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  fetchInArrivo: function fetchInArrivo(_ref4, idFiliale) {
+  fetchRichiesti: function fetchRichiesti(_ref4, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -3452,11 +3452,11 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inArrivo');
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/richiesti');
 
             case 3:
               response = _context4.sent;
-              commit('fetchInArrivo', response.data.data);
+              commit('fetchRichiesti', response.data.data);
 
             case 5:
             case "end":
@@ -3466,7 +3466,7 @@ var actions = {
       }, _callee4);
     }))();
   },
-  richiediProduct: function richiediProduct(_ref5, payload) {
+  fetchInArrivo: function fetchInArrivo(_ref5, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -3475,11 +3475,11 @@ var actions = {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrichiestaprodotti), payload);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inArrivo');
 
             case 3:
               response = _context5.sent;
-              commit('richiediProduct', response.data.data);
+              commit('fetchInArrivo', response.data.data);
 
             case 5:
             case "end":
@@ -3487,6 +3487,29 @@ var actions = {
           }
         }
       }, _callee5);
+    }))();
+  },
+  richiediProduct: function richiediProduct(_ref6, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context6.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrichiestaprodotti), payload);
+
+            case 3:
+              response = _context6.sent;
+              commit('richiediProduct', response.data.data);
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
     }))();
   }
 };
@@ -4418,7 +4441,8 @@ var help = function help() {
     linkmodificabgt: 'http://vuexdocker.local/api/modificaBgt',
     linkaudiometrie: 'http://vuexdocker.local/api/listaAudiometrie',
     linkaudiometria: 'http://vuexdocker.local/api/audiometria',
-    linkaddaudiometria: 'http://vuexdocker.local/api/addAudiometria'
+    linkaddaudiometria: 'http://vuexdocker.local/api/addAudiometria',
+    linkfilialefornitore: 'http://vuexdocker.local/api/filialeFornitore'
   };
 };
 

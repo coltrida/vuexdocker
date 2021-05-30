@@ -534,6 +534,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Prove",
@@ -543,6 +565,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nuovaProva: {
         prezzolistino: '0'
       },
+      elementiInProva: [],
       headerProve: [{
         text: 'Data',
         align: 'start',
@@ -554,6 +577,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         sortable: false,
         value: 'stato',
         "class": "indigo white--text"
+      }],
+      headerNuovaProva: [{
+        text: 'Fornitore',
+        align: 'start',
+        sortable: false,
+        value: 'fornitore_id',
+        "class": "indigo white--text"
+      }, {
+        text: 'Prodotto',
+        sortable: false,
+        value: 'prodotto.nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Prezzo',
+        sortable: false,
+        value: 'prodotto.prezzolistino',
+        "class": "indigo white--text"
       }]
     };
   },
@@ -562,9 +602,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
-    fetchListinoFromFornitore: 'fetchListinoFromFornitore',
-    fetchEleListino: 'fetchEleListino'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('product', {
+    fetchInFilialeFornitore: 'fetchInFilialeFornitore'
   })), {}, {
     cancella: function cancella() {
       this.$emit('chiudiProve');
@@ -572,24 +611,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     caricaProdotti: function caricaProdotti() {
       if (this.nuovaProva.fornitore_id) {
         this.nuovaProva.prezzolistino = '0';
-        this.fetchListinoFromFornitore(this.nuovaProva.fornitore_id);
+        this.fetchInFilialeFornitore({
+          'idFiliale': this.proveClient.filiale_id,
+          'idFornitore': this.nuovaProva.fornitore_id
+        });
       }
     },
     caricaPrezzoProdotto: function caricaPrezzoProdotto() {
-      var _this = this;
-
-      if (this.nuovaProva.listino_id) {
-        this.fetchEleListino(this.nuovaProva.listino_id).then(function () {
-          _this.nuovaProva.prezzolistino = _this.getEleListino.prezzolistino;
-        });
-      }
+      this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzolistino;
+    },
+    inserisciInProva: function inserisciInProva() {
+      this.elementiInProva.unshift(this.nuovaProva);
+      var posizione = this.getInFiliale.map(function (ele) {
+        return ele.id;
+      }).indexOf(this.nuovaProva.prodotto.id);
+      this.getInFiliale.splice(posizione, 1);
+      this.nuovaProva.prezzolistino = 0;
     }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('fornitori', {
     getFornitori: 'getFornitori'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('listino', {
-    getListino: 'getListino',
-    getEleListino: 'getEleListino'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
+    getInFiliale: 'getInFiliale'
   }))
 });
 
@@ -39921,10 +39964,10 @@ var render = function() {
                   [
                     _c("v-select", {
                       attrs: {
-                        "item-value": "id",
-                        "item-text": "nome",
-                        items: _vm.getListino,
-                        label: "listino"
+                        "item-text": "nomeMatricola",
+                        items: _vm.getInFiliale,
+                        label: "prodotti",
+                        "return-object": ""
                       },
                       on: {
                         change: function($event) {
@@ -39932,11 +39975,11 @@ var render = function() {
                         }
                       },
                       model: {
-                        value: _vm.nuovaProva.listino_id,
+                        value: _vm.nuovaProva.prodotto,
                         callback: function($$v) {
-                          _vm.$set(_vm.nuovaProva, "listino_id", $$v)
+                          _vm.$set(_vm.nuovaProva, "prodotto", $$v)
                         },
-                        expression: "nuovaProva.listino_id"
+                        expression: "nuovaProva.prodotto"
                       }
                     })
                   ],
@@ -39959,20 +40002,73 @@ var render = function() {
                     })
                   ],
                   1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { color: "primary", dark: "" },
+                        on: { click: _vm.inserisciInProva }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        In Prova\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
                 )
               ],
               1
             ),
             _vm._v(" "),
-            _c("v-data-table", {
-              staticClass: "elevation-1 mt-3",
-              attrs: {
-                headers: _vm.headerProve,
-                items: _vm.proveClient.prove,
-                "items-per-page": 10,
-                "hide-default-footer": ""
-              }
-            })
+            _c(
+              "v-row",
+              [
+                _c(
+                  "v-col",
+                  { attrs: { cols: "6" } },
+                  [
+                    _c("h3", [_vm._v("Nuova Prova")]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headerNuovaProva,
+                        items: _vm.elementiInProva,
+                        "items-per-page": 10,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  { attrs: { cols: "6" } },
+                  [
+                    _c("h3", [_vm._v("Prove")]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headerProve,
+                        items: _vm.proveClient.prove,
+                        "items-per-page": 10,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            )
           ],
           1
         )
