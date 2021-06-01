@@ -11,8 +11,11 @@ use App\Models\Prova;
 use App\Models\Ruolo;
 use Carbon\Carbon;
 use GuzzleHttp\Promise\Each;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use function compact;
 use function trim;
+use function view;
 
 class ProvaService
 {
@@ -99,7 +102,6 @@ class ProvaService
         $prodotti = $request->product;
         for ($item = 0; $item < count($prodotti); $item++){
             $prodotto = Product::find($prodotti[$item]['id']);
-           // $prova->product[$item]->pivot->prezzo = $prodotti[$item]['pivot']['prezzo'];
             $prodotto->stato_id = 4;
             $prodotto->save();
 
@@ -107,11 +109,22 @@ class ProvaService
                 ['prova_id', $prova->id],
                 ['product_id', $prodotti[$item]['id']]
             ])->first();
-            //return $tabellaPivot;
+
             $tabellaPivot->prezzo = $prodotti[$item]['pivot']['prezzo'];
             $tabellaPivot->save();
         }
 
-        return Prova::with('stato', 'user', 'product', 'client')->find($request->id);
+        $this->creaPdfFattura(Fattura::with('prova')->find($fattura->id));
+
+        $provaFattura = Prova::with('stato', 'user', 'product', 'client')->find($request->id);
+        return $provaFattura;
+    }
+
+    public function creaPdfFattura($fattura)
+    {
+        //return $fattura;
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML(view('pdf.fattura', compact('fattura')))->save("storage/fatture/2021/$fattura->id.pdf");
     }
 }
+

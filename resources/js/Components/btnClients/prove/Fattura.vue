@@ -121,7 +121,6 @@
 
             salva(){
                 this.itemFattura.totFatturaReale = this.totFatturaReale;
-                console.log(this.itemFattura);
                 this.salvaFattura(this.itemFattura);
                 this.chiudiFattura();
             },

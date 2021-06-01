@@ -17,6 +17,10 @@
 
             <v-container>
 
+                <a v-if="idFattura" target="_blank"
+                    :href="fatturaPdf"
+                ></a>
+
                 <fattura
                          :itemFattura="itemFattura"
                          :dialogFattura="dialogFattura" v-if="dialogFattura"
@@ -198,6 +202,23 @@
 
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on, attrs }">
+                                        <a :href="'http://vuexdocker.local/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
+                                            <v-icon v-if="item.stato.nome === 'FATTURA'"
+                                                    color="black"
+                                                    small
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                            >
+                                                mdi-check
+                                            </v-icon>
+                                        </a>
+
+                                    </template>
+                                    <span>Fattura</span>
+                                </v-tooltip>
+
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
                                         <v-icon v-if="item.stato.nome === 'PROVA'"
                                                 color="green"
                                                 small
@@ -208,7 +229,7 @@
                                             mdi-check
                                         </v-icon>
                                     </template>
-                                    <span>Fattura</span>
+                                    <span>Produci Fattura</span>
                                 </v-tooltip>
 
                             </template>
@@ -233,6 +254,7 @@
         data(){
             return {
                 dialog: false,
+                idFattura: '',
                 dialogFattura: false,
                 prova:{},
                 itemFattura:{},
@@ -357,6 +379,11 @@
 
             chiudiFattura(){
                 this.dialogFattura = false;
+            },
+
+            visualizzaFattura(idProva){
+                this.idFattura = idProva;
+                console.log(this.fatturaPdf)
             }
         },
 
@@ -374,6 +401,10 @@
                 getNuovaProvaCreata: 'getNuovaProvaCreata',
                 getProvePassate: 'getProvePassate',
             }),
+
+            fatturaPdf(){
+                return 'http://vuexdocker.local/storage/fatture/2021/'+this.idFattura+'.pdf';
+            }
         },
     }
 </script>

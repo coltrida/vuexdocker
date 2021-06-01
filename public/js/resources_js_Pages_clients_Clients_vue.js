@@ -588,7 +588,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     salva: function salva() {
       this.itemFattura.totFatturaReale = this.totFatturaReale;
-      console.log(this.itemFattura);
       this.salvaFattura(this.itemFattura);
       this.chiudiFattura();
     },
@@ -850,6 +849,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -861,6 +881,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       dialog: false,
+      idFattura: '',
       dialogFattura: false,
       prova: {},
       itemFattura: {},
@@ -1013,9 +1034,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     chiudiFattura: function chiudiFattura() {
       this.dialogFattura = false;
+    },
+    visualizzaFattura: function visualizzaFattura(idProva) {
+      this.idFattura = idProva;
+      console.log(this.fatturaPdf);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('fornitori', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('fornitori', {
     getFornitori: 'getFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('product', {
     getInFiliale: 'getInFiliale'
@@ -1023,7 +1048,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getElementiNuovaProva: 'getElementiNuovaProva',
     getNuovaProvaCreata: 'getNuovaProvaCreata',
     getProvePassate: 'getProvePassate'
-  }))
+  })), {}, {
+    fatturaPdf: function fatturaPdf() {
+      return 'http://vuexdocker.local/storage/fatture/2021/' + this.idFattura + '.pdf';
+    }
+  })
 });
 
 /***/ }),
@@ -40647,6 +40676,10 @@ var render = function() {
         _c(
           "v-container",
           [
+            _vm.idFattura
+              ? _c("a", { attrs: { target: "_blank", href: _vm.fatturaPdf } })
+              : _vm._e(),
+            _vm._v(" "),
             _vm.dialogFattura
               ? _c("fattura", {
                   attrs: {
@@ -41126,6 +41159,68 @@ var render = function() {
                                           var on = ref.on
                                           var attrs = ref.attrs
                                           return [
+                                            _c(
+                                              "a",
+                                              {
+                                                attrs: {
+                                                  href:
+                                                    "http://vuexdocker.local/storage/fatture/2021/" +
+                                                    item.id +
+                                                    ".pdf",
+                                                  target: "_blank"
+                                                }
+                                              },
+                                              [
+                                                item.stato.nome === "FATTURA"
+                                                  ? _c(
+                                                      "v-icon",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            attrs: {
+                                                              color: "black",
+                                                              small: ""
+                                                            }
+                                                          },
+                                                          "v-icon",
+                                                          attrs,
+                                                          false
+                                                        ),
+                                                        on
+                                                      ),
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                            mdi-check\n                                        "
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _vm._e()
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("Fattura")])]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
                                             item.stato.nome === "PROVA"
                                               ? _c(
                                                   "v-icon",
@@ -41167,7 +41262,10 @@ var render = function() {
                                     true
                                   )
                                 },
-                                [_vm._v(" "), _c("span", [_vm._v("Fattura")])]
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("Produci Fattura")])
+                                ]
                               )
                             ]
                           }

@@ -18,6 +18,6 @@ class Fattura extends Model
 
     public function prova()
     {
-        return $this->belongsTo(Prova::class);
+        return $this->belongsTo(Prova::class)->with('client');
     }
 }

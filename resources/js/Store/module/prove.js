@@ -93,6 +93,8 @@ const mutations = {
     },
 
     salvaFattura(state, payload){
+        //console.log('ok');
+        console.log(payload);
         state.provePassate = state.provePassate.filter(u => u.id !== payload.id);
         state.provePassate.unshift(payload);
     },

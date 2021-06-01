@@ -3820,6 +3820,8 @@ var mutations = {
     state.provePassate.unshift(payload);
   },
   salvaFattura: function salvaFattura(state, payload) {
+    //console.log('ok');
+    console.log(payload);
     state.provePassate = state.provePassate.filter(function (u) {
       return u.id !== payload.id;
     });
