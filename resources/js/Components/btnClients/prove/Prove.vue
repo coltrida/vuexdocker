@@ -1,13 +1,34 @@
 <template>
     <div class="text-center">
         <div class="row">
-            <h2>{{proveClient.nome}} {{proveClient.cognome}}</h2>
-            <v-btn color="primary" dark @click="cancella" class="mt-2">
-                Chiudi
-            </v-btn>
+            <div class="row mt-2">
+                <div style="display: flex; justify-content: space-between; align-items: center">
+                    <div>
+                        <h2>{{proveClient.nome}} {{proveClient.cognome}}</h2>
+                    </div>
+                    <div>
+                        <v-btn color="primary" dark @click="cancella" class="mt-2">
+                            Chiudi
+                        </v-btn>
+                    </div>
+                </div>
+            </div>
+
+
             <v-container>
 
-                <v-row>
+                <fattura
+                         :itemFattura="itemFattura"
+                         :dialogFattura="dialogFattura" v-if="dialogFattura"
+                         @chiudiFattura="chiudiFattura"
+                />
+
+                <v-row v-if="switchInserisci">
+                    <v-btn color="primary" dark @click="nuovaProvaInCorso" class="mt-2">
+                        Nuova Prova
+                    </v-btn>
+                </v-row>
+                <v-row v-else>
                     <v-col
                         cols="3"
                         sm="3"
@@ -37,6 +58,18 @@
                     </v-col>
 
                     <v-col
+
+                    >
+                        <v-select
+                            v-model="nuovaProva.orecchio"
+                            item-text="nome"
+                            item-value="valore"
+                            :items="orecchie"
+                            label="orecchio"
+                        ></v-select>
+                    </v-col>
+
+                    <v-col
                         cols="3"
                         sm="3"
                     >
@@ -55,26 +88,130 @@
 
                 <v-row>
                     <v-col cols="6">
-                        <h3>Nuova Prova</h3>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <h3>Nuova Prova</h3>
+                            </div>
+                            <div>
+                                <v-btn color="primary" dark @click="salvaProva">
+                                    Salva
+                                </v-btn>
+                            </div>
+                        </div>
+
                         <v-data-table
                             :headers="headerNuovaProva"
-                            :items="elementiInProva"
-                            :items-per-page="10"
+                            :items="getElementiNuovaProva"
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
 
+                            <template v-slot:item.actions="{ item }">
+                                <v-icon
+                                    color="red"
+                                    small
+                                    @click="eliminaElementoDallaProva(item.id, item.idProduct)"
+                                >
+                                    mdi-delete
+                                </v-icon>
+                            </template>
+
                         </v-data-table>
                     </v-col>
+
+
                     <v-col cols="6">
                         <h3>Prove</h3>
                         <v-data-table
                             :headers="headerProve"
-                            :items="proveClient.prove"
-                            :items-per-page="10"
+                            :items="getProvePassate"
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
+
+                            <template v-slot:item.actions="{ item }">
+                                <v-dialog
+                                    v-model="dialog"
+                                    width="500"
+                                >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                                color="blue"
+                                                small
+                                                v-bind="attrs"
+                                                v-on="on"
+
+                                        >
+                                            mdi-format-list-bulleted-square
+                                        </v-icon>
+                                    </template>
+
+                                    <v-card>
+                                        <v-card-title class="headline grey lighten-2">
+                                            Prodotti
+                                        </v-card-title>
+
+                                        <v-card-text class="mt-2">
+                                            <v-row class="mt-2" v-for="prodotto in item.product" :key="prodotto.id">
+                                                <v-col cols="4">
+                                                    <h3>{{ prodotto.matricola }}</h3>
+                                                </v-col>
+                                                <v-col cols="4">
+                                                    <h3>{{ prodotto.listino.nome }}</h3>
+                                                </v-col>
+                                                <v-col cols="4">
+                                                    <h3>{{ prodotto.pivot.prezzo }}</h3>
+                                                </v-col>
+                                            </v-row>
+
+                                        </v-card-text>
+
+                                        <v-divider></v-divider>
+
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn
+                                                color="primary"
+                                                text
+                                                @click="dialog = false"
+                                            >
+                                                Chiudi
+                                            </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon v-if="item.stato.nome === 'PROVA'"
+                                                color="red"
+                                                small
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                @click="reso(item.id)"
+                                        >
+                                            mdi-delete
+                                        </v-icon>
+                                    </template>
+                                    <span>Reso</span>
+                                </v-tooltip>
+
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon v-if="item.stato.nome === 'PROVA'"
+                                                color="green"
+                                                small
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                @click="apriFattura(item)"
+                                        >
+                                            mdi-check
+                                        </v-icon>
+                                    </template>
+                                    <span>Fattura</span>
+                                </v-tooltip>
+
+                            </template>
 
                         </v-data-table>
                     </v-col>
@@ -87,31 +224,49 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import Fattura from "./Fattura";
     export default {
         name: "Prove",
-
+        components: {Fattura},
         props: ['proveClient'],
 
         data(){
             return {
+                dialog: false,
+                dialogFattura: false,
+                prova:{},
+                itemFattura:{},
+                switchInserisci: true,
+                orecchie:[
+                    {nome: 'destro', valore:'dx'},
+                    {nome: 'sinistro', valore:'sx'}
+                ],
+
                 nuovaProva: {
-                    prezzolistino:'0'
+                    prezzolistino: 0
                 },
-                elementiInProva: [],
+
                 headerProve: [
                     { text: 'Data', align: 'start', sortable: false, value: 'inizio_prova', class: "indigo white--text" },
-                    { text: 'Stato', sortable: false, value: 'stato', class: "indigo white--text" },
+                    { text: 'Stato', sortable: false, value: 'stato.nome', class: "indigo white--text" },
+                    { text: 'Audio', sortable: false, value: 'user.name', class: "indigo white--text" },
+                    { text: 'Tot', sortable: false, value: 'tot', class: "indigo white--text" },
+                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
+
                 headerNuovaProva: [
-                    { text: 'Fornitore', align: 'start', sortable: false, value: 'fornitore_id', class: "indigo white--text" },
-                    { text: 'Prodotto', sortable: false, value: 'prodotto.nome', class: "indigo white--text" },
-                    { text: 'Prezzo', sortable: false, value: 'prodotto.prezzolistino', class: "indigo white--text" },
+                    { text: 'Matricola', align: 'start', sortable: false, value: 'matricola', class: "indigo white--text" },
+                    { text: 'Nome', sortable: false, value: 'nome', class: "indigo white--text" },
+                    { text: 'Prezzo', sortable: false, value: 'prezzo', class: "indigo white--text" },
+                    { text: 'Orecchio', sortable: false, value: 'orecchio', class: "indigo white--text" },
+                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
             }
         },
 
         mounted() {
             this.fetchFornitori();
+            this.fetchProvePassate(this.proveClient.prove);
         },
 
         methods: {
@@ -121,7 +276,28 @@
 
             ...mapActions('product', {
                 fetchInFilialeFornitore:'fetchInFilialeFornitore',
+                switchInProva:'switchInProva',
+                switchRimuoviDallaProva:'switchRimuoviDallaProva',
             }),
+
+            ...mapActions('prove', {
+                AddEleInNuovaProva:'AddEleInNuovaProva',
+                creaNuovaProva:'creaNuovaProva',
+                eliminaEle:'eliminaEle',
+                salvaProvaInCorso:'salvaProvaInCorso',
+                fetchProvePassate:'fetchProvePassate',
+                resoProva:'resoProva',
+            }),
+
+            nuovaProvaInCorso(){
+                this.switchInserisci = false;
+                this.prova.user_id = this.proveClient.user_id;
+                this.prova.client_id = this.proveClient.id;
+                this.prova.filiale_id = this.proveClient.filiale_id;
+                this.creaNuovaProva(this.prova).then(() => {
+                    this.prova.id = this.getNuovaProvaCreata.id;
+                });
+            },
 
             cancella(){
                 this.$emit('chiudiProve')
@@ -129,7 +305,6 @@
 
             caricaProdotti(){
                 if (this.nuovaProva.fornitore_id){
-                    this.nuovaProva.prezzolistino = '0';
                     this.fetchInFilialeFornitore({
                         'idFiliale': this.proveClient.filiale_id,
                         'idFornitore': this.nuovaProva.fornitore_id
@@ -142,10 +317,46 @@
             },
 
             inserisciInProva(){
-                this.elementiInProva.unshift(this.nuovaProva);
+                this.nuovaProva.prova_id = this.prova.id;
+                this.AddEleInNuovaProva(this.nuovaProva);
+                this.switchInProva({
+                    'idProduct':this.nuovaProva.prodotto.id,
+                    'user_id':this.proveClient.user_id,
+                    'client_id':this.proveClient.id,
+                });
+                this.eliminaElementoDallaListaPresenti();
+            },
+
+            eliminaElementoDallaListaPresenti(){
                 let posizione = this.getInFiliale.map(function(ele) { return ele.id; }).indexOf(this.nuovaProva.prodotto.id);
                 this.getInFiliale.splice(posizione, 1);
-                this.nuovaProva.prezzolistino = 0;
+                this.nuovaProva.orecchio = '';
+                this.nuovaProva.prezzolistino = '';
+            },
+
+            eliminaElementoDallaProva(id, idProduct){
+                this.eliminaEle(id);
+                this.switchRimuoviDallaProva(idProduct);
+            },
+
+            salvaProva(){
+                this.salvaProvaInCorso({
+                    'id': this.getNuovaProvaCreata.id,
+                    'tot': this.getElementiNuovaProva.reduce(function(a, b){return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo)})
+                });
+            },
+
+            reso(id){
+                this.resoProva(id);
+            },
+
+            apriFattura(item){
+              this.dialogFattura = true;
+              this.itemFattura = item;
+            },
+
+            chiudiFattura(){
+                this.dialogFattura = false;
             }
         },
 
@@ -156,6 +367,12 @@
 
             ...mapGetters('product', {
                 getInFiliale: 'getInFiliale',
+            }),
+
+            ...mapGetters('prove', {
+                getElementiNuovaProva: 'getElementiNuovaProva',
+                getNuovaProvaCreata: 'getNuovaProvaCreata',
+                getProvePassate: 'getProvePassate',
             }),
         },
     }

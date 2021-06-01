@@ -47,6 +47,14 @@ const help = () => {
         linkaudiometria: 'http://vuexdocker.local/api/audiometria',
         linkaddaudiometria: 'http://vuexdocker.local/api/addAudiometria',
         linkfilialefornitore: 'http://vuexdocker.local/api/filialeFornitore',
+        linknuovaprova: 'http://vuexdocker.local/api/nuovaProva',
+        linksalvaprova: 'http://vuexdocker.local/api/salvaProva',
+        linkaddeleinprova: 'http://vuexdocker.local/api/addEleInProva',
+        linkeliminaeleinprova: 'http://vuexdocker.local/api/provaProdotto',
+        linkproductswitchinprova: 'http://vuexdocker.local/api/productSwitchInProva',
+        linkproductswitchrimuovidallaprova: 'http://vuexdocker.local/api/productSwitchRimuoviDallaProva',
+        linkresoprova: 'http://vuexdocker.local/api/resoProva',
+        linksalvafattura: 'http://vuexdocker.local/api/salvaFattura',
     };
 };
 export default help;

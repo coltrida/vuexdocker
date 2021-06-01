@@ -2015,8 +2015,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -2030,6 +2030,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_clients__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./module/clients */ "./resources/js/Store/module/clients.js");
 /* harmony import */ var _module_tipologie__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./module/tipologie */ "./resources/js/Store/module/tipologie.js");
 /* harmony import */ var _module_audiometrie__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./module/audiometrie */ "./resources/js/Store/module/audiometrie.js");
+/* harmony import */ var _module_prove__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./module/prove */ "./resources/js/Store/module/prove.js");
 
 
 
@@ -2045,8 +2046,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_13__.default.use(vuex__WEBPACK_IMPORTED_MODULE_14__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_14__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_14__.default.use(vuex__WEBPACK_IMPORTED_MODULE_15__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_15__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2060,7 +2062,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_14__.default.Store({
     product: _module_product__WEBPACK_IMPORTED_MODULE_9__.default,
     clients: _module_clients__WEBPACK_IMPORTED_MODULE_10__.default,
     tipologie: _module_tipologie__WEBPACK_IMPORTED_MODULE_11__.default,
-    audiometrie: _module_audiometrie__WEBPACK_IMPORTED_MODULE_12__.default
+    audiometrie: _module_audiometrie__WEBPACK_IMPORTED_MODULE_12__.default,
+    prove: _module_prove__WEBPACK_IMPORTED_MODULE_13__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -3511,6 +3514,48 @@ var actions = {
         }
       }, _callee6);
     }))();
+  },
+  switchInProva: function switchInProva(_ref7, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchinprova), {
+                'idProduct': payload.idProduct,
+                'user_id': payload.user_id,
+                'client_id': payload.client_id
+              });
+
+            case 3:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  },
+  switchRimuoviDallaProva: function switchRimuoviDallaProva(_ref8, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              commit = _ref8.commit;
+              _context8.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchrimuovidallaprova) + '/' + id);
+
+            case 3:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    }))();
   }
 };
 var mutations = {
@@ -3531,6 +3576,254 @@ var mutations = {
     payload.forEach(function (ele) {
       state.richiesti.push(ele);
     }); //state.richiesti.unshift(payload);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/Store/module/prove.js":
+/*!********************************************!*\
+  !*** ./resources/js/Store/module/prove.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    elementiNuovaProva: [],
+    nuovaProvaCreata: {},
+    provePassate: []
+  };
+};
+
+var getters = {
+  getElementiNuovaProva: function getElementiNuovaProva(state) {
+    return state.elementiNuovaProva;
+  },
+  getNuovaProvaCreata: function getNuovaProvaCreata(state) {
+    return state.nuovaProvaCreata;
+  },
+  getProvePassate: function getProvePassate(state) {
+    return state.provePassate;
+  }
+};
+var actions = {
+  fetchProvePassate: function fetchProvePassate(_ref, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              commit('fetchProvePassate', payload);
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  creaNuovaProva: function creaNuovaProva(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linknuovaprova), payload);
+
+            case 3:
+              response = _context2.sent;
+              commit('creaNuovaProva', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  AddEleInNuovaProva: function AddEleInNuovaProva(_ref3, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddeleinprova), {
+                'prova_id': payload.prova_id,
+                'product_id': payload.prodotto.id,
+                'orecchio': payload.orecchio,
+                'prezzo': payload.prezzolistino
+              });
+
+            case 3:
+              response = _context3.sent;
+              commit('AddEleInNuovaProva', response.data.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  eliminaEle: function eliminaEle(_ref4, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkeliminaeleinprova) + '/' + id);
+
+            case 3:
+              commit('eliminaEle', id);
+
+            case 4:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  salvaProvaInCorso: function salvaProvaInCorso(_ref5, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksalvaprova), {
+                'id': payload.id,
+                'tot': payload.tot
+              });
+
+            case 3:
+              response = _context5.sent;
+              commit('salvaProvaInCorso', response.data);
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  },
+  resoProva: function resoProva(_ref6, idProva) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context6.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkresoprova) + '/' + idProva);
+
+            case 3:
+              response = _context6.sent;
+              commit('resoProva', response.data);
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+  salvaFattura: function salvaFattura(_ref7, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksalvafattura), payload);
+
+            case 3:
+              response = _context7.sent;
+              commit('salvaFattura', response.data);
+
+            case 5:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  }
+};
+var mutations = {
+  fetchProvePassate: function fetchProvePassate(state, payload) {
+    state.provePassate = payload;
+  },
+  creaNuovaProva: function creaNuovaProva(state, payload) {
+    state.nuovaProvaCreata = payload;
+  },
+  AddEleInNuovaProva: function AddEleInNuovaProva(state, payload) {
+    state.elementiNuovaProva.unshift(payload);
+  },
+  eliminaEle: function eliminaEle(state, id) {
+    state.elementiNuovaProva = state.elementiNuovaProva.filter(function (u) {
+      return u.id !== id;
+    });
+  },
+  salvaProvaInCorso: function salvaProvaInCorso(state, payload) {
+    state.provePassate.unshift(payload);
+    state.elementiNuovaProva = [];
+  },
+  resoProva: function resoProva(state, payload) {
+    state.provePassate = state.provePassate.filter(function (u) {
+      return u.id !== payload.id;
+    });
+    state.provePassate.unshift(payload);
+  },
+  salvaFattura: function salvaFattura(state, payload) {
+    state.provePassate = state.provePassate.filter(function (u) {
+      return u.id !== payload.id;
+    });
+    state.provePassate.unshift(payload);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4442,7 +4735,15 @@ var help = function help() {
     linkaudiometrie: 'http://vuexdocker.local/api/listaAudiometrie',
     linkaudiometria: 'http://vuexdocker.local/api/audiometria',
     linkaddaudiometria: 'http://vuexdocker.local/api/addAudiometria',
-    linkfilialefornitore: 'http://vuexdocker.local/api/filialeFornitore'
+    linkfilialefornitore: 'http://vuexdocker.local/api/filialeFornitore',
+    linknuovaprova: 'http://vuexdocker.local/api/nuovaProva',
+    linksalvaprova: 'http://vuexdocker.local/api/salvaProva',
+    linkaddeleinprova: 'http://vuexdocker.local/api/addEleInProva',
+    linkeliminaeleinprova: 'http://vuexdocker.local/api/provaProdotto',
+    linkproductswitchinprova: 'http://vuexdocker.local/api/productSwitchInProva',
+    linkproductswitchrimuovidallaprova: 'http://vuexdocker.local/api/productSwitchRimuoviDallaProva',
+    linkresoprova: 'http://vuexdocker.local/api/resoProva',
+    linksalvafattura: 'http://vuexdocker.local/api/salvaFattura'
   };
 };
 

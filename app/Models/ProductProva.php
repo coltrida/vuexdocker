@@ -10,4 +10,9 @@ class ProductProva extends Model
     use HasFactory;
 
     protected $table = 'product_prova';
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

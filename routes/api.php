@@ -10,6 +10,7 @@ use App\Http\Controllers\api\ListinoController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
 use App\Http\Controllers\api\ProductController;
+use App\Http\Controllers\api\ProvaController;
 use App\Http\Controllers\api\RecapitiController;
 use App\Http\Controllers\api\RuoloController;
 use App\Http\Controllers\api\TipologiaController;
@@ -71,6 +72,8 @@ Route::get('/filialeFornitore/{idFiliale}/{idFornitore}', [ProductController::cl
 Route::get('/filiali/{id}/inProva', [ProductController::class, 'inProva']);
 Route::get('/filiali/{id}/richiesti', [ProductController::class, 'richiesti']);
 Route::get('/filiali/{id}/inArrivo', [ProductController::class, 'inArrivo']);
+Route::post('/productSwitchInProva', [ProductController::class, 'switchInProva']);
+Route::get('/productSwitchRimuoviDallaProva/{id}', [ProductController::class, 'switchRimuoviDallaProva']);
 Route::post('/richiestaProdotti', [ProductController::class, 'richiestaProdotti']);
 
 // ---------------- client -------------------------
@@ -97,3 +100,11 @@ Route::get('/eliminaAssocia/{id}', [GestioneController::class, 'eliminaAssociazi
 Route::get('/listaAudiometrie/{idClient}', [AudiometriaController::class, 'index']);
 Route::get('/audiometria/{id}', [AudiometriaController::class, 'seleziona']);
 Route::post('/addAudiometria', [AudiometriaController::class, 'aggiungi']);
+
+// ---------------- prova -------------------------
+Route::post('/salvaProva', [ProvaController::class, 'salvaProva']);
+Route::delete('/provaProdotto/{id}', [ProvaController::class, 'eliminaProdotto']);
+Route::get('/resoProva/{idProva}', [ProvaController::class, 'reso']);
+Route::post('/nuovaProva', [ProvaController::class, 'nuova']);
+Route::post('/addEleInProva', [ProvaController::class, 'addEle']);
+Route::post('/salvaFattura', [ProvaController::class, 'salvaFattura']);

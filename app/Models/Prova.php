@@ -24,6 +24,11 @@ class Prova extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function stato()
+    {
+        return $this->belongsTo(StatoApa::class, 'stato_id', 'id');
+    }
+
     /*public function listino()
     {
         return $this->belongsToMany(Listino::class, 'product_prova', 'prova_id', 'product_id');
@@ -32,7 +37,7 @@ class Prova extends Model
     public function product()
     {
         return $this->belongsToMany(Product::class, 'product_prova', 'prova_id', 'product_id')
-            ->withPivot('prezzo');
+            ->withPivot('prezzo')->with('listino');
     }
 
     public function fattura()

@@ -56,6 +56,18 @@ const actions = {
         const response = await axios.post(`${help().linkrichiestaprodotti}`, payload);
         commit('richiediProduct', response.data.data);
     },
+
+    async switchInProva({commit}, payload){
+        await axios.post(`${help().linkproductswitchinprova}`, {
+            'idProduct': payload.idProduct,
+            'user_id': payload.user_id,
+            'client_id': payload.client_id,
+        });
+    },
+
+    async switchRimuoviDallaProva({commit}, id){
+        await axios.get(`${help().linkproductswitchrimuovidallaprova}`+'/'+id);
+    },
 };
 
 const mutations = {

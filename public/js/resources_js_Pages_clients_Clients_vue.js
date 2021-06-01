@@ -451,10 +451,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Prove.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Prove.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -556,16 +556,325 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      dialog: this.dialogFattura
+    };
+  },
+  name: "Fattura",
+  props: {
+    itemFattura: Object,
+    dialogFattura: Boolean
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('prove', {
+    salvaFattura: 'salvaFattura'
+  })), {}, {
+    salva: function salva() {
+      this.itemFattura.totFatturaReale = this.totFatturaReale;
+      console.log(this.itemFattura);
+      this.salvaFattura(this.itemFattura);
+      this.chiudiFattura();
+    },
+    chiudiFattura: function chiudiFattura() {
+      this.$emit('chiudiFattura');
+    }
+  }),
+  computed: {
+    totFatturaReale: function totFatturaReale() {
+      return this.itemFattura.product.reduce(function (a, b) {
+        return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Prove.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Prove.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _Fattura__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Fattura */ "./resources/js/Components/btnClients/prove/Fattura.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Prove",
+  components: {
+    Fattura: _Fattura__WEBPACK_IMPORTED_MODULE_0__.default
+  },
   props: ['proveClient'],
   data: function data() {
     return {
+      dialog: false,
+      dialogFattura: false,
+      prova: {},
+      itemFattura: {},
+      switchInserisci: true,
+      orecchie: [{
+        nome: 'destro',
+        valore: 'dx'
+      }, {
+        nome: 'sinistro',
+        valore: 'sx'
+      }],
       nuovaProva: {
-        prezzolistino: '0'
+        prezzolistino: 0
       },
-      elementiInProva: [],
       headerProve: [{
         text: 'Data',
         align: 'start',
@@ -575,42 +884,87 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Stato',
         sortable: false,
-        value: 'stato',
+        value: 'stato.nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Audio',
+        sortable: false,
+        value: 'user.name',
+        "class": "indigo white--text"
+      }, {
+        text: 'Tot',
+        sortable: false,
+        value: 'tot',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
         "class": "indigo white--text"
       }],
       headerNuovaProva: [{
-        text: 'Fornitore',
+        text: 'Matricola',
         align: 'start',
         sortable: false,
-        value: 'fornitore_id',
+        value: 'matricola',
         "class": "indigo white--text"
       }, {
-        text: 'Prodotto',
+        text: 'Nome',
         sortable: false,
-        value: 'prodotto.nome',
+        value: 'nome',
         "class": "indigo white--text"
       }, {
         text: 'Prezzo',
         sortable: false,
-        value: 'prodotto.prezzolistino',
+        value: 'prezzo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Orecchio',
+        sortable: false,
+        value: 'orecchio',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
         "class": "indigo white--text"
       }]
     };
   },
   mounted: function mounted() {
     this.fetchFornitori();
+    this.fetchProvePassate(this.proveClient.prove);
   },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('product', {
-    fetchInFilialeFornitore: 'fetchInFilialeFornitore'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('product', {
+    fetchInFilialeFornitore: 'fetchInFilialeFornitore',
+    switchInProva: 'switchInProva',
+    switchRimuoviDallaProva: 'switchRimuoviDallaProva'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('prove', {
+    AddEleInNuovaProva: 'AddEleInNuovaProva',
+    creaNuovaProva: 'creaNuovaProva',
+    eliminaEle: 'eliminaEle',
+    salvaProvaInCorso: 'salvaProvaInCorso',
+    fetchProvePassate: 'fetchProvePassate',
+    resoProva: 'resoProva'
   })), {}, {
+    nuovaProvaInCorso: function nuovaProvaInCorso() {
+      var _this = this;
+
+      this.switchInserisci = false;
+      this.prova.user_id = this.proveClient.user_id;
+      this.prova.client_id = this.proveClient.id;
+      this.prova.filiale_id = this.proveClient.filiale_id;
+      this.creaNuovaProva(this.prova).then(function () {
+        _this.prova.id = _this.getNuovaProvaCreata.id;
+      });
+    },
     cancella: function cancella() {
       this.$emit('chiudiProve');
     },
     caricaProdotti: function caricaProdotti() {
       if (this.nuovaProva.fornitore_id) {
-        this.nuovaProva.prezzolistino = '0';
         this.fetchInFilialeFornitore({
           'idFiliale': this.proveClient.filiale_id,
           'idFornitore': this.nuovaProva.fornitore_id
@@ -621,18 +975,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzolistino;
     },
     inserisciInProva: function inserisciInProva() {
-      this.elementiInProva.unshift(this.nuovaProva);
+      this.nuovaProva.prova_id = this.prova.id;
+      this.AddEleInNuovaProva(this.nuovaProva);
+      this.switchInProva({
+        'idProduct': this.nuovaProva.prodotto.id,
+        'user_id': this.proveClient.user_id,
+        'client_id': this.proveClient.id
+      });
+      this.eliminaElementoDallaListaPresenti();
+    },
+    eliminaElementoDallaListaPresenti: function eliminaElementoDallaListaPresenti() {
       var posizione = this.getInFiliale.map(function (ele) {
         return ele.id;
       }).indexOf(this.nuovaProva.prodotto.id);
       this.getInFiliale.splice(posizione, 1);
-      this.nuovaProva.prezzolistino = 0;
+      this.nuovaProva.orecchio = '';
+      this.nuovaProva.prezzolistino = '';
+    },
+    eliminaElementoDallaProva: function eliminaElementoDallaProva(id, idProduct) {
+      this.eliminaEle(id);
+      this.switchRimuoviDallaProva(idProduct);
+    },
+    salvaProva: function salvaProva() {
+      this.salvaProvaInCorso({
+        'id': this.getNuovaProvaCreata.id,
+        'tot': this.getElementiNuovaProva.reduce(function (a, b) {
+          return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo);
+        })
+      });
+    },
+    reso: function reso(id) {
+      this.resoProva(id);
+    },
+    apriFattura: function apriFattura(item) {
+      this.dialogFattura = true;
+      this.itemFattura = item;
+    },
+    chiudiFattura: function chiudiFattura() {
+      this.dialogFattura = false;
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('fornitori', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('fornitori', {
     getFornitori: 'getFornitori'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('product', {
     getInFiliale: 'getInFiliale'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('prove', {
+    getElementiNuovaProva: 'getElementiNuovaProva',
+    getNuovaProvaCreata: 'getNuovaProvaCreata',
+    getProvePassate: 'getProvePassate'
   }))
 });
 
@@ -39090,6 +39480,45 @@ component.options.__file = "resources/js/Components/btnClients/audiogramma/Visua
 
 /***/ }),
 
+/***/ "./resources/js/Components/btnClients/prove/Fattura.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/Components/btnClients/prove/Fattura.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Fattura_vue_vue_type_template_id_1eb3dade_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Fattura.vue?vue&type=template&id=1eb3dade&scoped=true& */ "./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=template&id=1eb3dade&scoped=true&");
+/* harmony import */ var _Fattura_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Fattura.vue?vue&type=script&lang=js& */ "./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Fattura_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Fattura_vue_vue_type_template_id_1eb3dade_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Fattura_vue_vue_type_template_id_1eb3dade_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "1eb3dade",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Components/btnClients/prove/Fattura.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Components/btnClients/prove/Prove.vue":
 /*!************************************************************!*\
   !*** ./resources/js/Components/btnClients/prove/Prove.vue ***!
@@ -39248,6 +39677,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Fattura_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Fattura.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Fattura_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/Components/btnClients/prove/Prove.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************!*\
   !*** ./resources/js/Components/btnClients/prove/Prove.vue?vue&type=script&lang=js& ***!
@@ -39327,6 +39772,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Nuovo_vue_vue_type_template_id_786c270a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Nuovo_vue_vue_type_template_id_786c270a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Nuovo.vue?vue&type=template&id=786c270a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/audiogramma/Nuovo.vue?vue&type=template&id=786c270a&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=template&id=1eb3dade&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=template&id=1eb3dade&scoped=true& ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Fattura_vue_vue_type_template_id_1eb3dade_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Fattura_vue_vue_type_template_id_1eb3dade_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Fattura_vue_vue_type_template_id_1eb3dade_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Fattura.vue?vue&type=template&id=1eb3dade&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=template&id=1eb3dade&scoped=true&");
 
 
 /***/ }),
@@ -39887,6 +40349,236 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=template&id=1eb3dade&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Fattura.vue?vue&type=template&id=1eb3dade&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-dialog",
+    {
+      attrs: { width: "900" },
+      model: {
+        value: _vm.dialog,
+        callback: function($$v) {
+          _vm.dialog = $$v
+        },
+        expression: "dialog"
+      }
+    },
+    [
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", { staticClass: "headline grey lighten-2" }, [
+            _vm._v("\n            Fattura\n        ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            { staticClass: "mt-2" },
+            [
+              _c(
+                "v-row",
+                { staticClass: "mt-2" },
+                [
+                  _c("v-col", [
+                    _c("h3", [_vm._v(_vm._s(_vm.itemFattura.client.nome))])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _c("h3", [_vm._v(_vm._s(_vm.itemFattura.client.cognome))])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _c("h3", [_vm._v(_vm._s(_vm.itemFattura.client.codfisc))])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _c("h3", [_vm._v(_vm._s(_vm.itemFattura.client.telefono))])
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-row",
+                { staticClass: "mt-2" },
+                [
+                  _c("v-col", [
+                    _c("h3", [_vm._v(_vm._s(_vm.itemFattura.client.indirizzo))])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _c("h3", [_vm._v(_vm._s(_vm.itemFattura.client.citta))])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _c("h3", [_vm._v(_vm._s(_vm.itemFattura.client.cap))])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _c("h3", [_vm._v(_vm._s(_vm.itemFattura.client.provincia))])
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mt-4" },
+                [
+                  _vm._l(_vm.itemFattura.product, function(prodotto) {
+                    return _c(
+                      "v-row",
+                      {
+                        key: prodotto.id,
+                        staticClass: "my-0 py-0",
+                        staticStyle: { "border-bottom": "1px solid grey" }
+                      },
+                      [
+                        _c(
+                          "v-col",
+                          { staticClass: "my-0 py-0", attrs: { cols: "4" } },
+                          [_c("h3", [_vm._v(_vm._s(prodotto.matricola))])]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-col",
+                          { staticClass: "my-0 py-0", attrs: { cols: "4" } },
+                          [_c("h3", [_vm._v(_vm._s(prodotto.listino.nome))])]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-col",
+                          { staticClass: "my-0 py-0", attrs: { cols: "4" } },
+                          [
+                            _c("v-text-field", {
+                              attrs: { label: "prezzo" },
+                              model: {
+                                value: prodotto.pivot.prezzo,
+                                callback: function($$v) {
+                                  _vm.$set(prodotto.pivot, "prezzo", $$v)
+                                },
+                                expression: "prodotto.pivot.prezzo"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    {
+                      staticClass: "my-0 py-0",
+                      staticStyle: { "border-bottom": "1px solid grey" }
+                    },
+                    [
+                      _c("v-col", [
+                        _c("h3", [
+                          _vm._v("Totale: " + _vm._s(_vm.totFatturaReale))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "acconto" },
+                            model: {
+                              value: _vm.itemFattura.acconto,
+                              callback: function($$v) {
+                                _vm.$set(_vm.itemFattura, "acconto", $$v)
+                              },
+                              expression: "itemFattura.acconto"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "rate" },
+                            model: {
+                              value: _vm.itemFattura.rate,
+                              callback: function($$v) {
+                                _vm.$set(_vm.itemFattura, "rate", $$v)
+                              },
+                              expression: "itemFattura.rate"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                2
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "primary", text: "" },
+                  on: { click: _vm.salva }
+                },
+                [_vm._v("\n                Salva\n            ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "primary", text: "" },
+                  on: { click: _vm.chiudiFattura }
+                },
+                [_vm._v("\n                Chiudi\n            ")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Prove.vue?vue&type=template&id=7cc157b1&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Prove.vue?vue&type=template&id=7cc157b1&scoped=true& ***!
@@ -39908,123 +40600,203 @@ var render = function() {
       "div",
       { staticClass: "row" },
       [
-        _c("h2", [
-          _vm._v(
-            _vm._s(_vm.proveClient.nome) + " " + _vm._s(_vm.proveClient.cognome)
+        _c("div", { staticClass: "row mt-2" }, [
+          _c(
+            "div",
+            {
+              staticStyle: {
+                display: "flex",
+                "justify-content": "space-between",
+                "align-items": "center"
+              }
+            },
+            [
+              _c("div", [
+                _c("h2", [
+                  _vm._v(
+                    _vm._s(_vm.proveClient.nome) +
+                      " " +
+                      _vm._s(_vm.proveClient.cognome)
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "mt-2",
+                      attrs: { color: "primary", dark: "" },
+                      on: { click: _vm.cancella }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Chiudi\n                    "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
           )
         ]),
         _vm._v(" "),
         _c(
-          "v-btn",
-          {
-            staticClass: "mt-2",
-            attrs: { color: "primary", dark: "" },
-            on: { click: _vm.cancella }
-          },
-          [_vm._v("\n            Chiudi\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
           "v-container",
           [
-            _c(
-              "v-row",
-              [
-                _c(
-                  "v-col",
-                  { attrs: { cols: "3", sm: "3" } },
-                  [
-                    _c("v-select", {
-                      attrs: {
-                        "item-value": "id",
-                        "item-text": "nome",
-                        items: _vm.getFornitori,
-                        label: "fornitore"
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.caricaProdotti()
-                        }
-                      },
-                      model: {
-                        value: _vm.nuovaProva.fornitore_id,
-                        callback: function($$v) {
-                          _vm.$set(_vm.nuovaProva, "fornitore_id", $$v)
-                        },
-                        expression: "nuovaProva.fornitore_id"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-col",
-                  { attrs: { cols: "3", sm: "3" } },
-                  [
-                    _c("v-select", {
-                      attrs: {
-                        "item-text": "nomeMatricola",
-                        items: _vm.getInFiliale,
-                        label: "prodotti",
-                        "return-object": ""
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.caricaPrezzoProdotto()
-                        }
-                      },
-                      model: {
-                        value: _vm.nuovaProva.prodotto,
-                        callback: function($$v) {
-                          _vm.$set(_vm.nuovaProva, "prodotto", $$v)
-                        },
-                        expression: "nuovaProva.prodotto"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-col",
-                  { attrs: { cols: "3", sm: "3" } },
-                  [
-                    _c("v-text-field", {
-                      attrs: { label: "prezzo" },
-                      model: {
-                        value: _vm.nuovaProva.prezzolistino,
-                        callback: function($$v) {
-                          _vm.$set(_vm.nuovaProva, "prezzolistino", $$v)
-                        },
-                        expression: "nuovaProva.prezzolistino"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-col",
+            _vm.dialogFattura
+              ? _c("fattura", {
+                  attrs: {
+                    itemFattura: _vm.itemFattura,
+                    dialogFattura: _vm.dialogFattura
+                  },
+                  on: { chiudiFattura: _vm.chiudiFattura }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.switchInserisci
+              ? _c(
+                  "v-row",
                   [
                     _c(
                       "v-btn",
                       {
+                        staticClass: "mt-2",
                         attrs: { color: "primary", dark: "" },
-                        on: { click: _vm.inserisciInProva }
+                        on: { click: _vm.nuovaProvaInCorso }
                       },
                       [
                         _vm._v(
-                          "\n                        In Prova\n                    "
+                          "\n                    Nuova Prova\n                "
                         )
                       ]
                     )
                   ],
                   1
                 )
-              ],
-              1
-            ),
+              : _c(
+                  "v-row",
+                  [
+                    _c(
+                      "v-col",
+                      { attrs: { cols: "3", sm: "3" } },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            "item-value": "id",
+                            "item-text": "nome",
+                            items: _vm.getFornitori,
+                            label: "fornitore"
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.caricaProdotti()
+                            }
+                          },
+                          model: {
+                            value: _vm.nuovaProva.fornitore_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.nuovaProva, "fornitore_id", $$v)
+                            },
+                            expression: "nuovaProva.fornitore_id"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-col",
+                      { attrs: { cols: "3", sm: "3" } },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            "item-text": "nomeMatricola",
+                            items: _vm.getInFiliale,
+                            label: "prodotti",
+                            "return-object": ""
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.caricaPrezzoProdotto()
+                            }
+                          },
+                          model: {
+                            value: _vm.nuovaProva.prodotto,
+                            callback: function($$v) {
+                              _vm.$set(_vm.nuovaProva, "prodotto", $$v)
+                            },
+                            expression: "nuovaProva.prodotto"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-col",
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            "item-text": "nome",
+                            "item-value": "valore",
+                            items: _vm.orecchie,
+                            label: "orecchio"
+                          },
+                          model: {
+                            value: _vm.nuovaProva.orecchio,
+                            callback: function($$v) {
+                              _vm.$set(_vm.nuovaProva, "orecchio", $$v)
+                            },
+                            expression: "nuovaProva.orecchio"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-col",
+                      { attrs: { cols: "3", sm: "3" } },
+                      [
+                        _c("v-text-field", {
+                          attrs: { label: "prezzo" },
+                          model: {
+                            value: _vm.nuovaProva.prezzolistino,
+                            callback: function($$v) {
+                              _vm.$set(_vm.nuovaProva, "prezzolistino", $$v)
+                            },
+                            expression: "nuovaProva.prezzolistino"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-col",
+                      [
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "primary", dark: "" },
+                            on: { click: _vm.inserisciInProva }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        In Prova\n                    "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
             _vm._v(" "),
             _c(
               "v-row",
@@ -40033,16 +40805,74 @@ var render = function() {
                   "v-col",
                   { attrs: { cols: "6" } },
                   [
-                    _c("h3", [_vm._v("Nuova Prova")]),
+                    _c(
+                      "div",
+                      {
+                        staticStyle: {
+                          display: "flex",
+                          "justify-content": "space-between"
+                        }
+                      },
+                      [
+                        _c("div", [_c("h3", [_vm._v("Nuova Prova")])]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { color: "primary", dark: "" },
+                                on: { click: _vm.salvaProva }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Salva\n                            "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
                       attrs: {
                         headers: _vm.headerNuovaProva,
-                        items: _vm.elementiInProva,
-                        "items-per-page": 10,
+                        items: _vm.getElementiNuovaProva,
                         "hide-default-footer": ""
-                      }
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "item.actions",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-icon",
+                                {
+                                  attrs: { color: "red", small: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.eliminaElementoDallaProva(
+                                        item.id,
+                                        item.idProduct
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                mdi-delete\n                            "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ])
                     })
                   ],
                   1
@@ -40058,10 +40888,291 @@ var render = function() {
                       staticClass: "elevation-1 mt-3",
                       attrs: {
                         headers: _vm.headerProve,
-                        items: _vm.proveClient.prove,
-                        "items-per-page": 10,
+                        items: _vm.getProvePassate,
                         "hide-default-footer": ""
-                      }
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "item.actions",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-dialog",
+                                {
+                                  attrs: { width: "500" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-icon",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    attrs: {
+                                                      color: "blue",
+                                                      small: ""
+                                                    }
+                                                  },
+                                                  "v-icon",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _vm._v(
+                                                  "\n                                        mdi-format-list-bulleted-square\n                                    "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  ),
+                                  model: {
+                                    value: _vm.dialog,
+                                    callback: function($$v) {
+                                      _vm.dialog = $$v
+                                    },
+                                    expression: "dialog"
+                                  }
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card",
+                                    [
+                                      _c(
+                                        "v-card-title",
+                                        {
+                                          staticClass: "headline grey lighten-2"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        Prodotti\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-text",
+                                        { staticClass: "mt-2" },
+                                        _vm._l(item.product, function(
+                                          prodotto
+                                        ) {
+                                          return _c(
+                                            "v-row",
+                                            {
+                                              key: prodotto.id,
+                                              staticClass: "mt-2"
+                                            },
+                                            [
+                                              _c(
+                                                "v-col",
+                                                { attrs: { cols: "4" } },
+                                                [
+                                                  _c("h3", [
+                                                    _vm._v(
+                                                      _vm._s(prodotto.matricola)
+                                                    )
+                                                  ])
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                { attrs: { cols: "4" } },
+                                                [
+                                                  _c("h3", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        prodotto.listino.nome
+                                                      )
+                                                    )
+                                                  ])
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                { attrs: { cols: "4" } },
+                                                [
+                                                  _c("h3", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        prodotto.pivot.prezzo
+                                                      )
+                                                    )
+                                                  ])
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        }),
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c("v-divider"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-actions",
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "primary",
+                                                text: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.dialog = false
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                            Chiudi\n                                        "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            item.stato.nome === "PROVA"
+                                              ? _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "red",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.reso(
+                                                              item.id
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                        mdi-delete\n                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("Reso")])]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            item.stato.nome === "PROVA"
+                                              ? _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "green",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.apriFattura(
+                                                              item
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                        mdi-check\n                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("Fattura")])]
+                              )
+                            ]
+                          }
+                        }
+                      ])
                     })
                   ],
                   1

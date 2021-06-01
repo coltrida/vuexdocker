@@ -47,7 +47,7 @@ class Client extends Model
 
     public function prova()
     {
-        return $this->hasMany(Prova::class);
+        return $this->hasMany(Prova::class)->with('stato', 'user', 'product', 'client');
     }
 
     public function provePassate()

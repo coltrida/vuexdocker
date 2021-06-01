@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProdottiInFilialeFornitoreResource;
 use App\Http\Resources\ProductInProvaResource;
 use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
@@ -17,7 +18,7 @@ class ProductController extends Controller
 
     public function presentiFornitore($idFilile, $idFornitore, ProductService $productService)
     {
-        return ProductResource::collection($productService->presentiFromFornitore($idFilile, $idFornitore));
+        return ProdottiInFilialeFornitoreResource::collection($productService->presentiFromFornitore($idFilile, $idFornitore));
     }
 
     public function inProva($id, ProductService $productService)
@@ -38,5 +39,15 @@ class ProductController extends Controller
     public function richiestaProdotti(Request $request, ProductService $productService)
     {
         return ProductResource::collection($productService->richiestaProdotti($request));
+    }
+
+    public function switchInProva(Request $request, ProductService $productService)
+    {
+        $productService->switchInProva($request);
+    }
+
+    public function switchRimuoviDallaProva($id, ProductService $productService)
+    {
+        $productService->switchRimuoviDallaProva($id);
     }
 }

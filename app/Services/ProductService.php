@@ -70,4 +70,22 @@ class ProductService
         }
         return $prodotti;
     }
+
+    public function switchInProva($request)
+    {
+        $product = Product::find($request->idProduct);
+        $product->stato_id = 3;
+        $product->user_id = $request->user_id;
+        $product->client_id = $request->client_id;
+        $product->save();
+    }
+
+    public function switchRimuoviDallaProva($id)
+    {
+        $product = Product::find($id);
+        $product->stato_id = 5;
+        $product->user_id = null;
+        $product->client_id = null;
+        $product->save();
+    }
 }
