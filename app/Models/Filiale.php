@@ -28,10 +28,11 @@ class Filiale extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function audio()
+    public function audioprot()
     {
         return $this->belongsToMany(User::class, 'filiale_user', 'filiale_id', 'user_id')
-            ->where('ruolo', config('enum.ruoli.audio'))
+            ->where('ruolo_id', 2)
+            ->with('budget')
             ->withPivot(['id']);
     }
 }

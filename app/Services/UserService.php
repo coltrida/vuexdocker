@@ -4,10 +4,15 @@
 namespace App\Services;
 
 use App\Models\Budget;
+use App\Models\Prova;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
+use function config;
 use function dd;
+use function setlocale;
 use function trim;
+use const LC_TIME;
 
 class UserService
 {
@@ -94,5 +99,35 @@ class UserService
         $budget->save();
 
         return User::with('budget')->find($request->idAudio);
+    }
+
+    public function user($id)
+    {
+        return User::with('ruolo')->find($id);
+    }
+
+    public function situazioneMese()
+    {
+        setlocale(LC_TIME, 'it_IT');
+        Carbon::setLocale('it');
+        $nomeMese = Carbon::now()->monthName;
+        $mese = Carbon::now()->month;
+        $anno = Carbon::now()->year;
+
+
+
+        /*return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+            $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
+        }, "budget:id,budgetAnno,$nomeMese as target"])
+            ->get();*/
+
+        return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+            $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
+        }, "budget:id,budgetAnno,$nomeMese as target"])
+            ->withSum(['provaFinalizzata' => function($g) use($mese, $anno){
+                $g->where([['mese_fine', $mese], ['anno_fine', $anno]]);
+            }], 'tot')
+            ->withCount('provaInCorso')
+            ->get();
     }
 }

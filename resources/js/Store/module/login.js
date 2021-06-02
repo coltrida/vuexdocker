@@ -4,7 +4,9 @@ const state = () => ({
     token: localStorage.getItem('user-token') || '',
     username: localStorage.getItem('username') || '',
     idUser: localStorage.getItem('idUser') || '',
-    messaggio: ''
+    messaggio: '',
+    ruolo: '',
+    user: {}
 });
 
 const getters = {
@@ -20,7 +22,15 @@ const getters = {
 
     getMessaggio(state){
         return state.messaggio;
-    }
+    },
+
+    getUser(state){
+        return state.user;
+    },
+
+    getRuolo(state){
+        return state.ruolo;
+    },
 };
 
 const actions = {
@@ -39,6 +49,11 @@ const actions = {
 
     async resetMessaggio({commit}){
         commit('resetMessaggio');
+    },
+
+    async fetchUser({commit}, id){
+        const response = await axios.get(`${help().linkuser}`+'/'+id);
+        commit('fetchUser', response.data);
     },
 };
 
@@ -69,6 +84,11 @@ const mutations = {
 
     resetMessaggio(state){
         state.messaggio = '';
+    },
+
+    fetchUser(state, payload){
+        state.user = payload;
+        state.ruolo = payload.ruolo.nome;
     }
 };
 

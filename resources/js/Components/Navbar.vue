@@ -18,7 +18,10 @@
             <v-spacer></v-spacer>
 
             <div v-if="getLogged" class="flex justify-end align-center">
-                <nav-bar-admin></nav-bar-admin>
+
+                <nav-bar-admin v-if="getRuolo === 'admin'"/>
+                <nav-bar-audio v-if="getRuolo === 'audio' || getRuolo === 'amministrazione'"/>
+
                 <v-btn text @click="logout" color="red">
                     Logout
                 </v-btn>
@@ -53,15 +56,17 @@
 <script>
     import { mapGetters } from 'vuex';
     import NavBarAdmin from "./NavBarAdmin";
+    import NavBarAudio from "./NavBarAudio";
     export default {
         name: "Navbar",
 
-        components: { NavBarAdmin },
+        components: {NavBarAudio, NavBarAdmin },
 
         computed:{
             ...mapGetters('login', {
                 getLogged:'getLogged',
                 getUsername:'getUsername',
+                getRuolo:'getRuolo',
             })
         },
 

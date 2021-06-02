@@ -55,6 +55,8 @@ const help = () => {
         linkproductswitchrimuovidallaprova: 'http://vuexdocker.local/api/productSwitchRimuoviDallaProva',
         linkresoprova: 'http://vuexdocker.local/api/resoProva',
         linksalvafattura: 'http://vuexdocker.local/api/salvaFattura',
+        linkgetuser: 'http://vuexdocker.local/api/user',
+        linksituazionemese: 'http://vuexdocker.local/api/situazioneMese',
     };
 };
 export default help;

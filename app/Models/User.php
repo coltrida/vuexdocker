@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(Recapito::class);
     }
 
+    public function filiale()
+    {
+        return $this->belongsToMany(Filiale::class, 'filiale_user', 'user_id', 'filiale_id');
+    }
+
     public function scopeAudio($query, $bgt='')
     {
         if($bgt == ''){
@@ -86,6 +91,25 @@ class User extends Authenticatable
     public function budget()
     {
         return $this->belongsTo(Budget::class);
+    }
+
+    public function prova()
+    {
+        return $this->hasMany(Prova::class);
+    }
+
+    public function provaInCorso()
+    {
+        return $this->hasMany(Prova::class)->whereHas('stato', function($q){
+            $q->where('nome', 'PROVA');
+        })->with('client:id,nome,cognome', 'product');
+    }
+
+    public function provaFinalizzata()
+    {
+        return $this->hasMany(Prova::class)->whereHas('stato', function($q){
+            $q->where('nome', 'FATTURA');
+        })->with('client:id,nome,cognome', 'product');
     }
 
 

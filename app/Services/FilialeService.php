@@ -38,6 +38,11 @@ class FilialeService
         return Filiale::with('users:id,name')->orderBy('nome')->get();
     }
 
+    public function situazioneMese()
+    {
+        return Filiale::with('audioprot')->orderBy('nome')->get();
+    }
+
     public function aggiungiAssociazione($request)
     {
         foreach($request->Audio as $audio){

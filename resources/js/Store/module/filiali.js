@@ -2,7 +2,8 @@ import help from "../../help";
 
 const state = () => ({
     filiali: [],
-    associazioni: []
+    associazioni: [],
+    situazioneMese: []
 });
 
 const getters = {
@@ -12,6 +13,10 @@ const getters = {
 
     getAssociazioni(state){
         return state.associazioni;
+    },
+
+    getSituazioneMese(state){
+        return state.situazioneMese;
     },
 
 };
@@ -25,6 +30,11 @@ const actions = {
     async fetchAssociazioni({commit}){
         const response = await axios.get(`${help().linkassociazioniPersonale}`);
         commit('fetchAssociazioni', response.data);
+    },
+
+    async fetchSituazioneMese({commit}){
+        const response = await axios.get(`${help().linksituazionemese}`);
+        commit('fetchSituazioneMese', response.data);
     },
 
     async fetchAssocia({commit}, payload){
@@ -58,6 +68,10 @@ const actions = {
 const mutations = {
     fetchAssociazioni(state, payload){
         state.associazioni = payload;
+    },
+
+    fetchSituazioneMese(state, payload){
+        state.situazioneMese = payload;
     },
 
     fetchAssocia(state, payload){

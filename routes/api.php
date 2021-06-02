@@ -26,12 +26,15 @@ Route::get('/audioConBgt', [UserController::class, 'audioConBgt']);
 Route::get('/audioSenzaBgt', [UserController::class, 'audioSenzaBgt']);
 Route::get('/amm', [UserController::class, 'amm']);
 Route::delete('/user/{id}', [UserController::class, 'elimina']);
+Route::get('/user/{id}', [UserController::class, 'user']);
 Route::post('/addUser', [UserController::class, 'aggiungi']);
+Route::get('/situazioneMese', [UserController::class, 'situazioneMese']);
 
 // ----------------- filiali -------------------------
 Route::get('/filiali', [FilialiController::class, 'index']);
 Route::delete('/filiali/{id}', [FilialiController::class, 'elimina']);
 Route::post('/addFiliale', [FilialiController::class, 'aggiungi']);
+/*Route::get('/situazioneMese', [FilialiController::class, 'situazioneMese']);*/
 
 // ----------------- recapiti -------------------------
 Route::get('/recapiti', [RecapitiController::class, 'index']);

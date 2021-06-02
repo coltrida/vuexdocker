@@ -1,16 +1,44 @@
 <template>
-    <div>
-        <h1>Home</h1>
-        <LineChart></LineChart>
+    <div v-if="getLogged">
+        <home-admin v-if="getRuolo === 'admin'"/>
+        <home-audio v-if="getRuolo === 'audio'"/>
+        <home-amm v-if="getRuolo === 'amministrazione'"/>
     </div>
-
 </template>
 
 <script>
-    import LineChart from "../../Components/btnClients/audiogramma/LineChart";
+    import {mapActions, mapGetters} from "vuex";
+    import HomeAdmin from "../../Components/home/homeAdmin";
+    import HomeAudio from "../../Components/home/homeAudio";
+    import HomeAmm from "../../Components/home/homeAmm";
     export default {
         name: "Home",
-        components: {LineChart}
+        components: {HomeAmm, HomeAudio, HomeAdmin},
+
+        mounted() {
+            if (this.getLogged){
+                this.fetchUser(this.getIdUser)
+            }
+        },
+
+        methods: {
+            ...mapActions('login', {
+                fetchUser: 'fetchUser',
+            }),
+
+            elimina(id) {
+                this.eliminaClient(id)
+            },
+        },
+
+        computed: {
+            ...mapGetters('login', {
+                getLogged: 'getLogged',
+                getUser: 'getUser',
+                getIdUser: 'getIdUser',
+                getRuolo: 'getRuolo',
+            }),
+        },
     }
 </script>
 

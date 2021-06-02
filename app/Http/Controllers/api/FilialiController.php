@@ -22,4 +22,9 @@ class FilialiController extends Controller
     {
         return $filialeService->elimina($id);
     }
+
+    public function situazioneMese(FilialeService $filialeService)
+    {
+        return $filialeService->situazioneMese();
+    }
 }

@@ -19,6 +19,7 @@ class Client extends Model
      * @var array
      */
     protected $guarded = [];
+    protected $appends = ['fullname'];
 
     public function notes()
     {
@@ -89,6 +90,11 @@ class Client extends Model
     public function getEtaAttribute()
     {
         return $this->datanascita ? Carbon::now()->year - substr($this->datanascita, 0, 4) : null;
+    }
+
+    public function getFullnameAttribute()
+    {
+        return $this->cognome.' '.$this->nome;
     }
 
     public function scopeCompleanno($query, $mese, $giorno)

@@ -37,4 +37,14 @@ class UserController extends Controller
     {
         return $userService->elimina($id);
     }
+
+    public function user($id, UserService $userService)
+    {
+        return $userService->user($id);
+    }
+
+    public function situazioneMese(UserService $userService)
+    {
+        return $userService->situazioneMese();
+    }
 }
