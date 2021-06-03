@@ -50,4 +50,9 @@ class ProductController extends Controller
     {
         $productService->switchRimuoviDallaProva($id);
     }
+
+    public function productRimuoviRichiesta($id, ProductService $productService)
+    {
+        $productService->productRimuoviRichiesta($id);
+    }
 }

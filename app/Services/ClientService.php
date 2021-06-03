@@ -15,7 +15,15 @@ class ClientService
     public function lista()
     {
         return Client::with('tipologia:id,nome',
-            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')->orderBy('cognome')->get();
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')
+                ->orderBy('cognome')->get();
+    }
+
+    public function clienteFiliale($idFiliale)
+    {
+        return Client::with('tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')
+                ->where('filiale_id', $idFiliale)->orderBy('cognome')->get();
     }
 
     public function cliente($id)

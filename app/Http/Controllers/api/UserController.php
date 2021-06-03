@@ -43,8 +43,8 @@ class UserController extends Controller
         return $userService->user($id);
     }
 
-    public function situazioneMese(UserService $userService)
+    public function situazioneMese(UserService $userService, $idAudio = '')
     {
-        return $userService->situazioneMese();
+        return $userService->situazioneMese($idAudio);
     }
 }

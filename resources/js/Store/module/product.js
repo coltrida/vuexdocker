@@ -68,6 +68,11 @@ const actions = {
     async switchRimuoviDallaProva({commit}, id){
         await axios.get(`${help().linkproductswitchrimuovidallaprova}`+'/'+id);
     },
+
+    async eliminaRichiesta({commit}, id){
+        await axios.delete(`${help().linkproductrimuovirichiesta}`+'/'+id);
+        commit('eliminaRichiesta', id);
+    },
 };
 
 const mutations = {
@@ -88,12 +93,14 @@ const mutations = {
     },
 
     richiediProduct(state, payload){
-       // console.log(payload);
         payload.forEach(ele => {
             state.richiesti.push(ele);
         })
-        //state.richiesti.unshift(payload);
     },
+
+    eliminaRichiesta(state, id) {
+        state.richiesti = state.richiesti.filter(u => u.id !== id);
+    }
 };
 
 export default{

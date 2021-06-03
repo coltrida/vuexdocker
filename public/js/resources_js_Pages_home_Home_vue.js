@@ -296,6 +296,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _Prodotti__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Prodotti */ "./resources/js/Components/home/Prodotti.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -313,8 +321,179 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "homeAudio"
+  name: "homeAudio",
+  components: {
+    Prodotti: _Prodotti__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  data: function data() {
+    return {
+      dialogProdotti: false,
+      prodottiSelezione: [],
+      expanded: [],
+      headers1: [{
+        text: 'Nome',
+        width: 185,
+        value: 'client.fullname',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Tot',
+        width: 70,
+        value: 'tot',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Inizio',
+        width: 120,
+        value: 'inizio_prova',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }
+      /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
+      ],
+      headers2: [{
+        text: 'Nome',
+        width: 185,
+        value: 'client.fullname',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Tot',
+        width: 70,
+        value: 'tot',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Finalizzato',
+        width: 120,
+        value: 'fine_prova',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }]
+    };
+  },
+  mounted: function mounted() {
+    this.fetchSituazioneMese(this.getIdUser);
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
+    fetchSituazioneMese: 'fetchSituazioneMese'
+  })), {}, {
+    seleziona: function seleziona(items) {
+      this.dialogProdotti = true;
+      this.prodottiSelezione = items;
+    },
+    chiudiProdotti: function chiudiProdotti() {
+      this.dialogProdotti = false;
+      this.prodottiSelezione = [];
+    }
+  }),
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
+    getSituazioneMese: 'getSituazioneMese'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
+  }))
 });
 
 /***/ }),
@@ -1106,18 +1285,246 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "flex justify-start align-center mt-2" },
+    [
+      _c(
+        "v-container",
+        [
+          _c("v-row", [_c("h1", [_vm._v("Home Audio")])]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _vm.dialogProdotti
+                ? _c("prodotti", {
+                    attrs: {
+                      prodotti: _vm.prodottiSelezione,
+                      "dialog-pro": _vm.dialogProdotti
+                    },
+                    on: { chiudiProdotti: _vm.chiudiProdotti }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("v-col", { attrs: { cols: "6" } }, [
+                _c("h2", [_vm._v("Prove in Corso:")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headers1,
+                        items: _vm.getSituazioneMese.prova_in_corso,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "header.client.fullname",
+                          fn: function(ref) {
+                            var header = ref.header
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.getSituazioneMese.name) +
+                                  "\n                        "
+                              )
+                            ]
+                          }
+                        },
+                        {
+                          key: "item.actions",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "green", dark: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.seleziona(item.product)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Prodotti\n                            "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("h2", [_vm._v("Finalizzati:")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headers2,
+                        items: _vm.getSituazioneMese.prova_finalizzata,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "header.client.fullname",
+                          fn: function(ref) {
+                            var header = ref.header
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.getSituazioneMese.name) +
+                                  "\n                        "
+                              )
+                            ]
+                          }
+                        },
+                        {
+                          key: "header.actions",
+                          fn: function(ref) {
+                            var header = ref.header
+                            return [
+                              _c(
+                                "v-chip",
+                                {
+                                  staticStyle: { "font-size": "12px" },
+                                  attrs: {
+                                    color: "orange",
+                                    label: "",
+                                    "text-color": "white"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Bgt: € " +
+                                      _vm._s(
+                                        (_vm.getSituazioneMese.budget
+                                          .budgetAnno *
+                                          _vm.getSituazioneMese.budget.target) /
+                                          100
+                                      ) +
+                                      " - Fatt: € " +
+                                      _vm._s(
+                                        _vm.getSituazioneMese
+                                          .prova_finalizzata_sum_tot
+                                      ) +
+                                      "\n                            "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        },
+                        {
+                          key: "item.actions",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "green", dark: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.seleziona(item.product)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Prodotti\n                            "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("v-col", { attrs: { cols: "6" } }, [
+                _c("h2", [_vm._v("Appuntamenti:")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headers1,
+                        items: _vm.getSituazioneMese.prova_in_corso,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "header.client.fullname",
+                          fn: function(ref) {
+                            var header = ref.header
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.getSituazioneMese.name) +
+                                  "\n                        "
+                              )
+                            ]
+                          }
+                        },
+                        {
+                          key: "item.actions",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "green", dark: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.seleziona(item.product)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Prodotti\n                            "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  ],
+                  1
+                )
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justify-start align-center mt-2" }, [
-      _c("h1", [_vm._v("Home Audio")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

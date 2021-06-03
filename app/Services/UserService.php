@@ -106,7 +106,7 @@ class UserService
         return User::with('ruolo')->find($id);
     }
 
-    public function situazioneMese()
+    public function situazioneMese($idAudio)
     {
         setlocale(LC_TIME, 'it_IT');
         Carbon::setLocale('it');
@@ -114,12 +114,16 @@ class UserService
         $mese = Carbon::now()->month;
         $anno = Carbon::now()->year;
 
-
-
-        /*return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
-            $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
-        }, "budget:id,budgetAnno,$nomeMese as target"])
-            ->get();*/
+        if($idAudio){
+            return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+                $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
+            }, "budget:id,budgetAnno,$nomeMese as target"])
+                ->withSum(['provaFinalizzata' => function($g) use($mese, $anno){
+                    $g->where([['mese_fine', $mese], ['anno_fine', $anno]]);
+                }], 'tot')
+                ->withCount('provaInCorso')
+                ->find($idAudio);
+        }
 
         return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
             $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
@@ -129,5 +133,6 @@ class UserService
             }], 'tot')
             ->withCount('provaInCorso')
             ->get();
+
     }
 }

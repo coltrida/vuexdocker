@@ -88,4 +88,9 @@ class ProductService
         $product->client_id = null;
         $product->save();
     }
+
+    public function productRimuoviRichiesta($id)
+    {
+        Product::find($id)->delete();
+    }
 }

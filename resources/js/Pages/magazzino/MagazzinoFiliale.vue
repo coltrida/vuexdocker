@@ -172,6 +172,7 @@
                 fetchRichiesti:'fetchRichiesti',
                 fetchInArrivo:'fetchInArrivo',
                 richiediProduct:'richiediProduct',
+                eliminaRichiesta:'eliminaRichiesta',
             }),
 
             ...mapActions('fornitori', {
@@ -194,6 +195,10 @@
                 this.richiediProduct(this.productRichiesto);
                 this.productRichiesto = {};
             },
+
+            elimina(id){
+                this.eliminaRichiesta(id);
+            }
 
         },
 

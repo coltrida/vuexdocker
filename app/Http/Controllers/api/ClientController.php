@@ -19,6 +19,11 @@ class ClientController extends Controller
         return new ClientResource($clientService->cliente($id));
     }
 
+    public function clientsFiliale($idFiliale, ClientService $clientService)
+    {
+        return ClientResource::collection($clientService->clienteFiliale($idFiliale));
+    }
+
     public function aggiungi(Request $request, ClientService $clientService)
     {
         return $clientService->aggiungi($request);

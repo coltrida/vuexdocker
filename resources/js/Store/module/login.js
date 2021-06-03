@@ -5,7 +5,7 @@ const state = () => ({
     username: localStorage.getItem('username') || '',
     idUser: localStorage.getItem('idUser') || '',
     messaggio: '',
-    ruolo: '',
+    ruolo: localStorage.getItem('rl') || '',
     user: {}
 });
 
@@ -64,10 +64,12 @@ const mutations = {
             localStorage.setItem('user-token', payload.token);
             localStorage.setItem('username', payload.user.name);
             localStorage.setItem('idUser', payload.user.id);
+            localStorage.setItem('rl', payload.user.ruolo_id);
 
             state.token = localStorage.getItem('user-token');
             state.username = localStorage.getItem('username');
             state.idUser = localStorage.getItem('idUser');
+            state.ruolo = localStorage.getItem('rl');
             state.messaggio = '';
         }else{
             state.messaggio = "Credenziali errate"
@@ -78,6 +80,7 @@ const mutations = {
         localStorage.removeItem('user-token');
         localStorage.removeItem('username');
         localStorage.removeItem('idUser');
+        localStorage.removeItem('rl');
         state.token = '';
         state.username = '';
     },

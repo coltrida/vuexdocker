@@ -8,6 +8,7 @@ const routes = [
     { path: '/filiali', component: () => import('../Pages/strutture/Filiali'), name: 'filiali' },
     { path: '/recapiti', component: () => import('../Pages/strutture/Recapiti'), name: 'recapiti' },
     { path: '/clients', component: () => import('../Pages/clients/Clients'), name: 'clients' },
+    { path: '/clientsFiliale/:filialeId', component: () => import('../Pages/clients/ClientsFiliale'), name: 'clientsFiliale' },
     { path: '/clients/inserisci/:clientId?', component: () => import('../Pages/clients/Inserisci'), name: 'clientsInserisci' },
     { path: '/magazzino/:filialeId', component: () => import('../Pages/magazzino/MagazzinoFiliale'), name: 'magazzino' },
     { path: '/associaPersonale', component: () => import('../Pages/gestione/AssociaPersonale'), name: 'associaPersonale' },

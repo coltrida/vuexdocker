@@ -33,6 +33,7 @@ const help = () => {
         linkaddrecapito: 'http://vuexdocker.local/api/addRecapito',
         linkrichiestaprodotti: 'http://vuexdocker.local/api/richiestaProdotti',
         linkclients: 'http://vuexdocker.local/api/clients',
+        linkclientsfiliale: 'http://vuexdocker.local/api/clientsFiliale',
         linkaddclient: 'http://vuexdocker.local/api/addClient',
         linkmodificaclient: 'http://vuexdocker.local/api/modificaClient',
         linktipologie: 'http://vuexdocker.local/api/tipologie',
@@ -57,6 +58,8 @@ const help = () => {
         linksalvafattura: 'http://vuexdocker.local/api/salvaFattura',
         linkgetuser: 'http://vuexdocker.local/api/user',
         linksituazionemese: 'http://vuexdocker.local/api/situazioneMese',
+        linkfilialiuser: 'http://vuexdocker.local/api/filialiUser',
+        linkproductrimuovirichiesta: 'http://vuexdocker.local/api/productRimuoviRichiesta',
     };
 };
 export default help;

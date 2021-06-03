@@ -22,6 +22,11 @@ const actions = {
         commit('fetchClients', response.data.data);
     },
 
+    async fetchClientsFiliale({commit}, idFiliale){
+        const response = await axios.get(`${help().linkclientsfiliale}`+'/'+idFiliale);
+        commit('fetchClients', response.data.data);
+    },
+
     async fetchClient({commit}, id){
         const response = await axios.get(`${help().linkclients}`+'/'+id);
         commit('fetchClient', response.data.data);

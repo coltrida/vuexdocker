@@ -27,6 +27,11 @@ const actions = {
         commit('fetchFiliali', response.data);
     },
 
+    async fetchFilialiByUser({commit}, idUser){
+        const response = await axios.get(`${help().linkfilialiuser}`+'/'+idUser);
+        commit('fetchFiliali', response.data);
+    },
+
     async fetchAssociazioni({commit}){
         const response = await axios.get(`${help().linkassociazioniPersonale}`);
         commit('fetchAssociazioni', response.data);

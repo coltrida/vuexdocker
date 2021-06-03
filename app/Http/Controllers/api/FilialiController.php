@@ -13,6 +13,11 @@ class FilialiController extends Controller
         return $filialeService->lista();
     }
 
+    public function filialiAudio($idAudio, FilialeService $filialeService)
+    {
+        return $filialeService->filialiAudio($idAudio);
+    }
+
     public function aggiungi(Request $request, FilialeService $filialeService)
     {
         return $filialeService->aggiungi($request);

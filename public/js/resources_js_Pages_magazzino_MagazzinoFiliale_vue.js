@@ -260,7 +260,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchInProva: 'fetchInProva',
     fetchRichiesti: 'fetchRichiesti',
     fetchInArrivo: 'fetchInArrivo',
-    richiediProduct: 'richiediProduct'
+    richiediProduct: 'richiediProduct',
+    eliminaRichiesta: 'eliminaRichiesta'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
@@ -276,6 +277,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.productRichiesto.stato_id = 6;
       this.richiediProduct(this.productRichiesto);
       this.productRichiesto = {};
+    },
+    elimina: function elimina(id) {
+      this.eliminaRichiesta(id);
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {

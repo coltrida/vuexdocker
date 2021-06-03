@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Filiale;
 use App\Models\FilialeUser;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class FilialeService
@@ -13,6 +14,11 @@ class FilialeService
     public function lista()
     {
         return Filiale::orderBy('nome')->get();
+    }
+
+    public function filialiAudio($idAudio)
+    {
+        return User::with('filiale')->find($idAudio)->filiale;
     }
 
     public function aggiungi($request)

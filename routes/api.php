@@ -28,10 +28,11 @@ Route::get('/amm', [UserController::class, 'amm']);
 Route::delete('/user/{id}', [UserController::class, 'elimina']);
 Route::get('/user/{id}', [UserController::class, 'user']);
 Route::post('/addUser', [UserController::class, 'aggiungi']);
-Route::get('/situazioneMese', [UserController::class, 'situazioneMese']);
+Route::get('/situazioneMese/{idAudio?}', [UserController::class, 'situazioneMese']);
 
 // ----------------- filiali -------------------------
 Route::get('/filiali', [FilialiController::class, 'index']);
+Route::get('/filialiUser/{idAudio}', [FilialiController::class, 'filialiAudio']);
 Route::delete('/filiali/{id}', [FilialiController::class, 'elimina']);
 Route::post('/addFiliale', [FilialiController::class, 'aggiungi']);
 /*Route::get('/situazioneMese', [FilialiController::class, 'situazioneMese']);*/
@@ -77,11 +78,13 @@ Route::get('/filiali/{id}/richiesti', [ProductController::class, 'richiesti']);
 Route::get('/filiali/{id}/inArrivo', [ProductController::class, 'inArrivo']);
 Route::post('/productSwitchInProva', [ProductController::class, 'switchInProva']);
 Route::get('/productSwitchRimuoviDallaProva/{id}', [ProductController::class, 'switchRimuoviDallaProva']);
+Route::delete('/productRimuoviRichiesta/{idProduct}', [ProductController::class, 'productRimuoviRichiesta']);
 Route::post('/richiestaProdotti', [ProductController::class, 'richiestaProdotti']);
 
 // ---------------- client -------------------------
 Route::get('/clients', [ClientController::class, 'index']);
 Route::get('/clients/{id}', [ClientController::class, 'cliente']);
+Route::get('/clientsFiliale/{idFiliale}', [ClientController::class, 'clientsFiliale']);
 Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
 Route::post('/addClient', [ClientController::class, 'aggiungi']);
 Route::post('/modificaClient', [ClientController::class, 'modifica']);
