@@ -165,6 +165,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -229,15 +271,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
-  updated: function updated() {
-    this.fetchSituazioneMese();
-  },
+
+  /*updated() {
+      this.fetchSituazioneMese();
+  },*/
   mounted: function mounted() {
     this.fetchSituazioneMese();
   },
 
   /*watch:{
-      getSituazioneMese(){
+      getProvePassate(){
+          console.log('ok')
           this.fetchSituazioneMese();
       }
   },*/
@@ -313,6 +357,42 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -498,11 +578,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.prodottiSelezione = [];
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
     getSituazioneMese: 'getSituazioneMese'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getIdUser: 'getIdUser'
-  }))
+  })), {}, {
+    bgtAnno: function bgtAnno() {
+      return this.getSituazioneMese.budget ? this.getSituazioneMese.budget.budgetAnno : null;
+    },
+    bgtTarget: function bgtTarget() {
+      return this.getSituazioneMese.budget ? this.getSituazioneMese.budget.target : null;
+    }
+  })
 });
 
 /***/ }),
@@ -1051,7 +1138,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "6" } },
+                { attrs: { cols: "4" } },
                 [
                   _c("h2", [_vm._v("Prove in Corso:")]),
                   _vm._v(" "),
@@ -1121,7 +1208,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "6" } },
+                { attrs: { cols: "4" } },
                 [
                   _c("h2", [_vm._v("Finalizzati:")]),
                   _vm._v(" "),
@@ -1135,6 +1222,110 @@ var render = function() {
                           attrs: {
                             headers: _vm.headers2,
                             items: audio.prova_finalizzata,
+                            "hide-default-footer": ""
+                          },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "header.client.fullname",
+                                fn: function(ref) {
+                                  var header = ref.header
+                                  return [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(audio.name) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                }
+                              },
+                              {
+                                key: "header.actions",
+                                fn: function(ref) {
+                                  var header = ref.header
+                                  return [
+                                    _c(
+                                      "v-chip",
+                                      {
+                                        staticStyle: { "font-size": "12px" },
+                                        attrs: {
+                                          color: "orange",
+                                          label: "",
+                                          "text-color": "white"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                Bgt: € " +
+                                            _vm._s(
+                                              (audio.budget.budgetAnno *
+                                                audio.budget.target) /
+                                                100
+                                            ) +
+                                            " - Fatt: € " +
+                                            _vm._s(
+                                              audio.prova_finalizzata_sum_tot
+                                            ) +
+                                            "\n                            "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                }
+                              },
+                              {
+                                key: "item.actions",
+                                fn: function(ref) {
+                                  var item = ref.item
+                                  return [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: { color: "green", dark: "" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.seleziona(item.product)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                Prodotti\n                            "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                }
+                              }
+                            ],
+                            null,
+                            true
+                          )
+                        })
+                      ],
+                      1
+                    )
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "4" } },
+                [
+                  _c("h2", [_vm._v("Resi:")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.getSituazioneMese, function(audio) {
+                    return _c(
+                      "div",
+                      { key: audio.id },
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1 mt-3",
+                          attrs: {
+                            headers: _vm.headers2,
+                            items: audio.prova_reso,
                             "hide-default-footer": ""
                           },
                           scopedSlots: _vm._u(
@@ -1413,10 +1604,96 @@ var render = function() {
                                   _vm._v(
                                     "\n                                Bgt: € " +
                                       _vm._s(
-                                        (_vm.getSituazioneMese.budget
-                                          .budgetAnno *
-                                          _vm.getSituazioneMese.budget.target) /
-                                          100
+                                        (_vm.bgtAnno * _vm.bgtTarget) / 100
+                                      ) +
+                                      " - Fatt: € " +
+                                      _vm._s(
+                                        _vm.getSituazioneMese
+                                          .prova_finalizzata_sum_tot
+                                      ) +
+                                      "\n                            "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        },
+                        {
+                          key: "item.actions",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "green", dark: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.seleziona(item.product)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Prodotti\n                            "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("h2", [_vm._v("Resi:")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headers2,
+                        items: _vm.getSituazioneMese.prova_reso,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "header.client.fullname",
+                          fn: function(ref) {
+                            var header = ref.header
+                            return [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.getSituazioneMese.name) +
+                                  "\n                        "
+                              )
+                            ]
+                          }
+                        },
+                        {
+                          key: "header.actions",
+                          fn: function(ref) {
+                            var header = ref.header
+                            return [
+                              _c(
+                                "v-chip",
+                                {
+                                  staticStyle: { "font-size": "12px" },
+                                  attrs: {
+                                    color: "orange",
+                                    label: "",
+                                    "text-color": "white"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Bgt: € " +
+                                      _vm._s(
+                                        (_vm.bgtAnno * _vm.bgtTarget) / 100
                                       ) +
                                       " - Fatt: € " +
                                       _vm._s(

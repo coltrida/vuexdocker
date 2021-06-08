@@ -12,7 +12,7 @@
                     v-if="dialogProdotti"
                     @chiudiProdotti="chiudiProdotti"
                 />
-                <v-col cols="6">
+                <v-col cols="4">
                     <h2>Prove in Corso:</h2>
                     <div v-for="audio in getSituazioneMese" :key="audio.id">
                         <v-data-table
@@ -37,7 +37,7 @@
                     </div>
                 </v-col>
 
-                <v-col cols="6">
+                <v-col cols="4">
                     <h2>Finalizzati:</h2>
                     <div v-for="audio in getSituazioneMese" :key="audio.id">
                         <v-data-table
@@ -80,6 +80,48 @@
                     </div>
                 </v-col>
 
+                <v-col cols="4">
+                    <h2>Resi:</h2>
+                    <div v-for="audio in getSituazioneMese" :key="audio.id">
+                        <v-data-table
+                            :headers="headers2"
+                            :items="audio.prova_reso"
+                            class="elevation-1 mt-3"
+                            hide-default-footer
+                        >
+
+                            <template v-slot:header.client.fullname="{ header }">
+                                {{ audio.name }}
+                            </template>
+
+                            <template v-slot:header.actions="{ header }">
+                                <v-chip
+                                    style="font-size: 12px"
+                                    color="orange"
+                                    label
+                                    text-color="white"
+                                >
+                                    Bgt: € {{ audio.budget.budgetAnno * audio.budget.target / 100 }} - Fatt: € {{audio.prova_finalizzata_sum_tot}}
+                                </v-chip>
+
+
+                            </template>
+
+                            <!--<template v-slot:item.product="{ header }">
+                                <v-btn color="green" @click.stop="seleziona(item)">
+                                    Prodotti
+                                </v-btn>
+                            </template>-->
+                            <template v-slot:item.actions="{ item }">
+                                <v-btn @click="seleziona(item.product)" color="green" dark>
+                                    Prodotti
+                                </v-btn>
+
+                            </template>
+
+                        </v-data-table>
+                    </div>
+                </v-col>
             </v-row>
 
         </v-container>
@@ -114,16 +156,17 @@
             }
         },
 
-        updated() {
+        /*updated() {
             this.fetchSituazioneMese();
-        },
+        },*/
 
         mounted() {
             this.fetchSituazioneMese();
         },
 
         /*watch:{
-            getSituazioneMese(){
+            getProvePassate(){
+                console.log('ok')
                 this.fetchSituazioneMese();
             }
         },*/
@@ -148,6 +191,10 @@
             ...mapGetters('users', {
                 getSituazioneMese: 'getSituazioneMese',
             }),
+
+            /*...mapGetters('prove', {
+                getProvePassate: 'getProvePassate',
+            }),*/
         },
     }
 </script>

@@ -112,6 +112,13 @@ class User extends Authenticatable
         })->with('client:id,nome,cognome', 'product');
     }
 
+    public function provaReso()
+    {
+        return $this->hasMany(Prova::class)->whereHas('stato', function($q){
+            $q->where('nome', 'RESO');
+        })->with('client:id,nome,cognome', 'product');
+    }
+
     public function client()
     {
         return $this->hasMany(Client::class);

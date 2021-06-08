@@ -31,6 +31,7 @@ const getters = {
     getRuolo(state){
         return state.ruolo;
     },
+
 };
 
 const actions = {
@@ -69,7 +70,7 @@ const mutations = {
             state.token = localStorage.getItem('user-token');
             state.username = localStorage.getItem('username');
             state.idUser = localStorage.getItem('idUser');
-            state.ruolo = localStorage.getItem('rl');
+            state.ruolo = payload.user.ruolo.nome;
             state.messaggio = '';
         }else{
             state.messaggio = "Credenziali errate"

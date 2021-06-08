@@ -11,7 +11,7 @@ class LoginService
 {
     public function login($request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::with('ruolo', 'recapito')->where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return [

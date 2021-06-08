@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AppuntamentiController;
 use App\Http\Controllers\api\AudiometriaController;
 use App\Http\Controllers\api\CategoriaController;
 use App\Http\Controllers\api\ClientController;
@@ -41,6 +42,7 @@ Route::post('/addFiliale', [FilialiController::class, 'aggiungi']);
 // ----------------- recapiti -------------------------
 Route::get('/recapiti', [RecapitiController::class, 'index']);
 Route::get('/recapitiPerAudio', [RecapitiController::class, 'listaPerAudio']);
+Route::get('/recapiti/{idAudio}', [RecapitiController::class, 'recapitiByAudio']);
 Route::delete('/recapiti/{id}', [RecapitiController::class, 'elimina']);
 Route::post('/addRecapito', [RecapitiController::class, 'aggiungi']);
 
@@ -115,3 +117,8 @@ Route::get('/resoProva/{idProva}', [ProvaController::class, 'reso']);
 Route::post('/nuovaProva', [ProvaController::class, 'nuova']);
 Route::post('/addEleInProva', [ProvaController::class, 'addEle']);
 Route::post('/salvaFattura', [ProvaController::class, 'salvaFattura']);
+
+// ----------------- appuntamenti -----------------------
+Route::get('/appuntamentiCliente/{idClient}', [AppuntamentiController::class, 'index']);
+Route::delete('/appuntamentiCliente/{id}', [AppuntamentiController::class, 'elimina']);
+Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);

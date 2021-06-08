@@ -104,7 +104,7 @@ class UserService
 
     public function user($id)
     {
-        return User::with('ruolo')->find($id);
+        return User::with('ruolo', 'recapito')->find($id);
     }
 
     public function situazioneMese($idAudio)
@@ -118,6 +118,8 @@ class UserService
         if($idAudio){
             return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
                 $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
+            },'provaReso' => function($r) use($mese, $anno){
+                $r->where([['mese_fine', $mese], ['anno_fine', $anno]]);
             }, "budget:id,budgetAnno,$nomeMese as target"])
                 ->withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', $mese], ['anno_fine', $anno]]);
@@ -128,6 +130,8 @@ class UserService
 
         return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
             $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
+        },'provaReso' => function($r) use($mese, $anno){
+            $r->where([['mese_fine', $mese], ['anno_fine', $anno]]);
         }, "budget:id,budgetAnno,$nomeMese as target"])
             ->withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                 $g->where([['mese_fine', $mese], ['anno_fine', $anno]]);

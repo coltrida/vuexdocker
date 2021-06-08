@@ -17,7 +17,7 @@ class CreateAppuntamentosTable extends Migration
             $table->id();
             $table->date('giorno');
             $table->time('orario');
-            $table->string('nota');
+            $table->string('nota')->nullable();
             $table->bigInteger('client_id');
             $table->bigInteger('user_id');
             $table->bigInteger('filiale_id')->nullable();

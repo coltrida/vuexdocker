@@ -18,6 +18,11 @@ class RecapitiController extends Controller
         return $recapitoService->listaPerAudio();
     }
 
+    public function recapitiByAudio($idAudio, RecapitoService $recapitoService)
+    {
+        return $recapitoService->recapitiByAudio($idAudio);
+    }
+
     public function aggiungi(Request $request, RecapitoService $recapitoService)
     {
         return $recapitoService->aggiungi($request);

@@ -56,7 +56,43 @@
                                     label
                                     text-color="white"
                                 >
-                                    Bgt: € {{ getSituazioneMese.budget.budgetAnno * getSituazioneMese.budget.target / 100 }} - Fatt: € {{getSituazioneMese.prova_finalizzata_sum_tot}}
+                                    Bgt: € {{ bgtAnno * bgtTarget / 100 }} - Fatt: € {{getSituazioneMese.prova_finalizzata_sum_tot}}
+                                </v-chip>
+
+
+                            </template>
+
+                            <template v-slot:item.actions="{ item }">
+                                <v-btn @click="seleziona(item.product)" color="green" dark>
+                                    Prodotti
+                                </v-btn>
+
+                            </template>
+
+                        </v-data-table>
+                    </div>
+
+                    <h2>Resi:</h2>
+                    <div>
+                        <v-data-table
+                            :headers="headers2"
+                            :items="getSituazioneMese.prova_reso"
+                            class="elevation-1 mt-3"
+                            hide-default-footer
+                        >
+
+                            <template v-slot:header.client.fullname="{ header }">
+                                {{ getSituazioneMese.name }}
+                            </template>
+
+                            <template v-slot:header.actions="{ header }">
+                                <v-chip
+                                    style="font-size: 12px"
+                                    color="orange"
+                                    label
+                                    text-color="white"
+                                >
+                                    Bgt: € {{ bgtAnno * bgtTarget / 100 }} - Fatt: € {{getSituazioneMese.prova_finalizzata_sum_tot}}
                                 </v-chip>
 
 
@@ -134,6 +170,7 @@
 
         mounted() {
             this.fetchSituazioneMese(this.getIdUser);
+
         },
 
         methods: {
@@ -160,6 +197,14 @@
             ...mapGetters('login', {
                 getIdUser: 'getIdUser',
             }),
+
+            bgtAnno(){
+                return this.getSituazioneMese.budget ? this.getSituazioneMese.budget.budgetAnno : null;
+            },
+
+            bgtTarget(){
+                return this.getSituazioneMese.budget ? this.getSituazioneMese.budget.target : null;
+            }
         },
     }
 </script>

@@ -57,6 +57,239 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Appuntamento",
+  data: function data() {
+    return {
+      newAppuntamento: {
+        filiale_id: null,
+        recapito_id: null,
+        nota: null
+      },
+      menu: false,
+      headers: [{
+        text: 'Giorno',
+        align: 'start',
+        sortable: false,
+        value: 'giorno',
+        "class": "indigo white--text"
+      }, {
+        text: 'orario',
+        sortable: false,
+        value: 'orario',
+        "class": "indigo white--text"
+      }, {
+        text: 'nota',
+        sortable: false,
+        value: 'nota',
+        "class": "indigo white--text"
+      }, {
+        text: 'filiale_id',
+        sortable: false,
+        value: 'filiale.nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'recapito_id',
+        sortable: false,
+        value: 'recapito.nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }]
+    };
+  },
+  props: ['appuntamentoClient'],
+  mounted: function mounted() {
+    this.fetchAppuntamenti(this.appuntamentoClient.id);
+    this.fetchRecapitiByAudio(this.getIdUser);
+    this.fetchFilialiByUser(this.getIdUser);
+  },
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
+    fetchAppuntamenti: 'fetchAppuntamenti',
+    addAppuntamento: 'addAppuntamento',
+    eliminaAppuntamento: 'eliminaAppuntamento'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
+    fetchRecapitiByAudio: 'fetchRecapitiByAudio'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
+    fetchFilialiByUser: 'fetchFilialiByUser'
+  })), {}, {
+    cancella: function cancella() {
+      this.$emit('chiudiAppuntamento');
+    },
+    inserisci: function inserisci() {
+      this.newAppuntamento.user_id = this.getIdUser;
+      this.newAppuntamento.client_id = this.appuntamentoClient.id;
+      this.addAppuntamento(this.newAppuntamento);
+      this.newAppuntamento = {
+        filiale_id: null,
+        recapito_id: null,
+        nota: null
+      };
+    },
+    elimina: function elimina(id) {
+      this.eliminaAppuntamento(id);
+    }
+  }),
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
+    getAppuntamenti: 'getAppuntamenti'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
+    getRecapiti: 'getRecapiti'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
+    getFiliali: 'getFiliali'
+  }))
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/audiogramma/Audiogramma.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/audiogramma/Audiogramma.vue?vue&type=script&lang=js& ***!
@@ -1068,10 +1301,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _Components_Messaggio__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Components/Messaggio */ "./resources/js/Components/Messaggio.vue");
 /* harmony import */ var _Components_btnClients_audiogramma_Audiogramma__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Components/btnClients/audiogramma/Audiogramma */ "./resources/js/Components/btnClients/audiogramma/Audiogramma.vue");
 /* harmony import */ var _Components_btnClients_prove_Prove__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Components/btnClients/prove/Prove */ "./resources/js/Components/btnClients/prove/Prove.vue");
+/* harmony import */ var _Components_btnClients_appuntamento_Appuntamento__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Components/btnClients/appuntamento/Appuntamento */ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1194,6 +1428,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -1203,7 +1459,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     Prove: _Components_btnClients_prove_Prove__WEBPACK_IMPORTED_MODULE_2__.default,
     Audiogramma: _Components_btnClients_audiogramma_Audiogramma__WEBPACK_IMPORTED_MODULE_1__.default,
-    Messaggio: _Components_Messaggio__WEBPACK_IMPORTED_MODULE_0__.default
+    Messaggio: _Components_Messaggio__WEBPACK_IMPORTED_MODULE_0__.default,
+    Appuntamento: _Components_btnClients_appuntamento_Appuntamento__WEBPACK_IMPORTED_MODULE_3__.default
   },
   data: function data() {
     return {
@@ -1212,7 +1469,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showAudiogramma: false,
       textMessaggio: null,
       openAudiogramma: false,
+      showAppuntamento: false,
       audiogrammaClient: {},
+      appuntamentoClient: {},
       proveClient: {},
       search: '',
       listino: {},
@@ -1272,7 +1531,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.fetchClientsFiliale(this.rottaIdFiliale);
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('clients', {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)('clients', {
     fetchClientsFiliale: 'fetchClientsFiliale',
     addClient: 'addClient',
     eliminaClient: 'eliminaClient'
@@ -1286,29 +1545,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     audiogramma: function audiogramma(client) {
       this.showProve = false;
       this.showAudiogramma = true;
+      this.showAppuntamento = false;
       this.showClients = false;
       this.audiogrammaClient = client;
+    },
+    appuntamento: function appuntamento(client) {
+      this.showProve = false;
+      this.showAudiogramma = false;
+      this.showClients = false;
+      this.showAppuntamento = true;
+      this.appuntamentoClient = client;
     },
     prove: function prove(client) {
       this.showProve = true;
       this.showAudiogramma = false;
+      this.showAppuntamento = false;
       this.showClients = false;
       this.proveClient = client;
     },
     chiudiAudiogramma: function chiudiAudiogramma() {
       this.showProve = false;
       this.showAudiogramma = false;
+      this.showAppuntamento = false;
       this.showClients = true;
       this.audiogrammaUser = {};
+    },
+    chiudiAppuntamento: function chiudiAppuntamento() {
+      this.showProve = false;
+      this.showAppuntamento = false;
+      this.showAudiogramma = false;
+      this.showClients = true;
+      this.appuntamentoClient = {};
     },
     chiudiProve: function chiudiProve() {
       this.showProve = false;
       this.showAudiogramma = false;
+      this.showAppuntamento = false;
       this.showClients = true;
       this.proveClient = {};
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('clients', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('clients', {
     getClients: 'getClients'
   })), {}, {
     rottaIdFiliale: function rottaIdFiliale() {
@@ -39353,6 +39630,45 @@ component.options.__file = "resources/js/Components/Messaggio.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/Components/btnClients/appuntamento/Appuntamento.vue ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Appuntamento_vue_vue_type_template_id_75981b12_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Appuntamento.vue?vue&type=template&id=75981b12&scoped=true& */ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=template&id=75981b12&scoped=true&");
+/* harmony import */ var _Appuntamento_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Appuntamento.vue?vue&type=script&lang=js& */ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Appuntamento_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Appuntamento_vue_vue_type_template_id_75981b12_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Appuntamento_vue_vue_type_template_id_75981b12_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "75981b12",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Components/btnClients/appuntamento/Appuntamento.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Components/btnClients/audiogramma/Audiogramma.vue":
 /*!************************************************************************!*\
   !*** ./resources/js/Components/btnClients/audiogramma/Audiogramma.vue ***!
@@ -39642,6 +39958,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Appuntamento_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Appuntamento.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Appuntamento_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/Components/btnClients/audiogramma/Audiogramma.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************!*\
   !*** ./resources/js/Components/btnClients/audiogramma/Audiogramma.vue?vue&type=script&lang=js& ***!
@@ -39767,6 +40099,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Messaggio_vue_vue_type_template_id_40862498_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Messaggio_vue_vue_type_template_id_40862498_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Messaggio.vue?vue&type=template&id=40862498&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/Messaggio.vue?vue&type=template&id=40862498&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=template&id=75981b12&scoped=true&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=template&id=75981b12&scoped=true& ***!
+  \*********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Appuntamento_vue_vue_type_template_id_75981b12_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Appuntamento_vue_vue_type_template_id_75981b12_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Appuntamento_vue_vue_type_template_id_75981b12_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Appuntamento.vue?vue&type=template&id=75981b12&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=template&id=75981b12&scoped=true&");
 
 
 /***/ }),
@@ -39940,6 +40289,362 @@ var render = function() {
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=template&id=75981b12&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/appuntamento/Appuntamento.vue?vue&type=template&id=75981b12&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "text-center" }, [
+    _c(
+      "div",
+      { staticClass: "row" },
+      [
+        _c("div", { staticClass: "row mt-2" }, [
+          _c(
+            "div",
+            {
+              staticStyle: {
+                display: "flex",
+                "justify-content": "space-between",
+                "align-items": "center"
+              }
+            },
+            [
+              _c("div", [
+                _c("h2", [
+                  _vm._v(
+                    _vm._s(_vm.appuntamentoClient.nome) +
+                      " " +
+                      _vm._s(_vm.appuntamentoClient.cognome)
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "mt-2",
+                      attrs: { color: "primary", dark: "" },
+                      on: { click: _vm.cancella }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Chiudi\n                    "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "v-container",
+          [
+            _c(
+              "v-row",
+              [
+                _c(
+                  "v-col",
+                  [
+                    _c(
+                      "v-menu",
+                      {
+                        ref: "menu",
+                        attrs: {
+                          "close-on-content-click": false,
+                          "return-value": _vm.newAppuntamento.giorno,
+                          transition: "scale-transition",
+                          "offset-y": "",
+                          "min-width": "auto"
+                        },
+                        on: {
+                          "update:returnValue": function($event) {
+                            return _vm.$set(
+                              _vm.newAppuntamento,
+                              "giorno",
+                              $event
+                            )
+                          },
+                          "update:return-value": function($event) {
+                            return _vm.$set(
+                              _vm.newAppuntamento,
+                              "giorno",
+                              $event
+                            )
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "activator",
+                            fn: function(ref) {
+                              var on = ref.on
+                              var attrs = ref.attrs
+                              return [
+                                _c(
+                                  "v-text-field",
+                                  _vm._g(
+                                    _vm._b(
+                                      {
+                                        attrs: {
+                                          label: "Data Appuntamento",
+                                          "prepend-icon": "mdi-calendar",
+                                          readonly: ""
+                                        },
+                                        model: {
+                                          value: _vm.newAppuntamento.giorno,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.newAppuntamento,
+                                              "giorno",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "newAppuntamento.giorno"
+                                        }
+                                      },
+                                      "v-text-field",
+                                      attrs,
+                                      false
+                                    ),
+                                    on
+                                  )
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.menu,
+                          callback: function($$v) {
+                            _vm.menu = $$v
+                          },
+                          expression: "menu"
+                        }
+                      },
+                      [
+                        _vm._v(" "),
+                        _c(
+                          "v-date-picker",
+                          {
+                            attrs: { "no-title": "", scrollable: "" },
+                            model: {
+                              value: _vm.newAppuntamento.giorno,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newAppuntamento, "giorno", $$v)
+                              },
+                              expression: "newAppuntamento.giorno"
+                            }
+                          },
+                          [
+                            _c("v-spacer"),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { text: "", color: "primary" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.menu = false
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Cancel\n                            "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { text: "", color: "primary" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.$refs.menu.save(
+                                      _vm.newAppuntamento.giorno
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                OK\n                            "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("v-time-picker", {
+                      attrs: {
+                        width: "200",
+                        height: "200",
+                        "max-height": "200",
+                        format: "ampm"
+                      },
+                      model: {
+                        value: _vm.newAppuntamento.orario,
+                        callback: function($$v) {
+                          _vm.$set(_vm.newAppuntamento, "orario", $$v)
+                        },
+                        expression: "newAppuntamento.orario"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("v-select", {
+                      attrs: {
+                        "item-value": "id",
+                        "item-text": "nome",
+                        items: _vm.getFiliali,
+                        label: "Filiale"
+                      },
+                      model: {
+                        value: _vm.newAppuntamento.filiale_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.newAppuntamento, "filiale_id", $$v)
+                        },
+                        expression: "newAppuntamento.filiale_id"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("v-select", {
+                      attrs: {
+                        "item-value": "id",
+                        "item-text": "nome",
+                        items: _vm.getRecapiti,
+                        label: "Recapito"
+                      },
+                      model: {
+                        value: _vm.newAppuntamento.recapito_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.newAppuntamento, "recapito_id", $$v)
+                        },
+                        expression: "newAppuntamento.recapito_id"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-row",
+              [
+                _c("v-textarea", {
+                  attrs: { label: "Note" },
+                  model: {
+                    value: _vm.newAppuntamento.nota,
+                    callback: function($$v) {
+                      _vm.$set(_vm.newAppuntamento, "nota", $$v)
+                    },
+                    expression: "newAppuntamento.nota"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-btn",
+              {
+                staticClass: "my-2",
+                attrs: { color: "primary" },
+                on: { click: _vm.inserisci }
+              },
+              [_vm._v("\n                Inserisci\n            ")]
+            ),
+            _vm._v(" "),
+            _c("v-data-table", {
+              staticClass: "elevation-1 my-4",
+              attrs: {
+                headers: _vm.headers,
+                items: _vm.getAppuntamenti,
+                "hide-default-footer": ""
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "item.actions",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { color: "red", small: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.elimina(item.id)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        mdi-delete\n                    "
+                          )
+                        ]
+                      )
+                    ]
+                  }
+                }
+              ])
+            })
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41334,6 +42039,13 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
+          _vm.showAppuntamento
+            ? _c("appuntamento", {
+                attrs: { appuntamentoClient: _vm.appuntamentoClient },
+                on: { chiudiAppuntamento: _vm.chiudiAppuntamento }
+              })
+            : _vm._e(),
+          _vm._v(" "),
           _vm.showProve
             ? _c("prove", {
                 attrs: { proveClient: _vm.proveClient },
@@ -41576,6 +42288,58 @@ var render = function() {
                                             _vm._b(
                                               {
                                                 attrs: {
+                                                  color: "purple",
+                                                  small: ""
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.appuntamento(
+                                                      item
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              "v-icon",
+                                              attrs,
+                                              false
+                                            ),
+                                            on
+                                          ),
+                                          [
+                                            _vm._v(
+                                              "\n                            mdi-calendar-edit\n                        "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
+                              )
+                            },
+                            [_vm._v(" "), _c("span", [_vm._v("Appuntamento")])]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-tooltip",
+                            {
+                              attrs: { bottom: "" },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      var attrs = ref.attrs
+                                      return [
+                                        _c(
+                                          "v-icon",
+                                          _vm._g(
+                                            _vm._b(
+                                              {
+                                                attrs: {
                                                   color: "orange",
                                                   small: ""
                                                 },
@@ -41613,7 +42377,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2317708578
+                  38003638
                 )
               })
             ],

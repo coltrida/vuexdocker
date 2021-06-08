@@ -18,6 +18,7 @@
             <appuntamento
                 v-if="showAppuntamento"
                 :appuntamentoClient="appuntamentoClient"
+                @chiudiAppuntamento = "chiudiAppuntamento"
             />
 
             <prove
@@ -105,10 +106,10 @@
                                 v-bind="attrs"
                                 v-on="on"
                             >
-                                mdi-headphones-settings
+                                mdi-calendar-edit
                             </v-icon>
                         </template>
-                        <span>Audiogramma</span>
+                        <span>Appuntamento</span>
                     </v-tooltip>
 
                     <v-tooltip bottom>
@@ -207,7 +208,7 @@
                 this.showAudiogramma = false;
                 this.showClients = false;
                 this.showAppuntamento = true;
-                this.audiogrammaClient = client;
+                this.appuntamentoClient = client;
             },
 
             prove(client){
@@ -221,13 +222,23 @@
             chiudiAudiogramma(){
                 this.showProve = false;
                 this.showAudiogramma = false;
+                this.showAppuntamento = false;
                 this.showClients = true;
-                this.audiogrammaUser = {};
+                this.audiogrammaClient = {};
+            },
+
+            chiudiAppuntamento(){
+                this.showProve = false;
+                this.showAppuntamento = false;
+                this.showAudiogramma = false;
+                this.showClients = true;
+                this.appuntamentoClient = {};
             },
 
             chiudiProve(){
                 this.showProve = false;
                 this.showAudiogramma = false;
+                this.showAppuntamento = false;
                 this.showClients = true;
                 this.proveClient = {};
             },

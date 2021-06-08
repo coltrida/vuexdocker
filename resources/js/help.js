@@ -60,6 +60,8 @@ const help = () => {
         linksituazionemese: 'http://vuexdocker.local/api/situazioneMese',
         linkfilialiuser: 'http://vuexdocker.local/api/filialiUser',
         linkproductrimuovirichiesta: 'http://vuexdocker.local/api/productRimuoviRichiesta',
+        linkappuntamenti: 'http://vuexdocker.local/api/appuntamentiCliente',
+        linkaddappuntamento: 'http://vuexdocker.local/api/addAppuntamento',
     };
 };
 export default help;

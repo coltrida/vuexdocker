@@ -23,6 +23,11 @@ class RecapitoService
         }])->orderBy('name')->get();
     }
 
+    public function recapitiByAudio($idAudio)
+    {
+        return User::with('recapito')->find($idAudio)->recapito;
+    }
+
     public function aggiungi($request)
     {
         $new = new Recapito();

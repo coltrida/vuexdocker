@@ -2021,8 +2021,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -2037,6 +2037,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_tipologie__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./module/tipologie */ "./resources/js/Store/module/tipologie.js");
 /* harmony import */ var _module_audiometrie__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./module/audiometrie */ "./resources/js/Store/module/audiometrie.js");
 /* harmony import */ var _module_prove__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./module/prove */ "./resources/js/Store/module/prove.js");
+/* harmony import */ var _module_appuntamenti__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./module/appuntamenti */ "./resources/js/Store/module/appuntamenti.js");
 
 
 
@@ -2053,8 +2054,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_14__.default.use(vuex__WEBPACK_IMPORTED_MODULE_15__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_15__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_15__.default.use(vuex__WEBPACK_IMPORTED_MODULE_16__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_16__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2069,10 +2071,137 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_15__.default.Store({
     clients: _module_clients__WEBPACK_IMPORTED_MODULE_10__.default,
     tipologie: _module_tipologie__WEBPACK_IMPORTED_MODULE_11__.default,
     audiometrie: _module_audiometrie__WEBPACK_IMPORTED_MODULE_12__.default,
-    prove: _module_prove__WEBPACK_IMPORTED_MODULE_13__.default
+    prove: _module_prove__WEBPACK_IMPORTED_MODULE_13__.default,
+    appuntamenti: _module_appuntamenti__WEBPACK_IMPORTED_MODULE_14__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
+
+/***/ }),
+
+/***/ "./resources/js/Store/module/appuntamenti.js":
+/*!***************************************************!*\
+  !*** ./resources/js/Store/module/appuntamenti.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    appuntamenti: []
+  };
+};
+
+var getters = {
+  getAppuntamenti: function getAppuntamenti(state) {
+    return state.appuntamenti;
+  }
+};
+var actions = {
+  fetchAppuntamenti: function fetchAppuntamenti(_ref, idClient) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamenti) + '/' + idClient);
+
+            case 3:
+              response = _context.sent;
+              commit('fetchAppuntamenti', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  addAppuntamento: function addAppuntamento(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddappuntamento), payload);
+
+            case 3:
+              response = _context2.sent;
+              commit('addAppuntamento', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  eliminaAppuntamento: function eliminaAppuntamento(_ref3, idAppuntamento) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamenti) + '/' + idAppuntamento);
+
+            case 3:
+              commit('eliminaAppuntamento', idAppuntamento);
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  }
+};
+var mutations = {
+  fetchAppuntamenti: function fetchAppuntamenti(state, payload) {
+    state.appuntamenti = payload;
+  },
+  addAppuntamento: function addAppuntamento(state, payload) {
+    state.appuntamenti.unshift(payload);
+  },
+  eliminaAppuntamento: function eliminaAppuntamento(state, id) {
+    state.appuntamenti = state.appuntamenti.filter(function (u) {
+      return u.id !== id;
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
 
 /***/ }),
 
@@ -3291,7 +3420,7 @@ var mutations = {
       state.token = localStorage.getItem('user-token');
       state.username = localStorage.getItem('username');
       state.idUser = localStorage.getItem('idUser');
-      state.ruolo = localStorage.getItem('rl');
+      state.ruolo = payload.user.ruolo.nome;
       state.messaggio = '';
     } else {
       state.messaggio = "Credenziali errate";
@@ -4064,7 +4193,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  addRecapito: function addRecapito(_ref3, payload) {
+  fetchRecapitiByAudio: function fetchRecapitiByAudio(_ref3, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -4073,6 +4202,29 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecapiti) + '/' + idAudio);
+
+            case 3:
+              response = _context3.sent;
+              commit('fetchRecapiti', response.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  addRecapito: function addRecapito(_ref4, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddrecapito), {
                 'nome': payload.nome,
                 'indirizzo': payload.indirizzo,
@@ -4083,26 +4235,26 @@ var actions = {
               });
 
             case 3:
-              response = _context3.sent;
+              response = _context4.sent;
               commit('addRecapito', response.data);
 
             case 5:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   },
-  eliminaRecapito: function eliminaRecapito(_ref4, payload) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+  eliminaRecapito: function eliminaRecapito(_ref5, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              commit = _ref4.commit;
-              _context4.next = 3;
+              commit = _ref5.commit;
+              _context5.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecapiti) + '/' + payload.id);
 
             case 3:
@@ -4110,10 +4262,10 @@ var actions = {
 
             case 4:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   }
 };
@@ -4928,7 +5080,9 @@ var help = function help() {
     linkgetuser: 'http://vuexdocker.local/api/user',
     linksituazionemese: 'http://vuexdocker.local/api/situazioneMese',
     linkfilialiuser: 'http://vuexdocker.local/api/filialiUser',
-    linkproductrimuovirichiesta: 'http://vuexdocker.local/api/productRimuoviRichiesta'
+    linkproductrimuovirichiesta: 'http://vuexdocker.local/api/productRimuoviRichiesta',
+    linkappuntamenti: 'http://vuexdocker.local/api/appuntamentiCliente',
+    linkaddappuntamento: 'http://vuexdocker.local/api/addAppuntamento'
   };
 };
 

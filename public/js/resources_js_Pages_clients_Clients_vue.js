@@ -68,12 +68,224 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Appuntamento"
+  name: "Appuntamento",
+  data: function data() {
+    return {
+      newAppuntamento: {
+        filiale_id: null,
+        recapito_id: null,
+        nota: null
+      },
+      menu: false,
+      headers: [{
+        text: 'Giorno',
+        align: 'start',
+        sortable: false,
+        value: 'giorno',
+        "class": "indigo white--text"
+      }, {
+        text: 'orario',
+        sortable: false,
+        value: 'orario',
+        "class": "indigo white--text"
+      }, {
+        text: 'nota',
+        sortable: false,
+        value: 'nota',
+        "class": "indigo white--text"
+      }, {
+        text: 'filiale_id',
+        sortable: false,
+        value: 'filiale.nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'recapito_id',
+        sortable: false,
+        value: 'recapito.nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }]
+    };
+  },
+  props: ['appuntamentoClient'],
+  mounted: function mounted() {
+    this.fetchAppuntamenti(this.appuntamentoClient.id);
+    this.fetchRecapitiByAudio(this.getIdUser);
+    this.fetchFilialiByUser(this.getIdUser);
+  },
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
+    fetchAppuntamenti: 'fetchAppuntamenti',
+    addAppuntamento: 'addAppuntamento',
+    eliminaAppuntamento: 'eliminaAppuntamento'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
+    fetchRecapitiByAudio: 'fetchRecapitiByAudio'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
+    fetchFilialiByUser: 'fetchFilialiByUser'
+  })), {}, {
+    cancella: function cancella() {
+      this.$emit('chiudiAppuntamento');
+    },
+    inserisci: function inserisci() {
+      this.newAppuntamento.user_id = this.getIdUser;
+      this.newAppuntamento.client_id = this.appuntamentoClient.id;
+      this.addAppuntamento(this.newAppuntamento);
+      this.newAppuntamento = {
+        filiale_id: null,
+        recapito_id: null,
+        nota: null
+      };
+    },
+    elimina: function elimina(id) {
+      this.eliminaAppuntamento(id);
+    }
+  }),
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
+    getAppuntamenti: 'getAppuntamenti'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
+    getRecapiti: 'getRecapiti'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
+    getFiliali: 'getFiliali'
+  }))
 });
 
 /***/ }),
@@ -1236,6 +1448,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -1345,7 +1558,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showAudiogramma = false;
       this.showClients = false;
       this.showAppuntamento = true;
-      this.audiogrammaClient = client;
+      this.appuntamentoClient = client;
     },
     prove: function prove(client) {
       this.showProve = true;
@@ -1357,12 +1570,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     chiudiAudiogramma: function chiudiAudiogramma() {
       this.showProve = false;
       this.showAudiogramma = false;
+      this.showAppuntamento = false;
       this.showClients = true;
-      this.audiogrammaUser = {};
+      this.audiogrammaClient = {};
+    },
+    chiudiAppuntamento: function chiudiAppuntamento() {
+      this.showProve = false;
+      this.showAppuntamento = false;
+      this.showAudiogramma = false;
+      this.showClients = true;
+      this.appuntamentoClient = {};
     },
     chiudiProve: function chiudiProve() {
       this.showProve = false;
       this.showAudiogramma = false;
+      this.showAppuntamento = false;
       this.showClients = true;
       this.proveClient = {};
     }
@@ -40091,7 +40313,338 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", { staticClass: "text-center" }, [
+    _c(
+      "div",
+      { staticClass: "row" },
+      [
+        _c("div", { staticClass: "row mt-2" }, [
+          _c(
+            "div",
+            {
+              staticStyle: {
+                display: "flex",
+                "justify-content": "space-between",
+                "align-items": "center"
+              }
+            },
+            [
+              _c("div", [
+                _c("h2", [
+                  _vm._v(
+                    _vm._s(_vm.appuntamentoClient.nome) +
+                      " " +
+                      _vm._s(_vm.appuntamentoClient.cognome)
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "mt-2",
+                      attrs: { color: "primary", dark: "" },
+                      on: { click: _vm.cancella }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Chiudi\n                    "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "v-container",
+          [
+            _c(
+              "v-row",
+              [
+                _c(
+                  "v-col",
+                  [
+                    _c(
+                      "v-menu",
+                      {
+                        ref: "menu",
+                        attrs: {
+                          "close-on-content-click": false,
+                          "return-value": _vm.newAppuntamento.giorno,
+                          transition: "scale-transition",
+                          "offset-y": "",
+                          "min-width": "auto"
+                        },
+                        on: {
+                          "update:returnValue": function($event) {
+                            return _vm.$set(
+                              _vm.newAppuntamento,
+                              "giorno",
+                              $event
+                            )
+                          },
+                          "update:return-value": function($event) {
+                            return _vm.$set(
+                              _vm.newAppuntamento,
+                              "giorno",
+                              $event
+                            )
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "activator",
+                            fn: function(ref) {
+                              var on = ref.on
+                              var attrs = ref.attrs
+                              return [
+                                _c(
+                                  "v-text-field",
+                                  _vm._g(
+                                    _vm._b(
+                                      {
+                                        attrs: {
+                                          label: "Data Appuntamento",
+                                          "prepend-icon": "mdi-calendar",
+                                          readonly: ""
+                                        },
+                                        model: {
+                                          value: _vm.newAppuntamento.giorno,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.newAppuntamento,
+                                              "giorno",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "newAppuntamento.giorno"
+                                        }
+                                      },
+                                      "v-text-field",
+                                      attrs,
+                                      false
+                                    ),
+                                    on
+                                  )
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.menu,
+                          callback: function($$v) {
+                            _vm.menu = $$v
+                          },
+                          expression: "menu"
+                        }
+                      },
+                      [
+                        _vm._v(" "),
+                        _c(
+                          "v-date-picker",
+                          {
+                            attrs: { "no-title": "", scrollable: "" },
+                            model: {
+                              value: _vm.newAppuntamento.giorno,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newAppuntamento, "giorno", $$v)
+                              },
+                              expression: "newAppuntamento.giorno"
+                            }
+                          },
+                          [
+                            _c("v-spacer"),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { text: "", color: "primary" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.menu = false
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Cancel\n                            "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { text: "", color: "primary" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.$refs.menu.save(
+                                      _vm.newAppuntamento.giorno
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                OK\n                            "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("v-time-picker", {
+                      attrs: {
+                        width: "200",
+                        height: "200",
+                        "max-height": "200",
+                        format: "ampm"
+                      },
+                      model: {
+                        value: _vm.newAppuntamento.orario,
+                        callback: function($$v) {
+                          _vm.$set(_vm.newAppuntamento, "orario", $$v)
+                        },
+                        expression: "newAppuntamento.orario"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("v-select", {
+                      attrs: {
+                        "item-value": "id",
+                        "item-text": "nome",
+                        items: _vm.getFiliali,
+                        label: "Filiale"
+                      },
+                      model: {
+                        value: _vm.newAppuntamento.filiale_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.newAppuntamento, "filiale_id", $$v)
+                        },
+                        expression: "newAppuntamento.filiale_id"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("v-select", {
+                      attrs: {
+                        "item-value": "id",
+                        "item-text": "nome",
+                        items: _vm.getRecapiti,
+                        label: "Recapito"
+                      },
+                      model: {
+                        value: _vm.newAppuntamento.recapito_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.newAppuntamento, "recapito_id", $$v)
+                        },
+                        expression: "newAppuntamento.recapito_id"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-row",
+              [
+                _c("v-textarea", {
+                  attrs: { label: "Note" },
+                  model: {
+                    value: _vm.newAppuntamento.nota,
+                    callback: function($$v) {
+                      _vm.$set(_vm.newAppuntamento, "nota", $$v)
+                    },
+                    expression: "newAppuntamento.nota"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-btn",
+              {
+                staticClass: "my-2",
+                attrs: { color: "primary" },
+                on: { click: _vm.inserisci }
+              },
+              [_vm._v("\n                Inserisci\n            ")]
+            ),
+            _vm._v(" "),
+            _c("v-data-table", {
+              staticClass: "elevation-1 my-4",
+              attrs: {
+                headers: _vm.headers,
+                items: _vm.getAppuntamenti,
+                "hide-default-footer": ""
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "item.actions",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { color: "red", small: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.elimina(item.id)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        mdi-delete\n                    "
+                          )
+                        ]
+                      )
+                    ]
+                  }
+                }
+              ])
+            })
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41488,7 +42041,8 @@ var render = function() {
           _vm._v(" "),
           _vm.showAppuntamento
             ? _c("appuntamento", {
-                attrs: { appuntamentoClient: _vm.appuntamentoClient }
+                attrs: { appuntamentoClient: _vm.appuntamentoClient },
+                on: { chiudiAppuntamento: _vm.chiudiAppuntamento }
               })
             : _vm._e(),
           _vm._v(" "),
@@ -41753,7 +42307,7 @@ var render = function() {
                                           ),
                                           [
                                             _vm._v(
-                                              "\n                            mdi-headphones-settings\n                        "
+                                              "\n                            mdi-calendar-edit\n                        "
                                             )
                                           ]
                                         )
@@ -41765,7 +42319,7 @@ var render = function() {
                                 true
                               )
                             },
-                            [_vm._v(" "), _c("span", [_vm._v("Audiogramma")])]
+                            [_vm._v(" "), _c("span", [_vm._v("Appuntamento")])]
                           ),
                           _vm._v(" "),
                           _c(
@@ -41823,7 +42377,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2348265835
+                  38003638
                 )
               })
             ],

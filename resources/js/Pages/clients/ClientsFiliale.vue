@@ -15,6 +15,12 @@
                 @chiudiAudiogramma = "chiudiAudiogramma"
             ></audiogramma>
 
+            <appuntamento
+                v-if="showAppuntamento"
+                :appuntamentoClient="appuntamentoClient"
+                @chiudiAppuntamento = "chiudiAppuntamento"
+            />
+
             <prove
                 v-if="showProve"
                 :proveClient="proveClient"
@@ -94,6 +100,21 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-icon
+                                color="purple"
+                                small
+                                @click="appuntamento(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-calendar-edit
+                            </v-icon>
+                        </template>
+                        <span>Appuntamento</span>
+                    </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon
                                 color="orange"
                                 small
                                 @click="prove(item)"
@@ -119,10 +140,11 @@
     import Messaggio from "../../Components/Messaggio";
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
     import Prove from "../../Components/btnClients/prove/Prove";
+    import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
 
     export default {
         name: "ClientsFiliale",
-        components: {Prove, Audiogramma, Messaggio},
+        components: {Prove, Audiogramma, Messaggio, Appuntamento},
         data() {
             return {
                 showClients: true,
@@ -130,7 +152,9 @@
                 showAudiogramma: false,
                 textMessaggio: null,
                 openAudiogramma: false,
+                showAppuntamento: false,
                 audiogrammaClient: {},
+                appuntamentoClient: {},
                 proveClient: {},
                 search: '',
                 listino: {},
@@ -173,13 +197,23 @@
             audiogramma(client){
                 this.showProve = false;
                 this.showAudiogramma = true;
+                this.showAppuntamento = false;
                 this.showClients = false;
                 this.audiogrammaClient = client;
+            },
+
+            appuntamento(client){
+                this.showProve = false;
+                this.showAudiogramma = false;
+                this.showClients = false;
+                this.showAppuntamento = true;
+                this.appuntamentoClient = client;
             },
 
             prove(client){
                 this.showProve = true;
                 this.showAudiogramma = false;
+                this.showAppuntamento = false;
                 this.showClients = false;
                 this.proveClient = client;
             },
@@ -187,13 +221,23 @@
             chiudiAudiogramma(){
                 this.showProve = false;
                 this.showAudiogramma = false;
+                this.showAppuntamento = false;
                 this.showClients = true;
                 this.audiogrammaUser = {};
+            },
+
+            chiudiAppuntamento(){
+                this.showProve = false;
+                this.showAppuntamento = false;
+                this.showAudiogramma = false;
+                this.showClients = true;
+                this.appuntamentoClient = {};
             },
 
             chiudiProve(){
                 this.showProve = false;
                 this.showAudiogramma = false;
+                this.showAppuntamento = false;
                 this.showClients = true;
                 this.proveClient = {};
             },

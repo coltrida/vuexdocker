@@ -15,6 +15,7 @@ import ClientsModule from './module/clients';
 import TipologieModule from './module/tipologie';
 import AudiometrieModule from './module/audiometrie';
 import ProveModule from './module/prove';
+import AppuntamentiModule from './module/appuntamenti';
 
 Vue.use(Vuex);
 
@@ -34,6 +35,7 @@ const store = new Vuex.Store({
         tipologie:TipologieModule,
         audiometrie:AudiometrieModule,
         prove:ProveModule,
+        appuntamenti:AppuntamentiModule,
     }
 });
 
