@@ -112,6 +112,16 @@ class User extends Authenticatable
         })->with('client:id,nome,cognome', 'product');
     }
 
+    public function client()
+    {
+        return $this->hasMany(Client::class);
+    }
+
+    public function appuntamenti()
+    {
+        return $this->hasMany(Appuntamento::class);
+    }
+
 
 /*    public function getIsAdminAttribute()
     {

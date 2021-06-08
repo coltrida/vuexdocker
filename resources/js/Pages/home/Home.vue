@@ -15,12 +15,6 @@
         name: "Home",
         components: {HomeAmm, HomeAudio, HomeAdmin},
 
-        mounted() {
-            if (this.getLogged){
-                this.fetchUser(this.getIdUser)
-            }
-        },
-
         methods: {
             ...mapActions('login', {
                 fetchUser: 'fetchUser',

@@ -4511,7 +4511,6 @@ var actions = {
 
             case 4:
               response = _context2.sent;
-              // console.log(response.data)
               commit('fetchSituazioneMese', response.data);
 
             case 6:

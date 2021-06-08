@@ -114,9 +114,19 @@
             }
         },
 
+        updated() {
+            this.fetchSituazioneMese();
+        },
+
         mounted() {
             this.fetchSituazioneMese();
         },
+
+        /*watch:{
+            getSituazioneMese(){
+                this.fetchSituazioneMese();
+            }
+        },*/
 
         methods: {
             ...mapActions('users', {

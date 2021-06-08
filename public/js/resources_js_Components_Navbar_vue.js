@@ -733,17 +733,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('login', {
     getLogged: 'getLogged',
     getUsername: 'getUsername',
-    getRuolo: 'getRuolo'
+    getRuolo: 'getRuolo',
+    getIdUser: 'getIdUser'
   })),
-  methods: {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('login', {
+    fetchUser: 'fetchUser'
+  })), {}, {
     logout: function logout() {
       this.$store.commit('login/logout');
       this.$router.push({
         name: 'home'
       });
     }
-  },
+  }),
   mounted: function mounted() {
+    if (this.getLogged) {
+      this.fetchUser(this.getIdUser);
+    }
     /*window.onunload = () => {
         localStorage.removeItem('user-token');
         localStorage.removeItem('username');
@@ -770,6 +776,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     window.onload = function () {
      window.localStorage.isMySessionActive = "true";
     };*/
+
   }
 });
 

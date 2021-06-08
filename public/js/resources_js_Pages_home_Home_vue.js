@@ -229,9 +229,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
+  updated: function updated() {
+    this.fetchSituazioneMese();
+  },
   mounted: function mounted() {
     this.fetchSituazioneMese();
   },
+
+  /*watch:{
+      getSituazioneMese(){
+          this.fetchSituazioneMese();
+      }
+  },*/
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
     fetchSituazioneMese: 'fetchSituazioneMese'
   })), {}, {
@@ -537,11 +546,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     HomeAmm: _Components_home_homeAmm__WEBPACK_IMPORTED_MODULE_2__.default,
     HomeAudio: _Components_home_homeAudio__WEBPACK_IMPORTED_MODULE_1__.default,
     HomeAdmin: _Components_home_homeAdmin__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  mounted: function mounted() {
-    if (this.getLogged) {
-      this.fetchUser(this.getIdUser);
-    }
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('login', {
     fetchUser: 'fetchUser'

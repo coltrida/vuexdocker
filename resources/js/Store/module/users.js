@@ -37,9 +37,7 @@ const actions = {
     },
 
     async fetchSituazioneMese({commit}, idAudio=''){
-        //console.log(idAudio)
         const response = await axios.get(`${help().linksituazionemese}`+'/'+idAudio);
-       // console.log(response.data)
         commit('fetchSituazioneMese', response.data);
     },
 

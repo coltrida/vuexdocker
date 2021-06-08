@@ -29,6 +29,7 @@ Route::delete('/user/{id}', [UserController::class, 'elimina']);
 Route::get('/user/{id}', [UserController::class, 'user']);
 Route::post('/addUser', [UserController::class, 'aggiungi']);
 Route::get('/situazioneMese/{idAudio?}', [UserController::class, 'situazioneMese']);
+Route::get('/appuntamenti/{idAudio}', [UserController::class, 'appuntamenti']);
 
 // ----------------- filiali -------------------------
 Route::get('/filiali', [FilialiController::class, 'index']);

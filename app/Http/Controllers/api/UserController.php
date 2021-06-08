@@ -47,4 +47,9 @@ class UserController extends Controller
     {
         return $userService->situazioneMese($idAudio);
     }
+
+    public function appuntamenti($idAudio, UserService $userService)
+    {
+        return $userService->appuntamenti($idAudio);
+    }
 }

@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Models\Budget;
+use App\Models\Client;
 use App\Models\Prova;
 use App\Models\User;
 use Carbon\Carbon;
@@ -134,5 +135,10 @@ class UserService
             ->withCount('provaInCorso')
             ->get();
 
+    }
+
+    public function appuntamenti($idAudio)
+    {
+        return User::with('client')->find($idAudio)->client;
     }
 }

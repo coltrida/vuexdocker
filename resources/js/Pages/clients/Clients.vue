@@ -15,6 +15,11 @@
                 @chiudiAudiogramma = "chiudiAudiogramma"
             ></audiogramma>
 
+            <appuntamento
+                v-if="showAppuntamento"
+                :appuntamentoClient="appuntamentoClient"
+            />
+
             <prove
                 v-if="showProve"
                 :proveClient="proveClient"
@@ -94,6 +99,21 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-icon
+                                color="purple"
+                                small
+                                @click="appuntamento(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-headphones-settings
+                            </v-icon>
+                        </template>
+                        <span>Audiogramma</span>
+                    </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon
                                 color="orange"
                                 small
                                 @click="prove(item)"
@@ -119,18 +139,21 @@
     import Messaggio from "../../Components/Messaggio";
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
     import Prove from "../../Components/btnClients/prove/Prove";
+    import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
 
     export default {
         name: "Clients",
-        components: {Prove, Audiogramma, Messaggio},
+        components: {Appuntamento, Prove, Audiogramma, Messaggio},
         data() {
             return {
                 showClients: true,
                 showProve: false,
                 showAudiogramma: false,
+                showAppuntamento: false,
                 textMessaggio: null,
                 openAudiogramma: false,
                 audiogrammaClient: {},
+                appuntamentoClient: {},
                 proveClient: {},
                 search: '',
                 listino: {},
@@ -173,13 +196,23 @@
 
             audiogramma(client){
                 this.showProve = false;
+                this.showAppuntamento = false;
                 this.showAudiogramma = true;
                 this.showClients = false;
                 this.audiogrammaClient = client;
             },
 
+            appuntamento(client){
+                this.showProve = false;
+                this.showAudiogramma = false;
+                this.showClients = false;
+                this.showAppuntamento = true;
+                this.audiogrammaClient = client;
+            },
+
             prove(client){
                 this.showProve = true;
+                this.showAppuntamento = false;
                 this.showAudiogramma = false;
                 this.showClients = false;
                 this.proveClient = client;

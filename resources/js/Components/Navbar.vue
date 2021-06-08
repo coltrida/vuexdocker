@@ -54,7 +54,7 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
     import NavBarAdmin from "./NavBarAdmin";
     import NavBarAudio from "./NavBarAudio";
     export default {
@@ -67,10 +67,15 @@
                 getLogged:'getLogged',
                 getUsername:'getUsername',
                 getRuolo:'getRuolo',
+                getIdUser:'getIdUser',
             })
         },
 
         methods: {
+            ...mapActions('login', {
+                fetchUser: 'fetchUser',
+            }),
+
             logout() {
                 this.$store.commit('login/logout');
                 this.$router.push({ name: 'home' });
@@ -78,6 +83,9 @@
         },
 
         mounted() {
+            if (this.getLogged){
+                this.fetchUser(this.getIdUser)
+            }
             /*window.onunload = () => {
                 localStorage.removeItem('user-token');
                 localStorage.removeItem('username');
