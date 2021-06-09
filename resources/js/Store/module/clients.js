@@ -2,12 +2,17 @@ import help from "../../help";
 
 const state = () => ({
     clients: [],
+    compleanni: [],
     client: {}
 });
 
 const getters = {
     getClients(state){
         return state.clients;
+    },
+
+    getCompleanni(state){
+        return state.compleanni;
     },
 
     getClient(state){
@@ -20,6 +25,11 @@ const actions = {
     async fetchClients({commit}){
         const response = await axios.get(`${help().linkclients}`);
         commit('fetchClients', response.data.data);
+    },
+
+    async fetchCompleanni({commit}, idAudio){
+        const response = await axios.get(`${help().linkcompleanni}`+'/'+idAudio);
+        commit('fetchCompleanni', response.data.data);
     },
 
     async fetchClientsFiliale({commit}, idFiliale){
@@ -51,6 +61,10 @@ const actions = {
 const mutations = {
     fetchClients(state, payload){
         state.clients = payload;
+    },
+
+    fetchCompleanni(state, payload){
+        state.compleanni = payload;
     },
 
     fetchClient(state, payload){

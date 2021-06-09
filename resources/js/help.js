@@ -62,6 +62,8 @@ const help = () => {
         linkproductrimuovirichiesta: 'http://vuexdocker.local/api/productRimuoviRichiesta',
         linkappuntamenti: 'http://vuexdocker.local/api/appuntamentiCliente',
         linkaddappuntamento: 'http://vuexdocker.local/api/addAppuntamento',
+        linkcompleanni: 'http://vuexdocker.local/api/compleanni',
+        linkappuntamentioggi: 'http://vuexdocker.local/api/appuntamentiOggiAudio',
     };
 };
 export default help;

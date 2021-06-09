@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -124,9 +125,26 @@ class User extends Authenticatable
         return $this->hasMany(Client::class);
     }
 
+    public function clientCompleanno()
+    {
+        $oggi = Carbon::now();
+        $giorno = $oggi->day;
+        $mese = $oggi->month;
+        return $this->hasMany(Client::class)->where([
+            ['giornoNascita', $giorno],
+            ['meseNascita', $mese]
+        ]);
+    }
+
     public function appuntamenti()
     {
         return $this->hasMany(Appuntamento::class);
+    }
+
+    public function appuntamentiOggi()
+    {
+        $oggi = Carbon::now()->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $oggi);
     }
 
 

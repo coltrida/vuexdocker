@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AppuntamentiResource;
 use App\Services\AppuntamentiService;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,11 @@ class AppuntamentiController extends Controller
     public function index($idClient, AppuntamentiService $appuntamentiService)
     {
         return $appuntamentiService->index($idClient);
+    }
+
+    public function oggi($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->oggi($idAudio));
     }
 
     public function aggiungi(Request $request, AppuntamentiService $appuntamentiService)

@@ -6,8 +6,10 @@ namespace App\Services;
 
 use App\Models\Client;
 use App\Models\Tipologia;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use function dd;
 use function trim;
 
 class ClientService
@@ -30,6 +32,11 @@ class ClientService
     {
         return Client::with('tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome')->find($id);
+    }
+
+    public function compleanni($idAudio)
+    {
+        return User::with('clientCompleanno')->find($idAudio)->clientCompleanno;
     }
 
     public function aggiungi($request)

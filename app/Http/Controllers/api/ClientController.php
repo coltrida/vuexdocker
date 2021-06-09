@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\CompleanniResource;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,11 @@ class ClientController extends Controller
     public function cliente($id, ClientService $clientService)
     {
         return new ClientResource($clientService->cliente($id));
+    }
+
+    public function compleanni($idAudio, ClientService $clientService)
+    {
+        return CompleanniResource::collection($clientService->compleanni($idAudio));
     }
 
     public function clientsFiliale($idFiliale, ClientService $clientService)

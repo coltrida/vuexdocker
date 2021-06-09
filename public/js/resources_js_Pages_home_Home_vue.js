@@ -499,6 +499,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -560,14 +561,94 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
+      }],
+      headers3: [{
+        text: 'Nome',
+        width: 185,
+        value: 'fullname',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'indirizzo',
+        width: 70,
+        value: 'indirizzo',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'citta',
+        width: 120,
+        value: 'citta',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'provincia',
+        width: 120,
+        value: 'provincia',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono',
+        width: 120,
+        value: 'telefono',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Data Nascita',
+        width: 120,
+        value: 'datanascita',
+        sortable: false,
+        "class": "indigo white--text"
+      }],
+      headers4: [{
+        text: 'Nome',
+        width: 185,
+        value: 'fullname',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono',
+        width: 70,
+        value: 'telefono',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'citta',
+        width: 120,
+        value: 'citta',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Luogo',
+        width: 120,
+        value: 'luogo',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'orario',
+        width: 120,
+        value: 'orario',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'giorno',
+        width: 120,
+        value: 'giorno',
+        sortable: false,
+        "class": "indigo white--text"
       }]
     };
   },
   mounted: function mounted() {
     this.fetchSituazioneMese(this.getIdUser);
+    this.fetchCompleanni(this.getIdUser);
+    this.fetchAppuntamentiOggi(this.getIdUser);
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
     fetchSituazioneMese: 'fetchSituazioneMese'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('clients', {
+    fetchCompleanni: 'fetchCompleanni'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
+    fetchAppuntamentiOggi: 'fetchAppuntamentiOggi'
   })), {}, {
     seleziona: function seleziona(items) {
       this.dialogProdotti = true;
@@ -578,10 +659,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.prodottiSelezione = [];
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
     getSituazioneMese: 'getSituazioneMese'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('clients', {
+    getCompleanni: 'getCompleanni'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getIdUser: 'getIdUser'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
+    getAppuntamenti: 'getAppuntamenti'
   })), {}, {
     bgtAnno: function bgtAnno() {
       return this.getSituazioneMese.budget ? this.getSituazioneMese.budget.budgetAnno : null;
@@ -1747,49 +1832,27 @@ var render = function() {
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
                       attrs: {
-                        headers: _vm.headers1,
-                        items: _vm.getSituazioneMese.prova_in_corso,
+                        headers: _vm.headers4,
+                        items: _vm.getAppuntamenti,
                         "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "header.client.fullname",
-                          fn: function(ref) {
-                            var header = ref.header
-                            return [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(_vm.getSituazioneMese.name) +
-                                  "\n                        "
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.actions",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: "green", dark: "" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.seleziona(item.product)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Prodotti\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("h2", [_vm._v("Complenni:")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headers3,
+                        items: _vm.getCompleanni,
+                        "hide-default-footer": ""
+                      }
                     })
                   ],
                   1

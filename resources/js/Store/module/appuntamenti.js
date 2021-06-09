@@ -17,6 +17,11 @@ const actions = {
         commit('fetchAppuntamenti', response.data);
     },
 
+    async fetchAppuntamentiOggi({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentioggi}`+'/'+idAudio);
+        commit('fetchAppuntamenti', response.data.data);
+    },
+
     async addAppuntamento({commit}, payload){
         const response = await axios.post(`${help().linkaddappuntamento}`, payload);
         commit('addAppuntamento', response.data);

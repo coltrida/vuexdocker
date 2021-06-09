@@ -2136,7 +2136,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  addAppuntamento: function addAppuntamento(_ref2, payload) {
+  fetchAppuntamentiOggi: function fetchAppuntamentiOggi(_ref2, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -2145,11 +2145,11 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddappuntamento), payload);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentioggi) + '/' + idAudio);
 
             case 3:
               response = _context2.sent;
-              commit('addAppuntamento', response.data);
+              commit('fetchAppuntamenti', response.data.data);
 
             case 5:
             case "end":
@@ -2159,15 +2159,38 @@ var actions = {
       }, _callee2);
     }))();
   },
-  eliminaAppuntamento: function eliminaAppuntamento(_ref3, idAppuntamento) {
+  addAppuntamento: function addAppuntamento(_ref3, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddappuntamento), payload);
+
+            case 3:
+              response = _context3.sent;
+              commit('addAppuntamento', response.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  eliminaAppuntamento: function eliminaAppuntamento(_ref4, idAppuntamento) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamenti) + '/' + idAppuntamento);
 
             case 3:
@@ -2175,10 +2198,10 @@ var actions = {
 
             case 4:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   }
 };
@@ -2489,6 +2512,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = function state() {
   return {
     clients: [],
+    compleanni: [],
     client: {}
   };
 };
@@ -2496,6 +2520,9 @@ var state = function state() {
 var getters = {
   getClients: function getClients(state) {
     return state.clients;
+  },
+  getCompleanni: function getCompleanni(state) {
+    return state.compleanni;
   },
   getClient: function getClient(state) {
     return state.client;
@@ -2525,7 +2552,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchClientsFiliale: function fetchClientsFiliale(_ref2, idFiliale) {
+  fetchCompleanni: function fetchCompleanni(_ref2, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -2534,11 +2561,11 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientsfiliale) + '/' + idFiliale);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcompleanni) + '/' + idAudio);
 
             case 3:
               response = _context2.sent;
-              commit('fetchClients', response.data.data);
+              commit('fetchCompleanni', response.data.data);
 
             case 5:
             case "end":
@@ -2548,7 +2575,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  fetchClient: function fetchClient(_ref3, id) {
+  fetchClientsFiliale: function fetchClientsFiliale(_ref3, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -2557,11 +2584,11 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients) + '/' + id);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientsfiliale) + '/' + idFiliale);
 
             case 3:
               response = _context3.sent;
-              commit('fetchClient', response.data.data);
+              commit('fetchClients', response.data.data);
 
             case 5:
             case "end":
@@ -2571,7 +2598,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  addClient: function addClient(_ref4, payload) {
+  fetchClient: function fetchClient(_ref4, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -2580,11 +2607,11 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddclient), payload);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients) + '/' + id);
 
             case 3:
               response = _context4.sent;
-              commit('addClient', response.data);
+              commit('fetchClient', response.data.data);
 
             case 5:
             case "end":
@@ -2594,7 +2621,7 @@ var actions = {
       }, _callee4);
     }))();
   },
-  modificaClient: function modificaClient(_ref5, payload) {
+  addClient: function addClient(_ref5, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -2603,11 +2630,11 @@ var actions = {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificaclient), payload);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddclient), payload);
 
             case 3:
               response = _context5.sent;
-              commit('modificaClient', response.data);
+              commit('addClient', response.data);
 
             case 5:
             case "end":
@@ -2617,15 +2644,38 @@ var actions = {
       }, _callee5);
     }))();
   },
-  eliminaClient: function eliminaClient(_ref6, id) {
+  modificaClient: function modificaClient(_ref6, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificaclient), payload);
+
+            case 3:
+              response = _context6.sent;
+              commit('modificaClient', response.data);
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+  eliminaClient: function eliminaClient(_ref7, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients) + '/' + id);
 
             case 3:
@@ -2633,16 +2683,19 @@ var actions = {
 
             case 4:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     }))();
   }
 };
 var mutations = {
   fetchClients: function fetchClients(state, payload) {
     state.clients = payload;
+  },
+  fetchCompleanni: function fetchCompleanni(state, payload) {
+    state.compleanni = payload;
   },
   fetchClient: function fetchClient(state, payload) {
     state.client = payload;
@@ -5082,7 +5135,9 @@ var help = function help() {
     linkfilialiuser: 'http://vuexdocker.local/api/filialiUser',
     linkproductrimuovirichiesta: 'http://vuexdocker.local/api/productRimuoviRichiesta',
     linkappuntamenti: 'http://vuexdocker.local/api/appuntamentiCliente',
-    linkaddappuntamento: 'http://vuexdocker.local/api/addAppuntamento'
+    linkaddappuntamento: 'http://vuexdocker.local/api/addAppuntamento',
+    linkcompleanni: 'http://vuexdocker.local/api/compleanni',
+    linkappuntamentioggi: 'http://vuexdocker.local/api/appuntamentiOggiAudio'
   };
 };
 

@@ -87,6 +87,7 @@ Route::post('/richiestaProdotti', [ProductController::class, 'richiestaProdotti'
 // ---------------- client -------------------------
 Route::get('/clients', [ClientController::class, 'index']);
 Route::get('/clients/{id}', [ClientController::class, 'cliente']);
+Route::get('/compleanni/{idAudio}', [ClientController::class, 'compleanni']);
 Route::get('/clientsFiliale/{idFiliale}', [ClientController::class, 'clientsFiliale']);
 Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
 Route::post('/addClient', [ClientController::class, 'aggiungi']);
@@ -120,5 +121,6 @@ Route::post('/salvaFattura', [ProvaController::class, 'salvaFattura']);
 
 // ----------------- appuntamenti -----------------------
 Route::get('/appuntamentiCliente/{idClient}', [AppuntamentiController::class, 'index']);
+Route::get('/appuntamentiOggiAudio/{idAudio}', [AppuntamentiController::class, 'oggi']);
 Route::delete('/appuntamentiCliente/{id}', [AppuntamentiController::class, 'elimina']);
 Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
