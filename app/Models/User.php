@@ -94,6 +94,21 @@ class User extends Authenticatable
         return $this->belongsTo(Budget::class);
     }
 
+    public function moltiBudget()
+    {
+        return $this->hasMany(Budget::class);
+    }
+
+    public function fatturati()
+    {
+        return $this->belongsTo(Fatturati::class);
+    }
+
+    public function moltiFatturati()
+    {
+        return $this->hasMany(Fatturati::class);
+    }
+
     public function prova()
     {
         return $this->hasMany(Prova::class);
@@ -111,6 +126,13 @@ class User extends Authenticatable
         return $this->hasMany(Prova::class)->whereHas('stato', function($q){
             $q->where('nome', 'FATTURA');
         })->with('client:id,nome,cognome', 'product');
+    }
+
+    public function fatturatoMese()
+    {
+        return $this->hasMany(Prova::class)->whereHas('stato', function($q){
+            $q->where('nome', 'FATTURA');
+        })->groupBy('mese_fine');
     }
 
     public function provaReso()

@@ -41,6 +41,11 @@ const actions = {
         commit('fetchSituazioneMese', response.data);
     },
 
+    async fetchSituazioneAnno({commit}){
+        const response = await axios.get(`${help().linkvisualizzasituazioneanno}`);
+        commit('fetchAudioConBgt', response.data);
+    },
+
     async fetchAudioConBgt({commit}){
         const response = await axios.get(`${help().linkaudioconbgt}`);
         commit('fetchAudioConBgt', response.data);

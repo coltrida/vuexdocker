@@ -64,6 +64,7 @@ const help = () => {
         linkaddappuntamento: 'http://vuexdocker.local/api/addAppuntamento',
         linkcompleanni: 'http://vuexdocker.local/api/compleanni',
         linkappuntamentioggi: 'http://vuexdocker.local/api/appuntamentiOggiAudio',
+        linkvisualizzasituazioneanno: 'http://vuexdocker.local/api/visualizzaSituazioneAnno',
     };
 };
 export default help;

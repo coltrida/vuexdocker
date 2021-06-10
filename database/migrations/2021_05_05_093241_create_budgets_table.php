@@ -15,6 +15,8 @@ class CreateBudgetsTable extends Migration
     {
         Schema::create('budgets', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->bigInteger('user_id');
             $table->integer('budgetAnno');
             $table->integer('premio')->nullable();
             $table->integer('stipendio')->nullable();

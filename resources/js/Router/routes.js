@@ -14,6 +14,7 @@ const routes = [
     { path: '/associaPersonale', component: () => import('../Pages/gestione/AssociaPersonale'), name: 'associaPersonale' },
     { path: '/tempiRecall', component: () => import('../Pages/gestione/TempiRecall'), name: 'tempiRecall' },
     { path: '/assegnaBudget', component: () => import('../Pages/gestione/AssegnaBudget'), name: 'assegnaBudget' },
+    { path: '/statisticheAudioprotesisti', component: () => import('../Pages/statistiche/Audioprotesisti'), name: 'statisticheAudioprotesisti' },
 ];
 
 export default routes;

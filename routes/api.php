@@ -30,6 +30,8 @@ Route::delete('/user/{id}', [UserController::class, 'elimina']);
 Route::get('/user/{id}', [UserController::class, 'user']);
 Route::post('/addUser', [UserController::class, 'aggiungi']);
 Route::get('/situazioneMese/{idAudio?}', [UserController::class, 'situazioneMese']);
+Route::get('/situazioneAnno', [UserController::class, 'situazioneAnno']);
+Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSituazioneAnno']);
 Route::get('/appuntamenti/{idAudio}', [UserController::class, 'appuntamenti']);
 
 // ----------------- filiali -------------------------

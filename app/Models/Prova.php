@@ -63,4 +63,9 @@ class Prova extends Model
         return $difference;
         //return Carbon::make($this->inizio_prova)->diffForHumans();
     }
+
+    public function scopeFinaliz($query)
+    {
+        return $query->groupBy('client_id');
+    }
 }
