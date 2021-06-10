@@ -99,6 +99,16 @@ class User extends Authenticatable
         return $this->hasMany(Budget::class);
     }
 
+    public function delta()
+    {
+        return $this->belongsTo(Delta::class);
+    }
+
+    public function moltiDelta()
+    {
+        return $this->hasMany(Delta::class);
+    }
+
     public function fatturati()
     {
         return $this->belongsTo(Fatturati::class);

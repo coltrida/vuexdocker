@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('ruolo_id')->unsigned();
             $table->bigInteger('budget_id')->nullable();
             $table->bigInteger('fatturati_id')->nullable();
+            $table->bigInteger('delta_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
