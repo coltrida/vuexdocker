@@ -7,6 +7,8 @@ use App\Http\Resources\ClientResource;
 use App\Http\Resources\CompleanniResource;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
+use Nexmo\Laravel\Facade\Nexmo;
+use function date_date_set;
 
 class ClientController extends Controller
 {
@@ -44,4 +46,15 @@ class ClientController extends Controller
     {
         return $clientService->elimina($id);
     }
+
+    public function inviaSms(Request $request)
+    {
+        Nexmo::message()->send([
+            'to' => '+393920222125',
+            'from' => '+393920222125',
+            'text' => $request['testo']
+        ]);
+
+    }
+
 }

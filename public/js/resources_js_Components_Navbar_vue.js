@@ -163,7 +163,7 @@ __webpack_require__.r(__webpack_exports__);
         link: 'tempiRecall'
       }, {
         title: 'Invio sms',
-        link: 'invioSms'
+        link: 'inviaSms'
       }]
     };
   }

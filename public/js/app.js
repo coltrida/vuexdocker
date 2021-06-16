@@ -2000,6 +2000,12 @@ var routes = [{
   },
   name: 'tempiRecall'
 }, {
+  path: '/inviaSms',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_InvioSms_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/InvioSms */ "./resources/js/Pages/gestione/InvioSms.vue"));
+  },
+  name: 'inviaSms'
+}, {
   path: '/assegnaBudget',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_AssegnaBudget_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/AssegnaBudget */ "./resources/js/Pages/gestione/AssegnaBudget.vue"));
@@ -2673,7 +2679,7 @@ var actions = {
       }, _callee6);
     }))();
   },
-  eliminaClient: function eliminaClient(_ref7, id) {
+  smsInvio: function smsInvio(_ref7, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
@@ -2682,6 +2688,27 @@ var actions = {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkinviasms), {
+                'testo': payload
+              });
+
+            case 3:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  },
+  eliminaClient: function eliminaClient(_ref8, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              commit = _ref8.commit;
+              _context8.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients) + '/' + id);
 
             case 3:
@@ -2689,10 +2716,10 @@ var actions = {
 
             case 4:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7);
+      }, _callee8);
     }))();
   }
 };
@@ -5169,7 +5196,8 @@ var help = function help() {
     linkaddappuntamento: 'http://vuexdocker.local/api/addAppuntamento',
     linkcompleanni: 'http://vuexdocker.local/api/compleanni',
     linkappuntamentioggi: 'http://vuexdocker.local/api/appuntamentiOggiAudio',
-    linkvisualizzasituazioneanno: 'http://vuexdocker.local/api/visualizzaSituazioneAnno'
+    linkvisualizzasituazioneanno: 'http://vuexdocker.local/api/visualizzaSituazioneAnno',
+    linkinviasms: 'http://vuexdocker.local/api/inviaSms'
   };
 };
 
@@ -91468,7 +91496,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

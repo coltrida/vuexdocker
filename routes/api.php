@@ -94,6 +94,7 @@ Route::get('/clientsFiliale/{idFiliale}', [ClientController::class, 'clientsFili
 Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
 Route::post('/addClient', [ClientController::class, 'aggiungi']);
 Route::post('/modificaClient', [ClientController::class, 'modifica']);
+Route::post('/inviaSms', [ClientController::class, 'inviaSms']);
 
 // ----------------- tipologia -------------------------
 Route::get('/tipologie', [TipologiaController::class, 'index']);

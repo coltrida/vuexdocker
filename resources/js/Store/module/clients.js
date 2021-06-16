@@ -52,6 +52,12 @@ const actions = {
         commit('modificaClient', response.data);
     },
 
+    async smsInvio({commit}, payload){
+        await axios.post(`${help().linkinviasms}`, {
+            'testo': payload
+        });
+    },
+
     async eliminaClient({commit}, id){
         await axios.delete(`${help().linkclients}`+'/'+id);
         commit('eliminaClient', payload);

@@ -33,7 +33,7 @@
                 { title: 'Associa Filiale Personale', link: 'associaPersonale' },
                 { title: 'Assegna Budget', link: 'assegnaBudget' },
                 { title: 'Tipi e Recall', link: 'tempiRecall' },
-                { title: 'Invio sms', link: 'invioSms' },
+                { title: 'Invio sms', link: 'inviaSms' },
             ],
         }),
     }
