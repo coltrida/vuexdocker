@@ -4154,8 +4154,6 @@ var mutations = {
     state.provePassate.unshift(payload);
   },
   salvaFattura: function salvaFattura(state, payload) {
-    //console.log('ok');
-    console.log(payload);
     state.provePassate = state.provePassate.filter(function (u) {
       return u.id !== payload.id;
     });
@@ -4662,11 +4660,15 @@ var state = function state() {
     audioConBgt: [],
     audioSenzaBgt: [],
     situazioneMese: [],
-    amm: []
+    amm: [],
+    pippo: ''
   };
 };
 
 var getters = {
+  getPippo: function getPippo(state) {
+    return state.pippo;
+  },
   getAudio: function getAudio(state) {
     return state.audio;
   },
@@ -4967,6 +4969,24 @@ var actions = {
         }
       }, _callee12);
     }))();
+  },
+  caricaProvaInHome: function caricaProvaInHome(_ref13, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
+        while (1) {
+          switch (_context13.prev = _context13.next) {
+            case 0:
+              commit = _ref13.commit;
+              commit('caricaProvaInHome', payload);
+
+            case 2:
+            case "end":
+              return _context13.stop();
+          }
+        }
+      }, _callee13);
+    }))();
   }
 };
 var mutations = {
@@ -5012,6 +5032,15 @@ var mutations = {
       return u.id !== payload.id;
     });
     state.audioConBgt.unshift(payload);
+  },
+  caricaProvaInHome: function caricaProvaInHome(state, payload) {
+    state.pippo = payload;
+    console.log(payload);
+    console.log(state.situazioneMese); //console.log(state.situazioneMese.filter(u => u.id === payload.user_id));
+    //console.log(state.situazioneMese);
+
+    /*state.audioSenzaBgt = state.audioSenzaBgt.filter(u => u.id !== payload.id);
+    state.audioConBgt.unshift(payload);*/
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({

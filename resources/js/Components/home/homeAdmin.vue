@@ -1,11 +1,11 @@
 <template>
     <div class="flex justify-start align-center mt-2">
-        <v-container>
-            <v-row>
-                <h1>Home Admin</h1>
-            </v-row>
 
-            <v-row>
+            <!--<v-row>
+                <h1>Home Admin</h1>
+            </v-row>-->
+
+            <v-row style="font-size: 10px">
                 <prodotti
                     :prodotti="prodottiSelezione"
                     :dialog-pro="dialogProdotti"
@@ -58,7 +58,7 @@
                                     label
                                     text-color="white"
                                 >
-                                    Bgt: € {{ audio.budget.budgetAnno * audio.budget.target / 100 }} - Fatt: € {{audio.prova_finalizzata_sum_tot}}
+                                    Bgt: € {{ audio.budget.target }} - Fatt: € {{audio.prova_finalizzata_sum_tot}}
                                 </v-chip>
 
 
@@ -101,7 +101,7 @@
                                     label
                                     text-color="white"
                                 >
-                                    Bgt: € {{ audio.budget.budgetAnno * audio.budget.target / 100 }} - Fatt: € {{audio.prova_finalizzata_sum_tot}}
+                                    Bgt: € {{ audio.budget.target }} - Fatt: € {{audio.prova_finalizzata_sum_tot}}
                                 </v-chip>
 
 
@@ -123,8 +123,7 @@
                     </div>
                 </v-col>
             </v-row>
-
-        </v-container>
+{{getPippo}}
     </div>
 </template>
 
@@ -141,7 +140,7 @@
                 expanded: [],
                 headers1: [
                     {text: 'Nome', width:185, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:70,  value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Inizio', width:120, value: 'inizio_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                     /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
@@ -149,7 +148,7 @@
 
                 headers2: [
                     {text: 'Nome', width:185, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:70, value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80, value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Finalizzato', width:120, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
@@ -161,7 +160,9 @@
         },*/
 
         mounted() {
-            this.fetchSituazioneMese();
+            this.fetchSituazioneMese().then(() => {
+                console.log(this.getSituazioneMese)
+            });
         },
 
         /*watch:{
@@ -190,6 +191,7 @@
         computed: {
             ...mapGetters('users', {
                 getSituazioneMese: 'getSituazioneMese',
+                getPippo: 'getPippo',
             }),
 
             /*...mapGetters('prove', {

@@ -206,7 +206,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -227,7 +226,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 70,
+        width: 80,
         value: 'tot',
         sortable: false,
         "class": "indigo white--text"
@@ -253,7 +252,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 70,
+        width: 80,
         value: 'tot',
         sortable: false,
         "class": "indigo white--text"
@@ -276,7 +275,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchSituazioneMese();
   },*/
   mounted: function mounted() {
-    this.fetchSituazioneMese();
+    var _this = this;
+
+    this.fetchSituazioneMese().then(function () {
+      console.log(_this.getSituazioneMese);
+    });
   },
 
   /*watch:{
@@ -298,7 +301,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
-    getSituazioneMese: 'getSituazioneMese'
+    getSituazioneMese: 'getSituazioneMese',
+    getPippo: 'getPippo'
   }))
 });
 
@@ -520,7 +524,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 70,
+        width: 80,
         value: 'tot',
         sortable: false,
         "class": "indigo white--text"
@@ -546,7 +550,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 70,
+        width: 80,
         value: 'tot',
         sortable: false,
         "class": "indigo white--text"
@@ -1204,306 +1208,292 @@ var render = function() {
     { staticClass: "flex justify-start align-center mt-2" },
     [
       _c(
-        "v-container",
+        "v-row",
+        { staticStyle: { "font-size": "10px" } },
         [
-          _c("v-row", [_c("h1", [_vm._v("Home Admin")])]),
+          _vm.dialogProdotti
+            ? _c("prodotti", {
+                attrs: {
+                  prodotti: _vm.prodottiSelezione,
+                  "dialog-pro": _vm.dialogProdotti
+                },
+                on: { chiudiProdotti: _vm.chiudiProdotti }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c(
-            "v-row",
+            "v-col",
+            { attrs: { cols: "4" } },
             [
-              _vm.dialogProdotti
-                ? _c("prodotti", {
-                    attrs: {
-                      prodotti: _vm.prodottiSelezione,
-                      "dialog-pro": _vm.dialogProdotti
-                    },
-                    on: { chiudiProdotti: _vm.chiudiProdotti }
-                  })
-                : _vm._e(),
+              _c("h2", [_vm._v("Prove in Corso:")]),
               _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
-                [
-                  _c("h2", [_vm._v("Prove in Corso:")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.getSituazioneMese, function(audio) {
-                    return _c(
-                      "div",
-                      { key: audio.id },
-                      [
-                        _c("v-data-table", {
-                          staticClass: "elevation-1 mt-3",
-                          attrs: {
-                            headers: _vm.headers1,
-                            items: audio.prova_in_corso,
-                            "hide-default-footer": ""
+              _vm._l(_vm.getSituazioneMese, function(audio) {
+                return _c(
+                  "div",
+                  { key: audio.id },
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headers1,
+                        items: audio.prova_in_corso,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "header.client.fullname",
+                            fn: function(ref) {
+                              var header = ref.header
+                              return [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(audio.name) +
+                                    "\n                            "
+                                )
+                              ]
+                            }
                           },
-                          scopedSlots: _vm._u(
-                            [
-                              {
-                                key: "header.client.fullname",
-                                fn: function(ref) {
-                                  var header = ref.header
-                                  return [
+                          {
+                            key: "item.actions",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { color: "green", dark: "" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.seleziona(item.product)
+                                      }
+                                    }
+                                  },
+                                  [
                                     _vm._v(
-                                      "\n                            " +
-                                        _vm._s(audio.name) +
-                                        "\n                        "
+                                      "\n                                    Prodotti\n                                "
                                     )
                                   ]
-                                }
-                              },
-                              {
-                                key: "item.actions",
-                                fn: function(ref) {
-                                  var item = ref.item
-                                  return [
-                                    _c(
-                                      "v-btn",
-                                      {
-                                        attrs: { color: "green", dark: "" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.seleziona(item.product)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                Prodotti\n                            "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                }
-                              }
-                            ],
-                            null,
-                            true
-                          )
-                        })
-                      ],
-                      1
-                    )
-                  })
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
-                [
-                  _c("h2", [_vm._v("Finalizzati:")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.getSituazioneMese, function(audio) {
-                    return _c(
-                      "div",
-                      { key: audio.id },
-                      [
-                        _c("v-data-table", {
-                          staticClass: "elevation-1 mt-3",
-                          attrs: {
-                            headers: _vm.headers2,
-                            items: audio.prova_finalizzata,
-                            "hide-default-footer": ""
-                          },
-                          scopedSlots: _vm._u(
-                            [
-                              {
-                                key: "header.client.fullname",
-                                fn: function(ref) {
-                                  var header = ref.header
-                                  return [
-                                    _vm._v(
-                                      "\n                            " +
-                                        _vm._s(audio.name) +
-                                        "\n                        "
-                                    )
-                                  ]
-                                }
-                              },
-                              {
-                                key: "header.actions",
-                                fn: function(ref) {
-                                  var header = ref.header
-                                  return [
-                                    _c(
-                                      "v-chip",
-                                      {
-                                        staticStyle: { "font-size": "12px" },
-                                        attrs: {
-                                          color: "orange",
-                                          label: "",
-                                          "text-color": "white"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                Bgt: € " +
-                                            _vm._s(
-                                              (audio.budget.budgetAnno *
-                                                audio.budget.target) /
-                                                100
-                                            ) +
-                                            " - Fatt: € " +
-                                            _vm._s(
-                                              audio.prova_finalizzata_sum_tot
-                                            ) +
-                                            "\n                            "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                }
-                              },
-                              {
-                                key: "item.actions",
-                                fn: function(ref) {
-                                  var item = ref.item
-                                  return [
-                                    _c(
-                                      "v-btn",
-                                      {
-                                        attrs: { color: "green", dark: "" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.seleziona(item.product)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                Prodotti\n                            "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                }
-                              }
-                            ],
-                            null,
-                            true
-                          )
-                        })
-                      ],
-                      1
-                    )
-                  })
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
-                [
-                  _c("h2", [_vm._v("Resi:")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.getSituazioneMese, function(audio) {
-                    return _c(
-                      "div",
-                      { key: audio.id },
-                      [
-                        _c("v-data-table", {
-                          staticClass: "elevation-1 mt-3",
-                          attrs: {
-                            headers: _vm.headers2,
-                            items: audio.prova_reso,
-                            "hide-default-footer": ""
-                          },
-                          scopedSlots: _vm._u(
-                            [
-                              {
-                                key: "header.client.fullname",
-                                fn: function(ref) {
-                                  var header = ref.header
-                                  return [
-                                    _vm._v(
-                                      "\n                            " +
-                                        _vm._s(audio.name) +
-                                        "\n                        "
-                                    )
-                                  ]
-                                }
-                              },
-                              {
-                                key: "header.actions",
-                                fn: function(ref) {
-                                  var header = ref.header
-                                  return [
-                                    _c(
-                                      "v-chip",
-                                      {
-                                        staticStyle: { "font-size": "12px" },
-                                        attrs: {
-                                          color: "orange",
-                                          label: "",
-                                          "text-color": "white"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                Bgt: € " +
-                                            _vm._s(
-                                              (audio.budget.budgetAnno *
-                                                audio.budget.target) /
-                                                100
-                                            ) +
-                                            " - Fatt: € " +
-                                            _vm._s(
-                                              audio.prova_finalizzata_sum_tot
-                                            ) +
-                                            "\n                            "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                }
-                              },
-                              {
-                                key: "item.actions",
-                                fn: function(ref) {
-                                  var item = ref.item
-                                  return [
-                                    _c(
-                                      "v-btn",
-                                      {
-                                        attrs: { color: "green", dark: "" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.seleziona(item.product)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                Prodotti\n                            "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                }
-                              }
-                            ],
-                            null,
-                            true
-                          )
-                        })
-                      ],
-                      1
-                    )
-                  })
-                ],
-                2
-              )
+                                )
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  ],
+                  1
+                )
+              })
             ],
-            1
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "4" } },
+            [
+              _c("h2", [_vm._v("Finalizzati:")]),
+              _vm._v(" "),
+              _vm._l(_vm.getSituazioneMese, function(audio) {
+                return _c(
+                  "div",
+                  { key: audio.id },
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headers2,
+                        items: audio.prova_finalizzata,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "header.client.fullname",
+                            fn: function(ref) {
+                              var header = ref.header
+                              return [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(audio.name) +
+                                    "\n                            "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "header.actions",
+                            fn: function(ref) {
+                              var header = ref.header
+                              return [
+                                _c(
+                                  "v-chip",
+                                  {
+                                    staticStyle: { "font-size": "12px" },
+                                    attrs: {
+                                      color: "orange",
+                                      label: "",
+                                      "text-color": "white"
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Bgt: € " +
+                                        _vm._s(audio.budget.target) +
+                                        " - Fatt: € " +
+                                        _vm._s(
+                                          audio.prova_finalizzata_sum_tot
+                                        ) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.actions",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { color: "green", dark: "" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.seleziona(item.product)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Prodotti\n                                "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  ],
+                  1
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "4" } },
+            [
+              _c("h2", [_vm._v("Resi:")]),
+              _vm._v(" "),
+              _vm._l(_vm.getSituazioneMese, function(audio) {
+                return _c(
+                  "div",
+                  { key: audio.id },
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        headers: _vm.headers2,
+                        items: audio.prova_reso,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "header.client.fullname",
+                            fn: function(ref) {
+                              var header = ref.header
+                              return [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(audio.name) +
+                                    "\n                            "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "header.actions",
+                            fn: function(ref) {
+                              var header = ref.header
+                              return [
+                                _c(
+                                  "v-chip",
+                                  {
+                                    staticStyle: { "font-size": "12px" },
+                                    attrs: {
+                                      color: "orange",
+                                      label: "",
+                                      "text-color": "white"
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Bgt: € " +
+                                        _vm._s(audio.budget.target) +
+                                        " - Fatt: € " +
+                                        _vm._s(
+                                          audio.prova_finalizzata_sum_tot
+                                        ) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.actions",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: { color: "green", dark: "" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.seleziona(item.product)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Prodotti\n                                "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  ],
+                  1
+                )
+              })
+            ],
+            2
           )
         ],
         1
-      )
+      ),
+      _vm._v("\n" + _vm._s(_vm.getPippo) + "\n    ")
     ],
     1
   )
@@ -1576,6 +1566,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-row",
+            { staticStyle: { "font-size": "10px" } },
             [
               _vm.dialogProdotti
                 ? _c("prodotti", {
@@ -1688,9 +1679,7 @@ var render = function() {
                                 [
                                   _vm._v(
                                     "\n                                Bgt: € " +
-                                      _vm._s(
-                                        (_vm.bgtAnno * _vm.bgtTarget) / 100
-                                      ) +
+                                      _vm._s(_vm.bgtTarget) +
                                       " - Fatt: € " +
                                       _vm._s(
                                         _vm.getSituazioneMese
@@ -1777,9 +1766,7 @@ var render = function() {
                                 [
                                   _vm._v(
                                     "\n                                Bgt: € " +
-                                      _vm._s(
-                                        (_vm.bgtAnno * _vm.bgtTarget) / 100
-                                      ) +
+                                      _vm._s(_vm.bgtTarget) +
                                       " - Fatt: € " +
                                       _vm._s(
                                         _vm.getSituazioneMese

@@ -5,7 +5,7 @@
                 <h1>Home Audio</h1>
             </v-row>
 
-            <v-row>
+            <v-row style="font-size: 10px">
                 <prodotti
                     :prodotti="prodottiSelezione"
                     :dialog-pro="dialogProdotti"
@@ -56,7 +56,7 @@
                                     label
                                     text-color="white"
                                 >
-                                    Bgt: € {{ bgtAnno * bgtTarget / 100 }} - Fatt: € {{getSituazioneMese.prova_finalizzata_sum_tot}}
+                                    Bgt: € {{ bgtTarget }} - Fatt: € {{getSituazioneMese.prova_finalizzata_sum_tot}}
                                 </v-chip>
 
 
@@ -92,7 +92,7 @@
                                     label
                                     text-color="white"
                                 >
-                                    Bgt: € {{ bgtAnno * bgtTarget / 100 }} - Fatt: € {{getSituazioneMese.prova_finalizzata_sum_tot}}
+                                    Bgt: € {{ bgtTarget }} - Fatt: € {{getSituazioneMese.prova_finalizzata_sum_tot}}
                                 </v-chip>
 
 
@@ -154,7 +154,7 @@
                 expanded: [],
                 headers1: [
                     {text: 'Nome', width:185, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:70,  value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Inizio', width:120, value: 'inizio_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                     /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
@@ -162,7 +162,7 @@
 
                 headers2: [
                     {text: 'Nome', width:185, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:70, value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80, value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Finalizzato', width:120, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
