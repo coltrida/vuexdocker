@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Events\ProveEvent;
 use App\Models\Fattura;
 use App\Models\Product;
 use App\Models\ProductProva;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Promise\Each;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use function broadcast;
 use function compact;
 use function trim;
 use function view;
@@ -62,7 +64,9 @@ class ProvaService
         $prova->stato_id = 3;
         $prova->tot = $request->tot;
         $prova->save();
-        return Prova::with('stato', 'user', 'product', 'client')->find($request->id);
+        $provaSalvata = Prova::with('stato', 'user', 'product', 'client')->find($request->id);
+        broadcast(new ProveEvent($provaSalvata))->toOthers();
+        return $provaSalvata;
     }
 
     public function reso($idProva)
@@ -77,7 +81,9 @@ class ProvaService
         $prova->mese_fine = Carbon::now()->month;
         $prova->anno_fine = Carbon::now()->year;
         $prova->save();
-        return Prova::with('product', 'stato', 'user')->find($idProva);
+        $provaSalvata = Prova::with('product', 'stato', 'user')->find($idProva);
+        broadcast(new ProveEvent($provaSalvata))->toOthers();
+        return $provaSalvata;
     }
 
     public function salvaFattura($request)
@@ -85,7 +91,7 @@ class ProvaService
         $prova = Prova::with('product')->find($request->id);
         $prova->stato_id = 4;
         $prova->tot = $request->totFatturaReale;
-        $prova->fine_prova = Carbon::now()->format('Y-d-m');
+        $prova->fine_prova = Carbon::now()->format('Y-m-d');
         $prova->mese_fine = Carbon::now()->month;
         $prova->anno_fine = Carbon::now()->year;
         $prova->save();
@@ -117,6 +123,7 @@ class ProvaService
         $this->creaPdfFattura(Fattura::with('prova')->find($fattura->id));
 
         $provaFattura = Prova::with('stato', 'user', 'product', 'client')->find($request->id);
+        broadcast(new ProveEvent($provaFattura))->toOthers();
         return $provaFattura;
     }
 

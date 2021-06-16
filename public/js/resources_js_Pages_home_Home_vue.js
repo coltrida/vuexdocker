@@ -277,17 +277,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
-    this.fetchSituazioneMese().then(function () {
-      console.log(_this.getSituazioneMese);
+    this.fetchSituazioneMese();
+    window.Echo.channel("provaChannel").listen(".task-created", function (e) {
+      _this.fetchSituazioneMese();
     });
   },
-
-  /*watch:{
-      getProvePassate(){
-          console.log('ok')
-          this.fetchSituazioneMese();
-      }
-  },*/
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
     fetchSituazioneMese: 'fetchSituazioneMese'
   })), {}, {
@@ -301,8 +295,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
-    getSituazioneMese: 'getSituazioneMese',
-    getPippo: 'getPippo'
+    getSituazioneMese: 'getSituazioneMese'
   }))
 });
 
@@ -1247,9 +1240,9 @@ var render = function() {
                               var header = ref.header
                               return [
                                 _vm._v(
-                                  "\n                                " +
+                                  "\n                            " +
                                     _vm._s(audio.name) +
-                                    "\n                            "
+                                    "\n                        "
                                 )
                               ]
                             }
@@ -1271,7 +1264,7 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n                                    Prodotti\n                                "
+                                      "\n                                Prodotti\n                            "
                                     )
                                   ]
                                 )
@@ -1317,9 +1310,9 @@ var render = function() {
                               var header = ref.header
                               return [
                                 _vm._v(
-                                  "\n                                " +
+                                  "\n                            " +
                                     _vm._s(audio.name) +
-                                    "\n                            "
+                                    "\n                        "
                                 )
                               ]
                             }
@@ -1341,13 +1334,13 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n                                    Bgt: € " +
+                                      "\n                                Bgt: € " +
                                         _vm._s(audio.budget.target) +
                                         " - Fatt: € " +
                                         _vm._s(
                                           audio.prova_finalizzata_sum_tot
                                         ) +
-                                        "\n                                "
+                                        "\n                            "
                                     )
                                   ]
                                 )
@@ -1371,7 +1364,7 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n                                    Prodotti\n                                "
+                                      "\n                                Prodotti\n                            "
                                     )
                                   ]
                                 )
@@ -1417,9 +1410,9 @@ var render = function() {
                               var header = ref.header
                               return [
                                 _vm._v(
-                                  "\n                                " +
+                                  "\n                            " +
                                     _vm._s(audio.name) +
-                                    "\n                            "
+                                    "\n                        "
                                 )
                               ]
                             }
@@ -1441,13 +1434,13 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n                                    Bgt: € " +
+                                      "\n                                Bgt: € " +
                                         _vm._s(audio.budget.target) +
                                         " - Fatt: € " +
                                         _vm._s(
                                           audio.prova_finalizzata_sum_tot
                                         ) +
-                                        "\n                                "
+                                        "\n                            "
                                     )
                                   ]
                                 )
@@ -1471,7 +1464,7 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n                                    Prodotti\n                                "
+                                      "\n                                Prodotti\n                            "
                                     )
                                   ]
                                 )
@@ -1492,8 +1485,7 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v("\n" + _vm._s(_vm.getPippo) + "\n    ")
+      )
     ],
     1
   )

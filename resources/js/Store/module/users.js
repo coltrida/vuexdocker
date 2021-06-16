@@ -6,13 +6,9 @@ const state = () => ({
     audioSenzaBgt: [],
     situazioneMese: [],
     amm: [],
-    pippo:'',
 });
 
 const getters = {
-    getPippo(state){
-        return state.pippo;
-    },
 
     getAudio(state){
         return state.audio;
@@ -104,9 +100,6 @@ const actions = {
         commit('modificaBgt', response.data);
     },
 
-    async caricaProvaInHome({commit}, payload){
-        commit('caricaProvaInHome', payload);
-    },
 };
 
 const mutations = {
@@ -154,16 +147,6 @@ const mutations = {
     modificaBgt(state, payload){
         state.audioSenzaBgt = state.audioSenzaBgt.filter(u => u.id !== payload.id);
         state.audioConBgt.unshift(payload);
-    },
-
-    caricaProvaInHome(state, payload){
-        state.pippo = payload;
-        console.log(payload);
-        console.log(state.situazioneMese);
-        //console.log(state.situazioneMese.filter(u => u.id === payload.user_id));
-        //console.log(state.situazioneMese);
-        /*state.audioSenzaBgt = state.audioSenzaBgt.filter(u => u.id !== payload.id);
-        state.audioConBgt.unshift(payload);*/
     },
 };
 

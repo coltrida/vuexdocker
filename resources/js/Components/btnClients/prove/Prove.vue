@@ -302,10 +302,6 @@
                 switchRimuoviDallaProva:'switchRimuoviDallaProva',
             }),
 
-            ...mapActions('users', {
-                caricaProvaInHome:'caricaProvaInHome',
-            }),
-
             ...mapActions('prove', {
                 AddEleInNuovaProva:'AddEleInNuovaProva',
                 creaNuovaProva:'creaNuovaProva',
@@ -366,16 +362,11 @@
             },
 
             salvaProva(){
-                //console.log(this.getElementiNuovaProva)
                 this.salvaProvaInCorso({
                     'id': this.getNuovaProvaCreata.id,
                     'tot': this.getElementiNuovaProva.length > 1 ?
                         this.getElementiNuovaProva.reduce(function(a, b){return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo)}) :
                         this.getElementiNuovaProva[0].prezzo
-                }).then(() => {
-                    //console.log(this.getProvePassate[0])
-                    // this.caricaProvaInHome(this.getProvePassate[0]);
-                    this.caricaProvaInHome('ciao');
                 });
 
             },

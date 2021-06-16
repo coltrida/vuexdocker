@@ -123,7 +123,7 @@
                     </div>
                 </v-col>
             </v-row>
-{{getPippo}}
+
     </div>
 </template>
 
@@ -160,17 +160,11 @@
         },*/
 
         mounted() {
-            this.fetchSituazioneMese().then(() => {
-                console.log(this.getSituazioneMese)
+            this.fetchSituazioneMese();
+            window.Echo.channel("provaChannel").listen(".task-created", e => {
+                this.fetchSituazioneMese();
             });
         },
-
-        /*watch:{
-            getProvePassate(){
-                console.log('ok')
-                this.fetchSituazioneMese();
-            }
-        },*/
 
         methods: {
             ...mapActions('users', {
@@ -191,7 +185,6 @@
         computed: {
             ...mapGetters('users', {
                 getSituazioneMese: 'getSituazioneMese',
-                getPippo: 'getPippo',
             }),
 
             /*...mapGetters('prove', {

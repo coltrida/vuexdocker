@@ -174,6 +174,32 @@ class ProductSeeder extends Seeder
                 'created_at' => Carbon::make('2021-03-20'),
                 'updated_at' => Carbon::make('2021-03-20'),
             ],
+            [
+                'matricola' => 'ffhghddddddrrr',
+                'stato_id' => 5,
+                'filiale_id' => 3,
+                'listino_id' => 4,
+                'fornitore_id' => 3,
+                'fattura_id' => null,
+                'user_id' => null,
+                'client_id' => null,
+                'ddt_id' => 2,
+                'created_at' => Carbon::make('2021-03-20'),
+                'updated_at' => Carbon::make('2021-03-20'),
+            ],
+            [
+                'matricola' => '55r',
+                'stato_id' => 5,
+                'filiale_id' => 3,
+                'listino_id' => 4,
+                'fornitore_id' => 3,
+                'fattura_id' => null,
+                'user_id' => null,
+                'client_id' => null,
+                'ddt_id' => 2,
+                'created_at' => Carbon::make('2021-03-20'),
+                'updated_at' => Carbon::make('2021-03-20'),
+            ],
         ]);
     }
 }

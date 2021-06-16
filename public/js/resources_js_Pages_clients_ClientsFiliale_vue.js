@@ -1189,14 +1189,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchFornitori();
     this.fetchProvePassate(this.proveClient.prove);
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('fornitori', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('product', {
     fetchInFilialeFornitore: 'fetchInFilialeFornitore',
     switchInProva: 'switchInProva',
     switchRimuoviDallaProva: 'switchRimuoviDallaProva'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
-    caricaProvaInHome: 'caricaProvaInHome'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('prove', {
     AddEleInNuovaProva: 'AddEleInNuovaProva',
     creaNuovaProva: 'creaNuovaProva',
@@ -1253,18 +1251,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.switchRimuoviDallaProva(idProduct);
     },
     salvaProva: function salvaProva() {
-      var _this2 = this;
-
-      //console.log(this.getElementiNuovaProva)
       this.salvaProvaInCorso({
         'id': this.getNuovaProvaCreata.id,
         'tot': this.getElementiNuovaProva.length > 1 ? this.getElementiNuovaProva.reduce(function (a, b) {
           return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo);
         }) : this.getElementiNuovaProva[0].prezzo
-      }).then(function () {
-        //console.log(this.getProvePassate[0])
-        // this.caricaProvaInHome(this.getProvePassate[0]);
-        _this2.caricaProvaInHome('ciao');
       });
     },
     reso: function reso(id) {
