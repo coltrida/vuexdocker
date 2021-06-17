@@ -82,9 +82,14 @@ Route::get('/filiali/{id}/inProva', [ProductController::class, 'inProva']);
 Route::get('/filiali/{id}/richiesti', [ProductController::class, 'richiesti']);
 Route::get('/filiali/{id}/inArrivo', [ProductController::class, 'inArrivo']);
 Route::post('/productSwitchInProva', [ProductController::class, 'switchInProva']);
+Route::post('/productSwitchImmatricolato', [ProductController::class, 'switchImmatricolato']);
 Route::get('/productSwitchRimuoviDallaProva/{id}', [ProductController::class, 'switchRimuoviDallaProva']);
 Route::delete('/productRimuoviRichiesta/{idProduct}', [ProductController::class, 'productRimuoviRichiesta']);
 Route::post('/richiestaProdotti', [ProductController::class, 'richiestaProdotti']);
+Route::post('/assegnaProdottiMagazzino', [ProductController::class, 'assegnaProdottiMagazzino']);
+Route::get('/listaProdottiRichiesti', [ProductController::class, 'listaProdottiRichiesti']);
+Route::get('/prodottiImmatricolati/{idFiliale}', [ProductController::class, 'prodottiImmatricolati']);
+Route::get('/productSwitchArrivato/{id}', [ProductController::class, 'switchArrivato']);
 
 // ---------------- client -------------------------
 Route::get('/clients', [ClientController::class, 'index']);

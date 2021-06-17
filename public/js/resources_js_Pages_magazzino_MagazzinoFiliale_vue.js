@@ -124,6 +124,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
@@ -240,6 +259,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Matricola',
         value: 'matricola',
         "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
       }]
     };
   },
@@ -261,7 +285,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchRichiesti: 'fetchRichiesti',
     fetchInArrivo: 'fetchInArrivo',
     richiediProduct: 'richiediProduct',
-    eliminaRichiesta: 'eliminaRichiesta'
+    eliminaRichiesta: 'eliminaRichiesta',
+    switchArrivato: 'switchArrivato'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
@@ -280,6 +305,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     elimina: function elimina(id) {
       this.eliminaRichiesta(id);
+    },
+    arrivato: function arrivato(id) {
+      this.switchArrivato(id);
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
@@ -573,7 +601,63 @@ var render = function() {
               headers: _vm.headers3,
               items: _vm.getInArrivo,
               "items-per-page": 10
-            }
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "item.actions",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _c(
+                      "v-tooltip",
+                      {
+                        attrs: { bottom: "" },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var on = ref.on
+                                var attrs = ref.attrs
+                                return [
+                                  _c(
+                                    "v-icon",
+                                    _vm._g(
+                                      _vm._b(
+                                        {
+                                          attrs: { color: "green", small: "" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.arrivato(item.id)
+                                            }
+                                          }
+                                        },
+                                        "v-icon",
+                                        attrs,
+                                        false
+                                      ),
+                                      on
+                                    ),
+                                    [
+                                      _vm._v(
+                                        "\n                            mdi-truck\n                        "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          true
+                        )
+                      },
+                      [_vm._v(" "), _c("span", [_vm._v("Arrivato")])]
+                    )
+                  ]
+                }
+              }
+            ])
           })
         ],
         1

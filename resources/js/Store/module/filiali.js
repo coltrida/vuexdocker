@@ -3,7 +3,8 @@ import help from "../../help";
 const state = () => ({
     filiali: [],
     associazioni: [],
-    situazioneMese: []
+    situazioneMese: [],
+    richiestaApparecchi: [],
 });
 
 const getters = {
@@ -17,6 +18,10 @@ const getters = {
 
     getSituazioneMese(state){
         return state.situazioneMese;
+    },
+
+    getRichiestaApparecchi(state){
+        return state.richiestaApparecchi;
     },
 
 };
@@ -68,6 +73,11 @@ const actions = {
         await axios.delete(`${help().linkfiliali}`+'/'+id);
         commit('eliminaFiliale', id);
     },
+
+    async fetchRichiestaApparecchi({commit}){
+        const response = await axios.get(`${help().linklistarichiestaapparecchi}`);
+        commit('fetchRichiestaApparecchi', response.data);
+    },
 };
 
 const mutations = {
@@ -97,6 +107,10 @@ const mutations = {
 
     eliminaFiliale(state, id){
         state.filiali = state.filiali.filter(u => u.id !== id);
+    },
+
+    fetchRichiestaApparecchi(state, payload){
+        state.richiestaApparecchi = payload;
     },
 };
 

@@ -312,6 +312,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -329,8 +336,165 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "homeAmm"
+  name: "homeAmm",
+  data: function data() {
+    return {
+      nomeFiliale: '',
+      matricole: [],
+      elemento: {},
+      valori: {},
+      headers1: [{
+        text: 'Nome',
+        value: 'listino.nome',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Fornitore',
+        value: 'listino.fornitore.nome',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Matricola',
+        width: 180,
+        value: 'matricola',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Invia',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }],
+      headers2: [{
+        text: 'Matricola',
+        value: 'matricola',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'listino',
+        value: 'listino.nome',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'fornitore',
+        value: 'listino.fornitore.nome',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Invia',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }]
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.fetchRichiestaApparecchi();
+    window.Echo.channel("provaChannel").listen(".task-created", function (e) {
+      _this.fetchSituazioneMese();
+    });
+  },
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
+    fetchRichiestaApparecchi: 'fetchRichiestaApparecchi'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('product', {
+    switchImmatricolato: 'switchImmatricolato',
+    fetchImmatricolati: 'fetchImmatricolati',
+    assegnaProdottiMagazzino: 'assegnaProdottiMagazzino'
+  })), {}, {
+    assegna: function assegna(item, filiale) {
+      var _this2 = this;
+
+      if (!this.nomeFiliale) {
+        this.nomeFiliale = filiale.nome;
+      }
+
+      this.switchImmatricolato({
+        idProduct: item.id,
+        matricola: this.matricole[item.id]
+      }).then(function () {
+        _this2.fetchImmatricolati(item.filiale_id);
+
+        _this2.fetchRichiestaApparecchi();
+      });
+    },
+    invia: function invia() {
+      var _this3 = this;
+
+      this.assegnaProdottiMagazzino(this.getImmatricolati).then(function () {
+        _this3.nomeFiliale = '';
+      });
+    }
+  }),
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
+    getRichiestaApparecchi: 'getRichiestaApparecchi'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
+    getImmatricolati: 'getImmatricolati'
+  }))
 });
 
 /***/ }),
@@ -1513,18 +1677,176 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "flex justify-start align-center mt-2" },
+    [
+      _c(
+        "v-container",
+        [
+          _c("v-row", [_c("h1", [_vm._v("Home Amministrazione")])]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "6" } },
+                [
+                  _c("h2", [_vm._v("Richiesta Materiale")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.getRichiestaApparecchi, function(filiale) {
+                    return _c(
+                      "div",
+                      { key: filiale.id },
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1 mt-3",
+                          attrs: {
+                            headers: _vm.headers1,
+                            items: filiale.products_richiesti,
+                            "hide-default-footer": ""
+                          },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "header.listino.nome",
+                                fn: function(ref) {
+                                  var header = ref.header
+                                  return [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(filiale.nome) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                }
+                              },
+                              {
+                                key: "item.matricola",
+                                fn: function(ref) {
+                                  var item = ref.item
+                                  return [
+                                    _c("v-text-field", {
+                                      staticClass: "mt-3",
+                                      attrs: { outlined: "", dense: "" },
+                                      model: {
+                                        value: _vm.matricole[item.id],
+                                        callback: function($$v) {
+                                          _vm.$set(_vm.matricole, item.id, $$v)
+                                        },
+                                        expression: "matricole[item.id]"
+                                      }
+                                    })
+                                  ]
+                                }
+                              },
+                              {
+                                key: "item.actions",
+                                fn: function(ref) {
+                                  var item = ref.item
+                                  return [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: { color: "green", dark: "" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.assegna(item, filiale)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    ASSEGNA\n                            "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                }
+                              }
+                            ],
+                            null,
+                            true
+                          )
+                        })
+                      ],
+                      1
+                    )
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm.getImmatricolati.length > 0
+                ? _c(
+                    "v-col",
+                    { attrs: { cols: "4" } },
+                    [
+                      _c("h2", [_vm._v("Da Spedire")]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          headers: _vm.headers2,
+                          items: _vm.getImmatricolati,
+                          "hide-default-footer": ""
+                        },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "header.actions",
+                              fn: function(ref) {
+                                var header = ref.header
+                                return [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { color: "green", dark: "" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.invia()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(_vm.nomeFiliale) +
+                                          "\n                            "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          false,
+                          2120809308
+                        )
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("v-col", { attrs: { cols: "2" } }, [
+                _c("h2", [_vm._v("Telefonate:")]),
+                _vm._v(" "),
+                _c("div")
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justify-start align-center mt-2" }, [
-      _c("h1", [_vm._v("Home Amm")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

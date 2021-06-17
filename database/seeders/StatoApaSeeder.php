@@ -36,6 +36,9 @@ class StatoApaSeeder extends Seeder
             [
                 'nome' => 'NUOVO'
             ],
+            [
+                'nome' => 'IMMATRICOLATO'
+            ],
         ]);
     }
 }

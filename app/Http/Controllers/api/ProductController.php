@@ -41,9 +41,19 @@ class ProductController extends Controller
         return ProductResource::collection($productService->richiestaProdotti($request));
     }
 
+    public function assegnaProdottiMagazzino(Request $request, ProductService $productService)
+    {
+        $productService->assegnaProdottiMagazzino($request);
+    }
+
     public function switchInProva(Request $request, ProductService $productService)
     {
         $productService->switchInProva($request);
+    }
+
+    public function switchImmatricolato(Request $request, ProductService $productService)
+    {
+        $productService->switchImmatricolato($request);
     }
 
     public function switchRimuoviDallaProva($id, ProductService $productService)
@@ -51,8 +61,23 @@ class ProductController extends Controller
         $productService->switchRimuoviDallaProva($id);
     }
 
+    public function prodottiImmatricolati($idFiliale, ProductService $productService)
+    {
+        return $productService->prodottiImmatricolati($idFiliale);
+    }
+
     public function productRimuoviRichiesta($id, ProductService $productService)
     {
         $productService->productRimuoviRichiesta($id);
+    }
+
+    public function listaProdottiRichiesti(ProductService $productService)
+    {
+        return $productService->listaProdottiRichiesti();
+    }
+
+    public function switchArrivato($id, ProductService $productService)
+    {
+        return new ProductResource($productService->switchArrivato($id));
     }
 }

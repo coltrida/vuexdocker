@@ -66,6 +66,11 @@ const help = () => {
         linkappuntamentioggi: 'http://vuexdocker.local/api/appuntamentiOggiAudio',
         linkvisualizzasituazioneanno: 'http://vuexdocker.local/api/visualizzaSituazioneAnno',
         linkinviasms: 'http://vuexdocker.local/api/inviaSms',
+        linklistarichiestaapparecchi: 'http://vuexdocker.local/api/listaProdottiRichiesti',
+        linkassegnaprodottimagazzino: 'http://vuexdocker.local/api/assegnaProdottiMagazzino',
+        linkimmatricolati: 'http://vuexdocker.local/api/prodottiImmatricolati',
+        linkswitchimmatricolato: 'http://vuexdocker.local/api/productSwitchImmatricolato',
+        linkswitcharrivato: 'http://vuexdocker.local/api/productSwitchArrivato',
     };
 };
 export default help;

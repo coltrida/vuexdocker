@@ -4,7 +4,8 @@ const state = () => ({
     inFiliale: [],
     inProva: [],
     richiesti: [],
-    inArrivo: []
+    inArrivo: [],
+    immatricolati:[],
 });
 
 const getters = {
@@ -22,6 +23,10 @@ const getters = {
 
     getInArrivo(state){
         return state.inArrivo;
+    },
+
+    getImmatricolati(state){
+        return state.immatricolati;
     },
 };
 
@@ -52,6 +57,11 @@ const actions = {
         commit('fetchInArrivo', response.data.data);
     },
 
+    async fetchImmatricolati({commit}, idFiliale){
+        const response = await axios.get(`${help().linkimmatricolati}`+'/'+idFiliale);
+        commit('fetchImmatricolati', response.data);
+    },
+
     async richiediProduct({commit}, payload){
         const response = await axios.post(`${help().linkrichiestaprodotti}`, payload);
         commit('richiediProduct', response.data.data);
@@ -65,6 +75,13 @@ const actions = {
         });
     },
 
+    async switchImmatricolato({commit}, payload){
+        await axios.post(`${help().linkswitchimmatricolato}`, {
+            'idProduct': payload.idProduct,
+            'matricola': payload.matricola,
+        });
+    },
+
     async switchRimuoviDallaProva({commit}, id){
         await axios.get(`${help().linkproductswitchrimuovidallaprova}`+'/'+id);
     },
@@ -72,6 +89,18 @@ const actions = {
     async eliminaRichiesta({commit}, id){
         await axios.delete(`${help().linkproductrimuovirichiesta}`+'/'+id);
         commit('eliminaRichiesta', id);
+    },
+
+    async assegnaProdottiMagazzino({commit}, payload){
+         await axios.post(`${help().linkassegnaprodottimagazzino}`, {
+             'prodotti':payload
+         });
+         commit('assegnaProdottiMagazzino');
+    },
+
+    async switchArrivato({commit}, id){
+        const response = await axios.get(`${help().linkswitcharrivato}`+'/'+id);
+        commit('switchArrivato', response.data.data);
     },
 };
 
@@ -92,6 +121,10 @@ const mutations = {
         state.inArrivo = payload;
     },
 
+    fetchImmatricolati(state, payload){
+        state.immatricolati = payload;
+    },
+
     richiediProduct(state, payload){
         payload.forEach(ele => {
             state.richiesti.push(ele);
@@ -100,7 +133,17 @@ const mutations = {
 
     eliminaRichiesta(state, id) {
         state.richiesti = state.richiesti.filter(u => u.id !== id);
-    }
+    },
+
+    assegnaProdottiMagazzino(state) {
+        state.immatricolati = [];
+    },
+
+    switchArrivato(state, payload) {
+        state.inArrivo = state.inArrivo.filter(u => u.id !== payload.id);
+        state.inFiliale.unshift(payload);
+    },
+
 };
 
 export default{

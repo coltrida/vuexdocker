@@ -126,6 +126,7 @@
       <path value="$PROJECT_DIR$/vendor/vonage/client-core" />
       <path value="$PROJECT_DIR$/vendor/vonage/nexmo-bridge" />
       <path value="$PROJECT_DIR$/vendor/vonage/client" />
+      <path value="$PROJECT_DIR$/vendor/laravel/envoy" />
     </include_path>
   </component>
   <component name="PhpUnit">

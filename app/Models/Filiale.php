@@ -28,6 +28,16 @@ class Filiale extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function productsRichiesti()
+    {
+        return $this->hasMany(Product::class)->where('stato_id', 6);
+    }
+
+    public function productsImmatricolati()
+    {
+        return $this->hasMany(Product::class)->where('stato_id', 8);
+    }
+
     public function audioprot()
     {
         return $this->belongsToMany(User::class, 'filiale_user', 'filiale_id', 'user_id')

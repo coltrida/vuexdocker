@@ -99,6 +99,25 @@
                 :items-per-page="10"
                 class="elevation-1 mt-3"
             >
+
+                <template v-slot:item.actions="{ item }">
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                                color="green"
+                                small
+                                @click="arrivato(item.id)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-truck
+                            </v-icon>
+                        </template>
+                        <span>Arrivato</span>
+                    </v-tooltip>
+                </template>
+
+
             </v-data-table>
         </v-container>
     </div>
@@ -145,7 +164,7 @@
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
                     { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
                     { text: 'Matricola', value: 'matricola', class: "indigo white--text" },
-
+                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
             }
         },
@@ -173,6 +192,7 @@
                 fetchInArrivo:'fetchInArrivo',
                 richiediProduct:'richiediProduct',
                 eliminaRichiesta:'eliminaRichiesta',
+                switchArrivato:'switchArrivato',
             }),
 
             ...mapActions('fornitori', {
@@ -198,6 +218,10 @@
 
             elimina(id){
                 this.eliminaRichiesta(id);
+            },
+
+            arrivato(id){
+                this.switchArrivato(id);
             }
 
         },
