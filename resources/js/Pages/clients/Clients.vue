@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <v-container v-if="showClients">
+        <div v-if="showClients">
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -130,7 +130,7 @@
 
             </v-data-table>
 
-        </v-container>
+        </div>
     </div>
 
 </template>
@@ -177,7 +177,9 @@
         },
 
         mounted() {
-            this.fetchClients();
+            this.fetchClients().then(() => {
+                this.search = this.cognomeRicerca;
+            });
         },
 
         methods: {
@@ -248,6 +250,10 @@
             ...mapGetters('clients', {
                 getClients: 'getClients',
             }),
+
+            cognomeRicerca(){
+                return this.$route.params.cogRicerca ? this.$route.params.cogRicerca : '';
+            },
         },
     }
 </script>

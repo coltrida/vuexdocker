@@ -1,9 +1,9 @@
 <template>
     <div class="flex justify-start align-center mt-2">
-        <v-container>
-            <v-row>
+
+            <!--<v-row>
                 <h1>Home Audio</h1>
-            </v-row>
+            </v-row>-->
 
             <v-row style="font-size: 10px">
                 <prodotti
@@ -28,9 +28,15 @@
 
                             <template v-slot:item.actions="{ item }">
                                 <v-btn @click="seleziona(item.product)" color="green" dark>
-                                    Prodotti
+                                    Prod
                                 </v-btn>
+                            </template>
 
+                            <template v-slot:item.client.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.cognome, }}">
+                                    {{item.client.fullname}}
+                                </router-link>
                             </template>
 
                         </v-data-table>
@@ -64,9 +70,15 @@
 
                             <template v-slot:item.actions="{ item }">
                                 <v-btn @click="seleziona(item.product)" color="green" dark>
-                                    Prodotti
+                                    Prod
                                 </v-btn>
+                            </template>
 
+                            <template v-slot:item.client.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.cognome, }}">
+                                    {{item.client.fullname}}
+                                </router-link>
                             </template>
 
                         </v-data-table>
@@ -100,9 +112,15 @@
 
                             <template v-slot:item.actions="{ item }">
                                 <v-btn @click="seleziona(item.product)" color="green" dark>
-                                    Prodotti
+                                    Prod
                                 </v-btn>
+                            </template>
 
+                            <template v-slot:item.client.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.cognome, }}">
+                                    {{item.client.fullname}}
+                                </router-link>
                             </template>
 
                         </v-data-table>
@@ -137,7 +155,7 @@
 
             </v-row>
 
-        </v-container>
+
     </div>
 </template>
 
@@ -153,7 +171,7 @@
                 prodottiSelezione: [],
                 expanded: [],
                 headers1: [
-                    {text: 'Nome', width:185, value: 'client.fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:170, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Inizio', width:120, value: 'inizio_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
@@ -161,14 +179,14 @@
                 ],
 
                 headers2: [
-                    {text: 'Nome', width:185, value: 'client.fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:170, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:80, value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Finalizzato', width:120, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
 
                 headers3: [
-                    {text: 'Nome', width:185, value: 'fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:170, value: 'fullname', sortable: false, class: "indigo white--text"},
                     {text: 'indirizzo', width:70, value: 'indirizzo', sortable: false, class: "indigo white--text"},
                     {text: 'citta', width:120, value: 'citta', sortable: false, class: "indigo white--text"},
                     {text: 'provincia', width:120, value: 'provincia', sortable: false, class: "indigo white--text"},
@@ -177,7 +195,7 @@
                 ],
 
                 headers4: [
-                    {text: 'Nome', width:185, value: 'fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:170, value: 'fullname', sortable: false, class: "indigo white--text"},
                     {text: 'telefono', width:70, value: 'telefono', sortable: false, class: "indigo white--text"},
                     {text: 'citta', width:120, value: 'citta', sortable: false, class: "indigo white--text"},
                     {text: 'Luogo', width:120, value: 'luogo', sortable: false, class: "indigo white--text"},

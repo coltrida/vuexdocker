@@ -131,7 +131,9 @@
 
         computed:{
             totFatturaReale(){
-                return this.itemFattura.product.reduce(function(a, b){return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo)})
+                return this.itemFattura.product.length > 1 ?
+                    this.itemFattura.product.reduce(function(a, b){return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo)}) :
+                    this.itemFattura.product[0].pivot.prezzo
             }
         }
     }

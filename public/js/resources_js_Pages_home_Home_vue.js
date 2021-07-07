@@ -211,6 +211,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -685,6 +704,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -699,7 +736,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       expanded: [],
       headers1: [{
         text: 'Nome',
-        width: 185,
+        width: 170,
         value: 'client.fullname',
         sortable: false,
         "class": "indigo white--text"
@@ -725,7 +762,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       ],
       headers2: [{
         text: 'Nome',
-        width: 185,
+        width: 170,
         value: 'client.fullname',
         sortable: false,
         "class": "indigo white--text"
@@ -749,7 +786,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       headers3: [{
         text: 'Nome',
-        width: 185,
+        width: 170,
         value: 'fullname',
         sortable: false,
         "class": "indigo white--text"
@@ -786,7 +823,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       headers4: [{
         text: 'Nome',
-        width: 185,
+        width: 170,
         value: 'fullname',
         sortable: false,
         "class": "indigo white--text"
@@ -1465,6 +1502,35 @@ var render = function() {
                                 )
                               ]
                             }
+                          },
+                          {
+                            key: "item.client.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticStyle: { color: "black" },
+                                    attrs: {
+                                      to: {
+                                        name: "clients",
+                                        params: {
+                                          cogRicerca: item.client.cognome
+                                        }
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.client.fullname) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
                           }
                         ],
                         null,
@@ -1565,6 +1631,35 @@ var render = function() {
                                 )
                               ]
                             }
+                          },
+                          {
+                            key: "item.client.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticStyle: { color: "black" },
+                                    attrs: {
+                                      to: {
+                                        name: "clients",
+                                        params: {
+                                          cogRicerca: item.client.cognome
+                                        }
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.client.fullname) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
                           }
                         ],
                         null,
@@ -1660,6 +1755,35 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n                                Prodotti\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.client.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticStyle: { color: "black" },
+                                    attrs: {
+                                      to: {
+                                        name: "clients",
+                                        params: {
+                                          cogRicerca: item.client.cognome
+                                        }
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.client.fullname) +
+                                        "\n                            "
                                     )
                                   ]
                                 )
@@ -1905,294 +2029,379 @@ var render = function() {
     { staticClass: "flex justify-start align-center mt-2" },
     [
       _c(
-        "v-container",
+        "v-row",
+        { staticStyle: { "font-size": "10px" } },
         [
-          _c("v-row", [_c("h1", [_vm._v("Home Audio")])]),
+          _vm.dialogProdotti
+            ? _c("prodotti", {
+                attrs: {
+                  prodotti: _vm.prodottiSelezione,
+                  "dialog-pro": _vm.dialogProdotti
+                },
+                on: { chiudiProdotti: _vm.chiudiProdotti }
+              })
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "v-row",
-            { staticStyle: { "font-size": "10px" } },
-            [
-              _vm.dialogProdotti
-                ? _c("prodotti", {
-                    attrs: {
-                      prodotti: _vm.prodottiSelezione,
-                      "dialog-pro": _vm.dialogProdotti
+          _c("v-col", { attrs: { cols: "6" } }, [
+            _c("h2", [_vm._v("Prove in Corso:")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers1,
+                    items: _vm.getSituazioneMese.prova_in_corso,
+                    "hide-default-footer": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "header.client.fullname",
+                      fn: function(ref) {
+                        var header = ref.header
+                        return [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.getSituazioneMese.name) +
+                              "\n                        "
+                          )
+                        ]
+                      }
                     },
-                    on: { chiudiProdotti: _vm.chiudiProdotti }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c("v-col", { attrs: { cols: "6" } }, [
-                _c("h2", [_vm._v("Prove in Corso:")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        headers: _vm.headers1,
-                        items: _vm.getSituazioneMese.prova_in_corso,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "header.client.fullname",
-                          fn: function(ref) {
-                            var header = ref.header
-                            return [
+                    {
+                      key: "item.actions",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "green", dark: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.seleziona(item.product)
+                                }
+                              }
+                            },
+                            [
                               _vm._v(
-                                "\n                            " +
-                                  _vm._s(_vm.getSituazioneMese.name) +
-                                  "\n                        "
+                                "\n                                Prod\n                            "
                               )
                             ]
-                          }
-                        },
-                        {
-                          key: "item.actions",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: "green", dark: "" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.seleziona(item.product)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Prodotti\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("h2", [_vm._v("Finalizzati:")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        headers: _vm.headers2,
-                        items: _vm.getSituazioneMese.prova_finalizzata,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "header.client.fullname",
-                          fn: function(ref) {
-                            var header = ref.header
-                            return [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(_vm.getSituazioneMese.name) +
-                                  "\n                        "
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "header.actions",
-                          fn: function(ref) {
-                            var header = ref.header
-                            return [
-                              _c(
-                                "v-chip",
-                                {
-                                  staticStyle: { "font-size": "12px" },
-                                  attrs: {
-                                    color: "orange",
-                                    label: "",
-                                    "text-color": "white"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Bgt: € " +
-                                      _vm._s(_vm.bgtTarget) +
-                                      " - Fatt: € " +
-                                      _vm._s(
-                                        _vm.getSituazioneMese
-                                          .prova_finalizzata_sum_tot
-                                      ) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.actions",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: "green", dark: "" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.seleziona(item.product)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Prodotti\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("h2", [_vm._v("Resi:")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        headers: _vm.headers2,
-                        items: _vm.getSituazioneMese.prova_reso,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "header.client.fullname",
-                          fn: function(ref) {
-                            var header = ref.header
-                            return [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(_vm.getSituazioneMese.name) +
-                                  "\n                        "
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "header.actions",
-                          fn: function(ref) {
-                            var header = ref.header
-                            return [
-                              _c(
-                                "v-chip",
-                                {
-                                  staticStyle: { "font-size": "12px" },
-                                  attrs: {
-                                    color: "orange",
-                                    label: "",
-                                    "text-color": "white"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Bgt: € " +
-                                      _vm._s(_vm.bgtTarget) +
-                                      " - Fatt: € " +
-                                      _vm._s(
-                                        _vm.getSituazioneMese
-                                          .prova_finalizzata_sum_tot
-                                      ) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.actions",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: "green", dark: "" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.seleziona(item.product)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Prodotti\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("v-col", { attrs: { cols: "6" } }, [
-                _c("h2", [_vm._v("Appuntamenti:")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        headers: _vm.headers4,
-                        items: _vm.getAppuntamenti,
-                        "hide-default-footer": ""
+                          )
+                        ]
                       }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("h2", [_vm._v("Complenni:")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        headers: _vm.headers3,
-                        items: _vm.getCompleanni,
-                        "hide-default-footer": ""
+                    },
+                    {
+                      key: "item.client.fullname",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "router-link",
+                            {
+                              staticStyle: { color: "black" },
+                              attrs: {
+                                to: {
+                                  name: "clientsFiliale",
+                                  params: {
+                                    filialeId: item.filiale_id,
+                                    nomRicerca: item.client.nome,
+                                    cogRicerca: item.client.cognome
+                                  }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(item.client.fullname) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ]
                       }
-                    })
-                  ],
-                  1
-                )
-              ])
-            ],
-            1
-          )
+                    }
+                  ])
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("h2", [_vm._v("Finalizzati:")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers2,
+                    items: _vm.getSituazioneMese.prova_finalizzata,
+                    "hide-default-footer": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "header.client.fullname",
+                      fn: function(ref) {
+                        var header = ref.header
+                        return [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.getSituazioneMese.name) +
+                              "\n                        "
+                          )
+                        ]
+                      }
+                    },
+                    {
+                      key: "header.actions",
+                      fn: function(ref) {
+                        var header = ref.header
+                        return [
+                          _c(
+                            "v-chip",
+                            {
+                              staticStyle: { "font-size": "12px" },
+                              attrs: {
+                                color: "orange",
+                                label: "",
+                                "text-color": "white"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Bgt: € " +
+                                  _vm._s(_vm.bgtTarget) +
+                                  " - Fatt: € " +
+                                  _vm._s(
+                                    _vm.getSituazioneMese
+                                      .prova_finalizzata_sum_tot
+                                  ) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.actions",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "green", dark: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.seleziona(item.product)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Prod\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.client.fullname",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "router-link",
+                            {
+                              staticStyle: { color: "black" },
+                              attrs: {
+                                to: {
+                                  name: "clientsFiliale",
+                                  params: {
+                                    filialeId: item.filiale_id,
+                                    nomRicerca: item.client.nome,
+                                    cogRicerca: item.client.cognome
+                                  }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(item.client.fullname) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("h2", [_vm._v("Resi:")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers2,
+                    items: _vm.getSituazioneMese.prova_reso,
+                    "hide-default-footer": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "header.client.fullname",
+                      fn: function(ref) {
+                        var header = ref.header
+                        return [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.getSituazioneMese.name) +
+                              "\n                        "
+                          )
+                        ]
+                      }
+                    },
+                    {
+                      key: "header.actions",
+                      fn: function(ref) {
+                        var header = ref.header
+                        return [
+                          _c(
+                            "v-chip",
+                            {
+                              staticStyle: { "font-size": "12px" },
+                              attrs: {
+                                color: "orange",
+                                label: "",
+                                "text-color": "white"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Bgt: € " +
+                                  _vm._s(_vm.bgtTarget) +
+                                  " - Fatt: € " +
+                                  _vm._s(
+                                    _vm.getSituazioneMese
+                                      .prova_finalizzata_sum_tot
+                                  ) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.actions",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "green", dark: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.seleziona(item.product)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Prod\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.client.fullname",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "router-link",
+                            {
+                              staticStyle: { color: "black" },
+                              attrs: {
+                                to: {
+                                  name: "clientsFiliale",
+                                  params: {
+                                    filialeId: item.filiale_id,
+                                    nomRicerca: item.client.nome,
+                                    cogRicerca: item.client.cognome
+                                  }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(item.client.fullname) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("v-col", { attrs: { cols: "6" } }, [
+            _c("h2", [_vm._v("Appuntamenti:")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers4,
+                    items: _vm.getAppuntamenti,
+                    "hide-default-footer": ""
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("h2", [_vm._v("Complenni:")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers3,
+                    items: _vm.getCompleanni,
+                    "hide-default-footer": ""
+                  }
+                })
+              ],
+              1
+            )
+          ])
         ],
         1
       )

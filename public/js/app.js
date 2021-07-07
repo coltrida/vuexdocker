@@ -1964,13 +1964,13 @@ var routes = [{
   },
   name: 'recapiti'
 }, {
-  path: '/clients',
+  path: '/clients/:cogRicerca?',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_clients_Clients_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/clients/Clients */ "./resources/js/Pages/clients/Clients.vue"));
   },
   name: 'clients'
 }, {
-  path: '/clientsFiliale/:filialeId',
+  path: '/clientsFiliale/:filialeId/:nomRicerca?/:cogRicerca?',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_clients_ClientsFiliale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/clients/ClientsFiliale */ "./resources/js/Pages/clients/ClientsFiliale.vue"));
   },

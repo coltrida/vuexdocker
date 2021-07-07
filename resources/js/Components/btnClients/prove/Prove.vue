@@ -213,7 +213,7 @@
 
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on, attrs }">
-                                        <a :href="'http://vuexdocker.local/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
+                                        <a :href="'http://vuexdocker.test/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
                                             <v-icon v-if="item.stato.nome === 'FATTURA'"
                                                     color="black"
                                                     small

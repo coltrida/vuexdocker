@@ -35,7 +35,13 @@
                                         mdi-format-list-bulleted-square
                                     </v-icon>
                                 </v-btn>
+                            </template>
 
+                            <template v-slot:item.client.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clients',
+                                        params: { cogRicerca:item.client.cognome, }}">
+                                    {{item.client.fullname}}
+                                </router-link>
                             </template>
 
                         </v-data-table>
@@ -78,7 +84,13 @@
                                 <v-btn @click="seleziona(item.product)" color="green" dark>
                                     Prod
                                 </v-btn>
+                            </template>
 
+                            <template v-slot:item.client.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clients',
+                                        params: { cogRicerca:item.client.cognome, }}">
+                                    {{item.client.fullname}}
+                                </router-link>
                             </template>
 
                         </v-data-table>
@@ -122,6 +134,13 @@
                                     Prodotti
                                 </v-btn>
 
+                            </template>
+
+                            <template v-slot:item.client.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clients',
+                                        params: { cogRicerca:item.client.cognome, }}">
+                                    {{item.client.fullname}}
+                                </router-link>
                             </template>
 
                         </v-data-table>

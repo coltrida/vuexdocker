@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <v-container v-if="showClients">
+        <div v-if="showClients">
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -130,7 +130,7 @@
 
             </v-data-table>
 
-        </v-container>
+        </div>
     </div>
 
 </template>
@@ -176,7 +176,9 @@
         },
 
         mounted() {
-            this.fetchClientsFiliale(this.rottaIdFiliale);
+            this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
+                this.search = this.cognomeRicerca;
+            });
         },
 
         methods: {
@@ -250,6 +252,18 @@
 
             rottaIdFiliale(){
                 return this.$route.params.filialeId ? this.$route.params.filialeId : null;
+            },
+
+            /*valoreRicerca(){
+                return this.$route.params.valRicerca ? this.$route.params.valRicerca : '';
+            },*/
+
+            /*nomeRicerca(){
+                return this.$route.params.nomRicerca ? this.$route.params.nomRicerca : '';
+            },*/
+
+            cognomeRicerca(){
+                return this.$route.params.cogRicerca ? this.$route.params.cogRicerca : '';
             },
         },
     }
