@@ -1103,6 +1103,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1251,11 +1262,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.switchRimuoviDallaProva(idProduct);
     },
     salvaProva: function salvaProva() {
+      //console.log(this.getElementiNuovaProva[0]);
+      //console.log(this.getElementiNuovaProva.length);
       this.salvaProvaInCorso({
         'id': this.getNuovaProvaCreata.id,
         'tot': this.getElementiNuovaProva.length > 1 ? this.getElementiNuovaProva.reduce(function (a, b) {
           return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo);
-        }) : this.getElementiNuovaProva[0].prezzo
+        }) : this.getElementiNuovaProva[0].originalPrezzo
       });
     },
     reso: function reso(id) {
@@ -40701,14 +40714,14 @@ var render = function() {
                   [
                     _c("Visualizza", {
                       attrs: {
-                        chartdata: _vm.chartDataD,
+                        chartdata: _vm.chartDataS,
                         options: _vm.chartOptions
                       }
                     }),
                     _vm._v(" "),
                     _c("Visualizza", {
                       attrs: {
-                        chartdata: _vm.chartDataS,
+                        chartdata: _vm.chartDataD,
                         options: _vm.chartOptions
                       }
                     })

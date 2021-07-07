@@ -8,6 +8,51 @@ use Illuminate\Database\Eloquent\Model;
 use function setlocale;
 use const LC_TIME;
 
+/**
+ * App\Models\Prova
+ *
+ * @property int $id
+ * @property int|null $user_id
+ * @property int|null $client_id
+ * @property int|null $filiale_id
+ * @property string|null $tot
+ * @property int|null $stato_id
+ * @property string|null $inizio_prova
+ * @property string|null $fine_prova
+ * @property int|null $mese_fine
+ * @property int|null $anno_fine
+ * @property int|null $mese_inizio
+ * @property int|null $anno_inizio
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Client|null $client
+ * @property-read \App\Models\Ddt|null $ddt
+ * @property-read \App\Models\Fattura|null $fattura
+ * @property-read mixed $giorni_in_prova
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $product
+ * @property-read int|null $product_count
+ * @property-read \App\Models\StatoApa|null $stato
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova finaliz()
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereAnnoFine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereAnnoInizio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereFilialeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereFineProva($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereInizioProva($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereMeseFine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereMeseInizio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereStatoId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereTot($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Prova extends Model
 {
     use HasFactory;

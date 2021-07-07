@@ -206,6 +206,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -220,7 +225,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       expanded: [],
       headers1: [{
         text: 'Nome',
-        width: 185,
+        width: 120,
         value: 'client.fullname',
         sortable: false,
         "class": "indigo white--text"
@@ -237,7 +242,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         sortable: false,
         "class": "indigo white--text"
       }, {
-        text: 'Actions',
+        text: 'Prodotti',
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -246,13 +251,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       ],
       headers2: [{
         text: 'Nome',
-        width: 185,
+        width: 160,
         value: 'client.fullname',
         sortable: false,
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 80,
+        width: 100,
         value: 'tot',
         sortable: false,
         "class": "indigo white--text"
@@ -265,6 +270,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Actions',
         value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }],
+      headers3: [{
+        text: 'Nome',
+        width: 140,
+        value: 'client.fullname',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Tot',
+        width: 80,
+        value: 'tot',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Reso',
+        width: 110,
+        value: 'fine_prova',
         sortable: false,
         "class": "indigo white--text"
       }]
@@ -1427,10 +1451,17 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _vm._v(
-                                      "\n                                Prodotti\n                            "
+                                    _c(
+                                      "v-icon",
+                                      { attrs: { color: "white", small: "" } },
+                                      [
+                                        _vm._v(
+                                          "\n                                    mdi-format-list-bulleted-square\n                                "
+                                        )
+                                      ]
                                     )
-                                  ]
+                                  ],
+                                  1
                                 )
                               ]
                             }
@@ -1450,7 +1481,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "4" } },
+            { attrs: { cols: "5" } },
             [
               _c("h2", [_vm._v("Finalizzati:")]),
               _vm._v(" "),
@@ -1528,7 +1559,7 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "\n                                Prodotti\n                            "
+                                      "\n                                Prod\n                            "
                                     )
                                   ]
                                 )
@@ -1550,7 +1581,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "4" } },
+            { attrs: { cols: "3" } },
             [
               _c("h2", [_vm._v("Resi:")]),
               _vm._v(" "),
@@ -1562,7 +1593,7 @@ var render = function() {
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
                       attrs: {
-                        headers: _vm.headers2,
+                        headers: _vm.headers3,
                         items: audio.prova_reso,
                         "hide-default-footer": ""
                       },

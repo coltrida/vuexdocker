@@ -1,6 +1,8 @@
 <template>
     <div class="text-center">
         <div class="row">
+
+            <!---------- Header --------->
             <div class="row mt-2">
                 <div style="display: flex; justify-content: space-between; align-items: center">
                     <div>
@@ -13,10 +15,11 @@
                     </div>
                 </div>
             </div>
-
+            <!---------- End Header --------->
 
             <v-container>
 
+                <!---------- Fattura --------->
                 <a v-if="idFattura" target="_blank"
                     :href="fatturaPdf"
                 ></a>
@@ -26,12 +29,17 @@
                          :dialogFattura="dialogFattura" v-if="dialogFattura"
                          @chiudiFattura="chiudiFattura"
                 />
+                <!---------- End Fattura --------->
 
+                <!---------- Creo nuova prova con pulsante NUOVA PROVA --------->
                 <v-row v-if="switchInserisci">
                     <v-btn color="primary" dark @click="nuovaProvaInCorso" class="mt-2">
                         Nuova Prova
                     </v-btn>
                 </v-row>
+                <!---------- End Creo nuova prova con pulsante NUOVA PROVA --------->
+
+                <!---------- Seleziono i prodotti per la nuova prova createa --------->
                 <v-row v-else>
                     <v-col
                         cols="3"
@@ -84,11 +92,13 @@
                     </v-col>
 
                     <v-col>
+                        <!---------- Bottone per inserire il prodotto nella nuova prova --------->
                         <v-btn color="primary" dark @click="inserisciInProva">
                             In Prova
                         </v-btn>
                     </v-col>
                 </v-row>
+                <!---------- End Seleziono i prodotti per la nuova prova createa --------->
 
                 <v-row>
                     <v-col cols="6">
@@ -97,6 +107,7 @@
                                 <h3>Nuova Prova</h3>
                             </div>
                             <div>
+                                <!---------- Bottone per salvare la prova --------->
                                 <v-btn color="primary" dark @click="salvaProva">
                                     Salva
                                 </v-btn>
@@ -362,11 +373,13 @@
             },
 
             salvaProva(){
+                //console.log(this.getElementiNuovaProva[0]);
+                //console.log(this.getElementiNuovaProva.length);
                 this.salvaProvaInCorso({
                     'id': this.getNuovaProvaCreata.id,
                     'tot': this.getElementiNuovaProva.length > 1 ?
                         this.getElementiNuovaProva.reduce(function(a, b){return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo)}) :
-                        this.getElementiNuovaProva[0].prezzo
+                        this.getElementiNuovaProva[0].originalPrezzo
                 });
 
             },

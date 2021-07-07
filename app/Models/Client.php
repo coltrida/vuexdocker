@@ -9,6 +9,82 @@ use function config;
 use function dd;
 use function substr;
 
+/**
+ * App\Models\Client
+ *
+ * @property int $id
+ * @property string $nome
+ * @property string $cognome
+ * @property string|null $codfisc
+ * @property string $indirizzo
+ * @property string $citta
+ * @property string $cap
+ * @property string $provincia
+ * @property string $telefono
+ * @property int $tipologia_id
+ * @property string|null $mail
+ * @property string|null $recall
+ * @property string|null $datarecall
+ * @property string|null $datanascita
+ * @property int|null $meseNascita
+ * @property int|null $giornoNascita
+ * @property int $marketing_id
+ * @property int $user_id
+ * @property int $filiale_id
+ * @property int|null $recapito_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamenti
+ * @property-read int|null $appuntamenti_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Audiometria[] $audiometria
+ * @property-read int|null $audiometria_count
+ * @property-read \App\Models\Filiale $filiale
+ * @property-read mixed $eta
+ * @property-read mixed $fullname
+ * @property-read \App\Models\Marketing $marketing
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Note[] $notes
+ * @property-read int|null $notes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $prova
+ * @property-read int|null $prova_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $provaDdt
+ * @property-read int|null $prova_ddt_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $provaFattura
+ * @property-read int|null $prova_fattura_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $provaInCorso
+ * @property-read int|null $prova_in_corso_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $provePassate
+ * @property-read int|null $prove_passate_count
+ * @property-read \App\Models\Recapito|null $recapito
+ * @property-read \App\Models\Tipologia $tipologia
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Client compleanno($mese, $giorno)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Client newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Client query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereCap($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereCitta($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereCodfisc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereCognome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereDatanascita($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereDatarecall($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereFilialeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereGiornoNascita($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereIndirizzo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereMail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereMarketingId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereMeseNascita($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereNome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereProvincia($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereRecall($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereRecapitoId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereTelefono($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereTipologiaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Client extends Model
 {
     use HasFactory;

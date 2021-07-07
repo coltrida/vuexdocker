@@ -10,6 +10,70 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use function config;
 
+/**
+ * App\Models\User
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property int $ruolo_id
+ * @property int|null $budget_id
+ * @property int|null $fatturati_id
+ * @property int|null $delta_id
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property string|null $password
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamenti
+ * @property-read int|null $appuntamenti_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiOggi
+ * @property-read int|null $appuntamenti_oggi_count
+ * @property-read \App\Models\Budget|null $budget
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Client[] $client
+ * @property-read int|null $client_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Client[] $clientCompleanno
+ * @property-read int|null $client_compleanno_count
+ * @property-read \App\Models\Delta|null $delta
+ * @property-read \App\Models\Fatturati|null $fatturati
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Filiale[] $filiale
+ * @property-read int|null $filiale_count
+ * @property-read mixed $is_admin
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Budget[] $moltiBudget
+ * @property-read int|null $molti_budget_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Delta[] $moltiDelta
+ * @property-read int|null $molti_delta_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Fatturati[] $moltiFatturati
+ * @property-read int|null $molti_fatturati_count
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $prova
+ * @property-read int|null $prova_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Recapito[] $recapito
+ * @property-read int|null $recapito_count
+ * @property-read \App\Models\Ruolo $ruolo
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read int|null $tokens_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User amm()
+ * @method static \Illuminate\Database\Eloquent\Builder|User audio($bgt = '')
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereBudgetId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeltaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFatturatiId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRuoloId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;

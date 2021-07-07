@@ -9,7 +9,7 @@ import store from './Store/index';
 import App from './App.vue';
 
 Vue.use(VueRouter);
-Vue.use(Vuetify)
+Vue.use(Vuetify);
 
 const app = new Vue({
     el:'#app',

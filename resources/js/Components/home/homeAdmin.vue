@@ -28,7 +28,12 @@
 
                             <template v-slot:item.actions="{ item }">
                                 <v-btn @click="seleziona(item.product)" color="green" dark>
-                                    Prodotti
+                                    <v-icon
+                                        color="white"
+                                        small
+                                    >
+                                        mdi-format-list-bulleted-square
+                                    </v-icon>
                                 </v-btn>
 
                             </template>
@@ -37,7 +42,7 @@
                     </div>
                 </v-col>
 
-                <v-col cols="4">
+                <v-col cols="5">
                     <h2>Finalizzati:</h2>
                     <div v-for="audio in getSituazioneMese" :key="audio.id">
                         <v-data-table
@@ -71,7 +76,7 @@
                                 </template>-->
                             <template v-slot:item.actions="{ item }">
                                 <v-btn @click="seleziona(item.product)" color="green" dark>
-                                    Prodotti
+                                    Prod
                                 </v-btn>
 
                             </template>
@@ -80,11 +85,11 @@
                     </div>
                 </v-col>
 
-                <v-col cols="4">
+                <v-col cols="3">
                     <h2>Resi:</h2>
                     <div v-for="audio in getSituazioneMese" :key="audio.id">
                         <v-data-table
-                            :headers="headers2"
+                            :headers="headers3"
                             :items="audio.prova_reso"
                             class="elevation-1 mt-3"
                             hide-default-footer
@@ -139,18 +144,24 @@
                 prodottiSelezione: [],
                 expanded: [],
                 headers1: [
-                    {text: 'Nome', width:185, value: 'client.fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:120, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Inizio', width:120, value: 'inizio_prova', sortable: false, class: "indigo white--text"},
-                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
+                    { text: 'Prodotti', value: 'actions', sortable: false, class: "indigo white--text" },
                     /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
                 ],
 
                 headers2: [
-                    {text: 'Nome', width:185, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:80, value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:160, value: 'client.fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:100, value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Finalizzato', width:120, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
+                ],
+
+                headers3: [
+                    {text: 'Nome', width:140, value: 'client.fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80, value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Reso', width:110, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                 ],
             }
         },

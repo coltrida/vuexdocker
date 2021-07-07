@@ -11,8 +11,8 @@
             <div class="row">
                 <h2>{{audiogrammaClient.nome}} {{audiogrammaClient.cognome}}</h2>
                 <div class="col-10 flex" v-if="audiogrammaClient.audiometria.length > 0">
-                    <Visualizza :chartdata="chartDataD" :options="chartOptions" />
                     <Visualizza :chartdata="chartDataS" :options="chartOptions" />
+                    <Visualizza :chartdata="chartDataD" :options="chartOptions" />
                 </div>
                 <div class="col-2">
                     <div>
