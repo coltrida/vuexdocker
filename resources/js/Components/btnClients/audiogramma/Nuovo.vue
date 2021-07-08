@@ -125,6 +125,7 @@
             return {
                 nuovaAudiometria:{
                     client_id: this.client_id,
+                    user_id: '',
                     sinistro: [],
                     destro: []
                 }
@@ -139,6 +140,8 @@
             }),
 
             salva(){
+                this.nuovaAudiometria.user_id = this.getIdUser;
+                //console.log(this.nuovaAudiometria);
                 this.addAudiometria(this.nuovaAudiometria).then(() =>{
                     this.$emit('salvaAudiometria', this.getAudiometria);
                     this.chiudi();
@@ -155,6 +158,10 @@
         computed:{
             ...mapGetters('audiometrie', {
                 getAudiometria: 'getAudiometria',
+            }),
+
+            ...mapGetters('login', {
+                getIdUser: 'getIdUser',
             }),
         }
     }

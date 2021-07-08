@@ -243,6 +243,11 @@ class User extends Authenticatable
         return $this->hasMany(Appuntamento::class)->where('giorno', $oggi);
     }
 
+    public function agenda()
+    {
+        return $this->hasMany(Agenda::class);
+    }
+
 
 /*    public function getIsAdminAttribute()
     {

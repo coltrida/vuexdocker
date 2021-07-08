@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Personale</h2>
-        <v-container>
+        <div>
             <v-row>
                 <v-col
                     cols="5"
@@ -91,7 +91,7 @@
             </v-row>
 
 
-        </v-container>
+        </div>
     </div>
 
 </template>

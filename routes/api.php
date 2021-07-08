@@ -16,13 +16,15 @@ use App\Http\Controllers\api\RecapitiController;
 use App\Http\Controllers\api\RuoloController;
 use App\Http\Controllers\api\TipologiaController;
 use App\Http\Controllers\api\UserController;
-use Illuminate\Support\Facades\Route;
+
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // ---------------- user -------------------------
 Route::get('/audio', [UserController::class, 'audio']);
+Route::get('/userAgenda', [UserController::class, 'userAgenda']);
+Route::post('/userAgenda', [UserController::class, 'addUserAgenda']);
 Route::get('/audioConBgt', [UserController::class, 'audioConBgt']);
 Route::get('/audioSenzaBgt', [UserController::class, 'audioSenzaBgt']);
 Route::get('/amm', [UserController::class, 'amm']);
@@ -130,5 +132,5 @@ Route::post('/salvaFattura', [ProvaController::class, 'salvaFattura']);
 // ----------------- appuntamenti -----------------------
 Route::get('/appuntamentiCliente/{idClient}', [AppuntamentiController::class, 'index']);
 Route::get('/appuntamentiOggiAudio/{idAudio}', [AppuntamentiController::class, 'oggi']);
-Route::delete('/appuntamentiCliente/{id}', [AppuntamentiController::class, 'elimina']);
+Route::delete('/appuntamentiCliente/{id}/{idUser}', [AppuntamentiController::class, 'elimina']);
 Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);

@@ -285,195 +285,188 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", [_vm._v("Personale")]),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        [
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "5", sm: "5" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "Nominativo"
+  return _c("div", [
+    _c("h2", [_vm._v("Personale")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _c(
+          "v-row",
+          [
+            _c(
+              "v-col",
+              { attrs: { cols: "5", sm: "5" } },
+              [
+                _c("v-text-field", {
+                  attrs: {
+                    counter: "25",
+                    hint: "Massimo 25 caratteri",
+                    label: "Nominativo"
+                  },
+                  model: {
+                    value: _vm.user.name,
+                    callback: function($$v) {
+                      _vm.$set(_vm.user, "name", $$v)
                     },
-                    model: {
-                      value: _vm.user.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.user, "name", $$v)
-                      },
-                      expression: "user.name"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4", sm: "4" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "email"
+                    expression: "user.name"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "4", sm: "4" } },
+              [
+                _c("v-text-field", {
+                  attrs: {
+                    counter: "25",
+                    hint: "Massimo 25 caratteri",
+                    label: "email"
+                  },
+                  model: {
+                    value: _vm.user.email,
+                    callback: function($$v) {
+                      _vm.$set(_vm.user, "email", $$v)
                     },
-                    model: {
-                      value: _vm.user.email,
-                      callback: function($$v) {
-                        _vm.$set(_vm.user, "email", $$v)
-                      },
-                      expression: "user.email"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "nome",
-                      items: _vm.getRuoli,
-                      label: "ruolo"
+                    expression: "user.email"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "3", sm: "3" } },
+              [
+                _c("v-select", {
+                  attrs: {
+                    "item-value": "id",
+                    "item-text": "nome",
+                    items: _vm.getRuoli,
+                    label: "ruolo"
+                  },
+                  model: {
+                    value: _vm.user.ruolo_id,
+                    callback: function($$v) {
+                      _vm.$set(_vm.user, "ruolo_id", $$v)
                     },
-                    model: {
-                      value: _vm.user.ruolo_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.user, "ruolo_id", $$v)
-                      },
-                      expression: "user.ruolo_id"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            {
-              attrs: { dark: "", color: "indigo" },
-              on: { click: _vm.aggiungi }
-            },
-            [_vm._v("\n            Inserisci\n        ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "6" } },
-                [
-                  _c("h2", [_vm._v("Audioprotesisti")]),
-                  _vm._v(" "),
-                  _c("v-data-table", {
-                    staticClass: "elevation-1 mt-3",
-                    attrs: {
-                      headers: _vm.headers1,
-                      items: _vm.getAudio,
-                      "items-per-page": 10
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "item.actions",
-                        fn: function(ref) {
-                          var item = ref.item
-                          return [
-                            _c(
-                              "v-icon",
-                              {
-                                attrs: { color: "red", small: "" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.eliminaAudioprotesista(item.id)
-                                  }
+                    expression: "user.ruolo_id"
+                  }
+                })
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "v-btn",
+          { attrs: { dark: "", color: "indigo" }, on: { click: _vm.aggiungi } },
+          [_vm._v("\n            Inserisci\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "v-row",
+          [
+            _c(
+              "v-col",
+              { attrs: { cols: "6" } },
+              [
+                _c("h2", [_vm._v("Audioprotesisti")]),
+                _vm._v(" "),
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers1,
+                    items: _vm.getAudio,
+                    "items-per-page": 10
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "item.actions",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "v-icon",
+                            {
+                              attrs: { color: "red", small: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.eliminaAudioprotesista(item.id)
                                 }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            mdi-delete\n                        "
-                                )
-                              ]
-                            )
-                          ]
-                        }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            mdi-delete\n                        "
+                              )
+                            ]
+                          )
+                        ]
                       }
-                    ])
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "6" } },
-                [
-                  _c("h2", [_vm._v("Amministrativi")]),
-                  _vm._v(" "),
-                  _c("v-data-table", {
-                    staticClass: "elevation-1 mt-3",
-                    attrs: {
-                      headers: _vm.headers2,
-                      items: _vm.getAmm,
-                      "items-per-page": 10
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "item.actions",
-                        fn: function(ref) {
-                          var item = ref.item
-                          return [
-                            _c(
-                              "v-icon",
-                              {
-                                attrs: { color: "red", small: "" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.eliminaAmministrativo(item.id)
-                                  }
+                    }
+                  ])
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "6" } },
+              [
+                _c("h2", [_vm._v("Amministrativi")]),
+                _vm._v(" "),
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers2,
+                    items: _vm.getAmm,
+                    "items-per-page": 10
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "item.actions",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "v-icon",
+                            {
+                              attrs: { color: "red", small: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.eliminaAmministrativo(item.id)
                                 }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            mdi-delete\n                        "
-                                )
-                              ]
-                            )
-                          ]
-                        }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            mdi-delete\n                        "
+                              )
+                            ]
+                          )
+                        ]
                       }
-                    ])
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+                    }
+                  ])
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

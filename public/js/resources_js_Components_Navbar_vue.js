@@ -372,11 +372,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   /*data: () => ({
       items: [
-          { title: 'Audioprotesisti' },
-          { title: 'Amministrativi' },
+          { title: 'lista', link: 'personale' },
+          { title: 'agende', link: 'personale' },
       ],
   }),*/
 });
@@ -669,6 +674,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -2202,12 +2211,67 @@ var render = function() {
     { staticClass: "text-center" },
     [
       _c(
-        "router-link",
-        { attrs: { to: { name: "personale" } } },
-        [
-          _c("v-btn", { attrs: { text: "", dark: "" } }, [
-            _vm._v("\n            Personale\n        ")
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      _vm._b(
+                        { attrs: { text: "", dark: "" } },
+                        "v-btn",
+                        attrs,
+                        false
+                      ),
+                      on
+                    ),
+                    [_vm._v("\n                Personale\n            ")]
+                  )
+                ]
+              }
+            }
           ])
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-list",
+            [
+              _c(
+                "router-link",
+                { attrs: { to: { name: "personale" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Lista")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "agende" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("agende")])],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
       )
@@ -2677,6 +2741,14 @@ var render = function() {
                   _vm._v(" "),
                   _vm.getRuolo === "audio" || _vm.getRuolo === "amministrazione"
                     ? _c("nav-bar-audio")
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.getRuolo === "audio" || _vm.getRuolo === "amministrazione"
+                    ? _c(
+                        "v-btn",
+                        { attrs: { text: "" }, on: { click: _vm.logout } },
+                        [_vm._v("\n                Agenda\n            ")]
+                      )
                     : _vm._e(),
                   _vm._v(" "),
                   _c(

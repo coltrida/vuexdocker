@@ -9,6 +9,14 @@
                 @cancellaMessaggio = "cancellaMessaggio"
             ></messaggio>
 
+            <messaggioelimina
+                v-if="showElimina"
+                :idElimina="idElimina"
+                :nomeElimina="nomeElimina"
+                :cognomeElimina="cognomeElimina"
+                @cancellaMessaggioElimina = "cancellaMessaggioElimina"
+            ></messaggioelimina>
+
             <audiogramma
                 v-if="showAudiogramma"
                 :audiogrammaClient="audiogrammaClient"
@@ -56,7 +64,7 @@
                             <v-icon
                                 color="red"
                                 small
-                                @click="elimina(item.id)"
+                                @click="elimina(item.id, item.nome, item.cognome)"
                                 v-bind="attrs"
                                 v-on="on"
                             >
@@ -141,12 +149,14 @@
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
     import Prove from "../../Components/btnClients/prove/Prove";
     import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
+    import Messaggioelimina from "../../Components/btnClients/elimina/Messaggioelimina";
 
     export default {
         name: "ClientsFiliale",
-        components: {Prove, Audiogramma, Messaggio, Appuntamento},
+        components: {Messaggioelimina, Prove, Audiogramma, Messaggio, Appuntamento},
         data() {
             return {
+                showElimina: false,
                 showClients: true,
                 showProve: false,
                 showAudiogramma: false,
@@ -157,6 +167,9 @@
                 appuntamentoClient: {},
                 proveClient: {},
                 search: '',
+                idElimina: '',
+                nomeElimina: '',
+                cognomeElimina: '',
                 listino: {},
                 headers: [
                     {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
@@ -185,11 +198,21 @@
             ...mapActions('clients', {
                 fetchClientsFiliale: 'fetchClientsFiliale',
                 addClient: 'addClient',
-                eliminaClient: 'eliminaClient',
             }),
 
-            elimina(id) {
-                this.eliminaClient(id)
+            elimina(id, nome, cognome) {
+                this.idElimina = id;
+                this.nomeElimina = nome;
+                this.cognomeElimina = cognome;
+                this.showElimina = true;
+                //this.eliminaClient(id)
+            },
+
+            cancellaMessaggioElimina(){
+                this.idElimina = '';
+                this.nomeElimina = '';
+                this.cognomeElimina = '';
+                this.showElimina = false;
             },
 
             cancellaMessaggio(){

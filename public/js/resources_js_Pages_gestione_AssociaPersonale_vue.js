@@ -118,6 +118,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       headers3: [{
         text: 'Nome',
+        width: 150,
         align: 'start',
         value: 'name',
         "class": "indigo white--text"

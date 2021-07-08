@@ -182,7 +182,7 @@
                         v-model="newClient.filiale_id"
                         item-value="id"
                         item-text="nome"
-                        :items="getFiliali"
+                        :items="getFilialiPerInserimento"
                         label="Filiale"
                     ></v-select>
                 </v-col>
@@ -227,7 +227,7 @@
             this.fetchTipologie();
             this.fetchCanali();
             this.fetchAudio();
-            this.fetchFiliali();
+            this.fetchFilialiPerInserimento();
             this.fetchRecapiti();
             if (this.rottaIdClient){
                 this.fetchClient(this.rottaIdClient).then(() => {
@@ -266,7 +266,7 @@
             }),
 
             ...mapActions('filiali', {
-                fetchFiliali:'fetchFiliali',
+                fetchFilialiPerInserimento:'fetchFilialiPerInserimento',
             }),
 
             ...mapActions('recapiti', {
@@ -274,7 +274,7 @@
             }),
 
             aggiungiModifica(){
-                if (this.getClient) {
+                if (this.getClient.nome) {
                     this.newClient.id = this.getClient.id;
                     this.modificaClient(this.newClient).then(() => {
                         this.newClient = {};
@@ -309,7 +309,7 @@
             }),
 
             ...mapGetters('filiali', {
-                getFiliali:'getFiliali',
+                getFilialiPerInserimento:'getFilialiPerInserimento',
             }),
 
             ...mapGetters('recapiti', {

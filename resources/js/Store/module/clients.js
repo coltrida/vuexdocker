@@ -60,7 +60,7 @@ const actions = {
 
     async eliminaClient({commit}, id){
         await axios.delete(`${help().linkclients}`+'/'+id);
-        commit('eliminaClient', payload);
+        commit('eliminaClient', id);
     },
 };
 

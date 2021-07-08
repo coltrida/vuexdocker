@@ -27,9 +27,9 @@ const actions = {
         commit('addAppuntamento', response.data);
     },
 
-    async eliminaAppuntamento({commit}, idAppuntamento){
-        await axios.delete(`${help().linkappuntamenti}`+'/'+idAppuntamento);
-        commit('eliminaAppuntamento', idAppuntamento);
+    async eliminaAppuntamento({commit}, payload){
+        await axios.delete(`${help().linkappuntamenti}`+'/'+payload.idAppuntamento+'/'+payload.idUser);
+        commit('eliminaAppuntamento', payload.idAppuntamento);
     },
 };
 

@@ -6,8 +6,9 @@ namespace App\Services;
 
 use App\Models\Appuntamento;
 use App\Models\Client;
+use App\Models\Filiale;
+use App\Models\Recapito;
 use App\Models\User;
-use Illuminate\Support\Facades\App;
 
 class AppuntamentiService
 {
@@ -36,12 +37,30 @@ class AppuntamentiService
         $newAppuntamento->filiale_id = $request->filiale_id;
         $newAppuntamento->recapito_id = $request->recapito_id;
         $newAppuntamento->save();
+
+        $dove = $request->filiale_id ? 'Filiale di '.Filiale::find($request->filiale_id)->nome : 'Recapito '.Recapito::find($request->recapito_id)->nome;
+        $utente = User::find($request->user_id);
+        $cliente = Client::find($request->client_id);
+        $propieta = 'appuntamento';
+        $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$request->giorno.' alle ore '.$request->orario.' presso '.$dove;
+
+        $log = new LoggingService();
+        $log->scriviLog($newAppuntamento, $utente, $propieta, $testo);
+
         return Appuntamento::with('filiale', 'recapito')->find($newAppuntamento->id);
 
     }
 
-    public function eliminaAppuntamento($id)
+    public function eliminaAppuntamento($id, $idUser)
     {
-        return Appuntamento::find($id)->delete();
+        $utente = User::find($idUser);
+        $appuntamento = Appuntamento::find($id);
+        $propieta = 'appuntamento';
+        $testo = $utente->name.' ha eliminato un appuntamento con id = '.$id.' per il giorno '.$appuntamento->giorno.' delle ore '.$appuntamento->orario;
+
+        $log = new LoggingService();
+        $log->scriviLog($appuntamento, $utente, $propieta, $testo);
+
+        return $appuntamento->delete();
     }
 }

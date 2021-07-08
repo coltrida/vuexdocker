@@ -188,7 +188,11 @@
             },
 
             elimina(id){
-                this.eliminaAppuntamento(id);
+                let payload = {
+                    idAppuntamento: id,
+                    idUser: this.getIdUser
+                };
+                this.eliminaAppuntamento(payload);
             }
 
         },

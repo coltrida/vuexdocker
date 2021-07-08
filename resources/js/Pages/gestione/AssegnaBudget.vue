@@ -4,7 +4,7 @@
         <v-btn @click="assegnaBudget" color="success" dark>
             {{textBtn}}
         </v-btn>
-        <v-container>
+        <div class="py-6">
             <v-row>
                 <v-col cols="4">
                     <h3>Audioprotesisti senza Budget</h3>
@@ -100,7 +100,7 @@
                 </template>
             </v-data-table>
 
-        </v-container>
+        </div>
     </div>
 </template>
 

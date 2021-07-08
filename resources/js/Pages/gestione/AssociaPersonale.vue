@@ -93,7 +93,7 @@
                     { text: 'Nome', align: 'start', value: 'name', class: "indigo white--text" },
                 ],
                 headers3: [
-                    { text: 'Nome', align: 'start', value: 'name', class: "indigo white--text" },
+                    {text: 'Nome', width: 150, align: 'start', value: 'name', class: "indigo white--text" },
                     {text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
             }

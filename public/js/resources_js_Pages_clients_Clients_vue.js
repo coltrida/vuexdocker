@@ -274,7 +274,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     elimina: function elimina(id) {
-      this.eliminaAppuntamento(id);
+      var payload = {
+        idAppuntamento: id,
+        idUser: this.getIdUser
+      };
+      this.eliminaAppuntamento(payload);
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
@@ -615,6 +619,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       nuovaAudiometria: {
         client_id: this.client_id,
+        user_id: '',
         sinistro: [],
         destro: []
       }
@@ -626,6 +631,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     salva: function salva() {
       var _this = this;
+
+      this.nuovaAudiometria.user_id = this.getIdUser; //console.log(this.nuovaAudiometria);
 
       this.addAudiometria(this.nuovaAudiometria).then(function () {
         _this.$emit('salvaAudiometria', _this.getAudiometria);
@@ -639,8 +646,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('tornaVisualizza');
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('audiometrie', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('audiometrie', {
     getAudiometria: 'getAudiometria'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
   }))
 });
 

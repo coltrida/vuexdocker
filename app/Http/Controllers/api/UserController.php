@@ -5,12 +5,23 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function audio(UserService $userService)
     {
         return $userService->audio();
+    }
+
+    public function userAgenda(UserService $userService)
+    {
+        return $userService->userAgenda();
+    }
+
+    public function addUserAgenda(Request $request, UserService $userService)
+    {
+        return $userService->addUserAgenda($request);
     }
 
     public function audioConBgt(UserService $userService)

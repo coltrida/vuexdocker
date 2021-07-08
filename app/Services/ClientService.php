@@ -62,6 +62,13 @@ class ClientService
         $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
         $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
         $new->save();
+
+        $utente = User::find($request->user_id);
+        $propieta = 'client';
+        $log = new LoggingService();
+        $testo = $utente->name.' ha inserito il nominativo '.$new->cognome.' '.$new->nome;
+        $log->scriviLog($new, $utente, $propieta, $testo);
+
         return $new;
     }
 
@@ -88,6 +95,13 @@ class ClientService
         $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
         $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
         $new->save();
+
+        $utente = User::find($request->user_id);
+        $propieta = 'client';
+        $log = new LoggingService();
+        $testo = $utente->name.' ha modificato il nominativo '.$new->cognome.' '.$new->nome;
+        $log->scriviLog($new, $utente, $propieta, $testo);
+
         return $new;
     }
 

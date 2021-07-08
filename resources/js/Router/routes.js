@@ -6,6 +6,7 @@ const routes = [
     { path: '/fornitori', component: () => import('../Pages/fornitori/Fornitori'), name: 'fornitori' },
     { path: '/personale', component: () => import('../Pages/personale/Personale'), name: 'personale' },
     { path: '/filiali', component: () => import('../Pages/strutture/Filiali'), name: 'filiali' },
+    { path: '/agende', component: () => import('../Pages/personale/Agende'), name: 'agende' },
     { path: '/recapiti', component: () => import('../Pages/strutture/Recapiti'), name: 'recapiti' },
     { path: '/clients/:cogRicerca?', component: () => import('../Pages/clients/Clients'), name: 'clients' },
     { path: '/clientsFiliale/:filialeId/:nomRicerca?/:cogRicerca?', component: () => import('../Pages/clients/ClientsFiliale'), name: 'clientsFiliale' },

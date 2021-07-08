@@ -22,6 +22,10 @@
                 <nav-bar-admin v-if="getRuolo === 'admin'"/>
                 <nav-bar-audio v-if="getRuolo === 'audio' || getRuolo === 'amministrazione'"/>
 
+                <v-btn text @click="logout" v-if="getRuolo === 'audio' || getRuolo === 'amministrazione'">
+                    Agenda
+                </v-btn>
+
                 <v-btn text @click="logout" color="red">
                     Logout
                 </v-btn>

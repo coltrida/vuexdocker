@@ -421,7 +421,8 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-container",
+        "div",
+        { staticClass: "py-6" },
         [
           _c(
             "v-row",

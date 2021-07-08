@@ -245,7 +245,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchTipologie();
     this.fetchCanali();
     this.fetchAudio();
-    this.fetchFiliali();
+    this.fetchFilialiPerInserimento();
     this.fetchRecapiti();
 
     if (this.rottaIdClient) {
@@ -276,14 +276,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudio: 'fetchAudio'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
-    fetchFiliali: 'fetchFiliali'
+    fetchFilialiPerInserimento: 'fetchFilialiPerInserimento'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
     fetchRecapiti: 'fetchRecapiti'
   })), {}, {
     aggiungiModifica: function aggiungiModifica() {
       var _this3 = this;
 
-      if (this.getClient) {
+      if (this.getClient.nome) {
         this.newClient.id = this.getClient.id;
         this.modificaClient(this.newClient).then(function () {
           _this3.newClient = {};
@@ -312,7 +312,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getAudio: 'getAudio'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
-    getFiliali: 'getFiliali'
+    getFilialiPerInserimento: 'getFilialiPerInserimento'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
     getRecapiti: 'getRecapiti'
   })), {}, {
@@ -792,7 +792,7 @@ var render = function() {
                     attrs: {
                       "item-value": "id",
                       "item-text": "nome",
-                      items: _vm.getFiliali,
+                      items: _vm.getFilialiPerInserimento,
                       label: "Filiale"
                     },
                     model: {

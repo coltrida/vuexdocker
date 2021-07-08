@@ -71,6 +71,7 @@ const help = () => {
         linkimmatricolati: 'http://vuexdocker.test/api/prodottiImmatricolati',
         linkswitchimmatricolato: 'http://vuexdocker.test/api/productSwitchImmatricolato',
         linkswitcharrivato: 'http://vuexdocker.test/api/productSwitchArrivato',
+        linkuseragenda: 'http://vuexdocker.test/api/userAgenda',
     };
 };
 export default help;

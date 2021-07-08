@@ -7,8 +7,7 @@ namespace App\Services;
 use App\Models\Audiometria;
 use App\Models\Client;
 use App\Models\Ruolo;
-use Illuminate\Support\Str;
-use function trim;
+use App\Models\User;
 
 class AudiometriaService
 {
@@ -44,6 +43,14 @@ class AudiometriaService
         $new->_8000s = isset($request->sinistro[10]) ? $request->sinistro[10] : $request->sinistro[9];
 
         $new->save();
+
+        $utente = User::find($request->user_id);
+        $propieta = 'audiometria';
+        $cliente = Client::find($request->client_id);
+        $testo = $utente->name.' ha salvato una audiometria per '.$cliente->cognome.' '.$cliente->nome;
+        $log = new LoggingService();
+        $log->scriviLog($new, $utente, $propieta, $testo);
+
         return $new;
     }
 

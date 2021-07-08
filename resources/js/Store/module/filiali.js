@@ -2,6 +2,7 @@ import help from "../../help";
 
 const state = () => ({
     filiali: [],
+    filialiPerInserimento: [],
     associazioni: [],
     situazioneMese: [],
     richiestaApparecchi: [],
@@ -10,6 +11,10 @@ const state = () => ({
 const getters = {
     getFiliali(state){
         return state.filiali;
+    },
+
+    getFilialiPerInserimento(state){
+        return state.filialiPerInserimento;
     },
 
     getAssociazioni(state){
@@ -30,6 +35,11 @@ const actions = {
     async fetchFiliali({commit}){
         const response = await axios.get(`${help().linkfiliali}`);
         commit('fetchFiliali', response.data);
+    },
+
+    async fetchFilialiPerInserimento({commit}){
+        const response = await axios.get(`${help().linkfiliali}`);
+        commit('fetchFilialiPerInserimento', response.data);
     },
 
     async fetchFilialiByUser({commit}, idUser){
@@ -99,6 +109,10 @@ const mutations = {
 
     fetchFiliali(state, payload){
         state.filiali = payload;
+    },
+
+    fetchFilialiPerInserimento(state, payload){
+        state.filialiPerInserimento = payload;
     },
 
     addFiliale(state, payload){

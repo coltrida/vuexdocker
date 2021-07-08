@@ -2,6 +2,7 @@ import help from "../../help";
 
 const state = () => ({
     audio: [],
+    users: [],
     audioConBgt: [],
     audioSenzaBgt: [],
     situazioneMese: [],
@@ -12,6 +13,10 @@ const getters = {
 
     getAudio(state){
         return state.audio;
+    },
+
+    getUsers(state){
+        return state.users;
     },
 
     getAudioConBgt(state){
@@ -35,6 +40,11 @@ const actions = {
     async fetchAudio({commit}){
         const response = await axios.get(`${help().linkaudio}`);
         commit('fetchAudio', response.data);
+    },
+
+    async fetchUserAgenda({commit}){
+        const response = await axios.get(`${help().linkuseragenda}`);
+        commit('fetchUserAgenda', response.data);
     },
 
     async fetchSituazioneMese({commit}, idAudio=''){
@@ -100,11 +110,20 @@ const actions = {
         commit('modificaBgt', response.data);
     },
 
+    async addAgenda({commit}, payload){
+        const response = await axios.post(`${help().linkuseragenda}`, payload);
+        commit('addAgenda', response.data);
+    },
+
 };
 
 const mutations = {
     fetchAudio(state, payload){
         state.audio = payload;
+    },
+
+    fetchUserAgenda(state, payload){
+        state.users = payload;
     },
 
     fetchSituazioneMese(state, payload){
@@ -147,6 +166,10 @@ const mutations = {
     modificaBgt(state, payload){
         state.audioSenzaBgt = state.audioSenzaBgt.filter(u => u.id !== payload.id);
         state.audioConBgt.unshift(payload);
+    },
+
+    addAgenda(state, payload){
+        state.users.find(u => u.id === payload.user_id).agenda.unshift(payload);
     },
 };
 

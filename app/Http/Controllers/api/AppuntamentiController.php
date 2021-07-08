@@ -24,8 +24,8 @@ class AppuntamentiController extends Controller
         return $appuntamentiService->addAppuntamento($request);
     }
 
-    public function elimina($id, AppuntamentiService $appuntamentiService)
+    public function elimina($id, $idUser, AppuntamentiService $appuntamentiService)
     {
-        return $appuntamentiService->eliminaAppuntamento($id);
+        return $appuntamentiService->eliminaAppuntamento($id, $idUser);
     }
 }

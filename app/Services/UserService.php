@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Models\Agenda;
 use App\Models\Budget;
 use App\Models\Client;
 use App\Models\Delta;
@@ -28,6 +29,54 @@ class UserService
     public function audio()
     {
         return User::audio()->orderBy('name')->get();
+    }
+
+    public function userAgenda()
+    {
+        return User::with('agenda')->orderBy('name')->get();
+    }
+
+    public function addUserAgenda($request)
+    {
+        $user_id = $request->user_id;
+        $tempo = $request->tempo;
+        $agendaEsistente = Agenda::where([
+            ['user_id', $user_id],
+            ['nome', $tempo]
+        ])->first();
+        if ($agendaEsistente){
+            if ($request->giorno == 'lun'){
+                $agendaEsistente->lun = $request->testo;
+            } elseif ($request->giorno == 'mar'){
+                $agendaEsistente->mar = $request->testo;
+            } elseif ($request->giorno == 'mer'){
+                $agendaEsistente->mer = $request->testo;
+            } elseif ($request->giorno == 'gio'){
+                $agendaEsistente->gio = $request->testo;
+            } elseif ($request->giorno == 'ven'){
+                $agendaEsistente->ven = $request->testo;
+            }
+            $agendaEsistente->save();
+            return $agendaEsistente;
+        } else {
+            $agenda = new Agenda();
+            $agenda->nome = $tempo;
+            $agenda->user_id = $user_id;
+            if ($request->giorno == 'lun'){
+                $agenda->lun = $request->testo;
+            } elseif ($request->giorno == 'mar'){
+                $agenda->mar = $request->testo;
+            } elseif ($request->giorno == 'mer'){
+                $agenda->mer = $request->testo;
+            } elseif ($request->giorno == 'gio'){
+                $agenda->gio = $request->testo;
+            } elseif ($request->giorno == 'ven'){
+                $agenda->ven = $request->testo;
+            }
+            $agenda->save();
+        }
+
+        return $agenda;
     }
 
     public function audioConBgt()
