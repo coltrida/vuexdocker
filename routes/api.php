@@ -24,6 +24,7 @@ Route::get('/logout', [LoginController::class, 'logout']);
 // ---------------- user -------------------------
 Route::get('/audio', [UserController::class, 'audio']);
 Route::get('/userAgenda', [UserController::class, 'userAgenda']);
+Route::get('/userAgenda/{idAudio}', [UserController::class, 'specificoUserAgenda']);
 Route::post('/userAgenda', [UserController::class, 'addUserAgenda']);
 Route::get('/audioConBgt', [UserController::class, 'audioConBgt']);
 Route::get('/audioSenzaBgt', [UserController::class, 'audioSenzaBgt']);
@@ -32,8 +33,6 @@ Route::delete('/user/{id}', [UserController::class, 'elimina']);
 Route::get('/user/{id}', [UserController::class, 'user']);
 Route::post('/addUser', [UserController::class, 'aggiungi']);
 Route::get('/situazioneMese/{idAudio?}', [UserController::class, 'situazioneMese']);
-Route::get('/situazioneAnno', [UserController::class, 'situazioneAnno']);
-Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSituazioneAnno']);
 Route::get('/appuntamenti/{idAudio}', [UserController::class, 'appuntamenti']);
 
 // ----------------- filiali -------------------------
@@ -132,5 +131,12 @@ Route::post('/salvaFattura', [ProvaController::class, 'salvaFattura']);
 // ----------------- appuntamenti -----------------------
 Route::get('/appuntamentiCliente/{idClient}', [AppuntamentiController::class, 'index']);
 Route::get('/appuntamentiOggiAudio/{idAudio}', [AppuntamentiController::class, 'oggi']);
+Route::get('/appuntamentiDomaniAudio/{idAudio}', [AppuntamentiController::class, 'domani']);
 Route::delete('/appuntamentiCliente/{id}/{idUser}', [AppuntamentiController::class, 'elimina']);
 Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
+
+// ----------------- statistiche -----------------------
+Route::get('/situazioneAnno', [UserController::class, 'situazioneAnno']);
+Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSituazioneAnno']);
+Route::get('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
+Route::get('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiMesi']);

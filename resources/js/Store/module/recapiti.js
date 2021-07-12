@@ -1,12 +1,22 @@
 import help from "../../help";
 
 const state = () => ({
-    recapiti: []
+    recapiti: [],
+    recapitiIngressi: [],
+    recapitiIngressiMesi: [],
 });
 
 const getters = {
     getRecapiti(state){
         return state.recapiti;
+    },
+
+    getRecapitiIngressi(state){
+        return state.recapitiIngressi;
+    },
+
+    getRecapitiIngressiMesi(state){
+        return state.recapitiIngressiMesi;
     },
 
 };
@@ -15,6 +25,16 @@ const actions = {
     async fetchRecapiti({commit}){
         const response = await axios.get(`${help().linkrecapiti}`);
         commit('fetchRecapiti', response.data);
+    },
+
+    async fetchRecapitiIngresi({commit}){
+        const response = await axios.get(`${help().linkstatisticherecapitiingressi}`);
+        commit('fetchRecapitiIngresi', response.data);
+    },
+
+    async fetchRecapitiIngresiMesi({commit}){
+        const response = await axios.get(`${help().linkstatisticherecapitiingressimese}`);
+        commit('fetchRecapitiIngresiMesi', response.data);
     },
 
     async fetchRecapitiPerAudio({commit}){
@@ -48,6 +68,14 @@ const actions = {
 const mutations = {
     fetchRecapiti(state, payload){
         state.recapiti = payload;
+    },
+
+    fetchRecapitiIngresi(state, payload){
+        state.recapitiIngressi = payload;
+    },
+
+    fetchRecapitiIngresiMesi(state, payload){
+        state.recapitiIngressiMesi = payload;
     },
 
     addRecapito(state, payload){

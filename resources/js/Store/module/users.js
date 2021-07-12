@@ -7,6 +7,7 @@ const state = () => ({
     audioSenzaBgt: [],
     situazioneMese: [],
     amm: [],
+    agenda:[]
 });
 
 const getters = {
@@ -34,6 +35,10 @@ const getters = {
     getSituazioneMese(state){
         return state.situazioneMese;
     },
+
+    getAgenda(state){
+        return state.agenda;
+    }
 };
 
 const actions = {
@@ -45,6 +50,11 @@ const actions = {
     async fetchUserAgenda({commit}){
         const response = await axios.get(`${help().linkuseragenda}`);
         commit('fetchUserAgenda', response.data);
+    },
+
+    async fetchSpecificoUserAgenda({commit}, idAudio){
+        const response = await axios.get(`${help().linkuseragenda}`+'/'+idAudio);
+        commit('fetchSpecificoUserAgenda', response.data);
     },
 
     async fetchSituazioneMese({commit}, idAudio=''){
@@ -126,6 +136,10 @@ const mutations = {
         state.users = payload;
     },
 
+    fetchSpecificoUserAgenda(state, payload){
+        state.agenda = payload;
+    },
+
     fetchSituazioneMese(state, payload){
         state.situazioneMese = payload;
     },
@@ -169,7 +183,7 @@ const mutations = {
     },
 
     addAgenda(state, payload){
-        state.users.find(u => u.id === payload.user_id).agenda.unshift(payload);
+        //state.users.find(u => u.id === payload.user_id).agenda.unshift(payload);
     },
 };
 

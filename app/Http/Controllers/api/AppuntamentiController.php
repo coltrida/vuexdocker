@@ -19,6 +19,11 @@ class AppuntamentiController extends Controller
         return AppuntamentiResource::collection($appuntamentiService->oggi($idAudio));
     }
 
+    public function domani($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->domani($idAudio));
+    }
+
     public function aggiungi(Request $request, AppuntamentiService $appuntamentiService)
     {
         return $appuntamentiService->addAppuntamento($request);

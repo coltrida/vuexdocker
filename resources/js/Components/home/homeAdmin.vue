@@ -1,10 +1,6 @@
 <template>
     <div class="flex justify-start align-center mt-2">
 
-            <!--<v-row>
-                <h1>Home Admin</h1>
-            </v-row>-->
-
             <v-row style="font-size: 10px">
                 <prodotti
                     :prodotti="prodottiSelezione"

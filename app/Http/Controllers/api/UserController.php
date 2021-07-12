@@ -19,6 +19,11 @@ class UserController extends Controller
         return $userService->userAgenda();
     }
 
+    public function specificoUserAgenda($idAudio, UserService $userService)
+    {
+        return $userService->specificoUserAgenda($idAudio);
+    }
+
     public function addUserAgenda(Request $request, UserService $userService)
     {
         return $userService->addUserAgenda($request);

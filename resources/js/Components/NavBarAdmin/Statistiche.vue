@@ -29,7 +29,8 @@
     export default {
         data: () => ({
             items: [
-                { title: 'Audioprotesisti', link: 'statisticheAudioprotesisti' },
+                { title: 'Fatt. Audio', link: 'statisticheAudioprotesisti' },
+                { title: 'Ing. Recapiti', link: 'ingressiRecapiti' },
             ],
         }),
     }

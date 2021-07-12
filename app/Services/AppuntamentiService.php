@@ -26,6 +26,13 @@ class AppuntamentiService
         }])->find($idAudio)->appuntamentiOggi;
     }
 
+    public function domani($idAudio)
+    {
+        return User::with(['appuntamentiDomani' => function($q){
+            $q->with('client');
+        }])->find($idAudio)->appuntamentiDomani;
+    }
+
     public function addAppuntamento($request)
     {
         $newAppuntamento = new Appuntamento();

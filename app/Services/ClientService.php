@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Client;
+use App\Models\Recapito;
 use App\Models\Tipologia;
 use App\Models\User;
 use Carbon\Carbon;
@@ -63,6 +64,10 @@ class ClientService
         $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
         $new->save();
 
+        $new->mese = Carbon::now()->month;
+        $new->anno = Carbon::now()->year;
+        $new->save();
+
         $utente = User::find($request->user_id);
         $propieta = 'client';
         $log = new LoggingService();
@@ -115,5 +120,106 @@ class ClientService
     public function elimina($id)
     {
         return Client::find($id)->delete();
+    }
+
+    public function ingressiRecapiti()
+    {
+        return Recapito::
+            withcount('clients')
+            ->withCount(['clients as clientsPc' => function($q){
+                $q->where('tipologia_id', 1);
+            }])
+            ->withCount(['clients as clientsCl' => function($q){
+                $q->where('tipologia_id', 2);
+            }])
+            ->withCount(['clients as clientsClc' => function($q){
+                $q->where('tipologia_id', 3);
+            }])
+            ->withCount(['clients as clientsNormo' => function($q){
+                $q->where('tipologia_id', 4);
+            }])
+            ->orderBy('nome')
+            ->get();
+    }
+
+    public function ingressiRecapitiMesi()
+    {
+        $annoOggi = Carbon::now()->year;
+        return Recapito::
+            withcount('clients')
+            ->withCount(['clients as gen' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 1],
+                ]);
+            }])
+            ->withCount(['clients as feb' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 2],
+                ]);
+            }])
+            ->withCount(['clients as mar' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 3],
+                ]);
+            }])
+            ->withCount(['clients as apr' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 4],
+                ]);
+            }])
+            ->withCount(['clients as mag' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 5],
+                ]);
+            }])
+            ->withCount(['clients as giu' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 6],
+                ]);
+            }])
+            ->withCount(['clients as lug' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 7],
+                ]);
+            }])
+            ->withCount(['clients as ago' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 8],
+                ]);
+            }])
+            ->withCount(['clients as set' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 9],
+                ]);
+            }])
+            ->withCount(['clients as ott' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 10],
+                ]);
+            }])
+            ->withCount(['clients as nov' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 11],
+                ]);
+            }])
+            ->withCount(['clients as dic' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                    ['mese', 12],
+                ]);
+            }])
+            ->orderBy('nome')
+            ->get();
     }
 }

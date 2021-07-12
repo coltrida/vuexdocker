@@ -17,7 +17,7 @@
             </div>
             <!---------- End Header --------->
 
-            <v-container>
+            <div>
 
                 <!---------- Fattura --------->
                 <a v-if="idFattura" target="_blank"
@@ -249,7 +249,7 @@
                     </v-col>
                 </v-row>
 
-            </v-container>
+            </div>
         </div>
     </div>
 </template>

@@ -7,6 +7,7 @@ const routes = [
     { path: '/personale', component: () => import('../Pages/personale/Personale'), name: 'personale' },
     { path: '/filiali', component: () => import('../Pages/strutture/Filiali'), name: 'filiali' },
     { path: '/agende', component: () => import('../Pages/personale/Agende'), name: 'agende' },
+    { path: '/agenda', component: () => import('../Pages/personale/Agenda'), name: 'agenda' },
     { path: '/recapiti', component: () => import('../Pages/strutture/Recapiti'), name: 'recapiti' },
     { path: '/clients/:cogRicerca?', component: () => import('../Pages/clients/Clients'), name: 'clients' },
     { path: '/clientsFiliale/:filialeId/:nomRicerca?/:cogRicerca?', component: () => import('../Pages/clients/ClientsFiliale'), name: 'clientsFiliale' },
@@ -17,6 +18,7 @@ const routes = [
     { path: '/inviaSms', component: () => import('../Pages/gestione/InvioSms'), name: 'inviaSms' },
     { path: '/assegnaBudget', component: () => import('../Pages/gestione/AssegnaBudget'), name: 'assegnaBudget' },
     { path: '/statisticheAudioprotesisti', component: () => import('../Pages/statistiche/Audioprotesisti'), name: 'statisticheAudioprotesisti' },
+    { path: '/ingressiRecapiti', component: () => import('../Pages/statistiche/IngRecapiti'), name: 'ingressiRecapiti' },
 ];
 
 export default routes;

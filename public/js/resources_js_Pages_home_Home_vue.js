@@ -43,6 +43,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Prodotti",
   data: function data() {
@@ -77,10 +84,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
 //
 //
 //
@@ -718,10 +721,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -864,13 +863,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchSituazioneMese(this.getIdUser);
     this.fetchCompleanni(this.getIdUser);
     this.fetchAppuntamentiOggi(this.getIdUser);
+    this.fetchAppuntamentiDomani(this.getIdUser);
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
     fetchSituazioneMese: 'fetchSituazioneMese'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('clients', {
     fetchCompleanni: 'fetchCompleanni'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
-    fetchAppuntamentiOggi: 'fetchAppuntamentiOggi'
+    fetchAppuntamentiOggi: 'fetchAppuntamentiOggi',
+    fetchAppuntamentiDomani: 'fetchAppuntamentiDomani'
   })), {}, {
     seleziona: function seleziona(items) {
       this.dialogProdotti = true;
@@ -888,7 +889,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
-    getAppuntamenti: 'getAppuntamenti'
+    getAppuntamenti: 'getAppuntamenti',
+    getAppuntamentiDomani: 'getAppuntamentiDomani'
   })), {}, {
     bgtAnno: function bgtAnno() {
       return this.getSituazioneMese.budget ? this.getSituazioneMese.budget.budgetAnno : null;
@@ -1356,19 +1358,35 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-card-text",
-            _vm._l(_vm.prodotti, function(item) {
-              return _c(
+            [
+              _c(
                 "v-row",
-                { key: item.id },
                 [
-                  _c("v-col", [_vm._v(_vm._s(item.matricola))]),
+                  _c("v-col", [_c("h3", [_vm._v("Matricola")])]),
                   _vm._v(" "),
-                  _c("v-col", [_vm._v(_vm._s(item.listino.nome))])
+                  _c("v-col", [_c("h3", [_vm._v("Modello")])]),
+                  _vm._v(" "),
+                  _c("v-col", [_c("h3", [_vm._v("Prezzo")])])
                 ],
                 1
-              )
-            }),
-            1
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.prodotti, function(item) {
+                return _c(
+                  "v-row",
+                  { key: item.id },
+                  [
+                    _c("v-col", [_vm._v(_vm._s(item.matricola))]),
+                    _vm._v(" "),
+                    _c("v-col", [_vm._v(_vm._s(item.listino.nome))]),
+                    _vm._v(" "),
+                    _c("v-col", [_vm._v(_vm._s(item.pivot.prezzo))])
+                  ],
+                  1
+                )
+              })
+            ],
+            2
           ),
           _vm._v(" "),
           _c(
@@ -2026,7 +2044,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex justify-start align-center mt-2" },
+    { staticClass: "flex justify-start align-center my-2" },
     [
       _c(
         "v-row",
@@ -2042,7 +2060,7 @@ var render = function() {
               })
             : _vm._e(),
           _vm._v(" "),
-          _c("v-col", { attrs: { cols: "6" } }, [
+          _c("v-col", { attrs: { cols: "5" } }, [
             _c("h2", [_vm._v("Prove in Corso:")]),
             _vm._v(" "),
             _c(
@@ -2056,19 +2074,6 @@ var render = function() {
                     "hide-default-footer": ""
                   },
                   scopedSlots: _vm._u([
-                    {
-                      key: "header.client.fullname",
-                      fn: function(ref) {
-                        var header = ref.header
-                        return [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.getSituazioneMese.name) +
-                              "\n                        "
-                          )
-                        ]
-                      }
-                    },
                     {
                       key: "item.actions",
                       fn: function(ref) {
@@ -2130,7 +2135,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("h2", [_vm._v("Finalizzati:")]),
+            _c("h2", { staticClass: "mt-4" }, [_vm._v("Finalizzati:")]),
             _vm._v(" "),
             _c(
               "div",
@@ -2143,19 +2148,6 @@ var render = function() {
                     "hide-default-footer": ""
                   },
                   scopedSlots: _vm._u([
-                    {
-                      key: "header.client.fullname",
-                      fn: function(ref) {
-                        var header = ref.header
-                        return [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.getSituazioneMese.name) +
-                              "\n                        "
-                          )
-                        ]
-                      }
-                    },
                     {
                       key: "header.actions",
                       fn: function(ref) {
@@ -2248,7 +2240,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("h2", [_vm._v("Resi:")]),
+            _c("h2", { staticClass: "mt-4" }, [_vm._v("Resi:")]),
             _vm._v(" "),
             _c(
               "div",
@@ -2261,19 +2253,6 @@ var render = function() {
                     "hide-default-footer": ""
                   },
                   scopedSlots: _vm._u([
-                    {
-                      key: "header.client.fullname",
-                      fn: function(ref) {
-                        var header = ref.header
-                        return [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.getSituazioneMese.name) +
-                              "\n                        "
-                          )
-                        ]
-                      }
-                    },
                     {
                       key: "header.actions",
                       fn: function(ref) {
@@ -2367,8 +2346,8 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("v-col", { attrs: { cols: "6" } }, [
-            _c("h2", [_vm._v("Appuntamenti:")]),
+          _c("v-col", { attrs: { cols: "7" } }, [
+            _c("h2", [_vm._v("Appuntamenti Oggi:")]),
             _vm._v(" "),
             _c(
               "div",
@@ -2385,7 +2364,24 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("h2", [_vm._v("Complenni:")]),
+            _c("h2", { staticClass: "mt-4" }, [_vm._v("Appuntamenti Domani:")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers4,
+                    items: _vm.getAppuntamentiDomani,
+                    "hide-default-footer": ""
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("h2", { staticClass: "mt-4" }, [_vm._v("Complenni:")]),
             _vm._v(" "),
             _c(
               "div",

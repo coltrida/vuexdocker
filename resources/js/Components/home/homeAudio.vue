@@ -1,9 +1,5 @@
 <template>
-    <div class="flex justify-start align-center mt-2">
-
-            <!--<v-row>
-                <h1>Home Audio</h1>
-            </v-row>-->
+    <div class="flex justify-start align-center my-2">
 
             <v-row style="font-size: 10px">
                 <prodotti
@@ -12,7 +8,7 @@
                     v-if="dialogProdotti"
                     @chiudiProdotti="chiudiProdotti"
                 />
-                <v-col cols="6">
+                <v-col cols="5">
                     <h2>Prove in Corso:</h2>
                     <div>
                         <v-data-table
@@ -21,10 +17,6 @@
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
-
-                            <template v-slot:header.client.fullname="{ header }">
-                                {{ getSituazioneMese.name }}
-                            </template>
 
                             <template v-slot:item.actions="{ item }">
                                 <v-btn @click="seleziona(item.product)" color="green" dark>
@@ -42,7 +34,7 @@
                         </v-data-table>
                     </div>
 
-                    <h2>Finalizzati:</h2>
+                    <h2 class="mt-4">Finalizzati:</h2>
                     <div>
                         <v-data-table
                             :headers="headers2"
@@ -50,10 +42,6 @@
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
-
-                            <template v-slot:header.client.fullname="{ header }">
-                                {{ getSituazioneMese.name }}
-                            </template>
 
                             <template v-slot:header.actions="{ header }">
                                 <v-chip
@@ -84,7 +72,7 @@
                         </v-data-table>
                     </div>
 
-                    <h2>Resi:</h2>
+                    <h2 class="mt-4">Resi:</h2>
                     <div>
                         <v-data-table
                             :headers="headers2"
@@ -92,10 +80,6 @@
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
-
-                            <template v-slot:header.client.fullname="{ header }">
-                                {{ getSituazioneMese.name }}
-                            </template>
 
                             <template v-slot:header.actions="{ header }">
                                 <v-chip
@@ -127,8 +111,8 @@
                     </div>
                 </v-col>
 
-                <v-col cols="6">
-                    <h2>Appuntamenti:</h2>
+                <v-col cols="7">
+                    <h2>Appuntamenti Oggi:</h2>
                     <div>
                         <v-data-table
                             :headers="headers4"
@@ -140,7 +124,19 @@
                         </v-data-table>
                     </div>
 
-                    <h2>Complenni:</h2>
+                    <h2 class="mt-4">Appuntamenti Domani:</h2>
+                    <div>
+                        <v-data-table
+                            :headers="headers4"
+                            :items="getAppuntamentiDomani"
+                            class="elevation-1 mt-3"
+                            hide-default-footer
+                        >
+
+                        </v-data-table>
+                    </div>
+
+                    <h2 class="mt-4">Complenni:</h2>
                     <div>
                         <v-data-table
                             :headers="headers3"
@@ -209,6 +205,7 @@
             this.fetchSituazioneMese(this.getIdUser);
             this.fetchCompleanni(this.getIdUser);
             this.fetchAppuntamentiOggi(this.getIdUser);
+            this.fetchAppuntamentiDomani(this.getIdUser);
 
         },
 
@@ -223,6 +220,7 @@
 
             ...mapActions('appuntamenti', {
                 fetchAppuntamentiOggi: 'fetchAppuntamentiOggi',
+                fetchAppuntamentiDomani: 'fetchAppuntamentiDomani',
             }),
 
             seleziona(items){
@@ -251,6 +249,7 @@
 
             ...mapGetters('appuntamenti', {
                 getAppuntamenti: 'getAppuntamenti',
+                getAppuntamentiDomani: 'getAppuntamentiDomani',
             }),
 
             bgtAnno(){

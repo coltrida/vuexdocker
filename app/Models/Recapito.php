@@ -41,4 +41,5 @@ class Recapito extends Model
     {
         return $this->hasMany(Client::class);
     }
+
 }

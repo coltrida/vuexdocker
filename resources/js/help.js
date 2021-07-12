@@ -64,6 +64,7 @@ const help = () => {
         linkaddappuntamento: 'http://vuexdocker.test/api/addAppuntamento',
         linkcompleanni: 'http://vuexdocker.test/api/compleanni',
         linkappuntamentioggi: 'http://vuexdocker.test/api/appuntamentiOggiAudio',
+        linkappuntamentidomani: 'http://vuexdocker.test/api/appuntamentiDomaniAudio',
         linkvisualizzasituazioneanno: 'http://vuexdocker.test/api/visualizzaSituazioneAnno',
         linkinviasms: 'http://vuexdocker.test/api/inviaSms',
         linklistarichiestaapparecchi: 'http://vuexdocker.test/api/listaProdottiRichiesti',
@@ -72,6 +73,8 @@ const help = () => {
         linkswitchimmatricolato: 'http://vuexdocker.test/api/productSwitchImmatricolato',
         linkswitcharrivato: 'http://vuexdocker.test/api/productSwitchArrivato',
         linkuseragenda: 'http://vuexdocker.test/api/userAgenda',
+        linkstatisticherecapitiingressi: 'http://vuexdocker.test/api/ingressiRecapiti',
+        linkstatisticherecapitiingressimese: 'http://vuexdocker.test/api/ingressiRecapitiMesi',
     };
 };
 export default help;

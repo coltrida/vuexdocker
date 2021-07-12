@@ -73,6 +73,10 @@ use function config;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRuoloId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Agenda[] $agenda
+ * @property-read int|null $agenda_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiDomani
+ * @property-read int|null $appuntamenti_domani_count
  */
 class User extends Authenticatable
 {
@@ -241,6 +245,12 @@ class User extends Authenticatable
     {
         $oggi = Carbon::now()->format('Y-m-d');
         return $this->hasMany(Appuntamento::class)->where('giorno', $oggi);
+    }
+
+    public function appuntamentiDomani()
+    {
+        $domani = Carbon::now()->addDay()->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $domani);
     }
 
     public function agenda()

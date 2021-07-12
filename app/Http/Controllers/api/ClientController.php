@@ -47,6 +47,16 @@ class ClientController extends Controller
         return $clientService->elimina($id);
     }
 
+    public function ingressiRecapiti(ClientService $clientService)
+    {
+        return $clientService->ingressiRecapiti();
+    }
+
+    public function ingressiRecapitiMesi(ClientService $clientService)
+    {
+        return $clientService->ingressiRecapitiMesi();
+    }
+
     public function inviaSms(Request $request)
     {
         Nexmo::message()->send([

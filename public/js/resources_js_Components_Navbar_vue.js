@@ -430,8 +430,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       items: [{
-        title: 'Audioprotesisti',
+        title: 'Fatt. Audio',
         link: 'statisticheAudioprotesisti'
+      }, {
+        title: 'Ing. Recapiti',
+        link: 'ingressiRecapiti'
       }]
     };
   }
@@ -674,6 +677,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -2743,13 +2748,21 @@ var render = function() {
                     ? _c("nav-bar-audio")
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.getRuolo === "audio" || _vm.getRuolo === "amministrazione"
-                    ? _c(
-                        "v-btn",
-                        { attrs: { text: "" }, on: { click: _vm.logout } },
-                        [_vm._v("\n                Agenda\n            ")]
-                      )
-                    : _vm._e(),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "agenda" } } },
+                    [
+                      _vm.getRuolo === "audio" ||
+                      _vm.getRuolo === "amministrazione"
+                        ? _c("v-btn", { attrs: { text: "" } }, [
+                            _vm._v(
+                              "\n                    Agenda\n                "
+                            )
+                          ])
+                        : _vm._e()
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-btn",

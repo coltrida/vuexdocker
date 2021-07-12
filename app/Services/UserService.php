@@ -33,15 +33,26 @@ class UserService
 
     public function userAgenda()
     {
-        return User::with('agenda')->orderBy('name')->get();
+        return User::with(['agenda' => function($q){
+            $q->orderBy('settimana')->orderBy('nome');
+        }])->orderBy('name')->get();
+    }
+
+    public function specificoUserAgenda($id)
+    {
+        return User::with(['agenda' => function($q){
+            $q->orderBy('settimana')->orderBy('nome');
+        }])->find($id)->agenda;
     }
 
     public function addUserAgenda($request)
     {
         $user_id = $request->user_id;
+        $settimana = $request->settimana;
         $tempo = $request->tempo;
         $agendaEsistente = Agenda::where([
             ['user_id', $user_id],
+            ['settimana', $settimana],
             ['nome', $tempo]
         ])->first();
         if ($agendaEsistente){
@@ -61,6 +72,7 @@ class UserService
         } else {
             $agenda = new Agenda();
             $agenda->nome = $tempo;
+            $agenda->settimana = $settimana;
             $agenda->user_id = $user_id;
             if ($request->giorno == 'lun'){
                 $agenda->lun = $request->testo;

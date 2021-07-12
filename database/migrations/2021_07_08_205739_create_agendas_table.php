@@ -17,6 +17,7 @@ class CreateAgendasTable extends Migration
             $table->id();
             $table->string('nome');
             $table->bigInteger('user_id');
+            $table->integer('settimana');
             $table->string('lun')->nullable();
             $table->string('mar')->nullable();
             $table->string('mer')->nullable();
