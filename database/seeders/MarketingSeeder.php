@@ -23,6 +23,9 @@ class MarketingSeeder extends Seeder
             ],
             [
                 'name' => 'LETTERA',
+            ],
+            [
+                'name' => 'LISTA ESTERNA',
             ]
         ]);
     }

@@ -123,10 +123,12 @@ class UserService
 
     public function assegnaBgt($request)
     {
-        $user = User::with('budget')->find($request->idAudio);
+        $user = User::find($request->idAudio);
 
         $budget = new Budget();
         $budget->budgetAnno = $request->budgetAnno;
+        $budget->user_id = $request->idAudio;
+        $budget->nome = 'Budget';
         $budget->stipendio = $request->stipendio;
         $budget->provvigione = $request->provvigione;
         $budget->gennaio = $request->budgetAnno * $request->mese[1] / 100;

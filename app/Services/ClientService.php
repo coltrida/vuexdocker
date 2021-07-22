@@ -72,7 +72,7 @@ class ClientService
         $propieta = 'client';
         $log = new LoggingService();
         $testo = $utente->name.' ha inserito il nominativo '.$new->cognome.' '.$new->nome;
-        $log->scriviLog($new, $utente, $propieta, $testo);
+        $log->scriviLog($new, $utente, $utente->name, $propieta, $testo);
 
         return $new;
     }
@@ -105,7 +105,7 @@ class ClientService
         $propieta = 'client';
         $log = new LoggingService();
         $testo = $utente->name.' ha modificato il nominativo '.$new->cognome.' '.$new->nome;
-        $log->scriviLog($new, $utente, $propieta, $testo);
+        $log->scriviLog($new, $utente, $utente->name, $propieta, $testo);
 
         return $new;
     }

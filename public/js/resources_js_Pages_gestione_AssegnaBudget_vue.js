@@ -247,7 +247,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     assegnaBudget: function assegnaBudget() {
       var _this = this;
 
-      this.assegna.idAudio = this.AudioSelected[0].id;
+      this.assegna.idAudio = this.AudioSelected[0].id; //console.log(this.assegna)
 
       if (this["switch"]) {
         this.modificaBgt(this.assegna).then(function () {

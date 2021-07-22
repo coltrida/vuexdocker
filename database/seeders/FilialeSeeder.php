@@ -17,27 +17,35 @@ class FilialeSeeder extends Seeder
         Filiale::insert([
             [
                 'nome' => 'PISA',
-                'indirizzo' => 'VIA ROSSI 23',
+                'indirizzo' => 'VIA MARIO LALLI 10',
                 'citta' => 'PISA',
-                'telefono' => '0559583503',
-                'cap' => '520226',
+                'telefono' => '0506206057',
+                'cap' => '56127',
                 'provincia' => 'PI',
             ],
             [
-                'nome' => 'LUCCA',
+                'nome' => 'CIVITANOVA',
                 'indirizzo' => 'VIA VICOLO STRETTO 23',
-                'citta' => 'GARFAGNANA DI BARGA',
+                'citta' => 'CIVITANOVA MARCHE',
                 'telefono' => '08554545',
                 'cap' => '584652',
-                'provincia' => 'LU',
+                'provincia' => 'MC',
             ],
             [
-                'nome' => 'AREZZO',
+                'nome' => 'SAN BENEDETTO',
                 'indirizzo' => 'VIA VAI 3',
-                'citta' => 'AREZZO',
+                'citta' => 'SAN BENEDETTO DEL TRONTO',
                 'telefono' => '08554545',
                 'cap' => '584652',
-                'provincia' => 'AR',
+                'provincia' => 'AP',
+            ],
+            [
+                'nome' => 'ANCONA',
+                'indirizzo' => 'VIA MOLTO LUNGA 4',
+                'citta' => 'ANCONA',
+                'telefono' => '08554545',
+                'cap' => '584652',
+                'provincia' => 'AN',
             ]
         ]);
     }

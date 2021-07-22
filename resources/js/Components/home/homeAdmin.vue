@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-start align-center mt-2">
+    <div class="flex justify-start align-center my-4">
 
             <v-row style="font-size: 10px">
                 <prodotti

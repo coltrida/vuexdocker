@@ -1,22 +1,23 @@
 <template>
-    <div class="text-center">
-        <div class="row">
+    <v-container>
+
+    <div>
+        <div class="flex justify-start mt-2">
 
             <!---------- Header --------->
-            <div class="row mt-2">
-                <div style="display: flex; justify-content: space-between; align-items: center">
-                    <div>
+            <div class="row">
+                    <div class="col-6">
                         <h2>{{proveClient.nome}} {{proveClient.cognome}}</h2>
                     </div>
-                    <div>
+                    <div class="col-6">
                         <v-btn color="primary" dark @click="cancella" class="mt-2">
                             Chiudi
                         </v-btn>
                     </div>
-                </div>
             </div>
+        </div>
             <!---------- End Header --------->
-
+        <div class="flex justify-start mt-2">
             <div>
 
                 <!---------- Fattura --------->
@@ -43,7 +44,6 @@
                 <v-row v-else>
                     <v-col
                         cols="3"
-                        sm="3"
                     >
                         <v-select
                             @change="caricaProdotti()"
@@ -57,7 +57,6 @@
 
                     <v-col
                         cols="3"
-                        sm="3"
                     >
                         <v-select
                             @change="caricaPrezzoProdotto()"
@@ -70,7 +69,7 @@
                     </v-col>
 
                     <v-col
-
+                        cols="2"
                     >
                         <v-select
                             v-model="nuovaProva.orecchio"
@@ -82,8 +81,7 @@
                     </v-col>
 
                     <v-col
-                        cols="3"
-                        sm="3"
+                        cols="2"
                     >
                         <v-text-field
                             v-model="nuovaProva.prezzolistino"
@@ -91,7 +89,9 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col>
+                    <v-col
+                        cols="2"
+                    >
                         <!---------- Bottone per inserire il prodotto nella nuova prova --------->
                         <v-btn color="primary" dark @click="inserisciInProva">
                             In Prova
@@ -140,7 +140,7 @@
                         <v-data-table
                             :headers="headerProve"
                             :items="getProvePassate"
-                            class="elevation-1 mt-3"
+                            class="elevation-1 mt-5"
                             hide-default-footer
                         >
 
@@ -252,6 +252,8 @@
             </div>
         </div>
     </div>
+    </v-container>
+
 </template>
 
 <script>
@@ -280,11 +282,11 @@
                 },
 
                 headerProve: [
-                    { text: 'Data', align: 'start', sortable: false, value: 'inizio_prova', class: "indigo white--text" },
-                    { text: 'Stato', sortable: false, value: 'stato.nome', class: "indigo white--text" },
-                    { text: 'Audio', sortable: false, value: 'user.name', class: "indigo white--text" },
-                    { text: 'Tot', sortable: false, value: 'tot', class: "indigo white--text" },
-                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
+                    { text: 'Data', width: 120, align: 'start', sortable: false, value: 'inizio_prova', class: "indigo white--text" },
+                    { text: 'Stato', width: 120, sortable: false, value: 'stato.nome', class: "indigo white--text" },
+                    { text: 'Audio', width: 120, sortable: false, value: 'user.name', class: "indigo white--text" },
+                    { text: 'Tot', width: 120, sortable: false, value: 'tot', class: "indigo white--text" },
+                    { text: 'Actions', width: 120, value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
 
                 headerNuovaProva: [

@@ -31,9 +31,9 @@ class DatabaseSeeder extends Seeder
             BudgetSeeder::class,
             ProductSeeder::class,
             TipologiaSeeder::class,
-            ProvaSeeder::class,
-            ProductProvaSeeder::class,
-            FatturaSeeder::class
+   //         ProvaSeeder::class,
+    //        ProductProvaSeeder::class,
+   //         FatturaSeeder::class
         ]);
     }
 }

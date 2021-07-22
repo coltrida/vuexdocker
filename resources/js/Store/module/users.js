@@ -111,6 +111,7 @@ const actions = {
     },
 
     async assegnaBgt({commit}, payload){
+        //console.log(payload)
         const response = await axios.post(`${help().linkassegnabgt}`, payload);
         commit('assegnaBgt', response.data);
     },

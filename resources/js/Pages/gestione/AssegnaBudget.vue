@@ -160,6 +160,7 @@
 
             assegnaBudget(){
                 this.assegna.idAudio = this.AudioSelected[0].id;
+                //console.log(this.assegna)
                 if (this.switch){
                     this.modificaBgt(this.assegna).then(() => {
                         this.switch = 0;

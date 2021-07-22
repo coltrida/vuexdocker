@@ -2035,6 +2035,18 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_statistiche_IngRecapiti_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/statistiche/IngRecapiti */ "./resources/js/Pages/statistiche/IngRecapiti.vue"));
   },
   name: 'ingressiRecapiti'
+}, {
+  path: '/importaClients',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_clients_Importclients_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/clients/Importclients */ "./resources/js/Pages/clients/Importclients.vue"));
+  },
+  name: 'importClients'
+}, {
+  path: '/logging',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_Logging_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/Logging */ "./resources/js/Pages/gestione/Logging.vue"));
+  },
+  name: 'logging'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -2051,8 +2063,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -2068,6 +2080,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_audiometrie__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./module/audiometrie */ "./resources/js/Store/module/audiometrie.js");
 /* harmony import */ var _module_prove__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./module/prove */ "./resources/js/Store/module/prove.js");
 /* harmony import */ var _module_appuntamenti__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./module/appuntamenti */ "./resources/js/Store/module/appuntamenti.js");
+/* harmony import */ var _module_logging__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./module/logging */ "./resources/js/Store/module/logging.js");
 
 
 
@@ -2085,8 +2098,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_15__.default.use(vuex__WEBPACK_IMPORTED_MODULE_16__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_16__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_16__.default.use(vuex__WEBPACK_IMPORTED_MODULE_17__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_17__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2102,7 +2116,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_16__.default.Store({
     tipologie: _module_tipologie__WEBPACK_IMPORTED_MODULE_11__.default,
     audiometrie: _module_audiometrie__WEBPACK_IMPORTED_MODULE_12__.default,
     prove: _module_prove__WEBPACK_IMPORTED_MODULE_13__.default,
-    appuntamenti: _module_appuntamenti__WEBPACK_IMPORTED_MODULE_14__.default
+    appuntamenti: _module_appuntamenti__WEBPACK_IMPORTED_MODULE_14__.default,
+    logging: _module_logging__WEBPACK_IMPORTED_MODULE_15__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -2768,6 +2783,23 @@ var actions = {
           }
         }
       }, _callee8);
+    }))();
+  },
+  importClients: function importClients() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              _context9.next = 2;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimportclients));
+
+            case 2:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9);
     }))();
   }
 };
@@ -3448,6 +3480,79 @@ var mutations = {
   },
   fetchEleListino: function fetchEleListino(state, payload) {
     state.eleListino = payload;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/Store/module/logging.js":
+/*!**********************************************!*\
+  !*** ./resources/js/Store/module/logging.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    loggings: []
+  };
+};
+
+var getters = {
+  getLogging: function getLogging(state) {
+    return state.loggings;
+  }
+};
+var actions = {
+  fetchLoggings: function fetchLoggings(_ref) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklogging));
+
+            case 3:
+              response = _context.sent;
+              commit('fetchLoggings', response.data.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }
+};
+var mutations = {
+  fetchLoggings: function fetchLoggings(state, payload) {
+    state.loggings = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5494,80 +5599,83 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var help = function help() {
+  var base = 'http://vuexdocker.test/api/';
   return {
     /*        linklogin: 'http://localhost/api/login',
             linklogout: 'http://localhost/api/logout',
             linkfiliali: 'http://localhost/api/filiali',
             linkcanali: 'http://localhost/api/canali',
             linkaddcanale: 'http://localhost/api/addCanale',*/
-    linklogin: 'http://vuexdocker.test/api/login',
-    linklogout: 'http://vuexdocker.test/api/logout',
-    linkcanali: 'http://vuexdocker.test/api/canali',
-    linkaddcanale: 'http://vuexdocker.test/api/addCanale',
-    linkfornitori: 'http://vuexdocker.test/api/fornitori',
-    linkaddfornitore: 'http://vuexdocker.test/api/addFornitore',
-    linklistino: 'http://vuexdocker.test/api/listino',
-    linkelelistino: 'http://vuexdocker.test/api/eleListino',
-    linkaddlistino: 'http://vuexdocker.test/api/addListino',
-    linkcategorie: 'http://vuexdocker.test/api/categorie',
-    linkaddcategoria: 'http://vuexdocker.test/api/addCategoria',
-    linkruoli: 'http://vuexdocker.test/api/ruoli',
-    linkaddruolo: 'http://vuexdocker.test/api/addRuolo',
-    linkaudio: 'http://vuexdocker.test/api/audio',
-    linkaudioconbgt: 'http://vuexdocker.test/api/audioConBgt',
-    linkaudiosenzabgt: 'http://vuexdocker.test/api/audioSenzaBgt',
-    linkamm: 'http://vuexdocker.test/api/amm',
-    linkuser: 'http://vuexdocker.test/api/user',
-    linkadduser: 'http://vuexdocker.test/api/addUser',
-    linkfiliali: 'http://vuexdocker.test/api/filiali',
-    linkaddfiliale: 'http://vuexdocker.test/api/addFiliale',
-    linkrecapiti: 'http://vuexdocker.test/api/recapiti',
-    linkrecapitiperaudio: 'http://vuexdocker.test/api/recapitiPerAudio',
-    linkaddrecapito: 'http://vuexdocker.test/api/addRecapito',
-    linkrichiestaprodotti: 'http://vuexdocker.test/api/richiestaProdotti',
-    linkclients: 'http://vuexdocker.test/api/clients',
-    linkclientsfiliale: 'http://vuexdocker.test/api/clientsFiliale',
-    linkaddclient: 'http://vuexdocker.test/api/addClient',
-    linkmodificaclient: 'http://vuexdocker.test/api/modificaClient',
-    linktipologie: 'http://vuexdocker.test/api/tipologie',
-    linkaddtipologia: 'http://vuexdocker.test/api/addTipologia',
-    linkmodificatipologia: 'http://vuexdocker.test/api/modificaTipologia',
-    linkassociazioniPersonale: 'http://vuexdocker.test/api/associazioniPersonale',
-    linkaggiungiAssociazione: 'http://vuexdocker.test/api/addAssocia',
-    linkeliminaAssociazione: 'http://vuexdocker.test/api/eliminaAssocia',
-    linkassegnabgt: 'http://vuexdocker.test/api/assegnaBgt',
-    linkmodificabgt: 'http://vuexdocker.test/api/modificaBgt',
-    linkaudiometrie: 'http://vuexdocker.test/api/listaAudiometrie',
-    linkaudiometria: 'http://vuexdocker.test/api/audiometria',
-    linkaddaudiometria: 'http://vuexdocker.test/api/addAudiometria',
-    linkfilialefornitore: 'http://vuexdocker.test/api/filialeFornitore',
-    linknuovaprova: 'http://vuexdocker.test/api/nuovaProva',
-    linksalvaprova: 'http://vuexdocker.test/api/salvaProva',
-    linkaddeleinprova: 'http://vuexdocker.test/api/addEleInProva',
-    linkeliminaeleinprova: 'http://vuexdocker.test/api/provaProdotto',
-    linkproductswitchinprova: 'http://vuexdocker.test/api/productSwitchInProva',
-    linkproductswitchrimuovidallaprova: 'http://vuexdocker.test/api/productSwitchRimuoviDallaProva',
-    linkresoprova: 'http://vuexdocker.test/api/resoProva',
-    linksalvafattura: 'http://vuexdocker.test/api/salvaFattura',
-    linkgetuser: 'http://vuexdocker.test/api/user',
-    linksituazionemese: 'http://vuexdocker.test/api/situazioneMese',
-    linkfilialiuser: 'http://vuexdocker.test/api/filialiUser',
-    linkproductrimuovirichiesta: 'http://vuexdocker.test/api/productRimuoviRichiesta',
-    linkappuntamenti: 'http://vuexdocker.test/api/appuntamentiCliente',
-    linkaddappuntamento: 'http://vuexdocker.test/api/addAppuntamento',
-    linkcompleanni: 'http://vuexdocker.test/api/compleanni',
-    linkappuntamentioggi: 'http://vuexdocker.test/api/appuntamentiOggiAudio',
-    linkappuntamentidomani: 'http://vuexdocker.test/api/appuntamentiDomaniAudio',
-    linkvisualizzasituazioneanno: 'http://vuexdocker.test/api/visualizzaSituazioneAnno',
+    linklogin: base + 'login',
+    linklogout: base + 'logout',
+    linkcanali: base + 'canali',
+    linkaddcanale: base + 'addCanale',
+    linkfornitori: base + 'fornitori',
+    linkaddfornitore: base + 'addFornitore',
+    linklistino: base + 'listino',
+    linkelelistino: base + 'eleListino',
+    linkaddlistino: base + 'addListino',
+    linkcategorie: base + 'categorie',
+    linkaddcategoria: base + 'addCategoria',
+    linkruoli: base + 'ruoli',
+    linkaddruolo: base + 'addRuolo',
+    linkaudio: base + 'audio',
+    linkaudioconbgt: base + 'audioConBgt',
+    linkaudiosenzabgt: base + 'audioSenzaBgt',
+    linkamm: base + 'amm',
+    linkuser: base + 'user',
+    linkadduser: base + 'addUser',
+    linkfiliali: base + 'filiali',
+    linkaddfiliale: base + 'addFiliale',
+    linkrecapiti: base + 'recapiti',
+    linkrecapitiperaudio: base + 'recapitiPerAudio',
+    linkaddrecapito: base + 'addRecapito',
+    linkrichiestaprodotti: base + 'richiestaProdotti',
+    linkclients: base + 'clients',
+    linkclientsfiliale: base + 'clientsFiliale',
+    linkaddclient: base + 'addClient',
+    linkmodificaclient: base + 'modificaClient',
+    linktipologie: base + 'tipologie',
+    linkaddtipologia: base + 'addTipologia',
+    linkmodificatipologia: base + 'modificaTipologia',
+    linkassociazioniPersonale: base + 'associazioniPersonale',
+    linkaggiungiAssociazione: base + 'addAssocia',
+    linkeliminaAssociazione: base + 'eliminaAssocia',
+    linkassegnabgt: base + 'assegnaBgt',
+    linkmodificabgt: base + 'modificaBgt',
+    linkaudiometrie: base + 'listaAudiometrie',
+    linkaudiometria: base + 'audiometria',
+    linkaddaudiometria: base + 'addAudiometria',
+    linkfilialefornitore: base + 'filialeFornitore',
+    linknuovaprova: base + 'nuovaProva',
+    linksalvaprova: base + 'salvaProva',
+    linkaddeleinprova: base + 'addEleInProva',
+    linkeliminaeleinprova: base + 'provaProdotto',
+    linkproductswitchinprova: base + 'productSwitchInProva',
+    linkproductswitchrimuovidallaprova: base + 'productSwitchRimuoviDallaProva',
+    linkresoprova: base + 'resoProva',
+    linksalvafattura: base + 'salvaFattura',
+    linkgetuser: base + 'user',
+    linksituazionemese: base + 'situazioneMese',
+    linkfilialiuser: base + 'filialiUser',
+    linkproductrimuovirichiesta: base + 'productRimuoviRichiesta',
+    linkappuntamenti: base + 'appuntamentiCliente',
+    linkaddappuntamento: base + 'addAppuntamento',
+    linkcompleanni: base + 'compleanni',
+    linkappuntamentioggi: base + 'appuntamentiOggiAudio',
+    linkappuntamentidomani: base + 'appuntamentiDomaniAudio',
+    linkvisualizzasituazioneanno: base + 'visualizzaSituazioneAnno',
     linkinviasms: 'http://vuexdocker.test/api/inviaSms',
-    linklistarichiestaapparecchi: 'http://vuexdocker.test/api/listaProdottiRichiesti',
-    linkassegnaprodottimagazzino: 'http://vuexdocker.test/api/assegnaProdottiMagazzino',
-    linkimmatricolati: 'http://vuexdocker.test/api/prodottiImmatricolati',
-    linkswitchimmatricolato: 'http://vuexdocker.test/api/productSwitchImmatricolato',
-    linkswitcharrivato: 'http://vuexdocker.test/api/productSwitchArrivato',
-    linkuseragenda: 'http://vuexdocker.test/api/userAgenda',
-    linkstatisticherecapitiingressi: 'http://vuexdocker.test/api/ingressiRecapiti',
-    linkstatisticherecapitiingressimese: 'http://vuexdocker.test/api/ingressiRecapitiMesi'
+    linklistarichiestaapparecchi: base + 'listaProdottiRichiesti',
+    linkassegnaprodottimagazzino: base + 'assegnaProdottiMagazzino',
+    linkimmatricolati: base + 'prodottiImmatricolati',
+    linkswitchimmatricolato: base + 'productSwitchImmatricolato',
+    linkswitcharrivato: base + 'productSwitchArrivato',
+    linkuseragenda: base + 'userAgenda',
+    linkstatisticherecapitiingressi: base + 'ingressiRecapiti',
+    linkstatisticherecapitiingressimese: base + 'ingressiRecapitiMesi',
+    linkimportclients: base + 'importClients',
+    linklogging: base + 'logging'
   };
 };
 
@@ -91866,7 +91974,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

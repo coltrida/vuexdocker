@@ -1441,7 +1441,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex justify-start align-center mt-2" },
+    { staticClass: "flex justify-start align-center my-4" },
     [
       _c(
         "v-row",

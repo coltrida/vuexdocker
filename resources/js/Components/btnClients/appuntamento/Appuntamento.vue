@@ -14,9 +14,9 @@
                 </div>
             </div>
 
-            <v-container>
+            <v-container class="py-4">
                 <v-row>
-                    <v-col>
+                    <v-col cols="6">
                         <v-menu
                             ref="menu"
                             v-model="menu"
@@ -39,6 +39,8 @@
                             <v-date-picker
                                 v-model="newAppuntamento.giorno"
                                 no-title
+                                first-day-of-week="1"
+                                locale="ITA"
                                 scrollable
                             >
                                 <v-spacer></v-spacer>
@@ -58,19 +60,7 @@
                                 </v-btn>
                             </v-date-picker>
                         </v-menu>
-                    </v-col>
 
-                    <v-col>
-                        <v-time-picker
-                            width="200"
-                            height="200"
-                            max-height="200"
-                            v-model.lazy="newAppuntamento.orario"
-                            format="ampm"
-                        ></v-time-picker>
-                    </v-col>
-
-                    <v-col>
                         <v-select
                             v-model.lazy="newAppuntamento.filiale_id"
                             item-value="id"
@@ -78,9 +68,7 @@
                             :items="getFiliali"
                             label="Filiale"
                         ></v-select>
-                    </v-col>
 
-                    <v-col>
                         <v-select
                             v-model.lazy="newAppuntamento.recapito_id"
                             item-value="id"
@@ -88,14 +76,25 @@
                             :items="getRecapiti"
                             label="Recapito"
                         ></v-select>
+
+                        <v-textarea
+                            label="Note"
+                            v-model.lazy="newAppuntamento.nota"
+                        ></v-textarea>
                     </v-col>
+
+                    <v-col cols="6">
+                        <v-time-picker
+                            style="height: 100px!important;"
+                            v-model.lazy="newAppuntamento.orario"
+                            format="ampm"
+                        ></v-time-picker>
+                    </v-col>
+
                 </v-row>
-                <v-row>
-                    <v-textarea
-                        label="Note"
-                        v-model.lazy="newAppuntamento.nota"
-                    ></v-textarea>
-                </v-row>
+
+
+
                 <v-btn @click="inserisci" color="primary" class="my-2">
                     Inserisci
                 </v-btn>

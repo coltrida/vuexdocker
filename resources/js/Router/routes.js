@@ -19,6 +19,8 @@ const routes = [
     { path: '/assegnaBudget', component: () => import('../Pages/gestione/AssegnaBudget'), name: 'assegnaBudget' },
     { path: '/statisticheAudioprotesisti', component: () => import('../Pages/statistiche/Audioprotesisti'), name: 'statisticheAudioprotesisti' },
     { path: '/ingressiRecapiti', component: () => import('../Pages/statistiche/IngRecapiti'), name: 'ingressiRecapiti' },
+    { path: '/importaClients', component: () => import('../Pages/clients/Importclients'), name: 'importClients' },
+    { path: '/logging', component: () => import('../Pages/gestione/Logging'), name: 'logging' },
 ];
 
 export default routes;

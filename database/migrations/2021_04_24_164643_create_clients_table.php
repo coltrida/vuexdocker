@@ -30,9 +30,9 @@ class CreateClientsTable extends Migration
             $table->date('datanascita')->nullable();
             $table->integer('meseNascita')->nullable();
             $table->integer('giornoNascita')->nullable();
-            $table->bigInteger('marketing_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('filiale_id')->unsigned();
+            $table->bigInteger('marketing_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->bigInteger('filiale_id')->unsigned()->nullable();
             $table->bigInteger('recapito_id')->unsigned()->nullable();
             $table->integer('mese')->nullable();
             $table->integer('anno')->nullable();

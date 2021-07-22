@@ -27,9 +27,9 @@ class ClientResource extends JsonResource
             'telefono' => $this->telefono,
             'tipologia' => $this->tipologia->nome,
             'tipologia_id' => $this->tipologia_id,
-            'marketing' => $this->marketing->name,
+            'marketing' => isset($this->marketing->name) ? $this->marketing->name : null,
             'marketing_id' => $this->marketing_id,
-            'user' => $this->user->name,
+            'user' => $this->user_id ? $this->user->name : null,
             'user_id' => $this->user_id,
             'filiale' => $this->filiale->nome,
             'filiale_id' => $this->filiale_id,
@@ -38,6 +38,7 @@ class ClientResource extends JsonResource
             'datanascita' => $this->datanascita,
             'audiometria' => $this->audiometria,
             'prove' => $this->prova,
+            'fullname' => $this->fullname,
         ];
     }
 }

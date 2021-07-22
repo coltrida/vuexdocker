@@ -136,6 +136,7 @@
                     </v-tooltip>
                 </template>
 
+
             </v-data-table>
 
         </div>
@@ -172,26 +173,37 @@
                 cognomeElimina: '',
                 listino: {},
                 headers: [
-                    {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
-                    {text: 'Cognome', align: 'start', value: 'cognome', class: "indigo white--text"},
-                    {text: 'Nome', value: 'nome', class: "indigo white--text"},
-                    {text: 'Indirizzo', value: 'indirizzo', class: "indigo white--text"},
-                    {text: 'Città', value: 'citta', class: "indigo white--text"},
-                    {text: 'cap', value: 'cap', class: "indigo white--text"},
+                    {text: 'Actions', width: 150, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
+                    {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
+                    {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
+                    {text: 'Città', width: 150, value: 'citta', class: "indigo white--text"},
+                    {text: 'cap', width: 70, value: 'cap', class: "indigo white--text"},
                     {text: 'PR', width: 70, value: 'provincia', class: "indigo white--text"},
-                    {text: 'telefono', value: 'telefono', class: "indigo white--text"},
+                    {text: 'telefono', width: 130, value: 'telefono', class: "indigo white--text"},
                     {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
                     {text: 'fonte', width: 200, value: 'marketing', class: "indigo white--text"},
-                    {text: 'user', value: 'user', class: "indigo white--text"},
+                    {text: 'user', width: 130, value: 'user', class: "indigo white--text"},
+                    {text: 'nominativo', width: 130, value: 'fullname', class: "indigo white--text"},
 
                 ],
             }
         },
 
         mounted() {
-            this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
-                this.search = this.cognomeRicerca;
+            let accesso = false;
+            this.getFiliali.forEach(element => {
+                if(element.id === this.rottaIdFiliale){
+                    accesso = true;
+                }
             });
+
+            if(accesso){
+                this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
+                    this.search = this.cognomeRicerca;
+                });
+            }
+
         },
 
         methods: {
@@ -271,6 +283,10 @@
         computed: {
             ...mapGetters('clients', {
                 getClients: 'getClients',
+            }),
+
+            ...mapGetters('filiali', {
+                getFiliali: 'getFiliali',
             }),
 
             rottaIdFiliale(){

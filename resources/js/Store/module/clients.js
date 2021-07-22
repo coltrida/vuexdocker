@@ -62,6 +62,10 @@ const actions = {
         await axios.delete(`${help().linkclients}`+'/'+id);
         commit('eliminaClient', id);
     },
+
+    async importClients(){
+        await axios.get(`${help().linkimportclients}`);
+    },
 };
 
 const mutations = {

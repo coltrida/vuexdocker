@@ -31,8 +31,13 @@ class TipologiaSeeder extends Seeder
                 'nome' => 'NORMO',
                 'recall' => null
             ],
+
             [
                 'nome' => 'DEC',
+                'recall' => null
+            ],
+            [
+                'nome' => 'LE',
                 'recall' => null
             ],
         ]);

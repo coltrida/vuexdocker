@@ -101,6 +101,8 @@ Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
 Route::post('/addClient', [ClientController::class, 'aggiungi']);
 Route::post('/modificaClient', [ClientController::class, 'modifica']);
 Route::post('/inviaSms', [ClientController::class, 'inviaSms']);
+Route::get('/importClients', [ClientController::class, 'importClients']);
+Route::get('/importClientsFromNoah', [ClientController::class, 'importClientsFromNoah']);
 
 // ----------------- tipologia -------------------------
 Route::get('/tipologie', [TipologiaController::class, 'index']);
@@ -114,6 +116,7 @@ Route::post('/addAssocia', [GestioneController::class, 'aggiungiAssociazione']);
 Route::post('/assegnaBgt', [GestioneController::class, 'assegnaBgt']);
 Route::post('/modificaBgt', [GestioneController::class, 'modificaBgt']);
 Route::get('/eliminaAssocia/{id}', [GestioneController::class, 'eliminaAssociazione']);
+Route::get('/logging', [GestioneController::class, 'logging']);
 
 // ---------------- audiometrie -------------------------
 Route::get('/listaAudiometrie/{idClient}', [AudiometriaController::class, 'index']);

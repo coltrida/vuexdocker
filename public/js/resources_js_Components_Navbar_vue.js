@@ -103,6 +103,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Lista',
         link: 'clients'
+      }, {
+        title: 'Import',
+        link: 'importClients'
       }]
     };
   }
@@ -164,6 +167,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Invio sms',
         link: 'inviaSms'
+      }, {
+        title: 'Logging',
+        link: 'logging'
       }]
     };
   }

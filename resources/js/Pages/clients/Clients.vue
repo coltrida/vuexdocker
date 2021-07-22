@@ -9,6 +9,14 @@
                 @cancellaMessaggio = "cancellaMessaggio"
             ></messaggio>
 
+            <messaggioelimina
+                v-if="showElimina"
+                :idElimina="idElimina"
+                :nomeElimina="nomeElimina"
+                :cognomeElimina="cognomeElimina"
+                @cancellaMessaggioElimina = "cancellaMessaggioElimina"
+            ></messaggioelimina>
+
             <audiogramma
                 v-if="showAudiogramma"
                 :audiogrammaClient="audiogrammaClient"
@@ -56,7 +64,7 @@
                             <v-icon
                                 color="red"
                                 small
-                                @click="elimina(item.id)"
+                                @click="elimina(item.id, item.nome, item.cognome)"
                                 v-bind="attrs"
                                 v-on="on"
                             >
@@ -141,12 +149,15 @@
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
     import Prove from "../../Components/btnClients/prove/Prove";
     import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
+    import Messaggioelimina from "../../Components/btnClients/elimina/Messaggioelimina";
 
     export default {
         name: "Clients",
-        components: {Appuntamento, Prove, Audiogramma, Messaggio},
+        components: {Messaggioelimina, Appuntamento, Prove, Audiogramma, Messaggio},
         data() {
             return {
+                showElimina: false,
+                carica: false,
                 showClients: true,
                 showProve: false,
                 showAudiogramma: false,
@@ -156,30 +167,40 @@
                 audiogrammaClient: {},
                 appuntamentoClient: {},
                 proveClient: {},
+                idElimina: '',
+                nomeElimina: '',
+                cognomeElimina: '',
                 search: '',
                 listino: {},
                 headers: [
-                    {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
-                    {text: 'Cognome', align: 'start', value: 'cognome', class: "indigo white--text"},
-                    {text: 'Nome', value: 'nome', class: "indigo white--text"},
-                    {text: 'Indirizzo', value: 'indirizzo', class: "indigo white--text"},
-                    {text: 'Città', value: 'citta', class: "indigo white--text"},
-                    {text: 'cap', value: 'cap', class: "indigo white--text"},
+                    {text: 'Actions', width: 150, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
+                    {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
+                    {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
+                    {text: 'Città', width: 150, value: 'citta', class: "indigo white--text"},
+                    {text: 'cap', width: 70, value: 'cap', class: "indigo white--text"},
                     {text: 'PR', width: 70, value: 'provincia', class: "indigo white--text"},
-                    {text: 'telefono', value: 'telefono', class: "indigo white--text"},
+                    {text: 'telefono', width: 130, value: 'telefono', class: "indigo white--text"},
                     {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
                     {text: 'fonte', width: 200, value: 'marketing', class: "indigo white--text"},
-                    {text: 'user', value: 'user', class: "indigo white--text"},
+                    {text: 'user', width: 130, value: 'user', class: "indigo white--text"},
                     {text: 'filiale', value: 'filiale', class: "indigo white--text"},
+                    {text: 'nominativo', width: 130, value: 'fullname', class: "indigo white--text"},
 
                 ],
             }
         },
 
         mounted() {
-            this.fetchClients().then(() => {
-                this.search = this.cognomeRicerca;
-            });
+            this.carica = true;
+            //console.log(this.getRuolo)
+            if(this.getRuolo == 'admin'){
+                this.fetchClients().then(() => {
+                    this.search = this.cognomeRicerca;
+                    this.carica = false;
+                });
+            }
+
         },
 
         methods: {
@@ -189,8 +210,19 @@
                 eliminaClient: 'eliminaClient',
             }),
 
-            elimina(id) {
-                this.eliminaClient(id)
+            elimina(id, nome, cognome) {
+                this.idElimina = id;
+                this.nomeElimina = nome;
+                this.cognomeElimina = cognome;
+                this.showElimina = true;
+                //this.eliminaClient(id)
+            },
+
+            cancellaMessaggioElimina(){
+                this.idElimina = '';
+                this.nomeElimina = '';
+                this.cognomeElimina = '';
+                this.showElimina = false;
             },
 
             cancellaMessaggio(){
@@ -249,6 +281,10 @@
         computed: {
             ...mapGetters('clients', {
                 getClients: 'getClients',
+            }),
+
+            ...mapGetters('login', {
+                getRuolo: 'getRuolo',
             }),
 
             cognomeRicerca(){
