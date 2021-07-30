@@ -77,6 +77,9 @@ use function config;
  * @property-read int|null $agenda_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiDomani
  * @property-read int|null $appuntamenti_domani_count
+ * @property int|null $pezzi_id
+ * @property-read \App\Models\Pezzi|null $pezzi
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePezziId($value)
  */
 class User extends Authenticatable
 {
@@ -177,6 +180,16 @@ class User extends Authenticatable
         return $this->hasMany(Delta::class);
     }
 
+    public function pezzi()
+    {
+        return $this->belongsTo(Pezzi::class);
+    }
+
+    public function moltiPezzi()
+    {
+        return $this->hasMany(Pezzi::class);
+    }
+
     public function fatturati()
     {
         return $this->belongsTo(Fatturati::class);
@@ -201,8 +214,11 @@ class User extends Authenticatable
 
     public function provaFinalizzata()
     {
-        return $this->hasMany(Prova::class)->whereHas('stato', function($q){
-            $q->where('nome', 'FATTURA');
+        $anno = Carbon::now()->year;
+        return $this->hasMany(Prova::class)
+            ->where('anno_fine', $anno)
+            ->whereHas('stato', function($q){
+                $q->where('nome', 'FATTURA');
         })->with('client:id,nome,cognome', 'product');
     }
 
@@ -251,6 +267,36 @@ class User extends Authenticatable
     {
         $domani = Carbon::now()->addDay()->format('Y-m-d');
         return $this->hasMany(Appuntamento::class)->where('giorno', $domani);
+    }
+
+    public function appuntamentiLunedi()
+    {
+        $giorno = Carbon::now()->startOfWeek()->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
+    }
+
+    public function appuntamentiMartedi()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDay()->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno);
+    }
+
+    public function appuntamentiMercoledi()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(2)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno);
+    }
+
+    public function appuntamentiGiovedi()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(3)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno);
+    }
+
+    public function appuntamentiVenerdi()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(4)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
     }
 
     public function agenda()

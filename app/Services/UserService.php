@@ -8,6 +8,7 @@ use App\Models\Budget;
 use App\Models\Client;
 use App\Models\Delta;
 use App\Models\Fatturati;
+use App\Models\Pezzi;
 use App\Models\Prova;
 use App\Models\User;
 use Carbon\Carbon;
@@ -221,18 +222,25 @@ class UserService
        foreach ($users as $user){
            $fatturati = $user->fatturati_id ? $user->fatturati : new Fatturati();
            $delta = $user->delta_id ? $user->delta : new Delta();
+           $pezzi = $user->pezzi_id ? $user->pezzi : new Pezzi();
            $totali = [];
            $totaliBgt = [];
+           $pezziTot = [];
 
            if ($mese >= 1) {
                $valore = User::with('budget')->
                    withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                        $g->where([['mese_fine', 1], ['anno_fine', $anno]]);
                    }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->gennaio = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->gennaio = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->gennaio = number_format( (float) (($fatturati->gennaio / $valore->budget->gennaio) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->gennaio);
                array_push($totali, $fatturati->gennaio);
                array_push($totaliBgt, $valore->budget->gennaio);
            }
@@ -242,10 +250,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 2], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->febbraio = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->febbraio = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->febbraio = number_format( (float) (($fatturati->febbraio / $valore->budget->febbraio) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->febbraio);
                array_push($totali, $fatturati->febbraio);
                array_push($totaliBgt, $valore->budget->febbraio);
            }
@@ -255,10 +268,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 3], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->marzo = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->marzo = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->marzo = number_format( (float) (($fatturati->marzo / $valore->budget->marzo) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->marzo);
                array_push($totali, $fatturati->marzo);
                array_push($totaliBgt, $valore->budget->marzo);
            }
@@ -268,10 +286,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 4], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->aprile = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->aprile = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->aprile = number_format( (float) (($fatturati->aprile / $valore->budget->aprile) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->aprile);
                array_push($totali, $fatturati->aprile);
                array_push($totaliBgt, $valore->budget->aprile);
            }
@@ -281,10 +304,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 5], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->maggio = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->maggio = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->maggio = number_format( (float) (($fatturati->maggio / $valore->budget->maggio) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->maggio);
                array_push($totali, $fatturati->maggio);
                array_push($totaliBgt, $valore->budget->maggio);
            }
@@ -294,10 +322,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 6], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->giugno = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->giugno = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->giugno = number_format( (float) (($fatturati->giugno / $valore->budget->giugno) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->giugno);
                array_push($totali, $fatturati->giugno);
                array_push($totaliBgt, $valore->budget->giugno);
            }
@@ -307,10 +340,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 7], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->luglio = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->luglio = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->luglio = number_format( (float) (($fatturati->luglio / $valore->budget->luglio) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->luglio);
                array_push($totali, $fatturati->luglio);
                array_push($totaliBgt, $valore->budget->luglio);
            }
@@ -320,10 +358,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 8], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->agosto = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->agosto = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->agosto = number_format( (float) (($fatturati->agosto / $valore->budget->agosto) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->agosto);
                array_push($totali, $fatturati->agosto);
                array_push($totaliBgt, $valore->budget->agosto);
            }
@@ -333,10 +376,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 9], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->settembre = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->settembre = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->settembre = number_format( (float) (($fatturati->settembre / $valore->budget->settembre) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->settembre);
                array_push($totali, $fatturati->settembre);
                array_push($totaliBgt, $valore->budget->settembre);
            }
@@ -346,10 +394,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 10], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->ottobre = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->ottobre = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->ottobre = number_format( (float) (($fatturati->ottobre / $valore->budget->ottobre) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->ottobre);
                array_push($totali, $fatturati->ottobre);
                array_push($totaliBgt, $valore->budget->ottobre);
            }
@@ -359,10 +412,15 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 11], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->novembre = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->novembre = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->novembre = number_format( (float) (($fatturati->novembre / $valore->budget->novembre) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->novembre);
                array_push($totali, $fatturati->novembre);
                array_push($totaliBgt, $valore->budget->novembre);
            }
@@ -372,31 +430,49 @@ class UserService
                withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                    $g->where([['mese_fine', 12], ['anno_fine', $anno]]);
                }], 'tot')
+                   ->with(['provaFinalizzata' => function($e){
+                       $e->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->dicembre = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->dicembre = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->dicembre = number_format( (float) (($fatturati->dicembre / $valore->budget->dicembre) - 1) * 100, '1');
+               array_push($pezziTot, $pezzi->dicembre);
                array_push($totali, $fatturati->dicembre);
                array_push($totaliBgt, $valore->budget->dicembre);
            }
 
+           $pezzi->user_id = $user->id;
            $fatturati->user_id = $user->id;
            $delta->user_id = $user->id;
 
+           $pezzi->budgetAnno = array_sum($pezziTot);
            $fatturati->budgetAnno = array_sum($totali);
            $delta->budgetAnno = number_format( (float)  ((array_sum($totali) / array_sum($totaliBgt)) - 1) * 100, '1');
 
+           $pezzi->nome = 'Pezzi';
            $fatturati->nome = 'Fatturati';
            $delta->nome = 'Delta';
+           $pezzi->save();
            $fatturati->save();
            $delta->save();
            $user->fatturati_id = $fatturati->id;
            $user->delta_id = $delta->id;
+           $user->pezzi_id = $pezzi->id;
            $user->save();
-
        }
 
-       //return Prova::selectRaw('sum(tot) AS cnt, mese_fine')->groupBy('mese_fine')->orderBy('mese_fine')->get();
+    }
+
+    public function dettaglioAudio()
+    {
+        return User::audio()
+            ->with(['provaFinalizzata' => function ($q){
+                $q->orderBy('mese_fine');
+            }])
+            ->orderBy('name')
+            ->get();
     }
 
     public function visualizzaSituazioneAnno()
@@ -406,7 +482,8 @@ class UserService
         foreach ($audios as $audio){
             $valori = User::audio(1)->with('moltiBudget')->find($audio->id)->moltiBudget
                 ->concat(User::audio(1)->with('moltiFatturati')->find($audio->id)->moltiFatturati)
-                ->concat(User::audio(1)->with('moltiDelta')->find($audio->id)->moltiDelta);
+                ->concat(User::audio(1)->with('moltiDelta')->find($audio->id)->moltiDelta)
+                ->concat(User::audio(1)->with('moltiPezzi')->find($audio->id)->moltiPezzi);
             $audio->valori = $valori;
         }
 

@@ -52,6 +52,8 @@ use const LC_TIME;
  * @method static \Illuminate\Database\Eloquent\Builder|Prova whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Prova whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $marketing_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereMarketingId($value)
  */
 class Prova extends Model
 {

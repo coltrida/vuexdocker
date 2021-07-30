@@ -62,6 +62,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -71,7 +92,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
-    importClients: 'importClients'
+    importClients: 'importClients',
+    importClientsXml: 'importClientsXml'
   })), {}, {
     importa: function importa() {
       var _this = this;
@@ -79,6 +101,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.carica = true;
       this.importClients().then(function () {
         _this.carica = false;
+      });
+    },
+    importaXml: function importaXml() {
+      var _this2 = this;
+
+      this.carica = true;
+      this.importClientsXml().then(function () {
+        _this2.carica = false;
       });
     }
   })
@@ -196,7 +226,7 @@ var render = function() {
             : _c(
                 "v-row",
                 [
-                  _c("v-col", { attrs: { cols: "5", sm: "5" } }, [
+                  _c("v-col", { attrs: { cols: "4", sm: "4" } }, [
                     _c("p", [
                       _vm._v(
                         "Inserire il file nella posizione /store/app/public/file.xlsx"
@@ -214,13 +244,41 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    { attrs: { cols: "2", sm: "2" } },
                     [
                       _c(
                         "v-btn",
                         {
                           attrs: { color: "success", dark: "" },
                           on: { click: _vm.importa }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Importa\n                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-col", { attrs: { cols: "4", sm: "4" } }, [
+                    _c("p", [
+                      _vm._v(
+                        "Inserire il file nella posizione /storage/app/public/gggg.xml"
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "2", sm: "2" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "success", dark: "" },
+                          on: { click: _vm.importaXml }
                         },
                         [
                           _vm._v(

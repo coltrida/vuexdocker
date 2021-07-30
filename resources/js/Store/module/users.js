@@ -5,6 +5,7 @@ const state = () => ({
     users: [],
     audioConBgt: [],
     audioSenzaBgt: [],
+    audioConFatt: [],
     situazioneMese: [],
     amm: [],
     agenda:[]
@@ -22,6 +23,10 @@ const getters = {
 
     getAudioConBgt(state){
         return state.audioConBgt;
+    },
+
+    getAudioConFatt(state){
+        return state.audioConFatt;
     },
 
     getAudioSenzaBgt(state){
@@ -70,6 +75,11 @@ const actions = {
     async fetchAudioConBgt({commit}){
         const response = await axios.get(`${help().linkaudioconbgt}`);
         commit('fetchAudioConBgt', response.data);
+    },
+
+    async fetchAudioConFatt({commit}){
+        const response = await axios.get(`${help().linkstatistichedettagliaudio}`);
+        commit('fetchAudioConFatt', response.data);
     },
 
     async fetchAudioSenzaBgt({commit}){
@@ -147,6 +157,10 @@ const mutations = {
 
     fetchAudioConBgt(state, payload){
         state.audioConBgt = payload;
+    },
+
+    fetchAudioConFatt(state, payload){
+        state.audioConFatt = payload;
     },
 
     fetchAudioSenzaBgt(state, payload){

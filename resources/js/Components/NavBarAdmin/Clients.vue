@@ -31,6 +31,7 @@
             items: [
                 { title: 'Inserisci', link: 'clientsInserisci'},
                 { title: 'Lista', link: 'clients' },
+                { title: 'Filtri', link: 'filtri' },
                 { title: 'Import', link: 'importClients' },
             ],
         }),

@@ -23,4 +23,9 @@ class MarketingController extends Controller
     {
         return $marketingService->eliminaCanale($id);
     }
+
+    public function fatturatoCanali(MarketingService $marketingService)
+    {
+        return $marketingService->fatturatoCanali();
+    }
 }

@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $telefono
+ * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereTelefono($value)
  */
 class Recapito extends Model
 {

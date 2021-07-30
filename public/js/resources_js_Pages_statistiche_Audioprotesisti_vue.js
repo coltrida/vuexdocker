@@ -40,6 +40,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -241,7 +245,29 @@ var render = function() {
             "div",
             { key: audio.id, staticClass: "mb-5" },
             [
-              _c("h2", [_vm._v(_vm._s(audio.name))]),
+              _c(
+                "div",
+                {
+                  staticStyle: {
+                    display: "flex",
+                    "align-items": "center",
+                    "justify-content": "space-between"
+                  }
+                },
+                [
+                  _c("h2", [_vm._v(_vm._s(audio.name))]),
+                  _vm._v(" "),
+                  _c("h4", [
+                    _vm._v(
+                      "Media Vendita " +
+                        _vm._s(
+                          audio.valori[1].budgetAnno /
+                            audio.valori[3].budgetAnno
+                        )
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("v-data-table", {
                 staticClass: "elevation-1 mt-3",

@@ -84,6 +84,10 @@ use function substr;
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $mese
+ * @property int|null $anno
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereAnno($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereMese($value)
  */
 class Client extends Model
 {
@@ -139,7 +143,8 @@ class Client extends Model
 
     public function provaFattura()
     {
-        return $this->hasMany(Prova::class)->where('stato', config('enum.statoAPA.fattura'));
+        $anno = Carbon::now()->year;
+        return $this->hasMany(Prova::class)->where([ ['stato_id', 4], ['anno_fine', $anno] ]);
     }
 
 

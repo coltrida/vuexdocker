@@ -104,6 +104,9 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Lista',
         link: 'clients'
       }, {
+        title: 'Filtri',
+        link: 'filtri'
+      }, {
         title: 'Import',
         link: 'importClients'
       }]
@@ -383,6 +386,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   /*data: () => ({
       items: [
@@ -438,6 +447,12 @@ __webpack_require__.r(__webpack_exports__);
       items: [{
         title: 'Fatt. Audio',
         link: 'statisticheAudioprotesisti'
+      }, {
+        title: 'Dettaglio Audio',
+        link: 'statisticheAudioprotesistiDettaglio'
+      }, {
+        title: 'Fatt. Canali',
+        link: 'fatturatoCanali'
       }, {
         title: 'Ing. Recapiti',
         link: 'ingressiRecapiti'
@@ -2275,6 +2290,19 @@ var render = function() {
                   _c(
                     "v-list-item",
                     [_c("v-list-item-title", [_vm._v("agende")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "calendar" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Calendar")])],
                     1
                   )
                 ],

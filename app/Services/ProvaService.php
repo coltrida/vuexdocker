@@ -31,6 +31,7 @@ class ProvaService
         $new = new Prova();
         $new->user_id = $request->user_id;
         $new->client_id = $request->client_id;
+        $new->marketing_id = $request->marketing_id;
         $new->filiale_id = $request->filiale_id;
         $new->stato_id = 7;
         $new->inizio_prova = Carbon::now()->format('Y-m-d');

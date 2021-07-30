@@ -58,7 +58,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123456'),
             ],
             [
-                'name' => 'Valeria Di Luca',
+                'name' => 'Valeria De Luca',
                 'email' => 'valeria@centroudito.eu',
                 'ruolo' => 2,
                 'budget_id' => 4,
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123456'),
             ],
             [
-                'name' => 'Carlo Di Luca',
+                'name' => 'Carlo De Luca',
                 'email' => 'babbo@centroudito.eu',
                 'ruolo' => 2,
                 'budget_id' => 5,

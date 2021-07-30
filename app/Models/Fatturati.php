@@ -55,6 +55,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Fatturati whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fatturati whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $asl
+ * @property int|null $binaurale
+ * @method static \Illuminate\Database\Eloquent\Builder|Fatturati whereAsl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fatturati whereBinaurale($value)
  */
 class Fatturati extends Model
 {

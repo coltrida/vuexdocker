@@ -34,7 +34,7 @@
                         </v-data-table>
                     </div>
 
-                    <h2 class="mt-4">Finalizzati:</h2>
+                    <h2 class="mt-6">Finalizzati:</h2>
                     <div>
                         <v-data-table
                             :headers="headers2"
@@ -72,7 +72,7 @@
                         </v-data-table>
                     </div>
 
-                    <h2 class="mt-4">Resi:</h2>
+                    <h2 class="mt-6">Resi:</h2>
                     <div>
                         <v-data-table
                             :headers="headers2"
@@ -124,7 +124,7 @@
                         </v-data-table>
                     </div>
 
-                    <h2 class="mt-4">Appuntamenti Domani:</h2>
+                    <h2 class="mt-6">Appuntamenti Domani:</h2>
                     <div>
                         <v-data-table
                             :headers="headers4"
@@ -136,7 +136,7 @@
                         </v-data-table>
                     </div>
 
-                    <h2 class="mt-4">Complenni:</h2>
+                    <h2 class="mt-6">Complenni:</h2>
                     <div>
                         <v-data-table
                             :headers="headers3"

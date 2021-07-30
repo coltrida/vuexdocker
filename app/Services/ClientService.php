@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Models\Audiometria;
 use App\Models\Client;
 use App\Models\Recapito;
 use App\Models\Tipologia;
@@ -51,6 +52,8 @@ class ClientService
         $new->cap = $request->cap;
         $new->provincia = trim(Str::upper($request->provincia));
         $new->telefono = $request->telefono;
+        $new->telefono2 = $request->telefono2;
+        $new->telefono3 = $request->telefono3;
         $new->tipologia_id = $request->tipologia_id;
         $new->marketing_id = $request->marketing_id;
         $new->filiale_id = $request->filiale_id;
@@ -88,6 +91,8 @@ class ClientService
         $new->cap = $request->cap;
         $new->provincia = trim(Str::upper($request->provincia));
         $new->telefono = $request->telefono;
+        $new->telefono2 = $request->telefono2;
+        $new->telefono3 = $request->telefono3;
         $new->tipologia_id = $request->tipologia_id;
         $new->marketing_id = $request->marketing_id;
         $new->filiale_id = $request->filiale_id;
@@ -221,5 +226,145 @@ class ClientService
             }])
             ->orderBy('nome')
             ->get();
+    }
+
+    public function province()
+    {
+        return Client::orderBy('provincia')->pluck('provincia');
+    }
+
+    public function importClientsFromNoah()
+    {
+        $xmlDataString = file_get_contents(storage_path('app/public/gggg.xml'));
+        //dd($xmlDataString);
+        $xmlObject = simplexml_load_string($xmlDataString, $class_name = "SimpleXMLElement", $options = 0, $ns = "pt", $is_prefix = true);
+
+        $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
+
+        //dd($xml->Patient->Patient->Actions->Action->PublicData->children());
+        //dd(count($xml->Patient));
+
+        foreach ($xml->Patient as $ele){
+            $client = Client::firstOrCreate(
+                [
+                    'nome' => $ele->Patient->FirstName,
+                    'cognome' => $ele->Patient->LastName,
+                    'indirizzo' => $ele->Patient->Address1 ? $ele->Patient->Address1 : null,
+                    'cap' => $ele->Patient->Zip ? $ele->Patient->Zip : null,
+                    'telefono' => $ele->Patient->HomePhone ? $ele->Patient->HomePhone : null,
+                    'telefono2' => $ele->Patient->WorkPhone ? $ele->Patient->WorkPhone : null,
+                    'telefono3' => $ele->Patient->MobilePhone ? $ele->Patient->MobilePhone : null,
+                    'provincia' => $ele->Patient->Other1 ? $ele->Patient->Other1 : null,
+                    'citta' => $ele->Patient->City ? $ele->Patient->City : null,
+                    'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
+                    'datanascita' => $ele->Patient->DateofBirth ? $ele->Patient->DateofBirth : null,
+                    'tipologia_id' => 2,
+                    'filiale_id' => User::find($ele->Patient->CreatedBy)->filiale[0]->id,
+                ]
+            );
+
+            $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
+            $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
+            //dd($audiometriad->TonePoints);
+
+            $d125 = null;
+            $d250 = null;
+            $d500 = null;
+            $d1000 = null;
+            $d1500 = null;
+            $d2000 = null;
+            $d3000 = null;
+            $d4000 = null;
+            $d6000 = null;
+            $d8000 = null;
+
+            $s125 = null;
+            $s250 = null;
+            $s500 = null;
+            $s1000 = null;
+            $s1500 = null;
+            $s2000 = null;
+            $s3000 = null;
+            $s4000 = null;
+            $s6000 = null;
+            $s8000 = null;
+
+            foreach ($audiometriad->TonePoints as $tono){
+                ${'d'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+            }
+
+            foreach ($audiometrias->TonePoints as $tono){
+                ${'s'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+            }
+
+            //dd((int)$d1000);
+
+            $audiom = Audiometria::where('client_id', $client->id)->firstOrNew();
+//dd($audiom->client_id);
+            if(!isset($audiom->client_id)){
+                $audiom->client_id = $client->id;
+                $audiom->_125d = (int)$d125 ? (int)$d125 : (int)$d250;
+                $audiom->_250d = (int)$d250 ? (int)$d250 : ( (int)$d125 + (int)$d500 ) / 2;
+                $audiom->_500d = (int)$d500 ? (int)$d500 : ( (int)$d250 + (int)$d1000 ) / 2;
+                $audiom->_1000d = (int)$d1000? (int)$d1000 : ( (int)$d500 + (int)$d1500 ) / 2;
+                $audiom->_1500d = (int)$d1500? (int)$d1500 : ( (int)$d1000 + (int)$d2000 ) / 2;
+                $audiom->_2000d = (int)$d2000? (int)$d2000 : ( (int)$d1500 + (int)$d3000 ) / 2;
+                $audiom->_3000d = (int)$d3000? (int)$d3000 : ( (int)$d2000 + (int)$d4000 ) / 2;
+                $audiom->_4000d = (int)$d4000? (int)$d4000 : ( (int)$d3000 + (int)$d6000 ) / 2;
+                $audiom->_6000d = (int)$d6000? (int)$d6000 : ( (int)$d4000 + (int)$d8000 ) / 2;
+                $audiom->_8000d = (int)$d8000? (int)$d8000 :  (int)$d6000;
+
+                $audiom->_125s = (int)$s125 ? (int)$s125 : (int)$s250;
+                $audiom->_250s = (int)$s250 ? (int)$s250 : ( (int)$s125 + (int)$s500 ) / 2;
+                $audiom->_500s = (int)$s500 ? (int)$s500 : ( (int)$s250 + (int)$s1000 ) / 2;
+                $audiom->_1000s = (int)$s1000? (int)$s1000 : ( (int)$s500 + (int)$s1500 ) / 2;
+                $audiom->_1500s = (int)$s1500? (int)$s1500 : ( (int)$s1000 + (int)$s2000 ) / 2;
+                $audiom->_2000s = (int)$s2000? (int)$s2000 : ( (int)$s1500 + (int)$s3000 ) / 2;
+                $audiom->_3000s = (int)$s3000? (int)$s3000 : ( (int)$s2000 + (int)$s4000 ) / 2;
+                $audiom->_4000s = (int)$s4000? (int)$s4000 : ( (int)$s3000 + (int)$s6000 ) / 2;
+                $audiom->_6000s = (int)$s6000? (int)$s6000 : ( (int)$s4000 + (int)$s8000 ) / 2;
+                $audiom->_8000s = (int)$s8000? (int)$s8000 :  (int)$s6000;
+
+                $audiom->save();
+            }
+
+        }
+/*
+        $json = json_encode($xmlObject);
+
+        //dd($json);
+
+        $phpDataArray = json_decode($json, true);
+        // dd($phpDataArray);
+        if(count($phpDataArray['Patient']) > 0){
+            //  $dataArray = array();
+            $idUser = $phpDataArray['Patient'][0]['Patient']['CreatedBy'];
+            //dd($idUser);
+            $filialeId = User::find($idUser)->filiale[0]->id;
+            //dd($filialeId);
+            foreach($phpDataArray['Patient'] as $index => $data){
+
+                // dd($phpDataArray['Patient'][1]);
+
+                Client::firstOrCreate(
+                    [
+                        'nome' => $data['Patient']['FirstName'],
+                        'cognome' => $data['Patient']['LastName'],
+                        'indirizzo' => $data['Patient']['Address1'] ? $data['Patient']['Address1'] : null,
+                        'cap' => $data['Patient']['Zip'] ? $data['Patient']['Zip'] : null,
+                        'telefono' => $data['Patient']['HomePhone'] ? $data['Patient']['HomePhone'] : null,
+                        'telefono2' => $data['Patient']['WorkPhone'] ? $data['Patient']['WorkPhone'] : null,
+                        'telefono3' => $data['Patient']['MobilePhone'] ? $data['Patient']['MobilePhone'] : null,
+                        'provincia' => $data['Patient']['Other1'] ? $data['Patient']['Other1'] : null,
+                        'citta' => $data['Patient']['City'] ? $data['Patient']['City'] : null,
+                        'user_id' => $data['Patient']['CreatedBy'],
+                        'datanascita' => isset($data['Patient']['DateofBirth']) ? $data['Patient']['DateofBirth'] : null,
+                        'tipologia_id' => 2,
+                        'filiale_id' => $filialeId,
+                    ]
+                );
+
+            }
+        }*/
     }
 }

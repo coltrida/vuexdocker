@@ -12,8 +12,8 @@
 
             <v-row v-else>
                 <v-col
-                    cols="5"
-                    sm="5"
+                    cols="4"
+                    sm="4"
                 >
                     <!--<v-file-input
                         accept=".xls, .xlsx"
@@ -25,10 +25,31 @@
                 </v-col>
 
                 <v-col
-                    cols="3"
-                    sm="3"
+                    cols="2"
+                    sm="2"
                 >
                     <v-btn @click="importa" color="success" dark>
+                        Importa
+                    </v-btn>
+
+                </v-col>
+
+                <v-col
+                    cols="4"
+                    sm="4"
+                >
+                    <!--<v-file-input
+                        accept=".xls, .xlsx"
+                        label="File input"
+                    ></v-file-input>-->
+                    <p>Inserire il file nella posizione /storage/app/public/gggg.xml</p>
+                </v-col>
+
+                <v-col
+                    cols="2"
+                    sm="2"
+                >
+                    <v-btn @click="importaXml" color="success" dark>
                         Importa
                     </v-btn>
 
@@ -56,11 +77,19 @@
         methods:{
             ...mapActions('clients', {
                 importClients: 'importClients',
+                importClientsXml: 'importClientsXml',
             }),
 
             importa(){
                 this.carica = true;
                 this.importClients().then(() => {
+                    this.carica = false;
+                });
+            },
+
+            importaXml(){
+                this.carica = true;
+                this.importClientsXml().then(() => {
                     this.carica = false;
                 });
             },

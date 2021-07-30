@@ -328,6 +328,7 @@
                 this.switchInserisci = false;
                 this.prova.user_id = this.proveClient.user_id;
                 this.prova.client_id = this.proveClient.id;
+                this.prova.marketing_id = this.proveClient.marketing_id;
                 this.prova.filiale_id = this.proveClient.filiale_id;
                 this.creaNuovaProva(this.prova).then(() => {
                     this.prova.id = this.getNuovaProvaCreata.id;

@@ -66,6 +66,11 @@ const help = () => {
         linkcompleanni: base+'compleanni',
         linkappuntamentioggi: base+'appuntamentiOggiAudio',
         linkappuntamentidomani: base+'appuntamentiDomaniAudio',
+        linkappuntamentilunedi: base+'appuntamentiLunediAudio',
+        linkappuntamentimartedi: base+'appuntamentiMartediAudio',
+        linkappuntamentimercoledi: base+'appuntamentiMercolediAudio',
+        linkappuntamentigiovedi: base+'appuntamentiGiovediAudio',
+        linkappuntamentivenerdi: base+'appuntamentiVenerdiAudio',
         linkvisualizzasituazioneanno: base+'visualizzaSituazioneAnno',
         linkinviasms: 'http://vuexdocker.test/api/inviaSms',
         linklistarichiestaapparecchi: base+'listaProdottiRichiesti',
@@ -76,8 +81,12 @@ const help = () => {
         linkuseragenda: base+'userAgenda',
         linkstatisticherecapitiingressi: base+'ingressiRecapiti',
         linkstatisticherecapitiingressimese: base+'ingressiRecapitiMesi',
+        linkstatistichefatturatocanali: base+'fatturatoCanali',
+        linkstatistichedettagliaudio: base+'dettaglioAudio',
         linkimportclients: base+'importClients',
+        linkimportclientsxml: base+'importClientsFromNoah',
         linklogging: base+'logging',
+        linkprovince: base+'province',
     };
 };
 export default help;

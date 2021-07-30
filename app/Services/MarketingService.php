@@ -27,4 +27,10 @@ class MarketingService
     {
         return Marketing::find($id)->delete();
     }
+
+    public function fatturatoCanali()
+    {
+        return Marketing::withSum('provaFattura', 'tot')
+            ->get();
+    }
 }

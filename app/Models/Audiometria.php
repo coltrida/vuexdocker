@@ -67,6 +67,7 @@ class Audiometria extends Model
     use HasFactory;
 
     protected $table = 'audiometrias';
+    protected $guarded = [];
 
     public function client()
     {

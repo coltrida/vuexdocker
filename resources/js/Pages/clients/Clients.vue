@@ -181,6 +181,8 @@
                     {text: 'cap', width: 70, value: 'cap', class: "indigo white--text"},
                     {text: 'PR', width: 70, value: 'provincia', class: "indigo white--text"},
                     {text: 'telefono', width: 130, value: 'telefono', class: "indigo white--text"},
+                    {text: 'telefono 2', width: 130, value: 'telefono2', class: "indigo white--text"},
+                    {text: 'telefono 3', width: 130, value: 'telefono3', class: "indigo white--text"},
                     {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
                     {text: 'fonte', width: 200, value: 'marketing', class: "indigo white--text"},
                     {text: 'user', width: 130, value: 'user', class: "indigo white--text"},

@@ -1,12 +1,17 @@
 import help from "../../help";
 
 const state = () => ({
-    canali: []
+    canali: [],
+    canaliFatturato: []
 });
 
 const getters = {
     getCanali(state){
         return state.canali;
+    },
+
+    getCanaliFatturato(state){
+        return state.canaliFatturato;
     },
 };
 
@@ -15,6 +20,11 @@ const actions = {
     async fetchCanali({commit}){
         const response = await axios.get(`${help().linkcanali}`);
         commit('fetchCanali', response.data);
+    },
+
+    async fetchCanaliFatturato({commit}){
+        const response = await axios.get(`${help().linkstatistichefatturatocanali}`);
+        commit('fetchCanaliFatturato', response.data);
     },
 
     async addCanale({commit}, newCanale){
@@ -33,6 +43,10 @@ const actions = {
 const mutations = {
     fetchCanali(state, payload){
         state.canali = payload;
+    },
+
+    fetchCanaliFatturato(state, payload){
+        state.canaliFatturato = payload;
     },
 
     addCanale(state, payload){

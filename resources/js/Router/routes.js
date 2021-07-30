@@ -8,6 +8,7 @@ const routes = [
     { path: '/filiali', component: () => import('../Pages/strutture/Filiali'), name: 'filiali' },
     { path: '/agende', component: () => import('../Pages/personale/Agende'), name: 'agende' },
     { path: '/agenda', component: () => import('../Pages/personale/Agenda'), name: 'agenda' },
+    { path: '/calendar', component: () => import('../Pages/personale/Calendar'), name: 'calendar' },
     { path: '/recapiti', component: () => import('../Pages/strutture/Recapiti'), name: 'recapiti' },
     { path: '/clients/:cogRicerca?', component: () => import('../Pages/clients/Clients'), name: 'clients' },
     { path: '/clientsFiliale/:filialeId/:nomRicerca?/:cogRicerca?', component: () => import('../Pages/clients/ClientsFiliale'), name: 'clientsFiliale' },
@@ -18,9 +19,12 @@ const routes = [
     { path: '/inviaSms', component: () => import('../Pages/gestione/InvioSms'), name: 'inviaSms' },
     { path: '/assegnaBudget', component: () => import('../Pages/gestione/AssegnaBudget'), name: 'assegnaBudget' },
     { path: '/statisticheAudioprotesisti', component: () => import('../Pages/statistiche/Audioprotesisti'), name: 'statisticheAudioprotesisti' },
+    { path: '/dettaglioAudioprotesisti', component: () => import('../Pages/statistiche/AudioprotesistiDettaglio'), name: 'statisticheAudioprotesistiDettaglio' },
     { path: '/ingressiRecapiti', component: () => import('../Pages/statistiche/IngRecapiti'), name: 'ingressiRecapiti' },
+    { path: '/fatturatoCanali', component: () => import('../Pages/statistiche/FattCanali'), name: 'fatturatoCanali' },
     { path: '/importaClients', component: () => import('../Pages/clients/Importclients'), name: 'importClients' },
     { path: '/logging', component: () => import('../Pages/gestione/Logging'), name: 'logging' },
+    { path: '/filtri', component: () => import('../Pages/clients/Filtri'), name: 'filtri' },
 ];
 
 export default routes;

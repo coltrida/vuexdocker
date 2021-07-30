@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFatturatisTable extends Migration
+class CreatePezzisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateFatturatisTable extends Migration
      */
     public function up()
     {
-        Schema::create('fatturatis', function (Blueprint $table) {
-            $table->id()->startingValue(1000);
+        Schema::create('pezzis', function (Blueprint $table) {
+            $table->id()->startingValue(3000);
             $table->string('nome')->nullable();
             $table->bigInteger('user_id')->nullable();
             $table->integer('budgetAnno')->nullable();
-            $table->integer('asl')->nullable();
-            $table->integer('binaurale')->nullable();
+            $table->integer('premio')->nullable();
+            $table->integer('stipendio')->nullable();
             $table->integer('provvigione')->nullable();
             $table->integer('gennaio')->nullable();
             $table->integer('febbraio')->nullable();
@@ -44,6 +44,6 @@ class CreateFatturatisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fatturatis');
+        Schema::dropIfExists('pezzis');
     }
 }

@@ -3,7 +3,11 @@
         <h2>Statistiche Audioprotesisti</h2>
         <v-container>
             <div v-for="audio in getAudioConBgt" :key="audio.id" class="mb-5">
-                <h2>{{audio.name}}</h2>
+                <div style="display: flex; align-items: center; justify-content: space-between">
+                    <h2>{{audio.name}}</h2>
+                    <h4>Media Vendita {{audio.valori[1].budgetAnno / audio.valori[3].budgetAnno}}</h4>
+                </div>
+
                 <v-data-table
                     :headers="headers"
                     :items="audio.valori"

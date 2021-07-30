@@ -23,6 +23,12 @@
                         <v-list-item-title>agende</v-list-item-title>
                     </v-list-item>
                 </router-link>
+
+                <router-link :to="{ name: 'calendar'}">
+                    <v-list-item>
+                        <v-list-item-title>Calendar</v-list-item-title>
+                    </v-list-item>
+                </router-link>
             </v-list>
         </v-menu>
 

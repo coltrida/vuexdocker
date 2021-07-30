@@ -2135,7 +2135,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("h2", { staticClass: "mt-4" }, [_vm._v("Finalizzati:")]),
+            _c("h2", { staticClass: "mt-6" }, [_vm._v("Finalizzati:")]),
             _vm._v(" "),
             _c(
               "div",
@@ -2240,7 +2240,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("h2", { staticClass: "mt-4" }, [_vm._v("Resi:")]),
+            _c("h2", { staticClass: "mt-6" }, [_vm._v("Resi:")]),
             _vm._v(" "),
             _c(
               "div",
@@ -2364,7 +2364,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("h2", { staticClass: "mt-4" }, [_vm._v("Appuntamenti Domani:")]),
+            _c("h2", { staticClass: "mt-6" }, [_vm._v("Appuntamenti Domani:")]),
             _vm._v(" "),
             _c(
               "div",
@@ -2381,7 +2381,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("h2", { staticClass: "mt-4" }, [_vm._v("Complenni:")]),
+            _c("h2", { staticClass: "mt-6" }, [_vm._v("Complenni:")]),
             _vm._v(" "),
             _c(
               "div",

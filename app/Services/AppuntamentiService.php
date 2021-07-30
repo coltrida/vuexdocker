@@ -33,6 +33,41 @@ class AppuntamentiService
         }])->find($idAudio)->appuntamentiDomani;
     }
 
+    public function lunedi($idAudio)
+    {
+        return User::with(['appuntamentiLunedi' => function($q){
+            $q->with('client');
+        }])->find($idAudio)->appuntamentiLunedi;
+    }
+
+    public function martedi($idAudio)
+    {
+        return User::with(['appuntamentiMartedi' => function($q){
+            $q->with('client');
+        }])->find($idAudio)->appuntamentiMartedi;
+    }
+
+    public function mercoledi($idAudio)
+    {
+        return User::with(['appuntamentiMercoledi' => function($q){
+            $q->with('client');
+        }])->find($idAudio)->appuntamentiMercoledi;
+    }
+
+    public function giovedi($idAudio)
+    {
+        return User::with(['appuntamentiGiovedi' => function($q){
+            $q->with('client');
+        }])->find($idAudio)->appuntamentiGiovedi;
+    }
+
+    public function venerdi($idAudio)
+    {
+        return User::with(['appuntamentiVenerdi' => function($q){
+            $q->with('client');
+        }])->find($idAudio)->appuntamentiVenerdi;
+    }
+
     public function addAppuntamento($request)
     {
         $newAppuntamento = new Appuntamento();
@@ -52,7 +87,7 @@ class AppuntamentiService
         $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$request->giorno.' alle ore '.$request->orario.' presso '.$dove;
 
         $log = new LoggingService();
-        $log->scriviLog($newAppuntamento, $utente, $propieta, $testo);
+        $log->scriviLog($newAppuntamento, $utente, $utente->name, $propieta, $testo);
 
         return Appuntamento::with('filiale', 'recapito')->find($newAppuntamento->id);
 
@@ -66,7 +101,7 @@ class AppuntamentiService
         $testo = $utente->name.' ha eliminato un appuntamento con id = '.$id.' per il giorno '.$appuntamento->giorno.' delle ore '.$appuntamento->orario;
 
         $log = new LoggingService();
-        $log->scriviLog($appuntamento, $utente, $propieta, $testo);
+        $log->scriviLog($appuntamento, $utente, $utente->name, $propieta, $testo);
 
         return $appuntamento->delete();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Marketing whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Marketing whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $provaFattura
+ * @property-read int|null $prova_fattura_count
  */
 class Marketing extends Model
 {
@@ -32,5 +35,11 @@ class Marketing extends Model
     public function clients()
     {
         return $this->hasMany(Client::class);
+    }
+
+    public function provaFattura()
+    {
+        $anno = Carbon::now()->year;
+        return $this->hasMany(Prova::class)->where([ ['stato_id', 4], ['anno_fine', $anno] ]);
     }
 }

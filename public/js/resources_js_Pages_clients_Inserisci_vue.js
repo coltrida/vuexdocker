@@ -230,6 +230,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -506,7 +526,7 @@ var render = function() {
             [
               _c(
                 "v-col",
-                { attrs: { cols: "2", sm: "2" } },
+                { attrs: { cols: "1", sm: "1" } },
                 [
                   _c("v-text-field", {
                     attrs: { label: "cap" },
@@ -542,7 +562,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "3", sm: "3" } },
+                { attrs: { cols: "2", sm: "2" } },
                 [
                   _c("v-text-field", {
                     attrs: { label: "telefono" },
@@ -562,12 +582,48 @@ var render = function() {
                 "v-col",
                 { attrs: { cols: "2", sm: "2" } },
                 [
+                  _c("v-text-field", {
+                    attrs: { label: "telefono 2" },
+                    model: {
+                      value: _vm.newClient.telefono2,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newClient, "telefono2", $$v)
+                      },
+                      expression: "newClient.telefono2"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "2", sm: "2" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "telefono 3" },
+                    model: {
+                      value: _vm.newClient.telefono3,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newClient, "telefono3", $$v)
+                      },
+                      expression: "newClient.telefono3"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "1", sm: "1" } },
+                [
                   _c("v-select", {
                     attrs: {
                       "item-value": "id",
                       "item-text": "nome",
                       items: _vm.getTipologie,
-                      label: "tipologia"
+                      label: "tipo"
                     },
                     model: {
                       value: _vm.newClient.tipologia_id,
@@ -583,7 +639,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "4", sm: "4" } },
+                { attrs: { cols: "3", sm: "3" } },
                 [
                   _c("v-text-field", {
                     attrs: { label: "mail" },

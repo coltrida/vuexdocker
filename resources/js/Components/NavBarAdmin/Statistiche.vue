@@ -30,6 +30,8 @@
         data: () => ({
             items: [
                 { title: 'Fatt. Audio', link: 'statisticheAudioprotesisti' },
+                { title: 'Dettaglio Audio', link: 'statisticheAudioprotesistiDettaglio' },
+                { title: 'Fatt. Canali', link: 'fatturatoCanali' },
                 { title: 'Ing. Recapiti', link: 'ingressiRecapiti' },
             ],
         }),

@@ -94,6 +94,7 @@ Route::get('/productSwitchArrivato/{id}', [ProductController::class, 'switchArri
 
 // ---------------- client -------------------------
 Route::get('/clients', [ClientController::class, 'index']);
+Route::get('/province', [ClientController::class, 'province']);
 Route::get('/clients/{id}', [ClientController::class, 'cliente']);
 Route::get('/compleanni/{idAudio}', [ClientController::class, 'compleanni']);
 Route::get('/clientsFiliale/{idFiliale}', [ClientController::class, 'clientsFiliale']);
@@ -135,11 +136,18 @@ Route::post('/salvaFattura', [ProvaController::class, 'salvaFattura']);
 Route::get('/appuntamentiCliente/{idClient}', [AppuntamentiController::class, 'index']);
 Route::get('/appuntamentiOggiAudio/{idAudio}', [AppuntamentiController::class, 'oggi']);
 Route::get('/appuntamentiDomaniAudio/{idAudio}', [AppuntamentiController::class, 'domani']);
+Route::get('/appuntamentiLunediAudio/{idAudio}', [AppuntamentiController::class, 'lunedi']);
+Route::get('/appuntamentiMartediAudio/{idAudio}', [AppuntamentiController::class, 'martedi']);
+Route::get('/appuntamentiMercolediAudio/{idAudio}', [AppuntamentiController::class, 'mercoledi']);
+Route::get('/appuntamentiGiovediAudio/{idAudio}', [AppuntamentiController::class, 'giovedi']);
+Route::get('/appuntamentiVenerdiAudio/{idAudio}', [AppuntamentiController::class, 'venerdi']);
 Route::delete('/appuntamentiCliente/{id}/{idUser}', [AppuntamentiController::class, 'elimina']);
 Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
 
 // ----------------- statistiche -----------------------
 Route::get('/situazioneAnno', [UserController::class, 'situazioneAnno']);
+Route::get('/dettaglioAudio', [UserController::class, 'dettaglioAudio']);
 Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSituazioneAnno']);
 Route::get('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
 Route::get('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiMesi']);
+Route::get('/fatturatoCanali', [MarketingController::class, 'fatturatoCanali']);

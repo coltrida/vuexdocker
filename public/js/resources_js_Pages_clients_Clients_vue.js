@@ -1313,6 +1313,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.switchInserisci = false;
       this.prova.user_id = this.proveClient.user_id;
       this.prova.client_id = this.proveClient.id;
+      this.prova.marketing_id = this.proveClient.marketing_id;
       this.prova.filiale_id = this.proveClient.filiale_id;
       this.creaNuovaProva(this.prova).then(function () {
         _this.prova.id = _this.getNuovaProvaCreata.id;
@@ -1638,6 +1639,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'telefono',
         width: 130,
         value: 'telefono',
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono 2',
+        width: 130,
+        value: 'telefono2',
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono 3',
+        width: 130,
+        value: 'telefono3',
         "class": "indigo white--text"
       }, {
         text: 'tipologia',

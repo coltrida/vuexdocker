@@ -47,8 +47,8 @@
 
             <v-row>
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="1"
+                    sm="1"
                 >
                     <v-text-field
                         v-model="newClient.cap"
@@ -67,8 +67,8 @@
                 </v-col>
 
                 <v-col
-                    cols="3"
-                    sm="3"
+                    cols="2"
+                    sm="2"
                 >
                     <v-text-field
                         v-model="newClient.telefono"
@@ -80,18 +80,38 @@
                     cols="2"
                     sm="2"
                 >
+                    <v-text-field
+                        v-model="newClient.telefono2"
+                        label="telefono 2"
+                    ></v-text-field>
+                </v-col>
+
+                <v-col
+                    cols="2"
+                    sm="2"
+                >
+                    <v-text-field
+                        v-model="newClient.telefono3"
+                        label="telefono 3"
+                    ></v-text-field>
+                </v-col>
+
+                <v-col
+                    cols="1"
+                    sm="1"
+                >
                     <v-select
                         v-model="newClient.tipologia_id"
                         item-value="id"
                         item-text="nome"
                         :items="getTipologie"
-                        label="tipologia"
+                        label="tipo"
                     ></v-select>
                 </v-col>
 
                 <v-col
-                    cols="4"
-                    sm="4"
+                    cols="3"
+                    sm="3"
                 >
                     <v-text-field
                         v-model="newClient.mail"

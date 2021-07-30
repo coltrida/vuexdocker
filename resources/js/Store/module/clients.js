@@ -3,6 +3,7 @@ import help from "../../help";
 const state = () => ({
     clients: [],
     compleanni: [],
+    province: [],
     client: {}
 });
 
@@ -19,12 +20,21 @@ const getters = {
         return state.client;
     },
 
+    getProvince(state){
+        return state.province;
+    },
+
 };
 
 const actions = {
     async fetchClients({commit}){
         const response = await axios.get(`${help().linkclients}`);
         commit('fetchClients', response.data.data);
+    },
+
+    async fetchProvince({commit}){
+        const response = await axios.get(`${help().linkprovince}`);
+        commit('fetchProvince', response.data);
     },
 
     async fetchCompleanni({commit}, idAudio){
@@ -66,11 +76,19 @@ const actions = {
     async importClients(){
         await axios.get(`${help().linkimportclients}`);
     },
+
+    async importClientsXml(){
+        await axios.get(`${help().linkimportclientsxml}`);
+    },
 };
 
 const mutations = {
     fetchClients(state, payload){
         state.clients = payload;
+    },
+
+    fetchProvince(state, payload){
+        state.province = payload;
     },
 
     fetchCompleanni(state, payload){

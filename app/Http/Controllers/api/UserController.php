@@ -69,6 +69,11 @@ class UserController extends Controller
         $userService->situazioneAnno();
     }
 
+    public function dettaglioAudio(UserService $userService)
+    {
+        return $userService->dettaglioAudio();
+    }
+
     public function visualizzaSituazioneAnno(UserService $userService)
     {
         return $userService->visualizzaSituazioneAnno();
