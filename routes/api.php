@@ -95,11 +95,13 @@ Route::get('/productSwitchArrivato/{id}', [ProductController::class, 'switchArri
 // ---------------- client -------------------------
 Route::get('/clients', [ClientController::class, 'index']);
 Route::get('/province', [ClientController::class, 'province']);
+Route::get('/cittaByProvincia/{provincia}', [ClientController::class, 'cittaByProvincia']);
 Route::get('/clients/{id}', [ClientController::class, 'cliente']);
 Route::get('/compleanni/{idAudio}', [ClientController::class, 'compleanni']);
 Route::get('/clientsFiliale/{idFiliale}', [ClientController::class, 'clientsFiliale']);
 Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
 Route::post('/addClient', [ClientController::class, 'aggiungi']);
+Route::post('/ricercaNominativi', [ClientController::class, 'ricercaNominativi']);
 Route::post('/modificaClient', [ClientController::class, 'modifica']);
 Route::post('/inviaSms', [ClientController::class, 'inviaSms']);
 Route::get('/importClients', [ClientController::class, 'importClients']);

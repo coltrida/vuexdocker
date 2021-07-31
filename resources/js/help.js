@@ -87,6 +87,8 @@ const help = () => {
         linkimportclientsxml: base+'importClientsFromNoah',
         linklogging: base+'logging',
         linkprovince: base+'province',
+        linkcittabyprovincia: base+'cittaByProvincia',
+        linkricercanominativi: base+'ricercaNominativi',
     };
 };
 export default help;

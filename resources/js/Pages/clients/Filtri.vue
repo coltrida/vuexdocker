@@ -21,9 +21,21 @@
                     sm="2"
                 >
                     <v-select
+                        @change="caricaCitta()"
                         v-model="ricerca.provincia"
                         :items="getProvince"
                         label="Prov."
+                    ></v-select>
+                </v-col>
+
+                <v-col
+                    cols="2"
+                    sm="2"
+                >
+                    <v-select
+                        v-model="ricerca.citta"
+                        :items="getCittaByProvincia"
+                        label="Città"
                     ></v-select>
                 </v-col>
             </v-row>
@@ -35,8 +47,7 @@
     <div>
         <v-data-table
             :headers="headers"
-            :items="getClients"
-            hide-default-footer
+            :items="getRicercaNominativi"
             class="elevation-1 mt-3"
         >
         </v-data-table>
@@ -56,7 +67,6 @@
             return {
                 ricerca:{},
                 headers: [
-                    {text: 'Actions', width: 150, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
                     {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
@@ -82,22 +92,29 @@
             ...mapActions('clients', {
                 fetchClients: 'fetchClients',
                 fetchProvince: 'fetchProvince',
+                fetchCittaByProvincia: 'fetchCittaByProvincia',
+                ricercaNominativi: 'ricercaNominativi',
             }),
 
             ...mapActions('tipologie', {
                 fetchTipologie:'fetchTipologie',
             }),
 
-            trova(){
+            caricaCitta(){
+                this.fetchCittaByProvincia(this.ricerca.provincia);
+            },
 
+            trova(){
+                this.ricercaNominativi(this.ricerca)
             }
 
         },
 
         computed: {
             ...mapGetters('clients', {
-                getClients: 'getClients',
+                getRicercaNominativi: 'getRicercaNominativi',
                 getProvince: 'getProvince',
+                getCittaByProvincia: 'getCittaByProvincia',
             }),
 
             ...mapGetters('tipologie', {

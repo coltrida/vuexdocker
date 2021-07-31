@@ -25,6 +25,11 @@ class ClientController extends Controller
         return $clientService->province();
     }
 
+    public function cittaByProvincia($provincia, ClientService $clientService)
+    {
+        return $clientService->cittaByProvincia($provincia);
+    }
+
     public function cliente($id, ClientService $clientService)
     {
         return new ClientResource($clientService->cliente($id));
@@ -43,6 +48,11 @@ class ClientController extends Controller
     public function aggiungi(Request $request, ClientService $clientService)
     {
         return $clientService->aggiungi($request);
+    }
+
+    public function ricercaNominativi(Request $request, ClientService $clientService)
+    {
+        return ClientResource::collection($clientService->ricercaNominativi($request));
     }
 
     public function modifica(Request $request, ClientService $clientService)
@@ -83,8 +93,6 @@ class ClientController extends Controller
     public function importClientsFromNoah(ClientService $clientService)
     {
         $clientService->importClientsFromNoah();
-
-
     }
 
 }

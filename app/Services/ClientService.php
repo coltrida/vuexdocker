@@ -233,29 +233,31 @@ class ClientService
         return Client::orderBy('provincia')->pluck('provincia');
     }
 
+    public function cittaByProvincia($provincia)
+    {
+        return Client::where('provincia', $provincia)->orderBy('citta')->pluck('citta');
+    }
+
     public function importClientsFromNoah()
     {
-        $xmlDataString = file_get_contents(storage_path('app/public/gggg.xml'));
+        $xmlDataString = file_get_contents(storage_path('app/public/file.xml'));
         //dd($xmlDataString);
-        $xmlObject = simplexml_load_string($xmlDataString, $class_name = "SimpleXMLElement", $options = 0, $ns = "pt", $is_prefix = true);
+        //$xmlObject = simplexml_load_string($xmlDataString, $class_name = "SimpleXMLElement", $options = 0, $ns = "pt", $is_prefix = true);
 
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
-
-        //dd($xml->Patient->Patient->Actions->Action->PublicData->children());
-        //dd(count($xml->Patient));
 
         foreach ($xml->Patient as $ele){
             $client = Client::firstOrCreate(
                 [
-                    'nome' => $ele->Patient->FirstName,
-                    'cognome' => $ele->Patient->LastName,
-                    'indirizzo' => $ele->Patient->Address1 ? $ele->Patient->Address1 : null,
-                    'cap' => $ele->Patient->Zip ? $ele->Patient->Zip : null,
+                    'nome' => trim(Str::upper($ele->Patient->FirstName)),
+                    'cognome' => trim(Str::upper($ele->Patient->LastName)),
+                    'indirizzo' => $ele->Patient->Address1 ? trim(Str::upper($ele->Patient->Address1)) : null,
+                    'cap' => $ele->Patient->Zip ? trim(Str::upper($ele->Patient->Zip)) : null,
                     'telefono' => $ele->Patient->HomePhone ? $ele->Patient->HomePhone : null,
                     'telefono2' => $ele->Patient->WorkPhone ? $ele->Patient->WorkPhone : null,
                     'telefono3' => $ele->Patient->MobilePhone ? $ele->Patient->MobilePhone : null,
-                    'provincia' => $ele->Patient->Other1 ? $ele->Patient->Other1 : null,
-                    'citta' => $ele->Patient->City ? $ele->Patient->City : null,
+                    'provincia' => $ele->Patient->Other1 ? trim(Str::upper($ele->Patient->Other1)) : null,
+                    'citta' => $ele->Patient->City ? trim(Str::upper($ele->Patient->City)) : null,
                     'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
                     'datanascita' => $ele->Patient->DateofBirth ? $ele->Patient->DateofBirth : null,
                     'tipologia_id' => 2,
@@ -297,10 +299,8 @@ class ClientService
                 ${'s'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
             }
 
-            //dd((int)$d1000);
-
             $audiom = Audiometria::where('client_id', $client->id)->firstOrNew();
-//dd($audiom->client_id);
+
             if(!isset($audiom->client_id)){
                 $audiom->client_id = $client->id;
                 $audiom->_125d = (int)$d125 ? (int)$d125 : (int)$d250;
@@ -329,42 +329,27 @@ class ClientService
             }
 
         }
-/*
-        $json = json_encode($xmlObject);
+    }
 
-        //dd($json);
+    public function ricercaNominativi($request)
+    {
+        $condizioni = [];
+        if ($request->tipo){
+            array_push($condizioni, ['tipologia_id', $request->tipo]);
+        }
+        if ($request->provincia){
+            array_push($condizioni, ['provincia', $request->provincia]);
+        }
+        if ($request->citta){
+            array_push($condizioni, ['citta', $request->citta]);
+        }
+        //$tipo = $request->tipo ? $request->tipo : '*';
+        //$provincia = $request->provincia ? $request->provincia : '*';
+        //$citta = $request->citta ? $request->citta : '*';
 
-        $phpDataArray = json_decode($json, true);
-        // dd($phpDataArray);
-        if(count($phpDataArray['Patient']) > 0){
-            //  $dataArray = array();
-            $idUser = $phpDataArray['Patient'][0]['Patient']['CreatedBy'];
-            //dd($idUser);
-            $filialeId = User::find($idUser)->filiale[0]->id;
-            //dd($filialeId);
-            foreach($phpDataArray['Patient'] as $index => $data){
-
-                // dd($phpDataArray['Patient'][1]);
-
-                Client::firstOrCreate(
-                    [
-                        'nome' => $data['Patient']['FirstName'],
-                        'cognome' => $data['Patient']['LastName'],
-                        'indirizzo' => $data['Patient']['Address1'] ? $data['Patient']['Address1'] : null,
-                        'cap' => $data['Patient']['Zip'] ? $data['Patient']['Zip'] : null,
-                        'telefono' => $data['Patient']['HomePhone'] ? $data['Patient']['HomePhone'] : null,
-                        'telefono2' => $data['Patient']['WorkPhone'] ? $data['Patient']['WorkPhone'] : null,
-                        'telefono3' => $data['Patient']['MobilePhone'] ? $data['Patient']['MobilePhone'] : null,
-                        'provincia' => $data['Patient']['Other1'] ? $data['Patient']['Other1'] : null,
-                        'citta' => $data['Patient']['City'] ? $data['Patient']['City'] : null,
-                        'user_id' => $data['Patient']['CreatedBy'],
-                        'datanascita' => isset($data['Patient']['DateofBirth']) ? $data['Patient']['DateofBirth'] : null,
-                        'tipologia_id' => 2,
-                        'filiale_id' => $filialeId,
-                    ]
-                );
-
-            }
-        }*/
+        return Client::with('tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')
+            ->where($condizioni)
+            ->orderBy('cognome')->get();
     }
 }

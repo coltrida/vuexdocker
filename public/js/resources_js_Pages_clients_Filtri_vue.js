@@ -67,6 +67,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Clients",
@@ -74,12 +85,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       ricerca: {},
       headers: [{
-        text: 'Actions',
-        width: 150,
-        value: 'actions',
-        sortable: false,
-        "class": "indigo white--text"
-      }, {
         text: 'Cognome',
         width: 160,
         align: 'start',
@@ -149,15 +154,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
     fetchClients: 'fetchClients',
-    fetchProvince: 'fetchProvince'
+    fetchProvince: 'fetchProvince',
+    fetchCittaByProvincia: 'fetchCittaByProvincia',
+    ricercaNominativi: 'ricercaNominativi'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('tipologie', {
     fetchTipologie: 'fetchTipologie'
   })), {}, {
-    trova: function trova() {}
+    caricaCitta: function caricaCitta() {
+      this.fetchCittaByProvincia(this.ricerca.provincia);
+    },
+    trova: function trova() {
+      this.ricercaNominativi(this.ricerca);
+    }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
-    getClients: 'getClients',
-    getProvince: 'getProvince'
+    getRicercaNominativi: 'getRicercaNominativi',
+    getProvince: 'getProvince',
+    getCittaByProvincia: 'getCittaByProvincia'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('tipologie', {
     getTipologie: 'getTipologie'
   }))
@@ -290,12 +303,35 @@ var render = function() {
             [
               _c("v-select", {
                 attrs: { items: _vm.getProvince, label: "Prov." },
+                on: {
+                  change: function($event) {
+                    return _vm.caricaCitta()
+                  }
+                },
                 model: {
                   value: _vm.ricerca.provincia,
                   callback: function($$v) {
                     _vm.$set(_vm.ricerca, "provincia", $$v)
                   },
                   expression: "ricerca.provincia"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getCittaByProvincia, label: "Città" },
+                model: {
+                  value: _vm.ricerca.citta,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "citta", $$v)
+                  },
+                  expression: "ricerca.citta"
                 }
               })
             ],
@@ -316,11 +352,7 @@ var render = function() {
         [
           _c("v-data-table", {
             staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.getClients,
-              "hide-default-footer": ""
-            }
+            attrs: { headers: _vm.headers, items: _vm.getRicercaNominativi }
           })
         ],
         1

@@ -2,8 +2,10 @@ import help from "../../help";
 
 const state = () => ({
     clients: [],
+    ricercaNominativi: [],
     compleanni: [],
     province: [],
+    cittaByProvincia: [],
     client: {}
 });
 
@@ -24,6 +26,14 @@ const getters = {
         return state.province;
     },
 
+    getCittaByProvincia(state){
+        return state.cittaByProvincia;
+    },
+
+    getRicercaNominativi(state){
+        return state.ricercaNominativi;
+    },
+
 };
 
 const actions = {
@@ -35,6 +45,11 @@ const actions = {
     async fetchProvince({commit}){
         const response = await axios.get(`${help().linkprovince}`);
         commit('fetchProvince', response.data);
+    },
+
+    async fetchCittaByProvincia({commit}, provincia){
+        const response = await axios.get(`${help().linkcittabyprovincia}`+'/'+provincia);
+        commit('fetchCittaByProvincia', response.data);
     },
 
     async fetchCompleanni({commit}, idAudio){
@@ -50,6 +65,12 @@ const actions = {
     async fetchClient({commit}, id){
         const response = await axios.get(`${help().linkclients}`+'/'+id);
         commit('fetchClient', response.data.data);
+    },
+
+    async ricercaNominativi({commit}, payload){
+        console.log(payload);
+        const response = await axios.post(`${help().linkricercanominativi}`, payload);
+        commit('ricercaNominativi', response.data.data);
     },
 
     async addClient({commit}, payload){
@@ -87,8 +108,16 @@ const mutations = {
         state.clients = payload;
     },
 
+    ricercaNominativi(state, payload){
+        state.ricercaNominativi = payload;
+    },
+
     fetchProvince(state, payload){
         state.province = payload;
+    },
+
+    fetchCittaByProvincia(state, payload){
+        state.cittaByProvincia = payload;
     },
 
     fetchCompleanni(state, payload){
