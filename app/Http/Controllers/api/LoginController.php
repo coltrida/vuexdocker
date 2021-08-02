@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Services\LoginService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,11 @@ class LoginController extends Controller
     public function login(LoginRequest $request, LoginService $loginService)
     {
         return $loginService->login($request);
+    }
+
+    public function register(Request $request, LoginService $loginService)
+    {
+        return $loginService->register($request);
     }
 
     public function logout()

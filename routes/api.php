@@ -20,6 +20,7 @@ use App\Http\Controllers\api\UserController;
 
 
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [LoginController::class, 'register']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // ---------------- user -------------------------

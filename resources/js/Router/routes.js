@@ -1,6 +1,7 @@
 const routes = [
     { path: '/', component: () => import('../Pages/home/Home'), name: 'home' },
     { path: '/login', component: () => import('../Pages/login/Login'), name: 'login' },
+    { path: '/register', component: () => import('../Pages/login/Register'), name: 'register' },
     { path: '/marketing', component: () => import('../Pages/marketing/Marketing'), name: 'marketing' },
     { path: '/listino', component: () => import('../Pages/fornitori/Listino'), name: 'listino' },
     { path: '/fornitori', component: () => import('../Pages/fornitori/Fornitori'), name: 'fornitori' },

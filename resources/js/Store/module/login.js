@@ -43,6 +43,15 @@ const actions = {
         commit('login', response.data);
     },
 
+    async register({commit}, payload){
+        const response = await axios.post(`${help().linkregister}`, {
+            'email': payload.email,
+            'password': payload.password,
+            'repeatpassword': payload.password,
+        });
+        commit('login', response.data);
+    },
+
     async logout({commit}){
         await axios.get(`${help().linklogout}`);
         commit('logout');

@@ -1,6 +1,9 @@
 <template>
     <div>
         <h2>Inserisci Cliente</h2>
+        <v-form ref="form"
+                v-model="valid"
+                lazy-validation>
         <v-container>
 
             <v-row>
@@ -10,7 +13,9 @@
                 >
                     <v-text-field
                         v-model="newClient.nome"
-                        label="Nome"
+                        :rules="nomeRules"
+                        label="Nome*"
+                        required
                     ></v-text-field>
                 </v-col>
 
@@ -20,7 +25,9 @@
                 >
                     <v-text-field
                         v-model="newClient.cognome"
-                        label="Cognome"
+                        label="Cognome*"
+                        :rules="cognomeRules"
+                        required
                     ></v-text-field>
                 </v-col>
 
@@ -30,7 +37,9 @@
                 >
                     <v-text-field
                         v-model="newClient.indirizzo"
-                        label="Indirizzo"
+                        label="Indirizzo*"
+                        :rules="indirizzoRules"
+                        required
                     ></v-text-field>
                 </v-col>
 
@@ -40,7 +49,9 @@
                 >
                     <v-text-field
                         v-model="newClient.citta"
-                        label="Citta"
+                        label="Citta*"
+                        :rules="cittaRules"
+                        required
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -62,7 +73,9 @@
                 >
                     <v-text-field
                         v-model="newClient.provincia"
-                        label="PR"
+                        label="PR*"
+                        :rules="provinciaRules"
+                        required
                     ></v-text-field>
                 </v-col>
 
@@ -72,7 +85,9 @@
                 >
                     <v-text-field
                         v-model="newClient.telefono"
-                        label="telefono"
+                        label="telefono*"
+                        :rules="telefonoRules"
+                        required
                     ></v-text-field>
                 </v-col>
 
@@ -105,7 +120,9 @@
                         item-value="id"
                         item-text="nome"
                         :items="getTipologie"
-                        label="tipo"
+                        label="tipo*"
+                        :rules="tipoRules"
+                        required
                     ></v-select>
                 </v-col>
 
@@ -177,7 +194,9 @@
                         item-value="id"
                         item-text="name"
                         :items="getCanali"
-                        label="fonte"
+                        label="fonte*"
+                        :rules="fonteRules"
+                        required
                     ></v-select>
                 </v-col>
 
@@ -191,7 +210,7 @@
                         :readonly="lettura"
                         item-text="name"
                         :items="getAudio"
-                        label="Audio"
+                        label="Audio*"
                     ></v-select>
                 </v-col>
 
@@ -204,7 +223,9 @@
                         item-value="id"
                         item-text="nome"
                         :items="getFilialiPerInserimento"
-                        label="Filiale"
+                        label="Filiale*"
+                        :rules="filialeRules"
+                        required
                     ></v-select>
                 </v-col>
 
@@ -231,6 +252,7 @@
             </v-btn>
 
         </v-container>
+        </v-form>
     </div>
 
 </template>
@@ -243,9 +265,19 @@
 
         data(){
             return {
+                valid: true,
                 newClient:{},
                 lettura: false,
-                menu:false
+                menu:false,
+                nomeRules: [ v => !!v || 'il nome è obbligatorio'],
+                cognomeRules: [ v => !!v || 'il cognome è obbligatorio'],
+                indirizzoRules: [ v => !!v || "l'indirizzo è obbligatorio"],
+                cittaRules: [ v => !!v || "la città è obbligatoria"],
+                provinciaRules: [ v => !!v || "la provincia è obbligatoria"],
+                telefonoRules: [ v => !!v || "il telefono è obbligatorio"],
+                tipoRules: [ v => !!v || "il tipo è obbligatorio"],
+                fonteRules: [ v => !!v || "la fonte è obbligatoria"],
+                filialeRules: [ v => !!v || "la filiale è obbligatoria"],
             }
         },
 
@@ -308,6 +340,7 @@
             },
 
             aggiungiModifica(){
+                this.$refs.form.validate();
                 let idFiliale = this.newClient.filiale_id;
                 if (this.getClient.nome) {
                     this.newClient.id = this.getClient.id;

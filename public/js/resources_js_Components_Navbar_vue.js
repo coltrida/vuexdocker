@@ -759,6 +759,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2844,9 +2846,18 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c("v-btn", { attrs: { text: "" } }, [
-                    _vm._v("\n                Register\n            ")
-                  ])
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "register" } } },
+                    [
+                      _c("v-btn", { attrs: { text: "" } }, [
+                        _vm._v(
+                          "\n                    Register\n                "
+                        )
+                      ])
+                    ],
+                    1
+                  )
                 ],
                 1
               )

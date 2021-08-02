@@ -9,6 +9,7 @@ const help = () => {
         linkaddcanale: 'http://localhost/api/addCanale',*/
 
         linklogin: base+'login',
+        linkregister: base+'register',
         linklogout: base+'logout',
         linkcanali: base+'canali',
         linkaddcanale: base+'addCanale',

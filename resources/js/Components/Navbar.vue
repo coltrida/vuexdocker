@@ -49,9 +49,11 @@
                     </v-btn>
                 </router-link>
 
-                <v-btn text>
-                    Register
-                </v-btn>
+                <router-link :to="{ name: 'register'}">
+                    <v-btn text>
+                        Register
+                    </v-btn>
+                </router-link>
             </div>
 
 

@@ -255,14 +255,64 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
   data: function data() {
     return {
+      valid: true,
       newClient: {},
       lettura: false,
-      menu: false
+      menu: false,
+      nomeRules: [function (v) {
+        return !!v || 'il nome è obbligatorio';
+      }],
+      cognomeRules: [function (v) {
+        return !!v || 'il cognome è obbligatorio';
+      }],
+      indirizzoRules: [function (v) {
+        return !!v || "l'indirizzo è obbligatorio";
+      }],
+      cittaRules: [function (v) {
+        return !!v || "la città è obbligatoria";
+      }],
+      provinciaRules: [function (v) {
+        return !!v || "la provincia è obbligatoria";
+      }],
+      telefonoRules: [function (v) {
+        return !!v || "il telefono è obbligatorio";
+      }],
+      tipoRules: [function (v) {
+        return !!v || "il tipo è obbligatorio";
+      }],
+      fonteRules: [function (v) {
+        return !!v || "la fonte è obbligatoria";
+      }],
+      filialeRules: [function (v) {
+        return !!v || "la filiale è obbligatoria";
+      }]
     };
   },
   mounted: function mounted() {
@@ -317,6 +367,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     aggiungiModifica: function aggiungiModifica() {
       var _this3 = this;
 
+      this.$refs.form.validate();
       var idFiliale = this.newClient.filiale_id;
 
       if (this.getClient.nome) {
@@ -478,352 +529,109 @@ var render = function() {
       _c("h2", [_vm._v("Inserisci Cliente")]),
       _vm._v(" "),
       _c(
-        "v-container",
+        "v-form",
+        {
+          ref: "form",
+          attrs: { "lazy-validation": "" },
+          model: {
+            value: _vm.valid,
+            callback: function($$v) {
+              _vm.valid = $$v
+            },
+            expression: "valid"
+          }
+        },
         [
           _c(
-            "v-row",
+            "v-container",
             [
               _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Nome" },
-                    model: {
-                      value: _vm.newClient.nome,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "nome", $$v)
-                      },
-                      expression: "newClient.nome"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Cognome" },
-                    model: {
-                      value: _vm.newClient.cognome,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "cognome", $$v)
-                      },
-                      expression: "newClient.cognome"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Indirizzo" },
-                    model: {
-                      value: _vm.newClient.indirizzo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "indirizzo", $$v)
-                      },
-                      expression: "newClient.indirizzo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Citta" },
-                    model: {
-                      value: _vm.newClient.citta,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "citta", $$v)
-                      },
-                      expression: "newClient.citta"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "cap" },
-                    model: {
-                      value: _vm.newClient.cap,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "cap", $$v)
-                      },
-                      expression: "newClient.cap"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "PR" },
-                    model: {
-                      value: _vm.newClient.provincia,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "provincia", $$v)
-                      },
-                      expression: "newClient.provincia"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "telefono" },
-                    model: {
-                      value: _vm.newClient.telefono,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "telefono", $$v)
-                      },
-                      expression: "newClient.telefono"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "telefono 2" },
-                    model: {
-                      value: _vm.newClient.telefono2,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "telefono2", $$v)
-                      },
-                      expression: "newClient.telefono2"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "telefono 3" },
-                    model: {
-                      value: _vm.newClient.telefono3,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "telefono3", $$v)
-                      },
-                      expression: "newClient.telefono3"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "nome",
-                      items: _vm.getTipologie,
-                      label: "tipo"
-                    },
-                    model: {
-                      value: _vm.newClient.tipologia_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "tipologia_id", $$v)
-                      },
-                      expression: "newClient.tipologia_id"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "mail" },
-                    model: {
-                      value: _vm.newClient.mail,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "mail", $$v)
-                      },
-                      expression: "newClient.mail"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
+                "v-row",
                 [
                   _c(
-                    "v-menu",
-                    {
-                      ref: "menu",
-                      attrs: {
-                        "close-on-content-click": false,
-                        "return-value": _vm.newClient.datanascita,
-                        transition: "scale-transition",
-                        "offset-y": "",
-                        "min-width": "auto"
-                      },
-                      on: {
-                        "update:returnValue": function($event) {
-                          return _vm.$set(_vm.newClient, "datanascita", $event)
-                        },
-                        "update:return-value": function($event) {
-                          return _vm.$set(_vm.newClient, "datanascita", $event)
-                        }
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "activator",
-                          fn: function(ref) {
-                            var on = ref.on
-                            var attrs = ref.attrs
-                            return [
-                              _c(
-                                "v-text-field",
-                                _vm._g(
-                                  _vm._b(
-                                    {
-                                      attrs: {
-                                        label: "Data di Nascita  ",
-                                        "prepend-icon": "mdi-calendar",
-                                        readonly: ""
-                                      },
-                                      model: {
-                                        value: _vm.newClient.datanascita,
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.newClient,
-                                            "datanascita",
-                                            $$v
-                                          )
-                                        },
-                                        expression: "newClient.datanascita"
-                                      }
-                                    },
-                                    "v-text-field",
-                                    attrs,
-                                    false
-                                  ),
-                                  on
-                                )
-                              )
-                            ]
-                          }
-                        }
-                      ]),
-                      model: {
-                        value: _vm.menu,
-                        callback: function($$v) {
-                          _vm.menu = $$v
-                        },
-                        expression: "menu"
-                      }
-                    },
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
                     [
-                      _vm._v(" "),
-                      _c(
-                        "v-date-picker",
-                        {
-                          attrs: { "no-title": "", scrollable: "" },
-                          model: {
-                            value: _vm.newClient.datanascita,
-                            callback: function($$v) {
-                              _vm.$set(_vm.newClient, "datanascita", $$v)
-                            },
-                            expression: "newClient.datanascita"
-                          }
+                      _c("v-text-field", {
+                        attrs: {
+                          rules: _vm.nomeRules,
+                          label: "Nome*",
+                          required: ""
                         },
-                        [
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { text: "", color: "primary" },
-                              on: {
-                                click: function($event) {
-                                  _vm.menu = false
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            Cancel\n                        "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { text: "", color: "primary" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.$refs.menu.save(
-                                    _vm.newClient.datanascita
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            OK\n                        "
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
+                        model: {
+                          value: _vm.newClient.nome,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "nome", $$v)
+                          },
+                          expression: "newClient.nome"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "Cognome*",
+                          rules: _vm.cognomeRules,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.newClient.cognome,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "cognome", $$v)
+                          },
+                          expression: "newClient.cognome"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "Indirizzo*",
+                          rules: _vm.indirizzoRules,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.newClient.indirizzo,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "indirizzo", $$v)
+                          },
+                          expression: "newClient.indirizzo"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "Citta*",
+                          rules: _vm.cittaRules,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.newClient.citta,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "citta", $$v)
+                          },
+                          expression: "newClient.citta"
+                        }
+                      })
                     ],
                     1
                   )
@@ -832,114 +640,415 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
+                "v-row",
                 [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "name",
-                      items: _vm.getCanali,
-                      label: "fonte"
-                    },
-                    model: {
-                      value: _vm.newClient.marketing_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "marketing_id", $$v)
-                      },
-                      expression: "newClient.marketing_id"
-                    }
-                  })
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "1", sm: "1" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "cap" },
+                        model: {
+                          value: _vm.newClient.cap,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "cap", $$v)
+                          },
+                          expression: "newClient.cap"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "1", sm: "1" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "PR*",
+                          rules: _vm.provinciaRules,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.newClient.provincia,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "provincia", $$v)
+                          },
+                          expression: "newClient.provincia"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "2", sm: "2" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "telefono*",
+                          rules: _vm.telefonoRules,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.newClient.telefono,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "telefono", $$v)
+                          },
+                          expression: "newClient.telefono"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "2", sm: "2" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "telefono 2" },
+                        model: {
+                          value: _vm.newClient.telefono2,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "telefono2", $$v)
+                          },
+                          expression: "newClient.telefono2"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "2", sm: "2" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "telefono 3" },
+                        model: {
+                          value: _vm.newClient.telefono3,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "telefono3", $$v)
+                          },
+                          expression: "newClient.telefono3"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "1", sm: "1" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          "item-text": "nome",
+                          items: _vm.getTipologie,
+                          label: "tipo*",
+                          rules: _vm.tipoRules,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.newClient.tipologia_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "tipologia_id", $$v)
+                          },
+                          expression: "newClient.tipologia_id"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "mail" },
+                        model: {
+                          value: _vm.newClient.mail,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "mail", $$v)
+                          },
+                          expression: "newClient.mail"
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
+                "v-row",
                 [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      readonly: _vm.lettura,
-                      "item-text": "name",
-                      items: _vm.getAudio,
-                      label: "Audio"
-                    },
-                    model: {
-                      value: _vm.newClient.user_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "user_id", $$v)
-                      },
-                      expression: "newClient.user_id"
-                    }
-                  })
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "2", sm: "2" } },
+                    [
+                      _c(
+                        "v-menu",
+                        {
+                          ref: "menu",
+                          attrs: {
+                            "close-on-content-click": false,
+                            "return-value": _vm.newClient.datanascita,
+                            transition: "scale-transition",
+                            "offset-y": "",
+                            "min-width": "auto"
+                          },
+                          on: {
+                            "update:returnValue": function($event) {
+                              return _vm.$set(
+                                _vm.newClient,
+                                "datanascita",
+                                $event
+                              )
+                            },
+                            "update:return-value": function($event) {
+                              return _vm.$set(
+                                _vm.newClient,
+                                "datanascita",
+                                $event
+                              )
+                            }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var on = ref.on
+                                var attrs = ref.attrs
+                                return [
+                                  _c(
+                                    "v-text-field",
+                                    _vm._g(
+                                      _vm._b(
+                                        {
+                                          attrs: {
+                                            label: "Data di Nascita  ",
+                                            "prepend-icon": "mdi-calendar",
+                                            readonly: ""
+                                          },
+                                          model: {
+                                            value: _vm.newClient.datanascita,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.newClient,
+                                                "datanascita",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "newClient.datanascita"
+                                          }
+                                        },
+                                        "v-text-field",
+                                        attrs,
+                                        false
+                                      ),
+                                      on
+                                    )
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.menu,
+                            callback: function($$v) {
+                              _vm.menu = $$v
+                            },
+                            expression: "menu"
+                          }
+                        },
+                        [
+                          _vm._v(" "),
+                          _c(
+                            "v-date-picker",
+                            {
+                              attrs: { "no-title": "", scrollable: "" },
+                              model: {
+                                value: _vm.newClient.datanascita,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.newClient, "datanascita", $$v)
+                                },
+                                expression: "newClient.datanascita"
+                              }
+                            },
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "", color: "primary" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.menu = false
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Cancel\n                        "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "", color: "primary" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$refs.menu.save(
+                                        _vm.newClient.datanascita
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            OK\n                        "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          "item-text": "name",
+                          items: _vm.getCanali,
+                          label: "fonte*",
+                          rules: _vm.fonteRules,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.newClient.marketing_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "marketing_id", $$v)
+                          },
+                          expression: "newClient.marketing_id"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "2", sm: "2" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          readonly: _vm.lettura,
+                          "item-text": "name",
+                          items: _vm.getAudio,
+                          label: "Audio*"
+                        },
+                        model: {
+                          value: _vm.newClient.user_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "user_id", $$v)
+                          },
+                          expression: "newClient.user_id"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "2", sm: "2" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          "item-text": "nome",
+                          items: _vm.getFilialiPerInserimento,
+                          label: "Filiale*",
+                          rules: _vm.filialeRules,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.newClient.filiale_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "filiale_id", $$v)
+                          },
+                          expression: "newClient.filiale_id"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          "item-text": "nome",
+                          items: _vm.getRecapiti,
+                          label: "Recapito"
+                        },
+                        model: {
+                          value: _vm.newClient.recapito_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "recapito_id", $$v)
+                          },
+                          expression: "newClient.recapito_id"
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "nome",
-                      items: _vm.getFilialiPerInserimento,
-                      label: "Filiale"
-                    },
-                    model: {
-                      value: _vm.newClient.filiale_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "filiale_id", $$v)
-                      },
-                      expression: "newClient.filiale_id"
-                    }
-                  })
-                ],
-                1
+                "v-btn",
+                {
+                  attrs: { color: "success", dark: "" },
+                  on: { click: _vm.aggiungiModifica }
+                },
+                [_vm._v("\n            " + _vm._s(_vm.nomeBtn) + "\n        ")]
               ),
               _vm._v(" "),
               _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "nome",
-                      items: _vm.getRecapiti,
-                      label: "Recapito"
-                    },
-                    model: {
-                      value: _vm.newClient.recapito_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.newClient, "recapito_id", $$v)
-                      },
-                      expression: "newClient.recapito_id"
-                    }
-                  })
-                ],
-                1
+                "v-btn",
+                {
+                  attrs: { color: "pink", dark: "" },
+                  on: { click: _vm.annulla }
+                },
+                [_vm._v("\n            Annulla\n        ")]
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            {
-              attrs: { color: "success", dark: "" },
-              on: { click: _vm.aggiungiModifica }
-            },
-            [_vm._v("\n            " + _vm._s(_vm.nomeBtn) + "\n        ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { color: "pink", dark: "" }, on: { click: _vm.annulla } },
-            [_vm._v("\n            Annulla\n        ")]
           )
         ],
         1
