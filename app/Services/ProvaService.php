@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Events\ProveEvent;
+use App\Models\Client;
 use App\Models\Fattura;
 use App\Models\Product;
 use App\Models\ProductProva;
@@ -96,6 +97,10 @@ class ProvaService
         $prova->mese_fine = Carbon::now()->month;
         $prova->anno_fine = Carbon::now()->year;
         $prova->save();
+
+        $client = Client::find($prova->client_id);
+        $client->tipologia_id = 2;
+        $client->save();
 
         $fattura = new Fattura();
         $fattura->prova_id = $prova->id;

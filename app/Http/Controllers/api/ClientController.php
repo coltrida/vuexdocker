@@ -47,7 +47,7 @@ class ClientController extends Controller
 
     public function aggiungi(Request $request, ClientService $clientService)
     {
-        return $clientService->aggiungi($request);
+        return new ClientResource($clientService->aggiungi($request));
     }
 
     public function ricercaNominativi(Request $request, ClientService $clientService)

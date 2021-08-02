@@ -168,6 +168,11 @@ class Client extends Model
         return $this->hasMany(Audiometria::class)->latest();
     }
 
+    public function documenti()
+    {
+        return $this->hasMany(Documento::class)->latest();
+    }
+
     public function getEtaAttribute()
     {
         return $this->datanascita ? Carbon::now()->year - substr($this->datanascita, 0, 4) : null;

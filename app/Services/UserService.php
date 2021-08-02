@@ -219,6 +219,7 @@ class UserService
         $mese = Carbon::now()->month;
 
        $users = User::audio(1)->get();
+
        foreach ($users as $user){
            $fatturati = $user->fatturati_id ? $user->fatturati : new Fatturati();
            $delta = $user->delta_id ? $user->delta : new Delta();
@@ -451,6 +452,24 @@ class UserService
            $fatturati->budgetAnno = array_sum($totali);
            $delta->budgetAnno = number_format( (float)  ((array_sum($totali) / array_sum($totaliBgt)) - 1) * 100, '1');
 
+           $numeroClienti = Client::where([
+               ['user_id', $user->id],
+               ['tipologia_id', 2],
+           ])->count();
+
+           $delta->stipendio = $numeroClienti;
+
+           $numeroPC = Client::where([
+               ['user_id', $user->id],
+               ['tipologia_id', 1],
+           ])->count();
+
+           $delta->provvigione = $numeroPC;
+
+           $tot = $numeroClienti + $numeroPC;
+
+           $delta->premio = $tot <> 0 ? ($numeroClienti / $tot) * 100 : 0;
+
            $pezzi->nome = 'Pezzi';
            $fatturati->nome = 'Fatturati';
            $delta->nome = 'Delta';
@@ -468,7 +487,7 @@ class UserService
     public function dettaglioAudio()
     {
         return User::audio()
-            ->with(['provaFinalizzata' => function ($q){
+            ->with(['delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
                 $q->orderBy('mese_fine');
             }])
             ->orderBy('name')

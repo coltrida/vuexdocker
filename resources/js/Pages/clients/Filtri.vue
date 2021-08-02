@@ -38,6 +38,19 @@
                         label="Città"
                     ></v-select>
                 </v-col>
+
+                <v-col
+                    cols="2"
+                    sm="2"
+                >
+                    <v-select
+                        v-model="ricerca.filiale"
+                        item-value="id"
+                        item-text="nome"
+                        :items="getFilialiPerInserimento"
+                        label="Filiale"
+                    ></v-select>
+                </v-col>
             </v-row>
 
             <v-btn @click="trova" color="success" dark>
@@ -86,6 +99,7 @@
         mounted() {
             this.fetchTipologie();
             this.fetchProvince();
+            this.fetchFilialiPerInserimento();
         },
 
         methods: {
@@ -98,6 +112,10 @@
 
             ...mapActions('tipologie', {
                 fetchTipologie:'fetchTipologie',
+            }),
+
+            ...mapActions('filiali', {
+                fetchFilialiPerInserimento:'fetchFilialiPerInserimento',
             }),
 
             caricaCitta(){
@@ -119,6 +137,10 @@
 
             ...mapGetters('tipologie', {
                 getTipologie:'getTipologie',
+            }),
+
+            ...mapGetters('filiali', {
+                getFilialiPerInserimento:'getFilialiPerInserimento',
             }),
 
         },

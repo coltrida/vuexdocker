@@ -250,17 +250,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
   data: function data() {
     return {
       newClient: {},
+      lettura: false,
       menu: false
     };
   },
   mounted: function mounted() {
     var _this = this;
+
+    if (this.getRuolo === 'audio') {
+      this.newClient.user_id = parseInt(this.getIdUser);
+      this.lettura = true;
+    }
 
     this.fetchTipologie();
     this.fetchCanali();
@@ -300,30 +311,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
     fetchRecapiti: 'fetchRecapiti'
   })), {}, {
+    annulla: function annulla() {
+      this.$router.go(-1);
+    },
     aggiungiModifica: function aggiungiModifica() {
       var _this3 = this;
+
+      var idFiliale = this.newClient.filiale_id;
 
       if (this.getClient.nome) {
         this.newClient.id = this.getClient.id;
         this.modificaClient(this.newClient).then(function () {
           _this3.newClient = {};
 
-          _this3.$router.push({
-            name: 'clients'
-          });
+          if (_this3.getRuolo === 'audio') {
+            _this3.$router.push({
+              name: 'clientsFiliale',
+              params: {
+                filialeId: idFiliale
+              }
+            });
+          } else {
+            _this3.$router.push({
+              name: 'clients'
+            });
+          }
         });
       } else {
         this.addClient(this.newClient).then(function () {
           _this3.newClient = {};
 
-          _this3.$router.push({
-            name: 'clients'
-          });
+          if (_this3.getRuolo === 'audio') {
+            _this3.$router.push({
+              name: 'clientsFiliale',
+              params: {
+                filialeId: idFiliale
+              }
+            });
+          } else {
+            _this3.$router.push({
+              name: 'clients'
+            });
+          }
         });
       }
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getRuolo: 'getRuolo',
+    getIdUser: 'getIdUser'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
     getClient: 'getClient'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('tipologie', {
     getTipologie: 'getTipologie'
@@ -824,6 +861,7 @@ var render = function() {
                   _c("v-select", {
                     attrs: {
                       "item-value": "id",
+                      readonly: _vm.lettura,
                       "item-text": "name",
                       items: _vm.getAudio,
                       label: "Audio"
@@ -896,6 +934,12 @@ var render = function() {
               on: { click: _vm.aggiungiModifica }
             },
             [_vm._v("\n            " + _vm._s(_vm.nomeBtn) + "\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { color: "pink", dark: "" }, on: { click: _vm.annulla } },
+            [_vm._v("\n            Annulla\n        ")]
           )
         ],
         1

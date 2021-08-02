@@ -47,7 +47,7 @@
                 Richiedi
             </v-btn>
 
-            <h3>Presenti</h3>
+            <h3 class="mt-5">Presenti</h3>
             <v-data-table
                 :headers="headers1"
                 :items="getInFiliale"
@@ -65,7 +65,7 @@
                 </template>
             </v-data-table>
 
-            <h3>In prova</h3>
+            <h3 class="mt-5">In prova</h3>
             <v-data-table
                 :headers="headers2"
                 :items="getInProva"
@@ -74,7 +74,7 @@
             >
             </v-data-table>
 
-            <h3>Richiesti</h3>
+            <h3 class="mt-5">Richiesti</h3>
             <v-data-table
                 :headers="headers1"
                 :items="getRichiesti"
@@ -92,7 +92,7 @@
                 </template>
             </v-data-table>
 
-            <h3>In Arrivo</h3>
+            <h3 class="mt-5">In Arrivo</h3>
             <v-data-table
                 :headers="headers3"
                 :items="getInArrivo"
@@ -135,7 +135,7 @@
                     { text: 'Fornitore', align: 'start', value: 'fornitore', class: "indigo white--text" },
                     { text: 'Nome', value: 'nome', class: "indigo white--text"},
                     { text: 'Categoria', value: 'categoria', class: "indigo white--text" },
-                    { text: 'Costo', value: 'costo', class: "indigo white--text" },
+                    /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
                     { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
@@ -147,7 +147,7 @@
                     { text: 'Fornitore', align: 'start', value: 'fornitore', class: "indigo white--text" },
                     { text: 'Nome', value: 'nome', class: "indigo white--text"},
                     { text: 'Categoria', value: 'categoria', class: "indigo white--text" },
-                    { text: 'Costo', value: 'costo', class: "indigo white--text" },
+                    /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
                     { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
@@ -159,7 +159,7 @@
                     { text: 'Fornitore', align: 'start', value: 'fornitore', class: "indigo white--text" },
                     { text: 'Nome', value: 'nome', class: "indigo white--text"},
                     { text: 'Categoria', value: 'categoria', class: "indigo white--text" },
-                    { text: 'Costo', value: 'costo', class: "indigo white--text" },
+                    /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
                     { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
@@ -170,12 +170,21 @@
         },
 
         mounted(){
-            this.fetchInFiliale(this.rottaIdFiliale);
-            this.fetchInProva(this.rottaIdFiliale);
-            this.fetchRichiesti(this.rottaIdFiliale);
-            this.fetchInArrivo(this.rottaIdFiliale);
+            let accesso = false;
+            this.getFiliali.forEach(element => {
+                if(element.id === this.rottaIdFiliale){
+                    accesso = true;
+                }
+            });
+            if (accesso){
+                this.fetchInFiliale(this.rottaIdFiliale);
+                this.fetchInProva(this.rottaIdFiliale);
+                this.fetchRichiesti(this.rottaIdFiliale);
+                this.fetchInArrivo(this.rottaIdFiliale);
 
-            this.fetchFornitori();
+                this.fetchFornitori();
+            }
+
         },
 
         watch:{
@@ -242,9 +251,13 @@
                 getListino:'getListino',
             }),
 
+            ...mapGetters('filiali', {
+                getFiliali: 'getFiliali',
+            }),
+
             rottaIdFiliale(){
-                return this.$route.params.filialeId;
-            }
+                return this.$route.params.filialeId ? this.$route.params.filialeId : null;
+            },
         },
     }
 </script>

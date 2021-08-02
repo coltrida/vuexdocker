@@ -188,6 +188,7 @@
                     <v-select
                         v-model="newClient.user_id"
                         item-value="id"
+                        :readonly="lettura"
                         item-text="name"
                         :items="getAudio"
                         label="Audio"
@@ -225,6 +226,10 @@
                 {{nomeBtn}}
             </v-btn>
 
+            <v-btn @click="annulla" color="pink" dark>
+                Annulla
+            </v-btn>
+
         </v-container>
     </div>
 
@@ -239,11 +244,16 @@
         data(){
             return {
                 newClient:{},
+                lettura: false,
                 menu:false
             }
         },
 
         mounted(){
+            if(this.getRuolo === 'audio'){
+                this.newClient.user_id = parseInt(this.getIdUser);
+                this.lettura = true;
+            }
             this.fetchTipologie();
             this.fetchCanali();
             this.fetchAudio();
@@ -293,17 +303,30 @@
                 fetchRecapiti:'fetchRecapiti',
             }),
 
+            annulla(){
+                this.$router.go(-1)
+            },
+
             aggiungiModifica(){
+                let idFiliale = this.newClient.filiale_id;
                 if (this.getClient.nome) {
                     this.newClient.id = this.getClient.id;
                     this.modificaClient(this.newClient).then(() => {
                         this.newClient = {};
-                        this.$router.push({ name: 'clients' });
+                        if(this.getRuolo === 'audio') {
+                            this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
+                        } else {
+                            this.$router.push({ name: 'clients' });
+                        }
                     });
                 } else {
                     this.addClient(this.newClient).then(() => {
                         this.newClient = {};
-                        this.$router.push({ name: 'clients' });
+                        if(this.getRuolo === 'audio') {
+                            this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
+                        } else {
+                            this.$router.push({ name: 'clients' });
+                        }
                     });
                 }
 
@@ -312,6 +335,11 @@
         },
 
         computed:{
+            ...mapGetters('login', {
+                getRuolo:'getRuolo',
+                getIdUser:'getIdUser',
+            }),
+
             ...mapGetters('clients', {
                 getClient:'getClient',
             }),

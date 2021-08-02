@@ -75,7 +75,8 @@ const actions = {
 
     async addClient({commit}, payload){
         const response = await axios.post(`${help().linkaddclient}`, payload);
-        commit('addClient', response.data);
+        console.log(response.data.data);
+        commit('addClient', response.data.data);
     },
 
     async modificaClient({commit}, payload){

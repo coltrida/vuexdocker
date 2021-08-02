@@ -2,8 +2,14 @@
     <div>
         <h2>Dettaglio Audioprotesisti</h2>
         <v-container>
-            <div v-for="audio in getAudioConFatt" :key="audio.id" class="mb-5">
-                <h2>{{audio.name}}</h2>
+            <div v-for="audio in getAudioConFatt" :key="audio.id" class="mb-7">
+                <v-row>
+                    <v-col><h2>{{audio.name}}</h2></v-col>
+                    <v-col><h4>Vendite su Pc: {{audio.delta.premio}} %</h4></v-col>
+                    <v-col><h4>Nr. Pc: {{audio.delta.provvigione}}</h4></v-col>
+                    <v-col><h4>Nr. Cl: {{audio.delta.stipendio}}</h4></v-col>
+                </v-row>
+
                 <v-data-table
                     :headers="headers"
                     :items="audio.prova_finalizzata"

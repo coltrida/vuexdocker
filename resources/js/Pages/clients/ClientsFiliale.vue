@@ -35,6 +35,12 @@
                 @chiudiProve = "chiudiProve"
             ></prove>
 
+            <documenti
+                v-if="showDocumenti"
+                :documentiClient="documentiClient"
+                @chiudiDocumenti="chiudiDocumenti"
+            ></documenti>
+
             <div class="ml-4" v-if="showClients">
                 <router-link :to="{ name: 'clientsInserisci'}">
                     <v-btn dark color="indigo">Inserisci</v-btn>
@@ -134,6 +140,21 @@
                         </template>
                         <span>Prova</span>
                     </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                                color="light-blue darken-4"
+                                small
+                                @click="documenti(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-file-document
+                            </v-icon>
+                        </template>
+                        <span>Documenti</span>
+                    </v-tooltip>
                 </template>
 
 
@@ -149,17 +170,19 @@
     import Messaggio from "../../Components/Messaggio";
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
     import Prove from "../../Components/btnClients/prove/Prove";
+    import Documenti from "../../Components/btnClients/documenti/Docunenti";
     import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
     import Messaggioelimina from "../../Components/btnClients/elimina/Messaggioelimina";
 
     export default {
         name: "ClientsFiliale",
-        components: {Messaggioelimina, Prove, Audiogramma, Messaggio, Appuntamento},
+        components: {Messaggioelimina, Prove, Documenti, Audiogramma, Messaggio, Appuntamento},
         data() {
             return {
                 showElimina: false,
                 showClients: true,
                 showProve: false,
+                showDocumenti: false,
                 showAudiogramma: false,
                 textMessaggio: null,
                 openAudiogramma: false,
@@ -167,6 +190,7 @@
                 audiogrammaClient: {},
                 appuntamentoClient: {},
                 proveClient: {},
+                documentiClient: {},
                 search: '',
                 idElimina: '',
                 nomeElimina: '',
@@ -194,13 +218,14 @@
 
         mounted() {
             let accesso = false;
+            //console.log(this.getFiliali);
             this.getFiliali.forEach(element => {
                 if(element.id === this.rottaIdFiliale){
                     accesso = true;
                 }
             });
 
-            if(accesso){
+            if(accesso && this.getClients.length == 0){
                 this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
                     this.search = this.cognomeRicerca;
                 });
@@ -234,6 +259,7 @@
             },
 
             audiogramma(client){
+                this.showDocumenti = false;
                 this.showProve = false;
                 this.showAudiogramma = true;
                 this.showAppuntamento = false;
@@ -242,6 +268,7 @@
             },
 
             appuntamento(client){
+                this.showDocumenti = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showClients = false;
@@ -250,6 +277,7 @@
             },
 
             prove(client){
+                this.showDocumenti = false;
                 this.showProve = true;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
@@ -257,7 +285,26 @@
                 this.proveClient = client;
             },
 
+            documenti(client){
+                this.showDocumenti = true;
+                this.showProve = false;
+                this.showAppuntamento = false;
+                this.showAudiogramma = false;
+                this.showClients = false;
+                this.documentiClient = client;
+            },
+
+            chiudiDocumenti(){
+                this.showDocumenti = false;
+                this.showProve = false;
+                this.showAudiogramma = false;
+                this.showAppuntamento = false;
+                this.showClients = true;
+                this.documentiClient = {};
+            },
+
             chiudiAudiogramma(){
+                this.showDocumenti = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
@@ -266,6 +313,7 @@
             },
 
             chiudiAppuntamento(){
+                this.showDocumenti = false;
                 this.showProve = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
@@ -274,6 +322,7 @@
             },
 
             chiudiProve(){
+                this.showDocumenti = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;

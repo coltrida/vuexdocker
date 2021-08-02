@@ -89,6 +89,9 @@ const help = () => {
         linkprovince: base+'province',
         linkcittabyprovincia: base+'cittaByProvincia',
         linkricercanominativi: base+'ricercaNominativi',
+        linkcaricadocumento: base+'salvaDocumento',
+        linklistadocumenti: base+'caricaDocumenti',
+        linkeliminadocumento: base+'eliminaDocumento',
     };
 };
 export default help;

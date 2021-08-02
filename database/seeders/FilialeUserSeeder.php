@@ -33,11 +33,19 @@ class FilialeUserSeeder extends Seeder
             ],
             [
                 'filiale_id' => 2,
+                'user_id' => 9,
+            ],
+            [
+                'filiale_id' => 3,
                 'user_id' => 5,
             ],
             [
                 'filiale_id' => 3,
                 'user_id' => 6,
+            ],
+            [
+                'filiale_id' => 4,
+                'user_id' => 8,
             ],
         ]);
     }

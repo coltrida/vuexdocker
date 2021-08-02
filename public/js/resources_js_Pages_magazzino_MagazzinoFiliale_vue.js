@@ -162,11 +162,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Categoria',
         value: 'categoria',
         "class": "indigo white--text"
-      }, {
-        text: 'Costo',
-        value: 'costo',
-        "class": "indigo white--text"
-      }, {
+      },
+      /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
+      {
         text: 'Prezzo',
         value: 'prezzolistino',
         "class": "indigo white--text"
@@ -201,11 +199,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Categoria',
         value: 'categoria',
         "class": "indigo white--text"
-      }, {
-        text: 'Costo',
-        value: 'costo',
-        "class": "indigo white--text"
-      }, {
+      },
+      /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
+      {
         text: 'Prezzo',
         value: 'prezzolistino',
         "class": "indigo white--text"
@@ -239,11 +235,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Categoria',
         value: 'categoria',
         "class": "indigo white--text"
-      }, {
-        text: 'Costo',
-        value: 'costo',
-        "class": "indigo white--text"
-      }, {
+      },
+      /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
+      {
         text: 'Prezzo',
         value: 'prezzolistino',
         "class": "indigo white--text"
@@ -268,11 +262,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchInFiliale(this.rottaIdFiliale);
-    this.fetchInProva(this.rottaIdFiliale);
-    this.fetchRichiesti(this.rottaIdFiliale);
-    this.fetchInArrivo(this.rottaIdFiliale);
-    this.fetchFornitori();
+    var _this = this;
+
+    var accesso = false;
+    this.getFiliali.forEach(function (element) {
+      if (element.id === _this.rottaIdFiliale) {
+        accesso = true;
+      }
+    });
+
+    if (accesso) {
+      this.fetchInFiliale(this.rottaIdFiliale);
+      this.fetchInProva(this.rottaIdFiliale);
+      this.fetchRichiesti(this.rottaIdFiliale);
+      this.fetchInArrivo(this.rottaIdFiliale);
+      this.fetchFornitori();
+    }
   },
   watch: {
     rottaIdFiliale: function rottaIdFiliale() {
@@ -310,7 +315,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.switchArrivato(id);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
     getInFiliale: 'getInFiliale',
     getInProva: 'getInProva',
     getRichiesti: 'getRichiesti',
@@ -319,9 +324,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getFornitori: 'getFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('listino', {
     getListino: 'getListino'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
+    getFiliali: 'getFiliali'
   })), {}, {
     rottaIdFiliale: function rottaIdFiliale() {
-      return this.$route.params.filialeId;
+      return this.$route.params.filialeId ? this.$route.params.filialeId : null;
     }
   })
 });
@@ -508,7 +515,7 @@ var render = function() {
             [_vm._v("\n            Richiedi\n        ")]
           ),
           _vm._v(" "),
-          _c("h3", [_vm._v("Presenti")]),
+          _c("h3", { staticClass: "mt-5" }, [_vm._v("Presenti")]),
           _vm._v(" "),
           _c("v-data-table", {
             staticClass: "elevation-1 mt-3",
@@ -545,7 +552,7 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _c("h3", [_vm._v("In prova")]),
+          _c("h3", { staticClass: "mt-5" }, [_vm._v("In prova")]),
           _vm._v(" "),
           _c("v-data-table", {
             staticClass: "elevation-1 mt-3",
@@ -556,7 +563,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("h3", [_vm._v("Richiesti")]),
+          _c("h3", { staticClass: "mt-5" }, [_vm._v("Richiesti")]),
           _vm._v(" "),
           _c("v-data-table", {
             staticClass: "elevation-1 mt-3",
@@ -593,7 +600,7 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _c("h3", [_vm._v("In Arrivo")]),
+          _c("h3", { staticClass: "mt-5" }, [_vm._v("In Arrivo")]),
           _vm._v(" "),
           _c("v-data-table", {
             staticClass: "elevation-1 mt-3",

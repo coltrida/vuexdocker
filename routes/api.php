@@ -4,6 +4,7 @@ use App\Http\Controllers\api\AppuntamentiController;
 use App\Http\Controllers\api\AudiometriaController;
 use App\Http\Controllers\api\CategoriaController;
 use App\Http\Controllers\api\ClientController;
+use App\Http\Controllers\api\DocumentoController;
 use App\Http\Controllers\api\FilialiController;
 use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\GestioneController;
@@ -145,6 +146,11 @@ Route::get('/appuntamentiGiovediAudio/{idAudio}', [AppuntamentiController::class
 Route::get('/appuntamentiVenerdiAudio/{idAudio}', [AppuntamentiController::class, 'venerdi']);
 Route::delete('/appuntamentiCliente/{id}/{idUser}', [AppuntamentiController::class, 'elimina']);
 Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
+
+// ----------------- documenti -----------------------
+Route::post('/salvaDocumento', [DocumentoController::class, 'salvaDocumento']);
+Route::get('/caricaDocumenti/{idClient}', [DocumentoController::class, 'caricaDocumenti']);
+Route::delete('/eliminaDocumento/{idDocumento}', [DocumentoController::class, 'eliminaDocumento']);
 
 // ----------------- statistiche -----------------------
 Route::get('/situazioneAnno', [UserController::class, 'situazioneAnno']);

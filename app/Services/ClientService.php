@@ -343,9 +343,9 @@ class ClientService
         if ($request->citta){
             array_push($condizioni, ['citta', $request->citta]);
         }
-        //$tipo = $request->tipo ? $request->tipo : '*';
-        //$provincia = $request->provincia ? $request->provincia : '*';
-        //$citta = $request->citta ? $request->citta : '*';
+        if ($request->filiale){
+            array_push($condizioni, ['filiale_id', $request->filiale]);
+        }
 
         return Client::with('tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')

@@ -78,6 +78,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Clients",
@@ -151,14 +164,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.fetchTipologie();
     this.fetchProvince();
+    this.fetchFilialiPerInserimento();
   },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
     fetchClients: 'fetchClients',
     fetchProvince: 'fetchProvince',
     fetchCittaByProvincia: 'fetchCittaByProvincia',
     ricercaNominativi: 'ricercaNominativi'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('tipologie', {
     fetchTipologie: 'fetchTipologie'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
+    fetchFilialiPerInserimento: 'fetchFilialiPerInserimento'
   })), {}, {
     caricaCitta: function caricaCitta() {
       this.fetchCittaByProvincia(this.ricerca.provincia);
@@ -167,12 +183,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.ricercaNominativi(this.ricerca);
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
     getRicercaNominativi: 'getRicercaNominativi',
     getProvince: 'getProvince',
     getCittaByProvincia: 'getCittaByProvincia'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('tipologie', {
     getTipologie: 'getTipologie'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
+    getFilialiPerInserimento: 'getFilialiPerInserimento'
   }))
 });
 
@@ -332,6 +350,29 @@ var render = function() {
                     _vm.$set(_vm.ricerca, "citta", $$v)
                   },
                   expression: "ricerca.citta"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  "item-value": "id",
+                  "item-text": "nome",
+                  items: _vm.getFilialiPerInserimento,
+                  label: "Filiale"
+                },
+                model: {
+                  value: _vm.ricerca.filiale,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "filiale", $$v)
+                  },
+                  expression: "ricerca.filiale"
                 }
               })
             ],

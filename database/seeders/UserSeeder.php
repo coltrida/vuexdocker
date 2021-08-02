@@ -86,7 +86,27 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
                 'password' => Hash::make('123456'),
-            ]
+            ],
+            [
+                'name' => 'Chiara Cardinale',
+                'email' => 'cardinale@centroudito.eu',
+                'ruolo' => 2,
+                'budget_id' => 6,
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'password' => Hash::make('123456'),
+            ],
+            [
+                'name' => 'Athanasia Papatheodoru',
+                'email' => 'papatheodoru@centroudito.eu',
+                'ruolo' => 2,
+                'budget_id' => 7,
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'password' => Hash::make('123456'),
+            ],
         ]);
     }
 }

@@ -22,10 +22,13 @@ class ClientsImport implements ToCollection, WithHeadingRow
             //dd($value);
             if ($value['cognome'] != null){
                 $filiale = 1;
+                $user = 2;
                 if(in_array($value['comune'] , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO'])) {
                     $filiale = 4;
+                    $user = 8;
                 } elseif (in_array($value['comune'] , ['LORETO', 'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'MACERATA', 'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO'])) {
                     $filiale = 2;
+                    $user = 9;
                 }
                 Client::insert([
                     'cognome'       => $value['cognome'],
@@ -37,7 +40,8 @@ class ClientsImport implements ToCollection, WithHeadingRow
                     'telefono'      => $value['numtel'],
                     'tipologia_id'  => 6,
                     'marketing_id'  => 4,
-                    'filiale_id'  => $filiale,
+                    'filiale_id'    => $filiale,
+                    'user_id'       => $user,
                     'created_at'    => Carbon::now(),
                     'updated_at'    => Carbon::now(),
                     'mese'          => Carbon::now()->month,

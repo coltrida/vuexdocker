@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <div>
 
     <div>
         <div class="flex justify-start mt-2">
@@ -252,7 +252,7 @@
             </div>
         </div>
     </div>
-    </v-container>
+    </div>
 
 </template>
 
