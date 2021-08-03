@@ -33,6 +33,16 @@ class DocumentoService
         }
     }
 
+    public function salvaFileXmlFromFiliale($request)
+    {
+        if($request->hasfile('file')) {
+            $file = $request->file('file');
+            $filename = $request->nomeFile;
+            $path = $request->fileName;
+            Storage::disk('public')->putFileAs($path, $file, $filename);
+        }
+    }
+
     public function caricaDocumenti($idClient)
     {
         return Client::with('documenti')->find($idClient)->documenti;

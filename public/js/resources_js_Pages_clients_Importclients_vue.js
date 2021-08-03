@@ -88,6 +88,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "Inserisci",
   data: function data() {
     return {
+      nomeFile: 'app/public/file.xml',
       carica: false
     };
   },
@@ -107,7 +108,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       this.carica = true;
-      this.importClientsXml().then(function () {
+      this.importClientsXml(this.nomeFile).then(function () {
         _this2.carica = false;
       });
     }
@@ -265,7 +266,7 @@ var render = function() {
                   _c("v-col", { attrs: { cols: "4", sm: "4" } }, [
                     _c("p", [
                       _vm._v(
-                        "Inserire il file nella posizione /storage/app/public/gggg.xml"
+                        "Inserire il file nella posizione /storage/app/public/file.xml"
                       )
                     ])
                   ]),

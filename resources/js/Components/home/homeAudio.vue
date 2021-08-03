@@ -183,10 +183,10 @@
 
                 headers3: [
                     {text: 'Nome', width:170, value: 'fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'indirizzo', width:70, value: 'indirizzo', sortable: false, class: "indigo white--text"},
+                    {text: 'telefono', width:70, value: 'telefono', sortable: false, class: "indigo white--text"},
                     {text: 'citta', width:120, value: 'citta', sortable: false, class: "indigo white--text"},
-                    {text: 'provincia', width:120, value: 'provincia', sortable: false, class: "indigo white--text"},
-                    {text: 'telefono', width:120, value: 'telefono', sortable: false, class: "indigo white--text"},
+                    {text: 'PR', width:120, value: 'provincia', sortable: false, class: "indigo white--text"},
+                    {text: 'indirizzo', width:120, value: 'indirizzo', sortable: false, class: "indigo white--text"},
                     {text: 'Data Nascita', width:120, value: 'datanascita', sortable: false, class: "indigo white--text"},
                 ],
 

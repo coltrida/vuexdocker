@@ -23,4 +23,9 @@ class DocumentoController extends Controller
     {
         $documentoService->eliminaDocumento($idDocumento);
     }
+
+    public function salvaFileXmlFromFiliale(Request $request, DocumentoService $documentoService)
+    {
+        $documentoService->salvaFileXmlFromFiliale($request);
+    }
 }

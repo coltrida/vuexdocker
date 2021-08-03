@@ -6,12 +6,17 @@ const state = () => ({
     compleanni: [],
     province: [],
     cittaByProvincia: [],
+    clientMessaggio: '',
     client: {}
 });
 
 const getters = {
     getClients(state){
         return state.clients;
+    },
+
+    getClientMessaggio(state){
+        return state.clientMessaggio;
     },
 
     getCompleanni(state){
@@ -75,7 +80,6 @@ const actions = {
 
     async addClient({commit}, payload){
         const response = await axios.post(`${help().linkaddclient}`, payload);
-        console.log(response.data.data);
         commit('addClient', response.data.data);
     },
 
@@ -99,8 +103,23 @@ const actions = {
         await axios.get(`${help().linkimportclients}`);
     },
 
-    async importClientsXml(){
-        await axios.get(`${help().linkimportclientsxml}`);
+    async importClientsXml({commit}, nomeFile){
+        const response = await axios.post(`${help().linkimportclientsxml}`, {
+            nomeFile: nomeFile
+        });
+        commit('importClientsXml', response.data);
+    },
+
+    async importClientsByFiliale({commit}, payload){
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+        };
+        let formData = new FormData();
+        formData.append('file', payload.fileUp);
+        formData.append('path', payload.path);
+        formData.append('nomeFile', payload.nomeFile);
+
+        await axios.post(`${help().linksalvafilexmlfromfiliale}`, formData, config);
     },
 };
 
@@ -140,6 +159,18 @@ const mutations = {
 
     eliminaClient(state, id){
         state.clients = state.clients.filter(u => u.id !== id);
+    },
+
+    importClientsXml(state, payload){
+        if (payload == 1){
+            state.clientMessaggio = 'Importazione effettuata'
+        } else {
+            state.clientMessaggio = 'Nessuna importazione effettuata'
+        }
+    },
+
+    resetClientMessaggio(state){
+        state.clientMessaggio = '';
     },
 };
 

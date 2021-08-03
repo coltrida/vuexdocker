@@ -1,5 +1,16 @@
 <template>
-    <div class="text-center">
+    <v-row class="my-3 flex-column">
+        <v-row>
+            <v-col cols="6">
+                <h2>{{audiogrammaClient.nome}} {{audiogrammaClient.cognome}}</h2>
+            </v-col>
+            <v-col cols="6" class="flex justify-end">
+                <v-btn color="primary" dark @click="cancella">
+                    Chiudi
+                </v-btn>
+            </v-col>
+        </v-row>
+
         <div v-if="creaAudiogramma">
             <nuovo
                 :client_id = audiogrammaClient.id
@@ -9,7 +20,6 @@
         </div>
         <div v-else>
             <div class="row">
-                <h2>{{audiogrammaClient.nome}} {{audiogrammaClient.cognome}}</h2>
                 <div class="col-10 flex" v-if="audiogrammaClient.audiometria.length > 0">
                     <Visualizza :chartdata="chartDataS" :options="chartOptions" />
                     <Visualizza :chartdata="chartDataD" :options="chartOptions" />
@@ -27,18 +37,12 @@
                         </v-btn>
                     </div>
 
-                    <div>
-                        <v-btn color="primary" dark @click="cancella" class="mt-2">
-                            Chiudi
-                        </v-btn>
-                    </div>
-
                 </div>
             </div>
 
 
         </div>
-    </div>
+    </v-row>
 </template>
 
 <script>

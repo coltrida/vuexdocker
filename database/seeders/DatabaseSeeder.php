@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use function now;
+use Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,5 +36,10 @@ class DatabaseSeeder extends Seeder
     //        ProductProvaSeeder::class,
    //         FatturaSeeder::class
         ]);
+
+        Storage::disk('public')->deleteDirectory('/documenti/');
+        Storage::disk('public')->deleteDirectory('/fatture/');
+        Storage::makeDirectory('/documenti');
+        Storage::makeDirectory('/fatture/2021/');
     }
 }

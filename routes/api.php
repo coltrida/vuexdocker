@@ -107,7 +107,7 @@ Route::post('/ricercaNominativi', [ClientController::class, 'ricercaNominativi']
 Route::post('/modificaClient', [ClientController::class, 'modifica']);
 Route::post('/inviaSms', [ClientController::class, 'inviaSms']);
 Route::get('/importClients', [ClientController::class, 'importClients']);
-Route::get('/importClientsFromNoah', [ClientController::class, 'importClientsFromNoah']);
+Route::post('/importClientsFromNoah', [ClientController::class, 'importClientsFromNoah']);
 
 // ----------------- tipologia -------------------------
 Route::get('/tipologie', [TipologiaController::class, 'index']);
@@ -150,6 +150,7 @@ Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
 
 // ----------------- documenti -----------------------
 Route::post('/salvaDocumento', [DocumentoController::class, 'salvaDocumento']);
+Route::post('/salvaFileXmlFromFiliale', [DocumentoController::class, 'salvaFileXmlFromFiliale']);
 Route::get('/caricaDocumenti/{idClient}', [DocumentoController::class, 'caricaDocumenti']);
 Route::delete('/eliminaDocumento/{idDocumento}', [DocumentoController::class, 'eliminaDocumento']);
 

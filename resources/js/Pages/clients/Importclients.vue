@@ -42,7 +42,7 @@
                         accept=".xls, .xlsx"
                         label="File input"
                     ></v-file-input>-->
-                    <p>Inserire il file nella posizione /storage/app/public/gggg.xml</p>
+                    <p>Inserire il file nella posizione /storage/app/public/file.xml</p>
                 </v-col>
 
                 <v-col
@@ -70,6 +70,7 @@
 
         data(){
             return {
+                nomeFile: 'app/public/file.xml',
                 carica: false
             }
         },
@@ -89,7 +90,7 @@
 
             importaXml(){
                 this.carica = true;
-                this.importClientsXml().then(() => {
+                this.importClientsXml(this.nomeFile).then(() => {
                     this.carica = false;
                 });
             },

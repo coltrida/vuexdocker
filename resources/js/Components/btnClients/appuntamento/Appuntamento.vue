@@ -1,19 +1,17 @@
 <template>
-    <div class="text-center">
-        <div class="row">
-            <div class="row mt-2">
-                <div style="display: flex; justify-content: space-between; align-items: center">
-                    <div>
-                        <h2>{{appuntamentoClient.nome}} {{appuntamentoClient.cognome}}</h2>
-                    </div>
-                    <div>
-                        <v-btn color="primary" dark @click="cancella" class="mt-2">
-                            Chiudi
-                        </v-btn>
-                    </div>
-                </div>
-            </div>
+    <v-row class="mt-3 flex-column">
+        <v-row>
+            <v-col cols="6">
+                <h2>{{appuntamentoClient.nome}} {{appuntamentoClient.cognome}}</h2>
+            </v-col>
+            <v-col cols="6" class="flex justify-end">
+                <v-btn color="primary" dark @click="cancella">
+                    Chiudi
+                </v-btn>
+            </v-col>
+        </v-row>
 
+        <div class="row">
             <v-container class="py-4">
                 <v-row>
                     <v-col cols="6">
@@ -119,7 +117,7 @@
                 </v-data-table>
             </v-container>
         </div>
-    </div>
+    </v-row>
 </template>
 
 <script>

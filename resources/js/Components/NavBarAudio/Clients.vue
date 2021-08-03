@@ -19,6 +19,11 @@
                             <v-list-item-title>{{ item.nome }}</v-list-item-title>
                         </v-list-item>
                     </router-link>
+                    <router-link :to="{ name: 'importByFiliale'}">
+                        <v-list-item>
+                            <v-list-item-title>IMPORTA</v-list-item-title>
+                        </v-list-item>
+                    </router-link>
                 </div>
             </v-list>
         </v-menu>

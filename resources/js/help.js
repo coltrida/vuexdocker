@@ -93,6 +93,7 @@ const help = () => {
         linkcaricadocumento: base+'salvaDocumento',
         linklistadocumenti: base+'caricaDocumenti',
         linkeliminadocumento: base+'eliminaDocumento',
+        linksalvafilexmlfromfiliale: base+'salvaFileXmlFromFiliale',
     };
 };
 export default help;

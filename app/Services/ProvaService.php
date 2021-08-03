@@ -6,19 +6,19 @@ namespace App\Services;
 
 use App\Events\ProveEvent;
 use App\Models\Client;
+use App\Models\Documento;
 use App\Models\Fattura;
 use App\Models\Product;
 use App\Models\ProductProva;
 use App\Models\Prova;
 use App\Models\Ruolo;
 use Carbon\Carbon;
-use GuzzleHttp\Promise\Each;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 use function broadcast;
 use function compact;
 use function trim;
 use function view;
+use Storage;
 
 class ProvaService
 {
@@ -137,7 +137,18 @@ class ProvaService
     {
         //return $fattura;
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML(view('pdf.fattura', compact('fattura')))->save("storage/fatture/2021/$fattura->id.pdf");
+        if (!Storage::disk('public')->exists('/documenti/'.$fattura->prova->client_id.'/')) {
+            Storage::makeDirectory('/documenti/'.$fattura->prova->client_id.'/');
+        }
+        $link = "storage/documenti/".$fattura->prova->client_id."/Fattura".$fattura->prova->mese_fine.$fattura->prova->anno_fine.".pdf";
+        $pdf->loadHTML(view('pdf.fattura', compact('fattura')))
+            ->save("storage/fatture/2021/$fattura->id.pdf")
+            ->save($link);
+        $documento = new Documento();
+        $documento->client_id = $fattura->prova->client_id;
+        $documento->tipo = 'fattura';
+        $documento->link = '/'.$link;
+        $documento->save();
     }
 }
 

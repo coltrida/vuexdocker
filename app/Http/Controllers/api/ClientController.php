@@ -90,9 +90,9 @@ class ClientController extends Controller
         Excel::import(new ClientsImport, storage_path('app/public/file.xlsx'));
     }
 
-    public function importClientsFromNoah(ClientService $clientService)
+    public function importClientsFromNoah(Request $request, ClientService $clientService)
     {
-        $clientService->importClientsFromNoah();
+        return $clientService->importClientsFromNoah($request);
     }
 
 }

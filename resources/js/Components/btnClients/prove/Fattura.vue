@@ -10,74 +10,149 @@
 
             <v-card-text class="mt-2">
                 <v-row class="mt-2">
-                    <v-col>
-                        <h3>{{ itemFattura.client.nome }}</h3>
+                    <v-col cols="3">
+                        <v-text-field
+                            v-model="itemFattura.client.nome"
+                            outlined
+                            readonly
+                            label="nome"
+                        ></v-text-field>
                     </v-col>
-                    <v-col>
-                        <h3>{{ itemFattura.client.cognome }}</h3>
+
+                    <v-col cols="3">
+                        <v-text-field
+                            v-model="itemFattura.client.cognome"
+                            outlined
+                            readonly
+                            label="cognome"
+                        ></v-text-field>
                     </v-col>
-                    <v-col>
-                        <h3>{{ itemFattura.client.codfisc }}</h3>
+
+                    <v-col cols="3">
+                        <v-text-field
+                            v-model="itemFattura.client.codfisc"
+                            outlined
+                            readonly
+                            label="cod. fis."
+                        ></v-text-field>
                     </v-col>
-                    <v-col>
-                        <h3>{{ itemFattura.client.telefono }}</h3>
+
+                    <v-col cols="3">
+                        <v-text-field
+                            v-model="itemFattura.client.telefono"
+                            outlined
+                            readonly
+                            label="telefono"
+                        ></v-text-field>
                     </v-col>
                 </v-row>
+
                 <v-row class="mt-2">
-                    <v-col>
-                        <h3>{{ itemFattura.client.indirizzo }}</h3>
+                    <v-col cols="4">
+                        <v-text-field
+                            v-model="itemFattura.client.indirizzo"
+                            outlined
+                            readonly
+                            label="indirizzo"
+                        ></v-text-field>
                     </v-col>
-                    <v-col>
-                        <h3>{{ itemFattura.client.citta }}</h3>
+
+                    <v-col cols="4">
+                        <v-text-field
+                            v-model="itemFattura.client.citta"
+                            outlined
+                            readonly
+                            label="citta"
+                        ></v-text-field>
                     </v-col>
-                    <v-col>
-                        <h3>{{ itemFattura.client.cap }}</h3>
+
+                    <v-col cols="2">
+                        <v-text-field
+                            v-model="itemFattura.client.cap"
+                            outlined
+                            readonly
+                            label="cap"
+                        ></v-text-field>
                     </v-col>
-                    <v-col>
-                        <h3>{{ itemFattura.client.provincia }}</h3>
+
+                    <v-col cols="2">
+                        <v-text-field
+                            v-model="itemFattura.client.provincia"
+                            outlined
+                            readonly
+                            label="provincia"
+                        ></v-text-field>
                     </v-col>
                 </v-row>
+
+                <v-divider></v-divider>
+
                 <div class="mt-4">
-                    <v-row class="my-0 py-0"
-                           v-for="prodotto in itemFattura.product"
-                           :key="prodotto.id"
-                           style="border-bottom: 1px solid grey"
-                    >
-                        <v-col cols="4" class="my-0 py-0">
-                            <h3>{{ prodotto.matricola }}</h3>
-                        </v-col>
-                        <v-col cols="4" class="my-0 py-0">
-                            <h3>{{ prodotto.listino.nome }}</h3>
-                        </v-col>
-                        <v-col cols="4" class="my-0 py-0">
-                            <v-text-field
-                                v-model="prodotto.pivot.prezzo"
-                                label="prezzo"
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
+                    <v-simple-table dense>
+                        <template v-slot:default>
+                            <thead>
+                            <tr>
+                                <th style="width: 40%" class="text-left">
+                                    <h2>Matricola</h2>
+                                </th>
+                                <th style="width: 40%" class="text-left">
+                                    <h2>Prodotto</h2>
+                                </th>
+                                <th style="width: 20%" class="text-left">
+                                    <h2>Prezzo</h2>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr
+                                v-for="prodotto in itemFattura.product"
+                                :key="prodotto.id"
+
+                            >
+                                <td>{{ prodotto.matricola }}</td>
+                                <td>{{ prodotto.listino.nome }}</td>
+                                <td style="padding-top: 15px">
+                                    <v-text-field
+                                        v-model="prodotto.pivot.prezzo"
+                                        outlined
+                                        label="prezzo"
+                                    ></v-text-field>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </template>
+                    </v-simple-table>
+
+                    <v-divider></v-divider>
+
                     <v-row class="my-0 py-0" style="border-bottom: 1px solid grey">
-                        <v-col>
-                            <h3>Totale: {{ totFatturaReale }}</h3>
-                        </v-col>
-                        <v-col>
+                        <v-col cols="4">
                             <v-text-field
-                                v-model="itemFattura.acconto"
-                                label="acconto"
-                            ></v-text-field>
-                        </v-col>
-                        <v-col>
-                            <v-text-field
-                                v-model="itemFattura.rate"
-                                label="rate"
+                                v-model="totFatturaReale"
+                                outlined
+                                readonly
+                                label="Totale"
                             ></v-text-field>
                         </v-col>
 
+                        <v-col cols="4">
+                            <v-text-field
+                                v-model="itemFattura.acconto"
+                                outlined
+                                label="Acconto"
+                            ></v-text-field>
+                        </v-col>
+
+                        <v-col cols="4">
+                            <v-text-field
+                                v-model="itemFattura.rate"
+                                outlined
+                                label="Rate"
+                            ></v-text-field>
+                        </v-col>
                     </v-row>
                 </div>
             </v-card-text>
-
-            <v-divider></v-divider>
 
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -102,37 +177,40 @@
 
 <script>
     import {mapActions} from "vuex";
+
     export default {
-        data(){
+        data() {
             return {
                 dialog: this.dialogFattura
             }
         },
         name: "Fattura",
-        props:{
+        props: {
             itemFattura: Object,
             dialogFattura: Boolean
         },
 
-        methods:{
+        methods: {
             ...mapActions('prove', {
-                salvaFattura:'salvaFattura',
+                salvaFattura: 'salvaFattura',
             }),
 
-            salva(){
+            salva() {
                 this.itemFattura.totFatturaReale = this.totFatturaReale;
                 this.salvaFattura(this.itemFattura);
                 this.chiudiFattura();
             },
-            chiudiFattura(){
+            chiudiFattura() {
                 this.$emit('chiudiFattura');
             }
         },
 
-        computed:{
-            totFatturaReale(){
+        computed: {
+            totFatturaReale() {
                 return this.itemFattura.product.length > 1 ?
-                    this.itemFattura.product.reduce(function(a, b){return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo)}) :
+                    this.itemFattura.product.reduce(function (a, b) {
+                        return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo)
+                    }) :
                     this.itemFattura.product[0].pivot.prezzo
             }
         }

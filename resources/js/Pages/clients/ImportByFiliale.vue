@@ -1,0 +1,107 @@
+<template>
+    <div>
+        <h2>Importa Cliente</h2>
+        <v-container>
+
+            <v-alert type="info" v-if="getClientMessaggio">
+                <v-row align="center">
+                    <v-col class="grow">
+                        {{ getClientMessaggio }}
+                    </v-col>
+                    <v-col class="shrink">
+                        <v-btn @click="reset">Chiudi</v-btn>
+                    </v-col>
+                </v-row>
+            </v-alert>
+
+            <div class="text-center" v-if="carica">
+                <v-progress-circular
+                    indeterminate
+                    color="primary"
+                ></v-progress-circular>
+            </div>
+
+            <v-row v-else>
+                <v-col
+                    cols="4"
+                    sm="4"
+                >
+                    <v-file-input
+                        v-model="caricaFile.fileUp"
+                        truncate-length="15"
+                        accept=".xml"
+                    ></v-file-input>
+                </v-col>
+
+                <v-col
+                    cols="2"
+                    sm="2"
+                >
+                    <v-btn @click="importaXml" color="success" dark>
+                        Importa
+                    </v-btn>
+
+                </v-col>
+            </v-row>
+
+
+
+        </v-container>
+    </div>
+
+</template>
+
+<script>
+    import {mapActions, mapGetters} from "vuex";
+    export default {
+        name: "Inserisci",
+
+        data(){
+            return {
+                caricaFile:{
+                    path: 'app/public/',
+                    fileUp:{},
+                    nomeFile: '',
+                },
+                carica: false
+            }
+        },
+
+        methods:{
+            ...mapActions('clients', {
+                importClientsByFiliale: 'importClientsByFiliale',
+                importClientsXml: 'importClientsXml',
+            }),
+
+            importaXml(){
+                this.caricaFile.nomeFile = 'file'+this.getIdUser+'.xml';
+                this.carica = true;
+                this.importClientsByFiliale(this.caricaFile).then(() => {
+                    let pathnomefile = this.caricaFile.path + this.caricaFile.nomeFile;
+                    this.importClientsXml(pathnomefile).then(() => {
+                        this.caricaFile = {};
+                        this.carica = false;
+                    });
+                });
+            },
+
+            reset(){
+                this.$store.commit('clients/resetClientMessaggio');
+            }
+        },
+
+        computed: {
+            ...mapGetters('login', {
+                getIdUser: 'getIdUser',
+            }),
+
+            ...mapGetters('clients', {
+                getClientMessaggio: 'getClientMessaggio',
+            }),
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

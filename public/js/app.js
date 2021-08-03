@@ -2066,6 +2066,12 @@ var routes = [{
   },
   name: 'importClients'
 }, {
+  path: '/importByFiliale',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_clients_ImportByFiliale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/clients/ImportByFiliale */ "./resources/js/Pages/clients/ImportByFiliale.vue"));
+  },
+  name: 'importByFiliale'
+}, {
   path: '/logging',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_Logging_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/Logging */ "./resources/js/Pages/gestione/Logging.vue"));
@@ -2895,6 +2901,7 @@ var state = function state() {
     compleanni: [],
     province: [],
     cittaByProvincia: [],
+    clientMessaggio: '',
     client: {}
   };
 };
@@ -2902,6 +2909,9 @@ var state = function state() {
 var getters = {
   getClients: function getClients(state) {
     return state.clients;
+  },
+  getClientMessaggio: function getClientMessaggio(state) {
+    return state.clientMessaggio;
   },
   getCompleanni: function getCompleanni(state) {
     return state.compleanni;
@@ -3095,10 +3105,9 @@ var actions = {
 
             case 3:
               response = _context8.sent;
-              console.log(response.data.data);
               commit('addClient', response.data.data);
 
-            case 6:
+            case 5:
             case "end":
               return _context8.stop();
           }
@@ -3189,21 +3198,57 @@ var actions = {
       }, _callee12);
     }))();
   },
-  importClientsXml: function importClientsXml() {
+  importClientsXml: function importClientsXml(_ref12, nomeFile) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13() {
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
-              _context13.next = 2;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimportclientsxml));
+              commit = _ref12.commit;
+              _context13.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimportclientsxml), {
+                nomeFile: nomeFile
+              });
 
-            case 2:
+            case 3:
+              response = _context13.sent;
+              commit('importClientsXml', response.data);
+
+            case 5:
             case "end":
               return _context13.stop();
           }
         }
       }, _callee13);
+    }))();
+  },
+  importClientsByFiliale: function importClientsByFiliale(_ref13, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee14() {
+      var commit, config, formData;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee14$(_context14) {
+        while (1) {
+          switch (_context14.prev = _context14.next) {
+            case 0:
+              commit = _ref13.commit;
+              config = {
+                headers: {
+                  'content-type': 'multipart/form-data'
+                }
+              };
+              formData = new FormData();
+              formData.append('file', payload.fileUp);
+              formData.append('path', payload.path);
+              formData.append('nomeFile', payload.nomeFile);
+              _context14.next = 8;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksalvafilexmlfromfiliale), formData, config);
+
+            case 8:
+            case "end":
+              return _context14.stop();
+          }
+        }
+      }, _callee14);
     }))();
   }
 };
@@ -3239,6 +3284,16 @@ var mutations = {
     state.clients = state.clients.filter(function (u) {
       return u.id !== id;
     });
+  },
+  importClientsXml: function importClientsXml(state, payload) {
+    if (payload == 1) {
+      state.clientMessaggio = 'Importazione effettuata';
+    } else {
+      state.clientMessaggio = 'Nessuna importazione effettuata';
+    }
+  },
+  resetClientMessaggio: function resetClientMessaggio(state) {
+    state.clientMessaggio = '';
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6331,7 +6386,8 @@ var help = function help() {
     linkricercanominativi: base + 'ricercaNominativi',
     linkcaricadocumento: base + 'salvaDocumento',
     linklistadocumenti: base + 'caricaDocumenti',
-    linkeliminadocumento: base + 'eliminaDocumento'
+    linkeliminadocumento: base + 'eliminaDocumento',
+    linksalvafilexmlfromfiliale: base + 'salvaFileXmlFromFiliale'
   };
 };
 
@@ -92630,7 +92686,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

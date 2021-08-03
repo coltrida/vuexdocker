@@ -238,12 +238,10 @@ class ClientService
         return Client::where('provincia', $provincia)->orderBy('citta')->pluck('citta');
     }
 
-    public function importClientsFromNoah()
+    public function importClientsFromNoah($request)
     {
-        $xmlDataString = file_get_contents(storage_path('app/public/file.xml'));
-        //dd($xmlDataString);
-        //$xmlObject = simplexml_load_string($xmlDataString, $class_name = "SimpleXMLElement", $options = 0, $ns = "pt", $is_prefix = true);
-
+        $xmlDataString = file_get_contents(storage_path($request->nomeFile));
+        $res = 0;
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
 
         foreach ($xml->Patient as $ele){
@@ -267,7 +265,6 @@ class ClientService
 
             $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
             $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
-            //dd($audiometriad->TonePoints);
 
             $d125 = null;
             $d250 = null;
@@ -325,10 +322,11 @@ class ClientService
                 $audiom->_6000s = (int)$s6000? (int)$s6000 : ( (int)$s4000 + (int)$s8000 ) / 2;
                 $audiom->_8000s = (int)$s8000? (int)$s8000 :  (int)$s6000;
 
-                $audiom->save();
-            }
+                $res = $audiom->save();
 
+            }
         }
+        return $res;
     }
 
     public function ricercaNominativi($request)

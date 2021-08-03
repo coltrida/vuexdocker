@@ -1,24 +1,20 @@
 <template>
-    <div>
-
-    <div>
-        <div class="flex justify-start mt-2">
-
-            <!---------- Header --------->
-            <div class="row">
-                    <div class="col-6">
-                        <h2>{{proveClient.nome}} {{proveClient.cognome}}</h2>
-                    </div>
-                    <div class="col-6">
-                        <v-btn color="primary" dark @click="cancella" class="mt-2">
-                            Chiudi
-                        </v-btn>
-                    </div>
-            </div>
-        </div>
+    <v-row class="mt-3 flex-column">
+        <!---------- Header --------->
+        <v-row>
+            <v-col cols="6">
+                <h2>{{proveClient.nome}} {{proveClient.cognome}}</h2>
+            </v-col>
+            <v-col cols="6" class="flex justify-end">
+                <v-btn color="primary" dark @click="cancella">
+                    Chiudi
+                </v-btn>
+            </v-col>
+        </v-row>
             <!---------- End Header --------->
-        <div class="flex justify-start mt-2">
-            <div>
+
+
+
 
                 <!---------- Fattura --------->
                 <a v-if="idFattura" target="_blank"
@@ -32,16 +28,18 @@
                 />
                 <!---------- End Fattura --------->
 
+        <v-row v-if="switchInserisci">
                 <!---------- Creo nuova prova con pulsante NUOVA PROVA --------->
-                <v-row v-if="switchInserisci">
+                <v-col >
                     <v-btn color="primary" dark @click="nuovaProvaInCorso" class="mt-2">
                         Nuova Prova
                     </v-btn>
-                </v-row>
+                </v-col>
+        </v-row>
                 <!---------- End Creo nuova prova con pulsante NUOVA PROVA --------->
 
                 <!---------- Seleziono i prodotti per la nuova prova createa --------->
-                <v-row v-else>
+        <v-row v-else>
                     <v-col
                         cols="3"
                     >
@@ -97,7 +95,7 @@
                             In Prova
                         </v-btn>
                     </v-col>
-                </v-row>
+        </v-row>
                 <!---------- End Seleziono i prodotti per la nuova prova createa --------->
 
                 <v-row>
@@ -214,7 +212,7 @@
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on, attrs }">
                                         <a :href="'http://vuexdocker.test/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
-                                            <v-icon v-if="item.stato.nome === 'FATTURA'"
+                                           <v-icon v-if="item.stato.nome === 'FATTURA'"
                                                     color="black"
                                                     small
                                                     v-bind="attrs"
@@ -249,10 +247,10 @@
                     </v-col>
                 </v-row>
 
-            </div>
-        </div>
-    </div>
-    </div>
+
+
+    </v-row>
+
 
 </template>
 

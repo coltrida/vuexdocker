@@ -24,6 +24,7 @@ const routes = [
     { path: '/ingressiRecapiti', component: () => import('../Pages/statistiche/IngRecapiti'), name: 'ingressiRecapiti' },
     { path: '/fatturatoCanali', component: () => import('../Pages/statistiche/FattCanali'), name: 'fatturatoCanali' },
     { path: '/importaClients', component: () => import('../Pages/clients/Importclients'), name: 'importClients' },
+    { path: '/importByFiliale', component: () => import('../Pages/clients/ImportByFiliale'), name: 'importByFiliale' },
     { path: '/logging', component: () => import('../Pages/gestione/Logging'), name: 'logging' },
     { path: '/filtri', component: () => import('../Pages/clients/Filtri'), name: 'filtri' },
 ];

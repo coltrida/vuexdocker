@@ -1,17 +1,13 @@
 <template>
     <div class="flex justify-start align-center mt-2">
-        <v-container>
-            <v-row>
-                <h1>Home Amministrazione</h1>
-            </v-row>
 
             <v-row>
-
                 <v-col cols="6">
                     <h2>Richiesta Materiale</h2>
                     <div v-for="filiale in getRichiestaApparecchi" :key="filiale.id">
                         <v-data-table
                             :headers="headers1"
+                            dense
                             :items="filiale.products_richiesti"
                             class="elevation-1 mt-3"
                             hide-default-footer
@@ -42,9 +38,10 @@
 
                 </v-col>
 
-                <v-col cols="4" v-if="getImmatricolati.length > 0">
+                <v-col cols="6" v-if="getImmatricolati.length > 0">
                     <h2>Da Spedire</h2>
                         <v-data-table
+                            dense
                             :headers="headers2"
                             :items="getImmatricolati"
                             class="elevation-1 mt-3"
@@ -58,21 +55,8 @@
                             </template>
 
                         </v-data-table>
-
-
                 </v-col>
-
-                <v-col cols="2">
-                    <h2>Telefonate:</h2>
-                    <div>
-
-                    </div>
-
-                </v-col>
-
             </v-row>
-
-        </v-container>
     </div>
 </template>
 
