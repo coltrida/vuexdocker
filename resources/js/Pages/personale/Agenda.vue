@@ -1,12 +1,10 @@
 <template>
     <div>
-        <h2>Agenda</h2>
+        <h2>Agenda Mese</h2>
         <div>
 
             <v-row class="py-4">
-
                 <v-col cols="12">
-
                         <v-data-table
                             hide-default-footer
                             :headers="headers1"
@@ -14,12 +12,9 @@
                             class="elevation-1 mt-3"
                             :item-class="itemRowBackground"
                         >
-
                         </v-data-table>
-
                 </v-col>
             </v-row>
-
 
         </div>
     </div>

@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Events\LogisticaEvent;
 use App\Models\Ddt;
 use App\Models\Filiale;
 use App\Models\Product;
@@ -70,6 +71,7 @@ class ProductService
             $prodotto->save();
             array_push($prodotti, $prodotto);
         }
+        broadcast(new LogisticaEvent($prodotti))->toOthers();
         return $prodotti;
     }
 
@@ -83,6 +85,7 @@ class ProductService
             $prodotto->ddt_id = $idDDT;
             $prodotto->save();
         };
+        broadcast(new LogisticaEvent($request->prodotti))->toOthers();
     }
 
     public function creaDDT($request)

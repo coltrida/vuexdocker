@@ -277,6 +277,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchRichiesti(this.rottaIdFiliale);
       this.fetchInArrivo(this.rottaIdFiliale);
       this.fetchFornitori();
+      window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
+        _this.fetchInFiliale(_this.rottaIdFiliale);
+
+        _this.fetchInProva(_this.rottaIdFiliale);
+
+        _this.fetchRichiesti(_this.rottaIdFiliale);
+
+        _this.fetchInArrivo(_this.rottaIdFiliale);
+      });
     }
   },
   watch: {

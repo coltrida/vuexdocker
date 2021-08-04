@@ -183,6 +183,13 @@
                 this.fetchInArrivo(this.rottaIdFiliale);
 
                 this.fetchFornitori();
+
+                window.Echo.channel("logisticaChannel").listen(".task-created", e => {
+                    this.fetchInFiliale(this.rottaIdFiliale);
+                    this.fetchInProva(this.rottaIdFiliale);
+                    this.fetchRichiesti(this.rottaIdFiliale);
+                    this.fetchInArrivo(this.rottaIdFiliale);
+                });
             }
 
         },

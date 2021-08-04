@@ -529,8 +529,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _NavBarAudio_Clients__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavBarAudio/Clients */ "./resources/js/Components/NavBarAudio/Clients.vue");
-/* harmony import */ var _NavBarAudio_Magazzino__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBarAudio/Magazzino */ "./resources/js/Components/NavBarAudio/Magazzino.vue");
+/* harmony import */ var _NavBarAudio_Agenda__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavBarAudio/Agenda */ "./resources/js/Components/NavBarAudio/Agenda.vue");
+/* harmony import */ var _NavBarAudio_Clients__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBarAudio/Clients */ "./resources/js/Components/NavBarAudio/Clients.vue");
+/* harmony import */ var _NavBarAudio_Magazzino__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NavBarAudio/Magazzino */ "./resources/js/Components/NavBarAudio/Magazzino.vue");
 //
 //
 //
@@ -538,15 +539,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "NavBarAudio",
   components: {
-    Magazzino: _NavBarAudio_Magazzino__WEBPACK_IMPORTED_MODULE_1__.default,
-    Clients: _NavBarAudio_Clients__WEBPACK_IMPORTED_MODULE_0__.default
+    Magazzino: _NavBarAudio_Magazzino__WEBPACK_IMPORTED_MODULE_2__.default,
+    Clients: _NavBarAudio_Clients__WEBPACK_IMPORTED_MODULE_1__.default,
+    Agenda: _NavBarAudio_Agenda__WEBPACK_IMPORTED_MODULE_0__.default
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
 
@@ -703,12 +751,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1217,6 +1259,45 @@ component.options.__file = "resources/js/Components/NavBarAudio.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Components/NavBarAudio/Agenda.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/Components/NavBarAudio/Agenda.vue ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Agenda_vue_vue_type_template_id_8067d0c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Agenda.vue?vue&type=template&id=8067d0c0&scoped=true& */ "./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=template&id=8067d0c0&scoped=true&");
+/* harmony import */ var _Agenda_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Agenda.vue?vue&type=script&lang=js& */ "./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Agenda_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Agenda_vue_vue_type_template_id_8067d0c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Agenda_vue_vue_type_template_id_8067d0c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "8067d0c0",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Components/NavBarAudio/Agenda.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Components/NavBarAudio/Clients.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/Components/NavBarAudio/Clients.vue ***!
@@ -1494,6 +1575,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Agenda_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Agenda.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Agenda_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/Components/NavBarAudio/Clients.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************!*\
   !*** ./resources/js/Components/NavBarAudio/Clients.vue?vue&type=script&lang=js& ***!
@@ -1708,6 +1805,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBarAudio_vue_vue_type_template_id_fa0d7c6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBarAudio_vue_vue_type_template_id_fa0d7c6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./NavBarAudio.vue?vue&type=template&id=fa0d7c6a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio.vue?vue&type=template&id=fa0d7c6a&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=template&id=8067d0c0&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=template&id=8067d0c0&scoped=true& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Agenda_vue_vue_type_template_id_8067d0c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Agenda_vue_vue_type_template_id_8067d0c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Agenda_vue_vue_type_template_id_8067d0c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Agenda.vue?vue&type=template&id=8067d0c0&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=template&id=8067d0c0&scoped=true&");
 
 
 /***/ }),
@@ -2531,7 +2645,103 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "flex justify-end align-center" },
-    [_c("Clients"), _vm._v(" "), _c("Magazzino")],
+    [_c("Clients"), _vm._v(" "), _c("Magazzino"), _vm._v(" "), _c("Agenda")],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=template&id=8067d0c0&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Agenda.vue?vue&type=template&id=8067d0c0&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "text-center" },
+    [
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      _vm._b(
+                        { attrs: { text: "", dark: "" } },
+                        "v-btn",
+                        attrs,
+                        false
+                      ),
+                      on
+                    ),
+                    [_vm._v("\n                Agenda\n            ")]
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-list",
+            [
+              _c(
+                "router-link",
+                { attrs: { to: { name: "agenda" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("MESE")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "settimana" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("SETTIMANA")])],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
     1
   )
 }
@@ -2801,22 +3011,6 @@ var render = function() {
                   _vm.getRuolo === "audio" || _vm.getRuolo === "amministrazione"
                     ? _c("nav-bar-audio")
                     : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    { attrs: { to: { name: "agenda" } } },
-                    [
-                      _vm.getRuolo === "audio" ||
-                      _vm.getRuolo === "amministrazione"
-                        ? _c("v-btn", { attrs: { text: "" } }, [
-                            _vm._v(
-                              "\n                    Agenda\n                "
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    1
-                  ),
                   _vm._v(" "),
                   _c(
                     "v-btn",

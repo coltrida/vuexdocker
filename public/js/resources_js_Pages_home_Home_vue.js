@@ -95,6 +95,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -102,6 +121,30 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     HomeAdmin: _homeAdmin__WEBPACK_IMPORTED_MODULE_1__.default,
     HomeAmm: _homeAmm__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  data: function data() {
+    return {
+      novitaLogistica: 0,
+      novitaCommerciale: 0
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
+      _this.novitaLogistica = '*';
+    });
+    window.Echo.channel("provaChannel").listen(".task-created", function (e) {
+      _this.novitaCommerciale = '*';
+    });
+  },
+  methods: {
+    resetLogistica: function resetLogistica() {
+      this.novitaLogistica = 0;
+    },
+    resetCommerciale: function resetCommerciale() {
+      this.novitaCommerciale = 0;
+    }
   }
 });
 
@@ -480,11 +523,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       valori: {},
       headers1: [{
         text: 'Nome',
+        width: 180,
         value: 'listino.nome',
         sortable: false,
         "class": "indigo white--text"
       }, {
         text: 'Fornitore',
+        width: 180,
         value: 'listino.fornitore.nome',
         sortable: false,
         "class": "indigo white--text"
@@ -496,6 +541,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Invia',
+        width: 120,
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -527,8 +573,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.fetchRichiestaApparecchi();
-    window.Echo.channel("provaChannel").listen(".task-created", function (e) {
-      _this.fetchSituazioneMese();
+    window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
+      _this.fetchRichiestaApparecchi();
     });
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
@@ -590,6 +636,19 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1545,7 +1604,25 @@ var render = function() {
     "v-tabs",
     { staticClass: "mt-3" },
     [
-      _c("v-tab", [_vm._v("Logistica")]),
+      _c(
+        "v-tab",
+        { on: { click: _vm.resetLogistica } },
+        [
+          _c(
+            "v-badge",
+            {
+              attrs: {
+                content: _vm.novitaLogistica,
+                value: _vm.novitaLogistica,
+                color: "green",
+                overlap: ""
+              }
+            },
+            [_vm._v("\n            Logistica\n        ")]
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-tab-item",
@@ -1553,7 +1630,25 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-tab", [_vm._v("Commerciale")]),
+      _c(
+        "v-tab",
+        { on: { click: _vm.resetCommerciale } },
+        [
+          _c(
+            "v-badge",
+            {
+              attrs: {
+                content: _vm.novitaCommerciale,
+                value: _vm.novitaCommerciale,
+                color: "green",
+                overlap: ""
+              }
+            },
+            [_vm._v("\n            Commerciale\n        ")]
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-tab-item",
@@ -2045,7 +2140,9 @@ var render = function() {
                               var item = ref.item
                               return [
                                 _c("v-text-field", {
-                                  staticClass: "mt-3",
+                                  staticStyle: {
+                                    transform: "translate(0, 12px)"
+                                  },
                                   attrs: { outlined: "", dense: "" },
                                   model: {
                                     value: _vm.matricole[item.id],
@@ -2249,7 +2346,7 @@ var render = function() {
                                   params: {
                                     filialeId: item.filiale_id,
                                     nomRicerca: item.client.nome,
-                                    cogRicerca: item.client.cognome
+                                    cogRicerca: item.client.fullname
                                   }
                                 }
                               }
@@ -2354,7 +2451,7 @@ var render = function() {
                                   params: {
                                     filialeId: item.filiale_id,
                                     nomRicerca: item.client.nome,
-                                    cogRicerca: item.client.cognome
+                                    cogRicerca: item.client.fullname
                                   }
                                 }
                               }
@@ -2459,7 +2556,7 @@ var render = function() {
                                   params: {
                                     filialeId: item.filiale_id,
                                     nomRicerca: item.client.nome,
-                                    cogRicerca: item.client.cognome
+                                    cogRicerca: item.client.fullname
                                   }
                                 }
                               }
@@ -2494,7 +2591,40 @@ var render = function() {
                     headers: _vm.headers4,
                     items: _vm.getAppuntamenti,
                     "hide-default-footer": ""
-                  }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "item.fullname",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "router-link",
+                            {
+                              staticStyle: { color: "black" },
+                              attrs: {
+                                to: {
+                                  name: "clientsFiliale",
+                                  params: {
+                                    filialeId: item.filiale_id,
+                                    nomRicerca: item.nome,
+                                    cogRicerca: item.fullname
+                                  }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(item.fullname) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    }
+                  ])
                 })
               ],
               1
@@ -2511,7 +2641,40 @@ var render = function() {
                     headers: _vm.headers4,
                     items: _vm.getAppuntamentiDomani,
                     "hide-default-footer": ""
-                  }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "item.fullname",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "router-link",
+                            {
+                              staticStyle: { color: "black" },
+                              attrs: {
+                                to: {
+                                  name: "clientsFiliale",
+                                  params: {
+                                    filialeId: item.filiale_id,
+                                    nomRicerca: item.nome,
+                                    cogRicerca: item.fullname
+                                  }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(item.fullname) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    }
+                  ])
                 })
               ],
               1

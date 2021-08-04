@@ -18,7 +18,7 @@
                             </template>
 
                             <template v-slot:item.matricola="{ item }">
-                                <v-text-field class="mt-3" v-model="matricole[item.id]"
+                                <v-text-field style="transform: translate(0, 12px);" v-model="matricole[item.id]"
                                     outlined
                                     dense
                                 ></v-text-field>
@@ -72,10 +72,10 @@
                 elemento:{},
                 valori:{},
                 headers1: [
-                    {text: 'Nome', value: 'listino.nome', sortable: false, class: "indigo white--text"},
-                    {text: 'Fornitore',  value: 'listino.fornitore.nome', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:180, value: 'listino.nome', sortable: false, class: "indigo white--text"},
+                    {text: 'Fornitore', width:180,  value: 'listino.fornitore.nome', sortable: false, class: "indigo white--text"},
                     {text: 'Matricola', width:180,  value: 'matricola', sortable: false, class: "indigo white--text"},
-                    { text: 'Invia', value: 'actions', sortable: false, class: "indigo white--text" },
+                    { text: 'Invia', width:120, value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
 
                 headers2: [
@@ -90,8 +90,8 @@
         mounted() {
             this.fetchRichiestaApparecchi();
 
-            window.Echo.channel("provaChannel").listen(".task-created", e => {
-                this.fetchSituazioneMese();
+            window.Echo.channel("logisticaChannel").listen(".task-created", e => {
+               this.fetchRichiestaApparecchi();
             });
         },
 

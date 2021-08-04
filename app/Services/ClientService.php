@@ -258,7 +258,9 @@ class ClientService
                     'citta' => $ele->Patient->City ? trim(Str::upper($ele->Patient->City)) : null,
                     'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
                     'datanascita' => $ele->Patient->DateofBirth ? $ele->Patient->DateofBirth : null,
-                    'tipologia_id' => 2,
+                    'recapito_id' => $ele->Patient->Other2 ? $ele->Patient->Other2 : null,
+                    'mail' => $ele->Patient->EMail ? $ele->Patient->EMail : null,
+                    'tipologia_id' => $ele->Patient->Province ? $ele->Patient->Province : null,
                     'filiale_id' => User::find($ele->Patient->CreatedBy)->filiale[0]->id,
                 ]
             );

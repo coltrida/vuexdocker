@@ -22,12 +22,6 @@
                 <nav-bar-admin v-if="getRuolo === 'admin'"/>
                 <nav-bar-audio v-if="getRuolo === 'audio' || getRuolo === 'amministrazione'"/>
 
-                <router-link :to="{ name: 'agenda'}">
-                    <v-btn text v-if="getRuolo === 'audio' || getRuolo === 'amministrazione'">
-                        Agenda
-                    </v-btn>
-                </router-link>
-
                 <v-btn text @click="logout" color="red">
                     Logout
                 </v-btn>

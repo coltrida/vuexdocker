@@ -1942,8 +1942,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
-    var accesso = false; //console.log(this.getFiliali);
-
+    var accesso = false;
     this.getFiliali.forEach(function (element) {
       if (element.id === _this.rottaIdFiliale) {
         accesso = true;
@@ -1954,6 +1953,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchClientsFiliale(this.rottaIdFiliale).then(function () {
         _this.search = _this.cognomeRicerca;
       });
+    }
+
+    if (this.cognomeRicerca) {
+      this.search = this.cognomeRicerca;
     }
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('clients', {

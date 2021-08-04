@@ -41,11 +41,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Listino",
@@ -344,7 +339,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h2", [_vm._v("Agenda")]),
+    _c("h2", [_vm._v("Agenda Mese")]),
     _vm._v(" "),
     _c(
       "div",

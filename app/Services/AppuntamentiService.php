@@ -22,49 +22,49 @@ class AppuntamentiService
     public function oggi($idAudio)
     {
         return User::with(['appuntamentiOggi' => function($q){
-            $q->with('client');
+            $q->with('client')->orderBy('orario');
         }])->find($idAudio)->appuntamentiOggi;
     }
 
     public function domani($idAudio)
     {
         return User::with(['appuntamentiDomani' => function($q){
-            $q->with('client');
+            $q->with('client')->orderBy('orario');
         }])->find($idAudio)->appuntamentiDomani;
     }
 
     public function lunedi($idAudio)
     {
         return User::with(['appuntamentiLunedi' => function($q){
-            $q->with('client');
+            $q->with('client')->orderBy('orario');
         }])->find($idAudio)->appuntamentiLunedi;
     }
 
     public function martedi($idAudio)
     {
         return User::with(['appuntamentiMartedi' => function($q){
-            $q->with('client');
+            $q->with('client')->orderBy('orario');
         }])->find($idAudio)->appuntamentiMartedi;
     }
 
     public function mercoledi($idAudio)
     {
         return User::with(['appuntamentiMercoledi' => function($q){
-            $q->with('client');
+            $q->with('client')->orderBy('orario');
         }])->find($idAudio)->appuntamentiMercoledi;
     }
 
     public function giovedi($idAudio)
     {
         return User::with(['appuntamentiGiovedi' => function($q){
-            $q->with('client');
+            $q->with('client')->orderBy('orario');
         }])->find($idAudio)->appuntamentiGiovedi;
     }
 
     public function venerdi($idAudio)
     {
         return User::with(['appuntamentiVenerdi' => function($q){
-            $q->with('client');
+            $q->with('client')->orderBy('orario');
         }])->find($idAudio)->appuntamentiVenerdi;
     }
 

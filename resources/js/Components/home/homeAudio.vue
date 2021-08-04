@@ -26,7 +26,7 @@
 
                             <template v-slot:item.client.fullname="{ item }">
                                 <router-link style="color: black" :to="{ name: 'clientsFiliale',
-                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.cognome, }}">
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.fullname, }}">
                                     {{item.client.fullname}}
                                 </router-link>
                             </template>
@@ -64,7 +64,7 @@
 
                             <template v-slot:item.client.fullname="{ item }">
                                 <router-link style="color: black" :to="{ name: 'clientsFiliale',
-                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.cognome, }}">
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.fullname, }}">
                                     {{item.client.fullname}}
                                 </router-link>
                             </template>
@@ -102,7 +102,7 @@
 
                             <template v-slot:item.client.fullname="{ item }">
                                 <router-link style="color: black" :to="{ name: 'clientsFiliale',
-                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.cognome, }}">
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.fullname, }}">
                                     {{item.client.fullname}}
                                 </router-link>
                             </template>
@@ -120,6 +120,12 @@
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
+                            <template v-slot:item.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                    {{item.fullname}}
+                                </router-link>
+                            </template>
 
                         </v-data-table>
                     </div>
@@ -132,6 +138,13 @@
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
+
+                            <template v-slot:item.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                    {{item.fullname}}
+                                </router-link>
+                            </template>
 
                         </v-data-table>
                     </div>

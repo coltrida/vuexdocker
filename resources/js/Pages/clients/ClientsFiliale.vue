@@ -218,7 +218,6 @@
 
         mounted() {
             let accesso = false;
-            //console.log(this.getFiliali);
             this.getFiliali.forEach(element => {
                 if(element.id === this.rottaIdFiliale){
                     accesso = true;
@@ -229,6 +228,10 @@
                 this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
                     this.search = this.cognomeRicerca;
                 });
+            }
+
+            if(this.cognomeRicerca){
+                this.search = this.cognomeRicerca;
             }
 
         },

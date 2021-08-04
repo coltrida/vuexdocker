@@ -1,31 +1,7 @@
 <template>
     <div>
-        <h2>Calendar</h2>
+        <h2>Agenda Settimana</h2>
         <div>
-            <v-row>
-                <v-col
-                    cols="6"
-                    sm="6"
-                >
-                    <v-select
-                        v-model="userId"
-                        item-value="id"
-                        item-text="name"
-                        :items="getAudio"
-                        label="Seleziona"
-                    ></v-select>
-                </v-col>
-
-                <v-col
-                    cols="4"
-                    sm="4"
-                >
-                    <v-btn @click="visualizza" dark color="indigo">
-                        Visualizza
-                    </v-btn>
-                </v-col>
-            </v-row>
-
             <v-row>
                 <v-col cols="12" class="flex">
                     <v-col>
@@ -195,11 +171,10 @@
     import {mapActions, mapGetters} from "vuex";
 
     export default {
-        name: "Calendar",
+        name: "Settimana",
 
         data(){
             return {
-                userId:'',
                 headers1: [
                     { text: 'Orario', width: 60, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
                     { text: 'Nome', width: 100, align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
@@ -210,14 +185,14 @@
         },
 
         mounted(){
-            this.fetchAudio();
+            this.fetchAppuntamentiLunedi(this.getIdUser);
+            this.fetchAppuntamentiMartedi(this.getIdUser);
+            this.fetchAppuntamentiMercoledi(this.getIdUser);
+            this.fetchAppuntamentiGiovedi(this.getIdUser);
+            this.fetchAppuntamentiVenerdi(this.getIdUser);
         },
 
         methods:{
-            ...mapActions('users', {
-                fetchAudio:'fetchAudio',
-            }),
-
             ...mapActions('appuntamenti', {
                 fetchAppuntamentiLunedi:'fetchAppuntamentiLunedi',
                 fetchAppuntamentiMartedi:'fetchAppuntamentiMartedi',
@@ -226,27 +201,19 @@
                 fetchAppuntamentiVenerdi:'fetchAppuntamentiVenerdi',
             }),
 
-            visualizza(){
-                this.fetchAppuntamentiLunedi(this.userId);
-                this.fetchAppuntamentiMartedi(this.userId);
-                this.fetchAppuntamentiMercoledi(this.userId);
-                this.fetchAppuntamentiGiovedi(this.userId);
-                this.fetchAppuntamentiVenerdi(this.userId);
-            }
-
         },
 
         computed:{
-            ...mapGetters('users', {
-                getAudio:'getAudio'
-            }),
-
             ...mapGetters('appuntamenti', {
                 getAppLun:'getAppLun',
                 getAppMar:'getAppMar',
                 getAppMer:'getAppMer',
                 getAppGio:'getAppGio',
                 getAppVen:'getAppVen',
+            }),
+
+            ...mapGetters('login', {
+                getIdUser:'getIdUser',
             }),
 
         },

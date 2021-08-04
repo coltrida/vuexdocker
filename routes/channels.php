@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('provaChannel', function () {
     return true;
 });
+
+Broadcast::channel('logisticaChannel', function () {
+    return true;
+});
