@@ -236,8 +236,12 @@ class UserService
                    ->with(['provaFinalizzata' => function($e){
                        $e->withCount('product');
                    }])
+                   ->with(['provaReso' => function($j) use($anno){
+                       $j->where('anno_fine', $anno)->withCount('product');
+                   }])
                    ->find($user->id);
 
+               $pezzi->premio = count($valore->provaReso) > 0 ? $valore->provaReso[0]->product_count : 0;
                $pezzi->gennaio = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                $fatturati->gennaio = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                $delta->gennaio = number_format( (float) (($fatturati->gennaio / $valore->budget->gennaio) - 1) * 100, '1');
@@ -487,7 +491,7 @@ class UserService
     public function dettaglioAudio()
     {
         return User::audio()
-            ->with(['delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
+            ->with(['pezzi','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
                 $q->orderBy('mese_fine');
             }])
             ->orderBy('name')

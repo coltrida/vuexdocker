@@ -100,20 +100,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -122,23 +108,30 @@ __webpack_require__.r(__webpack_exports__);
     HomeAdmin: _homeAdmin__WEBPACK_IMPORTED_MODULE_1__.default,
     HomeAmm: _homeAmm__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  data: function data() {
-    return {
-      novitaLogistica: 0,
-      novitaCommerciale: 0
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
 
-    window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
-      _this.novitaLogistica = '*';
-    });
-    window.Echo.channel("provaChannel").listen(".task-created", function (e) {
-      _this.novitaCommerciale = '*';
-    });
-  },
+  /*data(){
+      return{
+          sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3",
+          novitaLogistica : 0,
+          novitaCommerciale : 0,
+      }
+  },*/
+
+  /*mounted() {
+      window.Echo.channel("logisticaChannel").listen(".task-created", e => {
+          this.novitaLogistica = '*';
+          this.playSound();
+      });
+       window.Echo.channel("provaChannel").listen(".task-created", e => {
+          this.novitaCommerciale = '*';
+          this.playSound();
+      });
+  },*/
   methods: {
+    playSound: function playSound() {
+      var alert = new Audio(this.sound);
+      alert.play();
+    },
     resetLogistica: function resetLogistica() {
       this.novitaLogistica = 0;
     },
@@ -1604,25 +1597,9 @@ var render = function() {
     "v-tabs",
     { staticClass: "mt-3" },
     [
-      _c(
-        "v-tab",
-        { on: { click: _vm.resetLogistica } },
-        [
-          _c(
-            "v-badge",
-            {
-              attrs: {
-                content: _vm.novitaLogistica,
-                value: _vm.novitaLogistica,
-                color: "green",
-                overlap: ""
-              }
-            },
-            [_vm._v("\n            Logistica\n        ")]
-          )
-        ],
-        1
-      ),
+      _c("v-tab", { on: { click: _vm.resetLogistica } }, [
+        _vm._v("\n            Logistica\n    ")
+      ]),
       _vm._v(" "),
       _c(
         "v-tab-item",
@@ -1630,25 +1607,9 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-tab",
-        { on: { click: _vm.resetCommerciale } },
-        [
-          _c(
-            "v-badge",
-            {
-              attrs: {
-                content: _vm.novitaCommerciale,
-                value: _vm.novitaCommerciale,
-                color: "green",
-                overlap: ""
-              }
-            },
-            [_vm._v("\n            Commerciale\n        ")]
-          )
-        ],
-        1
-      ),
+      _c("v-tab", { on: { click: _vm.resetCommerciale } }, [
+        _vm._v("\n            Commerciale\n    ")
+      ]),
       _vm._v(" "),
       _c(
         "v-tab-item",

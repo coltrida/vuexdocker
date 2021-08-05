@@ -3,7 +3,7 @@ import help from "../../help";
 const state = () => ({
     appuntamenti: [],
     appuntamentiDomani: [],
-
+    dateSettimana: [],
     appLun: [],
     appMar: [],
     appMer: [],
@@ -39,6 +39,10 @@ const getters = {
     getAppVen(state){
         return state.appVen;
     },
+
+    getDateSettimana(state){
+        return state.dateSettimana;
+    },
 };
 
 const actions = {
@@ -51,6 +55,31 @@ const actions = {
     async fetchAppuntamentiOggi({commit}, idAudio){
         const response = await axios.get(`${help().linkappuntamentioggi}`+'/'+idAudio);
         commit('fetchAppuntamenti', response.data.data);
+    },
+
+    async prossimoLunedi({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentilunediprossimo}`+'/'+idAudio);
+        commit('fetchAppuntamentiLunedi', response.data.data);
+    },
+
+    async prossimoMartedi({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentimartediprossimo}`+'/'+idAudio);
+        commit('fetchAppuntamentiMartedi', response.data.data);
+    },
+
+    async prossimoMarcoledi({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentimercolediprossimo}`+'/'+idAudio);
+        commit('fetchAppuntamentiMercoledi', response.data.data);
+    },
+
+    async prossimoGiovedi({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentigiovediprossimo}`+'/'+idAudio);
+        commit('fetchAppuntamentiGiovedi', response.data.data);
+    },
+
+    async prossimoVenerdi({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentivenerdiprossimo}`+'/'+idAudio);
+        commit('fetchAppuntamentiVenerdi', response.data.data);
     },
 
     async fetchAppuntamentiLunedi({commit}, idAudio){
@@ -94,28 +123,38 @@ const actions = {
     },
 
     async fetchAppLun({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentilun}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentilunedi}`+'/'+idAudio);
         commit('fetchAppLun', response.data.data);
     },
 
     async fetchAppMar({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimar}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentimartedi}`+'/'+idAudio);
         commit('fetchAppMar', response.data.data);
     },
 
     async fetchAppMer({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimer}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentimercoledi}`+'/'+idAudio);
         commit('fetchAppMer', response.data.data);
     },
 
     async fetchAppGio({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentigio}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentigiovedi}`+'/'+idAudio);
         commit('fetchAppGio', response.data.data);
     },
 
     async fetchAppVen({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentiven}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentivenerdi}`+'/'+idAudio);
         commit('fetchAppVen', response.data.data);
+    },
+
+    async fetchDateSettimana({commit}){
+        const response = await axios.get(`${help().linkdatesettimana}`);
+        commit('fetchDateSettimana', response.data);
+    },
+
+    async fetchDateSettimanaProssima({commit}){
+        const response = await axios.get(`${help().linkdatesettimanaprossima}`);
+        commit('fetchDateSettimana', response.data);
     },
 };
 
@@ -162,6 +201,10 @@ const mutations = {
 
     fetchAppMar(state, payload){
         state.appMar = payload;
+    },
+
+    fetchDateSettimana(state, payload){
+        state.dateSettimana = payload;
     },
 };
 

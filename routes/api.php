@@ -145,8 +145,15 @@ Route::get('/appuntamentiMartediAudio/{idAudio}', [AppuntamentiController::class
 Route::get('/appuntamentiMercolediAudio/{idAudio}', [AppuntamentiController::class, 'mercoledi']);
 Route::get('/appuntamentiGiovediAudio/{idAudio}', [AppuntamentiController::class, 'giovedi']);
 Route::get('/appuntamentiVenerdiAudio/{idAudio}', [AppuntamentiController::class, 'venerdi']);
+Route::get('/appuntamentiLunediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'lunediProssimo']);
+Route::get('/appuntamentiMartediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'martediProssimo']);
+Route::get('/appuntamentiMercolediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'mercolediProssimo']);
+Route::get('/appuntamentiGiovediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'giovediProssimo']);
+Route::get('/appuntamentiVenerdiProssimoAudio/{idAudio}', [AppuntamentiController::class, 'venerdiProssimo']);
 Route::delete('/appuntamentiCliente/{id}/{idUser}', [AppuntamentiController::class, 'elimina']);
 Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
+Route::get('/dateSettimana', [AppuntamentiController::class, 'dateSettimana']);
+Route::get('/dateSettimanaProssima', [AppuntamentiController::class, 'dateSettimanaProssima']);
 
 // ----------------- documenti -----------------------
 Route::post('/salvaDocumento', [DocumentoController::class, 'salvaDocumento']);

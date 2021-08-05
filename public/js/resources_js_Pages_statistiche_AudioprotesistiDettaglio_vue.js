@@ -53,6 +53,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -200,8 +213,6 @@ var render = function() {
               _c(
                 "v-row",
                 [
-                  _c("v-col", [_c("h2", [_vm._v(_vm._s(audio.name))])]),
-                  _vm._v(" "),
                   _c("v-col", [
                     _c("h4", [
                       _vm._v(
@@ -220,41 +231,91 @@ var render = function() {
                     _c("h4", [
                       _vm._v("Nr. Cl: " + _vm._s(audio.delta.stipendio))
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _c("h4", [
+                      _vm._v("Pezzi Ven.: " + _vm._s(audio.pezzi.budgetAnno))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _c("h4", [
+                      _vm._v(
+                        "% conv.: " +
+                          _vm._s(
+                            audio.pezzi.budgetAnno
+                              ? (audio.pezzi.budgetAnno /
+                                  (audio.pezzi.budgetAnno +
+                                    audio.pezzi.premio)) *
+                                  100
+                              : 0
+                          ) +
+                          "%"
+                      )
+                    ])
                   ])
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("v-data-table", {
-                staticClass: "elevation-1 mt-3",
-                attrs: {
-                  headers: _vm.headers,
-                  items: audio.prova_finalizzata,
-                  "item-key": audio.prova_finalizzata.id,
-                  "hide-default-footer": ""
-                },
-                scopedSlots: _vm._u(
-                  [
-                    {
-                      key: "item.products",
-                      fn: function(ref) {
-                        var item = ref.item
-                        return _vm._l(item.product, function(ele) {
-                          return _c("div", { key: ele.id }, [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(ele.listino.nome) +
-                                "\n                    "
+              _c(
+                "v-expansion-panels",
+                [
+                  _c(
+                    "v-expansion-panel",
+                    [
+                      _c("v-expansion-panel-header", [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(audio.name) +
+                            " - Dettaglio vendite\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-expansion-panel-content",
+                        [
+                          _c("v-data-table", {
+                            staticClass: "elevation-1 mt-3",
+                            attrs: {
+                              dense: "",
+                              headers: _vm.headers,
+                              items: audio.prova_finalizzata,
+                              "item-key": audio.prova_finalizzata.id,
+                              "hide-default-footer": ""
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "item.products",
+                                  fn: function(ref) {
+                                    var item = ref.item
+                                    return _vm._l(item.product, function(ele) {
+                                      return _c("div", { key: ele.id }, [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(ele.listino.nome) +
+                                            "\n                                "
+                                        )
+                                      ])
+                                    })
+                                  }
+                                }
+                              ],
+                              null,
+                              true
                             )
-                          ])
-                        })
-                      }
-                    }
-                  ],
-                  null,
-                  true
-                )
-              })
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )

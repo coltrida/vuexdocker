@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\Filiale;
 use App\Models\Recapito;
 use App\Models\User;
+use Carbon\Carbon;
 
 class AppuntamentiService
 {
@@ -68,6 +69,41 @@ class AppuntamentiService
         }])->find($idAudio)->appuntamentiVenerdi;
     }
 
+    public function lunediProssimo($idAudio)
+    {
+        return User::with(['appuntamentiLunediProssimo' => function($q){
+            $q->with('client')->orderBy('orario');
+        }])->find($idAudio)->appuntamentiLunediProssimo;
+    }
+
+    public function martediProssimo($idAudio)
+    {
+        return User::with(['appuntamentiMartediProssimo' => function($q){
+            $q->with('client')->orderBy('orario');
+        }])->find($idAudio)->appuntamentiMartediProssimo;
+    }
+
+    public function mercolediProssimo($idAudio)
+    {
+        return User::with(['appuntamentiMercolediProssimo' => function($q){
+            $q->with('client')->orderBy('orario');
+        }])->find($idAudio)->appuntamentiMercolediProssimo;
+    }
+
+    public function giovediProssimo($idAudio)
+    {
+        return User::with(['appuntamentiGiovediProssimo' => function($q){
+            $q->with('client')->orderBy('orario');
+        }])->find($idAudio)->appuntamentiGiovediProssimo;
+    }
+
+    public function venerdiProssimo($idAudio)
+    {
+        return User::with(['appuntamentiVenerdiProssimo' => function($q){
+            $q->with('client')->orderBy('orario');
+        }])->find($idAudio)->appuntamentiVenerdiProssimo;
+    }
+
     public function addAppuntamento($request)
     {
         $newAppuntamento = new Appuntamento();
@@ -104,5 +140,29 @@ class AppuntamentiService
         $log->scriviLog($appuntamento, $utente, $utente->name, $propieta, $testo);
 
         return $appuntamento->delete();
+    }
+
+    public function dateSettimana()
+    {
+        $giorni = [];
+        $giorni[0] = Carbon::now()->startOfWeek()->format('d-m-Y');
+        $giorni[1] = Carbon::now()->startOfWeek()->addDay()->format('d-m-Y');
+        $giorni[2] = Carbon::now()->startOfWeek()->addDays(2)->format('d-m-Y');
+        $giorni[3] = Carbon::now()->startOfWeek()->addDays(3)->format('d-m-Y');
+        $giorni[4] = Carbon::now()->startOfWeek()->addDays(4)->format('d-m-Y');
+
+        return $giorni;
+    }
+
+    public function dateSettimanaProssima()
+    {
+        $giorni = [];
+        $giorni[0] = Carbon::now()->startOfWeek()->addDays(7)->format('d-m-Y');
+        $giorni[1] = Carbon::now()->startOfWeek()->addDays(8)->format('d-m-Y');
+        $giorni[2] = Carbon::now()->startOfWeek()->addDays(9)->format('d-m-Y');
+        $giorni[3] = Carbon::now()->startOfWeek()->addDays(10)->format('d-m-Y');
+        $giorni[4] = Carbon::now()->startOfWeek()->addDays(11)->format('d-m-Y');
+
+        return $giorni;
     }
 }

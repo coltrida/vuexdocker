@@ -299,69 +299,38 @@ class User extends Authenticatable
         return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
     }
 
+    public function appuntamentiLunediProssimo()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(7)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
+    }
+
+    public function appuntamentiMartediProssimo()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(8)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno);
+    }
+
+    public function appuntamentiMercolediProssimo()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(9)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno);
+    }
+
+    public function appuntamentiGiovediProssimo()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(10)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno);
+    }
+
+    public function appuntamentiVenerdiProssimo()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(11)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
+    }
+
     public function agenda()
     {
         return $this->hasMany(Agenda::class);
     }
-
-
-/*    public function getIsAdminAttribute()
-    {
-        return $this->ruolo == config('enum.ruoli.admin') ? true : false;
-    }
-
-    public function getIsAudioAttribute()
-    {
-        return $this->ruolo == config('enum.ruoli.audio') ? true : false;
-    }
-
-    public function getIsAmministrazioneAttribute()
-    {
-        return $this->ruolo == config('enum.ruoli.segreteria') ? true : false;
-    }
-
-    public function audiometrie()
-    {
-        return $this->hasMany(Audiometria::class);
-    }
-
-    public function filiale()
-    {
-        return $this->belongsToMany(Filiale::class, 'filiale_user', 'user_id', 'filiale_id');
-    }
-
-    public function prova()
-    {
-        return $this->hasMany(Prova::class);
-    }
-
-    public function provaInCorso()
-    {
-        return $this->hasMany(Prova::class)->where('stato', config('enum.statoAPA.prova'));
-    }
-
-    public function provaFinalizzata()
-    {
-        return $this->hasMany(Prova::class)->where('stato', config('enum.statoAPA.fattura'));
-    }
-
-    public function recapito()
-    {
-        return $this->hasMany(Recapito::class);
-    }
-
-    public function appuntamenti()
-    {
-        return $this->hasMany(Appuntamento::class);
-    }
-
-    public function budget()
-    {
-        return $this->belongsTo(Budget::class);
-    }
-
-    public function client()
-    {
-        return $this->hasMany(Client::class);
-    }*/
 }

@@ -808,6 +808,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -816,6 +844,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     NavBarAudio: _NavBarAudio__WEBPACK_IMPORTED_MODULE_1__.default,
     NavBarAdmin: _NavBarAdmin__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  data: function data() {
+    return {
+      sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3",
+      novitaLogistica: 0,
+      novitaCommerciale: 0
+    };
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('login', {
     getLogged: 'getLogged',
@@ -831,12 +866,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$router.push({
         name: 'home'
       });
+    },
+    playSound: function playSound() {
+      var alert = new Audio(this.sound);
+      alert.play();
+    },
+    resetAvviso: function resetAvviso() {
+      this.novitaLogistica = 0;
+      this.novitaCommerciale = 0;
     }
   }),
   mounted: function mounted() {
+    var _this = this;
+
     if (this.getLogged) {
       this.fetchUser(this.getIdUser);
     }
+
+    window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
+      _this.novitaLogistica = 'L';
+
+      _this.playSound();
+    });
+    window.Echo.channel("provaChannel").listen(".task-created", function (e) {
+      _this.novitaCommerciale = 'C';
+
+      _this.playSound();
+    });
     /*window.onunload = () => {
         localStorage.removeItem('user-token');
         localStorage.removeItem('username');
@@ -863,7 +919,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     window.onload = function () {
      window.localStorage.isMySessionActive = "true";
     };*/
-
   }
 });
 
@@ -2983,18 +3038,70 @@ var render = function() {
         "v-toolbar",
         { attrs: { color: "indigo darken-4", dark: "" } },
         [
+          _vm.getRuolo === "admin"
+            ? _c(
+                "v-badge",
+                {
+                  attrs: {
+                    content: _vm.novitaLogistica,
+                    value: _vm.novitaLogistica,
+                    color: "green",
+                    overlap: ""
+                  }
+                },
+                [
+                  _vm.getRuolo === "admin"
+                    ? _c(
+                        "v-badge",
+                        {
+                          attrs: {
+                            content: _vm.novitaCommerciale,
+                            value: _vm.novitaCommerciale,
+                            color: "green",
+                            bottom: "",
+                            overlap: ""
+                          }
+                        },
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: { name: "home" } } },
+                            [
+                              _c("v-img", {
+                                attrs: {
+                                  "lazy-src": "/img/logo-centroudito.png",
+                                  "max-height": "50",
+                                  "max-width": "150",
+                                  src: "/img/logo-centroudito.png"
+                                },
+                                on: { click: _vm.resetAvviso }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "router-link",
             { attrs: { to: { name: "home" } } },
             [
-              _c("v-img", {
-                attrs: {
-                  "lazy-src": "/img/logo-centroudito.png",
-                  "max-height": "50",
-                  "max-width": "150",
-                  src: "/img/logo-centroudito.png"
-                }
-              })
+              _vm.getRuolo === "audio"
+                ? _c("v-img", {
+                    attrs: {
+                      "lazy-src": "/img/logo-centroudito.png",
+                      "max-height": "50",
+                      "max-width": "150",
+                      src: "/img/logo-centroudito.png"
+                    }
+                  })
+                : _vm._e()
             ],
             1
           ),

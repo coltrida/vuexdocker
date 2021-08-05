@@ -147,7 +147,6 @@ class Client extends Model
         return $this->hasMany(Prova::class)->where([ ['stato_id', 4], ['anno_fine', $anno] ]);
     }
 
-
     public function provaDdt()
     {
         return $this->hasMany(Prova::class)->where('stato', config('enum.statoAPA.ddt'));

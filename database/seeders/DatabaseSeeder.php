@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             ListinoSeeder::class,
             RecapitoSeeder::class,
             FilialeUserSeeder::class,
-           // ClientSeeder::class,
+            ClientSeeder::class,
             BudgetSeeder::class,
             ProductSeeder::class,
             TipologiaSeeder::class,

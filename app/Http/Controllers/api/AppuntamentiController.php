@@ -49,6 +49,31 @@ class AppuntamentiController extends Controller
         return AppuntamentiResource::collection($appuntamentiService->venerdi($idAudio));
     }
 
+    public function lunediProssimo($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->lunediProssimo($idAudio));
+    }
+
+    public function martediProssimo($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->martediProssimo($idAudio));
+    }
+
+    public function mercolediProssimo($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->mercolediProssimo($idAudio));
+    }
+
+    public function giovediProssimo($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->giovediProssimo($idAudio));
+    }
+
+    public function venerdiProssimo($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->venerdiProssimo($idAudio));
+    }
+
     public function aggiungi(Request $request, AppuntamentiService $appuntamentiService)
     {
         return $appuntamentiService->addAppuntamento($request);
@@ -57,5 +82,15 @@ class AppuntamentiController extends Controller
     public function elimina($id, $idUser, AppuntamentiService $appuntamentiService)
     {
         return $appuntamentiService->eliminaAppuntamento($id, $idUser);
+    }
+
+    public function dateSettimana(AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->dateSettimana();
+    }
+
+    public function dateSettimanaProssima(AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->dateSettimanaProssima();
     }
 }

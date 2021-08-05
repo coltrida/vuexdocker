@@ -187,11 +187,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Settimana",
   data: function data() {
     return {
+      text: 'left',
       headers1: [{
         text: 'Orario',
         width: 60,
@@ -222,20 +249,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchAppuntamentiMercoledi(this.getIdUser);
     this.fetchAppuntamentiGiovedi(this.getIdUser);
     this.fetchAppuntamentiVenerdi(this.getIdUser);
+    this.fetchDateSettimana();
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
     fetchAppuntamentiLunedi: 'fetchAppuntamentiLunedi',
     fetchAppuntamentiMartedi: 'fetchAppuntamentiMartedi',
     fetchAppuntamentiMercoledi: 'fetchAppuntamentiMercoledi',
     fetchAppuntamentiGiovedi: 'fetchAppuntamentiGiovedi',
-    fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi'
-  })),
+    fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi',
+    prossimoLunedi: 'prossimoLunedi',
+    prossimoMartedi: 'prossimoMartedi',
+    prossimoMarcoledi: 'prossimoMarcoledi',
+    prossimoGiovedi: 'prossimoGiovedi',
+    prossimoVenerdi: 'prossimoVenerdi',
+    fetchDateSettimana: 'fetchDateSettimana',
+    fetchDateSettimanaProssima: 'fetchDateSettimanaProssima'
+  })), {}, {
+    attuale: function attuale() {
+      this.fetchAppuntamentiLunedi(this.getIdUser);
+      this.fetchAppuntamentiMartedi(this.getIdUser);
+      this.fetchAppuntamentiMercoledi(this.getIdUser);
+      this.fetchAppuntamentiGiovedi(this.getIdUser);
+      this.fetchAppuntamentiVenerdi(this.getIdUser);
+      this.fetchDateSettimana();
+    },
+    prossima: function prossima() {
+      this.prossimoLunedi(this.getIdUser);
+      this.prossimoMartedi(this.getIdUser);
+      this.prossimoMarcoledi(this.getIdUser);
+      this.prossimoGiovedi(this.getIdUser);
+      this.prossimoVenerdi(this.getIdUser);
+      this.fetchDateSettimanaProssima();
+    }
+  }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
     getAppLun: 'getAppLun',
     getAppMar: 'getAppMar',
     getAppMer: 'getAppMer',
     getAppGio: 'getAppGio',
-    getAppVen: 'getAppVen'
+    getAppVen: 'getAppVen',
+    getDateSettimana: 'getDateSettimana'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   }))
@@ -331,413 +384,471 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", [_vm._v("Agenda Settimana")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      [
-        _c(
-          "v-row",
-          [
-            _c(
-              "v-col",
-              { staticClass: "flex", attrs: { cols: "12" } },
-              [
-                _c(
-                  "v-col",
-                  [
-                    _c("h2", [_vm._v("Lunedi")]),
-                    _vm._v(" "),
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        dense: "",
-                        headers: _vm.headers1,
-                        items: _vm.getAppLun,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
+  return _c(
+    "div",
+    { staticClass: "my-2" },
+    [
+      _c(
+        "v-row",
+        [
+          _c("v-col", { attrs: { cols: "6" } }, [
+            _c("h2", [_vm._v("Agenda Settimana")])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { staticClass: "flex justify-end", attrs: { cols: "6" } },
+            [
+              _c(
+                "v-btn-toggle",
+                {
+                  attrs: { tile: "", color: "deep-purple accent-3", group: "" },
+                  model: {
+                    value: _vm.text,
+                    callback: function($$v) {
+                      _vm.text = $$v
+                    },
+                    expression: "text"
+                  }
+                },
+                [
+                  _c(
+                    "v-btn",
+                    { attrs: { value: "left" }, on: { click: _vm.attuale } },
+                    [_vm._v("\n                    Attuale\n                ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { value: "center" }, on: { click: _vm.prossima } },
+                    [_vm._v("\n                    Prossima\n                ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { staticClass: "flex", attrs: { cols: "12" } },
+                [
+                  _c(
+                    "v-col",
+                    [
+                      _c("h3", [
+                        _vm._v("Lunedi - " + _vm._s(_vm.getDateSettimana[0]))
+                      ]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          dense: "",
+                          headers: _vm.headers1,
+                          items: _vm.getAppLun,
+                          "hide-default-footer": ""
                         },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.fullname) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.orario",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.orario) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.luogo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.luogo) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
                           }
+                        ])
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c("h3", [
+                        _vm._v("Martedì - " + _vm._s(_vm.getDateSettimana[1]))
+                      ]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          dense: "",
+                          headers: _vm.headers1,
+                          items: _vm.getAppMar,
+                          "hide-default-footer": ""
                         },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.fullname) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.orario",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.orario) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.luogo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.luogo) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
                           }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-col",
-                  [
-                    _c("h2", [_vm._v("Martedì")]),
-                    _vm._v(" "),
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        dense: "",
-                        headers: _vm.headers1,
-                        items: _vm.getAppMar,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
+                        ])
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c("h3", [
+                        _vm._v("Mercoledì - " + _vm._s(_vm.getDateSettimana[2]))
+                      ]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          dense: "",
+                          headers: _vm.headers1,
+                          items: _vm.getAppMer,
+                          "hide-default-footer": ""
                         },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.fullname) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.orario",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.orario) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.luogo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.luogo) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
                           }
+                        ])
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c("h3", [
+                        _vm._v("Giovedì - " + _vm._s(_vm.getDateSettimana[3]))
+                      ]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          dense: "",
+                          headers: _vm.headers1,
+                          items: _vm.getAppGio,
+                          "hide-default-footer": ""
                         },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.fullname) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.orario",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.orario) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.luogo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.luogo) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
                           }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-col",
-                  [
-                    _c("h2", [_vm._v("Mercoledì")]),
-                    _vm._v(" "),
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        dense: "",
-                        headers: _vm.headers1,
-                        items: _vm.getAppMer,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
+                        ])
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c("h3", [
+                        _vm._v("Venerdì - " + _vm._s(_vm.getDateSettimana[4]))
+                      ]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          dense: "",
+                          headers: _vm.headers1,
+                          items: _vm.getAppVen,
+                          "hide-default-footer": ""
                         },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.fullname) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.orario",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.orario) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.luogo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.luogo) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
                           }
-                        },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-col",
-                  [
-                    _c("h2", [_vm._v("Giovedì")]),
-                    _vm._v(" "),
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        dense: "",
-                        headers: _vm.headers1,
-                        items: _vm.getAppGio,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-col",
-                  [
-                    _c("h2", [_vm._v("Venerdì")]),
-                    _vm._v(" "),
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
-                      attrs: {
-                        dense: "",
-                        headers: _vm.headers1,
-                        items: _vm.getAppVen,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    )
-  ])
+                        ])
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

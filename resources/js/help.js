@@ -72,6 +72,11 @@ const help = () => {
         linkappuntamentimercoledi: base+'appuntamentiMercolediAudio',
         linkappuntamentigiovedi: base+'appuntamentiGiovediAudio',
         linkappuntamentivenerdi: base+'appuntamentiVenerdiAudio',
+        linkappuntamentilunediprossimo: base+'appuntamentiLunediProssimoAudio',
+        linkappuntamentimartediprossimo: base+'appuntamentiMartediProssimoAudio',
+        linkappuntamentimercolediprossimo: base+'appuntamentiMercolediProssimoAudio',
+        linkappuntamentigiovediprossimo: base+'appuntamentiGiovediProssimoAudio',
+        linkappuntamentivenerdiprossimo: base+'appuntamentiVenerdiProssimoAudio',
         linkvisualizzasituazioneanno: base+'visualizzaSituazioneAnno',
         linkinviasms: 'http://vuexdocker.test/api/inviaSms',
         linklistarichiestaapparecchi: base+'listaProdottiRichiesti',
@@ -94,6 +99,8 @@ const help = () => {
         linklistadocumenti: base+'caricaDocumenti',
         linkeliminadocumento: base+'eliminaDocumento',
         linksalvafilexmlfromfiliale: base+'salvaFileXmlFromFiliale',
+        linkdatesettimana: base+'dateSettimana',
+        linkdatesettimanaprossima: base+'dateSettimanaProssima',
     };
 };
 export default help;

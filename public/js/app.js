@@ -2195,6 +2195,7 @@ var state = function state() {
   return {
     appuntamenti: [],
     appuntamentiDomani: [],
+    dateSettimana: [],
     appLun: [],
     appMar: [],
     appMer: [],
@@ -2224,6 +2225,9 @@ var getters = {
   },
   getAppVen: function getAppVen(state) {
     return state.appVen;
+  },
+  getDateSettimana: function getDateSettimana(state) {
+    return state.dateSettimana;
   }
 };
 var actions = {
@@ -2273,7 +2277,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  fetchAppuntamentiLunedi: function fetchAppuntamentiLunedi(_ref3, idAudio) {
+  prossimoLunedi: function prossimoLunedi(_ref3, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -2282,7 +2286,7 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentilunedi) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentilunediprossimo) + '/' + idAudio);
 
             case 3:
               response = _context3.sent;
@@ -2296,7 +2300,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  fetchAppuntamentiMartedi: function fetchAppuntamentiMartedi(_ref4, idAudio) {
+  prossimoMartedi: function prossimoMartedi(_ref4, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -2305,7 +2309,7 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimartedi) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimartediprossimo) + '/' + idAudio);
 
             case 3:
               response = _context4.sent;
@@ -2319,7 +2323,7 @@ var actions = {
       }, _callee4);
     }))();
   },
-  fetchAppuntamentiMercoledi: function fetchAppuntamentiMercoledi(_ref5, idAudio) {
+  prossimoMarcoledi: function prossimoMarcoledi(_ref5, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -2328,7 +2332,7 @@ var actions = {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimercoledi) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimercolediprossimo) + '/' + idAudio);
 
             case 3:
               response = _context5.sent;
@@ -2342,7 +2346,7 @@ var actions = {
       }, _callee5);
     }))();
   },
-  fetchAppuntamentiGiovedi: function fetchAppuntamentiGiovedi(_ref6, idAudio) {
+  prossimoGiovedi: function prossimoGiovedi(_ref6, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
@@ -2351,7 +2355,7 @@ var actions = {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentigiovedi) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentigiovediprossimo) + '/' + idAudio);
 
             case 3:
               response = _context6.sent;
@@ -2365,7 +2369,7 @@ var actions = {
       }, _callee6);
     }))();
   },
-  fetchAppuntamentiVenerdi: function fetchAppuntamentiVenerdi(_ref7, idAudio) {
+  prossimoVenerdi: function prossimoVenerdi(_ref7, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
@@ -2374,7 +2378,7 @@ var actions = {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentivenerdi) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentivenerdiprossimo) + '/' + idAudio);
 
             case 3:
               response = _context7.sent;
@@ -2388,7 +2392,7 @@ var actions = {
       }, _callee7);
     }))();
   },
-  fetchAppuntamentiDomani: function fetchAppuntamentiDomani(_ref8, idAudio) {
+  fetchAppuntamentiLunedi: function fetchAppuntamentiLunedi(_ref8, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
@@ -2397,11 +2401,11 @@ var actions = {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentidomani) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentilunedi) + '/' + idAudio);
 
             case 3:
               response = _context8.sent;
-              commit('fetchAppuntamentiDomani', response.data.data);
+              commit('fetchAppuntamentiLunedi', response.data.data);
 
             case 5:
             case "end":
@@ -2411,7 +2415,7 @@ var actions = {
       }, _callee8);
     }))();
   },
-  addAppuntamento: function addAppuntamento(_ref9, payload) {
+  fetchAppuntamentiMartedi: function fetchAppuntamentiMartedi(_ref9, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
@@ -2420,11 +2424,11 @@ var actions = {
             case 0:
               commit = _ref9.commit;
               _context9.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddappuntamento), payload);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimartedi) + '/' + idAudio);
 
             case 3:
               response = _context9.sent;
-              commit('addAppuntamento', response.data);
+              commit('fetchAppuntamentiMartedi', response.data.data);
 
             case 5:
             case "end":
@@ -2434,21 +2438,22 @@ var actions = {
       }, _callee9);
     }))();
   },
-  eliminaAppuntamento: function eliminaAppuntamento(_ref10, payload) {
+  fetchAppuntamentiMercoledi: function fetchAppuntamentiMercoledi(_ref10, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
         while (1) {
           switch (_context10.prev = _context10.next) {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamenti) + '/' + payload.idAppuntamento + '/' + payload.idUser);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimercoledi) + '/' + idAudio);
 
             case 3:
-              commit('eliminaAppuntamento', payload.idAppuntamento);
+              response = _context10.sent;
+              commit('fetchAppuntamentiMercoledi', response.data.data);
 
-            case 4:
+            case 5:
             case "end":
               return _context10.stop();
           }
@@ -2456,7 +2461,7 @@ var actions = {
       }, _callee10);
     }))();
   },
-  fetchAppLun: function fetchAppLun(_ref11, idAudio) {
+  fetchAppuntamentiGiovedi: function fetchAppuntamentiGiovedi(_ref11, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
@@ -2465,11 +2470,11 @@ var actions = {
             case 0:
               commit = _ref11.commit;
               _context11.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentilun) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentigiovedi) + '/' + idAudio);
 
             case 3:
               response = _context11.sent;
-              commit('fetchAppLun', response.data.data);
+              commit('fetchAppuntamentiGiovedi', response.data.data);
 
             case 5:
             case "end":
@@ -2479,7 +2484,7 @@ var actions = {
       }, _callee11);
     }))();
   },
-  fetchAppMar: function fetchAppMar(_ref12, idAudio) {
+  fetchAppuntamentiVenerdi: function fetchAppuntamentiVenerdi(_ref12, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee12() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee12$(_context12) {
@@ -2488,11 +2493,11 @@ var actions = {
             case 0:
               commit = _ref12.commit;
               _context12.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimar) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentivenerdi) + '/' + idAudio);
 
             case 3:
               response = _context12.sent;
-              commit('fetchAppMar', response.data.data);
+              commit('fetchAppuntamentiVenerdi', response.data.data);
 
             case 5:
             case "end":
@@ -2502,7 +2507,7 @@ var actions = {
       }, _callee12);
     }))();
   },
-  fetchAppMer: function fetchAppMer(_ref13, idAudio) {
+  fetchAppuntamentiDomani: function fetchAppuntamentiDomani(_ref13, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
@@ -2511,11 +2516,11 @@ var actions = {
             case 0:
               commit = _ref13.commit;
               _context13.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimer) + '/' + idAudio);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentidomani) + '/' + idAudio);
 
             case 3:
               response = _context13.sent;
-              commit('fetchAppMer', response.data.data);
+              commit('fetchAppuntamentiDomani', response.data.data);
 
             case 5:
             case "end":
@@ -2525,7 +2530,7 @@ var actions = {
       }, _callee13);
     }))();
   },
-  fetchAppGio: function fetchAppGio(_ref14, idAudio) {
+  addAppuntamento: function addAppuntamento(_ref14, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee14() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee14$(_context14) {
@@ -2534,11 +2539,11 @@ var actions = {
             case 0:
               commit = _ref14.commit;
               _context14.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentigio) + '/' + idAudio);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddappuntamento), payload);
 
             case 3:
               response = _context14.sent;
-              commit('fetchAppGio', response.data.data);
+              commit('addAppuntamento', response.data);
 
             case 5:
             case "end":
@@ -2548,27 +2553,187 @@ var actions = {
       }, _callee14);
     }))();
   },
-  fetchAppVen: function fetchAppVen(_ref15, idAudio) {
+  eliminaAppuntamento: function eliminaAppuntamento(_ref15, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee15() {
-      var commit, response;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee15$(_context15) {
         while (1) {
           switch (_context15.prev = _context15.next) {
             case 0:
               commit = _ref15.commit;
               _context15.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentiven) + '/' + idAudio);
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamenti) + '/' + payload.idAppuntamento + '/' + payload.idUser);
 
             case 3:
-              response = _context15.sent;
-              commit('fetchAppVen', response.data.data);
+              commit('eliminaAppuntamento', payload.idAppuntamento);
 
-            case 5:
+            case 4:
             case "end":
               return _context15.stop();
           }
         }
       }, _callee15);
+    }))();
+  },
+  fetchAppLun: function fetchAppLun(_ref16, idAudio) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee16() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee16$(_context16) {
+        while (1) {
+          switch (_context16.prev = _context16.next) {
+            case 0:
+              commit = _ref16.commit;
+              _context16.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentilunedi) + '/' + idAudio);
+
+            case 3:
+              response = _context16.sent;
+              commit('fetchAppLun', response.data.data);
+
+            case 5:
+            case "end":
+              return _context16.stop();
+          }
+        }
+      }, _callee16);
+    }))();
+  },
+  fetchAppMar: function fetchAppMar(_ref17, idAudio) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee17() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee17$(_context17) {
+        while (1) {
+          switch (_context17.prev = _context17.next) {
+            case 0:
+              commit = _ref17.commit;
+              _context17.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimartedi) + '/' + idAudio);
+
+            case 3:
+              response = _context17.sent;
+              commit('fetchAppMar', response.data.data);
+
+            case 5:
+            case "end":
+              return _context17.stop();
+          }
+        }
+      }, _callee17);
+    }))();
+  },
+  fetchAppMer: function fetchAppMer(_ref18, idAudio) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee18() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee18$(_context18) {
+        while (1) {
+          switch (_context18.prev = _context18.next) {
+            case 0:
+              commit = _ref18.commit;
+              _context18.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentimercoledi) + '/' + idAudio);
+
+            case 3:
+              response = _context18.sent;
+              commit('fetchAppMer', response.data.data);
+
+            case 5:
+            case "end":
+              return _context18.stop();
+          }
+        }
+      }, _callee18);
+    }))();
+  },
+  fetchAppGio: function fetchAppGio(_ref19, idAudio) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee19() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee19$(_context19) {
+        while (1) {
+          switch (_context19.prev = _context19.next) {
+            case 0:
+              commit = _ref19.commit;
+              _context19.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentigiovedi) + '/' + idAudio);
+
+            case 3:
+              response = _context19.sent;
+              commit('fetchAppGio', response.data.data);
+
+            case 5:
+            case "end":
+              return _context19.stop();
+          }
+        }
+      }, _callee19);
+    }))();
+  },
+  fetchAppVen: function fetchAppVen(_ref20, idAudio) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee20() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee20$(_context20) {
+        while (1) {
+          switch (_context20.prev = _context20.next) {
+            case 0:
+              commit = _ref20.commit;
+              _context20.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentivenerdi) + '/' + idAudio);
+
+            case 3:
+              response = _context20.sent;
+              commit('fetchAppVen', response.data.data);
+
+            case 5:
+            case "end":
+              return _context20.stop();
+          }
+        }
+      }, _callee20);
+    }))();
+  },
+  fetchDateSettimana: function fetchDateSettimana(_ref21) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee21() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee21$(_context21) {
+        while (1) {
+          switch (_context21.prev = _context21.next) {
+            case 0:
+              commit = _ref21.commit;
+              _context21.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkdatesettimana));
+
+            case 3:
+              response = _context21.sent;
+              commit('fetchDateSettimana', response.data);
+
+            case 5:
+            case "end":
+              return _context21.stop();
+          }
+        }
+      }, _callee21);
+    }))();
+  },
+  fetchDateSettimanaProssima: function fetchDateSettimanaProssima(_ref22) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee22() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee22$(_context22) {
+        while (1) {
+          switch (_context22.prev = _context22.next) {
+            case 0:
+              commit = _ref22.commit;
+              _context22.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkdatesettimanaprossima));
+
+            case 3:
+              response = _context22.sent;
+              commit('fetchDateSettimana', response.data);
+
+            case 5:
+            case "end":
+              return _context22.stop();
+          }
+        }
+      }, _callee22);
     }))();
   }
 };
@@ -2607,6 +2772,9 @@ var mutations = {
   },
   fetchAppMar: function fetchAppMar(state, payload) {
     state.appMar = payload;
+  },
+  fetchDateSettimana: function fetchDateSettimana(state, payload) {
+    state.dateSettimana = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6372,6 +6540,11 @@ var help = function help() {
     linkappuntamentimercoledi: base + 'appuntamentiMercolediAudio',
     linkappuntamentigiovedi: base + 'appuntamentiGiovediAudio',
     linkappuntamentivenerdi: base + 'appuntamentiVenerdiAudio',
+    linkappuntamentilunediprossimo: base + 'appuntamentiLunediProssimoAudio',
+    linkappuntamentimartediprossimo: base + 'appuntamentiMartediProssimoAudio',
+    linkappuntamentimercolediprossimo: base + 'appuntamentiMercolediProssimoAudio',
+    linkappuntamentigiovediprossimo: base + 'appuntamentiGiovediProssimoAudio',
+    linkappuntamentivenerdiprossimo: base + 'appuntamentiVenerdiProssimoAudio',
     linkvisualizzasituazioneanno: base + 'visualizzaSituazioneAnno',
     linkinviasms: 'http://vuexdocker.test/api/inviaSms',
     linklistarichiestaapparecchi: base + 'listaProdottiRichiesti',
@@ -6393,7 +6566,9 @@ var help = function help() {
     linkcaricadocumento: base + 'salvaDocumento',
     linklistadocumenti: base + 'caricaDocumenti',
     linkeliminadocumento: base + 'eliminaDocumento',
-    linksalvafilexmlfromfiliale: base + 'salvaFileXmlFromFiliale'
+    linksalvafilexmlfromfiliale: base + 'salvaFileXmlFromFiliale',
+    linkdatesettimana: base + 'dateSettimana',
+    linkdatesettimanaprossima: base + 'dateSettimanaProssima'
   };
 };
 

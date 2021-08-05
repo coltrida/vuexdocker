@@ -6,8 +6,36 @@
     >
         <v-toolbar color="indigo darken-4" dark>
 
+            <v-badge
+                v-if="getRuolo === 'admin'"
+                :content="novitaLogistica"
+                :value="novitaLogistica"
+                color="green"
+                overlap
+            >
+                <v-badge
+                    v-if="getRuolo === 'admin'"
+                    :content="novitaCommerciale"
+                    :value="novitaCommerciale"
+                    color="green"
+                    bottom
+                    overlap
+                >
+                <router-link :to="{ name: 'home'}">
+                    <v-img
+                        @click="resetAvviso"
+                        lazy-src="/img/logo-centroudito.png"
+                        max-height="50"
+                        max-width="150"
+                        src="/img/logo-centroudito.png"
+                    ></v-img>
+                </router-link>
+            </v-badge>
+            </v-badge>
+
             <router-link :to="{ name: 'home'}">
                 <v-img
+                    v-if="getRuolo === 'audio'"
                     lazy-src="/img/logo-centroudito.png"
                     max-height="50"
                     max-width="150"
@@ -64,6 +92,14 @@
 
         components: {NavBarAudio, NavBarAdmin },
 
+        data(){
+            return {
+                sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3",
+                novitaLogistica : 0,
+                novitaCommerciale : 0,
+            }
+        },
+
         computed:{
             ...mapGetters('login', {
                 getLogged:'getLogged',
@@ -82,12 +118,32 @@
                 this.$store.commit('login/logout');
                 this.$router.push({ name: 'home' });
             },
+
+            playSound(){
+                let alert = new Audio(this.sound);
+                alert.play();
+            },
+
+            resetAvviso(){
+                this.novitaLogistica = 0;
+                this.novitaCommerciale = 0;
+            },
         },
 
         mounted() {
             if (this.getLogged){
                 this.fetchUser(this.getIdUser)
             }
+
+            window.Echo.channel("logisticaChannel").listen(".task-created", e => {
+                this.novitaLogistica = 'L';
+                this.playSound();
+            });
+
+            window.Echo.channel("provaChannel").listen(".task-created", e => {
+                this.novitaCommerciale = 'C';
+                this.playSound();
+            });
             /*window.onunload = () => {
                 localStorage.removeItem('user-token');
                 localStorage.removeItem('username');

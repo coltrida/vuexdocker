@@ -1,14 +1,7 @@
 <template>
     <v-tabs class="mt-3">
         <v-tab @click="resetLogistica">
-            <v-badge
-                :content="novitaLogistica"
-                :value="novitaLogistica"
-                color="green"
-                overlap
-            >
                 Logistica
-            </v-badge>
         </v-tab>
         <v-tab-item>
             <v-card flat>
@@ -17,14 +10,7 @@
         </v-tab-item>
 
         <v-tab @click="resetCommerciale">
-            <v-badge
-                :content="novitaCommerciale"
-                :value="novitaCommerciale"
-                color="green"
-                overlap
-            >
                 Commerciale
-            </v-badge>
         </v-tab>
         <v-tab-item>
             <v-card flat>
@@ -40,24 +26,32 @@
     export default {
         name: "SuperHome",
         components: {HomeAdmin, HomeAmm},
-        data(){
+        /*data(){
             return{
+                sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3",
                 novitaLogistica : 0,
                 novitaCommerciale : 0,
             }
-        },
+        },*/
 
-        mounted() {
+        /*mounted() {
             window.Echo.channel("logisticaChannel").listen(".task-created", e => {
                 this.novitaLogistica = '*';
+                this.playSound();
             });
 
             window.Echo.channel("provaChannel").listen(".task-created", e => {
                 this.novitaCommerciale = '*';
+                this.playSound();
             });
-        },
+        },*/
 
         methods:{
+            playSound(){
+                let alert = new Audio(this.sound);
+                alert.play();
+            },
+
             resetLogistica(){
                 this.novitaLogistica = 0;
             },
