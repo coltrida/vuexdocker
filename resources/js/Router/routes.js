@@ -28,6 +28,11 @@ const routes = [
     { path: '/importByFiliale', component: () => import('../Pages/clients/ImportByFiliale'), name: 'importByFiliale' },
     { path: '/logging', component: () => import('../Pages/gestione/Logging'), name: 'logging' },
     { path: '/filtri', component: () => import('../Pages/clients/Filtri'), name: 'filtri' },
+    { path: '/rateClienti', component: () => import('../Pages/clients/RateAudio'), name: 'rateClienti' },
+    { path: '/saldati', component: () => import('../Pages/clients/SaldatiAdmin'), name: 'saldati' },
+    { path: '/rateali', component: () => import('../Pages/clients/RatealiAdmin'), name: 'rateali' },
+    { path: '/rateClienti/inserisci/:fatturaId?', component: () => import('../Pages/clients/InserisciRata'), name: 'rataInserisci' },
+    { path: '/ventaglioProdotti', component: () => import('../Pages/statistiche/VentaglioProdotti'), name: 'ventaglioProdotti' },
 ];
 
 export default routes;

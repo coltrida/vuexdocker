@@ -1493,7 +1493,7 @@ var render = function() {
   return _c(
     "v-dialog",
     {
-      attrs: { "max-width": "290" },
+      attrs: { width: "500" },
       model: {
         value: _vm.dialog,
         callback: function($$v) {

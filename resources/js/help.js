@@ -101,6 +101,11 @@ const help = () => {
         linksalvafilexmlfromfiliale: base+'salvaFileXmlFromFiliale',
         linkdatesettimana: base+'dateSettimana',
         linkdatesettimanaprossima: base+'dateSettimanaProssima',
+        linkclientidasaldare: base+'clientiDaSaldare',
+        linkclientisaldati: base+'clientiSaldati',
+        linkaddrata: base+'addRata',
+        linkfattura: base+'caricaFattura',
+        linkventaglio: base+'ventaglioAnno',
     };
 };
 export default help;

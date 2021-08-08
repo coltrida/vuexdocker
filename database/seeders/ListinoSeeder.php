@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Listino;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class ListinoSeeder extends Seeder
 {
@@ -143,5 +145,19 @@ class ListinoSeeder extends Seeder
                 'iva' => 4
             ],
         ]);
+
+        $listino = Listino::where('categoria_id', 1)
+            ->orderBy('fornitore_id')
+            ->orderBy('categoria_id')
+            ->orderBy('nome')
+            ->get();
+
+        $type = 'string';
+        foreach ($listino as $ele){
+            Schema::table('ventaglios', function (Blueprint $table) use ($type, $ele) {
+                $table->$type(str_replace(' ', '', $ele->nome))->default(0);
+            });
+        }
+
     }
 }

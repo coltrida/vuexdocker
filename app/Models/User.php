@@ -80,6 +80,34 @@ use function config;
  * @property int|null $pezzi_id
  * @property-read \App\Models\Pezzi|null $pezzi
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePezziId($value)
+ * @property string|null $cleanpassword
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiGiovedi
+ * @property-read int|null $appuntamenti_giovedi_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiGiovediProssimo
+ * @property-read int|null $appuntamenti_giovedi_prossimo_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiLunedi
+ * @property-read int|null $appuntamenti_lunedi_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiLunediProssimo
+ * @property-read int|null $appuntamenti_lunedi_prossimo_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiMartedi
+ * @property-read int|null $appuntamenti_martedi_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiMartediProssimo
+ * @property-read int|null $appuntamenti_martedi_prossimo_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiMercoledi
+ * @property-read int|null $appuntamenti_mercoledi_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiMercolediProssimo
+ * @property-read int|null $appuntamenti_mercoledi_prossimo_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiVenerdi
+ * @property-read int|null $appuntamenti_venerdi_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiVenerdiProssimo
+ * @property-read int|null $appuntamenti_venerdi_prossimo_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Pezzi[] $moltiPezzi
+ * @property-read int|null $molti_pezzi_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCleanpassword($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Fattura[] $clientDaSaldare
+ * @property-read int|null $client_da_saldare_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Fattura[] $clientSaldati
+ * @property-read int|null $client_saldati_count
  */
 class User extends Authenticatable
 {
@@ -332,5 +360,35 @@ class User extends Authenticatable
     public function agenda()
     {
         return $this->hasMany(Agenda::class);
+    }
+
+    public function clientDaSaldare()
+    {
+        return $this->hasMany(Fattura::class)->where('saldata', false);
+    }
+
+    public function clientSaldati()
+    {
+        return $this->hasMany(Fattura::class)->where([
+            ['saldata', true],
+            ['pagatoAudio', false],
+        ]);
+    }
+
+    public function productsFinalizzati()
+    {
+        $anno = Carbon::now()->year;
+        return $this->hasMany(Product::class)
+            ->whereHas('stato', function($q) {
+                $q->where('nome', 'FATTURA');
+        })
+            ->whereHas('prova', function($q) use($anno) {
+                $q->where('anno_fine', $anno);
+        });
+    }
+
+    public function ventaglio()
+    {
+        return $this->hasMany(Ventaglio::class);
     }
 }

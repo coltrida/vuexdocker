@@ -1442,6 +1442,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1452,6 +1461,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['proveClient'],
   data: function data() {
     return {
+      carica: false,
       dialog: false,
       idFattura: '',
       dialogFattura: false,
@@ -1596,13 +1606,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.switchRimuoviDallaProva(idProduct);
     },
     salvaProva: function salvaProva() {
+      var _this2 = this;
+
       //console.log(this.getElementiNuovaProva[0]);
       //console.log(this.getElementiNuovaProva.length);
+      this.carica = true;
       this.salvaProvaInCorso({
         'id': this.getNuovaProvaCreata.id,
         'tot': this.getElementiNuovaProva.length > 1 ? this.getElementiNuovaProva.reduce(function (a, b) {
           return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo);
         }) : this.getElementiNuovaProva[0].originalPrezzo
+      }).then(function () {
+        _this2.carica = false;
       });
     },
     reso: function reso(id) {
@@ -42651,24 +42666,37 @@ var render = function() {
                 [
                   _c("div", [_c("h3", [_vm._v("Nuova Prova")])]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "primary", dark: "" },
-                          on: { click: _vm.salvaProva }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Salva\n                            "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  )
+                  _c("div", [
+                    _vm.carica
+                      ? _c(
+                          "div",
+                          { staticClass: "text-center" },
+                          [
+                            _c("v-progress-circular", {
+                              attrs: { indeterminate: "", color: "primary" }
+                            })
+                          ],
+                          1
+                        )
+                      : _c(
+                          "div",
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { color: "primary", dark: "" },
+                                on: { click: _vm.salvaProva }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                    Salva\n                                "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                  ])
                 ]
               ),
               _vm._v(" "),

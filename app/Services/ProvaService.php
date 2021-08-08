@@ -11,6 +11,7 @@ use App\Models\Fattura;
 use App\Models\Product;
 use App\Models\ProductProva;
 use App\Models\Prova;
+use App\Models\Ratefattura;
 use App\Models\Ruolo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -96,6 +97,7 @@ class ProvaService
         $prova->fine_prova = Carbon::now()->format('Y-m-d');
         $prova->mese_fine = Carbon::now()->month;
         $prova->anno_fine = Carbon::now()->year;
+        $prova->giorni_prova = Carbon::now()->DiffInDays($prova->created_at);
         $prova->save();
 
         $client = Client::find($prova->client_id);
@@ -104,17 +106,40 @@ class ProvaService
 
         $fattura = new Fattura();
         $fattura->prova_id = $prova->id;
+        $fattura->user_id = $prova->user_id;
         $fattura->data_fattura = $prova->fine_prova;
+        $fattura->mese_fattura = Carbon::now()->month;
+        $fattura->anno_fattura = Carbon::now()->year;
         $fattura->acconto = $request->acconto;
         $fattura->nr_rate = $request->rate;
         $fattura->tot_fattura = $request->totFatturaReale;
         $fattura->al_saldo = (int)$request->totFatturaReale - (int)$request->acconto;
+        if ($fattura->al_saldo === 0){
+            $fattura->saldata = true;
+            $fattura->data_saldo = Carbon::now();
+        }
         $fattura->save();
+
+        if ($request->acconto) {
+            $newRata = new Ratefattura();
+            $newRata->fattura_id = $fattura->id;
+            $newRata->importo = $request->acconto;
+            if($request->acconto == $request->totFatturaReale){
+                $newRata->note = 'Saldo';
+            } else {
+                $newRata->note = 'Acconto';
+            }
+            $newRata->save();
+
+            $fattura->ultima_rata = Carbon::now();
+            $fattura->save();
+        }
 
         $prodotti = $request->product;
         for ($item = 0; $item < count($prodotti); $item++){
             $prodotto = Product::find($prodotti[$item]['id']);
             $prodotto->stato_id = 4;
+            $prodotto->fattura_id = $fattura->id;
             $prodotto->save();
 
             $tabellaPivot = ProductProva::where([

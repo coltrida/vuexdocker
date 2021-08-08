@@ -37,6 +37,22 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereTotFatturaScontato($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $user_id
+ * @property int|null $saldata
+ * @property int|null $pagata
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura wherePagata($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereSaldata($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereUserId($value)
+ * @property string|null $ultima_rata
+ * @property string|null $data_saldo
+ * @property string|null $data_pagamentoAudio
+ * @property int|null $pagatoAudio
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Ratefattura[] $rate
+ * @property-read int|null $rate_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereDataPagamentoAudio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereDataSaldo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura wherePagatoAudio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereUltimaRata($value)
  */
 class Fattura extends Model
 {
@@ -44,7 +60,7 @@ class Fattura extends Model
 
     protected $table = 'fatturas';
 
-    public function rata()
+    public function rate()
     {
         return $this->hasMany(Ratefattura::class);
     }

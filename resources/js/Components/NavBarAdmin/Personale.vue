@@ -29,6 +29,18 @@
                         <v-list-item-title>Calendar</v-list-item-title>
                     </v-list-item>
                 </router-link>
+
+                <router-link :to="{ name: 'saldati'}">
+                    <v-list-item>
+                        <v-list-item-title>Saldati</v-list-item-title>
+                    </v-list-item>
+                </router-link>
+
+                <router-link :to="{ name: 'rateali'}">
+                    <v-list-item>
+                        <v-list-item-title>Rateali</v-list-item-title>
+                    </v-list-item>
+                </router-link>
             </v-list>
         </v-menu>
 

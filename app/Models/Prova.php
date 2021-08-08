@@ -54,6 +54,8 @@ use const LC_TIME;
  * @mixin \Eloquent
  * @property int|null $marketing_id
  * @method static \Illuminate\Database\Eloquent\Builder|Prova whereMarketingId($value)
+ * @property int|null $giorni_prova
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereGiorniProva($value)
  */
 class Prova extends Model
 {

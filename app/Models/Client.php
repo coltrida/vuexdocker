@@ -88,6 +88,12 @@ use function substr;
  * @property int|null $anno
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereAnno($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereMese($value)
+ * @property string|null $telefono2
+ * @property string|null $telefono3
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Documento[] $documenti
+ * @property-read int|null $documenti_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereTelefono2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereTelefono3($value)
  */
 class Client extends Model
 {

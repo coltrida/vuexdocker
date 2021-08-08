@@ -24,6 +24,11 @@
                             <v-list-item-title>IMPORTA</v-list-item-title>
                         </v-list-item>
                     </router-link>
+                    <router-link :to="{ name: 'rateClienti'}">
+                        <v-list-item>
+                            <v-list-item-title>RATE CLIENTI</v-list-item-title>
+                        </v-list-item>
+                    </router-link>
                 </div>
             </v-list>
         </v-menu>

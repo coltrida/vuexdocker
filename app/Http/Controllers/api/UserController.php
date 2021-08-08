@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\DettaglioAudioResource;
+use App\Http\Resources\VisualizzaSituazioneAnnoResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -71,16 +73,22 @@ class UserController extends Controller
 
     public function dettaglioAudio(UserService $userService)
     {
+       // return DettaglioAudioResource::collection($userService->dettaglioAudio());
         return $userService->dettaglioAudio();
     }
 
     public function visualizzaSituazioneAnno(UserService $userService)
     {
-        return $userService->visualizzaSituazioneAnno();
+        return VisualizzaSituazioneAnnoResource::collection($userService->visualizzaSituazioneAnno());
     }
 
     public function appuntamenti($idAudio, UserService $userService)
     {
         return $userService->appuntamenti($idAudio);
+    }
+
+    public function ventaglioAnno(UserService $userService)
+    {
+        return $userService->ventaglioAnno();
     }
 }

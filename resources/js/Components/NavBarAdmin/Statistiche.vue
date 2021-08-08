@@ -33,6 +33,7 @@
                 { title: 'Dettaglio Audio', link: 'statisticheAudioprotesistiDettaglio' },
                 { title: 'Fatt. Canali', link: 'fatturatoCanali' },
                 { title: 'Ing. Recapiti', link: 'ingressiRecapiti' },
+                { title: 'Ventaglio Prodotti', link: 'ventaglioProdotti' },
             ],
         }),
     }

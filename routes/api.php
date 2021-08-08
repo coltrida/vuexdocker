@@ -13,6 +13,7 @@ use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\ProvaController;
+use App\Http\Controllers\api\RateController;
 use App\Http\Controllers\api\RecapitiController;
 use App\Http\Controllers\api\RuoloController;
 use App\Http\Controllers\api\TipologiaController;
@@ -168,3 +169,12 @@ Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSitua
 Route::get('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
 Route::get('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiMesi']);
 Route::get('/fatturatoCanali', [MarketingController::class, 'fatturatoCanali']);
+Route::get('/ventaglioAnno', [UserController::class, 'ventaglioAnno']);
+
+
+// ----------------- rate -----------------------
+Route::get('/clientiDaSaldare', [RateController::class, 'allClientiDaSaldare']);
+Route::get('/clientiDaSaldare/{idAudio}', [RateController::class, 'clientiDaSaldare']);
+Route::get('/clientiSaldati/{idAudio}', [RateController::class, 'clientiSaldati']);
+Route::post('/addRata', [RateController::class, 'addRata']);
+Route::get('/caricaFattura/{idFattura}', [RateController::class, 'caricaFattura']);

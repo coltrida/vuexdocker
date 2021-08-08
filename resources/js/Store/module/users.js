@@ -2,6 +2,7 @@ import help from "../../help";
 
 const state = () => ({
     audio: [],
+    ventaglioAnno: [],
     users: [],
     audioConBgt: [],
     audioSenzaBgt: [],
@@ -15,6 +16,10 @@ const getters = {
 
     getAudio(state){
         return state.audio;
+    },
+
+    getVentaglioAnno(state){
+        return state.ventaglioAnno;
     },
 
     getUsers(state){
@@ -69,7 +74,7 @@ const actions = {
 
     async fetchSituazioneAnno({commit}){
         const response = await axios.get(`${help().linkvisualizzasituazioneanno}`);
-        commit('fetchAudioConBgt', response.data);
+        commit('fetchAudioConBgt', response.data.data);
     },
 
     async fetchAudioConBgt({commit}){
@@ -79,6 +84,7 @@ const actions = {
 
     async fetchAudioConFatt({commit}){
         const response = await axios.get(`${help().linkstatistichedettagliaudio}`);
+        /*commit('fetchAudioConFatt', response.data.data);*/
         commit('fetchAudioConFatt', response.data);
     },
 
@@ -134,6 +140,11 @@ const actions = {
     async addAgenda({commit}, payload){
         const response = await axios.post(`${help().linkuseragenda}`, payload);
         commit('addAgenda', response.data);
+    },
+
+    async fetchVentaglioAnno({commit}){
+        const response = await axios.get(`${help().linkventaglio}`);
+        commit('fetchVentaglioAnno', response.data);
     },
 
 };
@@ -199,6 +210,10 @@ const mutations = {
 
     addAgenda(state, payload){
         //state.users.find(u => u.id === payload.user_id).agenda.unshift(payload);
+    },
+
+    fetchVentaglioAnno(state, payload){
+        state.ventaglioAnno = payload;
     },
 };
 

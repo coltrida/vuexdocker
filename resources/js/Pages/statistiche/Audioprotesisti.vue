@@ -1,34 +1,47 @@
 <template>
     <div>
         <h2>Statistiche Audioprotesisti</h2>
-        <v-container>
-            <div v-for="audio in getAudioConBgt" :key="audio.id" class="mb-5">
-                <div style="display: flex; align-items: center; justify-content: space-between">
-                    <h2>{{audio.name}}</h2>
-                    <h4>Media Vendita {{audio.valori[1].budgetAnno / audio.valori[3].budgetAnno}}</h4>
+
+        <v-row v-for="audio in getAudioConBgt" :key="audio.id" class="mb-5">
+            <v-col cols="8">
+                <div >
+                    <div style="display: flex; align-items: center; justify-content: space-between">
+                        <h3>{{audio.name}}</h3>
+                        <!--<h4>Media Vendita {{audio.valori[1].budgetAnno / audio.valori[3].budgetAnno}}</h4>-->
+                    </div>
+
+                    <v-data-table
+                        :headers="headers"
+                        :items="audio.valori"
+                        :item-key="audio.valori.nome"
+                        hide-default-footer
+                        class="elevation-1 mt-3"
+                    >
+
+                    </v-data-table>
                 </div>
+            </v-col>
 
-                <v-data-table
-                    :headers="headers"
-                    :items="audio.valori"
-                    :item-key="audio.valori.nome"
-                    hide-default-footer
-                    class="elevation-1 mt-3"
-                >
+            <v-col cols="4">
+                <incorpora-grafico :valoripassati="audio.valori[1]" :options="chartOptions"/>
+            </v-col>
 
-                </v-data-table>
-            </div>
+            <!--<v-col cols="4">
+                <grafico :chartdata="chartData" :options="chartOptions"/>
+            </v-col>-->
+        </v-row>
 
 
-        </v-container>
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import Grafico from "./Grafico";
+    import IncorporaGrafico from "./IncorporaGrafico";
     export default {
         name: "AssegnaBudget",
-
+        components: {IncorporaGrafico, Grafico},
         data(){
             return {
                 AudioSelected: [],
@@ -36,7 +49,7 @@
                 singleSelect: true,
                 headers: [
                     { text: 'Nome', align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
-                    { text: 'Bgt Anno', sortable: false, value: 'budgetAnno', class: "indigo white--text" },
+                    { text: 'Anno', sortable: false, value: 'budgetAnno', class: "indigo white--text" },
                     { text: 'Genn', sortable: false, value: 'gennaio', class: "indigo white--text" },
                     { text: 'Febb', sortable: false, value: 'febbraio', class: "indigo white--text" },
                     { text: 'Marzo', sortable: false, value: 'marzo', class: "indigo white--text" },
@@ -50,6 +63,35 @@
                     { text: 'Nove', sortable: false, value: 'novembre', class: "indigo white--text" },
                     { text: 'Dice', sortable: false, value: 'dicembre', class: "indigo white--text" },
                 ],
+
+                chartData:{
+
+                        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                        datasets: [
+                            {
+                                backgroundColor: '#f87979',
+                                data: [2, 3]
+                            },
+                        ]
+
+                },
+
+                chartOptions:{
+
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        /*scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    stepSize: 10,
+                                    min: -120
+                                }
+                            }]
+                        }*/
+
+                },
+
                 assegna: {
                     budgetAnno:0,
                     stipendio: 0,

@@ -26,7 +26,19 @@ class MarketingSeeder extends Seeder
             ],
             [
                 'name' => 'LISTA ESTERNA',
-            ]
+            ],
+            [
+                'name' => 'MEDICO',
+            ],
+            [
+                'name' => 'PASSAPAROLA',
+            ],
+            [
+                'name' => 'VETRINA',
+            ],
+            [
+                'name' => 'SOCIAL/WEB',
+            ],
         ]);
     }
 }

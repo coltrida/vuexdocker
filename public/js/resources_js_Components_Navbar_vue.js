@@ -392,6 +392,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   /*data: () => ({
       items: [
@@ -456,6 +468,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Ing. Recapiti',
         link: 'ingressiRecapiti'
+      }, {
+        title: 'Ventaglio Prodotti',
+        link: 'ventaglioProdotti'
       }]
     };
   }
@@ -616,6 +631,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2483,6 +2503,32 @@ var render = function() {
                   )
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "saldati" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Saldati")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "rateali" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Rateali")])],
+                    1
+                  )
+                ],
+                1
               )
             ],
             1
@@ -2892,6 +2938,19 @@ var render = function() {
                       _c(
                         "v-list-item",
                         [_c("v-list-item-title", [_vm._v("IMPORTA")])],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "rateClienti" } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v("RATE CLIENTI")])],
                         1
                       )
                     ],

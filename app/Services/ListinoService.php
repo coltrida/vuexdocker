@@ -5,7 +5,9 @@ namespace App\Services;
 
 
 use App\Models\Listino;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Schema;
 
 class ListinoService
 {
@@ -36,6 +38,11 @@ class ListinoService
         $listino->prezzolistino = trim($request['prezzolistino']);
         $listino->iva = trim($request['iva']);
         $listino->save();
+
+        $type = 'string';
+        Schema::table('ventaglios', function (Blueprint $table) use ($type, $listino) {
+            $table->$type(str_replace(' ', '', $listino->nome))->default(0);
+        });
 
         return Listino::with('categoria', 'fornitore:id,nome')->find($listino->id);
     }

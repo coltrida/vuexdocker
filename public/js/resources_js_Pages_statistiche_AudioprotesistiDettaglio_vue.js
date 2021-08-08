@@ -65,7 +65,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -93,6 +92,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'APA',
         sortable: false,
         value: 'products',
+        "class": "indigo white--text"
+      }, {
+        text: 'GG in prova',
+        sortable: false,
+        value: 'giorni_prova',
         "class": "indigo white--text"
       }]
     };
@@ -203,127 +207,111 @@ var render = function() {
     [
       _c("h2", [_vm._v("Dettaglio Audioprotesisti")]),
       _vm._v(" "),
-      _c(
-        "v-container",
-        _vm._l(_vm.getAudioConFatt, function(audio) {
-          return _c(
-            "div",
-            { key: audio.id, staticClass: "mb-7" },
-            [
-              _c(
-                "v-row",
-                [
-                  _c("v-col", [
-                    _c("h4", [
-                      _vm._v(
-                        "Vendite su Pc: " + _vm._s(audio.delta.premio) + " %"
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("v-col", [
-                    _c("h4", [
-                      _vm._v("Nr. Pc: " + _vm._s(audio.delta.provvigione))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("v-col", [
-                    _c("h4", [
-                      _vm._v("Nr. Cl: " + _vm._s(audio.delta.stipendio))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("v-col", [
-                    _c("h4", [
-                      _vm._v("Pezzi Ven.: " + _vm._s(audio.pezzi.budgetAnno))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("v-col", [
-                    _c("h4", [
-                      _vm._v(
-                        "% conv.: " +
-                          _vm._s(
-                            audio.pezzi.budgetAnno
-                              ? (audio.pezzi.budgetAnno /
-                                  (audio.pezzi.budgetAnno +
-                                    audio.pezzi.premio)) *
-                                  100
-                              : 0
-                          ) +
-                          "%"
-                      )
-                    ])
+      _vm._l(_vm.getAudioConFatt, function(audio) {
+        return _c(
+          "v-card",
+          {
+            key: audio.id,
+            staticClass: "mb-7",
+            attrs: { color: "blue lighten-4" }
+          },
+          [
+            _c(
+              "v-row",
+              { staticClass: "pa-5" },
+              [
+                _c("v-col", [
+                  _c("h4", [
+                    _vm._v(
+                      "Vendite su Pc: " + _vm._s(audio.delta.premio) + " %"
+                    )
                   ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-expansion-panels",
-                [
-                  _c(
-                    "v-expansion-panel",
-                    [
-                      _c("v-expansion-panel-header", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(audio.name) +
-                            " - Dettaglio vendite\n                    "
+                ]),
+                _vm._v(" "),
+                _c("v-col", [
+                  _c("h4", [
+                    _vm._v("Nr. Pc: " + _vm._s(audio.delta.provvigione))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("v-col", [
+                  _c("h4", [_vm._v("Nr. Cl: " + _vm._s(audio.delta.stipendio))])
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-expansion-panels",
+              [
+                _c(
+                  "v-expansion-panel",
+                  [
+                    _c("v-expansion-panel-header", [
+                      _c("h4", [
+                        _c(
+                          "span",
+                          {
+                            staticStyle: {
+                              "background-color": "yellow",
+                              padding: "5px"
+                            }
+                          },
+                          [_vm._v(_vm._s(audio.name))]
                         )
                       ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-expansion-panel-content",
-                        [
-                          _c("v-data-table", {
-                            staticClass: "elevation-1 mt-3",
-                            attrs: {
-                              dense: "",
-                              headers: _vm.headers,
-                              items: audio.prova_finalizzata,
-                              "item-key": audio.prova_finalizzata.id,
-                              "hide-default-footer": ""
-                            },
-                            scopedSlots: _vm._u(
-                              [
-                                {
-                                  key: "item.products",
-                                  fn: function(ref) {
-                                    var item = ref.item
-                                    return _vm._l(item.product, function(ele) {
-                                      return _c("div", { key: ele.id }, [
-                                        _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(ele.listino.nome) +
-                                            "\n                                "
-                                        )
-                                      ])
-                                    })
-                                  }
+                      _vm._v("   Dettaglio vendite\n                    ")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-expansion-panel-content",
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1 mt-3",
+                          attrs: {
+                            dense: "",
+                            headers: _vm.headers,
+                            items: audio.prova_finalizzata,
+                            "item-key": audio.prova_finalizzata.id,
+                            "hide-default-footer": ""
+                          },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "item.products",
+                                fn: function(ref) {
+                                  var item = ref.item
+                                  return _vm._l(item.product, function(ele) {
+                                    return _c("div", { key: ele.id }, [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(ele.listino.nome) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  })
                                 }
-                              ],
-                              null,
-                              true
-                            )
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        }),
-        0
-      )
+                              }
+                            ],
+                            null,
+                            true
+                          )
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

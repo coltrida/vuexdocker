@@ -106,9 +106,18 @@
                             </div>
                             <div>
                                 <!---------- Bottone per salvare la prova --------->
-                                <v-btn color="primary" dark @click="salvaProva">
-                                    Salva
-                                </v-btn>
+                                <div class="text-center" v-if="carica">
+                                    <v-progress-circular
+                                        indeterminate
+                                        color="primary"
+                                    ></v-progress-circular>
+                                </div>
+                                <div v-else>
+                                    <v-btn color="primary" dark @click="salvaProva">
+                                        Salva
+                                    </v-btn>
+                                </div>
+
                             </div>
                         </div>
 
@@ -264,6 +273,7 @@
 
         data(){
             return {
+                carica: false,
                 dialog: false,
                 idFattura: '',
                 dialogFattura: false,
@@ -376,11 +386,14 @@
             salvaProva(){
                 //console.log(this.getElementiNuovaProva[0]);
                 //console.log(this.getElementiNuovaProva.length);
+                this.carica = true;
                 this.salvaProvaInCorso({
                     'id': this.getNuovaProvaCreata.id,
                     'tot': this.getElementiNuovaProva.length > 1 ?
                         this.getElementiNuovaProva.reduce(function(a, b){return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo)}) :
                         this.getElementiNuovaProva[0].originalPrezzo
+                }).then(() => {
+                    this.carica = false;
                 });
 
             },

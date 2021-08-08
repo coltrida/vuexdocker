@@ -34,10 +34,10 @@ use const LC_TIME;
  * @property-read \App\Models\StatoApa|null $stato
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Product arrivo()
- * @method static \Illuminate\Database\Eloquent\Builder|Product filiale()
+
  * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Product prova()
+
  * @method static \Illuminate\Database\Eloquent\Builder|Product query()
  * @method static \Illuminate\Database\Eloquent\Builder|Product richiesto()
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereClientId($value)
@@ -132,5 +132,10 @@ class Product extends Model
         $now = Carbon::now();
         //return $this->created_at->diff($now)->days;
         return $this->listino->giorniTempoDiReso - $this->created_at->diff($now)->days;
+    }
+
+    public function fattura()
+    {
+        return $this->belongsTo(Fattura::class);
     }
 }

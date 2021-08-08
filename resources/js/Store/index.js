@@ -18,6 +18,7 @@ import ProveModule from './module/prove';
 import AppuntamentiModule from './module/appuntamenti';
 import LoggingModule from './module/logging';
 import DocumentiModule from './module/documenti';
+import RateModule from './module/rate';
 
 Vue.use(Vuex);
 
@@ -40,6 +41,7 @@ const store = new Vuex.Store({
         appuntamenti:AppuntamentiModule,
         logging:LoggingModule,
         documenti:DocumentiModule,
+        rate:RateModule,
     }
 });
 
