@@ -237,8 +237,8 @@
                         v-model="newClient.recapito_id"
                         item-value="id"
                         item-text="nome"
-                        :items="getRecapiti"
-                        label="Recapito"
+                        :items="origineFonte"
+                        :label="nomeLabel"
                     ></v-select>
                 </v-col>
             </v-row>
@@ -291,6 +291,7 @@
             this.fetchAudio();
             this.fetchFilialiPerInserimento();
             this.fetchRecapiti();
+            this.fetchMedici(this.getIdUser);
             if (this.rottaIdClient){
                 this.fetchClient(this.rottaIdClient).then(() => {
                     this.newClient = this.getClient;
@@ -335,6 +336,10 @@
                 fetchRecapiti:'fetchRecapiti',
             }),
 
+            ...mapActions('medici', {
+                fetchMedici:'fetchMedici',
+            }),
+
             annulla(){
                 this.$router.go(-1)
             },
@@ -362,8 +367,15 @@
                         }
                     });
                 }
-
             },
+
+            /*scegliFonte(){
+                if(this.newClient.marketing_id == 5) {
+                    'Medico'
+                } else {
+                    'Recapito';
+                }
+            }*/
 
         },
 
@@ -397,12 +409,24 @@
                 getRecapiti:'getRecapiti',
             }),
 
+            ...mapGetters('medici', {
+                getMedici:'getMedici',
+            }),
+
             rottaIdClient(){
                 return this.$route.params.clientId ? this.$route.params.clientId : null;
             },
 
             nomeBtn(){
                 return this.$route.params.clientId ? 'Modifica' : 'Inserisci';
+            },
+
+            nomeLabel(){
+                return this.newClient.marketing_id == 5 ? 'Medico' : 'Recapito';
+            },
+
+            origineFonte(){
+                return this.newClient.marketing_id == 5 ? this.getMedici : this.getRecapiti;
             }
         },
     }

@@ -391,4 +391,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ventaglio::class);
     }
+
+    public function medici()
+    {
+        return $this->hasMany(Medico::class);
+    }
 }

@@ -18,7 +18,7 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 3000; $i++){
+        for ($i = 1; $i < 500; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'21',
                 'cognome' => 'COGNOME'.$i.'21',
@@ -34,11 +34,11 @@ class ClientSeeder extends Seeder
                 'filiale_id' => 1,
                 'mese' => Carbon::now()->subMonths(rand(0,5))->month,
                 'anno' => Carbon::now()->year,
-                'recapito_id' => rand(1,9)
+                'recapito_id' => rand(1,2)
             ]);
         }
 
-        for ($i = 1; $i < 3000; $i++){
+        for ($i = 1; $i < 500; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'22',
                 'cognome' => 'COGNOME'.$i.'22',
@@ -54,11 +54,11 @@ class ClientSeeder extends Seeder
                 'filiale_id' => 2,
                 'mese' => Carbon::now()->subMonths(rand(0,5))->month,
                 'anno' => Carbon::now()->year,
-                'recapito_id' => rand(1,9)
+                'recapito_id' => rand(1,2)
             ]);
         }
 
-        for ($i = 1; $i < 3000; $i++){
+        for ($i = 1; $i < 500; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'23',
                 'cognome' => 'COGNOME'.$i.'23',
@@ -74,7 +74,7 @@ class ClientSeeder extends Seeder
                 'filiale_id' => 3,
                 'mese' => Carbon::now()->subMonths(rand(0,5))->month,
                 'anno' => Carbon::now()->year,
-                'recapito_id' => rand(1,9)
+                'recapito_id' => rand(1,2)
             ]);
         }
     }

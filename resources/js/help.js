@@ -106,6 +106,13 @@ const help = () => {
         linkaddrata: base+'addRata',
         linkfattura: base+'caricaFattura',
         linkventaglio: base+'ventaglioAnno',
+        linklistamedici: base+'listaDottori',
+        linkaddmedico: base+'addDottore',
+        linkcaricaorari: base+'caricaOrari',
+        linkaddorario: base+'addOrario',
+        linkcaricaorariodottore: base+'caricaOrarioDottore',
+        linkinviimedici: base+'inviiMedici',
+        linktotaleinviimedici: base+'totaleInviiMedici',
     };
 };
 export default help;

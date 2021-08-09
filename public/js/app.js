@@ -2119,6 +2119,24 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_statistiche_VentaglioProdotti_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/statistiche/VentaglioProdotti */ "./resources/js/Pages/statistiche/VentaglioProdotti.vue"));
   },
   name: 'ventaglioProdotti'
+}, {
+  path: '/listaMedici',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_medici_ListaMedici_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/medici/ListaMedici */ "./resources/js/Pages/medici/ListaMedici.vue"));
+  },
+  name: 'listaMedici'
+}, {
+  path: '/orariMedici/:dottore?',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_medici_OrariMedici_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/medici/OrariMedici */ "./resources/js/Pages/medici/OrariMedici.vue"));
+  },
+  name: 'orariMedici'
+}, {
+  path: '/inviiMedici',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_medici_InviiMedici_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/medici/InviiMedici */ "./resources/js/Pages/medici/InviiMedici.vue"));
+  },
+  name: 'inviiMedici'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -2135,8 +2153,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -2155,6 +2173,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_logging__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./module/logging */ "./resources/js/Store/module/logging.js");
 /* harmony import */ var _module_documenti__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./module/documenti */ "./resources/js/Store/module/documenti.js");
 /* harmony import */ var _module_rate__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./module/rate */ "./resources/js/Store/module/rate.js");
+/* harmony import */ var _module_medici__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./module/medici */ "./resources/js/Store/module/medici.js");
 
 
 
@@ -2175,8 +2194,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_18__.default.use(vuex__WEBPACK_IMPORTED_MODULE_19__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_19__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_19__.default.use(vuex__WEBPACK_IMPORTED_MODULE_20__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_20__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2195,7 +2215,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_19__.default.Store({
     appuntamenti: _module_appuntamenti__WEBPACK_IMPORTED_MODULE_14__.default,
     logging: _module_logging__WEBPACK_IMPORTED_MODULE_15__.default,
     documenti: _module_documenti__WEBPACK_IMPORTED_MODULE_16__.default,
-    rate: _module_rate__WEBPACK_IMPORTED_MODULE_17__.default
+    rate: _module_rate__WEBPACK_IMPORTED_MODULE_17__.default,
+    medici: _module_medici__WEBPACK_IMPORTED_MODULE_18__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -4752,6 +4773,271 @@ var mutations = {
 
 /***/ }),
 
+/***/ "./resources/js/Store/module/medici.js":
+/*!*********************************************!*\
+  !*** ./resources/js/Store/module/medici.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    medici: [],
+    orari: [],
+    invii: [],
+    totInvii: []
+  };
+};
+
+var getters = {
+  getMedici: function getMedici(state) {
+    return state.medici;
+  },
+  getOrari: function getOrari(state) {
+    return state.orari;
+  },
+  getInvii: function getInvii(state) {
+    return state.invii;
+  },
+  getTotaliInvii: function getTotaliInvii(state) {
+    return state.totInvii;
+  }
+};
+var actions = {
+  fetchMedici: function fetchMedici(_ref, idUser) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistamedici) + '/' + idUser);
+
+            case 3:
+              response = _context.sent;
+              commit('fetchMedici', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  addMedico: function addMedico(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddmedico), payload);
+
+            case 3:
+              response = _context2.sent;
+              commit('addMedico', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  eliminaMedico: function eliminaMedico(_ref3, idMedico) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistamedici) + '/' + idMedico);
+
+            case 3:
+              commit('eliminaMedico', idMedico);
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  caricaOrari: function caricaOrari(_ref4, idDottore) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcaricaorari) + '/' + idDottore);
+
+            case 3:
+              response = _context4.sent;
+              commit('caricaOrari', response.data);
+
+            case 5:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  caricaOrarioDottore: function caricaOrarioDottore(_ref5, dottore) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcaricaorariodottore) + '/' + dottore);
+
+            case 3:
+              response = _context5.sent;
+              commit('caricaOrari', response.data);
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  },
+  addOrario: function addOrario(_ref6, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context6.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddorario), payload);
+
+            case 3:
+              response = _context6.sent;
+              commit('addOrario', response.data);
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+  inviiMedici: function inviiMedici(_ref7, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkinviimedici), payload);
+
+            case 3:
+              response = _context7.sent;
+              commit('inviiMedici', response.data);
+
+            case 5:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  },
+  totaleInviiMedici: function totaleInviiMedici(_ref8, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              commit = _ref8.commit;
+              _context8.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linktotaleinviimedici), payload);
+
+            case 3:
+              response = _context8.sent;
+              commit('totaleInviiMedici', response.data);
+
+            case 5:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    }))();
+  }
+};
+var mutations = {
+  fetchMedici: function fetchMedici(state, payload) {
+    state.medici = payload;
+  },
+  addMedico: function addMedico(state, payload) {
+    state.medici.unshift(payload);
+  },
+  eliminaMedico: function eliminaMedico(state, id) {
+    state.medici = state.medici.filter(function (u) {
+      return u.id !== id;
+    });
+  },
+  caricaOrari: function caricaOrari(state, payload) {
+    state.orari = payload;
+  },
+  addOrario: function addOrario(state, payload) {
+    state.orari.unshift(payload);
+  },
+  inviiMedici: function inviiMedici(state, payload) {
+    state.invii = payload;
+  },
+  totaleInviiMedici: function totaleInviiMedici(state, payload) {
+    state.totInvii = payload;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
 /***/ "./resources/js/Store/module/product.js":
 /*!**********************************************!*\
   !*** ./resources/js/Store/module/product.js ***!
@@ -6821,7 +7107,14 @@ var help = function help() {
     linkclientisaldati: base + 'clientiSaldati',
     linkaddrata: base + 'addRata',
     linkfattura: base + 'caricaFattura',
-    linkventaglio: base + 'ventaglioAnno'
+    linkventaglio: base + 'ventaglioAnno',
+    linklistamedici: base + 'listaDottori',
+    linkaddmedico: base + 'addDottore',
+    linkcaricaorari: base + 'caricaOrari',
+    linkaddorario: base + 'addOrario',
+    linkcaricaorariodottore: base + 'caricaOrarioDottore',
+    linkinviimedici: base + 'inviiMedici',
+    linktotaleinviimedici: base + 'totaleInviiMedici'
   };
 };
 
@@ -93120,7 +93413,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

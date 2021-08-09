@@ -36,6 +36,7 @@ class CreateClientsTable extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->bigInteger('filiale_id')->unsigned()->nullable();
             $table->bigInteger('recapito_id')->unsigned()->nullable();
+            $table->bigInteger('medico_id')->unsigned()->nullable();
             $table->integer('mese')->nullable();
             $table->integer('anno')->nullable();
             $table->timestamps();

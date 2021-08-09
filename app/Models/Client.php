@@ -163,6 +163,11 @@ class Client extends Model
         return $this->belongsTo(Recapito::class);
     }
 
+    public function medico()
+    {
+        return $this->belongsTo(Medico::class);
+    }
+
     public function appuntamenti()
     {
         return $this->hasMany(Appuntamento::class);

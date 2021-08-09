@@ -57,7 +57,12 @@ class ClientService
         $new->tipologia_id = $request->tipologia_id;
         $new->marketing_id = $request->marketing_id;
         $new->filiale_id = $request->filiale_id;
-        $new->recapito_id = $request->recapito_id;
+        if($request->marketing_id == 5) {
+            $new->medico_id = $request->recapito_id;
+        } else {
+            $new->recapito_id = $request->recapito_id;
+        }
+
         $new->user_id = $request->user_id;
         $new->recall = 1;
         $new->datarecall = $this->calcolaRecall($request->tipologia_id);
@@ -96,7 +101,11 @@ class ClientService
         $new->tipologia_id = $request->tipologia_id;
         $new->marketing_id = $request->marketing_id;
         $new->filiale_id = $request->filiale_id;
-        $new->recapito_id = $request->recapito_id;
+        if($request->marketing_id == 5) {
+            $new->medico_id = $request->recapito_id;
+        } else {
+            $new->recapito_id = $request->recapito_id;
+        }
         $new->user_id = $request->user_id;
         $new->recall = 1;
         $new->datarecall = $this->calcolaRecall($request->tipologia_id);

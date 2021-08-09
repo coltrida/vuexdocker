@@ -5,6 +5,7 @@ use App\Http\Controllers\api\AudiometriaController;
 use App\Http\Controllers\api\CategoriaController;
 use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\DocumentoController;
+use App\Http\Controllers\api\DottoreController;
 use App\Http\Controllers\api\FilialiController;
 use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\GestioneController;
@@ -171,10 +172,19 @@ Route::get('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiM
 Route::get('/fatturatoCanali', [MarketingController::class, 'fatturatoCanali']);
 Route::get('/ventaglioAnno', [UserController::class, 'ventaglioAnno']);
 
-
 // ----------------- rate -----------------------
 Route::get('/clientiDaSaldare', [RateController::class, 'allClientiDaSaldare']);
 Route::get('/clientiDaSaldare/{idAudio}', [RateController::class, 'clientiDaSaldare']);
 Route::get('/clientiSaldati/{idAudio}', [RateController::class, 'clientiSaldati']);
 Route::post('/addRata', [RateController::class, 'addRata']);
 Route::get('/caricaFattura/{idFattura}', [RateController::class, 'caricaFattura']);
+
+// ----------------- dottori -----------------------
+Route::get('/listaDottori/{idUser}', [DottoreController::class, 'lista']);
+Route::get('/caricaOrari/{idDottore}', [DottoreController::class, 'caricaOrari']);
+Route::get('/caricaOrarioDottore/{dottore}', [DottoreController::class, 'caricaOrarioDottore']);
+Route::delete('/listaDottori/{idMedico}', [DottoreController::class, 'elimina']);
+Route::post('/addDottore', [DottoreController::class, 'aggiungi']);
+Route::post('/addOrario', [DottoreController::class, 'aggiungiOrario']);
+Route::post('/inviiMedici', [DottoreController::class, 'inviiMedici']);
+Route::post('/totaleInviiMedici', [DottoreController::class, 'totaleInviiMedici']);

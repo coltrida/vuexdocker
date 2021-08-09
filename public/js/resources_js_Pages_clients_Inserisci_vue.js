@@ -328,6 +328,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchAudio();
     this.fetchFilialiPerInserimento();
     this.fetchRecapiti();
+    this.fetchMedici(this.getIdUser);
 
     if (this.rottaIdClient) {
       this.fetchClient(this.rottaIdClient).then(function () {
@@ -346,7 +347,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
     addClient: 'addClient',
     modificaClient: 'modificaClient',
     fetchClient: 'fetchClient'
@@ -360,6 +361,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchFilialiPerInserimento: 'fetchFilialiPerInserimento'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
     fetchRecapiti: 'fetchRecapiti'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('medici', {
+    fetchMedici: 'fetchMedici'
   })), {}, {
     annulla: function annulla() {
       this.$router.go(-1);
@@ -407,8 +410,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     }
+    /*scegliFonte(){
+        if(this.newClient.marketing_id == 5) {
+            'Medico'
+        } else {
+            'Recapito';
+        }
+    }*/
+
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getRuolo: 'getRuolo',
     getIdUser: 'getIdUser'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
@@ -423,12 +434,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getFilialiPerInserimento: 'getFilialiPerInserimento'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
     getRecapiti: 'getRecapiti'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('medici', {
+    getMedici: 'getMedici'
   })), {}, {
     rottaIdClient: function rottaIdClient() {
       return this.$route.params.clientId ? this.$route.params.clientId : null;
     },
     nomeBtn: function nomeBtn() {
       return this.$route.params.clientId ? 'Modifica' : 'Inserisci';
+    },
+    nomeLabel: function nomeLabel() {
+      return this.newClient.marketing_id == 5 ? 'Medico' : 'Recapito';
+    },
+    origineFonte: function origineFonte() {
+      return this.newClient.marketing_id == 5 ? this.getMedici : this.getRecapiti;
     }
   })
 });
@@ -1012,8 +1031,8 @@ var render = function() {
                         attrs: {
                           "item-value": "id",
                           "item-text": "nome",
-                          items: _vm.getRecapiti,
-                          label: "Recapito"
+                          items: _vm.origineFonte,
+                          label: _vm.nomeLabel
                         },
                         model: {
                           value: _vm.newClient.recapito_id,

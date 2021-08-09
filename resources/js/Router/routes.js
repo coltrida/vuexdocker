@@ -33,6 +33,9 @@ const routes = [
     { path: '/rateali', component: () => import('../Pages/clients/RatealiAdmin'), name: 'rateali' },
     { path: '/rateClienti/inserisci/:fatturaId?', component: () => import('../Pages/clients/InserisciRata'), name: 'rataInserisci' },
     { path: '/ventaglioProdotti', component: () => import('../Pages/statistiche/VentaglioProdotti'), name: 'ventaglioProdotti' },
+    { path: '/listaMedici', component: () => import('../Pages/medici/ListaMedici'), name: 'listaMedici' },
+    { path: '/orariMedici/:dottore?', component: () => import('../Pages/medici/OrariMedici'), name: 'orariMedici' },
+    { path: '/inviiMedici', component: () => import('../Pages/medici/InviiMedici'), name: 'inviiMedici' },
 ];
 
 export default routes;
