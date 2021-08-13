@@ -63,10 +63,9 @@ class DottoreService
     {
         return Client::where([
             ['user_id', $request->idUser],
-            ['marketing_id', 5]
-        ])->whereHas('prova', function ($q) use($request){
-            $q->where('anno_inizio', $request->anno);
-        })
+            ['marketing_id', 5],
+            ['anno', $request->anno],
+        ])
             ->with('prova', 'medico')
         ->orderBy('medico_id')->get();
     }
@@ -146,5 +145,38 @@ class DottoreService
                 ]);
             }])
             ->withSum('prova', 'tot')->get();
+    }
+
+    public function statisticheInviiMedici($request)
+    {
+        return Client::where([
+            ['marketing_id', 5],
+            ['anno', $request->anno],
+        ])
+            ->with('prova', 'medico', 'user')
+            ->orderBy('user_id')->orderBy('medico_id')->get();
+    }
+
+    public function statisticheTotaleInviiMedici($request)
+    {
+        return Medico::
+        withCount(['clients as vendite' => function($q) use($request) {
+            $q->where([
+                ['marketing_id', 5]
+            ])->whereHas('prova', function ($q) use($request){
+                $q->where([
+                    ['anno_fine', $request->anno],
+                    ['stato_id', 4],
+                ]);
+            });
+        }])
+            ->withCount(['clients as invii' => function($q) use($request) {
+                $q->where([
+                    ['marketing_id', 5]
+                ]);
+            }])
+            ->withSum('prova', 'tot')
+            ->with('user')
+            ->get();
     }
 }

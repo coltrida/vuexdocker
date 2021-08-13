@@ -113,6 +113,9 @@ const help = () => {
         linkcaricaorariodottore: base+'caricaOrarioDottore',
         linkinviimedici: base+'inviiMedici',
         linktotaleinviimedici: base+'totaleInviiMedici',
+        linkstatisticheinviimedici: base+'statisticheInviiMedici',
+        linkstatistichetotaleinviimedici: base+'statisticheTotaleInviiMedici',
+        linkfilialebyid: base+'filialeById',
     };
 };
 export default help;

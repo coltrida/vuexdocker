@@ -250,6 +250,24 @@
                                     <span>Produci Fattura</span>
                                 </v-tooltip>
 
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <a :href="'http://vuexdocker.test'+item.copia_comm[0].link" target="_blank">
+                                            <v-icon
+                                                style="font-size: 25px"
+                                                    color="orange"
+                                                    small
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                            >
+                                                mdi-closed-caption
+                                            </v-icon>
+                                        </a>
+
+                                    </template>
+                                    <span>Copia Commissione</span>
+                                </v-tooltip>
+
                             </template>
 
                         </v-data-table>
@@ -413,7 +431,7 @@
 
             visualizzaFattura(idProva){
                 this.idFattura = idProva;
-                console.log(this.fatturaPdf)
+           //     console.log(this.fatturaPdf)
             }
         },
 

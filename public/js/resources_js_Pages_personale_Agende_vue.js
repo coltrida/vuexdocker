@@ -201,7 +201,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addAgenda(this.user).then(function () {
         _this.fetchUserAgenda();
       });
-      this.user = {};
+      /*this.user = {};*/
     },
     itemRowBackground: function itemRowBackground(item) {
       return item.settimana === 1 ? 'style-1' : item.settimana === 2 ? 'style-2' : item.settimana === 3 ? 'style-3' : item.settimana === 4 ? 'style-4' : '';

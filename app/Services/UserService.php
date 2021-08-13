@@ -36,7 +36,9 @@ class UserService
 
     public function userAgenda()
     {
-        return User::with(['agenda' => function($q){
+        return User::whereHas('ruolo', function ($r){
+            $r->where('nome', '<>', 'admin');
+        })->with(['agenda' => function($q){
             $q->orderBy('settimana')->orderBy('nome');
         }])->orderBy('name')->get();
     }

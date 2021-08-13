@@ -109,6 +109,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Recapiti",
@@ -292,7 +297,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "4", sm: "4" } },
+                { attrs: { cols: "3", sm: "3" } },
                 [
                   _c("v-text-field", {
                     attrs: { label: "Indirizzo" },
@@ -365,18 +370,30 @@ var render = function() {
                   })
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "2", sm: "2" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "mb-5",
+                      attrs: { dark: "", color: "indigo" },
+                      on: { click: _vm.aggiungi }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Inserisci\n                "
+                      )
+                    ]
+                  )
+                ],
+                1
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            {
-              attrs: { dark: "", color: "indigo" },
-              on: { click: _vm.aggiungi }
-            },
-            [_vm._v("\n            Inserisci\n        ")]
           ),
           _vm._v(" "),
           _vm._l(_vm.getRecapiti, function(audio) {

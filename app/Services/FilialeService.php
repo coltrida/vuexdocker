@@ -73,4 +73,9 @@ class FilialeService
         FilialeUser::find($id)->delete();
         return Filiale::with('users:id,name')->orderBy('nome')->get();
     }
+
+    public function filialeById($idFiliale)
+    {
+        return Filiale::find($idFiliale);
+    }
 }

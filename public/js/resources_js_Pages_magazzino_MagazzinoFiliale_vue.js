@@ -143,6 +143,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
@@ -277,6 +279,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchRichiesti(this.rottaIdFiliale);
       this.fetchInArrivo(this.rottaIdFiliale);
       this.fetchFornitori();
+      this.fetchFilialeById(this.rottaIdFiliale);
       window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
         _this.fetchInFiliale(_this.rottaIdFiliale);
 
@@ -291,9 +294,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {
     rottaIdFiliale: function rottaIdFiliale() {
       this.fetchInFiliale(this.rottaIdFiliale);
+      this.fetchInProva(this.rottaIdFiliale);
+      this.fetchRichiesti(this.rottaIdFiliale);
+      this.fetchInArrivo(this.rottaIdFiliale);
+      this.fetchFilialeById(this.rottaIdFiliale);
     }
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('product', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('product', {
     fetchInFiliale: 'fetchInFiliale',
     fetchInProva: 'fetchInProva',
     fetchRichiesti: 'fetchRichiesti',
@@ -305,6 +312,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
     fetchListinoFromFornitore: 'fetchListinoFromFornitore'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
+    fetchFilialeById: 'fetchFilialeById'
   })), {}, {
     caricaProdotti: function caricaProdotti() {
       if (this.productRichiesto.fornitore_id) {
@@ -324,7 +333,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.switchArrivato(id);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
     getInFiliale: 'getInFiliale',
     getInProva: 'getInProva',
     getRichiesti: 'getRichiesti',
@@ -334,7 +343,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('listino', {
     getListino: 'getListino'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
-    getFiliali: 'getFiliali'
+    getFiliali: 'getFiliali',
+    getFilialeById: 'getFilialeById'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getRuolo: 'getRuolo'
   })), {}, {
     rottaIdFiliale: function rottaIdFiliale() {
       return this.$route.params.filialeId ? this.$route.params.filialeId : null;
@@ -435,94 +447,106 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", [_vm._v("Magazzino")]),
+      _c("h2", [_vm._v("Magazzino " + _vm._s(_vm.getFilialeById.nome))]),
       _vm._v(" "),
       _c(
         "v-container",
         [
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
+          _vm.getRuolo != "admin"
+            ? _c(
+                "v-row",
                 [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "nome",
-                      items: _vm.getFornitori,
-                      label: "fornitore"
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.caricaProdotti()
-                      }
-                    },
-                    model: {
-                      value: _vm.productRichiesto.fornitore_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.productRichiesto, "fornitore_id", $$v)
-                      },
-                      expression: "productRichiesto.fornitore_id"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "nome",
-                      items: _vm.getListino,
-                      label: "listino"
-                    },
-                    model: {
-                      value: _vm.productRichiesto.listino_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.productRichiesto, "listino_id", $$v)
-                      },
-                      expression: "productRichiesto.listino_id"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "quantita" },
-                    model: {
-                      value: _vm.productRichiesto.quantita,
-                      callback: function($$v) {
-                        _vm.$set(_vm.productRichiesto, "quantita", $$v)
-                      },
-                      expression: "productRichiesto.quantita"
-                    }
-                  })
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          "item-text": "nome",
+                          items: _vm.getFornitori,
+                          label: "fornitore"
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.caricaProdotti()
+                          }
+                        },
+                        model: {
+                          value: _vm.productRichiesto.fornitore_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.productRichiesto, "fornitore_id", $$v)
+                          },
+                          expression: "productRichiesto.fornitore_id"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          "item-text": "nome",
+                          items: _vm.getListino,
+                          label: "listino"
+                        },
+                        model: {
+                          value: _vm.productRichiesto.listino_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.productRichiesto, "listino_id", $$v)
+                          },
+                          expression: "productRichiesto.listino_id"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "3", sm: "3" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "quantita" },
+                        model: {
+                          value: _vm.productRichiesto.quantita,
+                          callback: function($$v) {
+                            _vm.$set(_vm.productRichiesto, "quantita", $$v)
+                          },
+                          expression: "productRichiesto.quantita"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "success", dark: "" },
+                          on: { click: _vm.richiedi }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Richiedi\n                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
               )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            {
-              attrs: { color: "success", dark: "" },
-              on: { click: _vm.richiedi }
-            },
-            [_vm._v("\n            Richiedi\n        ")]
-          ),
+            : _vm._e(),
           _vm._v(" "),
           _c("h3", { staticClass: "mt-5" }, [_vm._v("Presenti")]),
           _vm._v(" "),

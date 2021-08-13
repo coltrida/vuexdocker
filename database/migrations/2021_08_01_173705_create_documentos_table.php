@@ -16,6 +16,7 @@ class CreateDocumentosTable extends Migration
         Schema::create('documentos', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('client_id');
+            $table->bigInteger('prova_id')->nullable();
             $table->string('tipo');
             $table->string('link');
             $table->timestamps();

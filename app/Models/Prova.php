@@ -73,6 +73,11 @@ class Prova extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function copiaComm()
+    {
+        return $this->hasMany(Documento::class)->where('tipo', 'copiaComm');
+    }
+
     public function stato()
     {
         return $this->belongsTo(StatoApa::class, 'stato_id', 'id');

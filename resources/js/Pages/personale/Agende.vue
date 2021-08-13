@@ -140,7 +140,7 @@
                 this.addAgenda(this.user).then(() => {
                     this.fetchUserAgenda();
                 });
-                this.user = {};
+                /*this.user = {};*/
             },
 
             itemRowBackground: function (item) {

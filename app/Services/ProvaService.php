@@ -67,7 +67,28 @@ class ProvaService
         $prova->stato_id = 3;
         $prova->tot = $request->tot;
         $prova->save();
-        $provaSalvata = Prova::with('stato', 'user', 'product', 'client')->find($request->id);
+
+        $giorno = Carbon::now()->day;
+        $mese = Carbon::now()->month;
+        $anno = Carbon::now()->year;
+
+        $documento = new Documento();
+        $documento->client_id = $prova->client->id;
+        $documento->prova_id = $prova->id;
+        $documento->tipo = 'copiaComm';
+        $filename = 'CopiaComm'.$giorno.$mese.$anno.'.pdf';
+        $documento->link = '/storage/documenti/'.$prova->client->id.'/'.$filename;
+        $documento->save();
+
+        $provaSalvata = Prova::with('stato', 'user', 'product', 'client', 'copiaComm')->find($request->id);
+
+        $pdf = App::make('dompdf.wrapper');
+        if (!Storage::disk('public')->exists('/documenti/'.$provaSalvata->client->id.'/')) {
+            Storage::makeDirectory('/documenti/'.$provaSalvata->client->id.'/');
+        }
+        $pdf->loadHTML(view('pdf.copiaComm', compact('provaSalvata')))
+            ->save("storage/documenti/".$provaSalvata->client->id.'/'.$filename);
+
         broadcast(new ProveEvent($provaSalvata))->toOthers();
         return $provaSalvata;
     }

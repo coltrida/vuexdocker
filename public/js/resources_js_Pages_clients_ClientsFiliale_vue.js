@@ -1451,6 +1451,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1631,8 +1649,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.dialogFattura = false;
     },
     visualizzaFattura: function visualizzaFattura(idProva) {
-      this.idFattura = idProva;
-      console.log(this.fatturaPdf);
+      this.idFattura = idProva; //     console.log(this.fatturaPdf)
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('fornitori', {
@@ -43059,6 +43076,71 @@ var render = function() {
                             )
                           },
                           [_vm._v(" "), _c("span", [_vm._v("Produci Fattura")])]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-tooltip",
+                          {
+                            attrs: { bottom: "" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    var attrs = ref.attrs
+                                    return [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href:
+                                              "http://vuexdocker.test" +
+                                              item.copia_comm[0].link,
+                                            target: "_blank"
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            _vm._g(
+                                              _vm._b(
+                                                {
+                                                  staticStyle: {
+                                                    "font-size": "25px"
+                                                  },
+                                                  attrs: {
+                                                    color: "orange",
+                                                    small: ""
+                                                  }
+                                                },
+                                                "v-icon",
+                                                attrs,
+                                                false
+                                              ),
+                                              on
+                                            ),
+                                            [
+                                              _vm._v(
+                                                "\n                                            mdi-closed-caption\n                                        "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [
+                            _vm._v(" "),
+                            _c("span", [_vm._v("Copia Commissione")])
+                          ]
                         )
                       ]
                     }

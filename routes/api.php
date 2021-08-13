@@ -42,6 +42,7 @@ Route::get('/appuntamenti/{idAudio}', [UserController::class, 'appuntamenti']);
 // ----------------- filiali -------------------------
 Route::get('/filiali', [FilialiController::class, 'index']);
 Route::get('/filialiUser/{idAudio}', [FilialiController::class, 'filialiAudio']);
+Route::get('/filialeById/{idFiliale}', [FilialiController::class, 'filialeById']);
 Route::delete('/filiali/{id}', [FilialiController::class, 'elimina']);
 Route::post('/addFiliale', [FilialiController::class, 'aggiungi']);
 /*Route::get('/situazioneMese', [FilialiController::class, 'situazioneMese']);*/
@@ -171,6 +172,8 @@ Route::get('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
 Route::get('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiMesi']);
 Route::get('/fatturatoCanali', [MarketingController::class, 'fatturatoCanali']);
 Route::get('/ventaglioAnno', [UserController::class, 'ventaglioAnno']);
+Route::post('/statisticheInviiMedici', [DottoreController::class, 'statisticheInviiMedici']);
+Route::post('/statisticheTotaleInviiMedici', [DottoreController::class, 'statisticheTotaleInviiMedici']);
 
 // ----------------- rate -----------------------
 Route::get('/clientiDaSaldare', [RateController::class, 'allClientiDaSaldare']);

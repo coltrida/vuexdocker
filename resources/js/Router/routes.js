@@ -36,6 +36,7 @@ const routes = [
     { path: '/listaMedici', component: () => import('../Pages/medici/ListaMedici'), name: 'listaMedici' },
     { path: '/orariMedici/:dottore?', component: () => import('../Pages/medici/OrariMedici'), name: 'orariMedici' },
     { path: '/inviiMedici', component: () => import('../Pages/medici/InviiMedici'), name: 'inviiMedici' },
+    { path: '/statisticheMedici', component: () => import('../Pages/statistiche/Medici'), name: 'statisticheMedici' },
 ];
 
 export default routes;

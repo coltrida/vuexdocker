@@ -18,15 +18,19 @@ class ClientService
 {
     public function lista()
     {
-        return Client::with('tipologia:id,nome',
-            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')
+        return Client::with(['tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+                $q->with('copiaComm')->first();
+            }])
                 ->orderBy('cognome')->get();
     }
 
     public function clienteFiliale($idFiliale)
     {
-        return Client::with('tipologia:id,nome',
-            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')
+        return Client::with(['tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+                $q->with('copiaComm')->first();
+            }])
                 ->where('filiale_id', $idFiliale)->orderBy('cognome')->get();
     }
 

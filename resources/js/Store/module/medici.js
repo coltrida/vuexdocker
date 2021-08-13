@@ -4,7 +4,10 @@ const state = () => ({
     medici: [],
     orari: [],
     invii: [],
-    totInvii: []
+    totInvii: [],
+
+    statisticheInvii: [],
+    statisticheTotInvii: [],
 });
 
 const getters = {
@@ -22,6 +25,14 @@ const getters = {
 
     getTotaliInvii(state){
         return state.totInvii;
+    },
+
+    getStatisticheInvii(state){
+        return state.statisticheInvii;
+    },
+
+    getStatisticheTotaliInvii(state){
+        return state.statisticheTotInvii;
     },
 };
 
@@ -66,6 +77,16 @@ const actions = {
         const response = await axios.post(`${help().linktotaleinviimedici}`, payload);
         commit('totaleInviiMedici', response.data);
     },
+
+    async statisticheInviiMedici({commit}, payload){
+        const response = await axios.post(`${help().linkstatisticheinviimedici}`, payload);
+        commit('statisticheInviiMedici', response.data);
+    },
+
+    async statisticheTotaleInviiMedici({commit}, payload){
+        const response = await axios.post(`${help().linkstatistichetotaleinviimedici}`, payload);
+        commit('statisticheTotaleInviiMedici', response.data);
+    },
 };
 
 const mutations = {
@@ -95,6 +116,14 @@ const mutations = {
 
     totaleInviiMedici(state, payload){
         state.totInvii = payload;
+    },
+
+    statisticheInviiMedici(state, payload){
+        state.statisticheInvii = payload;
+    },
+
+    statisticheTotaleInviiMedici(state, payload){
+        state.statisticheTotInvii = payload;
     },
 };
 

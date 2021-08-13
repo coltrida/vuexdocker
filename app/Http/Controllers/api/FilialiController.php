@@ -32,4 +32,9 @@ class FilialiController extends Controller
     {
         return $filialeService->situazioneMese();
     }
+
+    public function filialeById($idFiliale, FilialeService $filialeService)
+    {
+        return $filialeService->filialeById($idFiliale);
+    }
 }

@@ -14,8 +14,8 @@
                 </v-col>
 
                 <v-col
-                    cols="4"
-                    sm="4"
+                    cols="3"
+                    sm="3"
                 >
                     <v-text-field
                         v-model="recapito.indirizzo"
@@ -56,11 +56,16 @@
                     ></v-select>
                 </v-col>
 
+                <v-col cols="2"
+                       sm="2">
+                    <v-btn @click="aggiungi" dark color="indigo" class="mb-5">
+                        Inserisci
+                    </v-btn>
+                </v-col>
+
             </v-row>
 
-            <v-btn @click="aggiungi" dark color="indigo">
-                Inserisci
-            </v-btn>
+
 
             <div v-for="audio in getRecapiti" :key="audio.id">
                 <h2>{{audio.name}}</h2>

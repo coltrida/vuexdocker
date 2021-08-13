@@ -6,6 +6,7 @@ const state = () => ({
     associazioni: [],
     situazioneMese: [],
     richiestaApparecchi: [],
+    filiale:{}
 });
 
 const getters = {
@@ -29,12 +30,21 @@ const getters = {
         return state.richiestaApparecchi;
     },
 
+    getFilialeById(state){
+        return state.filiale;
+    }
+
 };
 
 const actions = {
     async fetchFiliali({commit}){
         const response = await axios.get(`${help().linkfiliali}`);
         commit('fetchFiliali', response.data);
+    },
+
+    async fetchFilialeById({commit}, idFiliale){
+        const response = await axios.get(`${help().linkfilialebyid}`+'/'+idFiliale);
+        commit('fetchFilialeById', response.data);
     },
 
     async fetchFilialiPerInserimento({commit}){
@@ -109,6 +119,10 @@ const mutations = {
 
     fetchFiliali(state, payload){
         state.filiali = payload;
+    },
+
+    fetchFilialeById(state, payload){
+        state.filiale = payload;
     },
 
     fetchFilialiPerInserimento(state, payload){

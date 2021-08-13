@@ -18,15 +18,18 @@
             <v-col cols="6">
                 <v-data-table
                     :headers="header"
-                    :items="getInvii"
+                    :items="getStatisticheInvii"
                     class="elevation-1"
                 >
+                    <template v-slot:item.nome="{ item }">
+                        {{ item.nome }} {{item.cognome}}
+                    </template>
                 </v-data-table>
             </v-col>
             <v-col cols="6">
                 <v-data-table
                     :headers="header2"
-                    :items="getTotaliInvii"
+                    :items="getStatisticheTotaliInvii"
                     class="elevation-1"
                 >
 
@@ -56,12 +59,14 @@
                 anni:['2021'],
 
                 header: [
+                    { text: 'Audio',  align: 'start', sortable: false, value: 'user.name', class: "indigo white--text" },
                     { text: 'Medico',  align: 'start', sortable: false, value: 'medico.nome', class: "indigo white--text" },
                     { text: 'Nome',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
                     { text: 'Importo Fattura',  sortable: false, value: 'prova[0].tot', class: "indigo white--text" },
                 ],
 
                 header2: [
+                    { text: 'Audio',  align: 'start', sortable: false, value: 'user.name', class: "indigo white--text" },
                     { text: 'Medico',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
                     { text: 'Tot invii',  sortable: false, value: 'invii', class: "indigo white--text" },
                     { text: 'Vendite',  sortable: false, value: 'vendite', class: "indigo white--text" },
@@ -76,26 +81,21 @@
 
         methods:{
             ...mapActions('medici', {
-                inviiMedici:'inviiMedici',
-                totaleInviiMedici:'totaleInviiMedici',
+                statisticheInviiMedici:'statisticheInviiMedici',
+                statisticheTotaleInviiMedici:'statisticheTotaleInviiMedici',
             }),
 
             selezionaAnno(){
-                this.ricerca.idUser = this.getIdUser;
-                this.inviiMedici(this.ricerca);
-                this.totaleInviiMedici(this.ricerca);
+                this.statisticheInviiMedici(this.ricerca);
+                this.statisticheTotaleInviiMedici(this.ricerca);
             },
 
         },
 
         computed:{
             ...mapGetters('medici', {
-                getInvii: 'getInvii',
-                getTotaliInvii: 'getTotaliInvii',
-            }),
-
-            ...mapGetters('login', {
-                getIdUser: 'getIdUser',
+                getStatisticheInvii: 'getStatisticheInvii',
+                getStatisticheTotaliInvii: 'getStatisticheTotaliInvii',
             }),
 
         }

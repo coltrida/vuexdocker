@@ -471,6 +471,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Ventaglio Prodotti',
         link: 'ventaglioProdotti'
+      }, {
+        title: 'Medici',
+        link: 'statisticheMedici'
       }]
     };
   }

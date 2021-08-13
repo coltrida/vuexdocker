@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h2>Magazzino</h2>
+        <h2>Magazzino {{getFilialeById.nome}}</h2>
         <v-container>
 
-            <v-row>
+            <v-row v-if="getRuolo != 'admin'">
                 <v-col
                     cols="3"
                     sm="3"
@@ -41,11 +41,13 @@
                     ></v-text-field>
                 </v-col>
 
-            </v-row>
+                <v-col>
+                    <v-btn @click="richiedi" color="success" dark>
+                        Richiedi
+                    </v-btn>
+                </v-col>
 
-            <v-btn @click="richiedi" color="success" dark>
-                Richiedi
-            </v-btn>
+            </v-row>
 
             <h3 class="mt-5">Presenti</h3>
             <v-data-table
@@ -184,6 +186,8 @@
 
                 this.fetchFornitori();
 
+                this.fetchFilialeById(this.rottaIdFiliale);
+
                 window.Echo.channel("logisticaChannel").listen(".task-created", e => {
                     this.fetchInFiliale(this.rottaIdFiliale);
                     this.fetchInProva(this.rottaIdFiliale);
@@ -197,6 +201,11 @@
         watch:{
             rottaIdFiliale(){
                 this.fetchInFiliale(this.rottaIdFiliale);
+                this.fetchInProva(this.rottaIdFiliale);
+                this.fetchRichiesti(this.rottaIdFiliale);
+                this.fetchInArrivo(this.rottaIdFiliale);
+
+                this.fetchFilialeById(this.rottaIdFiliale);
             }
         },
 
@@ -217,6 +226,10 @@
 
             ...mapActions('listino', {
                 fetchListinoFromFornitore:'fetchListinoFromFornitore',
+            }),
+
+            ...mapActions('filiali', {
+                fetchFilialeById:'fetchFilialeById',
             }),
 
             caricaProdotti(){
@@ -260,6 +273,11 @@
 
             ...mapGetters('filiali', {
                 getFiliali: 'getFiliali',
+                getFilialeById: 'getFilialeById',
+            }),
+
+            ...mapGetters('login', {
+                getRuolo:'getRuolo',
             }),
 
             rottaIdFiliale(){

@@ -47,4 +47,14 @@ class DottoreController extends Controller
     {
         return $dottoreService->totaleInviiMedici($request);
     }
+
+    public function statisticheInviiMedici(Request $request, DottoreService $dottoreService)
+    {
+        return $dottoreService->statisticheInviiMedici($request);
+    }
+
+    public function statisticheTotaleInviiMedici(Request $request, DottoreService $dottoreService)
+    {
+        return $dottoreService->statisticheTotaleInviiMedici($request);
+    }
 }

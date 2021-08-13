@@ -26,4 +26,9 @@ class Medico extends Model
     {
         return $this->hasManyThrough(Prova::class, Client::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
