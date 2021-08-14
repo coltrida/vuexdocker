@@ -23,7 +23,10 @@ class RuoloSeeder extends Seeder
             ],
             [
                 'nome' => 'amministrazione'
-            ]
+            ],
+            [
+                'nome' => 'call'
+            ],
         ]);
     }
 }

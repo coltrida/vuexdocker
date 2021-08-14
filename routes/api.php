@@ -6,6 +6,7 @@ use App\Http\Controllers\api\CategoriaController;
 use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\DocumentoController;
 use App\Http\Controllers\api\DottoreController;
+use App\Http\Controllers\api\ElaborazioneController;
 use App\Http\Controllers\api\FilialiController;
 use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\GestioneController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\api\ProvaController;
 use App\Http\Controllers\api\RateController;
 use App\Http\Controllers\api\RecapitiController;
 use App\Http\Controllers\api\RuoloController;
+use App\Http\Controllers\api\TelefonateController;
 use App\Http\Controllers\api\TipologiaController;
 use App\Http\Controllers\api\UserController;
 
@@ -33,6 +35,7 @@ Route::post('/userAgenda', [UserController::class, 'addUserAgenda']);
 Route::get('/audioConBgt', [UserController::class, 'audioConBgt']);
 Route::get('/audioSenzaBgt', [UserController::class, 'audioSenzaBgt']);
 Route::get('/amm', [UserController::class, 'amm']);
+Route::get('/callCenter', [UserController::class, 'callCenter']);
 Route::delete('/user/{id}', [UserController::class, 'elimina']);
 Route::get('/user/{id}', [UserController::class, 'user']);
 Route::post('/addUser', [UserController::class, 'aggiungi']);
@@ -112,6 +115,7 @@ Route::post('/inviaSms', [ClientController::class, 'inviaSms']);
 Route::get('/importClients', [ClientController::class, 'importClients']);
 Route::post('/importClientsFromNoah', [ClientController::class, 'importClientsFromNoah']);
 
+
 // ----------------- tipologia -------------------------
 Route::get('/tipologie', [TipologiaController::class, 'index']);
 Route::delete('/tipologie/{id}', [TipologiaController::class, 'elimina']);
@@ -164,8 +168,10 @@ Route::post('/salvaFileXmlFromFiliale', [DocumentoController::class, 'salvaFileX
 Route::get('/caricaDocumenti/{idClient}', [DocumentoController::class, 'caricaDocumenti']);
 Route::delete('/eliminaDocumento/{idDocumento}', [DocumentoController::class, 'eliminaDocumento']);
 
+// ----------------- elaborazioneGiornaliera -----------------------
+Route::get('/situazioneAnno', [ElaborazioneController::class, 'situazioneAnno']);
+
 // ----------------- statistiche -----------------------
-Route::get('/situazioneAnno', [UserController::class, 'situazioneAnno']);
 Route::get('/dettaglioAudio', [UserController::class, 'dettaglioAudio']);
 Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSituazioneAnno']);
 Route::get('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
@@ -191,3 +197,12 @@ Route::post('/addDottore', [DottoreController::class, 'aggiungi']);
 Route::post('/addOrario', [DottoreController::class, 'aggiungiOrario']);
 Route::post('/inviiMedici', [DottoreController::class, 'inviiMedici']);
 Route::post('/totaleInviiMedici', [DottoreController::class, 'totaleInviiMedici']);
+
+// ----------------- telefonate -----------------------
+Route::get('/recallOggi', [TelefonateController::class, 'recallOggi']);
+Route::post('/addTelefonata', [TelefonateController::class, 'addTelefonata']);
+Route::post('/aggiornaTelefonata', [TelefonateController::class, 'aggiornaTelefonata']);
+Route::get('/clientiMaiRichiamati', [TelefonateController::class, 'clientiMaiRichiamati']);
+Route::get('/clientiNonHannoMaiPresoAppuntamenti', [TelefonateController::class, 'clientiNonHannoMaiPresoAppuntamenti']);
+Route::get('/clientiUnAnnoUltimoAppuntamento', [TelefonateController::class, 'clientiUnAnnoUltimoAppuntamento']);
+Route::get('/recallsByIdClient/{idClient}', [TelefonateController::class, 'recallsByIdClient']);

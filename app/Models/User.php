@@ -108,6 +108,11 @@ use function config;
  * @property-read int|null $client_da_saldare_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Fattura[] $clientSaldati
  * @property-read int|null $client_saldati_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Medico[] $medici
+ * @property-read int|null $medici_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Ventaglio[] $ventaglio
+ * @property-read int|null $ventaglio_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User callcenter()
  */
 class User extends Authenticatable
 {
@@ -180,6 +185,13 @@ class User extends Authenticatable
     {
         return $query->whereHas('ruolo', function ($ruolo){
             $ruolo->where('nome', 'amministrazione');
+        });
+    }
+
+    public function scopeCallcenter($query)
+    {
+        return $query->whereHas('ruolo', function ($ruolo){
+            $ruolo->where('nome', 'call');
         });
     }
 

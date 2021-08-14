@@ -150,7 +150,12 @@
         mounted() {
             this.fetchAppuntamenti(this.appuntamentoClient.id);
             this.fetchRecapitiByAudio(this.getIdUser);
-            this.fetchFilialiByUser(this.getIdUser);
+            if (this.getRuolo == 'call'){
+                this.fetchFiliali();
+            } else {
+                this.fetchFilialiByUser(this.getIdUser);
+            }
+
         },
 
         methods:{
@@ -166,6 +171,7 @@
 
             ...mapActions('filiali', {
                 fetchFilialiByUser:'fetchFilialiByUser',
+                fetchFiliali:'fetchFiliali',
             }),
 
             cancella(){
@@ -173,7 +179,7 @@
             },
 
             inserisci(){
-                this.newAppuntamento.user_id = this.getIdUser;
+                this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
                 this.newAppuntamento.client_id = this.appuntamentoClient.id;
 
                 this.addAppuntamento(this.newAppuntamento);
@@ -201,6 +207,7 @@
 
             ...mapGetters('login', {
                 getIdUser: 'getIdUser',
+                getRuolo: 'getRuolo',
             }),
 
             ...mapGetters('recapiti', {

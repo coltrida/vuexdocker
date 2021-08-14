@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Audiometria;
 use App\Models\Client;
 use App\Models\Recapito;
+use App\Models\Telefonata;
 use App\Models\Tipologia;
 use App\Models\User;
 use Carbon\Carbon;
@@ -68,8 +69,8 @@ class ClientService
         }
 
         $new->user_id = $request->user_id;
-        $new->recall = 1;
-        $new->datarecall = $this->calcolaRecall($request->tipologia_id);
+
+    //    $dataRecallCalcolata = $this->calcolaRecall($request->tipologia_id);
         $new->mail = trim(Str::upper($request->mail));
         $new->datanascita = $request->datanascita;
         $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
@@ -79,6 +80,12 @@ class ClientService
         $new->mese = Carbon::now()->month;
         $new->anno = Carbon::now()->year;
         $new->save();
+
+        /*$prossimaTelefonata = new Telefonata();
+        $prossimaTelefonata->user_id = $request->user_id;
+        $prossimaTelefonata->client_id = $new->id;
+        $prossimaTelefonata->datarecall = $dataRecallCalcolata;
+        $prossimaTelefonata->save();*/
 
         $utente = User::find($request->user_id);
         $propieta = 'client';
@@ -365,4 +372,6 @@ class ClientService
             ->where($condizioni)
             ->orderBy('cognome')->get();
     }
+
+
 }

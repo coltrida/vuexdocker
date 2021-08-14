@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
             BudgetSeeder::class,
             ProductSeeder::class,
             TipologiaSeeder::class,
+            AgendaSeeder::class,
+            AppuntamentoSeeder::class
    //         ProvaSeeder::class,
     //        ProductProvaSeeder::class,
    //         FatturaSeeder::class

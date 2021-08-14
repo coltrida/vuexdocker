@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex justify-start align-center mt-2">
-            <div v-if="showClients"><h2>Clienti</h2></div>
+            <div v-if="showClients"><h2>Clienti - {{getFilialeById.nome}}</h2></div>
 
             <messaggio
                 v-if="textMessaggio"
@@ -40,6 +40,12 @@
                 :documentiClient="documentiClient"
                 @chiudiDocumenti="chiudiDocumenti"
             ></documenti>
+
+            <recalls
+                v-if="showRecalls"
+                :recallsClient="recallsClient"
+                @chiudiRecalls="chiudiRecalls"
+            ></recalls>
 
             <div class="ml-4" v-if="showClients">
                 <router-link :to="{ name: 'clientsInserisci'}">
@@ -155,6 +161,21 @@
                         </template>
                         <span>Documenti</span>
                     </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                                color="green"
+                                small
+                                @click="recalls(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-phone
+                            </v-icon>
+                        </template>
+                        <span>Recalls</span>
+                    </v-tooltip>
                 </template>
 
 
@@ -171,18 +192,20 @@
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
     import Prove from "../../Components/btnClients/prove/Prove";
     import Documenti from "../../Components/btnClients/documenti/Docunenti";
+    import Recalls from "../../Components/btnClients/recalls/Recalls";
     import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
     import Messaggioelimina from "../../Components/btnClients/elimina/Messaggioelimina";
 
     export default {
         name: "ClientsFiliale",
-        components: {Messaggioelimina, Prove, Documenti, Audiogramma, Messaggio, Appuntamento},
+        components: {Messaggioelimina, Prove, Documenti, Audiogramma, Messaggio, Appuntamento, Recalls},
         data() {
             return {
                 showElimina: false,
                 showClients: true,
                 showProve: false,
                 showDocumenti: false,
+                showRecalls: false,
                 showAudiogramma: false,
                 textMessaggio: null,
                 openAudiogramma: false,
@@ -191,13 +214,14 @@
                 appuntamentoClient: {},
                 proveClient: {},
                 documentiClient: {},
+                recallsClient: {},
                 search: '',
                 idElimina: '',
                 nomeElimina: '',
                 cognomeElimina: '',
                 listino: {},
                 headers: [
-                    {text: 'Actions', width: 150, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
                     {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
@@ -217,23 +241,13 @@
         },
 
         mounted() {
-            let accesso = false;
-            this.getFiliali.forEach(element => {
-                if(element.id === this.rottaIdFiliale){
-                    accesso = true;
-                }
-            });
+            this.caricadati();
+        },
 
-            if(accesso && this.getClients.length == 0){
-                this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
-                    this.search = this.cognomeRicerca;
-                });
+        watch:{
+            rottaIdFiliale(){
+                this.caricadati();
             }
-
-            if(this.cognomeRicerca){
-                this.search = this.cognomeRicerca;
-            }
-
         },
 
         methods: {
@@ -241,6 +255,37 @@
                 fetchClientsFiliale: 'fetchClientsFiliale',
                 addClient: 'addClient',
             }),
+
+            ...mapActions('filiali', {
+                fetchFilialeById:'fetchFilialeById',
+            }),
+
+            caricadati(){
+                this.fetchFilialeById(this.rottaIdFiliale);
+
+                let accesso = false;
+                this.getFiliali.forEach(element => {
+                    if(element.id === this.rottaIdFiliale){
+                        accesso = true;
+                    }
+                });
+
+                if(accesso && this.getClients.length == 0){
+                    this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
+                        this.search = this.cognomeRicerca;
+                    });
+                }
+
+                if(this.getRuolo == 'call'){
+                    this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
+                        this.search = this.cognomeRicerca;
+                    });
+                }
+
+                if(this.cognomeRicerca){
+                    this.search = this.cognomeRicerca;
+                }
+            },
 
             elimina(id, nome, cognome) {
                 this.idElimina = id;
@@ -263,6 +308,7 @@
 
             audiogramma(client){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = true;
                 this.showAppuntamento = false;
@@ -272,6 +318,7 @@
 
             appuntamento(client){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showClients = false;
@@ -281,6 +328,7 @@
 
             prove(client){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = true;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
@@ -290,6 +338,7 @@
 
             documenti(client){
                 this.showDocumenti = true;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
@@ -297,8 +346,29 @@
                 this.documentiClient = client;
             },
 
+            recalls(client){
+                this.showDocumenti = false;
+                this.showRecalls = true;
+                this.showProve = false;
+                this.showAppuntamento = false;
+                this.showAudiogramma = false;
+                this.showClients = false;
+                this.recallsClient = client;
+            },
+
+            chiudiRecalls(){
+                this.showDocumenti = false;
+                this.showRecalls = false;
+                this.showProve = false;
+                this.showAudiogramma = false;
+                this.showAppuntamento = false;
+                this.showClients = true;
+                this.recallsClient = {};
+            },
+
             chiudiDocumenti(){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
@@ -308,6 +378,7 @@
 
             chiudiAudiogramma(){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
@@ -317,6 +388,7 @@
 
             chiudiAppuntamento(){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
@@ -326,6 +398,7 @@
 
             chiudiProve(){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
@@ -341,6 +414,11 @@
 
             ...mapGetters('filiali', {
                 getFiliali: 'getFiliali',
+                getFilialeById: 'getFilialeById',
+            }),
+
+            ...mapGetters('login', {
+                getRuolo: 'getRuolo',
             }),
 
             rottaIdFiliale(){

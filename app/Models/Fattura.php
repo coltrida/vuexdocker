@@ -53,6 +53,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereDataSaldo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fattura wherePagatoAudio($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereUltimaRata($value)
+ * @property int|null $mese_fattura
+ * @property int|null $anno_fattura
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereAnnoFattura($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereMeseFattura($value)
  */
 class Fattura extends Model
 {

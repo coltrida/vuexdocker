@@ -246,7 +246,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.fetchAppuntamenti(this.appuntamentoClient.id);
     this.fetchRecapitiByAudio(this.getIdUser);
-    this.fetchFilialiByUser(this.getIdUser);
+
+    if (this.getRuolo == 'call') {
+      this.fetchFiliali();
+    } else {
+      this.fetchFilialiByUser(this.getIdUser);
+    }
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
     fetchAppuntamenti: 'fetchAppuntamenti',
@@ -255,13 +260,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
     fetchRecapitiByAudio: 'fetchRecapitiByAudio'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
-    fetchFilialiByUser: 'fetchFilialiByUser'
+    fetchFilialiByUser: 'fetchFilialiByUser',
+    fetchFiliali: 'fetchFiliali'
   })), {}, {
     cancella: function cancella() {
       this.$emit('chiudiAppuntamento');
     },
     inserisci: function inserisci() {
-      this.newAppuntamento.user_id = this.getIdUser;
+      this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
       this.newAppuntamento.client_id = this.appuntamentoClient.id;
       this.addAppuntamento(this.newAppuntamento);
       this.newAppuntamento = {
@@ -281,7 +287,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
     getAppuntamenti: 'getAppuntamenti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
-    getIdUser: 'getIdUser'
+    getIdUser: 'getIdUser',
+    getRuolo: 'getRuolo'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
     getRecapiti: 'getRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {

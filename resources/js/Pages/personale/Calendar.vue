@@ -24,12 +24,30 @@
                         Visualizza
                     </v-btn>
                 </v-col>
+                    <v-btn-toggle
+                        v-model="text"
+                        tile
+                        color="deep-purple accent-3"
+                        group
+                    >
+                        <v-btn value="left" @click="visualizza">
+                            Attuale
+                        </v-btn>
+
+                        <v-btn value="center" @click="prossima">
+                            Prossima
+                        </v-btn>
+
+                    </v-btn-toggle>
+                <v-col>
+
+                </v-col>
             </v-row>
 
             <v-row>
                 <v-col cols="12" class="flex">
                     <v-col>
-                        <h2>Lunedi</h2>
+                        <h3>Lunedi - {{getDateSettimana[0]}}</h3>
                         <v-data-table
                             dense
                             :headers="headers1"
@@ -59,7 +77,7 @@
                     </v-col>
 
                     <v-col>
-                        <h2>Martedì</h2>
+                        <h3>Martedì - {{getDateSettimana[1]}}</h3>
                         <v-data-table
                             dense
                             :headers="headers1"
@@ -90,7 +108,7 @@
                     </v-col>
 
                     <v-col>
-                        <h2>Mercoledì</h2>
+                        <h3>Mercoledì - {{getDateSettimana[2]}}</h3>
                         <v-data-table
                             dense
                             :headers="headers1"
@@ -121,7 +139,7 @@
                     </v-col>
 
                     <v-col>
-                        <h2>Giovedì</h2>
+                        <h3>Giovedì - {{getDateSettimana[3]}}</h3>
                         <v-data-table
                             dense
                             :headers="headers1"
@@ -152,7 +170,7 @@
                     </v-col>
 
                     <v-col>
-                        <h2>Venerdì</h2>
+                        <h3>Venerdì - {{getDateSettimana[4]}}</h3>
                         <v-data-table
                             dense
                             :headers="headers1"
@@ -199,6 +217,7 @@
 
         data(){
             return {
+                text: 'left',
                 userId:'',
                 headers1: [
                     { text: 'Orario', width: 60, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
@@ -211,6 +230,8 @@
 
         mounted(){
             this.fetchAudio();
+            this.fetchDateSettimana();
+            this.$store.commit('appuntamenti/resetAppuntamenti');
         },
 
         methods:{
@@ -224,6 +245,15 @@
                 fetchAppuntamentiMercoledi:'fetchAppuntamentiMercoledi',
                 fetchAppuntamentiGiovedi:'fetchAppuntamentiGiovedi',
                 fetchAppuntamentiVenerdi:'fetchAppuntamentiVenerdi',
+
+                prossimoLunedi:'prossimoLunedi',
+                prossimoMartedi:'prossimoMartedi',
+                prossimoMarcoledi:'prossimoMarcoledi',
+                prossimoGiovedi:'prossimoGiovedi',
+                prossimoVenerdi:'prossimoVenerdi',
+
+                fetchDateSettimana:'fetchDateSettimana',
+                fetchDateSettimanaProssima:'fetchDateSettimanaProssima',
             }),
 
             visualizza(){
@@ -232,6 +262,18 @@
                 this.fetchAppuntamentiMercoledi(this.userId);
                 this.fetchAppuntamentiGiovedi(this.userId);
                 this.fetchAppuntamentiVenerdi(this.userId);
+
+                this.fetchDateSettimana();
+            },
+
+            prossima(){
+                this.prossimoLunedi(this.userId);
+                this.prossimoMartedi(this.userId);
+                this.prossimoMarcoledi(this.userId);
+                this.prossimoGiovedi(this.userId);
+                this.prossimoVenerdi(this.userId);
+
+                this.fetchDateSettimanaProssima();
             }
 
         },
@@ -247,6 +289,8 @@
                 getAppMer:'getAppMer',
                 getAppGio:'getAppGio',
                 getAppVen:'getAppVen',
+
+                getDateSettimana:'getDateSettimana',
             }),
 
         },

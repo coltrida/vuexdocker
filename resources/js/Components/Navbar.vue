@@ -35,7 +35,7 @@
 
             <router-link :to="{ name: 'home'}">
                 <v-img
-                    v-if="getRuolo === 'audio'"
+                    v-if="getRuolo === 'audio'  || getRuolo === 'call'"
                     lazy-src="/img/logo-centroudito.png"
                     max-height="50"
                     max-width="150"
@@ -49,6 +49,7 @@
 
                 <nav-bar-admin v-if="getRuolo === 'admin'"/>
                 <nav-bar-audio v-if="getRuolo === 'audio' || getRuolo === 'amministrazione'"/>
+                <nav-bar-call v-if="getRuolo === 'call'"/>
 
                 <v-btn text @click="logout" color="red">
                     Logout
@@ -87,10 +88,11 @@
     import { mapGetters, mapActions } from 'vuex';
     import NavBarAdmin from "./NavBarAdmin";
     import NavBarAudio from "./NavBarAudio";
+    import NavBarCall from "./NavBarCall";
     export default {
         name: "Navbar",
 
-        components: {NavBarAudio, NavBarAdmin },
+        components: {NavBarCall, NavBarAudio, NavBarAdmin },
 
         data(){
             return {

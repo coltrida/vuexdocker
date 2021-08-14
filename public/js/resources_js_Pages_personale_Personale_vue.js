@@ -116,6 +116,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Listino",
@@ -160,22 +184,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchRuoli();
     this.fetchAudio();
     this.fetchAmm();
+    this.fetchCall();
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudio: 'fetchAudio',
     fetchAmm: 'fetchAmm',
+    fetchCall: 'fetchCall',
     addAudio: 'addAudio',
     addAmm: 'addAmm',
+    addCall: 'addCall',
     eliminaAudio: 'eliminaAudio',
-    eliminaAmm: 'eliminaAmm'
+    eliminaAmm: 'eliminaAmm',
+    eliminaCall: 'eliminaCall'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('ruoli', {
     fetchRuoli: 'fetchRuoli'
   })), {}, {
     aggiungi: function aggiungi() {
       if (this.user.ruolo_id === 2) {
         this.addAudio(this.user);
-      } else {
+      } else if (this.user.ruolo_id === 3) {
         this.addAmm(this.user);
+      } else {
+        this.addCall(this.user);
       }
 
       this.user = {};
@@ -185,11 +215,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     eliminaAmministrativo: function eliminaAmministrativo(id) {
       this.eliminaAmm(id);
+    },
+    eliminaCallCenter: function eliminaCallCenter(id) {
+      this.eliminaCall(id);
     }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getAudio: 'getAudio',
-    getAmm: 'getAmm'
+    getAmm: 'getAmm',
+    getCall: 'getCall'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('ruoli', {
     getRuoli: 'getRuoli'
   }))
@@ -293,10 +327,11 @@ var render = function() {
       [
         _c(
           "v-row",
+          { staticClass: "mb-9" },
           [
             _c(
               "v-col",
-              { attrs: { cols: "5", sm: "5" } },
+              { attrs: { cols: "4", sm: "4" } },
               [
                 _c("v-text-field", {
                   attrs: {
@@ -318,7 +353,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "v-col",
-              { attrs: { cols: "4", sm: "4" } },
+              { attrs: { cols: "3", sm: "3" } },
               [
                 _c("v-text-field", {
                   attrs: {
@@ -359,15 +394,25 @@ var render = function() {
                 })
               ],
               1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "2", sm: "2" } },
+              [
+                _c(
+                  "v-btn",
+                  {
+                    attrs: { dark: "", color: "indigo" },
+                    on: { click: _vm.aggiungi }
+                  },
+                  [_vm._v("\n                    Inserisci\n                ")]
+                )
+              ],
+              1
             )
           ],
           1
-        ),
-        _vm._v(" "),
-        _c(
-          "v-btn",
-          { attrs: { dark: "", color: "indigo" }, on: { click: _vm.aggiungi } },
-          [_vm._v("\n            Inserisci\n        ")]
         ),
         _vm._v(" "),
         _c(
@@ -443,6 +488,43 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   return _vm.eliminaAmministrativo(item.id)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            mdi-delete\n                        "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("h2", { staticClass: "mt-10" }, [_vm._v("Call Center")]),
+                _vm._v(" "),
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers2,
+                    items: _vm.getCall,
+                    "items-per-page": 10
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "item.actions",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _c(
+                            "v-icon",
+                            {
+                              attrs: { color: "red", small: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.eliminaCallCenter(item.id)
                                 }
                               }
                             },

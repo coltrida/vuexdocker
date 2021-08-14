@@ -34,10 +34,8 @@ use const LC_TIME;
  * @property-read \App\Models\StatoApa|null $stato
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Product arrivo()
-
  * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Product newQuery()
-
  * @method static \Illuminate\Database\Eloquent\Builder|Product query()
  * @method static \Illuminate\Database\Eloquent\Builder|Product richiesto()
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereClientId($value)
@@ -53,6 +51,9 @@ use const LC_TIME;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Fattura|null $fattura
+ * @method static \Illuminate\Database\Eloquent\Builder|Product filiale()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product prova()
  */
 class Product extends Model
 {

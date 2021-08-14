@@ -20,15 +20,13 @@ class CreateClientsTable extends Migration
             $table->string('codfisc')->unique()->nullable();
             $table->string('indirizzo');
             $table->string('citta');
-            $table->string('cap');
+            $table->string('cap')->nullable();
             $table->string('provincia');
             $table->string('telefono');
             $table->string('telefono2')->nullable();
             $table->string('telefono3')->nullable();
             $table->bigInteger('tipologia_id');
             $table->string('mail')->nullable();
-            $table->char('recall')->nullable();
-            $table->date('datarecall')->nullable();
             $table->date('datanascita')->nullable();
             $table->integer('meseNascita')->nullable();
             $table->integer('giornoNascita')->nullable();

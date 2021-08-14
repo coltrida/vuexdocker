@@ -56,6 +56,8 @@ use const LC_TIME;
  * @method static \Illuminate\Database\Eloquent\Builder|Prova whereMarketingId($value)
  * @property int|null $giorni_prova
  * @method static \Illuminate\Database\Eloquent\Builder|Prova whereGiorniProva($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Documento[] $copiaComm
+ * @property-read int|null $copia_comm_count
  */
 class Prova extends Model
 {

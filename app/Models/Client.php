@@ -94,6 +94,9 @@ use function substr;
  * @property-read int|null $documenti_count
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereTelefono2($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereTelefono3($value)
+ * @property int|null $medico_id
+ * @property-read \App\Models\Medico|null $medico
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereMedicoId($value)
  */
 class Client extends Model
 {
@@ -196,5 +199,24 @@ class Client extends Model
     public function scopeCompleanno($query, $mese, $giorno)
     {
         return $query->where([['meseNascita',$mese], ['giornoNascita', $giorno]]);
+    }
+
+    public function scopeClienti($query)
+    {
+        return $query->whereHas('tipologia', function ($q){
+            $q->where('nome', 'CL');
+        });
+    }
+
+    public function scopePossibili($query)
+    {
+        return $query->whereHas('tipologia', function ($q){
+            $q->where('nome', 'PC');
+        });
+    }
+
+    public function recalls()
+    {
+        return $this->hasMany(Telefonata::class);
     }
 }

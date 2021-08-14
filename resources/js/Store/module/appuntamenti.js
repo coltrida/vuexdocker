@@ -206,6 +206,14 @@ const mutations = {
     fetchDateSettimana(state, payload){
         state.dateSettimana = payload;
     },
+
+    resetAppuntamenti(state){
+        state.appLun = [];
+        state.appMar = [];
+        state.appMer = [];
+        state.appGio = [];
+        state.appVen = [];
+    }
 };
 
 export default{

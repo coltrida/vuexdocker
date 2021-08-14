@@ -2,10 +2,10 @@
     <div>
         <h2>Personale</h2>
         <div>
-            <v-row>
+            <v-row class="mb-9">
                 <v-col
-                    cols="5"
-                    sm="5"
+                    cols="4"
+                    sm="4"
                 >
                     <v-text-field
                         v-model="user.name"
@@ -16,8 +16,8 @@
                 </v-col>
 
                 <v-col
-                    cols="4"
-                    sm="4"
+                    cols="3"
+                    sm="3"
                 >
                     <v-text-field
                         v-model="user.email"
@@ -40,11 +40,16 @@
                     ></v-select>
                 </v-col>
 
-            </v-row>
+                <v-col
+                    cols="2"
+                    sm="2"
+                >
+                    <v-btn @click="aggiungi" dark color="indigo">
+                        Inserisci
+                    </v-btn>
+                </v-col>
 
-            <v-btn @click="aggiungi" dark color="indigo">
-                Inserisci
-            </v-btn>
+            </v-row>
 
             <v-row>
                 <v-col cols="6">
@@ -81,6 +86,25 @@
                                 color="red"
                                 small
                                 @click="eliminaAmministrativo(item.id)"
+                            >
+                                mdi-delete
+                            </v-icon>
+                        </template>
+
+                    </v-data-table>
+
+                    <h2 class="mt-10">Call Center</h2>
+                    <v-data-table
+                        :headers="headers2"
+                        :items="getCall"
+                        :items-per-page="10"
+                        class="elevation-1 mt-3"
+                    >
+                        <template v-slot:item.actions="{ item }">
+                            <v-icon
+                                color="red"
+                                small
+                                @click="eliminaCallCenter(item.id)"
                             >
                                 mdi-delete
                             </v-icon>
@@ -137,16 +161,20 @@
             this.fetchRuoli();
             this.fetchAudio();
             this.fetchAmm();
+            this.fetchCall();
         },
 
         methods:{
             ...mapActions('users', {
                 fetchAudio:'fetchAudio',
                 fetchAmm:'fetchAmm',
+                fetchCall:'fetchCall',
                 addAudio:'addAudio',
                 addAmm:'addAmm',
+                addCall:'addCall',
                 eliminaAudio:'eliminaAudio',
                 eliminaAmm:'eliminaAmm',
+                eliminaCall:'eliminaCall',
             }),
 
             ...mapActions('ruoli', {
@@ -156,8 +184,10 @@
             aggiungi(){
                 if(this.user.ruolo_id === 2){
                     this.addAudio(this.user);
-                }else{
+                }else if(this.user.ruolo_id === 3){
                     this.addAmm(this.user);
+                } else {
+                    this.addCall(this.user)
                 }
 
 
@@ -171,12 +201,17 @@
             eliminaAmministrativo(id){
                 this.eliminaAmm(id)
             },
+
+            eliminaCallCenter(id){
+                this.eliminaCall(id)
+            },
         },
 
         computed:{
             ...mapGetters('users', {
                 getAudio:'getAudio',
                 getAmm:'getAmm',
+                getCall:'getCall',
             }),
 
             ...mapGetters('ruoli', {

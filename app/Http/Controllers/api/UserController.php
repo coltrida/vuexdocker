@@ -46,6 +46,11 @@ class UserController extends Controller
         return $userService->amm();
     }
 
+    public function callCenter(UserService $userService)
+    {
+        return $userService->callCenter();
+    }
+
     public function aggiungi(UserRequest $request, UserService $userService)
     {
         return $userService->aggiungi($request);
@@ -64,11 +69,6 @@ class UserController extends Controller
     public function situazioneMese(UserService $userService, $idAudio = '')
     {
         return $userService->situazioneMese($idAudio);
-    }
-
-    public function situazioneAnno(UserService $userService)
-    {
-        $userService->situazioneAnno();
     }
 
     public function dettaglioAudio(UserService $userService)

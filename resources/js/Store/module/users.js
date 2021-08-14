@@ -9,6 +9,7 @@ const state = () => ({
     audioConFatt: [],
     situazioneMese: [],
     amm: [],
+    callCenter: [],
     agenda:[]
 });
 
@@ -40,6 +41,10 @@ const getters = {
 
     getAmm(state){
         return state.amm;
+    },
+
+    getCall(state){
+        return state.callCenter;
     },
 
     getSituazioneMese(state){
@@ -98,6 +103,11 @@ const actions = {
         commit('fetchAmm', response.data);
     },
 
+    async fetchCall({commit}){
+        const response = await axios.get(`${help().linkcallcenter}`);
+        commit('fetchCall', response.data);
+    },
+
     async addAudio({commit}, payload){
         const response = await axios.post(`${help().linkadduser}`, {
             'name': payload.name,
@@ -116,6 +126,15 @@ const actions = {
         commit('addAmm', response.data);
     },
 
+    async addCall({commit}, payload){
+        const response = await axios.post(`${help().linkadduser}`, {
+            'name': payload.name,
+            'email': payload.email,
+            'ruolo_id': payload.ruolo_id,
+        });
+        commit('addCall', response.data);
+    },
+
     async eliminaAudio({commit}, id){
         await axios.delete(`${help().linkuser}`+'/'+id);
         commit('eliminaAudio', id);
@@ -124,6 +143,11 @@ const actions = {
     async eliminaAmm({commit}, id){
         await axios.delete(`${help().linkuser}`+'/'+id);
         commit('eliminaAmm', id);
+    },
+
+    async eliminaCall({commit}, id){
+        await axios.delete(`${help().linkuser}`+'/'+id);
+        commit('eliminaCall', id);
     },
 
     async assegnaBgt({commit}, payload){
@@ -182,6 +206,10 @@ const mutations = {
         state.amm = payload;
     },
 
+    fetchCall(state, payload){
+        state.callCenter = payload;
+    },
+
     addAudio(state, payload){
         state.audio.unshift(payload);
     },
@@ -190,12 +218,20 @@ const mutations = {
         state.amm.unshift(payload);
     },
 
+    addCall(state, payload){
+        state.callCenter.unshift(payload);
+    },
+
     eliminaAudio(state, id){
         state.audio = state.audio.filter(u => u.id !== id);
     },
 
     eliminaAmm(state, id){
         state.amm = state.amm.filter(u => u.id !== id);
+    },
+
+    eliminaCall(state, id){
+        state.callCenter = state.callCenter.filter(u => u.id !== id);
     },
 
     assegnaBgt(state, payload){

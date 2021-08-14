@@ -20,6 +20,7 @@ import LoggingModule from './module/logging';
 import DocumentiModule from './module/documenti';
 import RateModule from './module/rate';
 import MediciModule from './module/medici';
+import TelefonateModule from './module/telefonate';
 
 Vue.use(Vuex);
 
@@ -44,6 +45,7 @@ const store = new Vuex.Store({
         documenti:DocumentiModule,
         rate:RateModule,
         medici:MediciModule,
+        telefonate:TelefonateModule,
     }
 });
 

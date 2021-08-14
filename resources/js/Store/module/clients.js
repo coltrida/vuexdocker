@@ -7,7 +7,7 @@ const state = () => ({
     province: [],
     cittaByProvincia: [],
     clientMessaggio: '',
-    client: {}
+    client: {},
 });
 
 const getters = {
@@ -73,7 +73,6 @@ const actions = {
     },
 
     async ricercaNominativi({commit}, payload){
-        console.log(payload);
         const response = await axios.post(`${help().linkricercanominativi}`, payload);
         commit('ricercaNominativi', response.data.data);
     },

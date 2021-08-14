@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Documento whereTipo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Documento whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $prova_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Documento whereProvaId($value)
  */
 class Documento extends Model
 {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,6 +43,11 @@ class Appuntamento extends Model
     use HasFactory;
 
     protected $table = 'appuntamentos';
+
+    public function getCalcologiornoAttribute()
+    {
+        return Carbon::make($this->giorno);
+    }
 
     public function filiale()
     {

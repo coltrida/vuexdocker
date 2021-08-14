@@ -107,6 +107,16 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
                 'password' => Hash::make('123456'),
             ],
+            [
+                'name' => 'Maria Bianchi',
+                'email' => 'bianchi@centroudito.eu',
+                'ruolo' => 4,
+                'budget_id' => null,
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'password' => Hash::make('123456'),
+            ],
         ]);
     }
 }

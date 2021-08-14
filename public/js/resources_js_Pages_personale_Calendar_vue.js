@@ -211,11 +211,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Calendar",
   data: function data() {
     return {
+      text: 'left',
       userId: '',
       headers1: [{
         text: 'Orario',
@@ -243,6 +262,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.fetchAudio();
+    this.fetchDateSettimana();
+    this.$store.commit('appuntamenti/resetAppuntamenti');
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudio: 'fetchAudio'
@@ -251,7 +272,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchAppuntamentiMartedi: 'fetchAppuntamentiMartedi',
     fetchAppuntamentiMercoledi: 'fetchAppuntamentiMercoledi',
     fetchAppuntamentiGiovedi: 'fetchAppuntamentiGiovedi',
-    fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi'
+    fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi',
+    prossimoLunedi: 'prossimoLunedi',
+    prossimoMartedi: 'prossimoMartedi',
+    prossimoMarcoledi: 'prossimoMarcoledi',
+    prossimoGiovedi: 'prossimoGiovedi',
+    prossimoVenerdi: 'prossimoVenerdi',
+    fetchDateSettimana: 'fetchDateSettimana',
+    fetchDateSettimanaProssima: 'fetchDateSettimanaProssima'
   })), {}, {
     visualizza: function visualizza() {
       this.fetchAppuntamentiLunedi(this.userId);
@@ -259,6 +287,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchAppuntamentiMercoledi(this.userId);
       this.fetchAppuntamentiGiovedi(this.userId);
       this.fetchAppuntamentiVenerdi(this.userId);
+      this.fetchDateSettimana();
+    },
+    prossima: function prossima() {
+      this.prossimoLunedi(this.userId);
+      this.prossimoMartedi(this.userId);
+      this.prossimoMarcoledi(this.userId);
+      this.prossimoGiovedi(this.userId);
+      this.prossimoVenerdi(this.userId);
+      this.fetchDateSettimanaProssima();
     }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
@@ -268,7 +305,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAppMar: 'getAppMar',
     getAppMer: 'getAppMer',
     getAppGio: 'getAppGio',
-    getAppVen: 'getAppVen'
+    getAppVen: 'getAppVen',
+    getDateSettimana: 'getDateSettimana'
   }))
 });
 
@@ -408,7 +446,45 @@ var render = function() {
                 )
               ],
               1
-            )
+            ),
+            _vm._v(" "),
+            _c(
+              "v-btn-toggle",
+              {
+                attrs: { tile: "", color: "deep-purple accent-3", group: "" },
+                model: {
+                  value: _vm.text,
+                  callback: function($$v) {
+                    _vm.text = $$v
+                  },
+                  expression: "text"
+                }
+              },
+              [
+                _c(
+                  "v-btn",
+                  { attrs: { value: "left" }, on: { click: _vm.visualizza } },
+                  [
+                    _vm._v(
+                      "\n                        Attuale\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-btn",
+                  { attrs: { value: "center" }, on: { click: _vm.prossima } },
+                  [
+                    _vm._v(
+                      "\n                        Prossima\n                    "
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("v-col")
           ],
           1
         ),
@@ -423,7 +499,9 @@ var render = function() {
                 _c(
                   "v-col",
                   [
-                    _c("h2", [_vm._v("Lunedi")]),
+                    _c("h3", [
+                      _vm._v("Lunedi - " + _vm._s(_vm.getDateSettimana[0]))
+                    ]),
                     _vm._v(" "),
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
@@ -500,7 +578,9 @@ var render = function() {
                 _c(
                   "v-col",
                   [
-                    _c("h2", [_vm._v("Martedì")]),
+                    _c("h3", [
+                      _vm._v("Martedì - " + _vm._s(_vm.getDateSettimana[1]))
+                    ]),
                     _vm._v(" "),
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
@@ -577,7 +657,9 @@ var render = function() {
                 _c(
                   "v-col",
                   [
-                    _c("h2", [_vm._v("Mercoledì")]),
+                    _c("h3", [
+                      _vm._v("Mercoledì - " + _vm._s(_vm.getDateSettimana[2]))
+                    ]),
                     _vm._v(" "),
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
@@ -654,7 +736,9 @@ var render = function() {
                 _c(
                   "v-col",
                   [
-                    _c("h2", [_vm._v("Giovedì")]),
+                    _c("h3", [
+                      _vm._v("Giovedì - " + _vm._s(_vm.getDateSettimana[3]))
+                    ]),
                     _vm._v(" "),
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
@@ -731,7 +815,9 @@ var render = function() {
                 _c(
                   "v-col",
                   [
-                    _c("h2", [_vm._v("Venerdì")]),
+                    _c("h3", [
+                      _vm._v("Venerdì - " + _vm._s(_vm.getDateSettimana[4]))
+                    ]),
                     _vm._v(" "),
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",

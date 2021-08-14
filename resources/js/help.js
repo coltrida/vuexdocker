@@ -26,6 +26,7 @@ const help = () => {
         linkaudioconbgt: base+'audioConBgt',
         linkaudiosenzabgt: base+'audioSenzaBgt',
         linkamm: base+'amm',
+        linkcallcenter: base+'callCenter',
         linkuser: base+'user',
         linkadduser: base+'addUser',
         linkfiliali: base+'filiali',
@@ -116,6 +117,13 @@ const help = () => {
         linkstatisticheinviimedici: base+'statisticheInviiMedici',
         linkstatistichetotaleinviimedici: base+'statisticheTotaleInviiMedici',
         linkfilialebyid: base+'filialeById',
+        linkrecalloggi: base+'recallOggi',
+        linkrecallsbyidclient: base+'recallsByIdClient',
+        linkclientimairichiamati: base+'clientiMaiRichiamati',
+        linkclientinonhannomaipresoappuntamenti: base+'clientiNonHannoMaiPresoAppuntamenti',
+        linkclientiunannoultimoappuntamento: base+'clientiUnAnnoUltimoAppuntamento',
+        linkaddtelefonata: base+'addTelefonata',
+        linkaggiornatelefonata: base+'aggiornaTelefonata',
     };
 };
 export default help;
