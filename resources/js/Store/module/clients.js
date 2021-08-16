@@ -84,7 +84,7 @@ const actions = {
 
     async modificaClient({commit}, payload){
         const response = await axios.post(`${help().linkmodificaclient}`, payload);
-        commit('modificaClient', response.data);
+        commit('modificaClient', response.data.data);
     },
 
     async smsInvio({commit}, payload){

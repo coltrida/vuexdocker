@@ -149,11 +149,13 @@
 
         mounted() {
             this.fetchAppuntamenti(this.appuntamentoClient.id);
-            this.fetchRecapitiByAudio(this.getIdUser);
+
             if (this.getRuolo == 'call'){
                 this.fetchFiliali();
+                this.fetchRecapitiByAudio(this.appuntamentoClient.user_id);
             } else {
                 this.fetchFilialiByUser(this.getIdUser);
+                this.fetchRecapitiByAudio(this.getIdUser);
             }
 
         },
@@ -167,6 +169,7 @@
 
             ...mapActions('recapiti', {
                 fetchRecapitiByAudio:'fetchRecapitiByAudio',
+                fetchRecapiti:'fetchRecapiti',
             }),
 
             ...mapActions('filiali', {

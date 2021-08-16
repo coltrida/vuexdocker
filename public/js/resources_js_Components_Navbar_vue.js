@@ -827,8 +827,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _NavBarCall_Clients__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavBarCall/Clients */ "./resources/js/Components/NavBarCall/Clients.vue");
-/* harmony import */ var _NavBarCall_Calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBarCall/Calendar */ "./resources/js/Components/NavBarCall/Calendar.vue");
-/* harmony import */ var _NavBarCall_Filtri__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NavBarCall/Filtri */ "./resources/js/Components/NavBarCall/Filtri.vue");
+/* harmony import */ var _NavBarCall_Agende__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBarCall/Agende */ "./resources/js/Components/NavBarCall/Agende.vue");
+/* harmony import */ var _NavBarCall_Calendar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NavBarCall/Calendar */ "./resources/js/Components/NavBarCall/Calendar.vue");
+/* harmony import */ var _NavBarCall_Filtri__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NavBarCall/Filtri */ "./resources/js/Components/NavBarCall/Filtri.vue");
 //
 //
 //
@@ -837,17 +838,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "NavBarCall",
   components: {
-    Calendar: _NavBarCall_Calendar__WEBPACK_IMPORTED_MODULE_1__.default,
+    Calendar: _NavBarCall_Calendar__WEBPACK_IMPORTED_MODULE_2__.default,
     Clients: _NavBarCall_Clients__WEBPACK_IMPORTED_MODULE_0__.default,
-    Filtri: _NavBarCall_Filtri__WEBPACK_IMPORTED_MODULE_2__.default
+    Filtri: _NavBarCall_Filtri__WEBPACK_IMPORTED_MODULE_3__.default,
+    Agende: _NavBarCall_Agende__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarCall/Agende.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarCall/Agende.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
 
@@ -1743,6 +1772,45 @@ component.options.__file = "resources/js/Components/NavBarCall.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Components/NavBarCall/Agende.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/Components/NavBarCall/Agende.vue ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Agende_vue_vue_type_template_id_280c7094_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Agende.vue?vue&type=template&id=280c7094&scoped=true& */ "./resources/js/Components/NavBarCall/Agende.vue?vue&type=template&id=280c7094&scoped=true&");
+/* harmony import */ var _Agende_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Agende.vue?vue&type=script&lang=js& */ "./resources/js/Components/NavBarCall/Agende.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Agende_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Agende_vue_vue_type_template_id_280c7094_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Agende_vue_vue_type_template_id_280c7094_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "280c7094",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Components/NavBarCall/Agende.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Components/NavBarCall/Calendar.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/Components/NavBarCall/Calendar.vue ***!
@@ -2139,6 +2207,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/NavBarCall/Agende.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/Components/NavBarCall/Agende.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Agende_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Agende.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarCall/Agende.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Agende_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/Components/NavBarCall/Calendar.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************!*\
   !*** ./resources/js/Components/NavBarCall/Calendar.vue?vue&type=script&lang=js& ***!
@@ -2454,6 +2538,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBarCall_vue_vue_type_template_id_1d7f800e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBarCall_vue_vue_type_template_id_1d7f800e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./NavBarCall.vue?vue&type=template&id=1d7f800e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarCall.vue?vue&type=template&id=1d7f800e&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/NavBarCall/Agende.vue?vue&type=template&id=280c7094&scoped=true&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/Components/NavBarCall/Agende.vue?vue&type=template&id=280c7094&scoped=true& ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Agende_vue_vue_type_template_id_280c7094_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Agende_vue_vue_type_template_id_280c7094_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Agende_vue_vue_type_template_id_280c7094_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Agende.vue?vue&type=template&id=280c7094&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarCall/Agende.vue?vue&type=template&id=280c7094&scoped=true&");
 
 
 /***/ }),
@@ -3764,7 +3865,56 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "flex justify-end align-center" },
-    [_c("Clients"), _vm._v(" "), _c("Filtri"), _vm._v(" "), _c("Calendar")],
+    [
+      _c("Clients"),
+      _vm._v(" "),
+      _c("Filtri"),
+      _vm._v(" "),
+      _c("Calendar"),
+      _vm._v(" "),
+      _c("Agende")
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarCall/Agende.vue?vue&type=template&id=280c7094&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarCall/Agende.vue?vue&type=template&id=280c7094&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "text-center" },
+    [
+      _c(
+        "router-link",
+        { attrs: { to: { name: "agende" } } },
+        [
+          _c("v-btn", { attrs: { text: "" } }, [
+            _vm._v("\n            Agende\n        ")
+          ])
+        ],
+        1
+      )
+    ],
     1
   )
 }

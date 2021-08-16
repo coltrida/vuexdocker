@@ -245,12 +245,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['appuntamentoClient'],
   mounted: function mounted() {
     this.fetchAppuntamenti(this.appuntamentoClient.id);
-    this.fetchRecapitiByAudio(this.getIdUser);
 
     if (this.getRuolo == 'call') {
       this.fetchFiliali();
+      this.fetchRecapitiByAudio(this.appuntamentoClient.user_id);
     } else {
       this.fetchFilialiByUser(this.getIdUser);
+      this.fetchRecapitiByAudio(this.getIdUser);
     }
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
@@ -258,7 +259,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addAppuntamento: 'addAppuntamento',
     eliminaAppuntamento: 'eliminaAppuntamento'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
-    fetchRecapitiByAudio: 'fetchRecapitiByAudio'
+    fetchRecapitiByAudio: 'fetchRecapitiByAudio',
+    fetchRecapiti: 'fetchRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
     fetchFilialiByUser: 'fetchFilialiByUser',
     fetchFiliali: 'fetchFiliali'
@@ -1676,6 +1678,232 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Docunenti",
+  props: ['recallsClient'],
+  data: function data() {
+    return {
+      telefonata: {},
+      telefonataDaAggiornare: {},
+      menu: false,
+      tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Non Risponde', 'Richiamare', 'Non vuole essere richiamato', 'Deceduto'],
+      header: [{
+        text: 'Data',
+        width: 120,
+        align: 'start',
+        sortable: false,
+        value: 'datarecall',
+        "class": "indigo white--text"
+      }, {
+        text: 'Esito',
+        sortable: false,
+        value: 'esito',
+        "class": "indigo white--text"
+      }, {
+        text: 'note',
+        sortable: false,
+        value: 'note',
+        "class": "indigo white--text"
+      }, {
+        text: 'Azioni',
+        sortable: false,
+        value: 'action',
+        "class": "indigo white--text"
+      }]
+    };
+  },
+  mounted: function mounted() {
+    this.fetchRecallsByIdClient(this.recallsClient.id);
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('telefonate', {
+    fetchRecallsByIdClient: 'fetchRecallsByIdClient',
+    addTelefonata: 'addTelefonata',
+    aggiornaTelefonata: 'aggiornaTelefonata'
+  })), {}, {
+    inserisci: function inserisci() {
+      var _this = this;
+
+      this.telefonata.clientId = this.recallsClient.id;
+      this.addTelefonata(this.telefonata).then(function () {
+        if (_this.telefonata.esito == 'Preso Appuntamento') {
+          _this.telefonata = {};
+
+          _this.$emit('chiudiRecalls', _this.recallsClient);
+        }
+
+        _this.telefonata = {};
+      });
+    },
+    aggiorna: function aggiorna(recall) {
+      var _this2 = this;
+
+      this.telefonataDaAggiornare.id = recall.id;
+      this.aggiornaTelefonata(this.telefonataDaAggiornare).then(function () {
+        if (_this2.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
+          _this2.$emit('chiudiRecalls', _this2.recallsClient);
+        }
+      });
+    },
+    cancella: function cancella() {
+      this.$emit('chiudiRecalls', null);
+    }
+  }),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('telefonate', {
+    getRecalls: 'getRecalls'
+  }))
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/clients/Filtri.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/clients/Filtri.vue?vue&type=script&lang=js& ***!
@@ -1687,13 +1915,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _Components_btnClients_elimina_Messaggioelimina__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Components/btnClients/elimina/Messaggioelimina */ "./resources/js/Components/btnClients/elimina/Messaggioelimina.vue");
 /* harmony import */ var _Components_Messaggio__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Components/Messaggio */ "./resources/js/Components/Messaggio.vue");
 /* harmony import */ var _Components_btnClients_audiogramma_Audiogramma__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Components/btnClients/audiogramma/Audiogramma */ "./resources/js/Components/btnClients/audiogramma/Audiogramma.vue");
 /* harmony import */ var _Components_btnClients_appuntamento_Appuntamento__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Components/btnClients/appuntamento/Appuntamento */ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue");
 /* harmony import */ var _Components_btnClients_prove_Prove__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Components/btnClients/prove/Prove */ "./resources/js/Components/btnClients/prove/Prove.vue");
 /* harmony import */ var _Components_btnClients_documenti_Docunenti__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Components/btnClients/documenti/Docunenti */ "./resources/js/Components/btnClients/documenti/Docunenti.vue");
+/* harmony import */ var _Components_btnClients_recalls_Recalls__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Components/btnClients/recalls/Recalls */ "./resources/js/Components/btnClients/recalls/Recalls.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1906,6 +2135,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -1921,7 +2172,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Appuntamento: _Components_btnClients_appuntamento_Appuntamento__WEBPACK_IMPORTED_MODULE_3__.default,
     Audiogramma: _Components_btnClients_audiogramma_Audiogramma__WEBPACK_IMPORTED_MODULE_2__.default,
     Messaggio: _Components_Messaggio__WEBPACK_IMPORTED_MODULE_1__.default,
-    Messaggioelimina: _Components_btnClients_elimina_Messaggioelimina__WEBPACK_IMPORTED_MODULE_0__.default
+    Messaggioelimina: _Components_btnClients_elimina_Messaggioelimina__WEBPACK_IMPORTED_MODULE_0__.default,
+    Recalls: _Components_btnClients_recalls_Recalls__WEBPACK_IMPORTED_MODULE_6__.default
   },
   data: function data() {
     return {
@@ -1930,6 +2182,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showClients: true,
       showProve: false,
       showDocumenti: false,
+      showRecalls: false,
       showAudiogramma: false,
       showAppuntamento: false,
       textMessaggio: null,
@@ -1938,13 +2191,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       appuntamentoClient: {},
       proveClient: {},
       documentiClient: {},
+      recallsClient: {},
       idElimina: '',
       nomeElimina: '',
       cognomeElimina: '',
       ricerca: {},
       headers: [{
         text: 'Actions',
-        width: 150,
+        width: 170,
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -2017,14 +2271,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchProvince();
     this.fetchFilialiPerInserimento();
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('clients', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapActions)('clients', {
     fetchClients: 'fetchClients',
     fetchProvince: 'fetchProvince',
     fetchCittaByProvincia: 'fetchCittaByProvincia',
     ricercaNominativi: 'ricercaNominativi'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('tipologie', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapActions)('tipologie', {
     fetchTipologie: 'fetchTipologie'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('filiali', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapActions)('filiali', {
     fetchFilialiPerInserimento: 'fetchFilialiPerInserimento'
   })), {}, {
     elimina: function elimina(id, nome, cognome) {
@@ -2044,6 +2298,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     audiogramma: function audiogramma(client) {
       this.showDocumenti = false;
+      this.showRecalls = false;
       this.showProve = false;
       this.showAppuntamento = false;
       this.showAudiogramma = true;
@@ -2052,6 +2307,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     appuntamento: function appuntamento(client) {
       this.showDocumenti = false;
+      this.showRecalls = false;
       this.showProve = false;
       this.showAudiogramma = false;
       this.showClients = false;
@@ -2060,6 +2316,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     prove: function prove(client) {
       this.showDocumenti = false;
+      this.showRecalls = false;
       this.showProve = true;
       this.showAppuntamento = false;
       this.showAudiogramma = false;
@@ -2068,14 +2325,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     documenti: function documenti(client) {
       this.showDocumenti = true;
+      this.showRecalls = false;
       this.showProve = false;
       this.showAppuntamento = false;
       this.showAudiogramma = false;
       this.showClients = false;
       this.documentiClient = client;
     },
+    recalls: function recalls(client) {
+      this.showDocumenti = false;
+      this.showRecalls = true;
+      this.showProve = false;
+      this.showAppuntamento = false;
+      this.showAudiogramma = false;
+      this.showClients = false;
+      this.recallsClient = client;
+    },
+    chiudiRecalls: function chiudiRecalls() {
+      this.showDocumenti = false;
+      this.showRecalls = false;
+      this.showProve = false;
+      this.showAudiogramma = false;
+      this.showAppuntamento = false;
+      this.showClients = true;
+      this.recallsClient = {};
+    },
     chiudiDocumenti: function chiudiDocumenti() {
       this.showDocumenti = false;
+      this.showRecalls = false;
       this.showProve = false;
       this.showAudiogramma = false;
       this.showAppuntamento = false;
@@ -2084,6 +2361,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     chiudiAudiogramma: function chiudiAudiogramma() {
       this.showDocumenti = false;
+      this.showRecalls = false;
       this.showProve = false;
       this.showAudiogramma = false;
       this.showAppuntamento = false;
@@ -2092,6 +2370,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     chiudiAppuntamento: function chiudiAppuntamento() {
       this.showDocumenti = false;
+      this.showRecalls = false;
       this.showProve = false;
       this.showAppuntamento = false;
       this.showAudiogramma = false;
@@ -2100,6 +2379,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     chiudiProve: function chiudiProve() {
       this.showDocumenti = false;
+      this.showRecalls = false;
       this.showProve = false;
       this.showAudiogramma = false;
       this.showAppuntamento = false;
@@ -2113,13 +2393,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.ricercaNominativi(this.ricerca);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('clients', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapGetters)('clients', {
     getRicercaNominativi: 'getRicercaNominativi',
     getProvince: 'getProvince',
     getCittaByProvincia: 'getCittaByProvincia'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('tipologie', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapGetters)('tipologie', {
     getTipologie: 'getTipologie'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('filiali', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapGetters)('filiali', {
     getFilialiPerInserimento: 'getFilialiPerInserimento'
   }))
 });
@@ -40511,6 +40791,45 @@ component.options.__file = "resources/js/Components/btnClients/prove/Prove.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Components/btnClients/recalls/Recalls.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/Components/btnClients/recalls/Recalls.vue ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Recalls_vue_vue_type_template_id_dd68a186_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Recalls.vue?vue&type=template&id=dd68a186&scoped=true& */ "./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=template&id=dd68a186&scoped=true&");
+/* harmony import */ var _Recalls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Recalls.vue?vue&type=script&lang=js& */ "./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Recalls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Recalls_vue_vue_type_template_id_dd68a186_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Recalls_vue_vue_type_template_id_dd68a186_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "dd68a186",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Components/btnClients/recalls/Recalls.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/clients/Filtri.vue":
 /*!***********************************************!*\
   !*** ./resources/js/Pages/clients/Filtri.vue ***!
@@ -40710,6 +41029,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Recalls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Recalls.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Recalls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/Pages/clients/Filtri.vue?vue&type=script&lang=js&":
 /*!************************************************************************!*\
   !*** ./resources/js/Pages/clients/Filtri.vue?vue&type=script&lang=js& ***!
@@ -40858,6 +41193,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Prove_vue_vue_type_template_id_7cc157b1_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Prove_vue_vue_type_template_id_7cc157b1_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Prove.vue?vue&type=template&id=7cc157b1&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/prove/Prove.vue?vue&type=template&id=7cc157b1&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=template&id=dd68a186&scoped=true&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=template&id=dd68a186&scoped=true& ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Recalls_vue_vue_type_template_id_dd68a186_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Recalls_vue_vue_type_template_id_dd68a186_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Recalls_vue_vue_type_template_id_dd68a186_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Recalls.vue?vue&type=template&id=dd68a186&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=template&id=dd68a186&scoped=true&");
 
 
 /***/ }),
@@ -43191,6 +43543,391 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=template&id=dd68a186&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/btnClients/recalls/Recalls.vue?vue&type=template&id=dd68a186&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-row",
+    { staticClass: "mt-3 flex-column" },
+    [
+      _c(
+        "v-row",
+        [
+          _c("v-col", { attrs: { cols: "6" } }, [
+            _c("h2", [
+              _vm._v(
+                _vm._s(_vm.recallsClient.nome) +
+                  " " +
+                  _vm._s(_vm.recallsClient.cognome) +
+                  " "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { staticClass: "flex justify-end", attrs: { cols: "6" } },
+            [
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "primary", dark: "" },
+                  on: { click: _vm.cancella }
+                },
+                [_vm._v("\n                Chiudi\n            ")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            [
+              _c(
+                "v-menu",
+                {
+                  ref: "menu",
+                  attrs: {
+                    "close-on-content-click": false,
+                    "return-value": _vm.telefonata.giorno,
+                    transition: "scale-transition",
+                    "offset-y": "",
+                    "min-width": "auto"
+                  },
+                  on: {
+                    "update:returnValue": function($event) {
+                      return _vm.$set(_vm.telefonata, "giorno", $event)
+                    },
+                    "update:return-value": function($event) {
+                      return _vm.$set(_vm.telefonata, "giorno", $event)
+                    }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function(ref) {
+                        var on = ref.on
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-text-field",
+                            _vm._g(
+                              _vm._b(
+                                {
+                                  attrs: {
+                                    label: "Data Telefonata",
+                                    "prepend-icon": "mdi-calendar",
+                                    readonly: ""
+                                  },
+                                  model: {
+                                    value: _vm.telefonata.giorno,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.telefonata, "giorno", $$v)
+                                    },
+                                    expression: "telefonata.giorno"
+                                  }
+                                },
+                                "v-text-field",
+                                attrs,
+                                false
+                              ),
+                              on
+                            )
+                          )
+                        ]
+                      }
+                    }
+                  ]),
+                  model: {
+                    value: _vm.menu,
+                    callback: function($$v) {
+                      _vm.menu = $$v
+                    },
+                    expression: "menu"
+                  }
+                },
+                [
+                  _vm._v(" "),
+                  _c(
+                    "v-date-picker",
+                    {
+                      attrs: {
+                        "no-title": "",
+                        "first-day-of-week": "1",
+                        locale: "ITA",
+                        scrollable: ""
+                      },
+                      model: {
+                        value: _vm.telefonata.giorno,
+                        callback: function($$v) {
+                          _vm.$set(_vm.telefonata, "giorno", $$v)
+                        },
+                        expression: "telefonata.giorno"
+                      }
+                    },
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { text: "", color: "primary" },
+                          on: {
+                            click: function($event) {
+                              _vm.menu = false
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Cancel\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { text: "", color: "primary" },
+                          on: {
+                            click: function($event) {
+                              return _vm.$refs.menu.save(_vm.telefonata.giorno)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        OK\n                    "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _c("v-select", {
+                attrs: { items: _vm.tipologiaEsito, label: "esito" },
+                model: {
+                  value: _vm.telefonata.esito,
+                  callback: function($$v) {
+                    _vm.$set(_vm.telefonata, "esito", $$v)
+                  },
+                  expression: "telefonata.esito"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _c("v-text-field", {
+                attrs: { label: "Note" },
+                model: {
+                  value: _vm.telefonata.note,
+                  callback: function($$v) {
+                    _vm.$set(_vm.telefonata, "note", $$v)
+                  },
+                  expression: "telefonata.note"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "primary", dark: "" },
+                  on: { click: _vm.inserisci }
+                },
+                [_vm._v("\n                Inserisci\n            ")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        { staticClass: "mb-6" },
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  headers: _vm.header,
+                  items: _vm.getRecalls,
+                  "hide-default-footer": ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.esito",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        item.esito == null
+                          ? _c(
+                              "div",
+                              [
+                                _c("v-select", {
+                                  attrs: {
+                                    items: _vm.tipologiaEsito,
+                                    label: "esito"
+                                  },
+                                  model: {
+                                    value: _vm.telefonataDaAggiornare.esito,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.telefonataDaAggiornare,
+                                        "esito",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "telefonataDaAggiornare.esito"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _c("div", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(item.esito) +
+                                  "\n                    "
+                              )
+                            ])
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.note",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        item.note == null && item.esito == null
+                          ? _c(
+                              "div",
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "Note" },
+                                  model: {
+                                    value: _vm.telefonataDaAggiornare.note,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.telefonataDaAggiornare,
+                                        "note",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "telefonataDaAggiornare.note"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _c("div", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(item.note) +
+                                  "\n                    "
+                              )
+                            ])
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.action",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        item.esito == null
+                          ? _c(
+                              "div",
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      small: "",
+                                      color: "success",
+                                      dark: ""
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.aggiorna(item)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            Aggiorna\n                        "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/clients/Filtri.vue?vue&type=template&id=691e0852&scoped=true&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/clients/Filtri.vue?vue&type=template&id=691e0852&scoped=true& ***!
@@ -43253,6 +43990,13 @@ var render = function() {
         ? _c("docunenti", {
             attrs: { documentiClient: _vm.documentiClient },
             on: { chiudiDocumenti: _vm.chiudiDocumenti }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showRecalls
+        ? _c("recalls", {
+            attrs: { recallsClient: _vm.recallsClient },
+            on: { chiudiRecalls: _vm.chiudiRecalls }
           })
         : _vm._e(),
       _vm._v(" "),
@@ -43720,6 +44464,56 @@ var render = function() {
                                   )
                                 },
                                 [_vm._v(" "), _c("span", [_vm._v("Documenti")])]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-icon",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    attrs: {
+                                                      color: "green",
+                                                      small: ""
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.recalls(item)
+                                                      }
+                                                    }
+                                                  },
+                                                  "v-icon",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _vm._v(
+                                                  "\n                        mdi-phone\n                    "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("Recalls")])]
                               )
                             ]
                           }
@@ -43727,7 +44521,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      828816259
+                      3640706525
                     )
                   })
                 ],

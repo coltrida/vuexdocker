@@ -2,10 +2,10 @@
     <div>
         <h2>Agende</h2>
         <div>
-            <v-row>
+            <v-row v-if="getRuolo == 'admin'">
                 <v-col
-                    cols="3"
-                    sm="3"
+                    cols="2"
+                    sm="2"
                 >
                     <v-select
                         v-model="user.user_id"
@@ -17,8 +17,8 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="1"
+                    sm="1"
                 >
                     <v-select
                         v-model="user.giorno"
@@ -61,11 +61,15 @@
                     ></v-select>
                 </v-col>
 
+                <v-col
+                    cols="2"
+                    sm="2"
+                >
+                    <v-btn @click="aggiungi" dark color="indigo">
+                        Inserisci
+                    </v-btn>
+                </v-col>
             </v-row>
-
-            <v-btn @click="aggiungi" dark color="indigo">
-                Inserisci
-            </v-btn>
 
             <v-row class="py-4">
 
@@ -149,13 +153,15 @@
                                   item.settimana === 3 ? 'style-3' :
                                         item.settimana === 4 ? 'style-4' : ''
             }
-
-
         },
 
         computed:{
             ...mapGetters('users', {
                 getUsers:'getUsers',
+            }),
+
+            ...mapGetters('login', {
+                getRuolo:'getRuolo',
             }),
 
         },

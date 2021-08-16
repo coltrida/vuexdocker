@@ -27,6 +27,37 @@ class TelefonateService
         })->orderBy('user_id')->get();
     }
 
+    public function telefonateFatteOggi()
+    {
+        $oggi = Carbon::now()->format('Y-m-d');
+        return Client::with(['tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+                $q->with('copiaComm')->first();
+            }])
+            ->whereHas('recalls', function ($q) use($oggi){
+                $q->where([['created_at', $oggi], ['effettuata', 1]])->orWhere([['updated_at', $oggi], ['effettuata', 1]]);
+            })->orderBy('user_id')->get();
+    }
+
+    public function numeroTelefonateFatteOggi()
+    {
+        $oggi = Carbon::now()->format('Y-m-d');
+        return Client::
+            whereHas('recalls', function ($q) use($oggi){
+                $q->where([['created_at', $oggi], ['effettuata', 1]])->orWhere([['updated_at', $oggi], ['effettuata', 1]]);
+            })->count();
+    }
+
+    public function numeroAppuntamentiPresiOggi()
+    {
+        $oggi = Carbon::now()->format('Y-m-d');
+        return Client::
+        whereHas('recalls', function ($q) use($oggi){
+            $q->where([['created_at', $oggi], ['effettuata', 1], ['esito', 'Preso Appuntamento']])
+                ->orWhere([['updated_at', $oggi], ['effettuata', 1], ['esito', 'Preso Appuntamento']]);
+        })->count();
+    }
+
     public function recallsByIdClient($idClient)
     {
         return Client::with(['recalls' => function($q){
@@ -41,7 +72,9 @@ class TelefonateService
                 'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                     $q->with('copiaComm')->first();
                 }])
-            ->doesntHave('recalls')
+            ->whereDoesntHave('recalls', function ($q){
+                $q->where('effettuata', 1);
+            })
             ->orderBy('user_id')
             ->get();
     }
@@ -66,8 +99,9 @@ class TelefonateService
                 'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                     $q->with('copiaComm')->first();
                 }])
-            ->whereHas('appuntamenti', function ($q) use($oggi){
-                $q->whereDate('giorno', '<', $oggi->subMonths(12));
+            ->has('appuntamenti')
+            ->whereDoesntHave('appuntamenti', function ($q) use($oggi){
+                $q->whereDate('giorno', '>', $oggi->subMonths(12));
             })
             ->orderBy('user_id')
             ->get();
@@ -82,6 +116,8 @@ class TelefonateService
         $prossimaTelefonata->esito = $request->esito;
         $prossimaTelefonata->note = $request->note;
         $prossimaTelefonata->effettuata = $request->esito ? 1 : 0;
+        $prossimaTelefonata->created_at = Carbon::now()->format('Y-m-d');
+        $prossimaTelefonata->updated_at = Carbon::now()->format('Y-m-d');
         $prossimaTelefonata->save();
 
         return $prossimaTelefonata;
@@ -93,6 +129,7 @@ class TelefonateService
         $telefonata->esito = $request->esito;
         $telefonata->note = $request->note;
         $telefonata->effettuata = $request->esito ? 1 : 0;
+        $telefonata->updated_at = Carbon::now()->format('Y-m-d');
         $telefonata->save();
 
         return $telefonata;

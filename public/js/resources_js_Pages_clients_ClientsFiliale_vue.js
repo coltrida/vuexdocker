@@ -245,12 +245,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['appuntamentoClient'],
   mounted: function mounted() {
     this.fetchAppuntamenti(this.appuntamentoClient.id);
-    this.fetchRecapitiByAudio(this.getIdUser);
 
     if (this.getRuolo == 'call') {
       this.fetchFiliali();
+      this.fetchRecapitiByAudio(this.appuntamentoClient.user_id);
     } else {
       this.fetchFilialiByUser(this.getIdUser);
+      this.fetchRecapitiByAudio(this.getIdUser);
     }
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
@@ -258,7 +259,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addAppuntamento: 'addAppuntamento',
     eliminaAppuntamento: 'eliminaAppuntamento'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
-    fetchRecapitiByAudio: 'fetchRecapitiByAudio'
+    fetchRecapitiByAudio: 'fetchRecapitiByAudio',
+    fetchRecapiti: 'fetchRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
     fetchFilialiByUser: 'fetchFilialiByUser',
     fetchFiliali: 'fetchFiliali'
@@ -1836,6 +1838,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Non Risponde', 'Richiamare', 'Non vuole essere richiamato', 'Deceduto'],
       header: [{
         text: 'Data',
+        width: 120,
         align: 'start',
         sortable: false,
         value: 'datarecall',
@@ -1871,15 +1874,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonata.clientId = this.recallsClient.id;
       this.addTelefonata(this.telefonata).then(function () {
+        if (_this.telefonata.esito == 'Preso Appuntamento') {
+          _this.telefonata = {};
+
+          _this.$emit('chiudiRecalls', _this.recallsClient);
+        }
+
         _this.telefonata = {};
       });
     },
     aggiorna: function aggiorna(recall) {
+      var _this2 = this;
+
       this.telefonataDaAggiornare.id = recall.id;
-      this.aggiornaTelefonata(this.telefonataDaAggiornare);
+      this.aggiornaTelefonata(this.telefonataDaAggiornare).then(function () {
+        if (_this2.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
+          _this2.$emit('chiudiRecalls', _this2.recallsClient);
+        }
+      });
     },
     cancella: function cancella() {
-      this.$emit('chiudiRecalls');
+      this.$emit('chiudiRecalls', null);
     }
   }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('telefonate', {
@@ -43827,7 +43842,7 @@ var render = function() {
                     fn: function(ref) {
                       var item = ref.item
                       return [
-                        item.esito == null
+                        item.note == null && item.esito == null
                           ? _c(
                               "div",
                               [

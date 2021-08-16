@@ -21,7 +21,8 @@ class CreateTelefonatasTable extends Migration
             $table->string('note')->nullable();
             $table->boolean('effettuata');
             $table->date('datarecall');
-            $table->timestamps();
+            $table->date('created_at');
+            $table->date('updated_at');
         });
     }
 

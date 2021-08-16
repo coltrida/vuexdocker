@@ -200,6 +200,9 @@ Route::post('/totaleInviiMedici', [DottoreController::class, 'totaleInviiMedici'
 
 // ----------------- telefonate -----------------------
 Route::get('/recallOggi', [TelefonateController::class, 'recallOggi']);
+Route::get('/telefonateFatteOggi', [TelefonateController::class, 'telefonateFatteOggi']);
+Route::get('/numeroTelefonateFatteOggi', [TelefonateController::class, 'numeroTelefonateFatteOggi']);
+Route::get('/numeroAppuntamentiPresiOggi', [TelefonateController::class, 'numeroAppuntamentiPresiOggi']);
 Route::post('/addTelefonata', [TelefonateController::class, 'addTelefonata']);
 Route::post('/aggiornaTelefonata', [TelefonateController::class, 'aggiornaTelefonata']);
 Route::get('/clientiMaiRichiamati', [TelefonateController::class, 'clientiMaiRichiamati']);

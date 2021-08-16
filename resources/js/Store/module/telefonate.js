@@ -3,6 +3,9 @@ import help from "../../help";
 const state = () => ({
     recalls: [],
     recallOggi: [],
+    telefonateFatteOggi: [],
+    numeroTelefonateFatteOggi: '',
+    numeroAppuntamentiPresiOggi: '',
     clientiMaiRichiamati: [],
     clientiNonHannoMaiPresoAppuntamenti: [],
     clientiUnAnnoUltimoAppuntamento: [],
@@ -15,6 +18,18 @@ const getters = {
 
     getRecallOggi(state){
         return state.recallOggi;
+    },
+
+    getTelefonateFatteOggi(state){
+        return state.telefonateFatteOggi;
+    },
+
+    getNumeroTelefonateFatteOggi(state){
+        return state.numeroTelefonateFatteOggi;
+    },
+
+    getNumeroAppuntamentiPresiOggi(state){
+        return state.numeroAppuntamentiPresiOggi;
     },
 
     getClientiMaiRichiamati(state){
@@ -39,6 +54,21 @@ const actions = {
     async fetchRecallOggi({commit}){
         const response = await axios.get(`${help().linkrecalloggi}`);
         commit('fetchRecallOggi', response.data);
+    },
+
+    async fetchTelefonateFatteOggi({commit}){
+        const response = await axios.get(`${help().linktelefonatefatteoggi}`);
+        commit('fetchTelefonateFatteOggi', response.data);
+    },
+
+    async fetchNumeroTelefonateFatteOggi({commit}){
+        const response = await axios.get(`${help().linknumerotelefonatefatteoggi}`);
+        commit('fetchNumeroTelefonateFatteOggi', response.data);
+    },
+
+    async fetchNumeroAppuntamentiPresiOggi({commit}){
+        const response = await axios.get(`${help().linknumeroappuntamentipresioggi}`);
+        commit('fetchNumeroAppuntamentiPresiOggi', response.data);
     },
 
     async addTelefonata({commit}, payload){
@@ -74,6 +104,18 @@ const mutations = {
 
     fetchRecallOggi(state, payload){
         state.recallOggi = payload;
+    },
+
+    fetchTelefonateFatteOggi(state, payload){
+        state.telefonateFatteOggi = payload;
+    },
+
+    fetchNumeroTelefonateFatteOggi(state, payload){
+        state.numeroTelefonateFatteOggi = payload;
+    },
+
+    fetchNumeroAppuntamentiPresiOggi(state, payload){
+        state.numeroAppuntamentiPresiOggi = payload;
     },
 
     addTelefonata(state, payload){

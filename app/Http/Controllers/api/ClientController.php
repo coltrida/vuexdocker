@@ -57,7 +57,7 @@ class ClientController extends Controller
 
     public function modifica(Request $request, ClientService $clientService)
     {
-        return $clientService->modifica($request);
+        return new ClientResource($clientService->modifica($request));
     }
 
     public function elimina($id, ClientService $clientService)

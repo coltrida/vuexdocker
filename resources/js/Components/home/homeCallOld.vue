@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-start align-center mt-2">
             <v-row>
-                <v-col cols="6">
+                <v-col cols="12">
 
                     <audiogramma
                         v-if="showAudiogramma"
@@ -340,10 +340,6 @@
                     </div>
                 </v-col>
 
-                <v-col cols="6">
-                    <calendar />
-                </v-col>
-
             </v-row>
     </div>
 </template>
@@ -355,10 +351,9 @@
     import Prove from "../btnClients/prove/Prove";
     import Docunenti from "../btnClients/documenti/Docunenti";
     import Recalls from "../btnClients/recalls/Recalls";
-    import Calendar from "../../Pages/personale/Calendar";
     export default {
         name: "homeCall",
-        components: {Calendar, Docunenti, Prove, Appuntamento, Audiogramma, Recalls},
+        components: {Docunenti, Prove, Appuntamento, Audiogramma, Recalls},
         data(){
             return {
                 carica: false,
@@ -377,13 +372,13 @@
                 recallsClient: {},
 
                 headers1: [
-                    {text: 'Actions', width: 130, value: 'actions', sortable: false, class: "indigo white--text"},
-                    {text: 'Audio', width:180, value: 'user.name', class: "indigo white--text"},
-                    {text: 'Nome', width:240, value: 'nome', class: "indigo white--text"},
-                    {text: 'Telefono', width:120, value: 'telefono', sortable: false, class: "indigo white--text" },
+                    {text: 'Actions', width: 150, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Audio', width:180, value: 'user.name', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:220, value: 'nome', sortable: false, class: "indigo white--text"},
                     {text: 'Indirizzo', width:220,  value: 'indirizzo', sortable: false, class: "indigo white--text"},
-                    {text: 'Città', width:180,  value: 'citta', class: "indigo white--text"},
-                    {text: 'PR', width:80, value: 'provincia', class: "indigo white--text" },
+                    {text: 'Città', width:180,  value: 'citta', sortable: false, class: "indigo white--text"},
+                    {text: 'PR', width:80, value: 'provincia', sortable: false, class: "indigo white--text" },
+                    {text: 'Telefono', width:120, value: 'telefono', sortable: false, class: "indigo white--text" },
                 ],
             }
         },
@@ -457,7 +452,7 @@
                 this.recallsClient = client;
             },
 
-            chiudiRecalls(client){
+            chiudiRecalls(){
                 this.caricaTelefonate();
                 this.showDocumenti = false;
                 this.showRecalls = false;
@@ -466,9 +461,6 @@
                 this.showAppuntamento = false;
                 this.showClients = true;
                 this.recallsClient = {};
-                if(client){
-                    this.appuntamento(client)
-                }
             },
 
             chiudiDocumenti(){

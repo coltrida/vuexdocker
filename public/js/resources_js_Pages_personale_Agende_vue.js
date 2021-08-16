@@ -117,6 +117,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Listino",
@@ -207,8 +211,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return item.settimana === 1 ? 'style-1' : item.settimana === 2 ? 'style-2' : item.settimana === 3 ? 'style-3' : item.settimana === 4 ? 'style-4' : '';
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getUsers: 'getUsers'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getRuolo: 'getRuolo'
   }))
 });
 
@@ -427,117 +433,133 @@ var render = function() {
     _c(
       "div",
       [
-        _c(
-          "v-row",
-          [
-            _c(
-              "v-col",
-              { attrs: { cols: "3", sm: "3" } },
+        _vm.getRuolo == "admin"
+          ? _c(
+              "v-row",
               [
-                _c("v-select", {
-                  attrs: {
-                    "item-value": "id",
-                    "item-text": "name",
-                    items: _vm.getUsers,
-                    label: "utente"
-                  },
-                  model: {
-                    value: _vm.user.user_id,
-                    callback: function($$v) {
-                      _vm.$set(_vm.user, "user_id", $$v)
-                    },
-                    expression: "user.user_id"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "v-col",
-              { attrs: { cols: "2", sm: "2" } },
-              [
-                _c("v-select", {
-                  attrs: { items: _vm.giorni, label: "giorno" },
-                  model: {
-                    value: _vm.user.giorno,
-                    callback: function($$v) {
-                      _vm.$set(_vm.user, "giorno", $$v)
-                    },
-                    expression: "user.giorno"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "v-col",
-              { attrs: { cols: "2", sm: "2" } },
-              [
-                _c("v-select", {
-                  attrs: { items: _vm.quando, label: "quando" },
-                  model: {
-                    value: _vm.user.tempo,
-                    callback: function($$v) {
-                      _vm.$set(_vm.user, "tempo", $$v)
-                    },
-                    expression: "user.tempo"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "v-col",
-              { attrs: { cols: "3", sm: "3" } },
-              [
-                _c("v-text-field", {
-                  attrs: { label: "Cosa" },
-                  model: {
-                    value: _vm.user.testo,
-                    callback: function($$v) {
-                      _vm.$set(_vm.user, "testo", $$v)
-                    },
-                    expression: "user.testo"
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "v-col",
-              { attrs: { cols: "2", sm: "2" } },
-              [
-                _c("v-select", {
-                  attrs: {
-                    "item-value": "valore",
-                    "item-text": "label",
-                    items: _vm.settimane,
-                    label: "settimana"
-                  },
-                  model: {
-                    value: _vm.user.settimana,
-                    callback: function($$v) {
-                      _vm.$set(_vm.user, "settimana", $$v)
-                    },
-                    expression: "user.settimana"
-                  }
-                })
+                _c(
+                  "v-col",
+                  { attrs: { cols: "2", sm: "2" } },
+                  [
+                    _c("v-select", {
+                      attrs: {
+                        "item-value": "id",
+                        "item-text": "name",
+                        items: _vm.getUsers,
+                        label: "utente"
+                      },
+                      model: {
+                        value: _vm.user.user_id,
+                        callback: function($$v) {
+                          _vm.$set(_vm.user, "user_id", $$v)
+                        },
+                        expression: "user.user_id"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  { attrs: { cols: "1", sm: "1" } },
+                  [
+                    _c("v-select", {
+                      attrs: { items: _vm.giorni, label: "giorno" },
+                      model: {
+                        value: _vm.user.giorno,
+                        callback: function($$v) {
+                          _vm.$set(_vm.user, "giorno", $$v)
+                        },
+                        expression: "user.giorno"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  { attrs: { cols: "2", sm: "2" } },
+                  [
+                    _c("v-select", {
+                      attrs: { items: _vm.quando, label: "quando" },
+                      model: {
+                        value: _vm.user.tempo,
+                        callback: function($$v) {
+                          _vm.$set(_vm.user, "tempo", $$v)
+                        },
+                        expression: "user.tempo"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  { attrs: { cols: "3", sm: "3" } },
+                  [
+                    _c("v-text-field", {
+                      attrs: { label: "Cosa" },
+                      model: {
+                        value: _vm.user.testo,
+                        callback: function($$v) {
+                          _vm.$set(_vm.user, "testo", $$v)
+                        },
+                        expression: "user.testo"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  { attrs: { cols: "2", sm: "2" } },
+                  [
+                    _c("v-select", {
+                      attrs: {
+                        "item-value": "valore",
+                        "item-text": "label",
+                        items: _vm.settimane,
+                        label: "settimana"
+                      },
+                      model: {
+                        value: _vm.user.settimana,
+                        callback: function($$v) {
+                          _vm.$set(_vm.user, "settimana", $$v)
+                        },
+                        expression: "user.settimana"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  { attrs: { cols: "2", sm: "2" } },
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { dark: "", color: "indigo" },
+                        on: { click: _vm.aggiungi }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Inserisci\n                "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
               ],
               1
             )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "v-btn",
-          { attrs: { dark: "", color: "indigo" }, on: { click: _vm.aggiungi } },
-          [_vm._v("\n            Inserisci\n        ")]
-        ),
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "v-row",

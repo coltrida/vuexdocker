@@ -102,7 +102,7 @@
                     </template>
 
                     <template v-slot:item.note="{ item }">
-                        <div v-if="item.esito == null">
+                        <div v-if="item.note == null && item.esito == null">
                             <v-text-field
                                 v-model="telefonataDaAggiornare.note"
                                 label="Note"
@@ -151,9 +151,9 @@
                     ],
 
                 header: [
-                    { text: 'Data',  align: 'start', sortable: false, value: 'datarecall', class: "indigo white--text" },
-                    { text: 'Esito',  sortable: false, value: 'esito', class: "indigo white--text" },
-                    { text: 'note',  sortable: false, value: 'note', class: "indigo white--text" },
+                    { text: 'Data', width:120,  align: 'start', sortable: false, value: 'datarecall', class: "indigo white--text" },
+                    { text: 'Esito', sortable: false, value: 'esito', class: "indigo white--text" },
+                    { text: 'note', sortable: false, value: 'note', class: "indigo white--text" },
                     { text: 'Azioni',  sortable: false, value: 'action', class: "indigo white--text" },
                 ],
             }
@@ -173,17 +173,25 @@
             inserisci(){
                 this.telefonata.clientId = this.recallsClient.id;
                 this.addTelefonata(this.telefonata).then(() =>{
+                if(this.telefonata.esito == 'Preso Appuntamento'){
                     this.telefonata = {};
+                    this.$emit('chiudiRecalls', this.recallsClient)
+                }
+                this.telefonata = {};
                 });
             },
 
             aggiorna(recall){
                 this.telefonataDaAggiornare.id = recall.id;
-                this.aggiornaTelefonata(this.telefonataDaAggiornare);
+                this.aggiornaTelefonata(this.telefonataDaAggiornare).then(() => {
+                    if(this.telefonataDaAggiornare.esito == 'Preso Appuntamento'){
+                        this.$emit('chiudiRecalls', this.recallsClient)
+                    }
+                });
             },
 
             cancella(){
-                this.$emit('chiudiRecalls')
+                this.$emit('chiudiRecalls', null)
             },
 
         },

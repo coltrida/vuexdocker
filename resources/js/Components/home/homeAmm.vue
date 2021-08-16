@@ -1,6 +1,5 @@
 <template>
     <div class="flex justify-start align-center mt-2">
-
             <v-row>
                 <v-col cols="6">
                     <h2>Richiesta Materiale</h2>

@@ -4,8 +4,8 @@
         <div>
             <v-row>
                 <v-col
-                    cols="6"
-                    sm="6"
+                    cols="5"
+                    sm="5"
                 >
                     <v-select
                         v-model="userId"
@@ -17,13 +17,18 @@
                 </v-col>
 
                 <v-col
-                    cols="4"
-                    sm="4"
+                    cols="3"
+                    sm="3"
                 >
                     <v-btn @click="visualizza" dark color="indigo">
                         Visualizza
                     </v-btn>
                 </v-col>
+
+                <v-col
+                    cols="4"
+                    sm="4"
+                >
                     <v-btn-toggle
                         v-model="text"
                         tile
@@ -39,13 +44,11 @@
                         </v-btn>
 
                     </v-btn-toggle>
-                <v-col>
-
                 </v-col>
             </v-row>
 
             <v-row>
-                <v-col cols="12" class="flex">
+                <v-col>
                     <v-col>
                         <h3>Lunedi - {{getDateSettimana[0]}}</h3>
                         <v-data-table
@@ -55,7 +58,7 @@
                             hide-default-footer
                             class="elevation-1 mt-3"
                         >
-                            <template v-slot:item.fullname="{ item }">
+                            <!--<template v-slot:item.fullname="{ item }">
                                 <div style="font-size: 10px">
                                     {{ item.fullname }}
                                 </div>
@@ -72,6 +75,12 @@
                                     {{ item.luogo }}
                                 </div>
                             </template>
+
+                            <template v-slot:item.note="{ item }">
+                                <div style="font-size: 10px">
+                                    {{ item.note }}
+                                </div>
+                            </template>-->
 
                         </v-data-table>
                     </v-col>
@@ -86,7 +95,7 @@
                             class="elevation-1 mt-3"
                         >
 
-                            <template v-slot:item.fullname="{ item }">
+                            <!--<template v-slot:item.fullname="{ item }">
                                 <div style="font-size: 10px">
                                     {{ item.fullname }}
                                 </div>
@@ -103,6 +112,12 @@
                                     {{ item.luogo }}
                                 </div>
                             </template>
+
+                            <template v-slot:item.note="{ item }">
+                                <div style="font-size: 10px">
+                                    {{ item.note }}
+                                </div>
+                            </template>-->
 
                         </v-data-table>
                     </v-col>
@@ -117,7 +132,7 @@
                             class="elevation-1 mt-3"
                         >
 
-                            <template v-slot:item.fullname="{ item }">
+                            <!--<template v-slot:item.fullname="{ item }">
                                 <div style="font-size: 10px">
                                     {{ item.fullname }}
                                 </div>
@@ -134,6 +149,12 @@
                                     {{ item.luogo }}
                                 </div>
                             </template>
+
+                            <template v-slot:item.note="{ item }">
+                                <div style="font-size: 10px">
+                                    {{ item.note }}
+                                </div>
+                            </template>-->
 
                         </v-data-table>
                     </v-col>
@@ -148,7 +169,7 @@
                             class="elevation-1 mt-3"
                         >
 
-                            <template v-slot:item.fullname="{ item }">
+                            <!--<template v-slot:item.fullname="{ item }">
                                 <div style="font-size: 10px">
                                     {{ item.fullname }}
                                 </div>
@@ -165,6 +186,12 @@
                                     {{ item.luogo }}
                                 </div>
                             </template>
+
+                            <template v-slot:item.note="{ item }">
+                                <div style="font-size: 10px">
+                                    {{ item.note }}
+                                </div>
+                            </template>-->
 
                         </v-data-table>
                     </v-col>
@@ -179,7 +206,7 @@
                             class="elevation-1 mt-3"
                         >
 
-                            <template v-slot:item.fullname="{ item }">
+                            <!--<template v-slot:item.fullname="{ item }">
                                 <div style="font-size: 10px">
                                     {{ item.fullname }}
                                 </div>
@@ -196,6 +223,12 @@
                                     {{ item.luogo }}
                                 </div>
                             </template>
+
+                            <template v-slot:item.nota="{ item }">
+                                <div style="font-size: 10px">
+                                    {{ item.nota }}
+                                </div>
+                            </template>-->
 
                         </v-data-table>
                     </v-col>
@@ -220,9 +253,10 @@
                 text: 'left',
                 userId:'',
                 headers1: [
-                    { text: 'Orario', width: 60, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
+                    { text: 'Orario', width: 30, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
                     { text: 'Nome', width: 100, align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
                     { text: 'Luogo', width:80, align: 'start', sortable: false, value: 'luogo', class: "indigo white--text" },
+                    { text: 'Note', width:110, align: 'start', sortable: false, value: 'nota', class: "indigo white--text" },
                 ],
 
             }
@@ -257,6 +291,7 @@
             }),
 
             visualizza(){
+                this.text = 'left';
                 this.fetchAppuntamentiLunedi(this.userId);
                 this.fetchAppuntamentiMartedi(this.userId);
                 this.fetchAppuntamentiMercoledi(this.userId);

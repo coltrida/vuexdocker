@@ -38,6 +38,12 @@
             @chiudiDocumenti="chiudiDocumenti"
         ></docunenti>
 
+        <recalls
+            v-if="showRecalls"
+            :recallsClient="recallsClient"
+            @chiudiRecalls="chiudiRecalls"
+        ></recalls>
+
         <div v-if="showClients">
             <h2>Filtra ricerca</h2>
             <v-row class="mt-6">
@@ -194,6 +200,21 @@
                     </template>
                     <span>Documenti</span>
                 </v-tooltip>
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                            color="green"
+                            small
+                            @click="recalls(item)"
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            mdi-phone
+                        </v-icon>
+                    </template>
+                    <span>Recalls</span>
+                </v-tooltip>
             </template>
 
         </v-data-table>
@@ -212,10 +233,11 @@
     import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
     import Prove from "../../Components/btnClients/prove/Prove";
     import Docunenti from "../../Components/btnClients/documenti/Docunenti";
+    import Recalls from "../../Components/btnClients/recalls/Recalls";
 
     export default {
         name: "Clients",
-        components: {Docunenti, Prove, Appuntamento, Audiogramma, Messaggio, Messaggioelimina},
+        components: {Docunenti, Prove, Appuntamento, Audiogramma, Messaggio, Messaggioelimina, Recalls},
         data() {
             return {
                 showElimina: false,
@@ -223,6 +245,7 @@
                 showClients: true,
                 showProve: false,
                 showDocumenti: false,
+                showRecalls: false,
                 showAudiogramma: false,
                 showAppuntamento: false,
                 textMessaggio: null,
@@ -231,12 +254,13 @@
                 appuntamentoClient: {},
                 proveClient: {},
                 documentiClient: {},
+                recallsClient: {},
                 idElimina: '',
                 nomeElimina: '',
                 cognomeElimina: '',
                 ricerca:{},
                 headers: [
-                    {text: 'Actions', width: 150, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
                     {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
@@ -296,6 +320,7 @@
 
             audiogramma(client){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = true;
@@ -305,6 +330,7 @@
 
             appuntamento(client){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showClients = false;
@@ -314,6 +340,7 @@
 
             prove(client){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = true;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
@@ -323,6 +350,7 @@
 
             documenti(client){
                 this.showDocumenti = true;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
@@ -330,8 +358,29 @@
                 this.documentiClient = client;
             },
 
+            recalls(client){
+                this.showDocumenti = false;
+                this.showRecalls = true;
+                this.showProve = false;
+                this.showAppuntamento = false;
+                this.showAudiogramma = false;
+                this.showClients = false;
+                this.recallsClient = client;
+            },
+
+            chiudiRecalls(){
+                this.showDocumenti = false;
+                this.showRecalls = false;
+                this.showProve = false;
+                this.showAudiogramma = false;
+                this.showAppuntamento = false;
+                this.showClients = true;
+                this.recallsClient = {};
+            },
+
             chiudiDocumenti(){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
@@ -341,6 +390,7 @@
 
             chiudiAudiogramma(){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
@@ -350,6 +400,7 @@
 
             chiudiAppuntamento(){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
@@ -359,6 +410,7 @@
 
             chiudiProve(){
                 this.showDocumenti = false;
+                this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;

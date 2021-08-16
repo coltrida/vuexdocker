@@ -27,6 +27,7 @@ class AppuntamentiResource extends JsonResource
             'giorno' => $this->giorno,
             'orario' => Str::substr($this->orario, 0, 5),
             'luogo' => $this->filiale_id ? $this->filiale->nome : $this->recapito->nome,
+            'nota' => $this->nota,
             'fullname' => $this->client->fullname,
         ];
     }

@@ -14,6 +14,21 @@ class TelefonateController extends Controller
         return $telefonateService->recallOggi();
     }
 
+    public function telefonateFatteOggi(TelefonateService $telefonateService)
+    {
+        return $telefonateService->telefonateFatteOggi();
+    }
+
+    public function numeroTelefonateFatteOggi(TelefonateService $telefonateService)
+    {
+        return $telefonateService->numeroTelefonateFatteOggi();
+    }
+
+    public function numeroAppuntamentiPresiOggi(TelefonateService $telefonateService)
+    {
+        return $telefonateService->numeroAppuntamentiPresiOggi();
+    }
+
     public function addTelefonata(Request $request, TelefonateService $telefonateService)
     {
         return $telefonateService->addTelefonata($request);

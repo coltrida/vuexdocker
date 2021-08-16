@@ -41,6 +41,12 @@
                 @chiudiDocumenti="chiudiDocumenti"
             ></documenti>
 
+            <recalls
+                v-if="showRecalls"
+                :recallsClient="recallsClient"
+                @chiudiRecalls="chiudiRecalls"
+            ></recalls>
+
             <div class="ml-4" v-if="showClients">
                 <router-link :to="{ name: 'clientsInserisci'}">
                     <v-btn dark color="indigo">Inserisci</v-btn>
@@ -155,6 +161,21 @@
                         </template>
                         <span>Documenti</span>
                     </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                                color="green"
+                                small
+                                @click="recalls(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-phone
+                            </v-icon>
+                        </template>
+                        <span>Recalls</span>
+                    </v-tooltip>
                 </template>
 
             </v-data-table>
@@ -170,12 +191,13 @@
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
     import Prove from "../../Components/btnClients/prove/Prove";
     import Documenti from "../../Components/btnClients/documenti/Docunenti";
+    import Recalls from "../../Components/btnClients/recalls/Recalls";
     import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
     import Messaggioelimina from "../../Components/btnClients/elimina/Messaggioelimina";
 
     export default {
         name: "Clients",
-        components: {Messaggioelimina, Appuntamento, Prove, Documenti, Audiogramma, Messaggio},
+        components: {Messaggioelimina, Appuntamento, Prove, Documenti, Audiogramma, Messaggio, Recalls},
         data() {
             return {
                 showElimina: false,
@@ -183,6 +205,7 @@
                 showClients: true,
                 showProve: false,
                 showDocumenti: false,
+                showRecalls: false,
                 showAudiogramma: false,
                 showAppuntamento: false,
                 textMessaggio: null,
@@ -191,13 +214,14 @@
                 appuntamentoClient: {},
                 proveClient: {},
                 documentiClient: {},
+                recallsClient: {},
                 idElimina: '',
                 nomeElimina: '',
                 cognomeElimina: '',
                 search: '',
                 listino: {},
                 headers: [
-                    {text: 'Actions', width: 150, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
                     {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
@@ -258,6 +282,7 @@
             audiogramma(client){
                 this.showDocumenti = false;
                 this.showProve = false;
+                this.showRecalls = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = true;
                 this.showClients = false;
@@ -267,6 +292,7 @@
             appuntamento(client){
                 this.showDocumenti = false;
                 this.showProve = false;
+                this.showRecalls = false;
                 this.showAudiogramma = false;
                 this.showClients = false;
                 this.showAppuntamento = true;
@@ -276,6 +302,7 @@
             prove(client){
                 this.showDocumenti = false;
                 this.showProve = true;
+                this.showRecalls = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
                 this.showClients = false;
@@ -285,15 +312,37 @@
             documenti(client){
                 this.showDocumenti = true;
                 this.showProve = false;
+                this.showRecalls = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
                 this.showClients = false;
                 this.documentiClient = client;
             },
 
+            recalls(client){
+                this.showDocumenti = false;
+                this.showRecalls = true;
+                this.showProve = false;
+                this.showAppuntamento = false;
+                this.showAudiogramma = false;
+                this.showClients = false;
+                this.recallsClient = client;
+            },
+
+            chiudiRecalls(){
+                this.showDocumenti = false;
+                this.showRecalls = false;
+                this.showProve = false;
+                this.showAudiogramma = false;
+                this.showAppuntamento = false;
+                this.showClients = true;
+                this.recallsClient = {};
+            },
+
             chiudiDocumenti(){
                 this.showDocumenti = false;
                 this.showProve = false;
+                this.showRecalls = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
                 this.showClients = true;
@@ -303,6 +352,7 @@
             chiudiAudiogramma(){
                 this.showDocumenti = false;
                 this.showProve = false;
+                this.showRecalls = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
                 this.showClients = true;
@@ -312,6 +362,7 @@
             chiudiAppuntamento(){
                 this.showDocumenti = false;
                 this.showProve = false;
+                this.showRecalls = false;
                 this.showAppuntamento = false;
                 this.showAudiogramma = false;
                 this.showClients = true;
@@ -321,6 +372,7 @@
             chiudiProve(){
                 this.showDocumenti = false;
                 this.showProve = false;
+                this.showRecalls = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
                 this.showClients = true;

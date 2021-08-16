@@ -3,16 +3,18 @@
         <Clients />
         <Filtri />
         <Calendar />
+        <Agende />
     </div>
 </template>
 
 <script>
     import Clients from "./NavBarCall/Clients";
+    import Agende from "./NavBarCall/Agende";
     import Calendar from "./NavBarCall/Calendar";
     import Filtri from "./NavBarCall/Filtri";
     export default {
         name: "NavBarCall",
-        components: {Calendar, Clients, Filtri}
+        components: {Calendar, Clients, Filtri, Agende}
     }
 </script>
 

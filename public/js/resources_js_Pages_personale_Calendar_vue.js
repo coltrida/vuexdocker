@@ -229,6 +229,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Calendar",
@@ -238,7 +271,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       userId: '',
       headers1: [{
         text: 'Orario',
-        width: 60,
+        width: 30,
         align: 'start',
         sortable: false,
         value: 'orario',
@@ -256,6 +289,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         align: 'start',
         sortable: false,
         value: 'luogo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Note',
+        width: 110,
+        align: 'start',
+        sortable: false,
+        value: 'nota',
         "class": "indigo white--text"
       }]
     };
@@ -282,6 +322,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchDateSettimanaProssima: 'fetchDateSettimanaProssima'
   })), {}, {
     visualizza: function visualizza() {
+      this.text = 'left';
       this.fetchAppuntamentiLunedi(this.userId);
       this.fetchAppuntamentiMartedi(this.userId);
       this.fetchAppuntamentiMercoledi(this.userId);
@@ -411,7 +452,7 @@ var render = function() {
           [
             _c(
               "v-col",
-              { attrs: { cols: "6", sm: "6" } },
+              { attrs: { cols: "5", sm: "5" } },
               [
                 _c("v-select", {
                   attrs: {
@@ -434,7 +475,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "v-col",
-              { attrs: { cols: "4", sm: "4" } },
+              { attrs: { cols: "3", sm: "3" } },
               [
                 _c(
                   "v-btn",
@@ -449,42 +490,57 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "v-btn-toggle",
-              {
-                attrs: { tile: "", color: "deep-purple accent-3", group: "" },
-                model: {
-                  value: _vm.text,
-                  callback: function($$v) {
-                    _vm.text = $$v
-                  },
-                  expression: "text"
-                }
-              },
+              "v-col",
+              { attrs: { cols: "4", sm: "4" } },
               [
                 _c(
-                  "v-btn",
-                  { attrs: { value: "left" }, on: { click: _vm.visualizza } },
+                  "v-btn-toggle",
+                  {
+                    attrs: {
+                      tile: "",
+                      color: "deep-purple accent-3",
+                      group: ""
+                    },
+                    model: {
+                      value: _vm.text,
+                      callback: function($$v) {
+                        _vm.text = $$v
+                      },
+                      expression: "text"
+                    }
+                  },
                   [
-                    _vm._v(
-                      "\n                        Attuale\n                    "
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { value: "left" },
+                        on: { click: _vm.visualizza }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Attuale\n                    "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { value: "center" },
+                        on: { click: _vm.prossima }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Prossima\n                    "
+                        )
+                      ]
                     )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-btn",
-                  { attrs: { value: "center" }, on: { click: _vm.prossima } },
-                  [
-                    _vm._v(
-                      "\n                        Prossima\n                    "
-                    )
-                  ]
+                  ],
+                  1
                 )
               ],
               1
-            ),
-            _vm._v(" "),
-            _c("v-col")
+            )
           ],
           1
         ),
@@ -494,7 +550,6 @@ var render = function() {
           [
             _c(
               "v-col",
-              { staticClass: "flex", attrs: { cols: "12" } },
               [
                 _c(
                   "v-col",
@@ -510,66 +565,7 @@ var render = function() {
                         headers: _vm.headers1,
                         items: _vm.getAppLun,
                         "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
+                      }
                     })
                   ],
                   1
@@ -589,66 +585,7 @@ var render = function() {
                         headers: _vm.headers1,
                         items: _vm.getAppMar,
                         "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
+                      }
                     })
                   ],
                   1
@@ -668,66 +605,7 @@ var render = function() {
                         headers: _vm.headers1,
                         items: _vm.getAppMer,
                         "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
+                      }
                     })
                   ],
                   1
@@ -747,66 +625,7 @@ var render = function() {
                         headers: _vm.headers1,
                         items: _vm.getAppGio,
                         "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
+                      }
                     })
                   ],
                   1
@@ -826,66 +645,7 @@ var render = function() {
                         headers: _vm.headers1,
                         items: _vm.getAppVen,
                         "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "item.fullname",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.fullname) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.orario",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.orario) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.luogo",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "div",
-                                { staticStyle: { "font-size": "10px" } },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(item.luogo) +
-                                      "\n                            "
-                                  )
-                                ]
-                              )
-                            ]
-                          }
-                        }
-                      ])
+                      }
                     })
                   ],
                   1

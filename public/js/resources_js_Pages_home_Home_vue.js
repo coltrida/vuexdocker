@@ -188,12 +188,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['appuntamentoClient'],
   mounted: function mounted() {
     this.fetchAppuntamenti(this.appuntamentoClient.id);
-    this.fetchRecapitiByAudio(this.getIdUser);
 
     if (this.getRuolo == 'call') {
       this.fetchFiliali();
+      this.fetchRecapitiByAudio(this.appuntamentoClient.user_id);
     } else {
       this.fetchFilialiByUser(this.getIdUser);
+      this.fetchRecapitiByAudio(this.getIdUser);
     }
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
@@ -201,7 +202,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addAppuntamento: 'addAppuntamento',
     eliminaAppuntamento: 'eliminaAppuntamento'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
-    fetchRecapitiByAudio: 'fetchRecapitiByAudio'
+    fetchRecapitiByAudio: 'fetchRecapitiByAudio',
+    fetchRecapiti: 'fetchRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
     fetchFilialiByUser: 'fetchFilialiByUser',
     fetchFiliali: 'fetchFiliali'
@@ -1701,6 +1703,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Non Risponde', 'Richiamare', 'Non vuole essere richiamato', 'Deceduto'],
       header: [{
         text: 'Data',
+        width: 120,
         align: 'start',
         sortable: false,
         value: 'datarecall',
@@ -1736,15 +1739,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonata.clientId = this.recallsClient.id;
       this.addTelefonata(this.telefonata).then(function () {
+        if (_this.telefonata.esito == 'Preso Appuntamento') {
+          _this.telefonata = {};
+
+          _this.$emit('chiudiRecalls', _this.recallsClient);
+        }
+
         _this.telefonata = {};
       });
     },
     aggiorna: function aggiorna(recall) {
+      var _this2 = this;
+
       this.telefonataDaAggiornare.id = recall.id;
-      this.aggiornaTelefonata(this.telefonataDaAggiornare);
+      this.aggiornaTelefonata(this.telefonataDaAggiornare).then(function () {
+        if (_this2.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
+          _this2.$emit('chiudiRecalls', _this2.recallsClient);
+        }
+      });
     },
     cancella: function cancella() {
-      this.$emit('chiudiRecalls');
+      this.$emit('chiudiRecalls', null);
     }
   }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('telefonate', {
@@ -1830,8 +1845,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _homeAmm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homeAmm */ "./resources/js/Components/home/homeAmm.vue");
 /* harmony import */ var _homeAdmin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./homeAdmin */ "./resources/js/Components/home/homeAdmin.vue");
+/* harmony import */ var _homeCallAdmin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./homeCallAdmin */ "./resources/js/Components/home/homeCallAdmin.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1854,11 +1877,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SuperHome",
   components: {
+    HomeCallAdmin: _homeCallAdmin__WEBPACK_IMPORTED_MODULE_2__.default,
     HomeAdmin: _homeAdmin__WEBPACK_IMPORTED_MODULE_1__.default,
     HomeAmm: _homeAmm__WEBPACK_IMPORTED_MODULE_0__.default
   },
@@ -1881,18 +1916,32 @@ __webpack_require__.r(__webpack_exports__);
           this.playSound();
       });
   },*/
-  methods: {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('telefonate', {
+    fetchRecallOggi: 'fetchRecallOggi',
+    fetchTelefonateFatteOggi: 'fetchTelefonateFatteOggi',
+    fetchNumeroTelefonateFatteOggi: 'fetchNumeroTelefonateFatteOggi',
+    fetchNumeroAppuntamentiPresiOggi: 'fetchNumeroAppuntamentiPresiOggi'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('filiali', {
+    fetchRichiestaApparecchi: 'fetchRichiestaApparecchi'
+  })), {}, {
     playSound: function playSound() {
       var alert = new Audio(this.sound);
       alert.play();
     },
     resetLogistica: function resetLogistica() {
       this.novitaLogistica = 0;
+      this.fetchRichiestaApparecchi();
     },
     resetCommerciale: function resetCommerciale() {
       this.novitaCommerciale = 0;
+    },
+    resetCallCenter: function resetCallCenter() {
+      this.fetchRecallOggi();
+      this.fetchTelefonateFatteOggi();
+      this.fetchNumeroTelefonateFatteOggi();
+      this.fetchNumeroAppuntamentiPresiOggi();
     }
-  }
+  })
 });
 
 /***/ }),
@@ -2197,7 +2246,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -2746,12 +2794,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _btnClients_audiogramma_Audiogramma__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../btnClients/audiogramma/Audiogramma */ "./resources/js/Components/btnClients/audiogramma/Audiogramma.vue");
 /* harmony import */ var _btnClients_appuntamento_Appuntamento__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../btnClients/appuntamento/Appuntamento */ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue");
 /* harmony import */ var _btnClients_prove_Prove__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../btnClients/prove/Prove */ "./resources/js/Components/btnClients/prove/Prove.vue");
 /* harmony import */ var _btnClients_documenti_Docunenti__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../btnClients/documenti/Docunenti */ "./resources/js/Components/btnClients/documenti/Docunenti.vue");
 /* harmony import */ var _btnClients_recalls_Recalls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../btnClients/recalls/Recalls */ "./resources/js/Components/btnClients/recalls/Recalls.vue");
+/* harmony import */ var _Pages_personale_Calendar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Pages/personale/Calendar */ "./resources/js/Pages/personale/Calendar.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3104,6 +3153,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -3113,6 +3167,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "homeCall",
   components: {
+    Calendar: _Pages_personale_Calendar__WEBPACK_IMPORTED_MODULE_5__.default,
     Docunenti: _btnClients_documenti_Docunenti__WEBPACK_IMPORTED_MODULE_3__.default,
     Prove: _btnClients_prove_Prove__WEBPACK_IMPORTED_MODULE_2__.default,
     Appuntamento: _btnClients_appuntamento_Appuntamento__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -3137,7 +3192,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       recallsClient: {},
       headers1: [{
         text: 'Actions',
-        width: 150,
+        width: 130,
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -3145,12 +3200,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Audio',
         width: 180,
         value: 'user.name',
-        sortable: false,
         "class": "indigo white--text"
       }, {
         text: 'Nome',
-        width: 220,
+        width: 240,
         value: 'nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Telefono',
+        width: 120,
+        value: 'telefono',
         sortable: false,
         "class": "indigo white--text"
       }, {
@@ -3163,19 +3222,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Città',
         width: 180,
         value: 'citta',
-        sortable: false,
         "class": "indigo white--text"
       }, {
         text: 'PR',
         width: 80,
         value: 'provincia',
-        sortable: false,
-        "class": "indigo white--text"
-      }, {
-        text: 'Telefono',
-        width: 120,
-        value: 'telefono',
-        sortable: false,
         "class": "indigo white--text"
       }]
     };
@@ -3183,7 +3234,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.caricaTelefonate();
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('telefonate', {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('telefonate', {
     fetchRecallOggi: 'fetchRecallOggi',
     fetchClientiMaiRichiamati: 'fetchClientiMaiRichiamati',
     fetchClientiNonHannoMaiPresoAppuntamenti: 'fetchClientiNonHannoMaiPresoAppuntamenti',
@@ -3240,7 +3291,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showClients = false;
       this.recallsClient = client;
     },
-    chiudiRecalls: function chiudiRecalls() {
+    chiudiRecalls: function chiudiRecalls(client) {
       this.caricaTelefonate();
       this.showDocumenti = false;
       this.showRecalls = false;
@@ -3249,6 +3300,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showAppuntamento = false;
       this.showClients = true;
       this.recallsClient = {};
+
+      if (client) {
+        this.appuntamento(client);
+      }
     },
     chiudiDocumenti: function chiudiDocumenti() {
       this.showDocumenti = false;
@@ -3288,11 +3343,264 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.proveClient = {};
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('telefonate', {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('telefonate', {
     getRecallOggi: 'getRecallOggi',
     getClientiMaiRichiamati: 'getClientiMaiRichiamati',
     getClientiNonHannoMaiPresoAppuntamenti: 'getClientiNonHannoMaiPresoAppuntamenti',
     getClientiUnAnnoUltimoAppuntamento: 'getClientiUnAnnoUltimoAppuntamento'
+  }))
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/home/homeCallAdmin.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/home/homeCallAdmin.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _btnClients_appuntamento_Appuntamento__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../btnClients/appuntamento/Appuntamento */ "./resources/js/Components/btnClients/appuntamento/Appuntamento.vue");
+/* harmony import */ var _btnClients_recalls_Recalls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../btnClients/recalls/Recalls */ "./resources/js/Components/btnClients/recalls/Recalls.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "homeCallAdmin",
+  components: {
+    Appuntamento: _btnClients_appuntamento_Appuntamento__WEBPACK_IMPORTED_MODULE_0__.default,
+    Recalls: _btnClients_recalls_Recalls__WEBPACK_IMPORTED_MODULE_1__.default
+  },
+  data: function data() {
+    return {
+      showClients: true,
+      showRecalls: false,
+      showAppuntamento: false,
+      appuntamentoClient: {},
+      recallsClient: {},
+      headers1: [{
+        text: 'Actions',
+        width: 70,
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Audio',
+        width: 180,
+        value: 'user.name',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Nome',
+        width: 240,
+        value: 'nome',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Telefono',
+        width: 120,
+        value: 'telefono',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Indirizzo',
+        width: 220,
+        value: 'indirizzo',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Città',
+        width: 180,
+        value: 'citta',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'PR',
+        width: 80,
+        value: 'provincia',
+        sortable: false,
+        "class": "indigo white--text"
+      }]
+    };
+  },
+  mounted: function mounted() {
+    this.fetchRecallOggi();
+    this.fetchTelefonateFatteOggi();
+    this.fetchNumeroTelefonateFatteOggi();
+    this.fetchNumeroAppuntamentiPresiOggi();
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('telefonate', {
+    fetchRecallOggi: 'fetchRecallOggi',
+    fetchTelefonateFatteOggi: 'fetchTelefonateFatteOggi',
+    fetchNumeroTelefonateFatteOggi: 'fetchNumeroTelefonateFatteOggi',
+    fetchNumeroAppuntamentiPresiOggi: 'fetchNumeroAppuntamentiPresiOggi'
+  })), {}, {
+    appuntamento: function appuntamento(client) {
+      this.showRecalls = false;
+      this.showClients = false;
+      this.showAppuntamento = true;
+      this.appuntamentoClient = client;
+    },
+    recalls: function recalls(client) {
+      this.showRecalls = true;
+      this.showAppuntamento = false;
+      this.showClients = false;
+      this.recallsClient = client;
+    },
+    chiudiRecalls: function chiudiRecalls() {
+      this.showRecalls = false;
+      this.showAppuntamento = false;
+      this.showClients = true;
+      this.recallsClient = {};
+    },
+    chiudiAppuntamento: function chiudiAppuntamento() {
+      this.showRecalls = false;
+      this.showAppuntamento = false;
+      this.showClients = true;
+      this.appuntamentoClient = {};
+    }
+  }),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('telefonate', {
+    getRecallOggi: 'getRecallOggi',
+    getTelefonateFatteOggi: 'getTelefonateFatteOggi',
+    getNumeroTelefonateFatteOggi: 'getNumeroTelefonateFatteOggi',
+    getNumeroAppuntamentiPresiOggi: 'getNumeroAppuntamentiPresiOggi'
   }))
 });
 
@@ -3358,6 +3666,359 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getUser: 'getUser',
     getIdUser: 'getIdUser',
     getRuolo: 'getRuolo'
+  }))
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/Calendar.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/Calendar.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Calendar",
+  data: function data() {
+    return {
+      text: 'left',
+      userId: '',
+      headers1: [{
+        text: 'Orario',
+        width: 30,
+        align: 'start',
+        sortable: false,
+        value: 'orario',
+        "class": "indigo white--text"
+      }, {
+        text: 'Nome',
+        width: 100,
+        align: 'start',
+        sortable: false,
+        value: 'fullname',
+        "class": "indigo white--text"
+      }, {
+        text: 'Luogo',
+        width: 80,
+        align: 'start',
+        sortable: false,
+        value: 'luogo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Note',
+        width: 110,
+        align: 'start',
+        sortable: false,
+        value: 'nota',
+        "class": "indigo white--text"
+      }]
+    };
+  },
+  mounted: function mounted() {
+    this.fetchAudio();
+    this.fetchDateSettimana();
+    this.$store.commit('appuntamenti/resetAppuntamenti');
+  },
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
+    fetchAudio: 'fetchAudio'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
+    fetchAppuntamentiLunedi: 'fetchAppuntamentiLunedi',
+    fetchAppuntamentiMartedi: 'fetchAppuntamentiMartedi',
+    fetchAppuntamentiMercoledi: 'fetchAppuntamentiMercoledi',
+    fetchAppuntamentiGiovedi: 'fetchAppuntamentiGiovedi',
+    fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi',
+    prossimoLunedi: 'prossimoLunedi',
+    prossimoMartedi: 'prossimoMartedi',
+    prossimoMarcoledi: 'prossimoMarcoledi',
+    prossimoGiovedi: 'prossimoGiovedi',
+    prossimoVenerdi: 'prossimoVenerdi',
+    fetchDateSettimana: 'fetchDateSettimana',
+    fetchDateSettimanaProssima: 'fetchDateSettimanaProssima'
+  })), {}, {
+    visualizza: function visualizza() {
+      this.text = 'left';
+      this.fetchAppuntamentiLunedi(this.userId);
+      this.fetchAppuntamentiMartedi(this.userId);
+      this.fetchAppuntamentiMercoledi(this.userId);
+      this.fetchAppuntamentiGiovedi(this.userId);
+      this.fetchAppuntamentiVenerdi(this.userId);
+      this.fetchDateSettimana();
+    },
+    prossima: function prossima() {
+      this.prossimoLunedi(this.userId);
+      this.prossimoMartedi(this.userId);
+      this.prossimoMarcoledi(this.userId);
+      this.prossimoGiovedi(this.userId);
+      this.prossimoVenerdi(this.userId);
+      this.fetchDateSettimanaProssima();
+    }
+  }),
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+    getAudio: 'getAudio'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
+    getAppLun: 'getAppLun',
+    getAppMar: 'getAppMar',
+    getAppMer: 'getAppMer',
+    getAppGio: 'getAppGio',
+    getAppVen: 'getAppVen',
+    getDateSettimana: 'getDateSettimana'
   }))
 });
 
@@ -41943,6 +42604,45 @@ component.options.__file = "resources/js/Components/home/homeCall.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Components/home/homeCallAdmin.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/Components/home/homeCallAdmin.vue ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _homeCallAdmin_vue_vue_type_template_id_3d6aecad_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./homeCallAdmin.vue?vue&type=template&id=3d6aecad&scoped=true& */ "./resources/js/Components/home/homeCallAdmin.vue?vue&type=template&id=3d6aecad&scoped=true&");
+/* harmony import */ var _homeCallAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./homeCallAdmin.vue?vue&type=script&lang=js& */ "./resources/js/Components/home/homeCallAdmin.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _homeCallAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _homeCallAdmin_vue_vue_type_template_id_3d6aecad_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _homeCallAdmin_vue_vue_type_template_id_3d6aecad_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "3d6aecad",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Components/home/homeCallAdmin.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/home/Home.vue":
 /*!******************************************!*\
   !*** ./resources/js/Pages/home/Home.vue ***!
@@ -41978,6 +42678,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/Pages/home/Home.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/Pages/personale/Calendar.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/Pages/personale/Calendar.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Calendar_vue_vue_type_template_id_ed55255e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Calendar.vue?vue&type=template&id=ed55255e&scoped=true& */ "./resources/js/Pages/personale/Calendar.vue?vue&type=template&id=ed55255e&scoped=true&");
+/* harmony import */ var _Calendar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Calendar.vue?vue&type=script&lang=js& */ "./resources/js/Pages/personale/Calendar.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Calendar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Calendar_vue_vue_type_template_id_ed55255e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Calendar_vue_vue_type_template_id_ed55255e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "ed55255e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/personale/Calendar.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -42222,6 +42961,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/home/homeCallAdmin.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/Components/home/homeCallAdmin.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_homeCallAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./homeCallAdmin.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/home/homeCallAdmin.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_homeCallAdmin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/Pages/home/Home.vue?vue&type=script&lang=js&":
 /*!*******************************************************************!*\
   !*** ./resources/js/Pages/home/Home.vue?vue&type=script&lang=js& ***!
@@ -42235,6 +42990,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Home.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/home/Home.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/personale/Calendar.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/Pages/personale/Calendar.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Calendar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/Calendar.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -42459,6 +43230,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/home/homeCallAdmin.vue?vue&type=template&id=3d6aecad&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/Components/home/homeCallAdmin.vue?vue&type=template&id=3d6aecad&scoped=true& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_homeCallAdmin_vue_vue_type_template_id_3d6aecad_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_homeCallAdmin_vue_vue_type_template_id_3d6aecad_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_homeCallAdmin_vue_vue_type_template_id_3d6aecad_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./homeCallAdmin.vue?vue&type=template&id=3d6aecad&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/home/homeCallAdmin.vue?vue&type=template&id=3d6aecad&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/Pages/home/Home.vue?vue&type=template&id=24943976&scoped=true&":
 /*!*************************************************************************************!*\
   !*** ./resources/js/Pages/home/Home.vue?vue&type=template&id=24943976&scoped=true& ***!
@@ -42472,6 +43260,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_24943976_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Home_vue_vue_type_template_id_24943976_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Home.vue?vue&type=template&id=24943976&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/home/Home.vue?vue&type=template&id=24943976&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/personale/Calendar.vue?vue&type=template&id=ed55255e&scoped=true&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/Pages/personale/Calendar.vue?vue&type=template&id=ed55255e&scoped=true& ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar_vue_vue_type_template_id_ed55255e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar_vue_vue_type_template_id_ed55255e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar_vue_vue_type_template_id_ed55255e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Calendar.vue?vue&type=template&id=ed55255e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/Calendar.vue?vue&type=template&id=ed55255e&scoped=true&");
 
 
 /***/ }),
@@ -44920,7 +45725,7 @@ var render = function() {
                     fn: function(ref) {
                       var item = ref.item
                       return [
-                        item.esito == null
+                        item.note == null && item.esito == null
                           ? _c(
                               "div",
                               [
@@ -45146,6 +45951,16 @@ var render = function() {
       _c(
         "v-tab-item",
         [_c("v-card", { attrs: { flat: "" } }, [_c("home-admin")], 1)],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-tab", { on: { click: _vm.resetCallCenter } }, [
+        _vm._v("\n        CallCenter\n    ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-tab-item",
+        [_c("v-card", { attrs: { flat: "" } }, [_c("home-call-admin")], 1)],
         1
       )
     ],
@@ -46229,7 +47044,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "12" } },
+            { attrs: { cols: "6" } },
             [
               _vm.showAudiogramma
                 ? _c("audiogramma", {
@@ -47345,7 +48160,416 @@ var render = function() {
                 : _vm._e()
             ],
             1
+          ),
+          _vm._v(" "),
+          _c("v-col", { attrs: { cols: "6" } }, [_c("calendar")], 1)
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/home/homeCallAdmin.vue?vue&type=template&id=3d6aecad&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/home/homeCallAdmin.vue?vue&type=template&id=3d6aecad&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "flex justify-start align-center mt-2" },
+    [
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c(
+                "v-row",
+                { staticClass: "pa-10" },
+                [
+                  _vm.showAppuntamento
+                    ? _c("appuntamento", {
+                        attrs: { appuntamentoClient: _vm.appuntamentoClient },
+                        on: { chiudiAppuntamento: _vm.chiudiAppuntamento }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.showRecalls
+                    ? _c("recalls", {
+                        attrs: { recallsClient: _vm.recallsClient },
+                        on: { chiudiRecalls: _vm.chiudiRecalls }
+                      })
+                    : _vm._e()
+                ],
+                1
+              )
+            ],
+            1
           )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _vm.showClients
+            ? _c(
+                "v-row",
+                { attrs: { cols: "12" } },
+                [
+                  _c(
+                    "v-col",
+                    [
+                      _c("v-chip", [
+                        _vm._v(
+                          "\n                    Telefonate effettuate: " +
+                            _vm._s(_vm.getNumeroTelefonateFatteOggi) +
+                            "\n                "
+                        )
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c("v-chip", [
+                        _vm._v(
+                          "\n                    Appuntamenti presi: " +
+                            _vm._s(_vm.getNumeroAppuntamentiPresiOggi) +
+                            "\n                "
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.showClients
+            ? _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6" } },
+                    [
+                      _c("h2", [_vm._v("Recall di oggi")]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          headers: _vm.headers1,
+                          dense: "",
+                          items: _vm.getRecallOggi
+                        },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "item.actions",
+                              fn: function(ref) {
+                                var item = ref.item
+                                return [
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "purple",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.appuntamento(
+                                                              item
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                mdi-calendar-edit\n                            "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Appuntamento")])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "green",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.recalls(
+                                                              item
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                mdi-phone\n                            "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Recalls")])
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          false,
+                          4147813278
+                        )
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6" } },
+                    [
+                      _c("h2", [_vm._v("Telefonate Effettuate")]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          headers: _vm.headers1,
+                          dense: "",
+                          items: _vm.getTelefonateFatteOggi
+                        },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "item.actions",
+                              fn: function(ref) {
+                                var item = ref.item
+                                return [
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "purple",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.appuntamento(
+                                                              item
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                mdi-calendar-edit\n                            "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Appuntamento")])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "green",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.recalls(
+                                                              item
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                mdi-phone\n                            "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Recalls")])
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          false,
+                          4147813278
+                        )
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            : _vm._e()
         ],
         1
       )
@@ -47391,6 +48615,249 @@ var render = function() {
         1
       )
     : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/Calendar.vue?vue&type=template&id=ed55255e&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/Calendar.vue?vue&type=template&id=ed55255e&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h2", [_vm._v("Calendar")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _c(
+          "v-row",
+          [
+            _c(
+              "v-col",
+              { attrs: { cols: "5", sm: "5" } },
+              [
+                _c("v-select", {
+                  attrs: {
+                    "item-value": "id",
+                    "item-text": "name",
+                    items: _vm.getAudio,
+                    label: "Seleziona"
+                  },
+                  model: {
+                    value: _vm.userId,
+                    callback: function($$v) {
+                      _vm.userId = $$v
+                    },
+                    expression: "userId"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "3", sm: "3" } },
+              [
+                _c(
+                  "v-btn",
+                  {
+                    attrs: { dark: "", color: "indigo" },
+                    on: { click: _vm.visualizza }
+                  },
+                  [_vm._v("\n                    Visualizza\n                ")]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "4", sm: "4" } },
+              [
+                _c(
+                  "v-btn-toggle",
+                  {
+                    attrs: {
+                      tile: "",
+                      color: "deep-purple accent-3",
+                      group: ""
+                    },
+                    model: {
+                      value: _vm.text,
+                      callback: function($$v) {
+                        _vm.text = $$v
+                      },
+                      expression: "text"
+                    }
+                  },
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { value: "left" },
+                        on: { click: _vm.visualizza }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Attuale\n                    "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { value: "center" },
+                        on: { click: _vm.prossima }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Prossima\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "v-row",
+          [
+            _c(
+              "v-col",
+              [
+                _c(
+                  "v-col",
+                  [
+                    _c("h3", [
+                      _vm._v("Lunedi - " + _vm._s(_vm.getDateSettimana[0]))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        dense: "",
+                        headers: _vm.headers1,
+                        items: _vm.getAppLun,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("h3", [
+                      _vm._v("Martedì - " + _vm._s(_vm.getDateSettimana[1]))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        dense: "",
+                        headers: _vm.headers1,
+                        items: _vm.getAppMar,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("h3", [
+                      _vm._v("Mercoledì - " + _vm._s(_vm.getDateSettimana[2]))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        dense: "",
+                        headers: _vm.headers1,
+                        items: _vm.getAppMer,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("h3", [
+                      _vm._v("Giovedì - " + _vm._s(_vm.getDateSettimana[3]))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        dense: "",
+                        headers: _vm.headers1,
+                        items: _vm.getAppGio,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("h3", [
+                      _vm._v("Venerdì - " + _vm._s(_vm.getDateSettimana[4]))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        dense: "",
+                        headers: _vm.headers1,
+                        items: _vm.getAppVen,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -118,8 +118,8 @@ class ClientService
             $new->recapito_id = $request->recapito_id;
         }
         $new->user_id = $request->user_id;
-        $new->recall = 1;
-        $new->datarecall = $this->calcolaRecall($request->tipologia_id);
+     //   $new->recall = 1;
+    //    $new->datarecall = $this->calcolaRecall($request->tipologia_id);
         $new->mail = trim(Str::upper($request->mail));
         $new->datanascita = $request->datanascita;
         $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
