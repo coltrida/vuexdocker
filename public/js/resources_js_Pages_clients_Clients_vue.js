@@ -197,17 +197,85 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Appuntamento",
   data: function data() {
     return {
+      modal2: false,
+      valid: true,
+      giornoRules: [function (v) {
+        return !!v || 'il giorno è obbligatorio';
+      }],
+      tipoRules: [function (v) {
+        return !!v || 'il tipo è obbligatorio';
+      }],
+      orarioRules: [function (v) {
+        return !!v || 'orario obbligatorio';
+      }],
       newAppuntamento: {
         filiale_id: null,
         recapito_id: null,
         nota: null
       },
       menu: false,
+      tipoAppuntamento: ['Prima Visista', 'Esame Audio', 'Controllo Prova', 'fine prova', 'Assistenza'],
       headers: [{
         text: 'Giorno',
         align: 'start',
@@ -225,14 +293,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'nota',
         "class": "indigo white--text"
       }, {
-        text: 'filiale_id',
+        text: 'Luogo',
         sortable: false,
-        value: 'filiale.nome',
+        value: 'luogo',
         "class": "indigo white--text"
       }, {
-        text: 'recapito_id',
+        text: 'Tipo',
         sortable: false,
-        value: 'recapito.nome',
+        value: 'tipo',
         "class": "indigo white--text"
       }, {
         text: 'Actions',
@@ -269,14 +337,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('chiudiAppuntamento');
     },
     inserisci: function inserisci() {
+      var _this = this;
+
+      this.$refs.form.validate();
       this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
       this.newAppuntamento.client_id = this.appuntamentoClient.id;
-      this.addAppuntamento(this.newAppuntamento);
-      this.newAppuntamento = {
-        filiale_id: null,
-        recapito_id: null,
-        nota: null
-      };
+      this.addAppuntamento(this.newAppuntamento).then(function () {
+        _this.$refs.form.resetValidation();
+
+        _this.newAppuntamento = {
+          filiale_id: null,
+          recapito_id: null,
+          tipo: null,
+          nota: null
+        };
+      });
     },
     elimina: function elimina(id) {
       var payload = {
@@ -926,22 +1001,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Messaggioelimina",
   props: ['idElimina', 'nomeElimina', 'cognomeElimina'],
+  data: function data() {
+    return {
+      oggettoElimina: {}
+    };
+  },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
     eliminaClient: 'eliminaClient'
   })), {}, {
     elimina: function elimina() {
-      this.eliminaClient(this.idElimina);
+      this.oggettoElimina.clientId = this.idElimina;
+      this.oggettoElimina.userId = this.getIdUser;
+      this.eliminaClient(this.oggettoElimina);
       this.cancella();
     },
     cancella: function cancella() {
       this.$emit('cancellaMessaggioElimina');
     }
   }),
-  computed: {
+  computed: _objectSpread({
     dialog: function dialog() {
       return !!this.idElimina;
     }
-  }
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
+  }))
 });
 
 /***/ }),
@@ -1873,6 +1957,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.telefonata.clientId = this.recallsClient.id;
+      this.telefonata.userId = this.getIdUser;
       this.addTelefonata(this.telefonata).then(function () {
         if (_this.telefonata.esito == 'Preso Appuntamento') {
           _this.telefonata = {};
@@ -1887,6 +1972,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       this.telefonataDaAggiornare.id = recall.id;
+      this.telefonataDaAggiornare.userId = this.getIdUser;
       this.aggiornaTelefonata(this.telefonataDaAggiornare).then(function () {
         if (_this2.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
           _this2.$emit('chiudiRecalls', _this2.recallsClient);
@@ -1897,8 +1983,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('chiudiRecalls', null);
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('telefonate', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('telefonate', {
     getRecalls: 'getRecalls'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
   }))
 });
 
@@ -41350,143 +41438,168 @@ var render = function() {
             { staticClass: "py-4" },
             [
               _c(
-                "v-row",
+                "v-form",
+                {
+                  ref: "form",
+                  attrs: { "lazy-validation": "" },
+                  model: {
+                    value: _vm.valid,
+                    callback: function($$v) {
+                      _vm.valid = $$v
+                    },
+                    expression: "valid"
+                  }
+                },
                 [
                   _c(
-                    "v-col",
-                    { attrs: { cols: "6" } },
+                    "v-row",
                     [
                       _c(
-                        "v-menu",
-                        {
-                          ref: "menu",
-                          attrs: {
-                            "close-on-content-click": false,
-                            "return-value": _vm.newAppuntamento.giorno,
-                            transition: "scale-transition",
-                            "offset-y": "",
-                            "min-width": "auto"
-                          },
-                          on: {
-                            "update:returnValue": function($event) {
-                              return _vm.$set(
-                                _vm.newAppuntamento,
-                                "giorno",
-                                $event
-                              )
-                            },
-                            "update:return-value": function($event) {
-                              return _vm.$set(
-                                _vm.newAppuntamento,
-                                "giorno",
-                                $event
-                              )
-                            }
-                          },
-                          scopedSlots: _vm._u([
-                            {
-                              key: "activator",
-                              fn: function(ref) {
-                                var on = ref.on
-                                var attrs = ref.attrs
-                                return [
-                                  _c(
-                                    "v-text-field",
-                                    _vm._g(
-                                      _vm._b(
-                                        {
-                                          attrs: {
-                                            label: "Data Appuntamento",
-                                            "prepend-icon": "mdi-calendar",
-                                            readonly: ""
-                                          },
-                                          model: {
-                                            value: _vm.newAppuntamento.giorno,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.newAppuntamento,
-                                                "giorno",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "newAppuntamento.giorno"
-                                          }
-                                        },
-                                        "v-text-field",
-                                        attrs,
-                                        false
-                                      ),
-                                      on
-                                    )
-                                  )
-                                ]
-                              }
-                            }
-                          ]),
-                          model: {
-                            value: _vm.menu,
-                            callback: function($$v) {
-                              _vm.menu = $$v
-                            },
-                            expression: "menu"
-                          }
-                        },
+                        "v-col",
+                        { attrs: { cols: "6" } },
                         [
-                          _vm._v(" "),
                           _c(
-                            "v-date-picker",
+                            "v-menu",
                             {
+                              ref: "menu",
                               attrs: {
-                                "no-title": "",
-                                "first-day-of-week": "1",
-                                locale: "ITA",
-                                scrollable: ""
+                                "close-on-content-click": false,
+                                "return-value": _vm.newAppuntamento.giorno,
+                                transition: "scale-transition",
+                                "offset-y": "",
+                                "min-width": "auto"
                               },
-                              model: {
-                                value: _vm.newAppuntamento.giorno,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.newAppuntamento, "giorno", $$v)
+                              on: {
+                                "update:returnValue": function($event) {
+                                  return _vm.$set(
+                                    _vm.newAppuntamento,
+                                    "giorno",
+                                    $event
+                                  )
                                 },
-                                expression: "newAppuntamento.giorno"
+                                "update:return-value": function($event) {
+                                  return _vm.$set(
+                                    _vm.newAppuntamento,
+                                    "giorno",
+                                    $event
+                                  )
+                                }
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    var attrs = ref.attrs
+                                    return [
+                                      _c(
+                                        "v-text-field",
+                                        _vm._g(
+                                          _vm._b(
+                                            {
+                                              attrs: {
+                                                label: "Data Appuntamento*",
+                                                "prepend-icon": "mdi-calendar",
+                                                readonly: "",
+                                                rules: _vm.giornoRules,
+                                                required: ""
+                                              },
+                                              model: {
+                                                value:
+                                                  _vm.newAppuntamento.giorno,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.newAppuntamento,
+                                                    "giorno",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "newAppuntamento.giorno"
+                                              }
+                                            },
+                                            "v-text-field",
+                                            attrs,
+                                            false
+                                          ),
+                                          on
+                                        )
+                                      )
+                                    ]
+                                  }
+                                }
+                              ]),
+                              model: {
+                                value: _vm.menu,
+                                callback: function($$v) {
+                                  _vm.menu = $$v
+                                },
+                                expression: "menu"
                               }
                             },
                             [
-                              _c("v-spacer"),
                               _vm._v(" "),
                               _c(
-                                "v-btn",
+                                "v-date-picker",
                                 {
-                                  attrs: { text: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.menu = false
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Cancel\n                            "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { text: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$refs.menu.save(
-                                        _vm.newAppuntamento.giorno
+                                  attrs: {
+                                    "no-title": "",
+                                    "first-day-of-week": "1",
+                                    locale: "ITA",
+                                    scrollable: ""
+                                  },
+                                  model: {
+                                    value: _vm.newAppuntamento.giorno,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.newAppuntamento,
+                                        "giorno",
+                                        $$v
                                       )
-                                    }
+                                    },
+                                    expression: "newAppuntamento.giorno"
                                   }
                                 },
                                 [
-                                  _vm._v(
-                                    "\n                                OK\n                            "
+                                  _c("v-spacer"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { text: "", color: "primary" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.menu = false
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                Cancel\n                            "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { text: "", color: "primary" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$refs.menu.save(
+                                            _vm.newAppuntamento.giorno
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                OK\n                            "
+                                      )
+                                    ]
                                   )
-                                ]
+                                ],
+                                1
                               )
                             ],
                             1
@@ -41495,38 +41608,252 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-select", {
-                        attrs: {
-                          "item-value": "id",
-                          "item-text": "nome",
-                          items: _vm.getFiliali,
-                          label: "Filiale"
-                        },
-                        model: {
-                          value: _vm.newAppuntamento.filiale_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.newAppuntamento, "filiale_id", $$v)
-                          },
-                          expression: "newAppuntamento.filiale_id"
-                        }
-                      }),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "6" } },
+                        [
+                          _c(
+                            "v-col",
+                            { staticClass: "pb-4", attrs: { cols: "6" } },
+                            [
+                              _c(
+                                "v-dialog",
+                                {
+                                  ref: "dialog",
+                                  attrs: {
+                                    "return-value": _vm.newAppuntamento.orario,
+                                    persistent: "",
+                                    width: "290px"
+                                  },
+                                  on: {
+                                    "update:returnValue": function($event) {
+                                      return _vm.$set(
+                                        _vm.newAppuntamento,
+                                        "orario",
+                                        $event
+                                      )
+                                    },
+                                    "update:return-value": function($event) {
+                                      return _vm.$set(
+                                        _vm.newAppuntamento,
+                                        "orario",
+                                        $event
+                                      )
+                                    }
+                                  },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        var attrs = ref.attrs
+                                        return [
+                                          _c(
+                                            "v-text-field",
+                                            _vm._g(
+                                              _vm._b(
+                                                {
+                                                  attrs: {
+                                                    label: "Seleziona Orario*",
+                                                    "prepend-icon":
+                                                      "mdi-clock-time-four-outline",
+                                                    readonly: "",
+                                                    rules: _vm.orarioRules,
+                                                    required: ""
+                                                  },
+                                                  model: {
+                                                    value:
+                                                      _vm.newAppuntamento
+                                                        .orario,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        _vm.newAppuntamento,
+                                                        "orario",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression:
+                                                      "newAppuntamento.orario"
+                                                  }
+                                                },
+                                                "v-text-field",
+                                                attrs,
+                                                false
+                                              ),
+                                              on
+                                            )
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ]),
+                                  model: {
+                                    value: _vm.modal2,
+                                    callback: function($$v) {
+                                      _vm.modal2 = $$v
+                                    },
+                                    expression: "modal2"
+                                  }
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _vm.modal2
+                                    ? _c(
+                                        "v-time-picker",
+                                        {
+                                          attrs: { "full-width": "" },
+                                          model: {
+                                            value: _vm.newAppuntamento.orario,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.newAppuntamento,
+                                                "orario",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "newAppuntamento.orario"
+                                          }
+                                        },
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                text: "",
+                                                color: "primary"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.modal2 = false
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                    Cancel\n                                "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                text: "",
+                                                color: "primary"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.$refs.dialog.save(
+                                                    _vm.newAppuntamento.orario
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                    OK\n                                "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e()
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              "item-value": "id",
+                              "item-text": "nome",
+                              items: _vm.getFiliali,
+                              label: "Filiale"
+                            },
+                            model: {
+                              value: _vm.newAppuntamento.filiale_id,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newAppuntamento, "filiale_id", $$v)
+                              },
+                              expression: "newAppuntamento.filiale_id"
+                            }
+                          })
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
-                      _c("v-select", {
-                        attrs: {
-                          "item-value": "id",
-                          "item-text": "nome",
-                          items: _vm.getRecapiti,
-                          label: "Recapito"
-                        },
-                        model: {
-                          value: _vm.newAppuntamento.recapito_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.newAppuntamento, "recapito_id", $$v)
-                          },
-                          expression: "newAppuntamento.recapito_id"
-                        }
-                      }),
+                      _c(
+                        "v-col",
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              "item-value": "id",
+                              "item-text": "nome",
+                              items: _vm.getRecapiti,
+                              label: "Recapito"
+                            },
+                            model: {
+                              value: _vm.newAppuntamento.recapito_id,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.newAppuntamento,
+                                  "recapito_id",
+                                  $$v
+                                )
+                              },
+                              expression: "newAppuntamento.recapito_id"
+                            }
+                          })
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
+                      _c(
+                        "v-col",
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              items: _vm.tipoAppuntamento,
+                              label: "Tipo Visita*",
+                              rules: _vm.tipoRules,
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.newAppuntamento.tipo,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newAppuntamento, "tipo", $$v)
+                              },
+                              expression: "newAppuntamento.tipo"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
                       _c("v-textarea", {
                         attrs: { label: "Note" },
                         model: {
@@ -41542,35 +41869,16 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-col",
-                    { attrs: { cols: "6" } },
-                    [
-                      _c("v-time-picker", {
-                        staticStyle: { height: "100px!important" },
-                        attrs: { format: "ampm" },
-                        model: {
-                          value: _vm.newAppuntamento.orario,
-                          callback: function($$v) {
-                            _vm.$set(_vm.newAppuntamento, "orario", $$v)
-                          },
-                          expression: "newAppuntamento.orario"
-                        }
-                      })
-                    ],
-                    1
+                    "v-btn",
+                    {
+                      staticClass: "my-2",
+                      attrs: { color: "primary" },
+                      on: { click: _vm.inserisci }
+                    },
+                    [_vm._v("\n                Inserisci\n            ")]
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  staticClass: "my-2",
-                  attrs: { color: "primary" },
-                  on: { click: _vm.inserisci }
-                },
-                [_vm._v("\n                Inserisci\n            ")]
               ),
               _vm._v(" "),
               _c("v-data-table", {

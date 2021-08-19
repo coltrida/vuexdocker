@@ -31,7 +31,7 @@
             items: [
                 { title: 'Lista', link: 'listaMedici' },
                 { title: 'Orari', link: 'orariMedici'},
-                { title: 'Invii', link: 'inviiMedici'},
+                { title: 'Prescrizioni', link: 'inviiMedici'},
             ],
         }),
     }

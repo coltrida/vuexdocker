@@ -4,13 +4,10 @@
         <v-form ref="form"
                 v-model="valid"
                 lazy-validation>
-        <v-container>
+        <v-container class="mb-10">
 
             <v-row>
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="3" lg="3">
                     <v-text-field
                         v-model="newClient.nome"
                         :rules="nomeRules"
@@ -19,10 +16,7 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="3" lg="3">
                     <v-text-field
                         v-model="newClient.cognome"
                         label="Cognome*"
@@ -31,10 +25,7 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="3" lg="3">
                     <v-text-field
                         v-model="newClient.indirizzo"
                         label="Indirizzo*"
@@ -43,10 +34,7 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="3" lg="3">
                     <v-text-field
                         v-model="newClient.citta"
                         label="Citta*"
@@ -57,20 +45,14 @@
             </v-row>
 
             <v-row>
-                <v-col
-                    cols="1"
-                    sm="1"
-                >
+                <v-col cols="6" md="1" lg="1">
                     <v-text-field
                         v-model="newClient.cap"
                         label="cap"
                     ></v-text-field>
                 </v-col>
 
-                <v-col
-                    cols="1"
-                    sm="1"
-                >
+                <v-col cols="6" md="1" lg="1">
                     <v-text-field
                         v-model="newClient.provincia"
                         label="PR*"
@@ -79,10 +61,7 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
+                <v-col cols="12" md="2" lg="2">
                     <v-text-field
                         v-model="newClient.telefono"
                         label="telefono*"
@@ -91,30 +70,21 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
+                <v-col cols="12" md="2" lg="2">
                     <v-text-field
                         v-model="newClient.telefono2"
                         label="telefono 2"
                     ></v-text-field>
                 </v-col>
 
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
+                <v-col cols="12" md="2" lg="2">
                     <v-text-field
                         v-model="newClient.telefono3"
                         label="telefono 3"
                     ></v-text-field>
                 </v-col>
 
-                <v-col
-                    cols="1"
-                    sm="1"
-                >
+                <v-col cols="6" md="1" lg="1">
                     <v-select
                         v-model="newClient.tipologia_id"
                         item-value="id"
@@ -126,10 +96,7 @@
                     ></v-select>
                 </v-col>
 
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="6" md="3" lg="3">
                     <v-text-field
                         v-model="newClient.mail"
                         label="mail"
@@ -138,10 +105,7 @@
             </v-row>
 
             <v-row>
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
+                <v-col cols="12" md="2" lg="2">
                     <v-menu
                         ref="menu"
                         v-model="menu"
@@ -185,10 +149,7 @@
                     </v-menu>
                 </v-col>
 
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="3" lg="3">
                     <v-select
                         v-model="newClient.marketing_id"
                         item-value="id"
@@ -200,10 +161,7 @@
                     ></v-select>
                 </v-col>
 
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
+                <v-col cols="12" md="2" lg="2">
                     <v-select
                         v-model="newClient.user_id"
                         item-value="id"
@@ -214,10 +172,7 @@
                     ></v-select>
                 </v-col>
 
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
+                <v-col cols="12" md="2" lg="2">
                     <v-select
                         v-model="newClient.filiale_id"
                         item-value="id"
@@ -229,10 +184,7 @@
                     ></v-select>
                 </v-col>
 
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="3" lg="3">
                     <v-select
                         v-model="newClient.recapito_id"
                         item-value="id"
@@ -282,6 +234,7 @@
         },
 
         mounted(){
+        //    console.log(this.$vuetify.breakpoint.name);
             if(this.getRuolo === 'audio'){
                 this.newClient.user_id = parseInt(this.getIdUser);
                 this.lettura = true;
@@ -351,20 +304,22 @@
                     this.newClient.id = this.getClient.id;
                     this.modificaClient(this.newClient).then(() => {
                         this.newClient = {};
-                        if(this.getRuolo === 'audio') {
+                        this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
+                        /*if(this.getRuolo === 'audio') {
                             this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
                         } else {
                             this.$router.push({ name: 'clients' });
-                        }
+                        }*/
                     });
                 } else {
                     this.addClient(this.newClient).then(() => {
                         this.newClient = {};
-                        if(this.getRuolo === 'audio') {
+                        this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
+                        /*if(this.getRuolo === 'audio') {
                             this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
                         } else {
                             this.$router.push({ name: 'clients' });
-                        }
+                        }*/
                     });
                 }
             },

@@ -8,6 +8,8 @@ const state = () => ({
     cittaByProvincia: [],
     clientMessaggio: '',
     client: {},
+    situazioneAnnoClientiAudio:[],
+    situazioneAnnoResiAudio:[],
 });
 
 const getters = {
@@ -37,6 +39,14 @@ const getters = {
 
     getRicercaNominativi(state){
         return state.ricercaNominativi;
+    },
+
+    getSituazioneAnnoClientiAudio(state){
+        return state.situazioneAnnoClientiAudio;
+    },
+
+    getSituazioneAnnoResiAudio(state){
+        return state.situazioneAnnoResiAudio;
     },
 
 };
@@ -93,9 +103,9 @@ const actions = {
         });
     },
 
-    async eliminaClient({commit}, id){
-        await axios.delete(`${help().linkclients}`+'/'+id);
-        commit('eliminaClient', id);
+    async eliminaClient({commit}, payload){
+        await axios.post(`${help().linkeliminaclient}`, payload);
+        commit('eliminaClient', payload.clientId);
     },
 
     async importClients(){
@@ -119,6 +129,16 @@ const actions = {
         formData.append('nomeFile', payload.nomeFile);
 
         await axios.post(`${help().linksalvafilexmlfromfiliale}`, formData, config);
+    },
+
+    async fetchSituazioneAnnoClientiAudio({commit}, payload){
+        const response = await axios.post(`${help().linkSituazioneAnnoClientiAudio}`, payload);
+        commit('fetchSituazioneAnnoClientiAudio', response.data);
+    },
+
+    async fetchSituazioneAnnoResiAudio({commit}, payload){
+        const response = await axios.post(`${help().linkSituazioneAnnoResiAudio}`, payload);
+        commit('fetchSituazioneAnnoResiAudio', response.data);
     },
 };
 
@@ -149,11 +169,13 @@ const mutations = {
 
     addClient(state, payload){
         state.clients.unshift(payload);
+        state.clientMessaggio = 'Nominativo inserito correttamente'
     },
 
     modificaClient(state, payload){
         state.clients = state.clients.filter(u => u.id !== payload.id);
         state.clients.unshift(payload);
+        state.clientMessaggio = 'Nominativo modificato correttamente'
     },
 
     eliminaClient(state, id){
@@ -170,6 +192,14 @@ const mutations = {
 
     resetClientMessaggio(state){
         state.clientMessaggio = '';
+    },
+
+    fetchSituazioneAnnoClientiAudio(state, payload){
+        state.situazioneAnnoClientiAudio = payload;
+    },
+
+    fetchSituazioneAnnoResiAudio(state, payload){
+        state.situazioneAnnoResiAudio = payload;
     },
 };
 

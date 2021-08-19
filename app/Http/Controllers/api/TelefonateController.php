@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TelefonateResource;
 use App\Services\TelefonateService;
 use Illuminate\Http\Request;
 
@@ -31,12 +32,12 @@ class TelefonateController extends Controller
 
     public function addTelefonata(Request $request, TelefonateService $telefonateService)
     {
-        return $telefonateService->addTelefonata($request);
+        return new TelefonateResource($telefonateService->addTelefonata($request));
     }
 
     public function aggiornaTelefonata(Request $request, TelefonateService $telefonateService)
     {
-        return $telefonateService->aggiornaTelefonata($request);
+        return new TelefonateResource($telefonateService->aggiornaTelefonata($request));
     }
 
     public function clientiMaiRichiamati(TelefonateService $telefonateService)
@@ -56,6 +57,6 @@ class TelefonateController extends Controller
 
     public function recallsByIdClient($idClient, TelefonateService $telefonateService)
     {
-        return $telefonateService->recallsByIdClient($idClient);
+        return TelefonateResource::collection($telefonateService->recallsByIdClient($idClient));
     }
 }

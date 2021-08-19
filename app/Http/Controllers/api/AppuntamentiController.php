@@ -11,7 +11,7 @@ class AppuntamentiController extends Controller
 {
     public function index($idClient, AppuntamentiService $appuntamentiService)
     {
-        return $appuntamentiService->index($idClient);
+        return AppuntamentiResource::collection($appuntamentiService->index($idClient));
     }
 
     public function oggi($idAudio, AppuntamentiService $appuntamentiService)
@@ -76,7 +76,7 @@ class AppuntamentiController extends Controller
 
     public function aggiungi(Request $request, AppuntamentiService $appuntamentiService)
     {
-        return $appuntamentiService->addAppuntamento($request);
+        return new AppuntamentiResource($appuntamentiService->addAppuntamento($request));
     }
 
     public function elimina($id, $idUser, AppuntamentiService $appuntamentiService)

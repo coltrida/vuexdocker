@@ -109,8 +109,9 @@ class TelefonateService
 
     public function addTelefonata($request)
     {
+        $client = Client::with('user')->find($request->clientId);
         $prossimaTelefonata = new Telefonata();
-        $prossimaTelefonata->user_id = Client::with('user')->find($request->clientId)->user->id;
+        $prossimaTelefonata->user_id = $client->user->id;
         $prossimaTelefonata->client_id = $request->clientId;
         $prossimaTelefonata->datarecall = $request->giorno;
         $prossimaTelefonata->esito = $request->esito;
@@ -120,17 +121,35 @@ class TelefonateService
         $prossimaTelefonata->updated_at = Carbon::now()->format('Y-m-d');
         $prossimaTelefonata->save();
 
+        $utente = User::find($request->usersId);
+        $log = new LoggingService();
+        $propieta = 'recall';
+        if($request->esito){
+            $testo = $utente->name.' ha telefonato a '.$client->cognome.' '.$client->nome.' con esito: '.$request->esito;
+        }else{
+            $testo = $utente->name.' ha inserito la telefonata da fare per '.$client->cognome.' '.$client->nome;
+        }
+        $log->scriviLog($client, $utente, $utente->name, $propieta, $testo);
+
         return $prossimaTelefonata;
     }
 
     public function aggiornaTelefonata($request)
     {
-        $telefonata = Telefonata::find($request->id);
+        $telefonata = Telefonata::with('client')->find($request->id);
         $telefonata->esito = $request->esito;
         $telefonata->note = $request->note;
         $telefonata->effettuata = $request->esito ? 1 : 0;
         $telefonata->updated_at = Carbon::now()->format('Y-m-d');
         $telefonata->save();
+
+        $utente = User::find($request->usersId);
+        $log = new LoggingService();
+        $propieta = 'recall';
+        if($request->esito){
+            $testo = $utente->name.' ha telefonato a '.$telefonata->client->cognome.' '.$telefonata->client->nome.' con esito: '.$request->esito;
+        }
+        $log->scriviLog($telefonata->client, $utente, $utente->name, $propieta, $testo);
 
         return $telefonata;
     }

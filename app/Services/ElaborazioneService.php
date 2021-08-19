@@ -8,17 +8,21 @@ use App\Models\Appuntamento;
 use App\Models\Client;
 use App\Models\Delta;
 use App\Models\Fatturati;
+use App\Models\Listino;
 use App\Models\Product;
+use App\Models\Prova;
 use App\Models\User;
 use App\Models\Ventaglio;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
 
 class ElaborazioneService
 {
     public function situazioneAnno()
     {
-        $anno = Carbon::now()->year;
-        $mese = Carbon::now()->month;
+        $oggi = Carbon::now();
+        $anno = $oggi->year;
+        $mese = $oggi->month;
 
         $users = User::audio(1)->get();
 
@@ -47,138 +51,6 @@ class ElaborazioneService
                     }])
                     ->find($user->id);
 
-                $ventaglio->m90 = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 1],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->m70 = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 2],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->m50 = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 3],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->m30 = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 4],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->LIVIO2400AI = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 5],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->LIVIO2000AI = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 6],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->LIVIO1600AI = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 7],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->LIVIO1200AI = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 8],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->LIVIO2400EDGEAILITHIUM = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 9],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->LIVIOAI2000LITHIUM = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 10],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->LIVIOAI1600LITHIUM = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 11],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
-                $ventaglio->LIVIOAI1200LITHIUM = Product::
-                whereHas('fattura', function ($f) use($anno){
-                    $f->where('anno_fattura', $anno);
-                })
-                    ->where([
-                        ['stato_id', 4],
-                        ['listino_id', 12],
-                        ['user_id', $user->id]
-                    ])
-                    ->count();
-
                 $ventaglio->tot = Product::
                 whereHas('fattura', function ($f) use($anno){
                     $f->where('anno_fattura', $anno);
@@ -188,6 +60,25 @@ class ElaborazioneService
                         ['user_id', $user->id]
                     ])
                     ->count();
+
+                $apparecchi = Listino::apparecchi()->get();
+
+                foreach ($apparecchi as $apparecchio){
+                    $nomeApa = str_replace(' ', '', $apparecchio->nome);
+                    $idListino = $apparecchio->id;
+                    $calcoloProdotto = Product::
+                    whereHas('fattura', function ($f) use($anno){
+                        $f->where('anno_fattura', $anno);
+                    })
+                        ->where([
+                            ['stato_id', 4],
+                            ['listino_id', $idListino],
+                            ['user_id', $user->id]
+                        ])
+                        ->count();
+                    $ventaglio->$nomeApa = $calcoloProdotto ?
+                        number_format(  (float) ($calcoloProdotto / $ventaglio->tot) * 100 , 0 ).'%' : 0;
+                }
 
                 $ventaglio->save();
 
@@ -422,7 +313,7 @@ class ElaborazioneService
 
             $tot = $numeroClienti + $numeroPC;
 
-            $delta->premio = $tot <> 0 ? ($numeroClienti / $tot) * 100 : 0;
+            $delta->premio = $tot <> 0 ? number_format( ($numeroClienti / $tot) * 100, '2') : 0;
 
             //      $pezzi->nome = 'Pezzi';
             $fatturati->nome = 'Fatturati';
@@ -434,6 +325,15 @@ class ElaborazioneService
             $user->delta_id = $delta->id;
             //        $user->pezzi_id = $pezzi->id;
             $user->save();
+        }
+
+        // -------------- conteggio giorni in prova delle prove in corso ---------- //
+        $prove = Prova::with('stato')->whereHas('stato', function ($q){
+            $q->where('nome', 'PROVA');
+        })->get();
+        foreach ($prove as $prova){
+            $prova->giorni_prova = $oggi->DiffInDays($prova->created_at);
+            $prova->save();
         }
 
     }

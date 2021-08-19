@@ -34,4 +34,9 @@ class ListinoController extends Controller
     {
         return $listinoService->listinoFromId($idListino);
     }
+
+    public function nomiApa(ListinoService $listinoService)
+    {
+        return $listinoService->nomiApa();
+    }
 }

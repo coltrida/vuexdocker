@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Audiometria;
 use App\Models\Client;
+use App\Models\Prova;
 use App\Models\Recapito;
 use App\Models\Telefonata;
 use App\Models\Tipologia;
@@ -142,9 +143,15 @@ class ClientService
         return $oggi->addDays($tipo->recall)->format('Y-m-d');
     }
 
-    public function elimina($id)
+    public function elimina($request)
     {
-        return Client::find($id)->delete();
+        $client = Client::find($request->clientId);
+        $user = User::find($request->userId);
+        $propieta = 'client';
+        $log = new LoggingService();
+        $testo = $user->name.' ha eliminato il nominativo '.$client->cognome.' '.$client->nome;
+        $log->scriviLog($client, $user, $user->name, $propieta, $testo);
+        return $client->delete();
     }
 
     public function ingressiRecapiti()
@@ -373,5 +380,31 @@ class ClientService
             ->orderBy('cognome')->get();
     }
 
+    public function situazioneAnnoClientiAudio($request)
+    {
+        return Prova::
+                with('client')
+                ->where([
+                    ['user_id', $request->userId],
+                    ['anno_fine', $request->anno],
+                ])->whereHas('stato', function ($t){
+                    $t->where('nome', 'FATTURA');
+                })
+            ->latest()
+            ->get();
+    }
 
+    public function situazioneAnnoResiAudio($request)
+    {
+        return Prova::
+        with('client')
+            ->where([
+                ['user_id', $request->userId],
+                ['anno_fine', $request->anno],
+            ])->whereHas('stato', function ($t){
+                $t->where('nome', 'RESO');
+            })
+            ->latest()
+            ->get();
+    }
 }

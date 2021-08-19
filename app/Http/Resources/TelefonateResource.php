@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LoggingResource extends JsonResource
+class TelefonateResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +16,10 @@ class LoggingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'created_at' => $this->created_at->format('d/m/Y - h:i:s A'),
-            'description' => $this->description,
-            'properties' => $this->properties,
+            'id' => $this->id,
+            'datarecall' => Carbon::make($this->datarecall)->format('d-m-Y'),
+            'esito' => $this->esito,
+            'note' => $this->note,
         ];
     }
 }

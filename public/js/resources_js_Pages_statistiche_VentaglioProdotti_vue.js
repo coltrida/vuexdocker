@@ -56,77 +56,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         sortable: false,
         value: 'tot',
         "class": "indigo white--text"
-      }, {
-        text: 'M30',
-        sortable: false,
-        value: 'M30',
-        "class": "indigo white--text"
-      }, {
-        text: 'M50',
-        sortable: false,
-        value: 'M50',
-        "class": "indigo white--text"
-      }, {
-        text: 'M70',
-        sortable: false,
-        value: 'M70',
-        "class": "indigo white--text"
-      }, {
-        text: 'M90',
-        sortable: false,
-        value: 'M90',
-        "class": "indigo white--text"
-      }, {
-        text: 'LIVIO1200AI',
-        sortable: false,
-        value: 'LIVIO1200AI',
-        "class": "indigo white--text"
-      }, {
-        text: 'LIVIO1600AI',
-        sortable: false,
-        value: 'LIVIO1600AI',
-        "class": "indigo white--text"
-      }, {
-        text: 'LIVIO2000AI',
-        sortable: false,
-        value: 'LIVIO2000AI',
-        "class": "indigo white--text"
-      }, {
-        text: 'LIVIO2400AI',
-        sortable: false,
-        value: 'LIVIO2400AI',
-        "class": "indigo white--text"
-      }, {
-        text: 'LIVIO2400EDGEAILITHIUM',
-        sortable: false,
-        value: 'LIVIO2400EDGEAILITHIUM',
-        "class": "indigo white--text"
-      }, {
-        text: 'LIVIOAI1200LITHIUM',
-        sortable: false,
-        value: 'LIVIOAI1200LITHIUM',
-        "class": "indigo white--text"
-      }, {
-        text: 'LIVIOAI1600LITHIUM',
-        sortable: false,
-        value: 'LIVIOAI1600LITHIUM',
-        "class": "indigo white--text"
-      }, {
-        text: 'LIVIOAI2000LITHIUM',
-        sortable: false,
-        value: 'LIVIOAI2000LITHIUM',
-        "class": "indigo white--text"
       }]
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.fetchVentaglioAnno();
+    this.fetchNomiApa().then(function () {
+      _this.inizializzaTabella();
+    });
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchVentaglioAnno: 'fetchVentaglioAnno'
-  })),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
+    fetchNomiApa: 'fetchNomiApa'
+  })), {}, {
+    inizializzaTabella: function inizializzaTabella() {
+      var _this2 = this;
+
+      this.getNomiApa.forEach(function (ele) {
+        var colonna = {
+          text: ele,
+          sortable: false,
+          value: ele,
+          "class": "indigo white--text"
+        };
+
+        _this2.headers.push(colonna);
+      });
+    }
+  }),
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getVentaglioAnno: 'getVentaglioAnno'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('listino', {
+    getNomiApa: 'getNomiApa'
   }))
 });
 

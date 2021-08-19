@@ -2,12 +2,17 @@ import help from "../../help";
 
 const state = () => ({
     listino: [],
+    nomiApa: [],
     eleListino: {}
 });
 
 const getters = {
     getListino(state){
         return state.listino;
+    },
+
+    getNomiApa(state){
+        return state.nomiApa;
     },
 
     getEleListino(state){
@@ -20,6 +25,11 @@ const actions = {
     async fetchListino({commit}){
         const response = await axios.get(`${help().linklistino}`);
         commit('fetchListino', response.data.data);
+    },
+
+    async fetchNomiApa({commit}){
+        const response = await axios.get(`${help().linknomiApa}`);
+        commit('fetchNomiApa', response.data);
     },
 
     async fetchListinoFromFornitore({commit}, idFornitore){
@@ -54,6 +64,10 @@ const actions = {
 const mutations = {
     fetchListino(state, payload){
         state.listino = payload;
+    },
+
+    fetchNomiApa(state, payload){
+        state.nomiApa = payload;
     },
 
     fetchListinoFromFornitore(state, payload){

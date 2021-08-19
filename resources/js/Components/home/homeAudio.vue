@@ -8,7 +8,7 @@
                     v-if="dialogProdotti"
                     @chiudiProdotti="chiudiProdotti"
                 />
-                <v-col cols="5">
+                <v-col md="5" lg="5" xs="12" sm="12">
                     <h2>Prove in Corso:</h2>
                     <div>
                         <v-data-table
@@ -111,7 +111,7 @@
                     </div>
                 </v-col>
 
-                <v-col cols="7">
+                <v-col md="7" lg="7" xs="12" sm="12">
                     <h2>Appuntamenti Oggi:</h2>
                     <div>
                         <v-data-table
@@ -206,7 +206,7 @@
                 headers4: [
                     {text: 'Nome', width:170, value: 'fullname', sortable: false, class: "indigo white--text"},
                     {text: 'telefono', width:70, value: 'telefono', sortable: false, class: "indigo white--text"},
-                    {text: 'citta', width:120, value: 'citta', sortable: false, class: "indigo white--text"},
+                    {text: 'Tipo', width:120, value: 'tipo', sortable: false, class: "indigo white--text"},
                     {text: 'Luogo', width:120, value: 'luogo', sortable: false, class: "indigo white--text"},
                     {text: 'orario', width:120, value: 'orario', sortable: false, class: "indigo white--text"},
                     {text: 'giorno', width:120, value: 'giorno', sortable: false, class: "indigo white--text"},
@@ -219,7 +219,7 @@
             this.fetchCompleanni(this.getIdUser);
             this.fetchAppuntamentiOggi(this.getIdUser);
             this.fetchAppuntamentiDomani(this.getIdUser);
-
+           // console.log(this.$vuetify.breakpoint.xs)
         },
 
         methods: {

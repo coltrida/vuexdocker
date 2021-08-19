@@ -161,7 +161,7 @@
                 headers1: [
                     {text: 'Nome', width:120, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
-                    {text: 'Inizio', width:120, value: 'inizio_prova', sortable: false, class: "indigo white--text"},
+                    {text: 'GG in prova', width:120, value: 'giorni_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Prodotti', value: 'actions', sortable: false, class: "indigo white--text" },
                     /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
                 ],

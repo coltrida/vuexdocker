@@ -16,7 +16,7 @@ class AppuntamentiService
     public function index($idClient)
     {
         return Client::with(['appuntamenti' => function($q){
-            $q->with('filiale', 'recapito')->latest();
+            $q->with('filiale', 'recapito', 'client')->latest();
         }])->find($idClient)->appuntamenti;
     }
 
@@ -110,6 +110,7 @@ class AppuntamentiService
         $newAppuntamento->giorno = $request->giorno;
         $newAppuntamento->orario = $request->orario;
         $newAppuntamento->nota = $request->nota;
+        $newAppuntamento->tipo = $request->tipo;
         $newAppuntamento->client_id = $request->client_id;
         $newAppuntamento->user_id = $request->user_id;
         $newAppuntamento->filiale_id = $request->filiale_id;
@@ -125,7 +126,7 @@ class AppuntamentiService
         $log = new LoggingService();
         $log->scriviLog($newAppuntamento, $utente, $utente->name, $propieta, $testo);
 
-        return Appuntamento::with('filiale', 'recapito')->find($newAppuntamento->id);
+        return Appuntamento::with('filiale', 'recapito', 'client')->find($newAppuntamento->id);
 
     }
 

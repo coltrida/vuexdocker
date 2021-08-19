@@ -13,6 +13,9 @@
 
         <div class="row">
             <v-container class="py-4">
+                <v-form ref="form"
+                        v-model="valid"
+                        lazy-validation>
                 <v-row>
                     <v-col cols="6">
                         <v-menu
@@ -27,9 +30,11 @@
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="newAppuntamento.giorno"
-                                    label="Data Appuntamento"
+                                    label="Data Appuntamento*"
                                     prepend-icon="mdi-calendar"
                                     readonly
+                                    :rules="giornoRules"
+                                    required
                                     v-bind="attrs"
                                     v-on="on"
                                 ></v-text-field>
@@ -58,44 +63,95 @@
                                 </v-btn>
                             </v-date-picker>
                         </v-menu>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-col cols="6" class="pb-4">
+                            <v-dialog
+                                ref="dialog"
+                                v-model="modal2"
+                                :return-value.sync="newAppuntamento.orario"
+                                persistent
+                                width="290px"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                        v-model="newAppuntamento.orario"
+                                        label="Seleziona Orario*"
+                                        prepend-icon="mdi-clock-time-four-outline"
+                                        readonly
+                                        :rules="orarioRules"
+                                        required
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    ></v-text-field>
+                                </template>
+                                <v-time-picker
+                                    v-if="modal2"
+                                    v-model="newAppuntamento.orario"
+                                    full-width
+                                >
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                        text
+                                        color="primary"
+                                        @click="modal2 = false"
+                                    >
+                                        Cancel
+                                    </v-btn>
+                                    <v-btn
+                                        text
+                                        color="primary"
+                                        @click="$refs.dialog.save(newAppuntamento.orario)"
+                                    >
+                                        OK
+                                    </v-btn>
+                                </v-time-picker>
+                            </v-dialog>
 
-                        <v-select
-                            v-model.lazy="newAppuntamento.filiale_id"
-                            item-value="id"
-                            item-text="nome"
-                            :items="getFiliali"
-                            label="Filiale"
-                        ></v-select>
+                        </v-col>
+                    </v-col>
+                </v-row>
+                        <v-row>
+                            <v-col>
+                                <v-select
+                                    v-model.lazy="newAppuntamento.filiale_id"
+                                    item-value="id"
+                                    item-text="nome"
+                                    :items="getFiliali"
+                                    label="Filiale"
+                                ></v-select>
+                            </v-col>
+                            <v-col>
+                                <v-select
+                                    v-model.lazy="newAppuntamento.recapito_id"
+                                    item-value="id"
+                                    item-text="nome"
+                                    :items="getRecapiti"
+                                    label="Recapito"
+                                ></v-select>
+                            </v-col>
+                            <v-col>
+                                <v-select
+                                    v-model.lazy="newAppuntamento.tipo"
+                                    :items="tipoAppuntamento"
+                                    label="Tipo Visita*"
+                                    :rules="tipoRules"
+                                    required
+                                ></v-select>
+                            </v-col>
+                        </v-row>
 
-                        <v-select
-                            v-model.lazy="newAppuntamento.recapito_id"
-                            item-value="id"
-                            item-text="nome"
-                            :items="getRecapiti"
-                            label="Recapito"
-                        ></v-select>
-
+                    <v-row>
                         <v-textarea
                             label="Note"
                             v-model.lazy="newAppuntamento.nota"
                         ></v-textarea>
-                    </v-col>
-
-                    <v-col cols="6">
-                        <v-time-picker
-                            style="height: 100px!important;"
-                            v-model.lazy="newAppuntamento.orario"
-                            format="ampm"
-                        ></v-time-picker>
-                    </v-col>
-
                 </v-row>
-
-
 
                 <v-btn @click="inserisci" color="primary" class="my-2">
                     Inserisci
                 </v-btn>
+                </v-form>
 
                 <v-data-table
                     :headers="headers"
@@ -127,19 +183,25 @@
 
         data(){
             return {
+                modal2: false,
+                valid: true,
+                giornoRules: [ v => !!v || 'il giorno è obbligatorio'],
+                tipoRules: [ v => !!v || 'il tipo è obbligatorio'],
+                orarioRules: [ v => !!v || 'orario obbligatorio'],
                 newAppuntamento:{
                     filiale_id:null,
                     recapito_id:null,
                     nota:null
                 },
                 menu:false,
+                tipoAppuntamento: ['Prima Visista', 'Esame Audio', 'Controllo Prova', 'fine prova', 'Assistenza'],
 
                 headers: [
                     { text: 'Giorno', align: 'start', sortable: false, value: 'giorno', class: "indigo white--text" },
                     { text: 'orario', sortable: false, value: 'orario', class: "indigo white--text" },
                     { text: 'nota', sortable: false, value: 'nota', class: "indigo white--text" },
-                    { text: 'filiale_id', sortable: false, value: 'filiale.nome', class: "indigo white--text" },
-                    { text: 'recapito_id', sortable: false, value: 'recapito.nome', class: "indigo white--text" },
+                    { text: 'Luogo', sortable: false, value: 'luogo', class: "indigo white--text" },
+                    { text: 'Tipo', sortable: false, value: 'tipo', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
             }
@@ -182,15 +244,20 @@
             },
 
             inserisci(){
+                this.$refs.form.validate();
                 this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
                 this.newAppuntamento.client_id = this.appuntamentoClient.id;
 
-                this.addAppuntamento(this.newAppuntamento);
-                this.newAppuntamento = {
-                    filiale_id:null,
-                    recapito_id:null,
-                    nota:null
-                }
+                this.addAppuntamento(this.newAppuntamento).then(() =>{
+                    this.$refs.form.resetValidation();
+                    this.newAppuntamento = {
+                        filiale_id:null,
+                        recapito_id:null,
+                        tipo:null,
+                        nota:null
+                    }
+                });
+
             },
 
             elimina(id){

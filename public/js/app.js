@@ -1867,14 +1867,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "App",
   components: {
+    NavBarCellulare: function NavBarCellulare() {
+      return __webpack_require__.e(/*! import() */ "resources_js_Components_NavBarCellulare_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./Components/NavBarCellulare */ "./resources/js/Components/NavBarCellulare.vue"));
+    },
     Navbar: function Navbar() {
       return __webpack_require__.e(/*! import() */ "resources_js_Components_Navbar_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./Components/Navbar */ "./resources/js/Components/Navbar.vue"));
     },
     Footer: function Footer() {
       return __webpack_require__.e(/*! import() */ "resources_js_Components_Footer_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./Components/Footer */ "./resources/js/Components/Footer.vue"));
+    }
+  },
+  data: function data() {
+    return {
+      drawer: false,
+      group: null
+    };
+  },
+  watch: {
+    group: function group() {
+      this.drawer = false;
     }
   }
 });
@@ -2143,6 +2204,12 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_statistiche_Medici_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/statistiche/Medici */ "./resources/js/Pages/statistiche/Medici.vue"));
   },
   name: 'statisticheMedici'
+}, {
+  path: '/situazioneAudio',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_clients_SituazioneAudio_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/clients/SituazioneAudio */ "./resources/js/Pages/clients/SituazioneAudio.vue"));
+  },
+  name: 'situazioneAudio'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -2307,7 +2374,7 @@ var actions = {
 
             case 3:
               response = _context.sent;
-              commit('fetchAppuntamenti', response.data);
+              commit('fetchAppuntamenti', response.data.data);
 
             case 5:
             case "end":
@@ -2606,7 +2673,7 @@ var actions = {
 
             case 3:
               response = _context14.sent;
-              commit('addAppuntamento', response.data);
+              commit('addAppuntamento', response.data.data);
 
             case 5:
             case "end":
@@ -3146,7 +3213,9 @@ var state = function state() {
     province: [],
     cittaByProvincia: [],
     clientMessaggio: '',
-    client: {}
+    client: {},
+    situazioneAnnoClientiAudio: [],
+    situazioneAnnoResiAudio: []
   };
 };
 
@@ -3171,6 +3240,12 @@ var getters = {
   },
   getRicercaNominativi: function getRicercaNominativi(state) {
     return state.ricercaNominativi;
+  },
+  getSituazioneAnnoClientiAudio: function getSituazioneAnnoClientiAudio(state) {
+    return state.situazioneAnnoClientiAudio;
+  },
+  getSituazioneAnnoResiAudio: function getSituazioneAnnoResiAudio(state) {
+    return state.situazioneAnnoResiAudio;
   }
 };
 var actions = {
@@ -3402,7 +3477,7 @@ var actions = {
       }, _callee10);
     }))();
   },
-  eliminaClient: function eliminaClient(_ref11, id) {
+  eliminaClient: function eliminaClient(_ref11, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
@@ -3411,10 +3486,10 @@ var actions = {
             case 0:
               commit = _ref11.commit;
               _context11.next = 3;
-              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclients) + '/' + id);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkeliminaclient), payload);
 
             case 3:
-              commit('eliminaClient', id);
+              commit('eliminaClient', payload.clientId);
 
             case 4:
             case "end":
@@ -3493,6 +3568,52 @@ var actions = {
         }
       }, _callee14);
     }))();
+  },
+  fetchSituazioneAnnoClientiAudio: function fetchSituazioneAnnoClientiAudio(_ref14, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee15() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee15$(_context15) {
+        while (1) {
+          switch (_context15.prev = _context15.next) {
+            case 0:
+              commit = _ref14.commit;
+              _context15.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkSituazioneAnnoClientiAudio), payload);
+
+            case 3:
+              response = _context15.sent;
+              commit('fetchSituazioneAnnoClientiAudio', response.data);
+
+            case 5:
+            case "end":
+              return _context15.stop();
+          }
+        }
+      }, _callee15);
+    }))();
+  },
+  fetchSituazioneAnnoResiAudio: function fetchSituazioneAnnoResiAudio(_ref15, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee16() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee16$(_context16) {
+        while (1) {
+          switch (_context16.prev = _context16.next) {
+            case 0:
+              commit = _ref15.commit;
+              _context16.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkSituazioneAnnoResiAudio), payload);
+
+            case 3:
+              response = _context16.sent;
+              commit('fetchSituazioneAnnoResiAudio', response.data);
+
+            case 5:
+            case "end":
+              return _context16.stop();
+          }
+        }
+      }, _callee16);
+    }))();
   }
 };
 var mutations = {
@@ -3516,12 +3637,14 @@ var mutations = {
   },
   addClient: function addClient(state, payload) {
     state.clients.unshift(payload);
+    state.clientMessaggio = 'Nominativo inserito correttamente';
   },
   modificaClient: function modificaClient(state, payload) {
     state.clients = state.clients.filter(function (u) {
       return u.id !== payload.id;
     });
     state.clients.unshift(payload);
+    state.clientMessaggio = 'Nominativo modificato correttamente';
   },
   eliminaClient: function eliminaClient(state, id) {
     state.clients = state.clients.filter(function (u) {
@@ -3537,6 +3660,12 @@ var mutations = {
   },
   resetClientMessaggio: function resetClientMessaggio(state) {
     state.clientMessaggio = '';
+  },
+  fetchSituazioneAnnoClientiAudio: function fetchSituazioneAnnoClientiAudio(state, payload) {
+    state.situazioneAnnoClientiAudio = payload;
+  },
+  fetchSituazioneAnnoResiAudio: function fetchSituazioneAnnoResiAudio(state, payload) {
+    state.situazioneAnnoResiAudio = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4209,6 +4338,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = function state() {
   return {
     listino: [],
+    nomiApa: [],
     eleListino: {}
   };
 };
@@ -4216,6 +4346,9 @@ var state = function state() {
 var getters = {
   getListino: function getListino(state) {
     return state.listino;
+  },
+  getNomiApa: function getNomiApa(state) {
+    return state.nomiApa;
   },
   getEleListino: function getEleListino(state) {
     return state.eleListino;
@@ -4245,7 +4378,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchListinoFromFornitore: function fetchListinoFromFornitore(_ref2, idFornitore) {
+  fetchNomiApa: function fetchNomiApa(_ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -4254,11 +4387,11 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistino) + '/' + idFornitore);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linknomiApa));
 
             case 3:
               response = _context2.sent;
-              commit('fetchListinoFromFornitore', response.data);
+              commit('fetchNomiApa', response.data);
 
             case 5:
             case "end":
@@ -4268,7 +4401,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  addListino: function addListino(_ref3, payload) {
+  fetchListinoFromFornitore: function fetchListinoFromFornitore(_ref3, idFornitore) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -4277,6 +4410,29 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistino) + '/' + idFornitore);
+
+            case 3:
+              response = _context3.sent;
+              commit('fetchListinoFromFornitore', response.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  addListino: function addListino(_ref4, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddlistino), {
                 'nome': payload.nome,
                 'fornitore_id': payload.fornitore_id,
@@ -4288,32 +4444,10 @@ var actions = {
               });
 
             case 3:
-              response = _context3.sent;
+              response = _context4.sent;
               commit('addListino', response.data.data);
 
             case 5:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }))();
-  },
-  eliminaListino: function eliminaListino(_ref4, id) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              commit = _ref4.commit;
-              _context4.next = 3;
-              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistino) + '/' + id);
-
-            case 3:
-              commit('eliminaListino', id);
-
-            case 4:
             case "end":
               return _context4.stop();
           }
@@ -4321,33 +4455,58 @@ var actions = {
       }, _callee4);
     }))();
   },
-  fetchEleListino: function fetchEleListino(_ref5, id) {
+  eliminaListino: function eliminaListino(_ref5, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-      var commit, response;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkelelistino) + '/' + id);
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistino) + '/' + id);
 
             case 3:
-              response = _context5.sent;
-              commit('fetchEleListino', response.data);
+              commit('eliminaListino', id);
 
-            case 5:
+            case 4:
             case "end":
               return _context5.stop();
           }
         }
       }, _callee5);
     }))();
+  },
+  fetchEleListino: function fetchEleListino(_ref6, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context6.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkelelistino) + '/' + id);
+
+            case 3:
+              response = _context6.sent;
+              commit('fetchEleListino', response.data);
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
   }
 };
 var mutations = {
   fetchListino: function fetchListino(state, payload) {
     state.listino = payload;
+  },
+  fetchNomiApa: function fetchNomiApa(state, payload) {
+    state.nomiApa = payload;
   },
   fetchListinoFromFornitore: function fetchListinoFromFornitore(state, payload) {
     state.listino = payload;
@@ -6409,7 +6568,7 @@ var actions = {
 
             case 3:
               response = _context.sent;
-              commit('fetchRecallsByIdClient', response.data);
+              commit('fetchRecallsByIdClient', response.data.data);
 
             case 5:
             case "end":
@@ -6524,7 +6683,7 @@ var actions = {
 
             case 3:
               response = _context6.sent;
-              commit('addTelefonata', response.data);
+              commit('addTelefonata', response.data.data);
 
             case 5:
             case "end":
@@ -6547,7 +6706,7 @@ var actions = {
 
             case 3:
               response = _context7.sent;
-              commit('aggiornaTelefonata', response.data);
+              commit('aggiornaTelefonata', response.data.data);
 
             case 5:
             case "end":
@@ -7571,6 +7730,7 @@ var help = function help() {
     linkaddrecapito: base + 'addRecapito',
     linkrichiestaprodotti: base + 'richiestaProdotti',
     linkclients: base + 'clients',
+    linkeliminaclient: base + 'eliminaClient',
     linkclientsfiliale: base + 'clientsFiliale',
     linkaddclient: base + 'addClient',
     linkmodificaclient: base + 'modificaClient',
@@ -7661,7 +7821,10 @@ var help = function help() {
     linkclientinonhannomaipresoappuntamenti: base + 'clientiNonHannoMaiPresoAppuntamenti',
     linkclientiunannoultimoappuntamento: base + 'clientiUnAnnoUltimoAppuntamento',
     linkaddtelefonata: base + 'addTelefonata',
-    linkaggiornatelefonata: base + 'aggiornaTelefonata'
+    linkaggiornatelefonata: base + 'aggiornaTelefonata',
+    linkSituazioneAnnoClientiAudio: base + 'situazioneAnnoClientiAudio',
+    linkSituazioneAnnoResiAudio: base + 'situazioneAnnoResiAudio',
+    linknomiApa: base + 'nomiApa'
   };
 };
 
@@ -32052,22 +32215,109 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    [
-      _c("Navbar", { staticStyle: { border: "none" } }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticStyle: { padding: "0 50px", "margin-bottom": "50px" } },
-        [_c("router-view")],
-        1
-      ),
-      _vm._v(" "),
-      _c("Footer")
-    ],
-    1
-  )
+  return _c("v-app", [
+    !_vm.$vuetify.breakpoint.xs
+      ? _c(
+          "div",
+          [
+            _c("Navbar", { staticStyle: { border: "none" } }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticStyle: { padding: "0 50px", "margin-bottom": "50px" } },
+              [_c("router-view")],
+              1
+            ),
+            _vm._v(" "),
+            _c("Footer")
+          ],
+          1
+        )
+      : _c(
+          "div",
+          [
+            _c(
+              "v-app-bar",
+              { attrs: { color: "indigo darken-4", dark: "" } },
+              [
+                _c("v-app-bar-nav-icon", {
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      _vm.drawer = !_vm.drawer
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("v-spacer"),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "home" } } },
+                  [
+                    _c("v-img", {
+                      attrs: {
+                        "lazy-src": "/img/logo-centroudito.png",
+                        "max-height": "50",
+                        "max-width": "150",
+                        src: "/img/logo-centroudito.png"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-navigation-drawer",
+              {
+                attrs: { absolute: "", left: "", temporary: "" },
+                model: {
+                  value: _vm.drawer,
+                  callback: function($$v) {
+                    _vm.drawer = $$v
+                  },
+                  expression: "drawer"
+                }
+              },
+              [
+                _c(
+                  "v-list",
+                  { attrs: { nav: "", dense: "" } },
+                  [
+                    _c(
+                      "v-list-item-group",
+                      {
+                        attrs: {
+                          "active-class": "deep-purple--text text--accent-4"
+                        },
+                        model: {
+                          value: _vm.group,
+                          callback: function($$v) {
+                            _vm.group = $$v
+                          },
+                          expression: "group"
+                        }
+                      },
+                      [_c("nav-bar-cellulare")],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("v-card-text", [_c("router-view")], 1),
+            _vm._v(" "),
+            _c("Footer")
+          ],
+          1
+        )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -93960,7 +94210,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Pages_statistiche_Medici_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Pages_statistiche_Medici_vue":1,"resources_js_Pages_clients_SituazioneAudio_vue":1,"resources_js_Components_NavBarCellulare_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

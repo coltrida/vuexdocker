@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="py-10">
         <h2>Dettaglio Audioprotesisti</h2>
 
             <v-card color="blue lighten-4" v-for="audio in getAudioConFatt" :key="audio.id" class="mb-7">

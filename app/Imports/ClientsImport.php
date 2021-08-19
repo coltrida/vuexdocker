@@ -23,10 +23,12 @@ class ClientsImport implements ToCollection, WithHeadingRow
             if ($value['cognome'] != null){
                 $filiale = 1;
                 $user = 2;
-                if(in_array($value['comune'] , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO'])) {
+                if(in_array($value['comune'] , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO', 'FALCONARA MARITTIMA', 'OSTRA'])) {
                     $filiale = 4;
                     $user = 8;
-                } elseif (in_array($value['comune'] , ['LORETO', 'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'MACERATA', 'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO'])) {
+                } elseif (in_array($value['comune'] , ['LORETO',
+                    'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'MACERATA',
+                    'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'CAMERINO'])) {
                     $filiale = 2;
                     $user = 9;
                 }

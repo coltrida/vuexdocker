@@ -2,7 +2,7 @@
     <v-row class="mt-3 flex-column">
         <v-row>
             <v-col cols="6">
-                <h2>Prescrizioni Medici</h2>
+                <h2>Riepilogo</h2>
             </v-col>
             <v-col cols="6">
                 <v-select
@@ -16,20 +16,21 @@
 
         <v-row class="mb-6">
             <v-col cols="6">
+                <h3>Clienti</h3>
                 <v-data-table
                     :headers="header"
-                    :items="getInvii"
+                    :items="getSituazioneAnnoClientiAudio"
                     class="elevation-1"
                 >
                 </v-data-table>
             </v-col>
             <v-col cols="6">
+                <h3>Resi</h3>
                 <v-data-table
-                    :headers="header2"
-                    :items="getTotaliInvii"
+                    :headers="header"
+                    :items="getSituazioneAnnoResiAudio"
                     class="elevation-1"
                 >
-
                 </v-data-table>
             </v-col>
         </v-row>
@@ -56,16 +57,10 @@
                 anni:['2021'],
 
                 header: [
-                    { text: 'Medico',  align: 'start', sortable: false, value: 'medico.nome', class: "indigo white--text" },
-                    { text: 'Nome',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
-                    { text: 'Importo Fattura',  sortable: false, value: 'prova[0].tot', class: "indigo white--text" },
-                ],
-
-                header2: [
-                    { text: 'Medico',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
-                    { text: 'Tot invii',  sortable: false, value: 'invii', class: "indigo white--text" },
-                    { text: 'Vendite',  sortable: false, value: 'vendite', class: "indigo white--text" },
-                    { text: 'Importo',  sortable: false, value: 'prova_sum_tot', class: "indigo white--text" },
+                    { text: 'Cognome',  align: 'start', sortable: false, value: 'client.cognome', class: "indigo white--text" },
+                    { text: 'Nome',  align: 'start', sortable: false, value: 'client.nome', class: "indigo white--text" },
+                    { text: 'Città',  align: 'start', sortable: false, value: 'client.citta', class: "indigo white--text" },
+                    { text: 'Importo',  sortable: false, value: 'tot', class: "indigo white--text" },
                 ],
             }
         },
@@ -75,23 +70,23 @@
         },
 
         methods:{
-            ...mapActions('medici', {
-                inviiMedici:'inviiMedici',
-                totaleInviiMedici:'totaleInviiMedici',
+            ...mapActions('clients', {
+                fetchSituazioneAnnoClientiAudio:'fetchSituazioneAnnoClientiAudio',
+                fetchSituazioneAnnoResiAudio:'fetchSituazioneAnnoResiAudio',
             }),
 
             selezionaAnno(){
-                this.ricerca.idUser = this.getIdUser;
-                this.inviiMedici(this.ricerca);
-                this.totaleInviiMedici(this.ricerca);
+                this.ricerca.userId = this.getIdUser;
+                this.fetchSituazioneAnnoClientiAudio(this.ricerca);
+                this.fetchSituazioneAnnoResiAudio(this.ricerca);
             },
 
         },
 
         computed:{
-            ...mapGetters('medici', {
-                getInvii: 'getInvii',
-                getTotaliInvii: 'getTotaliInvii',
+            ...mapGetters('clients', {
+                getSituazioneAnnoClientiAudio: 'getSituazioneAnnoClientiAudio',
+                getSituazioneAnnoResiAudio: 'getSituazioneAnnoResiAudio',
             }),
 
             ...mapGetters('login', {

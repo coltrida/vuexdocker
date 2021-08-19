@@ -11,4 +11,9 @@ class Telefonata extends Model
 
     protected $table = 'telefonatas';
     protected $guarded = [];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
 }

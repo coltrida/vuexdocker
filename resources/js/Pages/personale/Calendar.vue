@@ -8,6 +8,7 @@
                     sm="5"
                 >
                     <v-select
+                        @change="visualizza()"
                         v-model="userId"
                         item-value="id"
                         item-text="name"
@@ -16,14 +17,14 @@
                     ></v-select>
                 </v-col>
 
-                <v-col
+                <!--<v-col
                     cols="3"
                     sm="3"
                 >
                     <v-btn @click="visualizza" dark color="indigo">
                         Visualizza
                     </v-btn>
-                </v-col>
+                </v-col>-->
 
                 <v-col
                     cols="4"
@@ -256,6 +257,7 @@
                     { text: 'Orario', width: 30, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
                     { text: 'Nome', width: 100, align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
                     { text: 'Luogo', width:80, align: 'start', sortable: false, value: 'luogo', class: "indigo white--text" },
+                    { text: 'Tipo', width:110, align: 'start', sortable: false, value: 'tipo', class: "indigo white--text" },
                     { text: 'Note', width:110, align: 'start', sortable: false, value: 'nota', class: "indigo white--text" },
                 ],
 

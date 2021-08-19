@@ -49,7 +49,7 @@ const actions = {
 
     async fetchAppuntamenti({commit}, idClient){
         const response = await axios.get(`${help().linkappuntamenti}`+'/'+idClient);
-        commit('fetchAppuntamenti', response.data);
+         commit('fetchAppuntamenti', response.data.data);
     },
 
     async fetchAppuntamentiOggi({commit}, idAudio){
@@ -114,7 +114,7 @@ const actions = {
 
     async addAppuntamento({commit}, payload){
         const response = await axios.post(`${help().linkaddappuntamento}`, payload);
-        commit('addAppuntamento', response.data);
+        commit('addAppuntamento', response.data.data);
     },
 
     async eliminaAppuntamento({commit}, payload){

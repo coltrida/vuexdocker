@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div class="pb-10">
         <div class="flex justify-start align-center mt-2">
             <div v-if="showClients"><h2>Clienti - {{getFilialeById.nome}}</h2></div>
 
             <messaggio
-                v-if="textMessaggio"
-                :textMessaggio="textMessaggio"
+                v-if="getClientMessaggio"
+                :textMessaggio="getClientMessaggio"
                 @cancellaMessaggio = "cancellaMessaggio"
             ></messaggio>
 
@@ -16,6 +16,17 @@
                 :cognomeElimina="cognomeElimina"
                 @cancellaMessaggioElimina = "cancellaMessaggioElimina"
             ></messaggioelimina>
+
+            <!--<v-alert type="info" v-if="getClientMessaggio">
+                <v-row align="center">
+                    <v-col class="grow">
+                        {{ getClientMessaggio }}
+                    </v-col>
+                    <v-col class="shrink">
+                        <v-btn @click="reset">Chiudi</v-btn>
+                    </v-col>
+                </v-row>
+            </v-alert>-->
 
             <audiogramma
                 v-if="showAudiogramma"
@@ -55,6 +66,15 @@
         </div>
 
         <div v-if="showClients">
+
+            <div class="text-center" v-if="carica">
+                <v-progress-circular
+                    indeterminate
+                    color="primary"
+                ></v-progress-circular>
+            </div>
+
+            <div v-else>
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
@@ -180,7 +200,7 @@
 
 
             </v-data-table>
-
+            </div>
         </div>
     </div>
 
@@ -201,6 +221,7 @@
         components: {Messaggioelimina, Prove, Documenti, Audiogramma, Messaggio, Appuntamento, Recalls},
         data() {
             return {
+                carica: false,
                 showElimina: false,
                 showClients: true,
                 showProve: false,
@@ -271,14 +292,18 @@
                 });
 
                 if(accesso && this.getClients.length == 0){
+                    this.carica = true;
                     this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
                         this.search = this.cognomeRicerca;
+                        this.carica = false;
                     });
                 }
 
-                if(this.getRuolo == 'call'){
+                if(this.getRuolo == 'call' || this.getRuolo == 'admin'){
+                    this.carica = true;
                     this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
                         this.search = this.cognomeRicerca;
+                        this.carica = false;
                     });
                 }
 
@@ -304,6 +329,7 @@
 
             cancellaMessaggio(){
                 this.textMessaggio = '';
+                this.$store.commit('clients/resetClientMessaggio');
             },
 
             audiogramma(client){
@@ -405,11 +431,16 @@
                 this.showClients = true;
                 this.proveClient = {};
             },
+
+            reset(){
+                this.$store.commit('clients/resetClientMessaggio');
+            }
         },
 
         computed: {
             ...mapGetters('clients', {
                 getClients: 'getClients',
+                getClientMessaggio: 'getClientMessaggio',
             }),
 
             ...mapGetters('filiali', {

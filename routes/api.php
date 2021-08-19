@@ -48,7 +48,6 @@ Route::get('/filialiUser/{idAudio}', [FilialiController::class, 'filialiAudio'])
 Route::get('/filialeById/{idFiliale}', [FilialiController::class, 'filialeById']);
 Route::delete('/filiali/{id}', [FilialiController::class, 'elimina']);
 Route::post('/addFiliale', [FilialiController::class, 'aggiungi']);
-/*Route::get('/situazioneMese', [FilialiController::class, 'situazioneMese']);*/
 
 // ----------------- recapiti -------------------------
 Route::get('/recapiti', [RecapitiController::class, 'index']);
@@ -73,6 +72,7 @@ Route::delete('/listino/{id}', [ListinoController::class, 'elimina']);
 Route::post('/addListino', [ListinoController::class, 'aggiungi']);
 Route::get('/listino/{idFornitore}', [ListinoController::class, 'productFromFornitore']);
 Route::get('/eleListino/{idListino}', [ListinoController::class, 'listinoFromId']);
+Route::get('/nomiApa', [ListinoController::class, 'nomiApa']);
 
 // ---------------- categoria -------------------------
 Route::get('/categorie', [CategoriaController::class, 'index']);
@@ -107,13 +107,15 @@ Route::get('/cittaByProvincia/{provincia}', [ClientController::class, 'cittaByPr
 Route::get('/clients/{id}', [ClientController::class, 'cliente']);
 Route::get('/compleanni/{idAudio}', [ClientController::class, 'compleanni']);
 Route::get('/clientsFiliale/{idFiliale}', [ClientController::class, 'clientsFiliale']);
-Route::delete('/clients/{id}', [ClientController::class, 'elimina']);
+Route::post('/eliminaClient', [ClientController::class, 'elimina']);
 Route::post('/addClient', [ClientController::class, 'aggiungi']);
 Route::post('/ricercaNominativi', [ClientController::class, 'ricercaNominativi']);
 Route::post('/modificaClient', [ClientController::class, 'modifica']);
 Route::post('/inviaSms', [ClientController::class, 'inviaSms']);
 Route::get('/importClients', [ClientController::class, 'importClients']);
 Route::post('/importClientsFromNoah', [ClientController::class, 'importClientsFromNoah']);
+Route::post('/situazioneAnnoClientiAudio', [ClientController::class, 'situazioneAnnoClientiAudio']);
+Route::post('/situazioneAnnoResiAudio', [ClientController::class, 'situazioneAnnoResiAudio']);
 
 
 // ----------------- tipologia -------------------------

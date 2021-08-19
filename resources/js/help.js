@@ -36,6 +36,7 @@ const help = () => {
         linkaddrecapito: base+'addRecapito',
         linkrichiestaprodotti: base+'richiestaProdotti',
         linkclients: base+'clients',
+        linkeliminaclient: base+'eliminaClient',
         linkclientsfiliale: base+'clientsFiliale',
         linkaddclient: base+'addClient',
         linkmodificaclient: base+'modificaClient',
@@ -127,6 +128,9 @@ const help = () => {
         linkclientiunannoultimoappuntamento: base+'clientiUnAnnoUltimoAppuntamento',
         linkaddtelefonata: base+'addTelefonata',
         linkaggiornatelefonata: base+'aggiornaTelefonata',
+        linkSituazioneAnnoClientiAudio: base+'situazioneAnnoClientiAudio',
+        linkSituazioneAnnoResiAudio: base+'situazioneAnnoResiAudio',
+        linknomiApa: base+'nomiApa',
     };
 };
 export default help;

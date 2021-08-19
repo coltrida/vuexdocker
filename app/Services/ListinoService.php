@@ -51,4 +51,14 @@ class ListinoService
     {
         return Listino::find($id)->delete();
     }
+
+    public function nomiApa()
+    {
+        $nomi = [];
+        $list = Listino::apparecchi()->pluck('nome');
+        foreach ($list as $ele){
+            array_push($nomi, str_replace(' ', '', $ele));
+        }
+        return $nomi;
+    }
 }

@@ -172,6 +172,7 @@
 
             inserisci(){
                 this.telefonata.clientId = this.recallsClient.id;
+                this.telefonata.userId = this.getIdUser;
                 this.addTelefonata(this.telefonata).then(() =>{
                 if(this.telefonata.esito == 'Preso Appuntamento'){
                     this.telefonata = {};
@@ -183,6 +184,7 @@
 
             aggiorna(recall){
                 this.telefonataDaAggiornare.id = recall.id;
+                this.telefonataDaAggiornare.userId = this.getIdUser;
                 this.aggiornaTelefonata(this.telefonataDaAggiornare).then(() => {
                     if(this.telefonataDaAggiornare.esito == 'Preso Appuntamento'){
                         this.$emit('chiudiRecalls', this.recallsClient)
@@ -199,6 +201,10 @@
         computed:{
             ...mapGetters('telefonate', {
                 getRecalls: 'getRecalls',
+            }),
+
+            ...mapGetters('login', {
+                getIdUser: 'getIdUser',
             }),
         }
     }

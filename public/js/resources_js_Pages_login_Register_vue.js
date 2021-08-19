@@ -210,7 +210,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticStyle: { padding: "50px 100px" } },
+    { staticClass: "pt-16" },
     [
       _vm.getMessaggio
         ? _c(

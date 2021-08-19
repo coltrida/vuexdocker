@@ -63,7 +63,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -200,7 +199,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticStyle: { padding: "50px 100px" } },
+    { staticClass: "pt-16" },
     [
       _vm.getMessaggio
         ? _c(
@@ -251,9 +250,9 @@ var render = function() {
           _c("v-text-field", {
             staticClass: "input-group--focused ",
             attrs: {
+              "full-width": "",
               rules: [_vm.rules.required],
               type: "text",
-              name: "input-10-2",
               label: "e-mail"
             },
             model: {
@@ -270,7 +269,6 @@ var render = function() {
               "append-icon": _vm.show1 ? "mdi-eye" : "mdi-eye-off",
               rules: [_vm.rules.required, _vm.rules.min],
               type: _vm.show1 ? "text" : "password",
-              name: "input-10-1",
               label: "password",
               hint: "minimo 6 caratteri",
               counter: ""

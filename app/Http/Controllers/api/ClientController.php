@@ -60,9 +60,9 @@ class ClientController extends Controller
         return new ClientResource($clientService->modifica($request));
     }
 
-    public function elimina($id, ClientService $clientService)
+    public function elimina(Request $request, ClientService $clientService)
     {
-        return $clientService->elimina($id);
+        return $clientService->elimina($request);
     }
 
     public function ingressiRecapiti(ClientService $clientService)
@@ -93,6 +93,16 @@ class ClientController extends Controller
     public function importClientsFromNoah(Request $request, ClientService $clientService)
     {
         return $clientService->importClientsFromNoah($request);
+    }
+
+    public function situazioneAnnoClientiAudio(Request $request, ClientService $clientService)
+    {
+        return $clientService->situazioneAnnoClientiAudio($request);
+    }
+
+    public function situazioneAnnoResiAudio(Request $request, ClientService $clientService)
+    {
+        return $clientService->situazioneAnnoResiAudio($request);
     }
 
 }

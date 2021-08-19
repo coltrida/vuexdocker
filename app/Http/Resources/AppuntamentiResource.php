@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
@@ -24,10 +25,11 @@ class AppuntamentiResource extends JsonResource
             'citta' => $this->client->citta,
             'provincia' => $this->client->provincia,
             'telefono' => $this->client->telefono,
-            'giorno' => $this->giorno,
+            'giorno' => Carbon::make($this->giorno)->format('d-m-Y'),
             'orario' => Str::substr($this->orario, 0, 5),
             'luogo' => $this->filiale_id ? $this->filiale->nome : $this->recapito->nome,
             'nota' => $this->nota,
+            'tipo' => $this->tipo,
             'fullname' => $this->client->fullname,
         ];
     }

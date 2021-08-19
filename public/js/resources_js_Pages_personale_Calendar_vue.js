@@ -262,6 +262,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Calendar",
@@ -289,6 +290,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         align: 'start',
         sortable: false,
         value: 'luogo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Tipo',
+        width: 110,
+        align: 'start',
+        sortable: false,
+        value: 'tipo',
         "class": "indigo white--text"
       }, {
         text: 'Note',
@@ -461,6 +469,11 @@ var render = function() {
                     items: _vm.getAudio,
                     label: "Seleziona"
                   },
+                  on: {
+                    change: function($event) {
+                      return _vm.visualizza()
+                    }
+                  },
                   model: {
                     value: _vm.userId,
                     callback: function($$v) {
@@ -469,22 +482,6 @@ var render = function() {
                     expression: "userId"
                   }
                 })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "v-col",
-              { attrs: { cols: "3", sm: "3" } },
-              [
-                _c(
-                  "v-btn",
-                  {
-                    attrs: { dark: "", color: "indigo" },
-                    on: { click: _vm.visualizza }
-                  },
-                  [_vm._v("\n                    Visualizza\n                ")]
-                )
               ],
               1
             ),

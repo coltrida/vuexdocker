@@ -1,5 +1,5 @@
 <template>
-    <div style="padding: 50px 100px">
+    <div class="pt-16">
         <v-alert type="error" v-if="getMessaggio">
             <v-row align="center">
                 <v-col class="grow">

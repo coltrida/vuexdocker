@@ -52,8 +52,7 @@ use const LC_TIME;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUserId($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Fattura|null $fattura
- * @method static \Illuminate\Database\Eloquent\Builder|Product filiale()
- * @method static \Illuminate\Database\Eloquent\Builder|Product prova()
+
  */
 class Product extends Model
 {
@@ -138,5 +137,14 @@ class Product extends Model
     public function fattura()
     {
         return $this->belongsTo(Fattura::class);
+    }
+
+    public function scopeApparecchi($query)
+    {
+        return $query->whereHas('listino', function ($stato){
+            $stato->whereHas('categoria', function ($cat){
+                $cat->where('nome', 'APA');
+            });
+        });
     }
 }

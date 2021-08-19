@@ -35,11 +35,17 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
     export default {
         name: "Messaggioelimina",
 
         props: [ 'idElimina', 'nomeElimina', 'cognomeElimina' ],
+
+        data(){
+            return{
+                oggettoElimina:{}
+            }
+        },
 
        methods:{
            ...mapActions('clients', {
@@ -47,7 +53,9 @@
            }),
 
            elimina(){
-               this.eliminaClient(this.idElimina);
+               this.oggettoElimina.clientId = this.idElimina;
+               this.oggettoElimina.userId = this.getIdUser;
+               this.eliminaClient(this.oggettoElimina);
                this.cancella();
            },
 
@@ -59,7 +67,11 @@
         computed:{
             dialog(){
                 return !!this.idElimina;
-            }
+            },
+
+            ...mapGetters('login', {
+                getIdUser: 'getIdUser',
+            }),
         },
     }
 </script>

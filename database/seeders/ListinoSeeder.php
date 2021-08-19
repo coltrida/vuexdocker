@@ -146,7 +146,9 @@ class ListinoSeeder extends Seeder
             ],
         ]);
 
-        $listino = Listino::where('categoria_id', 1)
+        $listino = Listino::whereHas('categoria', function ($q){
+            $q->where('nome', 'APA');
+        })
             ->orderBy('fornitore_id')
             ->orderBy('categoria_id')
             ->orderBy('nome')

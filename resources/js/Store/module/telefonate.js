@@ -48,7 +48,7 @@ const getters = {
 const actions = {
     async fetchRecallsByIdClient({commit}, idClient){
         const response = await axios.get(`${help().linkrecallsbyidclient}`+'/'+idClient);
-        commit('fetchRecallsByIdClient', response.data);
+        commit('fetchRecallsByIdClient', response.data.data);
     },
 
     async fetchRecallOggi({commit}){
@@ -73,12 +73,12 @@ const actions = {
 
     async addTelefonata({commit}, payload){
         const response = await axios.post(`${help().linkaddtelefonata}`, payload);
-        commit('addTelefonata', response.data);
+        commit('addTelefonata', response.data.data);
     },
 
     async aggiornaTelefonata({commit}, payload){
         const response = await axios.post(`${help().linkaggiornatelefonata}`, payload);
-        commit('aggiornaTelefonata', response.data);
+        commit('aggiornaTelefonata', response.data.data);
     },
 
     async fetchClientiMaiRichiamati({commit}){

@@ -56,4 +56,11 @@ class Listino extends Model
     {
         return $query->where('fornitore_id', $idFornitore);
     }
+
+    public function scopeApparecchi($query)
+    {
+        return $query->whereHas('categoria', function ($stato){
+            $stato->where('nome', 'APA');
+        });
+    }
 }

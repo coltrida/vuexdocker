@@ -65,6 +65,7 @@ class ProvaService
     {
         $prova = Prova::find($request->id);
         $prova->stato_id = 3;
+        $prova->giorni_prova = 0;
         $prova->tot = $request->tot;
         $prova->save();
 
@@ -90,6 +91,12 @@ class ProvaService
             ->save("storage/documenti/".$provaSalvata->client->id.'/'.$filename);
 
         broadcast(new ProveEvent($provaSalvata))->toOthers();
+
+        $propieta = 'prova';
+        $log = new LoggingService();
+        $testo = $provaSalvata->user->name.' ha aperto una prova per il paziente '.$provaSalvata->client->cognome.' '.$provaSalvata->client->nome;
+        $log->scriviLog($provaSalvata, $provaSalvata->user, $provaSalvata->user->name, $propieta, $testo);
+
         return $provaSalvata;
     }
 
@@ -105,8 +112,14 @@ class ProvaService
         $prova->mese_fine = Carbon::now()->month;
         $prova->anno_fine = Carbon::now()->year;
         $prova->save();
-        $provaSalvata = Prova::with('product', 'stato', 'user')->find($idProva);
+        $provaSalvata = Prova::with('product', 'stato', 'user', 'client', 'copiaComm')->find($idProva);
         broadcast(new ProveEvent($provaSalvata))->toOthers();
+
+        $propieta = 'prova';
+        $log = new LoggingService();
+        $testo = $prova->user->name.' ha reso la prova per il paziente '.$prova->client->cognome.' '.$prova->client->nome;
+        $log->scriviLog($prova, $prova->user, $prova->user->name, $propieta, $testo);
+
         return $provaSalvata;
     }
 
@@ -174,8 +187,14 @@ class ProvaService
 
         $this->creaPdfFattura(Fattura::with('prova')->find($fattura->id));
 
-        $provaFattura = Prova::with('stato', 'user', 'product', 'client')->find($request->id);
+        $provaFattura = Prova::with('stato', 'user', 'product', 'client', 'copiaComm')->find($request->id);
         broadcast(new ProveEvent($provaFattura))->toOthers();
+
+        $propieta = 'prova';
+        $log = new LoggingService();
+        $testo = $provaFattura->user->name.' ha fatturato la prova per il paziente '.$provaFattura->client->cognome.' '.$provaFattura->client->nome;
+        $log->scriviLog($provaFattura, $provaFattura->user, $provaFattura->user->name, $propieta, $testo);
+
         return $provaFattura;
     }
 

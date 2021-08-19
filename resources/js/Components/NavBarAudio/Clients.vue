@@ -29,6 +29,11 @@
                             <v-list-item-title>RATE CLIENTI</v-list-item-title>
                         </v-list-item>
                     </router-link>
+                    <router-link :to="{ name: 'situazioneAudio'}">
+                        <v-list-item>
+                            <v-list-item-title>SITUAZIONE</v-list-item-title>
+                        </v-list-item>
+                    </router-link>
                 </div>
             </v-list>
         </v-menu>

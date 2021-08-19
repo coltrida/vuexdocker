@@ -229,54 +229,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -318,6 +270,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
+    //    console.log(this.$vuetify.breakpoint.name);
     if (this.getRuolo === 'audio') {
       this.newClient.user_id = parseInt(this.getIdUser);
       this.lettura = true;
@@ -378,35 +331,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.modificaClient(this.newClient).then(function () {
           _this3.newClient = {};
 
-          if (_this3.getRuolo === 'audio') {
-            _this3.$router.push({
-              name: 'clientsFiliale',
-              params: {
-                filialeId: idFiliale
-              }
-            });
+          _this3.$router.push({
+            name: 'clientsFiliale',
+            params: {
+              filialeId: idFiliale
+            }
+          });
+          /*if(this.getRuolo === 'audio') {
+              this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
           } else {
-            _this3.$router.push({
-              name: 'clients'
-            });
-          }
+              this.$router.push({ name: 'clients' });
+          }*/
+
         });
       } else {
         this.addClient(this.newClient).then(function () {
           _this3.newClient = {};
 
-          if (_this3.getRuolo === 'audio') {
-            _this3.$router.push({
-              name: 'clientsFiliale',
-              params: {
-                filialeId: idFiliale
-              }
-            });
+          _this3.$router.push({
+            name: 'clientsFiliale',
+            params: {
+              filialeId: idFiliale
+            }
+          });
+          /*if(this.getRuolo === 'audio') {
+              this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
           } else {
-            _this3.$router.push({
-              name: 'clients'
-            });
-          }
+              this.$router.push({ name: 'clients' });
+          }*/
+
         });
       }
     }
@@ -563,13 +516,14 @@ var render = function() {
         [
           _c(
             "v-container",
+            { staticClass: "mb-10" },
             [
               _c(
                 "v-row",
                 [
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-text-field", {
                         attrs: {
@@ -591,7 +545,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-text-field", {
                         attrs: {
@@ -613,7 +567,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-text-field", {
                         attrs: {
@@ -635,7 +589,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-text-field", {
                         attrs: {
@@ -663,7 +617,7 @@ var render = function() {
                 [
                   _c(
                     "v-col",
-                    { attrs: { cols: "1", sm: "1" } },
+                    { attrs: { cols: "6", md: "1", lg: "1" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "cap" },
@@ -681,7 +635,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "1", sm: "1" } },
+                    { attrs: { cols: "6", md: "1", lg: "1" } },
                     [
                       _c("v-text-field", {
                         attrs: {
@@ -703,7 +657,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "2", sm: "2" } },
+                    { attrs: { cols: "12", md: "2", lg: "2" } },
                     [
                       _c("v-text-field", {
                         attrs: {
@@ -725,7 +679,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "2", sm: "2" } },
+                    { attrs: { cols: "12", md: "2", lg: "2" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "telefono 2" },
@@ -743,7 +697,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "2", sm: "2" } },
+                    { attrs: { cols: "12", md: "2", lg: "2" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "telefono 3" },
@@ -761,7 +715,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "1", sm: "1" } },
+                    { attrs: { cols: "6", md: "1", lg: "1" } },
                     [
                       _c("v-select", {
                         attrs: {
@@ -786,7 +740,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    { attrs: { cols: "6", md: "3", lg: "3" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "mail" },
@@ -810,7 +764,7 @@ var render = function() {
                 [
                   _c(
                     "v-col",
-                    { attrs: { cols: "2", sm: "2" } },
+                    { attrs: { cols: "12", md: "2", lg: "2" } },
                     [
                       _c(
                         "v-menu",
@@ -951,7 +905,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-select", {
                         attrs: {
@@ -976,7 +930,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "2", sm: "2" } },
+                    { attrs: { cols: "12", md: "2", lg: "2" } },
                     [
                       _c("v-select", {
                         attrs: {
@@ -1000,7 +954,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "2", sm: "2" } },
+                    { attrs: { cols: "12", md: "2", lg: "2" } },
                     [
                       _c("v-select", {
                         attrs: {
@@ -1025,7 +979,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-select", {
                         attrs: {

@@ -1,5 +1,5 @@
 <template>
-    <div style="padding: 50px 100px">
+    <div class="pt-16">
         <v-alert type="error" v-if="getMessaggio">
             <v-row align="center">
                 <v-col class="grow">
@@ -13,10 +13,10 @@
 
     <v-form @submit.prevent="login">
         <v-text-field
+            full-width
             v-model="user.email"
             :rules="[rules.required]"
             type="text"
-            name="input-10-2"
             label="e-mail"
             class="input-group--focused "
         ></v-text-field>
@@ -26,7 +26,6 @@
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
-            name="input-10-1"
             label="password"
             hint="minimo 6 caratteri"
             counter
