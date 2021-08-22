@@ -2,7 +2,15 @@
     <div class="text-center">
         <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
+                <v-badge
+                    v-if="getRuolo === 'audio'"
+                    :content="novita"
+                    :value="novita"
+                    color="red"
+                    overlap
+                >
                 <v-btn
+                    @click="resetNovita"
                     text
                     dark
                     v-bind="attrs"
@@ -10,6 +18,7 @@
                 >
                     Magazzini
                 </v-btn>
+                </v-badge>
             </template>
             <v-list>
                 <div v-for="(item, index) in getFiliali"
@@ -28,16 +37,43 @@
 <script>
     import { mapGetters, mapActions } from 'vuex';
     export default {
+        data(){
+            return{
+                novita : 0,
+            }
+        },
         mounted(){
             if (this.getIdUser){
                 this.fetchFilialiByUser(this.getIdUser);
             }
         },
 
+        watch:{
+            getSoglie(){
+               // console.log(this.getSoglie[0]);
+                this.getSoglie.forEach(ele => {
+                    if (parseInt(ele.conteggio) - parseInt(ele.soglia) < 0){
+                        //console.log(parseInt(ele.soglia) - parseInt(ele.conteggio));
+                        this.novita = '*';
+                        this.playSound();
+                    }
+                })
+            }
+        },
+
         methods:{
             ...mapActions('filiali', {
                 fetchFilialiByUser:'fetchFilialiByUser',
-            })
+            }),
+
+            playSound(){
+                let alert = new Audio(this.sound);
+                alert.play();
+            },
+
+            resetNovita(){
+                this.novita = 0;
+            },
         },
 
         computed:{
@@ -47,6 +83,11 @@
 
             ...mapGetters('login', {
                 getIdUser:'getIdUser',
+                getRuolo:'getRuolo',
+            }),
+
+            ...mapGetters('product', {
+                getSoglie:'getSoglie',
             }),
         },
     }

@@ -121,6 +121,7 @@
             invia(){
                 this.assegnaProdottiMagazzino(this.getImmatricolati).then(() => {
                     this.nomeFiliale = '';
+                    this.matricole = [];
                 });
             }
         },

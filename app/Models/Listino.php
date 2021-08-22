@@ -52,6 +52,11 @@ class Listino extends Model
         return $this->belongsTo(Categoria::class);
     }
 
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function scopeFromfornitore($query, $idFornitore)
     {
         return $query->where('fornitore_id', $idFornitore);
@@ -63,4 +68,14 @@ class Listino extends Model
             $stato->where('nome', 'APA');
         });
     }
+
+    public function filiale()
+    {
+        return $this->belongsToMany(Filiale::class)->withPivot('soglia');
+    }
+
+    /*public function filialeById()
+    {
+        return $this->belongsToMany(Filiale::find($id))->withPivot('soglia');
+    }*/
 }

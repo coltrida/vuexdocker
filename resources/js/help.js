@@ -131,6 +131,7 @@ const help = () => {
         linkSituazioneAnnoClientiAudio: base+'situazioneAnnoClientiAudio',
         linkSituazioneAnnoResiAudio: base+'situazioneAnnoResiAudio',
         linknomiApa: base+'nomiApa',
+        linksoglie: base+'controlloSoglie',
     };
 };
 export default help;

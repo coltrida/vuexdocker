@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Events\LogisticaEvent;
 use App\Models\Ddt;
 use App\Models\Filiale;
+use App\Models\Listino;
 use App\Models\Product;
 use function array_push;
 use function create_function;
@@ -16,11 +17,44 @@ class ProductService
 {
     public function presenti($id)
     {
-        return Filiale::with(['products' => function($q){
-            $q->with(['listino' => function($l){
-                $l->with('fornitore', 'categoria');
+        $nomeFiliale = Filiale::find($id)->nome;
+        return Filiale::with(['products' => function($q) use($nomeFiliale){
+            $q->with(['listino' => function($l) use($nomeFiliale){
+                $l->with(['fornitore', 'categoria','filiale' => function($h) use($nomeFiliale){
+                    $h->where('nome', $nomeFiliale);
+                }]);
             }])->filiale()->orderBy('listino_id');
         }])->find($id)->products;
+    }
+
+    public function controlloSoglie($id)
+    {
+        $soglie = [];
+        $nomeFiliale = Filiale::find($id)->nome;
+
+        $conteggi = Product::
+        where('filiale_id', $id)
+            ->filiale()
+            ->get()
+            ->countBy('listino_id');
+
+        $listino = Listino::
+            with(['filiale' => function($e) use($nomeFiliale){
+                $e->where('nome', $nomeFiliale);
+        }])
+            ->whereHas('product', function ($stato) use($id){
+                $stato->where('filiale_id', $id)->filiale();
+        })->orderBy('id')->get();
+
+        for ($i = 0; $i < count($listino); $i++){
+            $idListino = $listino[$i]->id;
+            $soglie[$i]['nome'] = $listino[$i]->nome;
+            $soglie[$i]['soglia'] = $listino[$i]->filiale[0]->pivot->soglia;
+            $soglie[$i]['conteggio'] = $conteggi["$idListino"];
+        }
+
+        return $soglie;
+
     }
 
     public function presentiFromFornitore($idFiliale, $idFornitore)

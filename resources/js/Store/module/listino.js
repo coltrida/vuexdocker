@@ -46,6 +46,8 @@ const actions = {
             'prezzolistino': payload.prezzolistino,
             'iva': payload.iva,
             'giorniTempoDiReso': payload.giorniTempoDiReso,
+            'idFiliali':payload.idFiliali,
+            'soglie':payload.soglie,
         });
         commit('addListino', response.data.data);
     },

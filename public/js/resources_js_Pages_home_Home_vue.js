@@ -1515,7 +1515,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('product', {
     fetchInFilialeFornitore: 'fetchInFilialeFornitore',
     switchInProva: 'switchInProva',
-    switchRimuoviDallaProva: 'switchRimuoviDallaProva'
+    switchRimuoviDallaProva: 'switchRimuoviDallaProva',
+    fetchSoglie: 'fetchSoglie'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('prove', {
     AddEleInNuovaProva: 'AddEleInNuovaProva',
     creaNuovaProva: 'creaNuovaProva',
@@ -1585,6 +1586,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }) : this.getElementiNuovaProva[0].originalPrezzo
       }).then(function () {
         _this2.carica = false;
+
+        _this2.fetchSoglie(_this2.proveClient.filiale_id);
       });
     },
     reso: function reso(id) {
@@ -2479,6 +2482,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.assegnaProdottiMagazzino(this.getImmatricolati).then(function () {
         _this3.nomeFiliale = '';
+        _this3.matricole = [];
       });
     }
   }),
@@ -2680,6 +2684,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2705,9 +2724,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         sortable: false,
         "class": "indigo white--text"
       }, {
-        text: 'Inizio',
+        text: 'GG in prova',
         width: 120,
-        value: 'inizio_prova',
+        value: 'giorni_prova',
         sortable: false,
         "class": "indigo white--text"
       }, {
@@ -46974,6 +46993,44 @@ var render = function() {
                               )
                             ]
                           )
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.giorni_prova",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          item.giorni_prova > 20
+                            ? _c(
+                                "div",
+                                [
+                                  _c(
+                                    "v-chip",
+                                    {
+                                      attrs: {
+                                        color: "red",
+                                        "text-color": "white"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(item.giorni_prova) +
+                                          "\n                                "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            : _c("div", [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(item.giorni_prova) +
+                                    "\n                            "
+                                )
+                              ])
                         ]
                       }
                     }

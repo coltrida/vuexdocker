@@ -31,6 +31,21 @@
                                 </router-link>
                             </template>
 
+                            <template v-slot:item.giorni_prova="{ item }">
+                                <div v-if="item.giorni_prova > 20">
+                                    <v-chip
+                                        color="red"
+                                        text-color="white"
+                                    >
+                                        {{item.giorni_prova}}
+                                    </v-chip>
+                                </div>
+                                <div v-else>
+                                    {{item.giorni_prova}}
+                                </div>
+
+                            </template>
+
                         </v-data-table>
                     </div>
 
@@ -182,7 +197,7 @@
                 headers1: [
                     {text: 'Nome', width:170, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
-                    {text: 'Inizio', width:120, value: 'inizio_prova', sortable: false, class: "indigo white--text"},
+                    {text: 'GG in prova', width:120, value: 'giorni_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                     /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
                 ],

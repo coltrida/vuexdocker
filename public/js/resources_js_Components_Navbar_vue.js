@@ -766,20 +766,60 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      novita: 0
+    };
+  },
   mounted: function mounted() {
     if (this.getIdUser) {
       this.fetchFilialiByUser(this.getIdUser);
     }
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
+  watch: {
+    getSoglie: function getSoglie() {
+      var _this = this;
+
+      // console.log(this.getSoglie[0]);
+      this.getSoglie.forEach(function (ele) {
+        if (parseInt(ele.conteggio) - parseInt(ele.soglia) < 0) {
+          //console.log(parseInt(ele.soglia) - parseInt(ele.conteggio));
+          _this.novita = '*';
+
+          _this.playSound();
+        }
+      });
+    }
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
     fetchFilialiByUser: 'fetchFilialiByUser'
-  })),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
+  })), {}, {
+    playSound: function playSound() {
+      var alert = new Audio(this.sound);
+      alert.play();
+    },
+    resetNovita: function resetNovita() {
+      this.novita = 0;
+    }
+  }),
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
     getFiliali: 'getFiliali'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
-    getIdUser: 'getIdUser'
+    getIdUser: 'getIdUser',
+    getRuolo: 'getRuolo'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
+    getSoglie: 'getSoglie'
   }))
 });
 
@@ -3767,19 +3807,42 @@ var render = function() {
                 var on = ref.on
                 var attrs = ref.attrs
                 return [
-                  _c(
-                    "v-btn",
-                    _vm._g(
-                      _vm._b(
-                        { attrs: { text: "", dark: "" } },
-                        "v-btn",
-                        attrs,
-                        false
-                      ),
-                      on
-                    ),
-                    [_vm._v("\n                Magazzini\n            ")]
-                  )
+                  _vm.getRuolo === "audio"
+                    ? _c(
+                        "v-badge",
+                        {
+                          attrs: {
+                            content: _vm.novita,
+                            value: _vm.novita,
+                            color: "red",
+                            overlap: ""
+                          }
+                        },
+                        [
+                          _c(
+                            "v-btn",
+                            _vm._g(
+                              _vm._b(
+                                {
+                                  attrs: { text: "", dark: "" },
+                                  on: { click: _vm.resetNovita }
+                                },
+                                "v-btn",
+                                attrs,
+                                false
+                              ),
+                              on
+                            ),
+                            [
+                              _vm._v(
+                                "\n                Magazzini\n            "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ]
               }
             }

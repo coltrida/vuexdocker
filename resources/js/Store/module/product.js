@@ -6,11 +6,16 @@ const state = () => ({
     richiesti: [],
     inArrivo: [],
     immatricolati:[],
+    soglie:[]
 });
 
 const getters = {
     getInFiliale(state){
         return state.inFiliale;
+    },
+
+    getSoglie(state){
+        return state.soglie;
     },
 
     getInProva(state){
@@ -35,6 +40,11 @@ const actions = {
     async fetchInFiliale({commit}, idFiliale){
         const response = await axios.get(`${help().linkfiliali}`+'/'+idFiliale+'/presenti');
         commit('fetchInFiliale', response.data.data);
+    },
+
+    async fetchSoglie({commit}, idFiliale){
+        const response = await axios.get(`${help().linksoglie}`+'/'+idFiliale);
+        commit('fetchSoglie', response.data);
     },
 
     async fetchInFilialeFornitore({commit}, payload){
@@ -107,6 +117,10 @@ const actions = {
 const mutations = {
     fetchInFiliale(state, payload){
         state.inFiliale = payload;
+    },
+
+    fetchSoglie(state, payload){
+        state.soglie = payload;
     },
 
     fetchInProva(state, payload){

@@ -4440,7 +4440,9 @@ var actions = {
                 'costo': payload.costo,
                 'prezzolistino': payload.prezzolistino,
                 'iva': payload.iva,
-                'giorniTempoDiReso': payload.giorniTempoDiReso
+                'giorniTempoDiReso': payload.giorniTempoDiReso,
+                'idFiliali': payload.idFiliali,
+                'soglie': payload.soglie
               });
 
             case 3:
@@ -5330,13 +5332,17 @@ var state = function state() {
     inProva: [],
     richiesti: [],
     inArrivo: [],
-    immatricolati: []
+    immatricolati: [],
+    soglie: []
   };
 };
 
 var getters = {
   getInFiliale: function getInFiliale(state) {
     return state.inFiliale;
+  },
+  getSoglie: function getSoglie(state) {
+    return state.soglie;
   },
   getInProva: function getInProva(state) {
     return state.inProva;
@@ -5375,7 +5381,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchInFilialeFornitore: function fetchInFilialeFornitore(_ref2, payload) {
+  fetchSoglie: function fetchSoglie(_ref2, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -5384,11 +5390,11 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfilialefornitore) + '/' + payload.idFiliale + '/' + payload.idFornitore);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksoglie) + '/' + idFiliale);
 
             case 3:
               response = _context2.sent;
-              commit('fetchInFiliale', response.data.data);
+              commit('fetchSoglie', response.data);
 
             case 5:
             case "end":
@@ -5398,7 +5404,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  fetchInProva: function fetchInProva(_ref3, idFiliale) {
+  fetchInFilialeFornitore: function fetchInFilialeFornitore(_ref3, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -5407,11 +5413,11 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inProva');
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfilialefornitore) + '/' + payload.idFiliale + '/' + payload.idFornitore);
 
             case 3:
               response = _context3.sent;
-              commit('fetchInProva', response.data.data);
+              commit('fetchInFiliale', response.data.data);
 
             case 5:
             case "end":
@@ -5421,7 +5427,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  fetchRichiesti: function fetchRichiesti(_ref4, idFiliale) {
+  fetchInProva: function fetchInProva(_ref4, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -5430,11 +5436,11 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/richiesti');
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inProva');
 
             case 3:
               response = _context4.sent;
-              commit('fetchRichiesti', response.data.data);
+              commit('fetchInProva', response.data.data);
 
             case 5:
             case "end":
@@ -5444,7 +5450,7 @@ var actions = {
       }, _callee4);
     }))();
   },
-  fetchInArrivo: function fetchInArrivo(_ref5, idFiliale) {
+  fetchRichiesti: function fetchRichiesti(_ref5, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -5453,11 +5459,11 @@ var actions = {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inArrivo');
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/richiesti');
 
             case 3:
               response = _context5.sent;
-              commit('fetchInArrivo', response.data.data);
+              commit('fetchRichiesti', response.data.data);
 
             case 5:
             case "end":
@@ -5467,7 +5473,7 @@ var actions = {
       }, _callee5);
     }))();
   },
-  fetchImmatricolati: function fetchImmatricolati(_ref6, idFiliale) {
+  fetchInArrivo: function fetchInArrivo(_ref6, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
@@ -5476,11 +5482,11 @@ var actions = {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimmatricolati) + '/' + idFiliale);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inArrivo');
 
             case 3:
               response = _context6.sent;
-              commit('fetchImmatricolati', response.data);
+              commit('fetchInArrivo', response.data.data);
 
             case 5:
             case "end":
@@ -5490,7 +5496,7 @@ var actions = {
       }, _callee6);
     }))();
   },
-  richiediProduct: function richiediProduct(_ref7, payload) {
+  fetchImmatricolati: function fetchImmatricolati(_ref7, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
@@ -5499,11 +5505,11 @@ var actions = {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrichiestaprodotti), payload);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimmatricolati) + '/' + idFiliale);
 
             case 3:
               response = _context7.sent;
-              commit('richiediProduct', response.data.data);
+              commit('fetchImmatricolati', response.data);
 
             case 5:
             case "end":
@@ -5513,22 +5519,22 @@ var actions = {
       }, _callee7);
     }))();
   },
-  switchInProva: function switchInProva(_ref8, payload) {
+  richiediProduct: function richiediProduct(_ref8, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchinprova), {
-                'idProduct': payload.idProduct,
-                'user_id': payload.user_id,
-                'client_id': payload.client_id
-              });
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrichiestaprodotti), payload);
 
             case 3:
+              response = _context8.sent;
+              commit('richiediProduct', response.data.data);
+
+            case 5:
             case "end":
               return _context8.stop();
           }
@@ -5536,7 +5542,7 @@ var actions = {
       }, _callee8);
     }))();
   },
-  switchImmatricolato: function switchImmatricolato(_ref9, payload) {
+  switchInProva: function switchInProva(_ref9, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
@@ -5545,9 +5551,10 @@ var actions = {
             case 0:
               commit = _ref9.commit;
               _context9.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitchimmatricolato), {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchinprova), {
                 'idProduct': payload.idProduct,
-                'matricola': payload.matricola
+                'user_id': payload.user_id,
+                'client_id': payload.client_id
               });
 
             case 3:
@@ -5558,7 +5565,7 @@ var actions = {
       }, _callee9);
     }))();
   },
-  switchRimuoviDallaProva: function switchRimuoviDallaProva(_ref10, id) {
+  switchImmatricolato: function switchImmatricolato(_ref10, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
@@ -5567,7 +5574,10 @@ var actions = {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchrimuovidallaprova) + '/' + id);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitchimmatricolato), {
+                'idProduct': payload.idProduct,
+                'matricola': payload.matricola
+              });
 
             case 3:
             case "end":
@@ -5577,7 +5587,7 @@ var actions = {
       }, _callee10);
     }))();
   },
-  eliminaRichiesta: function eliminaRichiesta(_ref11, id) {
+  switchRimuoviDallaProva: function switchRimuoviDallaProva(_ref11, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
@@ -5586,12 +5596,9 @@ var actions = {
             case 0:
               commit = _ref11.commit;
               _context11.next = 3;
-              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductrimuovirichiesta) + '/' + id);
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchrimuovidallaprova) + '/' + id);
 
             case 3:
-              commit('eliminaRichiesta', id);
-
-            case 4:
             case "end":
               return _context11.stop();
           }
@@ -5599,7 +5606,7 @@ var actions = {
       }, _callee11);
     }))();
   },
-  assegnaProdottiMagazzino: function assegnaProdottiMagazzino(_ref12, payload) {
+  eliminaRichiesta: function eliminaRichiesta(_ref12, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee12() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee12$(_context12) {
@@ -5608,12 +5615,10 @@ var actions = {
             case 0:
               commit = _ref12.commit;
               _context12.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottimagazzino), {
-                'prodotti': payload
-              });
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductrimuovirichiesta) + '/' + id);
 
             case 3:
-              commit('assegnaProdottiMagazzino');
+              commit('eliminaRichiesta', id);
 
             case 4:
             case "end":
@@ -5623,33 +5628,60 @@ var actions = {
       }, _callee12);
     }))();
   },
-  switchArrivato: function switchArrivato(_ref13, id) {
+  assegnaProdottiMagazzino: function assegnaProdottiMagazzino(_ref13, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13() {
-      var commit, response;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
               commit = _ref13.commit;
               _context13.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitcharrivato) + '/' + id);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottimagazzino), {
+                'prodotti': payload
+              });
 
             case 3:
-              response = _context13.sent;
-              commit('switchArrivato', response.data.data);
+              commit('assegnaProdottiMagazzino');
 
-            case 5:
+            case 4:
             case "end":
               return _context13.stop();
           }
         }
       }, _callee13);
     }))();
+  },
+  switchArrivato: function switchArrivato(_ref14, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee14() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee14$(_context14) {
+        while (1) {
+          switch (_context14.prev = _context14.next) {
+            case 0:
+              commit = _ref14.commit;
+              _context14.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitcharrivato) + '/' + id);
+
+            case 3:
+              response = _context14.sent;
+              commit('switchArrivato', response.data.data);
+
+            case 5:
+            case "end":
+              return _context14.stop();
+          }
+        }
+      }, _callee14);
+    }))();
   }
 };
 var mutations = {
   fetchInFiliale: function fetchInFiliale(state, payload) {
     state.inFiliale = payload;
+  },
+  fetchSoglie: function fetchSoglie(state, payload) {
+    state.soglie = payload;
   },
   fetchInProva: function fetchInProva(state, payload) {
     state.inProva = payload;
@@ -7824,7 +7856,8 @@ var help = function help() {
     linkaggiornatelefonata: base + 'aggiornaTelefonata',
     linkSituazioneAnnoClientiAudio: base + 'situazioneAnnoClientiAudio',
     linkSituazioneAnnoResiAudio: base + 'situazioneAnnoResiAudio',
-    linknomiApa: base + 'nomiApa'
+    linknomiApa: base + 'nomiApa',
+    linksoglie: base + 'controlloSoglie'
   };
 };
 

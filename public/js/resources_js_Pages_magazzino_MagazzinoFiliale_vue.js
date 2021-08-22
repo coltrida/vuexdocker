@@ -145,12 +145,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
   data: function data() {
     return {
       productRichiesto: {},
+      headersRiepilogo: [{
+        text: 'Nome',
+        align: 'start',
+        value: 'nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Soglia',
+        value: 'soglia',
+        "class": "indigo white--text"
+      }, {
+        text: 'Conteggio',
+        value: 'conteggio',
+        "class": "indigo white--text"
+      }],
       headers1: [{
         text: 'Fornitore',
         align: 'start',
@@ -278,6 +309,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchInProva(this.rottaIdFiliale);
       this.fetchRichiesti(this.rottaIdFiliale);
       this.fetchInArrivo(this.rottaIdFiliale);
+      this.fetchSoglie(this.rottaIdFiliale);
       this.fetchFornitori();
       this.fetchFilialeById(this.rottaIdFiliale);
       window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
@@ -297,6 +329,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchInProva(this.rottaIdFiliale);
       this.fetchRichiesti(this.rottaIdFiliale);
       this.fetchInArrivo(this.rottaIdFiliale);
+      this.fetchSoglie(this.rottaIdFiliale);
       this.fetchFilialeById(this.rottaIdFiliale);
     }
   },
@@ -307,7 +340,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchInArrivo: 'fetchInArrivo',
     richiediProduct: 'richiediProduct',
     eliminaRichiesta: 'eliminaRichiesta',
-    switchArrivato: 'switchArrivato'
+    switchArrivato: 'switchArrivato',
+    fetchSoglie: 'fetchSoglie'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
@@ -330,14 +364,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.eliminaRichiesta(id);
     },
     arrivato: function arrivato(id) {
-      this.switchArrivato(id);
+      var _this2 = this;
+
+      this.switchArrivato(id).then(function () {
+        _this2.fetchSoglie(_this2.rottaIdFiliale);
+      });
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
     getInFiliale: 'getInFiliale',
     getInProva: 'getInProva',
     getRichiesti: 'getRichiesti',
-    getInArrivo: 'getInArrivo'
+    getInArrivo: 'getInArrivo',
+    getSoglie: 'getSoglie'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('fornitori', {
     getFornitori: 'getFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('listino', {
@@ -547,6 +586,39 @@ var render = function() {
                 1
               )
             : _vm._e(),
+          _vm._v(" "),
+          _c("h3", { staticClass: "mt-5" }, [_vm._v("Riepilogo Presenti")]),
+          _vm._v(" "),
+          _c("v-data-table", {
+            staticClass: "elevation-1 mt-3",
+            attrs: { headers: _vm.headersRiepilogo, items: _vm.getSoglie },
+            scopedSlots: _vm._u([
+              {
+                key: "item.actions",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _c(
+                      "v-icon",
+                      {
+                        attrs: { color: "red", small: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.elimina(item.id)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    mdi-delete\n                "
+                        )
+                      ]
+                    )
+                  ]
+                }
+              }
+            ])
+          }),
           _vm._v(" "),
           _c("h3", { staticClass: "mt-5" }, [_vm._v("Presenti")]),
           _vm._v(" "),

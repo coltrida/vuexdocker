@@ -297,17 +297,21 @@ class ElaborazioneService
             $fatturati->budgetAnno = array_sum($totali);
             $delta->budgetAnno = number_format( (float)  ((array_sum($totali) / array_sum($totaliBgt)) - 1) * 100, '1').'%';
 
-            $numeroClienti = Client::where([
-                ['user_id', $user->id],
-                ['tipologia_id', 2],
-            ])->count();
+            $numeroClienti = Client::clienti()->where([
+                ['user_id', $user->id]
+            ])->whereHas('prova', function ($q) use($anno){
+                $q->where('anno_inizio', $anno);
+            })
+                ->count();
 
             $delta->stipendio = $numeroClienti;
 
-            $numeroPC = Client::where([
-                ['user_id', $user->id],
-                ['tipologia_id', 1],
-            ])->count();
+            $numeroPC = Client::possibili()->where([
+                ['user_id', $user->id]
+            ])->whereHas('prova', function ($q) use($anno){
+                $q->where('anno_inizio', $anno);
+            })
+                ->count();
 
             $delta->provvigione = $numeroPC;
 
@@ -317,6 +321,12 @@ class ElaborazioneService
 
             //      $pezzi->nome = 'Pezzi';
             $fatturati->nome = 'Fatturati';
+
+            $fatturati->provvigione = $numeroClienti <> 0 ?
+                $fatturati->budgetAnno / $numeroClienti : 0;
+
+           // $fatturati->provvigione = $numeroClienti;
+
             $delta->nome = 'Delta';
             //       $pezzi->save();
             $fatturati->save();

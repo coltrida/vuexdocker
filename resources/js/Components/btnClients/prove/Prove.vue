@@ -339,6 +339,7 @@
                 fetchInFilialeFornitore:'fetchInFilialeFornitore',
                 switchInProva:'switchInProva',
                 switchRimuoviDallaProva:'switchRimuoviDallaProva',
+                fetchSoglie: 'fetchSoglie',
             }),
 
             ...mapActions('prove', {
@@ -412,6 +413,7 @@
                         this.getElementiNuovaProva[0].originalPrezzo
                 }).then(() => {
                     this.carica = false;
+                    this.fetchSoglie(this.proveClient.filiale_id);
                 });
 
             },

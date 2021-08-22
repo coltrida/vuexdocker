@@ -83,4 +83,9 @@ class Filiale extends Model
             ->with('budget')
             ->withPivot(['id']);
     }
+
+    public function listino()
+    {
+        return $this->belongsToMany(Listino::class)->withPivot('soglia');
+    }
 }

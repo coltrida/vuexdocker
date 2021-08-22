@@ -1659,7 +1659,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('product', {
     fetchInFilialeFornitore: 'fetchInFilialeFornitore',
     switchInProva: 'switchInProva',
-    switchRimuoviDallaProva: 'switchRimuoviDallaProva'
+    switchRimuoviDallaProva: 'switchRimuoviDallaProva',
+    fetchSoglie: 'fetchSoglie'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('prove', {
     AddEleInNuovaProva: 'AddEleInNuovaProva',
     creaNuovaProva: 'creaNuovaProva',
@@ -1729,6 +1730,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }) : this.getElementiNuovaProva[0].originalPrezzo
       }).then(function () {
         _this2.carica = false;
+
+        _this2.fetchSoglie(_this2.proveClient.filiale_id);
       });
     },
     reso: function reso(id) {

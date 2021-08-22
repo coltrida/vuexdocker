@@ -23,7 +23,8 @@ class ListinoResource extends JsonResource
             'costo' => '€ '.number_format($this->costo, 0, ',', '.'),
             'prezzolistino' => '€ '.number_format($this->prezzolistino, 0, ',', '.'),
             'iva' => $this->iva.' %',
-            'giorniTempoDiReso' => $this->giorniTempoDiReso
+            'giorniTempoDiReso' => $this->giorniTempoDiReso,
+            'filiale' => $this->filiale
         ];
     }
 }

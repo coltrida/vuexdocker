@@ -13,7 +13,7 @@ class ListinoService
 {
     public function listino()
     {
-        return Listino::with('categoria', 'fornitore:id,nome')->orderBy('fornitore_id')->orderBy('categoria_id')->get();
+        return Listino::with('categoria', 'filiale', 'fornitore:id,nome')->orderBy('fornitore_id')->orderBy('categoria_id')->get();
     }
 
     public function listinoFromFornitore($idFornitore)
@@ -28,6 +28,7 @@ class ListinoService
 
     public function inserisci($request)
     {
+        //dd($request->idFiliale);
         $listino = new Listino();
 
         $listino->categoria_id = $request['categoria_id'];
@@ -38,6 +39,12 @@ class ListinoService
         $listino->prezzolistino = trim($request['prezzolistino']);
         $listino->iva = trim($request['iva']);
         $listino->save();
+
+        for ($i=0; $i < count($request->soglie); $i++){
+            if ($request->soglie[$i] != null){
+                $listino->filiale()->attach($request->idFiliali[$i], ['soglia' => $request->soglie[$i]]);
+            }
+        }
 
         $type = 'string';
         Schema::table('ventaglios', function (Blueprint $table) use ($type, $listino) {

@@ -26,7 +26,8 @@ class ProductResource extends JsonResource
             'iva' => $this->listino->iva.' %',
             'giorniTempoDiReso' => $this->listino->giorniTempoDiReso,
             'listinoId' => $this->listino->id,
-            'nomeMatricola' => $this->listino->nome.' - '.$this->matricola
+            'nomeMatricola' => $this->listino->nome.' - '.$this->matricola,
+            'soglia' => $this->listino->filiale[0]->pivot->soglia,
         ];
     }
 }

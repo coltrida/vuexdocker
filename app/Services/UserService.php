@@ -222,12 +222,10 @@ class UserService
 
     }
 
-
-
     public function dettaglioAudio()
     {
         return User::audio()
-            ->with(['pezzi','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
+            ->with(['pezzi','fatturati','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
                 $q->orderBy('mese_fine');
             }])
             ->orderBy('name')

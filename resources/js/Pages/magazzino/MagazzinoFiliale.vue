@@ -49,6 +49,23 @@
 
             </v-row>
 
+            <h3 class="mt-5">Riepilogo Presenti</h3>
+            <v-data-table
+                :headers="headersRiepilogo"
+                :items="getSoglie"
+                class="elevation-1 mt-3"
+            >
+                <template v-slot:item.actions="{ item }">
+                    <v-icon
+                        color="red"
+                        small
+                        @click="elimina(item.id)"
+                    >
+                        mdi-delete
+                    </v-icon>
+                </template>
+            </v-data-table>
+
             <h3 class="mt-5">Presenti</h3>
             <v-data-table
                 :headers="headers1"
@@ -133,6 +150,12 @@
         data(){
             return {
                 productRichiesto:{},
+                headersRiepilogo: [
+                    { text: 'Nome', align: 'start', value: 'nome', class: "indigo white--text" },
+                    { text: 'Soglia', value: 'soglia', class: "indigo white--text"},
+                    { text: 'Conteggio', value: 'conteggio', class: "indigo white--text" },
+                ],
+
                 headers1: [
                     { text: 'Fornitore', align: 'start', value: 'fornitore', class: "indigo white--text" },
                     { text: 'Nome', value: 'nome', class: "indigo white--text"},
@@ -183,6 +206,7 @@
                 this.fetchInProva(this.rottaIdFiliale);
                 this.fetchRichiesti(this.rottaIdFiliale);
                 this.fetchInArrivo(this.rottaIdFiliale);
+                this.fetchSoglie(this.rottaIdFiliale);
 
                 this.fetchFornitori();
 
@@ -204,6 +228,7 @@
                 this.fetchInProva(this.rottaIdFiliale);
                 this.fetchRichiesti(this.rottaIdFiliale);
                 this.fetchInArrivo(this.rottaIdFiliale);
+                this.fetchSoglie(this.rottaIdFiliale);
 
                 this.fetchFilialeById(this.rottaIdFiliale);
             }
@@ -218,6 +243,7 @@
                 richiediProduct:'richiediProduct',
                 eliminaRichiesta:'eliminaRichiesta',
                 switchArrivato:'switchArrivato',
+                fetchSoglie:'fetchSoglie',
             }),
 
             ...mapActions('fornitori', {
@@ -250,7 +276,10 @@
             },
 
             arrivato(id){
-                this.switchArrivato(id);
+                this.switchArrivato(id).then(() => {
+                    this.fetchSoglie(this.rottaIdFiliale);
+                });
+
             }
 
         },
@@ -261,6 +290,7 @@
                 getInProva:'getInProva',
                 getRichiesti:'getRichiesti',
                 getInArrivo:'getInArrivo',
+                getSoglie:'getSoglie',
             }),
 
             ...mapGetters('fornitori', {
