@@ -10,7 +10,6 @@
                     overlap
                 >
                 <v-btn
-                    @click="resetNovita"
                     text
                     dark
                     v-bind="attrs"
@@ -44,18 +43,19 @@
         },
         mounted(){
             if (this.getIdUser){
-                this.fetchFilialiByUser(this.getIdUser);
+                this.fetchFilialiByUser(this.getIdUser).then(() => {
+                    this.fetchSoglie(this.getFiliali[0].id);
+                });
+
             }
         },
 
         watch:{
             getSoglie(){
-               // console.log(this.getSoglie[0]);
+                this.novita = 0;
                 this.getSoglie.forEach(ele => {
                     if (parseInt(ele.conteggio) - parseInt(ele.soglia) < 0){
-                        //console.log(parseInt(ele.soglia) - parseInt(ele.conteggio));
                         this.novita = '*';
-                        this.playSound();
                     }
                 })
             }
@@ -66,14 +66,10 @@
                 fetchFilialiByUser:'fetchFilialiByUser',
             }),
 
-            playSound(){
-                let alert = new Audio(this.sound);
-                alert.play();
-            },
+            ...mapActions('product', {
+                fetchSoglie:'fetchSoglie',
+            }),
 
-            resetNovita(){
-                this.novita = 0;
-            },
         },
 
         computed:{

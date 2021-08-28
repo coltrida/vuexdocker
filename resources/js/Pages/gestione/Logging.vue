@@ -8,7 +8,6 @@
                     <v-data-table
                         :headers="headers1"
                         :items="getLogging"
-                        hide-default-footer
                         class="elevation-1 mt-3"
                     >
 

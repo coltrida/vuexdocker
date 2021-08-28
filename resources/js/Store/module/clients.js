@@ -112,9 +112,10 @@ const actions = {
         await axios.get(`${help().linkimportclients}`);
     },
 
-    async importClientsXml({commit}, nomeFile){
+    async importClientsXml({commit}, payload){
         const response = await axios.post(`${help().linkimportclientsxml}`, {
-            nomeFile: nomeFile
+            nomeFile: payload.nomeFile,
+            idUser: payload.idUser,
         });
         commit('importClientsXml', response.data);
     },

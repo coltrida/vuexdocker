@@ -91,8 +91,11 @@
                     <template v-slot:item.esito="{ item }">
                         <div v-if="item.esito == null">
                             <v-select
+                                class="mt-4"
                                 v-model="telefonataDaAggiornare.esito"
                                 :items="tipologiaEsito"
+                                outlined
+                                dense
                                 label="esito"
                             ></v-select>
                         </div>

@@ -19,9 +19,21 @@
                         >
 
                             <template v-slot:item.actions="{ item }">
-                                <v-btn @click="seleziona(item.product)" color="green" dark>
-                                    Prod
-                                </v-btn>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                <v-icon
+                                    @click="seleziona(item.product)"
+                                    color="blue"
+                                    small
+                                    v-bind="attrs"
+                                    v-on="on"
+
+                                >
+                                    mdi-format-list-bulleted-square
+                                </v-icon>
+                                    </template>
+                                    <span>Prodotti</span>
+                                </v-tooltip>
                             </template>
 
                             <template v-slot:item.client.fullname="{ item }">
@@ -72,9 +84,21 @@
                             </template>
 
                             <template v-slot:item.actions="{ item }">
-                                <v-btn @click="seleziona(item.product)" color="green" dark>
-                                    Prod
-                                </v-btn>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            @click="seleziona(item.product)"
+                                            color="blue"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+
+                                        >
+                                            mdi-format-list-bulleted-square
+                                        </v-icon>
+                                    </template>
+                                    <span>Prodotti</span>
+                                </v-tooltip>
                             </template>
 
                             <template v-slot:item.client.fullname="{ item }">
@@ -110,9 +134,21 @@
                             </template>
 
                             <template v-slot:item.actions="{ item }">
-                                <v-btn @click="seleziona(item.product)" color="green" dark>
-                                    Prod
-                                </v-btn>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            @click="seleziona(item.product)"
+                                            color="blue"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+
+                                        >
+                                            mdi-format-list-bulleted-square
+                                        </v-icon>
+                                    </template>
+                                    <span>Prodotti</span>
+                                </v-tooltip>
                             </template>
 
                             <template v-slot:item.client.fullname="{ item }">

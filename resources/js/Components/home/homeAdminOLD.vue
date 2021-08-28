@@ -8,16 +8,16 @@
                     v-if="dialogProdotti"
                     @chiudiProdotti="chiudiProdotti"
                 />
-
                 <v-col cols="4">
                     <h2>Prove in Corso:</h2>
-                    <div v-for="audio in getCommerciale" :key="audio.id">
+                    <div v-for="audio in getSituazioneMese" :key="audio.id">
                         <v-data-table
                             :headers="headers1"
                             :items="audio.prova_in_corso"
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
+
                             <template v-slot:header.client.fullname="{ header }">
                                 {{ audio.name }}
                             </template>
@@ -41,8 +41,8 @@
                             </template>
 
                             <template v-slot:item.client.fullname="{ item }">
-                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
-                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.fullname, }}">
+                                <router-link style="color: black" :to="{ name: 'clients',
+                                        params: { cogRicerca:item.client.cognome, }}">
                                     {{item.client.fullname}}
                                 </router-link>
                             </template>
@@ -53,7 +53,7 @@
 
                 <v-col cols="5">
                     <h2>Finalizzati:</h2>
-                    <div v-for="audio in getCommerciale" :key="audio.id">
+                    <div v-for="audio in getSituazioneMese" :key="audio.id">
                         <v-data-table
                             :headers="headers2"
                             :items="audio.prova_finalizzata"
@@ -95,8 +95,8 @@
                             </template>
 
                             <template v-slot:item.client.fullname="{ item }">
-                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
-                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.fullname, }}">
+                                <router-link style="color: black" :to="{ name: 'clients',
+                                        params: { cogRicerca:item.client.cognome, }}">
                                     {{item.client.fullname}}
                                 </router-link>
                             </template>
@@ -107,7 +107,7 @@
 
                 <v-col cols="3">
                     <h2>Resi:</h2>
-                    <div v-for="audio in getCommerciale" :key="audio.id">
+                    <div v-for="audio in getSituazioneMese" :key="audio.id">
                         <v-data-table
                             :headers="headers3"
                             :items="audio.prova_reso"
@@ -150,8 +150,8 @@
                             </template>
 
                             <template v-slot:item.client.fullname="{ item }">
-                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
-                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.fullname, }}">
+                                <router-link style="color: black" :to="{ name: 'clients',
+                                        params: { cogRicerca:item.client.cognome, }}">
                                     {{item.client.fullname}}
                                 </router-link>
                             </template>
@@ -159,7 +159,6 @@
                         </v-data-table>
                     </div>
                 </v-col>
-
             </v-row>
 
     </div>
@@ -175,11 +174,13 @@
             return {
                 dialogProdotti: false,
                 prodottiSelezione: [],
+                expanded: [],
                 headers1: [
                     {text: 'Nome', width:120, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'GG in prova', width:120, value: 'giorni_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Prodotti', value: 'actions', sortable: false, class: "indigo white--text" },
+                    /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
                 ],
 
                 headers2: [
@@ -194,20 +195,23 @@
                     {text: 'Tot', width:80, value: 'tot', sortable: false, class: "indigo white--text"},
                     {text: 'Reso', width:110, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                 ],
-
             }
         },
 
+        /*updated() {
+            this.fetchSituazioneMese();
+        },*/
+
         mounted() {
-            this.fetchCommerciale();
+            this.fetchSituazioneMese();
             window.Echo.channel("provaChannel").listen(".task-created", e => {
-                this.fetchCommerciale();
+                this.fetchSituazioneMese();
             });
         },
 
         methods: {
             ...mapActions('users', {
-                fetchCommerciale: 'fetchCommerciale',
+                fetchSituazioneMese: 'fetchSituazioneMese',
             }),
 
             seleziona(items){
@@ -223,8 +227,12 @@
 
         computed: {
             ...mapGetters('users', {
-                getCommerciale: 'getCommerciale',
+                getSituazioneMese: 'getSituazioneMese',
             }),
+
+            /*...mapGetters('prove', {
+                getProvePassate: 'getProvePassate',
+            }),*/
         },
     }
 </script>

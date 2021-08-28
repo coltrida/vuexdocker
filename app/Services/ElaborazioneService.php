@@ -284,56 +284,56 @@ class ElaborazioneService
                 //        $pezzi->dicembre = $valore->prova_finalizzata_sum_tot ? $valore->provaFinalizzata->sum('product_count') : 0;
                 $fatturati->dicembre = $valore->prova_finalizzata_sum_tot ? $valore->prova_finalizzata_sum_tot : 0;
                 $delta->dicembre = number_format( (float) (($fatturati->dicembre / $valore->budget->dicembre) - 1) * 100, '1').'%';
-                //        array_push($pezziTot, $pezzi->dicembre);
+
                 array_push($totali, $fatturati->dicembre);
                 array_push($totaliBgt, $valore->budget->dicembre);
             }
 
-            //      $pezzi->user_id = $user->id;
             $fatturati->user_id = $user->id;
             $delta->user_id = $user->id;
 
-            //       $pezzi->budgetAnno = array_sum($pezziTot);
+            // -------------- calcolo fatturato totale dell'anno ---------- //
             $fatturati->budgetAnno = array_sum($totali);
+
+            // -------------- calcolo fatturato totale dell'anno / budget anno ---------- //
             $delta->budgetAnno = number_format( (float)  ((array_sum($totali) / array_sum($totaliBgt)) - 1) * 100, '1').'%';
 
+            // -------------- conteggio numero Clienti ---------- //
             $numeroClienti = Client::clienti()->where([
                 ['user_id', $user->id]
             ])->whereHas('prova', function ($q) use($anno){
                 $q->where('anno_inizio', $anno);
             })
                 ->count();
-
             $delta->stipendio = $numeroClienti;
 
+            // -------------- conteggio numero PC ---------- //
             $numeroPC = Client::possibili()->where([
                 ['user_id', $user->id]
             ])->whereHas('prova', function ($q) use($anno){
                 $q->where('anno_inizio', $anno);
             })
                 ->count();
-
             $delta->provvigione = $numeroPC;
 
+            // -------------- conteggio numero clienti + numero pc ---------- //
             $tot = $numeroClienti + $numeroPC;
 
             $delta->premio = $tot <> 0 ? number_format( ($numeroClienti / $tot) * 100, '2') : 0;
 
-            //      $pezzi->nome = 'Pezzi';
             $fatturati->nome = 'Fatturati';
 
-            $fatturati->provvigione = $numeroClienti <> 0 ?
-                $fatturati->budgetAnno / $numeroClienti : 0;
-
-           // $fatturati->provvigione = $numeroClienti;
+            // -------------- conteggio media vendita ---------- //
+            $fatturati->provvigione = $ventaglio->tot <> 0 ?
+                $fatturati->budgetAnno / $ventaglio->tot : 0;
 
             $delta->nome = 'Delta';
-            //       $pezzi->save();
+
             $fatturati->save();
             $delta->save();
             $user->fatturati_id = $fatturati->id;
             $user->delta_id = $delta->id;
-            //        $user->pezzi_id = $pezzi->id;
+
             $user->save();
         }
 

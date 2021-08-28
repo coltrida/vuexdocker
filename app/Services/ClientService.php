@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Models\Appuntamento;
 use App\Models\Audiometria;
 use App\Models\Client;
 use App\Models\Prova;
@@ -71,7 +72,6 @@ class ClientService
 
         $new->user_id = $request->user_id;
 
-    //    $dataRecallCalcolata = $this->calcolaRecall($request->tipologia_id);
         $new->mail = trim(Str::upper($request->mail));
         $new->datanascita = $request->datanascita;
         $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
@@ -82,11 +82,13 @@ class ClientService
         $new->anno = Carbon::now()->year;
         $new->save();
 
-        /*$prossimaTelefonata = new Telefonata();
-        $prossimaTelefonata->user_id = $request->user_id;
-        $prossimaTelefonata->client_id = $new->id;
-        $prossimaTelefonata->datarecall = $dataRecallCalcolata;
-        $prossimaTelefonata->save();*/
+        $telefonata = new Telefonata();
+        $telefonata->user_id = $new->user_id;
+        $telefonata->client_id = $new->id;
+        $telefonata->note = "recall automatico dell'inserimento paziente";
+        $telefonata->datarecall = $this->calcolaRecall($new->tipologia_id);
+        $telefonata->effettuata = false;
+        $telefonata->save();
 
         $utente = User::find($request->user_id);
         $propieta = 'client';
@@ -267,7 +269,8 @@ class ClientService
 
     public function importClientsFromNoah($request)
     {
-        $xmlDataString = file_get_contents(storage_path($request->nomeFile));
+        //dd($request);
+        $xmlDataString = file_get_contents(asset('/storage/'.$request['nomeFile']));
         $res = 0;
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
 
@@ -283,17 +286,48 @@ class ClientService
                     'telefono3' => $ele->Patient->MobilePhone ? $ele->Patient->MobilePhone : null,
                     'provincia' => $ele->Patient->Other1 ? trim(Str::upper($ele->Patient->Other1)) : null,
                     'citta' => $ele->Patient->City ? trim(Str::upper($ele->Patient->City)) : null,
-                    'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
+//                    'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
+                    'user_id' => $request['idUser'],
                     'datanascita' => $ele->Patient->DateofBirth ? $ele->Patient->DateofBirth : null,
-                    'recapito_id' => $ele->Patient->Other2 ? $ele->Patient->Other2 : null,
+//                    'recapito_id' => $ele->Patient->Other2 ? $ele->Patient->Other2 : null,
+                    'recapito_id' => null,
                     'mail' => $ele->Patient->EMail ? $ele->Patient->EMail : null,
-                    'tipologia_id' => $ele->Patient->Province ? $ele->Patient->Province : null,
-                    'filiale_id' => User::find($ele->Patient->CreatedBy)->filiale[0]->id,
+//                    'tipologia_id' => $ele->Patient->Province ? $ele->Patient->Province : null,
+                    'tipologia_id' => 6,
+//                    'filiale_id' => User::find($ele->Patient->CreatedBy)->filiale[0]->id,
+                    'filiale_id' => User::find($request->idUser)->filiale[0]->id,
                 ]
             );
+            $audiometriad = null;
+            $audiometrias = null;
+//dd($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]);
+            if (isset($ele->Patient->Actions)){
+                if (isset($ele->Patient->Actions->Action)){
+                    if (isset($ele->Patient->Actions->Action->PublicData)){
+                        if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard)){
+                            if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0])){
+                                $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
+                            }
+                        }
+                    }
+                }
+            }
 
-            $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
-            $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
+            if (isset($ele->Patient->Actions)){
+                if (isset($ele->Patient->Actions->Action)){
+                    if (isset($ele->Patient->Actions->Action->PublicData)){
+                        if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard)){
+                            if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1])){
+                                $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
+                            }
+                        }
+                    }
+                }
+            }
+            /*$audiometriad = isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]) ?
+                $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0] : null;
+            $audiometrias = isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1]) ?
+                $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1] : null;*/
 
             $d125 = null;
             $d250 = null;
@@ -317,13 +351,18 @@ class ClientService
             $s6000 = null;
             $s8000 = null;
 
-            foreach ($audiometriad->TonePoints as $tono){
-                ${'d'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+            if (isset($audiometriad->TonePoints)) {
+                foreach ($audiometriad->TonePoints as $tono){
+                    ${'d'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+                }
             }
 
-            foreach ($audiometrias->TonePoints as $tono){
-                ${'s'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+            if (isset($audiometrias->TonePoints)) {
+                foreach ($audiometrias->TonePoints as $tono){
+                    ${'s'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+                }
             }
+
 
             $audiom = Audiometria::where('client_id', $client->id)->firstOrNew();
 

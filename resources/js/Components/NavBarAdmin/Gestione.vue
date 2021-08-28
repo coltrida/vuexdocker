@@ -34,6 +34,8 @@
                 { title: 'Assegna Budget', link: 'assegnaBudget' },
                 { title: 'Tipi e Recall', link: 'tempiRecall' },
                 { title: 'Invio sms', link: 'inviaSms' },
+                { title: 'Backup', link: 'backup' },
+                { title: 'Restore', link: 'restore' },
                 { title: 'Logging', link: 'logging' },
             ],
         }),

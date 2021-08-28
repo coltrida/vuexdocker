@@ -2,7 +2,7 @@
     <v-row class="mt-3 flex-column">
         <v-row>
             <v-col cols="6">
-                <h2>Invii Medici</h2>
+                <h2>Prescrizioni Mediche</h2>
             </v-col>
             <v-col cols="6">
                 <v-select

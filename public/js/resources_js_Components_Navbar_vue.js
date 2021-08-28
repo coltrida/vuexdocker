@@ -193,6 +193,12 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Invio sms',
         link: 'inviaSms'
       }, {
+        title: 'Backup',
+        link: 'backup'
+      }, {
+        title: 'Restore',
+        link: 'restore'
+      }, {
         title: 'Logging',
         link: 'logging'
       }]
@@ -774,7 +780,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -783,36 +788,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     if (this.getIdUser) {
-      this.fetchFilialiByUser(this.getIdUser);
+      this.fetchFilialiByUser(this.getIdUser).then(function () {
+        _this.fetchSoglie(_this.getFiliali[0].id);
+      });
     }
   },
   watch: {
     getSoglie: function getSoglie() {
-      var _this = this;
+      var _this2 = this;
 
-      // console.log(this.getSoglie[0]);
+      this.novita = 0;
       this.getSoglie.forEach(function (ele) {
         if (parseInt(ele.conteggio) - parseInt(ele.soglia) < 0) {
-          //console.log(parseInt(ele.soglia) - parseInt(ele.conteggio));
-          _this.novita = '*';
-
-          _this.playSound();
+          _this2.novita = '*';
         }
       });
     }
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
     fetchFilialiByUser: 'fetchFilialiByUser'
-  })), {}, {
-    playSound: function playSound() {
-      var alert = new Audio(this.sound);
-      alert.play();
-    },
-    resetNovita: function resetNovita() {
-      this.novita = 0;
-    }
-  }),
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('product', {
+    fetchSoglie: 'fetchSoglie'
+  })),
   computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
     getFiliali: 'getFiliali'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
@@ -1177,7 +1177,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3",
       novitaLogistica: 0,
       novitaCommerciale: 0
     };
@@ -1197,10 +1196,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name: 'home'
       });
     },
-    playSound: function playSound() {
-      var alert = new Audio(this.sound);
-      alert.play();
-    },
     resetAvviso: function resetAvviso() {
       this.novitaLogistica = 0;
       this.novitaCommerciale = 0;
@@ -1215,13 +1210,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
       _this.novitaLogistica = 'L';
-
-      _this.playSound();
     });
     window.Echo.channel("provaChannel").listen(".task-created", function (e) {
       _this.novitaCommerciale = 'C';
-
-      _this.playSound();
     });
     /*window.onunload = () => {
         localStorage.removeItem('user-token');
@@ -3823,10 +3814,7 @@ var render = function() {
                             "v-btn",
                             _vm._g(
                               _vm._b(
-                                {
-                                  attrs: { text: "", dark: "" },
-                                  on: { click: _vm.resetNovita }
-                                },
+                                { attrs: { text: "", dark: "" } },
                                 "v-btn",
                                 attrs,
                                 false

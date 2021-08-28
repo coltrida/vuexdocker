@@ -42,7 +42,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "TempiRecall",
@@ -186,11 +185,7 @@ var render = function() {
                 [
                   _c("v-data-table", {
                     staticClass: "elevation-1 mt-3",
-                    attrs: {
-                      headers: _vm.headers1,
-                      items: _vm.getLogging,
-                      "hide-default-footer": ""
-                    }
+                    attrs: { headers: _vm.headers1, items: _vm.getLogging }
                   })
                 ],
                 1

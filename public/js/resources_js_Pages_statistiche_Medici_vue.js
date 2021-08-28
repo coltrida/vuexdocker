@@ -244,7 +244,7 @@ var render = function() {
         "v-row",
         [
           _c("v-col", { attrs: { cols: "6" } }, [
-            _c("h2", [_vm._v("Invii Medici")])
+            _c("h2", [_vm._v("Prescrizioni Mediche")])
           ]),
           _vm._v(" "),
           _c(

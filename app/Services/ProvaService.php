@@ -81,6 +81,14 @@ class ProvaService
         $documento->link = '/storage/documenti/'.$prova->client->id.'/'.$filename;
         $documento->save();
 
+        $informativa = new Documento();
+        $informativa->client_id = $prova->client->id;
+        $informativa->prova_id = $prova->id;
+        $informativa->tipo = 'informativa';
+        $filenameInformativa = 'Informativa'.$giorno.$mese.$anno.'.pdf';
+        $informativa->link = '/storage/documenti/'.$prova->client->id.'/'.$filenameInformativa;
+        $informativa->save();
+
         $provaSalvata = Prova::with('stato', 'user', 'product', 'client', 'copiaComm')->find($request->id);
 
         $pdf = App::make('dompdf.wrapper');
@@ -89,6 +97,10 @@ class ProvaService
         }
         $pdf->loadHTML(view('pdf.copiaComm', compact('provaSalvata')))
             ->save("storage/documenti/".$provaSalvata->client->id.'/'.$filename);
+
+        $pdf2 = App::make('dompdf.wrapper');
+        $pdf2->loadHTML(view('pdf.informativa', compact('provaSalvata')))
+            ->save("storage/documenti/".$provaSalvata->client->id.'/'.$filenameInformativa);
 
         broadcast(new ProveEvent($provaSalvata))->toOthers();
 

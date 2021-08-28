@@ -4,6 +4,7 @@ const state = () => ({
     audio: [],
     ventaglioAnno: [],
     users: [],
+    commerciale: [],
     audioConBgt: [],
     audioSenzaBgt: [],
     audioConFatt: [],
@@ -17,6 +18,10 @@ const getters = {
 
     getAudio(state){
         return state.audio;
+    },
+
+    getCommerciale(state){
+        return state.commerciale;
     },
 
     getVentaglioAnno(state){
@@ -60,6 +65,11 @@ const actions = {
     async fetchAudio({commit}){
         const response = await axios.get(`${help().linkaudio}`);
         commit('fetchAudio', response.data);
+    },
+
+    async fetchCommerciale({commit}){
+        const response = await axios.get(`${help().linksituazionemese}`);
+        commit('fetchCommerciale', response.data);
     },
 
     async fetchUserAgenda({commit}){
@@ -176,6 +186,10 @@ const actions = {
 const mutations = {
     fetchAudio(state, payload){
         state.audio = payload;
+    },
+
+    fetchCommerciale(state, payload){
+        state.commerciale = payload;
     },
 
     fetchUserAgenda(state, payload){

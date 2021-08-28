@@ -887,7 +887,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         fileUp: {},
         tipo: ''
       },
-      tipiFile: ['Prescrizione', 'Autorizzazione', 'Collaudo'],
+      tipiFile: ['Prescrizione', 'Autorizzazione', 'Collaudo', 'CodFisc'],
       header: [{
         text: 'Data',
         align: 'start',
@@ -1735,7 +1735,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     reso: function reso(id) {
-      this.resoProva(id);
+      var _this3 = this;
+
+      this.resoProva(id).then(function () {
+        _this3.fetchSoglie(_this3.proveClient.filiale_id);
+      });
     },
     apriFattura: function apriFattura(item) {
       this.dialogFattura = true;
@@ -1783,6 +1787,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -43669,7 +43676,7 @@ var render = function() {
                                         {
                                           attrs: {
                                             href:
-                                              "http://vuexdocker.test/storage/fatture/2021/" +
+                                              "https://www.centrouditogroup.it/storage/fatture/2021/" +
                                               item.id +
                                               ".pdf",
                                             target: "_blank"
@@ -43785,7 +43792,7 @@ var render = function() {
                                         {
                                           attrs: {
                                             href:
-                                              "http://vuexdocker.test" +
+                                              "https://www.centrouditogroup.it" +
                                               item.copia_comm[0].link,
                                             target: "_blank"
                                           }
@@ -44119,8 +44126,11 @@ var render = function() {
                               "div",
                               [
                                 _c("v-select", {
+                                  staticClass: "mt-4",
                                   attrs: {
                                     items: _vm.tipologiaEsito,
+                                    outlined: "",
+                                    dense: "",
                                     label: "esito"
                                   },
                                   model: {

@@ -96,7 +96,6 @@
 
         data(){
             return {
-                sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3",
                 novitaLogistica : 0,
                 novitaCommerciale : 0,
             }
@@ -121,11 +120,6 @@
                 this.$router.push({ name: 'home' });
             },
 
-            playSound(){
-                let alert = new Audio(this.sound);
-                alert.play();
-            },
-
             resetAvviso(){
                 this.novitaLogistica = 0;
                 this.novitaCommerciale = 0;
@@ -139,12 +133,10 @@
 
             window.Echo.channel("logisticaChannel").listen(".task-created", e => {
                 this.novitaLogistica = 'L';
-                this.playSound();
             });
 
             window.Echo.channel("provaChannel").listen(".task-created", e => {
                 this.novitaCommerciale = 'C';
-                this.playSound();
             });
             /*window.onunload = () => {
                 localStorage.removeItem('user-token');

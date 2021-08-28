@@ -28,11 +28,11 @@ class DatabaseSeeder extends Seeder
             ListinoSeeder::class,
             RecapitoSeeder::class,
             FilialeUserSeeder::class,
-            ClientSeeder::class,
+      //      ClientSeeder::class,
             BudgetSeeder::class,
             ProductSeeder::class,
             TipologiaSeeder::class,
-            AgendaSeeder::class,
+     //       AgendaSeeder::class,
             FilialeListinoSeeder::class
    //         AppuntamentoSeeder::class
    //         ProvaSeeder::class,

@@ -62,6 +62,7 @@
                     path: 'app/public/',
                     fileUp:{},
                     nomeFile: '',
+                    idUser: ''
                 },
                 carica: false
             }
@@ -75,10 +76,11 @@
 
             importaXml(){
                 this.caricaFile.nomeFile = 'file'+this.getIdUser+'.xml';
+                this.caricaFile.idUser = this.getIdUser;
                 this.carica = true;
                 this.importClientsByFiliale(this.caricaFile).then(() => {
-                    let pathnomefile = this.caricaFile.path + this.caricaFile.nomeFile;
-                    this.importClientsXml(pathnomefile).then(() => {
+                  //  let pathnomefile = this.caricaFile.nomeFile;
+                    this.importClientsXml(this.caricaFile).then(() => {
                         this.caricaFile = {};
                         this.carica = false;
                     });

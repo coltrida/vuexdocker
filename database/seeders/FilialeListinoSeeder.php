@@ -18,7 +18,7 @@ class FilialeListinoSeeder extends Seeder
     {
         Filiale::all()->each(function ($filiale){
             Listino::all()->each(function ($listino) use($filiale){
-                $filiale->listino()->attach($listino->id, ['soglia' => Arr::random([2,3,4])]);
+                $filiale->listino()->attach($listino->id, ['soglia' => Arr::random([1])]);
             });
         });
     }

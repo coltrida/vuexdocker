@@ -38,6 +38,8 @@ const routes = [
     { path: '/inviiMedici', component: () => import('../Pages/medici/InviiMedici'), name: 'inviiMedici' },
     { path: '/statisticheMedici', component: () => import('../Pages/statistiche/Medici'), name: 'statisticheMedici' },
     { path: '/situazioneAudio', component: () => import('../Pages/clients/SituazioneAudio'), name: 'situazioneAudio' },
+    { path: '/backup', component: () => import('../Pages/gestione/Backup'), name: 'backup' },
+    { path: '/restore', component: () => import('../Pages/gestione/Restore'), name: 'restore' },
 ];
 
 export default routes;

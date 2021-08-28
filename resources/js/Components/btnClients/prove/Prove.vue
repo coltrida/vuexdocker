@@ -220,7 +220,7 @@
 
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on, attrs }">
-                                        <a :href="'http://vuexdocker.test/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
+                                        <a :href="'https://www.centrouditogroup.it/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
                                            <v-icon v-if="item.stato.nome === 'FATTURA'"
                                                     color="black"
                                                     small
@@ -252,7 +252,7 @@
 
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on, attrs }">
-                                        <a :href="'http://vuexdocker.test'+item.copia_comm[0].link" target="_blank">
+                                        <a :href="'https://www.centrouditogroup.it'+item.copia_comm[0].link" target="_blank">
                                             <v-icon
                                                 style="font-size: 25px"
                                                     color="orange"
@@ -419,7 +419,9 @@
             },
 
             reso(id){
-                this.resoProva(id);
+                this.resoProva(id).then(() =>{
+                    this.fetchSoglie(this.proveClient.filiale_id);
+                });
             },
 
             apriFattura(item){

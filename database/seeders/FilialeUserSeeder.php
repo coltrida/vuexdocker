@@ -19,7 +19,7 @@ class FilialeUserSeeder extends Seeder
                 'filiale_id' => 1,
                 'user_id' => 2,
             ],
-            [
+/*            [
                 'filiale_id' => 1,
                 'user_id' => 3,
             ],
@@ -46,7 +46,7 @@ class FilialeUserSeeder extends Seeder
             [
                 'filiale_id' => 4,
                 'user_id' => 8,
-            ],
+            ],*/
         ]);
     }
 }

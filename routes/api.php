@@ -131,6 +131,8 @@ Route::post('/addAssocia', [GestioneController::class, 'aggiungiAssociazione']);
 Route::post('/assegnaBgt', [GestioneController::class, 'assegnaBgt']);
 Route::post('/modificaBgt', [GestioneController::class, 'modificaBgt']);
 Route::get('/eliminaAssocia/{id}', [GestioneController::class, 'eliminaAssociazione']);
+Route::get('/backup', [GestioneController::class, 'backup']);
+Route::get('/restore', [GestioneController::class, 'restore']);
 Route::get('/logging', [GestioneController::class, 'logging']);
 
 // ---------------- audiometrie -------------------------
@@ -173,6 +175,10 @@ Route::delete('/eliminaDocumento/{idDocumento}', [DocumentoController::class, 'e
 
 // ----------------- elaborazioneGiornaliera -----------------------
 Route::get('/situazioneAnno', [ElaborazioneController::class, 'situazioneAnno']);
+Route::get('/resetSpecial', function (){
+    Artisan::call('migrate:fresh');
+    Artisan::call('db:seed');
+});
 
 // ----------------- statistiche -----------------------
 Route::get('/dettaglioAudio', [UserController::class, 'dettaglioAudio']);

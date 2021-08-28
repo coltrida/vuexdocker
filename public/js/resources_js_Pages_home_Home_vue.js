@@ -830,7 +830,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         fileUp: {},
         tipo: ''
       },
-      tipiFile: ['Prescrizione', 'Autorizzazione', 'Collaudo'],
+      tipiFile: ['Prescrizione', 'Autorizzazione', 'Collaudo', 'CodFisc'],
       header: [{
         text: 'Data',
         align: 'start',
@@ -1591,7 +1591,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     reso: function reso(id) {
-      this.resoProva(id);
+      var _this3 = this;
+
+      this.resoProva(id).then(function () {
+        _this3.fetchSoglie(_this3.proveClient.filiale_id);
+      });
     },
     apriFattura: function apriFattura(item) {
       this.dialogFattura = true;
@@ -1639,6 +1643,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -1982,7 +1989,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   /*data(){
       return{
-          sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3",
           novitaLogistica : 0,
           novitaCommerciale : 0,
       }
@@ -1991,11 +1997,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   /*mounted() {
       window.Echo.channel("logisticaChannel").listen(".task-created", e => {
           this.novitaLogistica = '*';
-          this.playSound();
       });
        window.Echo.channel("provaChannel").listen(".task-created", e => {
           this.novitaCommerciale = '*';
-          this.playSound();
       });
   },*/
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('telefonate', {
@@ -2006,10 +2010,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('filiali', {
     fetchRichiestaApparecchi: 'fetchRichiestaApparecchi'
   })), {}, {
-    playSound: function playSound() {
-      var alert = new Audio(this.sound);
-      alert.play();
-    },
     resetLogistica: function resetLogistica() {
       this.novitaLogistica = 0;
       this.fetchRichiestaApparecchi();
@@ -2196,6 +2196,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2207,7 +2225,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       dialogProdotti: false,
       prodottiSelezione: [],
-      expanded: [],
       headers1: [{
         text: 'Nome',
         width: 120,
@@ -2231,9 +2248,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
-      }
-      /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
-      ],
+      }],
       headers2: [{
         text: 'Nome',
         width: 160,
@@ -2279,20 +2294,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
-
-  /*updated() {
-      this.fetchSituazioneMese();
-  },*/
   mounted: function mounted() {
     var _this = this;
 
-    this.fetchSituazioneMese();
+    this.fetchCommerciale();
     window.Echo.channel("provaChannel").listen(".task-created", function (e) {
-      _this.fetchSituazioneMese();
+      _this.fetchCommerciale();
     });
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
-    fetchSituazioneMese: 'fetchSituazioneMese'
+    fetchCommerciale: 'fetchCommerciale'
   })), {}, {
     seleziona: function seleziona(items) {
       this.dialogProdotti = true;
@@ -2304,7 +2315,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
-    getSituazioneMese: 'getSituazioneMese'
+    getCommerciale: 'getCommerciale'
   }))
 });
 
@@ -2514,6 +2525,42 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -45567,7 +45614,7 @@ var render = function() {
                                         {
                                           attrs: {
                                             href:
-                                              "http://vuexdocker.test/storage/fatture/2021/" +
+                                              "https://www.centrouditogroup.it/storage/fatture/2021/" +
                                               item.id +
                                               ".pdf",
                                             target: "_blank"
@@ -45683,7 +45730,7 @@ var render = function() {
                                         {
                                           attrs: {
                                             href:
-                                              "http://vuexdocker.test" +
+                                              "https://www.centrouditogroup.it" +
                                               item.copia_comm[0].link,
                                             target: "_blank"
                                           }
@@ -46017,8 +46064,11 @@ var render = function() {
                               "div",
                               [
                                 _c("v-select", {
+                                  staticClass: "mt-4",
                                   attrs: {
                                     items: _vm.tipologiaEsito,
+                                    outlined: "",
+                                    dense: "",
                                     label: "esito"
                                   },
                                   model: {
@@ -46340,7 +46390,7 @@ var render = function() {
             [
               _c("h2", [_vm._v("Prove in Corso:")]),
               _vm._v(" "),
-              _vm._l(_vm.getSituazioneMese, function(audio) {
+              _vm._l(_vm.getCommerciale, function(audio) {
                 return _c(
                   "div",
                   { key: audio.id },
@@ -46373,27 +46423,60 @@ var render = function() {
                               var item = ref.item
                               return [
                                 _c(
-                                  "v-btn",
+                                  "v-tooltip",
                                   {
-                                    attrs: { color: "green", dark: "" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.seleziona(item.product)
-                                      }
-                                    }
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              _c(
+                                                "v-icon",
+                                                _vm._g(
+                                                  _vm._b(
+                                                    {
+                                                      attrs: {
+                                                        color: "blue",
+                                                        small: ""
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.seleziona(
+                                                            item.product
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    "v-icon",
+                                                    attrs,
+                                                    false
+                                                  ),
+                                                  on
+                                                ),
+                                                [
+                                                  _vm._v(
+                                                    "\n                                        mdi-format-list-bulleted-square\n                                    "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
                                   },
                                   [
-                                    _c(
-                                      "v-icon",
-                                      { attrs: { color: "white", small: "" } },
-                                      [
-                                        _vm._v(
-                                          "\n                                    mdi-format-list-bulleted-square\n                                "
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Prodotti")])
+                                  ]
                                 )
                               ]
                             }
@@ -46409,9 +46492,11 @@ var render = function() {
                                     staticStyle: { color: "black" },
                                     attrs: {
                                       to: {
-                                        name: "clients",
+                                        name: "clientsFiliale",
                                         params: {
-                                          cogRicerca: item.client.cognome
+                                          filialeId: item.filiale_id,
+                                          nomRicerca: item.client.nome,
+                                          cogRicerca: item.client.fullname
                                         }
                                       }
                                     }
@@ -46446,7 +46531,7 @@ var render = function() {
             [
               _c("h2", [_vm._v("Finalizzati:")]),
               _vm._v(" "),
-              _vm._l(_vm.getSituazioneMese, function(audio) {
+              _vm._l(_vm.getCommerciale, function(audio) {
                 return _c(
                   "div",
                   { key: audio.id },
@@ -46509,19 +46594,59 @@ var render = function() {
                               var item = ref.item
                               return [
                                 _c(
-                                  "v-btn",
+                                  "v-tooltip",
                                   {
-                                    attrs: { color: "green", dark: "" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.seleziona(item.product)
-                                      }
-                                    }
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              _c(
+                                                "v-icon",
+                                                _vm._g(
+                                                  _vm._b(
+                                                    {
+                                                      attrs: {
+                                                        color: "blue",
+                                                        small: ""
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.seleziona(
+                                                            item.product
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    "v-icon",
+                                                    attrs,
+                                                    false
+                                                  ),
+                                                  on
+                                                ),
+                                                [
+                                                  _vm._v(
+                                                    "\n                                        mdi-format-list-bulleted-square\n                                    "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
                                   },
                                   [
-                                    _vm._v(
-                                      "\n                                Prod\n                            "
-                                    )
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Prodotti")])
                                   ]
                                 )
                               ]
@@ -46538,9 +46663,11 @@ var render = function() {
                                     staticStyle: { color: "black" },
                                     attrs: {
                                       to: {
-                                        name: "clients",
+                                        name: "clientsFiliale",
                                         params: {
-                                          cogRicerca: item.client.cognome
+                                          filialeId: item.filiale_id,
+                                          nomRicerca: item.client.nome,
+                                          cogRicerca: item.client.fullname
                                         }
                                       }
                                     }
@@ -46575,7 +46702,7 @@ var render = function() {
             [
               _c("h2", [_vm._v("Resi:")]),
               _vm._v(" "),
-              _vm._l(_vm.getSituazioneMese, function(audio) {
+              _vm._l(_vm.getCommerciale, function(audio) {
                 return _c(
                   "div",
                   { key: audio.id },
@@ -46638,19 +46765,59 @@ var render = function() {
                               var item = ref.item
                               return [
                                 _c(
-                                  "v-btn",
+                                  "v-tooltip",
                                   {
-                                    attrs: { color: "green", dark: "" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.seleziona(item.product)
-                                      }
-                                    }
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              _c(
+                                                "v-icon",
+                                                _vm._g(
+                                                  _vm._b(
+                                                    {
+                                                      attrs: {
+                                                        color: "blue",
+                                                        small: ""
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.seleziona(
+                                                            item.product
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    "v-icon",
+                                                    attrs,
+                                                    false
+                                                  ),
+                                                  on
+                                                ),
+                                                [
+                                                  _vm._v(
+                                                    "\n                                        mdi-format-list-bulleted-square\n                                    "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
                                   },
                                   [
-                                    _vm._v(
-                                      "\n                                Prodotti\n                            "
-                                    )
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Prodotti")])
                                   ]
                                 )
                               ]
@@ -46667,9 +46834,11 @@ var render = function() {
                                     staticStyle: { color: "black" },
                                     attrs: {
                                       to: {
-                                        name: "clients",
+                                        name: "clientsFiliale",
                                         params: {
-                                          cogRicerca: item.client.cognome
+                                          filialeId: item.filiale_id,
+                                          nomRicerca: item.client.nome,
+                                          cogRicerca: item.client.fullname
                                         }
                                       }
                                     }
@@ -46947,20 +47116,55 @@ var render = function() {
                         var item = ref.item
                         return [
                           _c(
-                            "v-btn",
+                            "v-tooltip",
                             {
-                              attrs: { color: "green", dark: "" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.seleziona(item.product)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                Prod\n                            "
+                              attrs: { bottom: "" },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      var attrs = ref.attrs
+                                      return [
+                                        _c(
+                                          "v-icon",
+                                          _vm._g(
+                                            _vm._b(
+                                              {
+                                                attrs: {
+                                                  color: "blue",
+                                                  small: ""
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.seleziona(
+                                                      item.product
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              "v-icon",
+                                              attrs,
+                                              false
+                                            ),
+                                            on
+                                          ),
+                                          [
+                                            _vm._v(
+                                              "\n                                mdi-format-list-bulleted-square\n                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
                               )
-                            ]
+                            },
+                            [_vm._v(" "), _c("span", [_vm._v("Prodotti")])]
                           )
                         ]
                       }
@@ -47090,20 +47294,55 @@ var render = function() {
                         var item = ref.item
                         return [
                           _c(
-                            "v-btn",
+                            "v-tooltip",
                             {
-                              attrs: { color: "green", dark: "" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.seleziona(item.product)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                Prod\n                            "
+                              attrs: { bottom: "" },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      var attrs = ref.attrs
+                                      return [
+                                        _c(
+                                          "v-icon",
+                                          _vm._g(
+                                            _vm._b(
+                                              {
+                                                attrs: {
+                                                  color: "blue",
+                                                  small: ""
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.seleziona(
+                                                      item.product
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              "v-icon",
+                                              attrs,
+                                              false
+                                            ),
+                                            on
+                                          ),
+                                          [
+                                            _vm._v(
+                                              "\n                                        mdi-format-list-bulleted-square\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
                               )
-                            ]
+                            },
+                            [_vm._v(" "), _c("span", [_vm._v("Prodotti")])]
                           )
                         ]
                       }
@@ -47195,20 +47434,55 @@ var render = function() {
                         var item = ref.item
                         return [
                           _c(
-                            "v-btn",
+                            "v-tooltip",
                             {
-                              attrs: { color: "green", dark: "" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.seleziona(item.product)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                Prod\n                            "
+                              attrs: { bottom: "" },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      var attrs = ref.attrs
+                                      return [
+                                        _c(
+                                          "v-icon",
+                                          _vm._g(
+                                            _vm._b(
+                                              {
+                                                attrs: {
+                                                  color: "blue",
+                                                  small: ""
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.seleziona(
+                                                      item.product
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              "v-icon",
+                                              attrs,
+                                              false
+                                            ),
+                                            on
+                                          ),
+                                          [
+                                            _vm._v(
+                                              "\n                                        mdi-format-list-bulleted-square\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ],
+                                null,
+                                true
                               )
-                            ]
+                            },
+                            [_vm._v(" "), _c("span", [_vm._v("Prodotti")])]
                           )
                         ]
                       }

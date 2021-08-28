@@ -121,7 +121,7 @@ class TelefonateService
         $prossimaTelefonata->updated_at = Carbon::now()->format('Y-m-d');
         $prossimaTelefonata->save();
 
-        $utente = User::find($request->usersId);
+        $utente = User::find($request->userId);
         $log = new LoggingService();
         $propieta = 'recall';
         if($request->esito){
@@ -143,7 +143,7 @@ class TelefonateService
         $telefonata->updated_at = Carbon::now()->format('Y-m-d');
         $telefonata->save();
 
-        $utente = User::find($request->usersId);
+        $utente = User::find($request->userId);
         $log = new LoggingService();
         $propieta = 'recall';
         if($request->esito){

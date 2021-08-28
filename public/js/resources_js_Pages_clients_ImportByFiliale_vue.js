@@ -79,7 +79,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       caricaFile: {
         path: 'app/public/',
         fileUp: {},
-        nomeFile: ''
+        nomeFile: '',
+        idUser: ''
       },
       carica: false
     };
@@ -92,11 +93,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.caricaFile.nomeFile = 'file' + this.getIdUser + '.xml';
+      this.caricaFile.idUser = this.getIdUser;
       this.carica = true;
       this.importClientsByFiliale(this.caricaFile).then(function () {
-        var pathnomefile = _this.caricaFile.path + _this.caricaFile.nomeFile;
-
-        _this.importClientsXml(pathnomefile).then(function () {
+        //  let pathnomefile = this.caricaFile.nomeFile;
+        _this.importClientsXml(_this.caricaFile).then(function () {
           _this.caricaFile = {};
           _this.carica = false;
         });

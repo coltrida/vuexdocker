@@ -40,4 +40,14 @@ class GestioneController extends Controller
     {
         return LoggingResource::collection($loggingService->lista());
     }
+
+    public function backup(LoggingService $loggingService)
+    {
+        return $loggingService->backup();
+    }
+
+    public function restore(LoggingService $loggingService)
+    {
+        return $loggingService->restore();
+    }
 }

@@ -1,6 +1,6 @@
 <div style="display:flex">
     <div style="font-size: 14px">
-        <img src="{{public_path('img/logo-centroudito.jpg')}}" style="width: 200px">
+        <img src="{{asset('img/logo-centroudito.jpg')}}" style="width: 200px">
         <div>Centro Udito</div>
         <div>via Roma 12</div>
         <div>50125 Pisa</div>
@@ -47,27 +47,12 @@
 </div>
 
 <div style="border: 1px solid black; height: 400px; width: 100%; margin-top: 10px; margin-bottom: 30px; padding: 10px">
-    <h3>Informativa Privacy</h3>
-    <p>
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
-        lsdkjf òlsdkjf òlksdfòlj dslòf jkld sjlòf jdklsòj fldslòkf lkdjslf jklòsd j
+    <h3>Altre condizioni del Contratto</h3>
+    <p style="text-align: justify; text-justify: inter-word;">
+        ................ ................... .................. ............... ...........
+        ................. ................. ....... ............... .................
+        ................... ............. ................ ............... ............
+        ............... ............ ............... ................. ..................
     </p>
 </div>
 

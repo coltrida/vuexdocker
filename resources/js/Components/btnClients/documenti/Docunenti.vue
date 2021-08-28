@@ -93,7 +93,7 @@
                     tipo: ''
                 },
 
-                tipiFile: ['Prescrizione', 'Autorizzazione', 'Collaudo'],
+                tipiFile: ['Prescrizione', 'Autorizzazione', 'Collaudo', 'CodFisc'],
 
                 header: [
                     { text: 'Data',  align: 'start', sortable: false, value: 'created_at', class: "indigo white--text" },

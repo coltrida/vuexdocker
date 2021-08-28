@@ -229,6 +229,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -250,6 +253,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cittaRules: [function (v) {
         return !!v || "la città è obbligatoria";
       }],
+      capRules: [function (v) {
+        return !!v || "il cap è obbligatorio";
+      }],
       provinciaRules: [function (v) {
         return !!v || "la provincia è obbligatoria";
       }],
@@ -264,6 +270,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       filialeRules: [function (v) {
         return !!v || "la filiale è obbligatoria";
+      }],
+      nascitaRules: [function (v) {
+        return !!v || "la data di nascita è obbligatoria";
       }]
     };
   },
@@ -620,7 +629,11 @@ var render = function() {
                     { attrs: { cols: "6", md: "1", lg: "1" } },
                     [
                       _c("v-text-field", {
-                        attrs: { label: "cap" },
+                        attrs: {
+                          label: "cap*",
+                          rules: _vm.capRules,
+                          required: ""
+                        },
                         model: {
                           value: _vm.newClient.cap,
                           callback: function($$v) {
@@ -761,6 +774,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-row",
+                { staticClass: "mb-10" },
                 [
                   _c(
                     "v-col",
@@ -806,9 +820,10 @@ var render = function() {
                                       _vm._b(
                                         {
                                           attrs: {
-                                            label: "Data di Nascita  ",
+                                            label: "Data di Nascita*",
                                             "prepend-icon": "mdi-calendar",
-                                            readonly: ""
+                                            rules: _vm.nascitaRules,
+                                            required: ""
                                           },
                                           model: {
                                             value: _vm.newClient.datanascita,

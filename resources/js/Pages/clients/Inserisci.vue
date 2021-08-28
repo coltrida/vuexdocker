@@ -48,7 +48,9 @@
                 <v-col cols="6" md="1" lg="1">
                     <v-text-field
                         v-model="newClient.cap"
-                        label="cap"
+                        label="cap*"
+                        :rules="capRules"
+                        required
                     ></v-text-field>
                 </v-col>
 
@@ -104,7 +106,7 @@
                 </v-col>
             </v-row>
 
-            <v-row>
+            <v-row class="mb-10">
                 <v-col cols="12" md="2" lg="2">
                     <v-menu
                         ref="menu"
@@ -118,9 +120,10 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-text-field
                                 v-model="newClient.datanascita"
-                                label="Data di Nascita  "
+                                label="Data di Nascita*"
                                 prepend-icon="mdi-calendar"
-                                readonly
+                                :rules="nascitaRules"
+                                required
                                 v-bind="attrs"
                                 v-on="on"
                             ></v-text-field>
@@ -225,11 +228,13 @@
                 cognomeRules: [ v => !!v || 'il cognome è obbligatorio'],
                 indirizzoRules: [ v => !!v || "l'indirizzo è obbligatorio"],
                 cittaRules: [ v => !!v || "la città è obbligatoria"],
+                capRules: [ v => !!v || "il cap è obbligatorio"],
                 provinciaRules: [ v => !!v || "la provincia è obbligatoria"],
                 telefonoRules: [ v => !!v || "il telefono è obbligatorio"],
                 tipoRules: [ v => !!v || "il tipo è obbligatorio"],
                 fonteRules: [ v => !!v || "la fonte è obbligatoria"],
                 filialeRules: [ v => !!v || "la filiale è obbligatoria"],
+                nascitaRules: [ v => !!v || "la data di nascita è obbligatoria"],
             }
         },
 

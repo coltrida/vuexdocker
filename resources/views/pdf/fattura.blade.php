@@ -1,6 +1,6 @@
 <div style="display:flex">
     <div style="font-size: 14px">
-        <img src="{{public_path('img/logo-centroudito.jpg')}}" style="width: 200px">
+        <img src="{{asset('img/logo-centroudito.jpg')}}" style="width: 200px">
         <div>Centro Udito</div>
         <div>via Roma 12</div>
         <div>50125 Pisa</div>

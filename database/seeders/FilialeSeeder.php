@@ -23,7 +23,7 @@ class FilialeSeeder extends Seeder
                 'cap' => '56127',
                 'provincia' => 'PI',
             ],
-            [
+            /*[
                 'nome' => 'CIVITANOVA',
                 'indirizzo' => 'VIA VICOLO STRETTO 23',
                 'citta' => 'CIVITANOVA MARCHE',
@@ -46,7 +46,7 @@ class FilialeSeeder extends Seeder
                 'telefono' => '08554545',
                 'cap' => '584652',
                 'provincia' => 'AN',
-            ]
+            ]*/
         ]);
     }
 }

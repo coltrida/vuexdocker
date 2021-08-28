@@ -16,11 +16,11 @@ class CreateFilialesTable extends Migration
         Schema::create('filiales', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('indirizzo');
-            $table->string('citta');
-            $table->string('telefono');
-            $table->string('cap');
-            $table->string('provincia');
+            $table->string('indirizzo')->nullable();
+            $table->string('citta')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('cap')->nullable();
+            $table->string('provincia')->nullable();
             $table->timestamps();
         });
     }
