@@ -28,4 +28,9 @@ class MarketingController extends Controller
     {
         return $marketingService->fatturatoCanali();
     }
+
+    public function userFatturatoCanali(MarketingService $marketingService)
+    {
+        return $marketingService->userFatturatoCanali();
+    }
 }

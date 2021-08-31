@@ -3227,13 +3227,17 @@ var state = function state() {
     clientMessaggio: '',
     client: {},
     situazioneAnnoClientiAudio: [],
-    situazioneAnnoResiAudio: []
+    situazioneAnnoResiAudio: [],
+    messaggioBackup: ''
   };
 };
 
 var getters = {
   getClients: function getClients(state) {
     return state.clients;
+  },
+  getMessaggioBackup: function getMessaggioBackup(state) {
+    return state.messaggioBackup;
   },
   getClientMessaggio: function getClientMessaggio(state) {
     return state.clientMessaggio;
@@ -3627,6 +3631,29 @@ var actions = {
         }
       }, _callee16);
     }))();
+  },
+  eseguiBackup: function eseguiBackup(_ref16) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee17() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee17$(_context17) {
+        while (1) {
+          switch (_context17.prev = _context17.next) {
+            case 0:
+              commit = _ref16.commit;
+              _context17.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkbackup));
+
+            case 3:
+              response = _context17.sent;
+              commit('eseguiBackup', response.data);
+
+            case 5:
+            case "end":
+              return _context17.stop();
+          }
+        }
+      }, _callee17);
+    }))();
   }
 };
 var mutations = {
@@ -3679,6 +3706,9 @@ var mutations = {
   },
   fetchSituazioneAnnoResiAudio: function fetchSituazioneAnnoResiAudio(state, payload) {
     state.situazioneAnnoResiAudio = payload;
+  },
+  eseguiBackup: function eseguiBackup(state, payload) {
+    state.messaggioBackup = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4859,7 +4889,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = function state() {
   return {
     canali: [],
-    canaliFatturato: []
+    canaliFatturato: [],
+    userCanaliFatturato: []
   };
 };
 
@@ -4869,6 +4900,9 @@ var getters = {
   },
   getCanaliFatturato: function getCanaliFatturato(state) {
     return state.canaliFatturato;
+  },
+  getUserCanaliFatturato: function getUserCanaliFatturato(state) {
+    return state.userCanaliFatturato;
   }
 };
 var actions = {
@@ -4918,7 +4952,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  addCanale: function addCanale(_ref3, newCanale) {
+  fetchUserCanaliFatturato: function fetchUserCanaliFatturato(_ref3) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -4927,13 +4961,11 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddcanale), {
-                'newCanale': newCanale
-              });
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatisticheuserfatturatocanali));
 
             case 3:
               response = _context3.sent;
-              commit('addCanale', response.data);
+              commit('fetchUserCanaliFatturato', response.data);
 
             case 5:
             case "end":
@@ -4943,15 +4975,40 @@ var actions = {
       }, _callee3);
     }))();
   },
-  eliminaCanale: function eliminaCanale(_ref4, id) {
+  addCanale: function addCanale(_ref4, newCanale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddcanale), {
+                'newCanale': newCanale
+              });
+
+            case 3:
+              response = _context4.sent;
+              commit('addCanale', response.data);
+
+            case 5:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  eliminaCanale: function eliminaCanale(_ref5, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcanali) + '/' + id);
 
             case 3:
@@ -4959,10 +5016,10 @@ var actions = {
 
             case 4:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   }
 };
@@ -4972,6 +5029,9 @@ var mutations = {
   },
   fetchCanaliFatturato: function fetchCanaliFatturato(state, payload) {
     state.canaliFatturato = payload;
+  },
+  fetchUserCanaliFatturato: function fetchUserCanaliFatturato(state, payload) {
+    state.userCanaliFatturato = payload;
   },
   addCanale: function addCanale(state, payload) {
     state.canali.unshift(payload);
@@ -5183,22 +5243,21 @@ var actions = {
       }, _callee6);
     }))();
   },
-  inviiMedici: function inviiMedici(_ref7, payload) {
+  eliminaOrario: function eliminaOrario(_ref7, idOrario) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-      var commit, response;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkinviimedici), payload);
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkeliminaOrario) + '/' + idOrario);
 
             case 3:
-              response = _context7.sent;
-              commit('inviiMedici', response.data);
+              commit('eliminaOrario', idOrario);
 
-            case 5:
+            case 4:
             case "end":
               return _context7.stop();
           }
@@ -5206,7 +5265,7 @@ var actions = {
       }, _callee7);
     }))();
   },
-  totaleInviiMedici: function totaleInviiMedici(_ref8, payload) {
+  inviiMedici: function inviiMedici(_ref8, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
@@ -5215,11 +5274,11 @@ var actions = {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linktotaleinviimedici), payload);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkinviimedici), payload);
 
             case 3:
               response = _context8.sent;
-              commit('totaleInviiMedici', response.data);
+              commit('inviiMedici', response.data);
 
             case 5:
             case "end":
@@ -5229,7 +5288,7 @@ var actions = {
       }, _callee8);
     }))();
   },
-  statisticheInviiMedici: function statisticheInviiMedici(_ref9, payload) {
+  totaleInviiMedici: function totaleInviiMedici(_ref9, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
@@ -5238,11 +5297,11 @@ var actions = {
             case 0:
               commit = _ref9.commit;
               _context9.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatisticheinviimedici), payload);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linktotaleinviimedici), payload);
 
             case 3:
               response = _context9.sent;
-              commit('statisticheInviiMedici', response.data);
+              commit('totaleInviiMedici', response.data);
 
             case 5:
             case "end":
@@ -5252,7 +5311,7 @@ var actions = {
       }, _callee9);
     }))();
   },
-  statisticheTotaleInviiMedici: function statisticheTotaleInviiMedici(_ref10, payload) {
+  statisticheInviiMedici: function statisticheInviiMedici(_ref10, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
@@ -5261,11 +5320,11 @@ var actions = {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatistichetotaleinviimedici), payload);
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatisticheinviimedici), payload);
 
             case 3:
               response = _context10.sent;
-              commit('statisticheTotaleInviiMedici', response.data);
+              commit('statisticheInviiMedici', response.data);
 
             case 5:
             case "end":
@@ -5273,6 +5332,29 @@ var actions = {
           }
         }
       }, _callee10);
+    }))();
+  },
+  statisticheTotaleInviiMedici: function statisticheTotaleInviiMedici(_ref11, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
+        while (1) {
+          switch (_context11.prev = _context11.next) {
+            case 0:
+              commit = _ref11.commit;
+              _context11.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatistichetotaleinviimedici), payload);
+
+            case 3:
+              response = _context11.sent;
+              commit('statisticheTotaleInviiMedici', response.data);
+
+            case 5:
+            case "end":
+              return _context11.stop();
+          }
+        }
+      }, _callee11);
     }))();
   }
 };
@@ -5293,6 +5375,11 @@ var mutations = {
   },
   addOrario: function addOrario(state, payload) {
     state.orari.unshift(payload);
+  },
+  eliminaOrario: function eliminaOrario(state, idOrario) {
+    state.orari = state.orari.filter(function (u) {
+      return u.id !== idOrario;
+    });
   },
   inviiMedici: function inviiMedici(state, payload) {
     state.invii = payload;
@@ -7860,6 +7947,7 @@ var help = function help() {
     linkstatisticherecapitiingressi: base + 'ingressiRecapiti',
     linkstatisticherecapitiingressimese: base + 'ingressiRecapitiMesi',
     linkstatistichefatturatocanali: base + 'fatturatoCanali',
+    linkstatisticheuserfatturatocanali: base + 'userFatturatoCanali',
     linkstatistichedettagliaudio: base + 'dettaglioAudio',
     linkimportclients: base + 'importClients',
     linkimportclientsxml: base + 'importClientsFromNoah',
@@ -7882,6 +7970,7 @@ var help = function help() {
     linkaddmedico: base + 'addDottore',
     linkcaricaorari: base + 'caricaOrari',
     linkaddorario: base + 'addOrario',
+    linkeliminaOrario: base + 'eliminaOrario',
     linkcaricaorariodottore: base + 'caricaOrarioDottore',
     linkinviimedici: base + 'inviiMedici',
     linktotaleinviimedici: base + 'totaleInviiMedici',

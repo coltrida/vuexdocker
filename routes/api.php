@@ -186,6 +186,7 @@ Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSitua
 Route::get('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
 Route::get('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiMesi']);
 Route::get('/fatturatoCanali', [MarketingController::class, 'fatturatoCanali']);
+Route::get('/userFatturatoCanali', [MarketingController::class, 'userFatturatoCanali']);
 Route::get('/ventaglioAnno', [UserController::class, 'ventaglioAnno']);
 Route::post('/statisticheInviiMedici', [DottoreController::class, 'statisticheInviiMedici']);
 Route::post('/statisticheTotaleInviiMedici', [DottoreController::class, 'statisticheTotaleInviiMedici']);
@@ -204,6 +205,7 @@ Route::get('/caricaOrarioDottore/{dottore}', [DottoreController::class, 'caricaO
 Route::delete('/listaDottori/{idMedico}', [DottoreController::class, 'elimina']);
 Route::post('/addDottore', [DottoreController::class, 'aggiungi']);
 Route::post('/addOrario', [DottoreController::class, 'aggiungiOrario']);
+Route::delete('/eliminaOrario/{idOrario}', [DottoreController::class, 'eliminaOrario']);
 Route::post('/inviiMedici', [DottoreController::class, 'inviiMedici']);
 Route::post('/totaleInviiMedici', [DottoreController::class, 'totaleInviiMedici']);
 

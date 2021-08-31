@@ -2334,6 +2334,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'tipologia',
         "class": "indigo white--text"
       }, {
+        text: 'Data di Nascita',
+        width: 150,
+        value: 'datanascita',
+        "class": "indigo white--text"
+      }, {
         text: 'fonte',
         width: 200,
         value: 'marketing',

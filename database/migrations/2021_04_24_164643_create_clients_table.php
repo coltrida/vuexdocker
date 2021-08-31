@@ -18,11 +18,11 @@ class CreateClientsTable extends Migration
             $table->string('nome');
             $table->string('cognome');
             $table->string('codfisc')->unique()->nullable();
-            $table->string('indirizzo');
-            $table->string('citta');
+            $table->string('indirizzo')->nullable();
+            $table->string('citta')->nullable();
             $table->string('cap')->nullable();
-            $table->string('provincia');
-            $table->string('telefono');
+            $table->string('provincia')->nullable();
+            $table->string('telefono')->nullable();
             $table->string('telefono2')->nullable();
             $table->string('telefono3')->nullable();
             $table->bigInteger('tipologia_id');

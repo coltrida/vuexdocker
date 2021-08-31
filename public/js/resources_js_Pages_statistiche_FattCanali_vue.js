@@ -40,13 +40,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
   data: function data() {
     return {
+      ricerca: {},
       headers: [{
         text: 'Nome',
+        width: 300,
         align: 'start',
         sortable: false,
         value: 'name',
@@ -55,6 +90,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Fatturato',
         sortable: false,
         value: 'prova_fattura_sum_tot',
+        "class": "indigo white--text"
+      }, {
+        text: 'Ingressi',
+        sortable: false,
+        value: 'clients_count',
         "class": "indigo white--text"
       }, {
         text: '%',
@@ -66,12 +106,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.fetchCanaliFatturato();
+    this.fetchUserCanaliFatturato();
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('marketing', {
-    fetchCanaliFatturato: 'fetchCanaliFatturato'
-  })),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('marketing', {
+    fetchCanaliFatturato: 'fetchCanaliFatturato',
+    fetchUserCanaliFatturato: 'fetchUserCanaliFatturato'
+  })), {}, {
+    sumField: function sumField(key) {
+      return this.getCanaliFatturato.reduce(function (a, b) {
+        return a + (b[key] || 0);
+      }, 0);
+    }
+  }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('marketing', {
-    getCanaliFatturato: 'getCanaliFatturato'
+    getCanaliFatturato: 'getCanaliFatturato',
+    getUserCanaliFatturato: 'getUserCanaliFatturato'
   }))
 });
 
@@ -173,46 +222,107 @@ var render = function() {
       _c(
         "v-container",
         [
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.getCanaliFatturato,
-              "hide-default-footer": ""
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.percentuale",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(
-                          item.prova_fattura_sum_tot
-                            ? (
-                                item.prova_fattura_sum_tot /
-                                _vm.getCanaliFatturato.reduce(function(a, b) {
-                                  return {
-                                    prova_fattura_sum_tot:
-                                      a.prova_fattura_sum_tot +
-                                      b.prova_fattura_sum_tot
-                                  }
-                                }).prova_fattura_sum_tot
-                              ).toFixed(2) *
-                                100 +
-                                " %"
-                            : 0
-                        ) +
-                        "\n                "
-                    )
-                  ]
+          _c(
+            "v-data-table",
+            {
+              staticClass: "elevation-1 mt-3",
+              attrs: {
+                dense: "",
+                headers: _vm.headers,
+                items: _vm.getCanaliFatturato,
+                "hide-default-footer": ""
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "item.percentuale",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(
+                            item.prova_fattura_sum_tot
+                              ? (
+                                  item.prova_fattura_sum_tot /
+                                  _vm.getCanaliFatturato.reduce(function(a, b) {
+                                    return {
+                                      prova_fattura_sum_tot:
+                                        a.prova_fattura_sum_tot +
+                                        b.prova_fattura_sum_tot
+                                    }
+                                  }).prova_fattura_sum_tot
+                                ).toFixed(2) *
+                                  100 +
+                                  " %"
+                              : 0
+                          ) +
+                          "\n                "
+                      )
+                    ]
+                  }
                 }
-              }
-            ])
+              ])
+            },
+            [
+              _vm._v(" "),
+              _c("template", { slot: "body.append" }, [
+                _c("tr", { staticClass: "pink--text" }, [
+                  _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("prova_fattura_sum_tot")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("clients_count")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" })
+                ])
+              ])
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.getUserCanaliFatturato, function(audio) {
+            return _c(
+              "div",
+              { key: audio.id, staticClass: "mt-8" },
+              [
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    dense: "",
+                    headers: _vm.headers,
+                    items: audio.valori,
+                    "hide-default-footer": ""
+                  },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "header.name",
+                        fn: function(ref) {
+                          var header = ref.header
+                          return [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(audio.name) +
+                                "\n                    "
+                            )
+                          ]
+                        }
+                      }
+                    ],
+                    null,
+                    true
+                  )
+                })
+              ],
+              1
+            )
           })
         ],
-        1
+        2
       )
     ],
     1

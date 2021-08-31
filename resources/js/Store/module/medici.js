@@ -68,6 +68,11 @@ const actions = {
         commit('addOrario', response.data);
     },
 
+    async eliminaOrario({commit}, idOrario){
+        await axios.delete(`${help().linkeliminaOrario}`+'/'+idOrario);
+        commit('eliminaOrario', idOrario);
+    },
+
     async inviiMedici({commit}, payload){
         const response = await axios.post(`${help().linkinviimedici}`, payload);
         commit('inviiMedici', response.data);
@@ -108,6 +113,10 @@ const mutations = {
 
     addOrario(state, payload){
         state.orari.unshift(payload);
+    },
+
+    eliminaOrario(state, idOrario){
+        state.orari = state.orari.filter(u => u.id !== idOrario);
     },
 
     inviiMedici(state, payload){

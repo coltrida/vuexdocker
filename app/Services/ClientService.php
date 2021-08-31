@@ -124,7 +124,7 @@ class ClientService
      //   $new->recall = 1;
     //    $new->datarecall = $this->calcolaRecall($request->tipologia_id);
         $new->mail = trim(Str::upper($request->mail));
-        $new->datanascita = $request->datanascita;
+        $new->datanascita = $request->datanascita ? Carbon::make($request->datanascita)->format('Y-m-d') : null;
         $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
         $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
         $new->save();
@@ -275,23 +275,25 @@ class ClientService
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
 
         foreach ($xml->Patient as $ele){
+            //dd($ele->Patient);
             $client = Client::firstOrCreate(
                 [
                     'nome' => trim(Str::upper($ele->Patient->FirstName)),
                     'cognome' => trim(Str::upper($ele->Patient->LastName)),
-                    'indirizzo' => $ele->Patient->Address1 ? trim(Str::upper($ele->Patient->Address1)) : null,
-                    'cap' => $ele->Patient->Zip ? trim(Str::upper($ele->Patient->Zip)) : null,
-                    'telefono' => $ele->Patient->HomePhone ? $ele->Patient->HomePhone : null,
-                    'telefono2' => $ele->Patient->WorkPhone ? $ele->Patient->WorkPhone : null,
-                    'telefono3' => $ele->Patient->MobilePhone ? $ele->Patient->MobilePhone : null,
-                    'provincia' => $ele->Patient->Other1 ? trim(Str::upper($ele->Patient->Other1)) : null,
                     'citta' => $ele->Patient->City ? trim(Str::upper($ele->Patient->City)) : null,
+                    'indirizzo' => $ele->Patient->Address1 ? trim(Str::upper($ele->Patient->Address1)) : null],
+                [
+                    'cap' => $ele->Patient->Zip ? trim(Str::upper($ele->Patient->Zip)) : null,
+                    'telefono' => $ele->Patient->MobilePhone ? trim(Str::upper($ele->Patient->MobilePhone)) : null,
+                    'telefono2' => $ele->Patient->WorkPhone ? trim(Str::upper($ele->Patient->WorkPhone)) : null,
+                    'telefono3' => $ele->Patient->HomePhone ? trim(Str::upper($ele->Patient->HomePhone)) : null,
+                    'provincia' => $ele->Patient->Other1 ? trim(Str::upper($ele->Patient->Other1)) : null,
 //                    'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
                     'user_id' => $request['idUser'],
-                    'datanascita' => $ele->Patient->DateofBirth ? $ele->Patient->DateofBirth : null,
+                    'datanascita' => $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null,
 //                    'recapito_id' => $ele->Patient->Other2 ? $ele->Patient->Other2 : null,
                     'recapito_id' => null,
-                    'mail' => $ele->Patient->EMail ? $ele->Patient->EMail : null,
+                    'mail' => is_string($ele->Patient->EMail) ? (string)$ele->Patient->EMail : null,
 //                    'tipologia_id' => $ele->Patient->Province ? $ele->Patient->Province : null,
                     'tipologia_id' => 6,
 //                    'filiale_id' => User::find($ele->Patient->CreatedBy)->filiale[0]->id,

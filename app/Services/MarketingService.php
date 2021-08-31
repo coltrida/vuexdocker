@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Marketing;
+use App\Models\User;
 use Illuminate\Support\Str;
 use function trim;
 
@@ -30,7 +31,26 @@ class MarketingService
 
     public function fatturatoCanali()
     {
-        return Marketing::withSum('provaFattura', 'tot')
+        return Marketing::
+            withSum('provaFattura', 'tot')
+            ->withCount('clients')
             ->get();
+    }
+
+    public function userFatturatoCanali()
+    {
+        $audios = User::audio()->get();
+        foreach ($audios as $audio){
+            $market = Marketing::
+            whereHas('clients', function ($q) use($audio){
+                $q->where('user_id', $audio->id);
+            })
+                ->withSum('provaFattura', 'tot')
+                ->withCount('clients')
+                ->get();
+
+            $audio->valori = $market;
+        }
+        return $audios;
     }
 }

@@ -24,7 +24,7 @@ class RecapitoSeeder extends Seeder
                 'user_id' => 3,
             ],
             [
-                'nome' => 'OTTICA AOPOLLONI',
+                'nome' => 'OTTICA APPOLLONI',
                 'indirizzo' => 'PIAZZA G. MATTEOTTI 168',
                 'citta' => 'QUERCETA DI SERAVEZZA',
                 'provincia' => 'LU',

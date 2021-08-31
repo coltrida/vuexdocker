@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
-use function number_format;
 
 class ClientResource extends JsonResource
 {
@@ -25,6 +25,8 @@ class ClientResource extends JsonResource
             'cap' => $this->cap,
             'provincia' => $this->provincia,
             'telefono' => $this->telefono,
+            'telefono2' => $this->telefono2,
+            'telefono3' => $this->telefono3,
             'tipologia' => $this->tipologia->nome,
             'tipologia_id' => $this->tipologia_id,
             'marketing' => isset($this->marketing->name) ? $this->marketing->name : null,
@@ -35,7 +37,7 @@ class ClientResource extends JsonResource
             'filiale_id' => $this->filiale_id,
             'recapito' => isset($this->recapito->nome) ? $this->recapito->nome : null,
             'recapito_id' => $this->recapito_id,
-            'datanascita' => $this->datanascita,
+            'datanascita' => $this->datanascita ? Carbon::make($this->datanascita)->format('d-m-Y') : null,
             'audiometria' => $this->audiometria,
             'prove' => $this->prova,
             'fullname' => $this->fullname,

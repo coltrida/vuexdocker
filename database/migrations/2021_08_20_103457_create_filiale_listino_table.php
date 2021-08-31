@@ -15,8 +15,8 @@ class CreateFilialeListinoTable extends Migration
     {
         Schema::create('filiale_listino', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('filiale_id')->onDelete('cascade');;
-            $table->bigInteger('listino_id')->onDelete('cascade');;
+            $table->bigInteger('filiale_id')->onDelete('cascade');
+            $table->bigInteger('listino_id')->onDelete('cascade');
             $table->integer('soglia');
             $table->timestamps();
         });

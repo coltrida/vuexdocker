@@ -10,11 +10,16 @@ const state = () => ({
     client: {},
     situazioneAnnoClientiAudio:[],
     situazioneAnnoResiAudio:[],
+    messaggioBackup:''
 });
 
 const getters = {
     getClients(state){
         return state.clients;
+    },
+
+    getMessaggioBackup(state){
+        return state.messaggioBackup;
     },
 
     getClientMessaggio(state){
@@ -141,6 +146,11 @@ const actions = {
         const response = await axios.post(`${help().linkSituazioneAnnoResiAudio}`, payload);
         commit('fetchSituazioneAnnoResiAudio', response.data);
     },
+
+    async eseguiBackup({commit}){
+        const response = await axios.get(`${help().linkbackup}`);
+        commit('eseguiBackup', response.data);
+    },
 };
 
 const mutations = {
@@ -201,6 +211,10 @@ const mutations = {
 
     fetchSituazioneAnnoResiAudio(state, payload){
         state.situazioneAnnoResiAudio = payload;
+    },
+
+    eseguiBackup(state, payload){
+        state.messaggioBackup = payload;
     },
 };
 

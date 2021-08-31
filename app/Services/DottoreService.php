@@ -36,8 +36,10 @@ class DottoreService
         $nome = trim(Str::upper($request->nome));
         $cognome = trim(Str::upper($request->cognome));
         $new->nome = $cognome.' '.$nome;
-        $new->user_id = $request->userId;
+      //  $new->user_id = $request->userId;
         $new->save();
+
+        $new->user()->attach($request->userId);
 
         return $new;
     }
@@ -57,6 +59,11 @@ class DottoreService
         $new->save();
 
         return $new;
+    }
+
+    public function eliminaOrario($idOrario)
+    {
+        return OrarioMedico::find($idOrario)->delete();
     }
 
     public function inviiMedici($request)

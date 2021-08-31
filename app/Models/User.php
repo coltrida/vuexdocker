@@ -406,6 +406,6 @@ class User extends Authenticatable
 
     public function medici()
     {
-        return $this->hasMany(Medico::class);
+        return $this->belongsToMany(Medico::class);
     }
 }

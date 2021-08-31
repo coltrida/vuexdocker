@@ -38,6 +38,11 @@ class DottoreController extends Controller
         return $dottoreService->aggiungiOrario($request);
     }
 
+    public function eliminaOrario($idOrario, DottoreService $dottoreService)
+    {
+        return $dottoreService->eliminaOrario($idOrario);
+    }
+
     public function inviiMedici(Request $request, DottoreService $dottoreService)
     {
         return $dottoreService->inviiMedici($request);
