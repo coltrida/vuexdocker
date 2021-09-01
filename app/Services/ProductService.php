@@ -9,6 +9,7 @@ use App\Models\Ddt;
 use App\Models\Filiale;
 use App\Models\Listino;
 use App\Models\Product;
+use Carbon\Carbon;
 use function array_push;
 use function create_function;
 use function dd;
@@ -195,6 +196,7 @@ class ProductService
         }])
             ->find($id);
         $product->stato_id = 5;
+        $product->datacarico = Carbon::now()->format('Y-m-d');
         $product->save();
         return $product;
     }

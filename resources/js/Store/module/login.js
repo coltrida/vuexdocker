@@ -1,11 +1,11 @@
 import help from '../../help';
 
 const state = () => ({
-    token: localStorage.getItem('user-token') || '',
-    username: localStorage.getItem('username') || '',
-    idUser: localStorage.getItem('idUser') || '',
+    token: sessionStorage.getItem('user-token') || '',
+    username: sessionStorage.getItem('username') || '',
+    idUser: sessionStorage.getItem('idUser') || '',
     messaggio: '',
-    ruolo: localStorage.getItem('rl') || '',
+    ruolo: sessionStorage.getItem('rl') || '',
     user: {}
 });
 
@@ -71,14 +71,14 @@ const mutations = {
     login(state, payload){
 
         if (payload.stato === 'successo'){
-            localStorage.setItem('user-token', payload.token);
-            localStorage.setItem('username', payload.user.name);
-            localStorage.setItem('idUser', payload.user.id);
-            localStorage.setItem('rl', payload.user.ruolo_id);
+            sessionStorage.setItem('user-token', payload.token);
+            sessionStorage.setItem('username', payload.user.name);
+            sessionStorage.setItem('idUser', payload.user.id);
+            sessionStorage.setItem('rl', payload.user.ruolo_id);
 
-            state.token = localStorage.getItem('user-token');
-            state.username = localStorage.getItem('username');
-            state.idUser = localStorage.getItem('idUser');
+            state.token = sessionStorage.getItem('user-token');
+            state.username = sessionStorage.getItem('username');
+            state.idUser = sessionStorage.getItem('idUser');
             state.ruolo = payload.user.ruolo.nome;
             state.messaggio = '';
         }else{
@@ -87,10 +87,10 @@ const mutations = {
     },
 
     logout(state){
-        localStorage.removeItem('user-token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('idUser');
-        localStorage.removeItem('rl');
+        sessionStorage.removeItem('user-token');
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('idUser');
+        sessionStorage.removeItem('rl');
         state.token = '';
         state.username = '';
     },

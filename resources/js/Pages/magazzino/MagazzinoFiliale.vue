@@ -82,6 +82,21 @@
                         mdi-delete
                     </v-icon>
                 </template>
+
+                <template v-slot:item.giorniRimasti="{ item }">
+                    <!--<div v-if="this.oggi - item.datacarico < item.listino.giorniTempoDiReso">
+                        <v-chip
+                            color="red"
+                            dark
+                        >
+                            {{ item.datacarico }}
+                        </v-chip>
+                    </div>-->
+                    <div>
+                        {{ item.giorniRimasti }}  - {{item.datacarico}}
+                    </div>
+
+                </template>
             </v-data-table>
 
             <h3 class="mt-5">In prova</h3>
@@ -95,7 +110,7 @@
 
             <h3 class="mt-5">Richiesti</h3>
             <v-data-table
-                :headers="headers1"
+                :headers="headers4"
                 :items="getRichiesti"
                 :items-per-page="10"
                 class="elevation-1 mt-3"
@@ -163,7 +178,7 @@
                     /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
-                    { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
+                    { text: 'Giorni Rimasti', value: 'giorniRimasti', class: "indigo white--text" },
                     { text: 'Matricola', value: 'matricola', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
 
@@ -190,6 +205,18 @@
                     { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
                     { text: 'Matricola', value: 'matricola', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
+                ],
+                headers4: [
+                    { text: 'Fornitore', align: 'start', value: 'fornitore', class: "indigo white--text" },
+                    { text: 'Nome', value: 'nome', class: "indigo white--text"},
+                    { text: 'Categoria', value: 'categoria', class: "indigo white--text" },
+                    /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
+                    { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
+                    { text: 'Iva', value: 'iva', class: "indigo white--text" },
+                    { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
+                    { text: 'Matricola', value: 'matricola', class: "indigo white--text" },
+                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
+
                 ],
             }
         },
@@ -313,6 +340,7 @@
             rottaIdFiliale(){
                 return this.$route.params.filialeId ? this.$route.params.filialeId : null;
             },
+
         },
     }
 </script>

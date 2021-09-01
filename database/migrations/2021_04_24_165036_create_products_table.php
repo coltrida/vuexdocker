@@ -24,6 +24,8 @@ class CreateProductsTable extends Migration
             $table->bigInteger('fornitore_id')->nullable();
             $table->bigInteger('ddt_id')->nullable();
             $table->bigInteger('fattura_id')->nullable();
+            $table->date('datacarico')->nullable();
+            $table->boolean('pericoloRestituzione')->nullable()->default(false);
             $table->timestamps();
         });
     }

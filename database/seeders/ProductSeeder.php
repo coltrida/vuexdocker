@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
         Product::insert([
             [
                 'matricola' => '123',
-                'stato_id' => 5,
+                'stato_id' => 1,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 1,
@@ -32,7 +32,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'matricola' => '234',
-                'stato_id' => 5,
+                'stato_id' => 1,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 1,

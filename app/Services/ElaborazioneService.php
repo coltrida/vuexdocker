@@ -346,5 +346,18 @@ class ElaborazioneService
             $prova->save();
         }
 
+        // -------------- conteggio giorni di reso dei prodotti in magazzino o in prova e inserimento allarme ---------- //
+        $oggi = Carbon::now();
+        $prodotti = Product::with('listino')->whereHas('stato', function ($q){
+            $q->where('nome', 'DDT')
+                ->orWhere('nome', 'RESO')
+                ->orWhere('nome', 'PROVA')
+                ->orWhere('nome', 'FILIALE');
+        })->get();
+        foreach ($prodotti as $prodotto){
+            if($oggi->diffInDays($prodotto->datacarico) > (int)$prodotto->listino->giorniTempoDiReso - 15){
+                $prodotto->pericoloRestituzione = true;
+            };
+        }
     }
 }

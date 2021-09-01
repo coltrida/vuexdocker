@@ -162,6 +162,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
@@ -206,8 +221,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'iva',
         "class": "indigo white--text"
       }, {
-        text: 'GG reso',
-        value: 'giorniTempoDiReso',
+        text: 'Giorni Rimasti',
+        value: 'giorniRimasti',
         "class": "indigo white--text"
       }, {
         text: 'Matricola',
@@ -256,6 +271,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }],
       headers3: [{
+        text: 'Fornitore',
+        align: 'start',
+        value: 'fornitore',
+        "class": "indigo white--text"
+      }, {
+        text: 'Nome',
+        value: 'nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Categoria',
+        value: 'categoria',
+        "class": "indigo white--text"
+      },
+      /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
+      {
+        text: 'Prezzo',
+        value: 'prezzolistino',
+        "class": "indigo white--text"
+      }, {
+        text: 'Iva',
+        value: 'iva',
+        "class": "indigo white--text"
+      }, {
+        text: 'GG reso',
+        value: 'giorniTempoDiReso',
+        "class": "indigo white--text"
+      }, {
+        text: 'Matricola',
+        value: 'matricola',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }],
+      headers4: [{
         text: 'Fornitore',
         align: 'start',
         value: 'fornitore',
@@ -653,6 +705,23 @@ var render = function() {
                     )
                   ]
                 }
+              },
+              {
+                key: "item.giorniRimasti",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _c("div", [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(item.giorniRimasti) +
+                          "  - " +
+                          _vm._s(item.datacarico) +
+                          "\n                "
+                      )
+                    ])
+                  ]
+                }
               }
             ])
           }),
@@ -673,7 +742,7 @@ var render = function() {
           _c("v-data-table", {
             staticClass: "elevation-1 mt-3",
             attrs: {
-              headers: _vm.headers1,
+              headers: _vm.headers4,
               items: _vm.getRichiesti,
               "items-per-page": 10
             },
