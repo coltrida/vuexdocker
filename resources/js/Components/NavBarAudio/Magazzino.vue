@@ -55,7 +55,7 @@
                 this.novita = 0;
                 this.getSoglie.forEach(ele => {
                     if (parseInt(ele.conteggio) - parseInt(ele.soglia) < 0){
-                        this.novita = '*';
+                        this.novita = 's';
                     }
                 })
             }

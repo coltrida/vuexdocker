@@ -10,13 +10,14 @@ use App\Models\Filiale;
 use App\Models\Recapito;
 use App\Models\User;
 use Carbon\Carbon;
+use Mail;
 
 class AppuntamentiService
 {
     public function index($idClient)
     {
         return Client::with(['appuntamenti' => function($q){
-            $q->with('filiale', 'recapito', 'client')->latest();
+            $q->with('filiale', 'recapito', 'client')->orderBy('giorno', 'DESC');
         }])->find($idClient)->appuntamenti;
     }
 
@@ -125,6 +126,11 @@ class AppuntamentiService
 
         $log = new LoggingService();
         $log->scriviLog($newAppuntamento, $utente, $utente->name, $propieta, $testo);
+
+        if ($cliente->mail){
+            Mail::to($cliente->mail)->send(new \App\Mail\Appuntamento($cliente, $newAppuntamento));
+        }
+
 
         return Appuntamento::with('filiale', 'recapito', 'client')->find($newAppuntamento->id);
 

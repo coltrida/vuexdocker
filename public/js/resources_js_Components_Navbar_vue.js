@@ -708,6 +708,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
@@ -803,7 +805,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.novita = 0;
       this.getSoglie.forEach(function (ele) {
         if (parseInt(ele.conteggio) - parseInt(ele.soglia) < 0) {
-          _this2.novita = '*';
+          _this2.novita = 's';
         }
       });
     }
@@ -1214,32 +1216,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     window.Echo.channel("provaChannel").listen(".task-created", function (e) {
       _this.novitaCommerciale = 'C';
     });
-    /*window.onunload = () => {
-        localStorage.removeItem('user-token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('idUser');
-        // Clear the local storage
-        window.username.clear();
-        window.idUser.clear();
-    };*/
-
-    /* window.onbeforeunload = function (e) {
-         window.onunload = function () {
-             localStorage.removeItem('user-token');
-             localStorage.removeItem('username');
-             localStorage.removeItem('idUser');
-         };
-         return undefined;
-     };
-    window.onbeforeunload = function (e) {
-     window.onunload = function () {
-         window.localStorage.isMySessionActive = "false";
-     };
-     return undefined;
-    };
-    window.onload = function () {
-     window.localStorage.isMySessionActive = "true";
-    };*/
   }
 });
 
@@ -3684,31 +3660,41 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-list",
-            _vm._l(_vm.getFiliali, function(item, index) {
-              return _c(
-                "div",
-                { key: index },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        to: {
-                          name: "clientsFiliale",
-                          params: { filialeId: item.id }
+            [
+              _vm._l(_vm.getFiliali, function(item, index) {
+                return _c(
+                  "div",
+                  { key: index },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "clientsFiliale",
+                            params: { filialeId: item.id }
+                          }
                         }
-                      }
-                    },
-                    [
-                      _c(
-                        "v-list-item",
-                        [_c("v-list-item-title", [_vm._v(_vm._s(item.nome))])],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
+                      },
+                      [
+                        _c(
+                          "v-list-item",
+                          [
+                            _c("v-list-item-title", [_vm._v(_vm._s(item.nome))])
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
                   _c(
                     "router-link",
                     { attrs: { to: { name: "importByFiliale" } } },
@@ -3750,8 +3736,8 @@ var render = function() {
                 ],
                 1
               )
-            }),
-            0
+            ],
+            2
           )
         ],
         1

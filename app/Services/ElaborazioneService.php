@@ -355,7 +355,7 @@ class ElaborazioneService
                 ->orWhere('nome', 'FILIALE');
         })->get();
         foreach ($prodotti as $prodotto){
-            if($oggi->diffInDays($prodotto->datacarico) > (int)$prodotto->listino->giorniTempoDiReso - 15){
+            if($oggi->diffInDays($prodotto->datacarico) > (int)$prodotto->listino->giorniTempoDiReso - 10){
                 $prodotto->pericoloRestituzione = true;
             };
         }

@@ -2339,6 +2339,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'datanascita',
         "class": "indigo white--text"
       }, {
+        text: 'E-mail',
+        width: 180,
+        value: 'mail',
+        "class": "indigo white--text"
+      }, {
         text: 'fonte',
         width: 200,
         value: 'marketing',
@@ -2381,21 +2386,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
 
-      if (accesso && this.getClients.length == 0) {
-        this.carica = true;
-        this.fetchClientsFiliale(this.rottaIdFiliale).then(function () {
-          _this.search = _this.cognomeRicerca;
-          _this.carica = false;
-        });
-      }
+      if (accesso
+      /*&& this.getClients.length == 0*/
+      ) {
+          this.carica = true;
+          this.fetchClientsFiliale(this.rottaIdFiliale).then(function () {
+            _this.search = _this.cognomeRicerca;
+            _this.carica = false;
+          });
+        }
+      /*if(this.getRuolo == 'call' || this.getRuolo == 'admin'){
+          this.carica = true;
+          this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
+              this.search = this.cognomeRicerca;
+              this.carica = false;
+          });
+      }*/
 
-      if (this.getRuolo == 'call' || this.getRuolo == 'admin') {
-        this.carica = true;
-        this.fetchClientsFiliale(this.rottaIdFiliale).then(function () {
-          _this.search = _this.cognomeRicerca;
-          _this.carica = false;
-        });
-      }
 
       if (this.cognomeRicerca) {
         this.search = this.cognomeRicerca;

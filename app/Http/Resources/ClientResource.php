@@ -35,6 +35,7 @@ class ClientResource extends JsonResource
             'user_id' => $this->user_id,
             'filiale' => $this->filiale->nome,
             'filiale_id' => $this->filiale_id,
+            'mail' => $this->mail,
             'recapito' => isset($this->recapito->nome) ? $this->recapito->nome : null,
             'recapito_id' => $this->recapito_id,
             'datanascita' => $this->datanascita ? Carbon::make($this->datanascita)->format('d-m-Y') : null,

@@ -254,6 +254,7 @@
                     {text: 'telefono 3', width: 130, value: 'telefono3', class: "indigo white--text"},
                     {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
                     {text: 'Data di Nascita', width: 150, value: 'datanascita', class: "indigo white--text"},
+                    {text: 'E-mail', width: 180, value: 'mail', class: "indigo white--text"},
                     {text: 'fonte', width: 200, value: 'marketing', class: "indigo white--text"},
                     {text: 'user', width: 130, value: 'user', class: "indigo white--text"},
                     {text: 'nominativo', width: 130, value: 'fullname', class: "indigo white--text"},
@@ -292,7 +293,7 @@
                     }
                 });
 
-                if(accesso && this.getClients.length == 0){
+                if(accesso /*&& this.getClients.length == 0*/){
                     this.carica = true;
                     this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
                         this.search = this.cognomeRicerca;
@@ -300,13 +301,13 @@
                     });
                 }
 
-                if(this.getRuolo == 'call' || this.getRuolo == 'admin'){
+                /*if(this.getRuolo == 'call' || this.getRuolo == 'admin'){
                     this.carica = true;
                     this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
                         this.search = this.cognomeRicerca;
                         this.carica = false;
                     });
-                }
+                }*/
 
                 if(this.cognomeRicerca){
                     this.search = this.cognomeRicerca;

@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         User::insert([
             [
                 'name' => 'ADMIN',
-                'email' => 'info@centroudito.eu',
+                'email' => 'info@centrouditogroup.it',
                 'ruolo_id' => 1,
                 'budget_id' => null,
                 'email_verified_at' => now(),
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Federico Cosseddu',
-                'email' => 'cosseddu@centroudito.eu',
+                'email' => 'federico.cosseddu@centrouditogroup.it',
                 'ruolo' => 2,
                 'budget_id' => 1,
                 'email_verified_at' => now(),
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Selene Caracciolo',
-                'email' => 'caracciolo@centroudito.eu',
+                'email' => 'selene.caracciolo@centrouditogroup.it',
                 'ruolo' => 2,
                 'budget_id' => 2,
                 'email_verified_at' => now(),
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Matteo Serra',
-                'email' => 'serra@centroudito.eu',
+                'email' => 'matteo.serra@centrouditogroup.it',
                 'ruolo' => 2,
                 'budget_id' => 3,
                 'email_verified_at' => now(),
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Alberto Parlagreco',
-                'email' => 'parlagreco@centroudito.eu',
+                'email' => 'alberto.parlagreco@centrouditogroup.it',
                 'ruolo' => 2,
                 'budget_id' => 4,
                 'email_verified_at' => now(),
@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Athanasia Papatheodoru',
-                'email' => 'papatheodoru@centroudito.eu',
+                'email' => 'athanasia.papatheodoru@centrouditogroup.it',
                 'ruolo' => 2,
                 'budget_id' => 5,
                 'email_verified_at' => now(),
@@ -79,7 +79,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Amministrativa',
-                'email' => 'amministrazione@centroudito.eu',
+                'email' => 'amministrazione@centrouditogroup.it',
                 'ruolo' => 3,
                 'budget_id' => null,
                 'email_verified_at' => now(),
@@ -89,7 +89,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'call center',
-                'email' => 'call@centroudito.eu',
+                'email' => 'call@centrouditogroup.it',
                 'ruolo' => 4,
                 'budget_id' => null,
                 'email_verified_at' => now(),

@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
         Product::insert([
             [
                 'matricola' => '123',
-                'stato_id' => 1,
+                'stato_id' => 5,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 1,
@@ -27,12 +27,13 @@ class ProductSeeder extends Seeder
                 'user_id' => null,
                 'client_id' => null,
                 'ddt_id' => 1,
+                'datacarico' => '2021-08-20',
                 'created_at' => Carbon::make('2021-03-02'),
                 'updated_at' => Carbon::make('2021-03-02'),
             ],
             [
                 'matricola' => '234',
-                'stato_id' => 1,
+                'stato_id' => 5,
                 'filiale_id' => 1,
                 'listino_id' => 4,
                 'fornitore_id' => 1,
@@ -40,6 +41,7 @@ class ProductSeeder extends Seeder
                 'user_id' => null,
                 'client_id' => null,
                 'ddt_id' => 1,
+                'datacarico' => '2021-06-10',
                 'created_at' => Carbon::make('2021-03-02'),
                 'updated_at' => Carbon::make('2021-03-02'),
             ],

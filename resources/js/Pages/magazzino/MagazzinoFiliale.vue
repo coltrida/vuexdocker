@@ -84,16 +84,16 @@
                 </template>
 
                 <template v-slot:item.giorniRimasti="{ item }">
-                    <!--<div v-if="this.oggi - item.datacarico < item.listino.giorniTempoDiReso">
+                    <div v-if="item.giorniRimasti < 10">
                         <v-chip
                             color="red"
                             dark
                         >
-                            {{ item.datacarico }}
+                            {{ item.giorniRimasti }}
                         </v-chip>
-                    </div>-->
-                    <div>
-                        {{ item.giorniRimasti }}  - {{item.datacarico}}
+                    </div>
+                    <div v-else>
+                        {{ item.giorniRimasti }}
                     </div>
 
                 </template>
@@ -178,7 +178,7 @@
                     /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
-                    { text: 'Giorni Rimasti', value: 'giorniRimasti', class: "indigo white--text" },
+                    { text: 'Giorni x Reso', value: 'giorniRimasti', class: "indigo white--text" },
                     { text: 'Matricola', value: 'matricola', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
 

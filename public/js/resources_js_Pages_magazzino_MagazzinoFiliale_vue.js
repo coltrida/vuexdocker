@@ -221,7 +221,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'iva',
         "class": "indigo white--text"
       }, {
-        text: 'Giorni Rimasti',
+        text: 'Giorni x Reso',
         value: 'giorniRimasti',
         "class": "indigo white--text"
       }, {
@@ -711,15 +711,31 @@ var render = function() {
                 fn: function(ref) {
                   var item = ref.item
                   return [
-                    _c("div", [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(item.giorniRimasti) +
-                          "  - " +
-                          _vm._s(item.datacarico) +
-                          "\n                "
-                      )
-                    ])
+                    item.giorniRimasti < 10
+                      ? _c(
+                          "div",
+                          [
+                            _c(
+                              "v-chip",
+                              { attrs: { color: "red", dark: "" } },
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(item.giorniRimasti) +
+                                    "\n                    "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      : _c("div", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(item.giorniRimasti) +
+                              "\n                "
+                          )
+                        ])
                   ]
                 }
               }

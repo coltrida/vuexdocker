@@ -26,7 +26,7 @@ class ProductResource extends JsonResource
             'prezzolistino' => '€ '.number_format($this->listino->prezzolistino, 0, ',', '.'),
             'iva' => $this->listino->iva.' %',
             'giorniTempoDiReso' => $this->listino->giorniTempoDiReso,
-            'giorniRimasti' => $this->datacarico ? Carbon::now()->diffInDays($this->datacarico) : null,
+            'giorniRimasti' => $this->datacarico ? (int)$this->listino->giorniTempoDiReso - Carbon::now()->diffInDays($this->datacarico) : null,
             'datacarico' => $this->datacarico ? Carbon::make($this->datacarico)->format('d-m-Y') : null,
             'listinoId' => $this->listino->id,
             'nomeMatricola' => $this->listino->nome.' - '.$this->matricola,

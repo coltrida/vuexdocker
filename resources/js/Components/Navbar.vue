@@ -138,34 +138,7 @@
             window.Echo.channel("provaChannel").listen(".task-created", e => {
                 this.novitaCommerciale = 'C';
             });
-            /*window.onunload = () => {
-                localStorage.removeItem('user-token');
-                localStorage.removeItem('username');
-                localStorage.removeItem('idUser');
-                // Clear the local storage
-                window.username.clear();
-                window.idUser.clear();
-            };*/
 
-               /* window.onbeforeunload = function (e) {
-                    window.onunload = function () {
-                        localStorage.removeItem('user-token');
-                        localStorage.removeItem('username');
-                        localStorage.removeItem('idUser');
-                    };
-                    return undefined;
-                };
-
-            window.onbeforeunload = function (e) {
-                window.onunload = function () {
-                    window.localStorage.isMySessionActive = "false";
-                };
-                return undefined;
-            };
-
-            window.onload = function () {
-                window.localStorage.isMySessionActive = "true";
-            };*/
         }
     }
 </script>
