@@ -23,6 +23,7 @@ use App\Http\Controllers\api\TipologiaController;
 use App\Http\Controllers\api\UserController;
 
 
+
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register']);
 Route::get('/logout', [LoginController::class, 'logout']);
@@ -220,3 +221,13 @@ Route::get('/clientiMaiRichiamati', [TelefonateController::class, 'clientiMaiRic
 Route::get('/clientiNonHannoMaiPresoAppuntamenti', [TelefonateController::class, 'clientiNonHannoMaiPresoAppuntamenti']);
 Route::get('/clientiUnAnnoUltimoAppuntamento', [TelefonateController::class, 'clientiUnAnnoUltimoAppuntamento']);
 Route::get('/recallsByIdClient/{idClient}', [TelefonateController::class, 'recallsByIdClient']);
+
+// ----------------- debugBar -----------------------
+Route::get('/debugOn', function (){
+    $q = new Barryvdh\Debugbar\LaravelDebugbar();
+    $q->enable();
+});
+Route::get('/debugOff', function (){
+    $q = new Barryvdh\Debugbar\LaravelDebugbar();
+    $q->disable();
+});

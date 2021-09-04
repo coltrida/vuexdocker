@@ -107,7 +107,7 @@ class ProvaService
         $propieta = 'prova';
         $log = new LoggingService();
         $testo = $provaSalvata->user->name.' ha aperto una prova per il paziente '.$provaSalvata->client->cognome.' '.$provaSalvata->client->nome;
-        $log->scriviLog($provaSalvata, $provaSalvata->user, $provaSalvata->user->name, $propieta, $testo);
+        $log->scriviLog($provaSalvata->client->cognome.' '.$provaSalvata->client->nome, $provaSalvata->user, $provaSalvata->user->name, $propieta, $testo);
 
         return $provaSalvata;
     }
@@ -130,7 +130,7 @@ class ProvaService
         $propieta = 'prova';
         $log = new LoggingService();
         $testo = $prova->user->name.' ha reso la prova per il paziente '.$prova->client->cognome.' '.$prova->client->nome;
-        $log->scriviLog($prova, $prova->user, $prova->user->name, $propieta, $testo);
+        $log->scriviLog($provaSalvata->client->cognome.' '.$provaSalvata->client->nome, $prova->user, $prova->user->name, $propieta, $testo);
 
         return $provaSalvata;
     }
@@ -205,7 +205,7 @@ class ProvaService
         $propieta = 'prova';
         $log = new LoggingService();
         $testo = $provaFattura->user->name.' ha fatturato la prova per il paziente '.$provaFattura->client->cognome.' '.$provaFattura->client->nome;
-        $log->scriviLog($provaFattura, $provaFattura->user, $provaFattura->user->name, $propieta, $testo);
+        $log->scriviLog($provaFattura->client->cognome.' '.$provaFattura->client->nome, $provaFattura->user, $provaFattura->user->name, $propieta, $testo);
 
         return $provaFattura;
     }

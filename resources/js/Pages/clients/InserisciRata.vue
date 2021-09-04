@@ -8,7 +8,7 @@
 
             <v-card elevation="2">
                 <v-card-title>
-                    {{getFattura.prova.client.fullname}}
+                    {{nomeCliente}}
                 </v-card-title>
                 <v-card-subtitle>
                     Totale Fattura: {{getFattura.tot_fattura}}
@@ -69,6 +69,7 @@
 
         data(){
             return {
+                nomeCliente: '',
                 valid: true,
                 newRata:{},
                 importoRules: [ v => !!v || 'importo obbligatorio'],
@@ -76,7 +77,9 @@
         },
 
         mounted(){
-            this.fetchFattura(this.rottaIdFattura);
+            this.fetchFattura(this.rottaIdFattura).then(() => {
+                this.nomeCliente = this.getFattura.prova.client.fullname
+            });
         },
 
         methods:{

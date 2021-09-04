@@ -125,7 +125,7 @@ class AppuntamentiService
         $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$request->giorno.' alle ore '.$request->orario.' presso '.$dove;
 
         $log = new LoggingService();
-        $log->scriviLog($newAppuntamento, $utente, $utente->name, $propieta, $testo);
+        $log->scriviLog($cliente->cognome.' '.$cliente->nome, $utente, $utente->name, $propieta, $testo);
 
         if ($cliente->mail){
             Mail::to($cliente->mail)->send(new \App\Mail\Appuntamento($cliente, $newAppuntamento));
@@ -139,12 +139,12 @@ class AppuntamentiService
     public function eliminaAppuntamento($id, $idUser)
     {
         $utente = User::find($idUser);
-        $appuntamento = Appuntamento::find($id);
+        $appuntamento = Appuntamento::with('client')->find($id);
         $propieta = 'appuntamento';
         $testo = $utente->name.' ha eliminato un appuntamento con id = '.$id.' per il giorno '.$appuntamento->giorno.' delle ore '.$appuntamento->orario;
 
         $log = new LoggingService();
-        $log->scriviLog($appuntamento, $utente, $utente->name, $propieta, $testo);
+        $log->scriviLog($appuntamento->client->cognome.''.$appuntamento->client->nome, $utente, $utente->name, $propieta, $testo);
 
         return $appuntamento->delete();
     }

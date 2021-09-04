@@ -49,7 +49,7 @@ class AudiometriaService
         $cliente = Client::find($request->client_id);
         $testo = $utente->name.' ha salvato una audiometria per '.$cliente->cognome.' '.$cliente->nome;
         $log = new LoggingService();
-        $log->scriviLog($new, $utente, $utente->name, $propieta, $testo);
+        $log->scriviLog($cliente->cognome.' '.$cliente->nome, $utente, $utente->name, $propieta, $testo);
 
         return $new;
     }

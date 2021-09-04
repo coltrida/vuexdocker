@@ -129,7 +129,7 @@ class TelefonateService
         }else{
             $testo = $utente->name.' ha inserito la telefonata da fare per '.$client->cognome.' '.$client->nome;
         }
-        $log->scriviLog($client, $utente, $utente->name, $propieta, $testo);
+        $log->scriviLog($client->cognome.' '.$client->nome, $utente, $utente->name, $propieta, $testo);
 
         return $prossimaTelefonata;
     }
@@ -149,7 +149,7 @@ class TelefonateService
         if($request->esito){
             $testo = $utente->name.' ha telefonato a '.$telefonata->client->cognome.' '.$telefonata->client->nome.' con esito: '.$request->esito;
         }
-        $log->scriviLog($telefonata->client, $utente, $utente->name, $propieta, $testo);
+        $log->scriviLog($telefonata->client->cognome.' '.$telefonata->client->nome, $utente, $utente->name, $propieta, $testo);
 
         return $telefonata;
     }

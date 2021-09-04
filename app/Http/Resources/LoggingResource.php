@@ -17,7 +17,9 @@ class LoggingResource extends JsonResource
         return [
             'created_at' => $this->created_at->format('d/m/Y - h:i:s A'),
             'description' => $this->description,
-            'properties' => $this->properties,
+            'log_name' => $this->log_name,
+            'event' => $this->event,
+            'subject_type' => $this->subject_type,
         ];
     }
 }

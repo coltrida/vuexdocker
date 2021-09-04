@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Models\Activitylog;
 use Carbon\Carbon;
 use DB;
 use Storage;
@@ -14,19 +15,26 @@ class LoggingService
 {
     public function scriviLog($oggetto, $soggetto, $nomeSoggetto, $propieta, $testo)
     {
-        activity()
+        $log = new Activitylog();
+        $log->description = $testo;
+        $log->log_name = $propieta;
+        $log->event = $oggetto;
+        $log->subject_type = $nomeSoggetto;
+        $log->save();
+
+        /*activity()
             ->performedOn($oggetto)
             ->causedBy($soggetto)
             ->withProperties([
                 ['customProperty' => $propieta],
                 ['nomeSoggetto' => $nomeSoggetto]
             ])
-            ->log($testo);
+            ->log($testo);*/
     }
 
     public function lista()
     {
-        return Activity::latest()->get();
+        return Activitylog::latest()->get();
     }
 
     public function backup()

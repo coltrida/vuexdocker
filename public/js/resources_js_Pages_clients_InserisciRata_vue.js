@@ -86,6 +86,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "Inserisci",
   data: function data() {
     return {
+      nomeCliente: '',
       valid: true,
       newRata: {},
       importoRules: [function (v) {
@@ -94,7 +95,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchFattura(this.rottaIdFattura);
+    var _this = this;
+
+    this.fetchFattura(this.rottaIdFattura).then(function () {
+      _this.nomeCliente = _this.getFattura.prova.client.fullname;
+    });
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('rate', {
     addRata: 'addRata',
@@ -104,14 +109,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$router.go(-1);
     },
     aggiungi: function aggiungi() {
-      var _this = this;
+      var _this2 = this;
 
       this.$refs.form.validate();
       this.newRata.fatturaId = this.rottaIdFattura;
       this.addRata(this.newRata).then(function () {
-        _this.newRata = {};
+        _this2.newRata = {};
 
-        _this.$router.push({
+        _this2.$router.push({
           name: 'rateClienti'
         });
       });
@@ -245,7 +250,7 @@ var render = function() {
                   _c("v-card-title", [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.getFattura.prova.client.fullname) +
+                        _vm._s(_vm.nomeCliente) +
                         "\n            "
                     )
                   ]),

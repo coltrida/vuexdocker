@@ -53,16 +53,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'created_at',
         "class": "indigo white--text"
       }, {
+        text: 'Soggetto',
+        value: 'subject_type',
+        "class": "indigo white--text"
+      }, {
         text: 'Testo',
         value: 'description',
         "class": "indigo white--text"
       }, {
         text: 'Settore',
-        value: 'properties[0].customProperty',
+        value: 'log_name',
         "class": "indigo white--text"
       }, {
-        text: 'Soggetto',
-        value: 'properties[1].nomeSoggetto',
+        text: 'Oggetto',
+        value: 'event',
         "class": "indigo white--text"
       }]
     };

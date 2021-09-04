@@ -32,9 +32,10 @@
             return {
                 headers1: [
                     { text: 'Data', align: 'start', value: 'created_at', class: "indigo white--text" },
+                    { text: 'Soggetto', value: 'subject_type', class: "indigo white--text" },
                     { text: 'Testo', value: 'description', class: "indigo white--text" },
-                    { text: 'Settore', value: 'properties[0].customProperty', class: "indigo white--text" },
-                    { text: 'Soggetto', value: 'properties[1].nomeSoggetto', class: "indigo white--text" },
+                    { text: 'Settore', value: 'log_name', class: "indigo white--text" },
+                    { text: 'Oggetto', value: 'event', class: "indigo white--text" },
                 ],
 
             }
