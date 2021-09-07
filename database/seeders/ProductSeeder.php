@@ -41,7 +41,7 @@ class ProductSeeder extends Seeder
                 'user_id' => null,
                 'client_id' => null,
                 'ddt_id' => 1,
-                'datacarico' => '2021-06-10',
+                'datacarico' => '2021-06-20',
                 'created_at' => Carbon::make('2021-03-02'),
                 'updated_at' => Carbon::make('2021-03-02'),
             ],

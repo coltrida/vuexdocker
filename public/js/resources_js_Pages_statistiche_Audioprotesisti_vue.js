@@ -57,6 +57,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -223,6 +226,44 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/statistiche/GraficoBar.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/statistiche/GraficoBar.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_chartjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-chartjs */ "./node_modules/vue-chartjs/es/index.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Grafico",
+  "extends": vue_chartjs__WEBPACK_IMPORTED_MODULE_0__.Bar,
+  props: {
+    chartdata: {
+      type: Object,
+      "default": null
+    },
+    options: {
+      type: Object,
+      "default": null
+    }
+  },
+  mounted: function mounted() {
+    this.renderChart(this.chartdata, this.options);
+  },
+  watch: {
+    chartdata: function chartdata() {
+      this.renderChart(this.chartdata, this.options);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/statistiche/IncorporaGrafico.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/statistiche/IncorporaGrafico.vue?vue&type=script&lang=js& ***!
@@ -234,7 +275,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Grafico__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Grafico */ "./resources/js/Pages/statistiche/Grafico.vue");
+/* harmony import */ var _GraficoBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GraficoBar */ "./resources/js/Pages/statistiche/GraficoBar.vue");
 //
 //
 //
@@ -243,10 +284,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "IncorporaGrafico",
   components: {
-    Grafico: _Grafico__WEBPACK_IMPORTED_MODULE_0__.default
+    GraficoBar: _GraficoBar__WEBPACK_IMPORTED_MODULE_0__.default
   },
   props: {
     valoripassati: {
+      type: Object,
+      "default": null
+    },
+    budget: {
       type: Object,
       "default": null
     }
@@ -262,21 +307,18 @@ __webpack_require__.r(__webpack_exports__);
           backgroundColor: '#a8c3f8',
           borderColor: 'rgb(0,1,192)',
           data: [this.valoripassati.gennaio, this.valoripassati.febbraio, this.valoripassati.marzo, this.valoripassati.aprile, this.valoripassati.maggio, this.valoripassati.giugno, this.valoripassati.luglio, this.valoripassati.agosto, this.valoripassati.settembre, this.valoripassati.ottobre, this.valoripassati.novembre, this.valoripassati.dicembre]
+        }, {
+          label: 'budget',
+          tension: 0,
+          fill: false,
+          backgroundColor: '#f89a8d',
+          borderColor: 'rgb(192,8,9)',
+          data: [this.budget.gennaio, this.budget.febbraio, this.budget.marzo, this.budget.aprile, this.budget.maggio, this.budget.giugno, this.budget.luglio, this.budget.agosto, this.budget.settembre, this.budget.ottobre, this.budget.novembre, this.budget.dicembre]
         }]
       },
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false
-        /*scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 10,
-                    min: -120
-                }
-            }]
-        }*/
-
       }
     };
   }
@@ -38256,6 +38298,44 @@ component.options.__file = "resources/js/Pages/statistiche/Grafico.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Pages/statistiche/GraficoBar.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/Pages/statistiche/GraficoBar.vue ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _GraficoBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GraficoBar.vue?vue&type=script&lang=js& */ "./resources/js/Pages/statistiche/GraficoBar.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+;
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
+  _GraficoBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "dadddd0e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/statistiche/GraficoBar.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/statistiche/IncorporaGrafico.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/Pages/statistiche/IncorporaGrafico.vue ***!
@@ -38324,6 +38404,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Grafico_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Grafico.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/statistiche/Grafico.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Grafico_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/statistiche/GraficoBar.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/Pages/statistiche/GraficoBar.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GraficoBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./GraficoBar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/statistiche/GraficoBar.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GraficoBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -38440,6 +38536,7 @@ var render = function() {
                 _c("incorpora-grafico", {
                   attrs: {
                     valoripassati: audio.valori[1],
+                    budget: audio.valori[0],
                     options: _vm.chartOptions
                   }
                 })
@@ -38477,7 +38574,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("grafico", {
+  return _c("grafico-bar", {
     attrs: { chartdata: _vm.chartData, options: _vm.chartOptions }
   })
 }

@@ -9,7 +9,7 @@
                     <v-col><h4>Nr. Pc: {{audio.delta.provvigione}}</h4></v-col>
                     <v-col><h4>Nr. Cl: {{audio.delta.stipendio}}</h4></v-col>
                     <v-col><h4>Media v.: {{audio.fatturati.provvigione}}</h4></v-col>
-                    <!--<v-col><h4>Pezzi Ven.: {{audio.pezzi.budgetAnno}}</h4></v-col>-->
+                    <v-col><h4>Prove aperte: {{audio.prova_count}}</h4></v-col>
                     <!--<v-col><h4>% conv.: {{audio.pezzi.budgetAnno ? audio.pezzi.budgetAnno / (audio.pezzi.budgetAnno + audio.pezzi.premio) * 100 : 0 }}%</h4></v-col>-->
                 </v-row>
 

@@ -74,6 +74,7 @@ class ClientService
 
         $new->mail = trim(Str::upper($request->mail));
         $new->datanascita = $request->datanascita;
+        $new->luogoNascita = trim(Str::upper($request->luogoNascita)) == '' ? null : trim(Str::upper($request->luogoNascita));
         $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
         $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
         $new->save();
@@ -125,6 +126,7 @@ class ClientService
     //    $new->datarecall = $this->calcolaRecall($request->tipologia_id);
         $new->mail = trim(Str::upper($request->mail));
         $new->datanascita = $request->datanascita ? Carbon::make($request->datanascita)->format('Y-m-d') : null;
+        $new->luogoNascita = trim(Str::upper($request->luogoNascita)) == '' ? null : trim(Str::upper($request->luogoNascita));
         $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
         $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
         $new->save();

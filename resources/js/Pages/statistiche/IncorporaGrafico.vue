@@ -1,17 +1,21 @@
 <template>
-        <grafico :chartdata="chartData" :options="chartOptions"/>
+        <grafico-bar :chartdata="chartData" :options="chartOptions"/>
 </template>
 
 <script>
-    import Grafico from "./Grafico";
+    import GraficoBar from "./GraficoBar";
     export default {
         name: "IncorporaGrafico",
-        components: {Grafico},
+        components: {GraficoBar},
         props: {
             valoripassati: {
                 type: Object,
                 default: null
-            }
+            },
+            budget: {
+                type: Object,
+                default: null
+            },
         },
 
         data(){
@@ -41,24 +45,34 @@
                                 this.valoripassati.dicembre,
                             ]
                         },
+                        {
+                            label: 'budget',
+                            tension: 0,
+                            fill: false,
+                            backgroundColor: '#f89a8d',
+                            borderColor: 'rgb(192,8,9)',
+                            data: [
+                                this.budget.gennaio,
+                                this.budget.febbraio,
+                                this.budget.marzo,
+                                this.budget.aprile,
+                                this.budget.maggio,
+                                this.budget.giugno,
+                                this.budget.luglio,
+                                this.budget.agosto,
+                                this.budget.settembre,
+                                this.budget.ottobre,
+                                this.budget.novembre,
+                                this.budget.dicembre,
+                            ]
+                        },
                     ]
 
                 },
 
                 chartOptions:{
-
                     responsive: true,
                     maintainAspectRatio: false,
-                    /*scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                stepSize: 10,
-                                min: -120
-                            }
-                        }]
-                    }*/
-
                 },
             }
         }

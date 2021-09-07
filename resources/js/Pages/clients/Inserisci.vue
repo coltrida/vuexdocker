@@ -106,7 +106,7 @@
                 </v-col>
             </v-row>
 
-            <v-row class="mb-10">
+            <v-row>
                 <v-col cols="12" md="2" lg="2">
                     <v-menu
                         ref="menu"
@@ -195,6 +195,21 @@
                         :items="origineFonte"
                         :label="nomeLabel"
                     ></v-select>
+                </v-col>
+            </v-row>
+
+            <v-row class="mb-10">
+                <v-col cols="12" md="6" lg="6">
+                    <v-text-field
+                        v-model="newClient.luogoNascita"
+                        label="Luogo di Nascita"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6" lg="6">
+                    <v-text-field
+                        v-model="newClient.codfisc"
+                        label="Codice Fiscale"
+                    ></v-text-field>
                 </v-col>
             </v-row>
 

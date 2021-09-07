@@ -244,6 +244,12 @@ var render = function() {
                   _c("h4", [
                     _vm._v("Media v.: " + _vm._s(audio.fatturati.provvigione))
                   ])
+                ]),
+                _vm._v(" "),
+                _c("v-col", [
+                  _c("h4", [
+                    _vm._v("Prove aperte: " + _vm._s(audio.prova_count))
+                  ])
                 ])
               ],
               1

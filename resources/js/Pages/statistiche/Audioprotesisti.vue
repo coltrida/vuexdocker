@@ -23,7 +23,10 @@
             </v-col>
 
             <v-col cols="4">
-                <incorpora-grafico :valoripassati="audio.valori[1]" :options="chartOptions"/>
+                <incorpora-grafico
+                    :valoripassati="audio.valori[1]"
+                    :budget="audio.valori[0]"
+                    :options="chartOptions"/>
             </v-col>
 
             <!--<v-col cols="4">

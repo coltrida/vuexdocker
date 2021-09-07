@@ -28,6 +28,7 @@ class CreateClientsTable extends Migration
             $table->bigInteger('tipologia_id');
             $table->string('mail')->nullable();
             $table->date('datanascita')->nullable();
+            $table->string('luogoNascita')->nullable();
             $table->integer('meseNascita')->nullable();
             $table->integer('giornoNascita')->nullable();
             $table->bigInteger('marketing_id')->unsigned()->nullable();

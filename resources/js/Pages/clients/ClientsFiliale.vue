@@ -94,6 +94,7 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-icon
+                                v-if="!$vuetify.breakpoint.xs"
                                 color="red"
                                 small
                                 @click="elimina(item.id, item.nome, item.cognome)"
@@ -101,6 +102,15 @@
                                 v-on="on"
                             >
                                 mdi-delete
+                            </v-icon>
+                            <v-icon
+                                v-else
+                                color="red"
+                                @click="elimina(item.id, item.nome, item.cognome)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-trash-can-outline
                             </v-icon>
                         </template>
                         <span>Elimina</span>
@@ -110,8 +120,17 @@
                         <template v-slot:activator="{ on, attrs }">
                             <router-link :to="{ name: 'clientsInserisci', params: { clientId: item.id }}">
                                 <v-icon
+                                    v-if="!$vuetify.breakpoint.xs"
                                     color="blue"
                                     small
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-pencil
+                                </v-icon>
+                                <v-icon
+                                    v-else
+                                    color="blue"
                                     v-bind="attrs"
                                     v-on="on"
                                 >
@@ -125,8 +144,18 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-icon
+                                v-if="!$vuetify.breakpoint.xs"
                                 color="green"
                                 small
+                                @click="audiogramma(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-headphones-settings
+                            </v-icon>
+                            <v-icon
+                                v-else
+                                color="green"
                                 @click="audiogramma(item)"
                                 v-bind="attrs"
                                 v-on="on"
@@ -140,8 +169,18 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-icon
+                                v-if="!$vuetify.breakpoint.xs"
                                 color="purple"
                                 small
+                                @click="appuntamento(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-calendar-edit
+                            </v-icon>
+                            <v-icon
+                                v-else
+                                color="purple"
                                 @click="appuntamento(item)"
                                 v-bind="attrs"
                                 v-on="on"
@@ -155,8 +194,18 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-icon
+                                v-if="!$vuetify.breakpoint.xs"
                                 color="orange"
                                 small
+                                @click="prove(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-ear-hearing
+                            </v-icon>
+                            <v-icon
+                                v-else
+                                color="orange"
                                 @click="prove(item)"
                                 v-bind="attrs"
                                 v-on="on"
@@ -170,8 +219,18 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-icon
+                                v-if="!$vuetify.breakpoint.xs"
                                 color="light-blue darken-4"
                                 small
+                                @click="documenti(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-file-document
+                            </v-icon>
+                            <v-icon
+                                v-else
+                                color="light-blue darken-4"
                                 @click="documenti(item)"
                                 v-bind="attrs"
                                 v-on="on"
@@ -185,8 +244,18 @@
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
                             <v-icon
+                                v-if="!$vuetify.breakpoint.xs"
                                 color="green"
                                 small
+                                @click="recalls(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-phone
+                            </v-icon>
+                            <v-icon
+                                v-else
+                                color="green"
                                 @click="recalls(item)"
                                 v-bind="attrs"
                                 v-on="on"

@@ -51,9 +51,10 @@ class LoggingService
 //dd(Storage::disk('public')->exists('/backup.sql'));
         switch($worked) {
             case 0:
-                redirect(asset('storage/backup.sql'));
+                Storage::download('/backup.sql');
+                //redirect(asset('storage/backup.sql'));
                // Storage::disk('public')->download('/backup.sql');
-                $res = 'Il database' . $mysqlDatabaseName . ' è stato eseguito con successo';
+               $res = 'Il database' . $mysqlDatabaseName . ' è stato eseguito con successo';
                 break;
             case 1:
                 $res = 'Si è verificato un errore durante la esportatione da <b>' . $mysqlDatabaseName . '</b> a ' . getcwd() . '/' . $mysqlExportPath . '</b>';
@@ -78,10 +79,10 @@ class LoggingService
         exec($command,$output,$worked);
         switch($worked){
             case 0:
-                echo 'I dati del file <b>' .$mysqlImportFilename .'</b> sono stati importati con successo nella banca dati <b>' .$mysqlDatabaseName .'</b>';
+                return 'I dati del file <b>' .$mysqlImportFilename .'</b> sono stati importati con successo nella banca dati <b>' .$mysqlDatabaseName .'</b>';
                 break;
             case 1:
-                echo 'Si è verificato un errore durante la importazione. Controllare se il file si trova nella stessa cartella dello script. Controllare nuovamente anche i seguenti dati:<br/><br/><table><tr><td>MySQL Database Name:</td><td><b>' .$mysqlDatabaseName .'</b></td></tr><tr><td>MySQL User Name:</td><td><b>' .$mysqlUserName .'</b></td></tr><tr><td>MySQL Password:</td><td><b>NOTSHOWN</b></td></tr><tr><td>MySQL Host Name:</td><td><b>' .$mysqlHostName .'</b></td></tr><tr><td>MySQL Import Dateiname:</td><td><b>' .$mysqlImportFilename .'</b></td></tr></table>';
+                return 'Si è verificato un errore durante la importazione. Controllare se il file si trova nella stessa cartella dello script. Controllare nuovamente anche i seguenti dati:<br/><br/><table><tr><td>MySQL Database Name:</td><td><b>' .$mysqlDatabaseName .'</b></td></tr><tr><td>MySQL User Name:</td><td><b>' .$mysqlUserName .'</b></td></tr><tr><td>MySQL Password:</td><td><b>NOTSHOWN</b></td></tr><tr><td>MySQL Host Name:</td><td><b>' .$mysqlHostName .'</b></td></tr><tr><td>MySQL Import Dateiname:</td><td><b>' .$mysqlImportFilename .'</b></td></tr></table>';
                 break;
         }
     }

@@ -195,7 +195,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Appuntamento",
@@ -43530,7 +43529,7 @@ var render = function() {
                     [
                       _c(
                         "v-col",
-                        { attrs: { cols: "6" } },
+                        { attrs: { cols: "12", md: "6", lg: "6" } },
                         [
                           _c(
                             "v-menu",
@@ -43684,161 +43683,147 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-col",
-                        { attrs: { cols: "6" } },
+                        { attrs: { cols: "12", md: "6", lg: "6" } },
                         [
                           _c(
-                            "v-col",
-                            { staticClass: "pb-4", attrs: { cols: "6" } },
-                            [
-                              _c(
-                                "v-dialog",
-                                {
-                                  ref: "dialog",
-                                  attrs: {
-                                    "return-value": _vm.newAppuntamento.orario,
-                                    persistent: "",
-                                    width: "290px"
-                                  },
-                                  on: {
-                                    "update:returnValue": function($event) {
-                                      return _vm.$set(
-                                        _vm.newAppuntamento,
-                                        "orario",
-                                        $event
-                                      )
-                                    },
-                                    "update:return-value": function($event) {
-                                      return _vm.$set(
-                                        _vm.newAppuntamento,
-                                        "orario",
-                                        $event
-                                      )
-                                    }
-                                  },
-                                  scopedSlots: _vm._u([
-                                    {
-                                      key: "activator",
-                                      fn: function(ref) {
-                                        var on = ref.on
-                                        var attrs = ref.attrs
-                                        return [
-                                          _c(
-                                            "v-text-field",
-                                            _vm._g(
-                                              _vm._b(
-                                                {
-                                                  attrs: {
-                                                    label: "Seleziona Orario*",
-                                                    "prepend-icon":
-                                                      "mdi-clock-time-four-outline",
-                                                    readonly: "",
-                                                    rules: _vm.orarioRules,
-                                                    required: ""
-                                                  },
-                                                  model: {
-                                                    value:
-                                                      _vm.newAppuntamento
-                                                        .orario,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.newAppuntamento,
-                                                        "orario",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "newAppuntamento.orario"
-                                                  }
-                                                },
-                                                "v-text-field",
-                                                attrs,
-                                                false
-                                              ),
-                                              on
-                                            )
-                                          )
-                                        ]
-                                      }
-                                    }
-                                  ]),
-                                  model: {
-                                    value: _vm.modal2,
-                                    callback: function($$v) {
-                                      _vm.modal2 = $$v
-                                    },
-                                    expression: "modal2"
-                                  }
+                            "v-dialog",
+                            {
+                              ref: "dialog",
+                              attrs: {
+                                "return-value": _vm.newAppuntamento.orario,
+                                persistent: "",
+                                width: "290px"
+                              },
+                              on: {
+                                "update:returnValue": function($event) {
+                                  return _vm.$set(
+                                    _vm.newAppuntamento,
+                                    "orario",
+                                    $event
+                                  )
                                 },
-                                [
-                                  _vm._v(" "),
-                                  _vm.modal2
-                                    ? _c(
-                                        "v-time-picker",
-                                        {
-                                          attrs: { "full-width": "" },
-                                          model: {
-                                            value: _vm.newAppuntamento.orario,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.newAppuntamento,
-                                                "orario",
-                                                $$v
-                                              )
+                                "update:return-value": function($event) {
+                                  return _vm.$set(
+                                    _vm.newAppuntamento,
+                                    "orario",
+                                    $event
+                                  )
+                                }
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    var attrs = ref.attrs
+                                    return [
+                                      _c(
+                                        "v-text-field",
+                                        _vm._g(
+                                          _vm._b(
+                                            {
+                                              attrs: {
+                                                label: "Seleziona Orario*",
+                                                "prepend-icon":
+                                                  "mdi-clock-time-four-outline",
+                                                readonly: "",
+                                                rules: _vm.orarioRules,
+                                                required: ""
+                                              },
+                                              model: {
+                                                value:
+                                                  _vm.newAppuntamento.orario,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.newAppuntamento,
+                                                    "orario",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression:
+                                                  "newAppuntamento.orario"
+                                              }
                                             },
-                                            expression: "newAppuntamento.orario"
+                                            "v-text-field",
+                                            attrs,
+                                            false
+                                          ),
+                                          on
+                                        )
+                                      )
+                                    ]
+                                  }
+                                }
+                              ]),
+                              model: {
+                                value: _vm.modal2,
+                                callback: function($$v) {
+                                  _vm.modal2 = $$v
+                                },
+                                expression: "modal2"
+                              }
+                            },
+                            [
+                              _vm._v(" "),
+                              _vm.modal2
+                                ? _c(
+                                    "v-time-picker",
+                                    {
+                                      attrs: { "full-width": "" },
+                                      model: {
+                                        value: _vm.newAppuntamento.orario,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.newAppuntamento,
+                                            "orario",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "newAppuntamento.orario"
+                                      }
+                                    },
+                                    [
+                                      _c("v-spacer"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: { text: "", color: "primary" },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.modal2 = false
+                                            }
                                           }
                                         },
                                         [
-                                          _c("v-spacer"),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: {
-                                                text: "",
-                                                color: "primary"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.modal2 = false
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                    Cancel\n                                "
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: {
-                                                text: "",
-                                                color: "primary"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.$refs.dialog.save(
-                                                    _vm.newAppuntamento.orario
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                    OK\n                                "
-                                              )
-                                            ]
+                                          _vm._v(
+                                            "\n                                    Cancel\n                                "
                                           )
-                                        ],
-                                        1
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: { text: "", color: "primary" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.$refs.dialog.save(
+                                                _vm.newAppuntamento.orario
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                    OK\n                                "
+                                          )
+                                        ]
                                       )
-                                    : _vm._e()
-                                ],
-                                1
-                              )
+                                    ],
+                                    1
+                                  )
+                                : _vm._e()
                             ],
                             1
                           )
@@ -43854,6 +43839,7 @@ var render = function() {
                     [
                       _c(
                         "v-col",
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
                         [
                           _c("v-select", {
                             attrs: {
@@ -43876,6 +43862,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-col",
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
                         [
                           _c("v-select", {
                             attrs: {
@@ -43902,6 +43889,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-col",
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
                         [
                           _c("v-select", {
                             attrs: {
@@ -43928,16 +43916,23 @@ var render = function() {
                   _c(
                     "v-row",
                     [
-                      _c("v-textarea", {
-                        attrs: { label: "Note" },
-                        model: {
-                          value: _vm.newAppuntamento.nota,
-                          callback: function($$v) {
-                            _vm.$set(_vm.newAppuntamento, "nota", $$v)
-                          },
-                          expression: "newAppuntamento.nota"
-                        }
-                      })
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12" } },
+                        [
+                          _c("v-textarea", {
+                            attrs: { label: "Note" },
+                            model: {
+                              value: _vm.newAppuntamento.nota,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newAppuntamento, "nota", $$v)
+                              },
+                              expression: "newAppuntamento.nota"
+                            }
+                          })
+                        ],
+                        1
+                      )
                     ],
                     1
                   ),

@@ -17,7 +17,7 @@
                         v-model="valid"
                         lazy-validation>
                 <v-row>
-                    <v-col cols="6">
+                    <v-col cols="12" md="6" lg="6">
                         <v-menu
                             ref="menu"
                             v-model="menu"
@@ -64,8 +64,7 @@
                             </v-date-picker>
                         </v-menu>
                     </v-col>
-                    <v-col cols="6">
-                        <v-col cols="6" class="pb-4">
+                    <v-col cols="12" md="6" lg="6">
                             <v-dialog
                                 ref="dialog"
                                 v-model="modal2"
@@ -107,12 +106,10 @@
                                     </v-btn>
                                 </v-time-picker>
                             </v-dialog>
-
-                        </v-col>
                     </v-col>
                 </v-row>
                         <v-row>
-                            <v-col>
+                            <v-col cols="12" md="4" lg="4">
                                 <v-select
                                     v-model.lazy="newAppuntamento.filiale_id"
                                     item-value="id"
@@ -121,7 +118,7 @@
                                     label="Filiale"
                                 ></v-select>
                             </v-col>
-                            <v-col>
+                            <v-col cols="12" md="4" lg="4">
                                 <v-select
                                     v-model.lazy="newAppuntamento.recapito_id"
                                     item-value="id"
@@ -130,7 +127,7 @@
                                     label="Recapito"
                                 ></v-select>
                             </v-col>
-                            <v-col>
+                            <v-col cols="12" md="4" lg="4">
                                 <v-select
                                     v-model.lazy="newAppuntamento.tipo"
                                     :items="tipoAppuntamento"
@@ -142,10 +139,12 @@
                         </v-row>
 
                     <v-row>
-                        <v-textarea
-                            label="Note"
-                            v-model.lazy="newAppuntamento.nota"
-                        ></v-textarea>
+                        <v-col cols="12">
+                            <v-textarea
+                                label="Note"
+                                v-model.lazy="newAppuntamento.nota"
+                            ></v-textarea>
+                        </v-col>
                 </v-row>
 
                 <v-btn @click="inserisci" color="primary" class="my-2">

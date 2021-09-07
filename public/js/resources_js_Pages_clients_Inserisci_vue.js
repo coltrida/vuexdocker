@@ -232,6 +232,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -774,7 +789,6 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-row",
-                { staticClass: "mb-10" },
                 [
                   _c(
                     "v-col",
@@ -1009,6 +1023,49 @@ var render = function() {
                             _vm.$set(_vm.newClient, "recapito_id", $$v)
                           },
                           expression: "newClient.recapito_id"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-row",
+                { staticClass: "mb-10" },
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "6", lg: "6" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Luogo di Nascita" },
+                        model: {
+                          value: _vm.newClient.luogoNascita,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "luogoNascita", $$v)
+                          },
+                          expression: "newClient.luogoNascita"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "6", lg: "6" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Codice Fiscale" },
+                        model: {
+                          value: _vm.newClient.codfisc,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "codfisc", $$v)
+                          },
+                          expression: "newClient.codfisc"
                         }
                       })
                     ],

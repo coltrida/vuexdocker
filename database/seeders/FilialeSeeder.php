@@ -23,30 +23,30 @@ class FilialeSeeder extends Seeder
                 'cap' => '56127',
                 'provincia' => 'PI',
             ],
-            /*[
+            [
                 'nome' => 'CIVITANOVA',
-                'indirizzo' => 'VIA VICOLO STRETTO 23',
-                'citta' => 'CIVITANOVA MARCHE',
-                'telefono' => '08554545',
-                'cap' => '584652',
-                'provincia' => 'MC',
+                'indirizzo' => null,
+                'citta' => null,
+                'telefono' => null,
+                'cap' => null,
+                'provincia' => null,
             ],
             [
-                'nome' => 'SAN BENEDETTO',
-                'indirizzo' => 'VIA VAI 3',
-                'citta' => 'SAN BENEDETTO DEL TRONTO',
-                'telefono' => '08554545',
-                'cap' => '584652',
-                'provincia' => 'AP',
+                'nome' => 'LUCCA',
+                'indirizzo' => null,
+                'citta' => null,
+                'telefono' => null,
+                'cap' => null,
+                'provincia' => null,
             ],
             [
-                'nome' => 'ANCONA',
-                'indirizzo' => 'VIA MOLTO LUNGA 4',
-                'citta' => 'ANCONA',
-                'telefono' => '08554545',
-                'cap' => '584652',
-                'provincia' => 'AN',
-            ]*/
+                'nome' => 'LIVORNO',
+                'indirizzo' => null,
+                'citta' => null,
+                'telefono' => null,
+                'cap' => null,
+                'provincia' => null,
+            ]
         ]);
     }
 }
