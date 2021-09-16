@@ -28,26 +28,46 @@ const getters = {
 
 const actions = {
     async fetchAllClientsDaSaldare({commit}){
-        const response = await axios.get(`${help().linkclientidasaldare}`);
+        const response = await axios.get(`${help().linkclientidasaldare}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAllClientsDaSaldare', response.data.data);
     },
 
     async fetchClientsDaSaldare({commit}, idAudio){
-        const response = await axios.get(`${help().linkclientidasaldare}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkclientidasaldare}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchClientsDaSaldare', response.data.data);
     },
 
     async fetchClientsSaldati({commit}, idAudio){
-        const response = await axios.get(`${help().linkclientisaldati}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkclientisaldati}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchClientsSaldati', response.data.data);
     },
 
     async addRata({commit}, payload){
-        await axios.post(`${help().linkaddrata}`, payload);
+        await axios.post(`${help().linkaddrata}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
     },
 
     async fetchFattura({commit}, idFattura){
-        const response = await axios.get(`${help().linkfattura}`+'/'+idFattura);
+        const response = await axios.get(`${help().linkfattura}`+'/'+idFattura, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchFattura', response.data.data);
     },
 

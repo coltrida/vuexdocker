@@ -177,21 +177,21 @@
                 prodottiSelezione: [],
                 headers1: [
                     {text: 'Nome', width:120, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80,  value: 'tot_formattato', sortable: false, class: "indigo white--text"},
                     {text: 'GG in prova', width:120, value: 'giorni_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Prodotti', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
 
                 headers2: [
                     {text: 'Nome', width:160, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:100, value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:100, value: 'tot_formattato', sortable: false, class: "indigo white--text"},
                     {text: 'Finalizzato', width:120, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
 
                 headers3: [
                     {text: 'Nome', width:140, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:80, value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80, value: 'tot_formattato', sortable: false, class: "indigo white--text"},
                     {text: 'Reso', width:110, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                 ],
 

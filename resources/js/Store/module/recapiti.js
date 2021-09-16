@@ -23,27 +23,47 @@ const getters = {
 
 const actions = {
     async fetchRecapiti({commit}){
-        const response = await axios.get(`${help().linkrecapiti}`);
+        const response = await axios.get(`${help().linkrecapiti}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchRecapiti', response.data);
     },
 
     async fetchRecapitiIngresi({commit}){
-        const response = await axios.get(`${help().linkstatisticherecapitiingressi}`);
+        const response = await axios.get(`${help().linkstatisticherecapitiingressi}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchRecapitiIngresi', response.data);
     },
 
     async fetchRecapitiIngresiMesi({commit}){
-        const response = await axios.get(`${help().linkstatisticherecapitiingressimese}`);
+        const response = await axios.get(`${help().linkstatisticherecapitiingressimese}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchRecapitiIngresiMesi', response.data);
     },
 
     async fetchRecapitiPerAudio({commit}){
-        const response = await axios.get(`${help().linkrecapitiperaudio}`);
+        const response = await axios.get(`${help().linkrecapitiperaudio}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchRecapiti', response.data);
     },
 
     async fetchRecapitiByAudio({commit}, idAudio){
-        const response = await axios.get(`${help().linkrecapiti}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkrecapiti}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchRecapiti', response.data);
     },
 
@@ -55,12 +75,20 @@ const actions = {
             'telefono': payload.telefono,
             'user_id': payload.user_id,
             'provincia': payload.provincia,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('addRecapito', response.data);
     },
 
     async eliminaRecapito({commit}, payload){
-        await axios.delete(`${help().linkrecapiti}`+'/'+payload.id);
+        await axios.delete(`${help().linkrecapiti}`+'/'+payload.id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaRecapito', payload);
     },
 };

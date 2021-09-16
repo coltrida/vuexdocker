@@ -26,4 +26,9 @@ class FornitoriController extends Controller
     {
         return $fornitoriService->eliminaFornitore($id);
     }
+
+    public function modifica(Request $request, FornitoriService $fornitoriService)
+    {
+        return $fornitoriService->modificaFornitore($request);
+    }
 }

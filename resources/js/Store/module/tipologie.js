@@ -17,22 +17,38 @@ const getters = {
 
 const actions = {
     async fetchTipologie({commit}){
-        const response = await axios.get(`${help().linktipologie}`);
+        const response = await axios.get(`${help().linktipologie}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchTipologie', response.data);
     },
 
     async modificaTipologia({commit}, payload){
-        const response = await axios.post(`${help().linkmodificatipologia}`, payload);
+        const response = await axios.post(`${help().linkmodificatipologia}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchTipologie', response.data);
     },
 
     async addTipologia({commit}, payload){
-        const response = await axios.post(`${help().linkaddtipologia}`, payload);
+        const response = await axios.post(`${help().linkaddtipologia}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('addTipologia', response.data);
     },
 
     async eliminaTipologia({commit}, id){
-        await axios.delete(`${help().linktipologie}`+'/'+id);
+        await axios.delete(`${help().linktipologie}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaTipologia', id);
     },
 };

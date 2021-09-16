@@ -232,7 +232,7 @@
                 expanded: [],
                 headers1: [
                     {text: 'Nome', width:170, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:80,  value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80,  value: 'tot_formattato', sortable: false, class: "indigo white--text"},
                     {text: 'GG in prova', width:120, value: 'giorni_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                     /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
@@ -240,7 +240,7 @@
 
                 headers2: [
                     {text: 'Nome', width:170, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:80, value: 'tot', sortable: false, class: "indigo white--text"},
+                    {text: 'Tot', width:80, value: 'tot_formattato', sortable: false, class: "indigo white--text"},
                     {text: 'Finalizzato', width:120, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],

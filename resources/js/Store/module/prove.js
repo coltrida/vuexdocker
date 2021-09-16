@@ -22,12 +22,21 @@ const getters = {
 
 const actions = {
 
-    async fetchProvePassate({commit}, payload){
-        commit('fetchProvePassate', payload);
+    async fetchProvePassate({commit}, idClient){
+        const response = await axios.get(`${help().linkprovepassate}`+'/'+idClient, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchProvePassate', response.data);
     },
 
     async creaNuovaProva({commit}, payload){
-        const response = await axios.post(`${help().linknuovaprova}`, payload);
+        const response = await axios.post(`${help().linknuovaprova}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('creaNuovaProva', response.data);
     },
 
@@ -37,12 +46,20 @@ const actions = {
             'product_id': payload.prodotto.id,
             'orecchio': payload.orecchio,
             'prezzo': payload.prezzolistino,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('AddEleInNuovaProva', response.data.data);
     },
 
     async eliminaEle({commit}, id){
-        await axios.delete(`${help().linkeliminaeleinprova}`+'/'+id);
+        await axios.delete(`${help().linkeliminaeleinprova}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaEle', id);
     },
 
@@ -50,17 +67,29 @@ const actions = {
         const response = await axios.post(`${help().linksalvaprova}`, {
             'id':payload.id,
             'tot':payload.tot
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('salvaProvaInCorso', response.data);
     },
 
     async resoProva({commit}, idProva){
-        const response = await axios.get(`${help().linkresoprova}`+'/'+idProva);
+        const response = await axios.get(`${help().linkresoprova}`+'/'+idProva, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('resoProva', response.data);
     },
 
     async salvaFattura({commit}, payload){
-        const response = await axios.post(`${help().linksalvafattura}`, payload);
+        const response = await axios.post(`${help().linksalvafattura}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('salvaFattura', response.data);
     },
 };

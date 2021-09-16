@@ -31,6 +31,14 @@ class RecapitoSeeder extends Seeder
                 'telefono' => '0584760689',
                 'user_id' => 3,
             ],
+            [
+                'nome' => 'CENTRO MEDICO BLUGALLERY',
+                'indirizzo' => 'VIA FERRANTE FERRANTI, 41',
+                'citta' => 'TACCOLI',
+                'provincia' => 'MC',
+                'telefono' => '0733639051',
+                'user_id' => 9,
+            ],
         ]);
     }
 }

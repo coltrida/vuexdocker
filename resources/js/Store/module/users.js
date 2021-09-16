@@ -11,13 +11,23 @@ const state = () => ({
     situazioneMese: [],
     amm: [],
     callCenter: [],
-    agenda:[]
+    agenda:[],
+    totFatt: 0,
+    totBgtProg: 0
 });
 
 const getters = {
 
     getAudio(state){
         return state.audio;
+    },
+
+    getTotFatt(state){
+        return state.totFatt;
+    },
+
+    getTotBgtProg(state){
+        return state.totBgtProg;
     },
 
     getCommerciale(state){
@@ -63,58 +73,110 @@ const getters = {
 
 const actions = {
     async fetchAudio({commit}){
-        const response = await axios.get(`${help().linkaudio}`);
+        const response = await axios.get(`${help().linkaudio}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAudio', response.data);
     },
 
     async fetchCommerciale({commit}){
-        const response = await axios.get(`${help().linksituazionemese}`);
+        const response = await axios.get(`${help().linksituazionemese}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchCommerciale', response.data);
     },
 
     async fetchUserAgenda({commit}){
-        const response = await axios.get(`${help().linkuseragenda}`);
+        const response = await axios.get(`${help().linkuseragenda}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchUserAgenda', response.data);
     },
 
     async fetchSpecificoUserAgenda({commit}, idAudio){
-        const response = await axios.get(`${help().linkuseragenda}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkuseragenda}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchSpecificoUserAgenda', response.data);
     },
 
     async fetchSituazioneMese({commit}, idAudio=''){
-        const response = await axios.get(`${help().linksituazionemese}`+'/'+idAudio);
+        const response = await axios.get(`${help().linksituazionemese}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchSituazioneMese', response.data);
     },
 
     async fetchSituazioneAnno({commit}){
-        const response = await axios.get(`${help().linkvisualizzasituazioneanno}`);
+        const response = await axios.get(`${help().linkvisualizzasituazioneanno}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAudioConBgt', response.data.data);
     },
 
     async fetchAudioConBgt({commit}){
-        const response = await axios.get(`${help().linkaudioconbgt}`);
+        const response = await axios.get(`${help().linkaudioconbgt}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAudioConBgt', response.data);
     },
 
     async fetchAudioConFatt({commit}){
-        const response = await axios.get(`${help().linkstatistichedettagliaudio}`);
-        /*commit('fetchAudioConFatt', response.data.data);*/
+        const response = await axios.get(`${help().linkstatistichedettagliaudio}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAudioConFatt', response.data);
     },
 
+    async fetchAudioConBgtAssegnato({commit}){
+        const response = await axios.get(`${help().linkaudioconbgt}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchAudioConBgtAssegnato', response.data);
+    },
+
     async fetchAudioSenzaBgt({commit}){
-        const response = await axios.get(`${help().linkaudiosenzabgt}`);
+        const response = await axios.get(`${help().linkaudiosenzabgt}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAudioSenzaBgt', response.data);
     },
 
     async fetchAmm({commit}){
-        const response = await axios.get(`${help().linkamm}`);
+        const response = await axios.get(`${help().linkamm}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAmm', response.data);
     },
 
     async fetchCall({commit}){
-        const response = await axios.get(`${help().linkcallcenter}`);
+        const response = await axios.get(`${help().linkcallcenter}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchCall', response.data);
     },
 
@@ -123,6 +185,10 @@ const actions = {
             'name': payload.name,
             'email': payload.email,
             'ruolo_id': payload.ruolo_id,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('addAudio', response.data);
     },
@@ -132,6 +198,10 @@ const actions = {
             'name': payload.name,
             'email': payload.email,
             'ruolo_id': payload.ruolo_id,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('addAmm', response.data);
     },
@@ -141,43 +211,75 @@ const actions = {
             'name': payload.name,
             'email': payload.email,
             'ruolo_id': payload.ruolo_id,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('addCall', response.data);
     },
 
     async eliminaAudio({commit}, id){
-        await axios.delete(`${help().linkuser}`+'/'+id);
+        await axios.delete(`${help().linkuser}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaAudio', id);
     },
 
     async eliminaAmm({commit}, id){
-        await axios.delete(`${help().linkuser}`+'/'+id);
+        await axios.delete(`${help().linkuser}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaAmm', id);
     },
 
     async eliminaCall({commit}, id){
-        await axios.delete(`${help().linkuser}`+'/'+id);
+        await axios.delete(`${help().linkuser}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaCall', id);
     },
 
     async assegnaBgt({commit}, payload){
         //console.log(payload)
-        const response = await axios.post(`${help().linkassegnabgt}`, payload);
+        const response = await axios.post(`${help().linkassegnabgt}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('assegnaBgt', response.data);
     },
 
     async modificaBgt({commit}, payload){
-        const response = await axios.post(`${help().linkmodificabgt}`, payload);
+        const response = await axios.post(`${help().linkmodificabgt}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('modificaBgt', response.data);
     },
 
     async addAgenda({commit}, payload){
-        const response = await axios.post(`${help().linkuseragenda}`, payload);
+        const response = await axios.post(`${help().linkuseragenda}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('addAgenda', response.data);
     },
 
     async fetchVentaglioAnno({commit}){
-        const response = await axios.get(`${help().linkventaglio}`);
+        const response = await axios.get(`${help().linkventaglio}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchVentaglioAnno', response.data);
     },
 
@@ -204,7 +306,20 @@ const mutations = {
         state.situazioneMese = payload;
     },
 
+    fetchAudioConBgtAssegnato(state, payload){
+        state.audioConBgt = payload;
+    },
+
     fetchAudioConBgt(state, payload){
+        let totFatt = 0;
+        let totBgtProg = 0;
+        payload.forEach(elemento => {
+            totBgtProg = totBgtProg + elemento.valori[0].premio;
+            totFatt = totFatt + elemento.valori[1].budgetAnno;
+        });
+        state.totFatt = totFatt;
+        state.totBgtProg = totBgtProg;
+
         state.audioConBgt = payload;
     },
 

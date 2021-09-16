@@ -40,4 +40,9 @@ class ProvaController extends Controller
     {
         return $provaService->salvaFattura($request);
     }
+
+    public function provePassate($idClient, ProvaService $provaService)
+    {
+        return $provaService->provePassate($idClient);
+    }
 }

@@ -1,12 +1,27 @@
 <template>
     <div>
-        <h2>Statistiche Audioprotesisti</h2>
+        <h2 class="mb-4">Statistiche Audioprotesisti -
+            <v-chip
+                color="primary"
+                outlined
+                pill
+            >
+            Fatturato tot. {{getTotFatt}}
+            </v-chip>
+                -
+            <v-chip
+                color="deep-purple accent-4"
+                outlined
+            >
+            Bgt Prog. {{getTotBgtProg}}
+            </v-chip>
+        </h2>
 
         <v-row v-for="audio in getAudioConBgt" :key="audio.id" class="mb-5">
             <v-col cols="8">
                 <div >
                     <div style="display: flex; align-items: center; justify-content: space-between">
-                        <h3>{{audio.name}}</h3>
+                        <h3>{{audio.name}} - Budget Progressivo: {{audio.valori[0].premio}}</h3>
                         <!--<h4>Media Vendita {{audio.valori[1].budgetAnno / audio.valori[3].budgetAnno}}</h4>-->
                     </div>
 
@@ -47,6 +62,7 @@
         components: {IncorporaGrafico, Grafico},
         data(){
             return {
+                elementi: [],
                 AudioSelected: [],
                 switch: 0,
                 singleSelect: true,
@@ -105,7 +121,9 @@
         },
 
         mounted() {
-            this.fetchSituazioneAnno();
+            this.fetchSituazioneAnno().then(() => {
+                this.elementi = this.getAudioConBgt
+            });
         },
 
         methods:{
@@ -118,6 +136,8 @@
         computed:{
             ...mapGetters('users', {
                 getAudioConBgt:'getAudioConBgt',
+                getTotFatt:'getTotFatt',
+                getTotBgtProg:'getTotBgtProg',
             }),
 
         }

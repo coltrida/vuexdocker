@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Medico whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Medico whereUserId($value)
  * @mixin \Eloquent
+ * @property-read int|null $user_count
  */
 class Medico extends Model
 {

@@ -37,4 +37,9 @@ class FilialiController extends Controller
     {
         return $filialeService->filialeById($idFiliale);
     }
+
+    public function modifica(Request $request, FilialeService $filialeService)
+    {
+        return $filialeService->modifica($request);
+    }
 }

@@ -24,29 +24,34 @@ class FilialeUserSeeder extends Seeder
                 'user_id' => 2,
             ],
             [
-                'filiale_id' => 2,
-                'user_id' => 6,
+                'filiale_id' => 6,
+                'user_id' => 2,
             ],
-            /*         [
-                         'filiale_id' => 1,
-                         'user_id' => 4,
-                     ],
-                     [
-                         'filiale_id' => 2,
-                         'user_id' => 9,
-                     ],
-                     [
-                         'filiale_id' => 3,
-                         'user_id' => 5,
-                     ],
-                     [
-                         'filiale_id' => 3,
-                         'user_id' => 6,
-                     ],
-                     [
-                         'filiale_id' => 4,
-                         'user_id' => 8,
-                     ],*/
+            [
+                'filiale_id' => 7,
+                'user_id' => 2,
+            ],
+            [
+                'filiale_id' => 2,
+                'user_id' => 9,
+            ],
+             [
+                 'filiale_id' => 4,
+                 'user_id' => 8,
+             ],
+             [
+                 'filiale_id' => 5,
+                 'user_id' => 6,
+             ],
+           [
+                'filiale_id' => 6,
+                'user_id' => 5,
+            ],
+             [
+                 'filiale_id' => 7,
+                 'user_id' => 3,
+             ],
+
         ]);
     }
 }

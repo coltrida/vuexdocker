@@ -52,7 +52,13 @@ use const LC_TIME;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUserId($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Fattura|null $fattura
-
+ * @property string|null $datacarico
+ * @property int|null $pericoloRestituzione
+ * @method static \Illuminate\Database\Eloquent\Builder|Product apparecchi()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product filiale()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product prova()
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereDatacarico($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePericoloRestituzione($value)
  */
 class Product extends Model
 {

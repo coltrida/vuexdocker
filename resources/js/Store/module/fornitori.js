@@ -13,7 +13,11 @@ const getters = {
 const actions = {
 
     async fetchFornitori({commit}){
-        const response = await axios.get(`${help().linkfornitori}`);
+        const response = await axios.get(`${help().linkfornitori}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchFornitori', response.data);
     },
 
@@ -28,12 +32,29 @@ const actions = {
             'email': payload.email,
             'pec': payload.pec,
             'univoco': payload.univoco,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('addFornitore', response.data);
     },
 
+    async modificaFornitore({commit}, payload){
+        const response = await axios.post(`${help().linkmodificafornitore}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('modificaFornitore', response.data);
+    },
+
     async eliminaFornitore({commit}, id){
-        await axios.delete(`${help().linkfornitori}`+'/'+id);
+        await axios.delete(`${help().linkfornitori}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaFornitore', id);
     },
 };
@@ -49,6 +70,10 @@ const mutations = {
 
     eliminaFornitore(state, id){
         state.fornitori = state.fornitori.filter(u => u.id !== id);
+    },
+
+    modificaFornitore(state, payload){
+        state.fornitori.unshift(payload);
     },
 };
 

@@ -60,6 +60,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -71,6 +86,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      elementi: [],
       AudioSelected: [],
       "switch": 0,
       singleSelect: true,
@@ -176,13 +192,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchSituazioneAnno();
+    var _this = this;
+
+    this.fetchSituazioneAnno().then(function () {
+      _this.elementi = _this.getAudioConBgt;
+    });
   },
   methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('users', {
     fetchSituazioneAnno: 'fetchSituazioneAnno'
   })),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('users', {
-    getAudioConBgt: 'getAudioConBgt'
+    getAudioConBgt: 'getAudioConBgt',
+    getTotFatt: 'getTotFatt',
+    getTotBgtProg: 'getTotBgtProg'
   }))
 });
 
@@ -38492,7 +38514,37 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", [_vm._v("Statistiche Audioprotesisti")]),
+      _c(
+        "h2",
+        { staticClass: "mb-4" },
+        [
+          _vm._v("Statistiche Audioprotesisti -\n        "),
+          _c(
+            "v-chip",
+            { attrs: { color: "primary", outlined: "", pill: "" } },
+            [
+              _vm._v(
+                "\n        Fatturato tot. " +
+                  _vm._s(_vm.getTotFatt) +
+                  "\n        "
+              )
+            ]
+          ),
+          _vm._v("\n            -\n        "),
+          _c(
+            "v-chip",
+            { attrs: { color: "deep-purple accent-4", outlined: "" } },
+            [
+              _vm._v(
+                "\n        Bgt Prog. " +
+                  _vm._s(_vm.getTotBgtProg) +
+                  "\n        "
+              )
+            ]
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm._l(_vm.getAudioConBgt, function(audio) {
         return _c(
@@ -38512,7 +38564,15 @@ var render = function() {
                         "justify-content": "space-between"
                       }
                     },
-                    [_c("h3", [_vm._v(_vm._s(audio.name))])]
+                    [
+                      _c("h3", [
+                        _vm._v(
+                          _vm._s(audio.name) +
+                            " - Budget Progressivo: " +
+                            _vm._s(audio.valori[0].premio)
+                        )
+                      ])
+                    ]
                   ),
                   _vm._v(" "),
                   _c("v-data-table", {

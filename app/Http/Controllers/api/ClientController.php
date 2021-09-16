@@ -105,4 +105,9 @@ class ClientController extends Controller
         return $clientService->situazioneAnnoResiAudio($request);
     }
 
+    public function riepilogo(ClientService $clientService)
+    {
+        return $clientService->riepilogo();
+    }
+
 }

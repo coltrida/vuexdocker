@@ -146,13 +146,13 @@
         },
 
         mounted() {
-            this.fetchAudioConBgt();
+            this.fetchAudioConBgtAssegnato();
             this.fetchAudioSenzaBgt();
         },
 
         methods:{
             ...mapActions('users', {
-                fetchAudioConBgt:'fetchAudioConBgt',
+                fetchAudioConBgtAssegnato:'fetchAudioConBgtAssegnato',
                 fetchAudioSenzaBgt:'fetchAudioSenzaBgt',
                 assegnaBgt:'assegnaBgt',
                 modificaBgt:'modificaBgt',

@@ -1,7 +1,8 @@
 <template>
     <div>
         <h2>Fatturato Canali</h2>
-        <v-container>
+        <v-row>
+            <v-col cols="8">
                 <v-data-table
                     dense
                     :headers="headers"
@@ -25,7 +26,13 @@
                         </tr>
                     </template>
                 </v-data-table>
-
+            </v-col>
+            <v-col cols="4">
+                <!--<incorpora-torta
+                    :valoripassati="getCanaliFatturato[1]"
+                    :options="chartOptions"/>-->
+            </v-col>
+        </v-row>
                 <div v-for="audio in getUserCanaliFatturato" :key="audio.id" class="mt-8">
                     <v-data-table
                         dense
@@ -49,15 +56,15 @@
                         </template>-->
                     </v-data-table>
                 </div>
-        </v-container>
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import IncorporaTorta from "./IncorporaTorta";
     export default {
         name: "AssegnaBudget",
-
+        components: {IncorporaTorta},
         data(){
             return {
                 ricerca:{},
@@ -67,6 +74,12 @@
                     { text: 'Ingressi', sortable: false, value: 'clients_count', class: "indigo white--text" },
                     { text: '%', sortable: false, value: 'percentuale', class: "indigo white--text" },
                 ],
+
+                chartOptions:{
+
+                    responsive: true,
+                    maintainAspectRatio: false,
+                },
             }
         },
 

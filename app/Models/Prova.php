@@ -58,12 +58,14 @@ use const LC_TIME;
  * @method static \Illuminate\Database\Eloquent\Builder|Prova whereGiorniProva($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Documento[] $copiaComm
  * @property-read int|null $copia_comm_count
+ * @property-read mixed $tot_formattato
  */
 class Prova extends Model
 {
     use HasFactory;
 
     protected $table = 'provas';
+    protected $appends = ['tot_formattato'];
 
     public function user()
     {
@@ -104,6 +106,11 @@ class Prova extends Model
     public function ddt()
     {
         return $this->hasOne(Ddt::class);
+    }
+
+    public function getTotFormattatoAttribute()
+    {
+        return $this->tot ? '€ '.number_format( (float) $this->tot, '0', ',', '.') : null;
     }
 
     public function getGiorniInProvaAttribute()

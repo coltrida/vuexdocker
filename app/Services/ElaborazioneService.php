@@ -24,7 +24,7 @@ class ElaborazioneService
         $anno = $oggi->year;
         $mese = $oggi->month;
 
-        $users = User::audio(1)->get();
+        $users = User::with('budget')->audio(1)->get();
 
         foreach ($users as $user){
             $fatturati = $user->fatturati_id ? $user->fatturati : new Fatturati();
@@ -39,6 +39,7 @@ class ElaborazioneService
             );
 
             if ($mese >= 1) {
+                $user->budget->premio = $user->budget->gennaio;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 1], ['anno_fine', $anno]]);
@@ -92,6 +93,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 2) {
+                $user->budget->premio += $user->budget->febbraio;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 2], ['anno_fine', $anno]]);
@@ -110,6 +112,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 3) {
+                $user->budget->premio += $user->budget->marzo;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 3], ['anno_fine', $anno]]);
@@ -128,6 +131,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 4) {
+                $user->budget->premio += $user->budget->aprile;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 4], ['anno_fine', $anno]]);
@@ -146,6 +150,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 5) {
+                $user->budget->premio += $user->budget->maggio;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 5], ['anno_fine', $anno]]);
@@ -164,6 +169,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 6) {
+                $user->budget->premio += $user->budget->giugno;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 6], ['anno_fine', $anno]]);
@@ -182,6 +188,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 7) {
+                $user->budget->premio += $user->budget->luglio;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 7], ['anno_fine', $anno]]);
@@ -200,6 +207,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 8) {
+                $user->budget->premio += $user->budget->agosto;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 8], ['anno_fine', $anno]]);
@@ -218,6 +226,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 9) {
+                $user->budget->premio += $user->budget->settembre;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 9], ['anno_fine', $anno]]);
@@ -236,6 +245,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 10) {
+                $user->budget->premio += $user->budget->ottobre;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 10], ['anno_fine', $anno]]);
@@ -254,6 +264,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 11) {
+                $user->budget->premio += $user->budget->novembre;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 11], ['anno_fine', $anno]]);
@@ -272,6 +283,7 @@ class ElaborazioneService
             }
 
             if ($mese >= 12) {
+                $user->budget->premio += $user->budget->dicembre;
                 $valore = User::with('budget')->
                 withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', 12], ['anno_fine', $anno]]);
@@ -296,7 +308,7 @@ class ElaborazioneService
             $fatturati->budgetAnno = array_sum($totali);
 
             // -------------- calcolo fatturato totale dell'anno / budget anno ---------- //
-            $delta->budgetAnno = number_format( (float)  ((array_sum($totali) / array_sum($totaliBgt)) - 1) * 100, '1').'%';
+            $delta->budgetAnno = number_format( (float)  ((array_sum($totali) / $user->budget->premio) - 1) * 100, '1').'%';
 
             // -------------- conteggio numero Clienti ---------- //
             $numeroClienti = Client::clienti()->where([
@@ -333,8 +345,7 @@ class ElaborazioneService
             $delta->save();
             $user->fatturati_id = $fatturati->id;
             $user->delta_id = $delta->id;
-
-            $user->save();
+            $user->push();
         }
 
         // -------------- conteggio giorni in prova delle prove in corso ---------- //
@@ -359,5 +370,22 @@ class ElaborazioneService
                 $prodotto->pericoloRestituzione = true;
             };
         }
+
+        // -------------- Backup ---------- //
+        $mysqlDatabaseName =env('DB_DATABASE');
+        $mysqlUserName = env('DB_USERNAME');
+        $mysqlPassword = env('DB_PASSWORD');
+        $mysqlHostName = env('DB_HOST');
+        $mysqlExportPath ='backup.sql';
+
+        $command='mysqldump --opt -h' .$mysqlHostName .' -u' .$mysqlUserName .' -p' .$mysqlPassword .' ' .$mysqlDatabaseName .' > storage/' .$mysqlExportPath;
+        exec($command,$output,$worked);
+
+
+        // -------------- Invio e-mail per remind appuntamento ---------- //
+        $appuntamentiDomani = Appuntamento::with('client')->where('giorno', $oggi->addDay())->get();
+        $primoCliente = Client::first();
+        $primoAppuntamento = Appuntamento::first();
+        \Mail::to('coltrida@gmail.com')->later(now()->addHours(8), new \App\Mail\Appuntamento($primoCliente, $primoAppuntamento));
     }
 }

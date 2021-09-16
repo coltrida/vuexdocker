@@ -37,6 +37,9 @@ class MedicoSeeder extends Seeder
             [
                 'nome' => 'MARSALLI GIULIA'
             ],
+            [
+                'nome' => 'DURSO DOMENICO'
+            ],
         ]);
 
         DB::table('medico_user')->insert([
@@ -67,6 +70,10 @@ class MedicoSeeder extends Seeder
             [
                 'medico_id' => 7,
                 'user_id' => 2,
+            ],
+            [
+                'medico_id' => 8,
+                'user_id' => 9,
             ],
 
         ]);

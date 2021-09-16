@@ -18,17 +18,29 @@ const getters = {
 const actions = {
 
     async fetchAudiometrie({commit}, idClient){
-        const response = await axios.get(`${help().linkaudiometrie}`+'/'+idClient);
+        const response = await axios.get(`${help().linkaudiometrie}`+'/'+idClient, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAudiometrie', response.data);
     },
 
     async addAudiometria({commit}, payload){
-        const response = await axios.post(`${help().linkaddaudiometria}`, payload);
+        const response = await axios.post(`${help().linkaddaudiometria}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('addAudiometria', response.data);
     },
 
     async selezionaAudiometria({commit}, idAudiometria){
-        const response = await axios.get(`${help().linkaudiometria}`+'/'+idAudiometria);
+        const response = await axios.get(`${help().linkaudiometria}`+'/'+idAudiometria, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('selezionaAudiometria', response.data);
     },
 };

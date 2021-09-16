@@ -27,10 +27,13 @@ class ClientsImport implements ToCollection, WithHeadingRow
                     $filiale = 4;
                     $user = 8;
                 } elseif (in_array($value['comune'] , ['LORETO',
-                    'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'MACERATA',
-                    'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'CAMERINO'])) {
+                    'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI',
+                    'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO'])) {
                     $filiale = 2;
                     $user = 9;
+                } elseif (in_array($value['comune'] , ['MACERATA', 'CAMERINO'])) {
+                    $filiale = 5;
+                    $user = 6;
                 }
                 Client::insert([
                     'cognome'       => $value['cognome'],

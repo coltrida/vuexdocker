@@ -104,6 +104,13 @@
             </v-row>
 
     <div>
+        <div class="text-center" v-if="carica">
+            <v-progress-circular
+                indeterminate
+                color="primary"
+            ></v-progress-circular>
+        </div>
+        <div v-else>
         <v-data-table
             :headers="headers"
             :items="getRicercaNominativi"
@@ -218,6 +225,7 @@
             </template>
 
         </v-data-table>
+        </div>
     </div>
         </div>
 
@@ -423,7 +431,10 @@
             },
 
             trova(){
-                this.ricercaNominativi(this.ricerca)
+                this.carica = true;
+                this.ricercaNominativi(this.ricerca).then(() => {
+                    this.carica = false;
+                })
             }
 
         },

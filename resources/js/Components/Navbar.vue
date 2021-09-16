@@ -51,7 +51,7 @@
                 <nav-bar-audio v-if="getRuolo === 'audio' || getRuolo === 'amministrazione'"/>
                 <nav-bar-call v-if="getRuolo === 'call'"/>
 
-                <v-btn text @click="logout" color="red">
+                <v-btn text @click="logoutBtn" color="red">
                     Logout
                 </v-btn>
                 <v-chip
@@ -113,10 +113,11 @@
         methods: {
             ...mapActions('login', {
                 fetchUser: 'fetchUser',
+                logout: 'logout',
             }),
 
-            logout() {
-                this.$store.commit('login/logout');
+            logoutBtn() {
+                this.logout(this.getIdUser);
                 this.$router.push({ name: 'home' });
             },
 

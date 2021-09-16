@@ -48,112 +48,200 @@ const getters = {
 const actions = {
 
     async fetchAppuntamenti({commit}, idClient){
-        const response = await axios.get(`${help().linkappuntamenti}`+'/'+idClient);
+        const response = await axios.get(`${help().linkappuntamenti}`+'/'+idClient, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
          commit('fetchAppuntamenti', response.data.data);
     },
 
     async fetchAppuntamentiOggi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentioggi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentioggi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamenti', response.data.data);
     },
 
     async prossimoLunedi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentilunediprossimo}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentilunediprossimo}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiLunedi', response.data.data);
     },
 
     async prossimoMartedi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimartediprossimo}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentimartediprossimo}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiMartedi', response.data.data);
     },
 
     async prossimoMarcoledi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimercolediprossimo}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentimercolediprossimo}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiMercoledi', response.data.data);
     },
 
     async prossimoGiovedi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentigiovediprossimo}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentigiovediprossimo}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiGiovedi', response.data.data);
     },
 
     async prossimoVenerdi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentivenerdiprossimo}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentivenerdiprossimo}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiVenerdi', response.data.data);
     },
 
     async fetchAppuntamentiLunedi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentilunedi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentilunedi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiLunedi', response.data.data);
     },
 
     async fetchAppuntamentiMartedi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimartedi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentimartedi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiMartedi', response.data.data);
     },
 
     async fetchAppuntamentiMercoledi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimercoledi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentimercoledi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiMercoledi', response.data.data);
     },
 
     async fetchAppuntamentiGiovedi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentigiovedi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentigiovedi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiGiovedi', response.data.data);
     },
 
     async fetchAppuntamentiVenerdi({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentivenerdi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentivenerdi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiVenerdi', response.data.data);
     },
 
     async fetchAppuntamentiDomani({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentidomani}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentidomani}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppuntamentiDomani', response.data.data);
     },
 
     async addAppuntamento({commit}, payload){
-        const response = await axios.post(`${help().linkaddappuntamento}`, payload);
+        const response = await axios.post(`${help().linkaddappuntamento}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('addAppuntamento', response.data.data);
     },
 
     async eliminaAppuntamento({commit}, payload){
-        await axios.delete(`${help().linkappuntamenti}`+'/'+payload.idAppuntamento+'/'+payload.idUser);
+        await axios.delete(`${help().linkappuntamenti}`+'/'+payload.idAppuntamento+'/'+payload.idUser, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaAppuntamento', payload.idAppuntamento);
     },
 
     async fetchAppLun({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentilunedi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentilunedi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppLun', response.data.data);
     },
 
     async fetchAppMar({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimartedi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentimartedi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppMar', response.data.data);
     },
 
     async fetchAppMer({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimercoledi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentimercoledi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppMer', response.data.data);
     },
 
     async fetchAppGio({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentigiovedi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentigiovedi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppGio', response.data.data);
     },
 
     async fetchAppVen({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentivenerdi}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkappuntamentivenerdi}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAppVen', response.data.data);
     },
 
     async fetchDateSettimana({commit}){
-        const response = await axios.get(`${help().linkdatesettimana}`);
+        const response = await axios.get(`${help().linkdatesettimana}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchDateSettimana', response.data);
     },
 
     async fetchDateSettimanaProssima({commit}){
-        const response = await axios.get(`${help().linkdatesettimanaprossima}`);
+        const response = await axios.get(`${help().linkdatesettimanaprossima}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchDateSettimana', response.data);
     },
 };

@@ -13,19 +13,31 @@ const getters = {
 const actions = {
 
     async fetchRuoli({commit}){
-        const response = await axios.get(`${help().linkruoli}`);
+        const response = await axios.get(`${help().linkruoli}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchRuoli', response.data);
     },
 
     async addRuolo({commit}, payload){
         const response = await axios.post(`${help().linkaddruolo}`, {
             'nome': payload.nome,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('addRuolo', response.data);
     },
 
     async eliminaRuolo({commit}, id){
-        await axios.delete(`${help().linkruoli}`+'/'+id);
+        await axios.delete(`${help().linkruoli}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaRuolo', id);
     },
 };

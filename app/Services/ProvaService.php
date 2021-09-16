@@ -227,5 +227,14 @@ class ProvaService
         $documento->link = '/'.$link;
         $documento->save();
     }
+
+    public function provePassate($idClient)
+    {
+        return Client::with(['prova' => function($q){
+            $q->with('copiaComm');
+        }])
+            ->find($idClient)
+            ->prova;
+    }
 }
 

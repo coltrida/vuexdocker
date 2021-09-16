@@ -932,9 +932,9 @@ var render = function() {
               var item = ref.item
               return [
                 _c(
-                  "v-btn",
+                  "v-icon",
                   {
-                    attrs: { color: "green", dark: "" },
+                    attrs: { color: "green", dark: "", small: "" },
                     on: {
                       click: function($event) {
                         return _vm.seleziona(item.rate)
@@ -942,13 +942,10 @@ var render = function() {
                     }
                   },
                   [
-                    _c("v-icon", { attrs: { color: "white", small: "" } }, [
-                      _vm._v(
-                        "\n                        mdi-format-list-bulleted-square\n                    "
-                      )
-                    ])
-                  ],
-                  1
+                    _vm._v(
+                      "\n                        mdi-format-list-bulleted-square\n                    "
+                    )
+                  ]
                 )
               ]
             }

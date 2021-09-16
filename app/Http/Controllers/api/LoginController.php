@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use App\Services\LoginService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,9 +31,10 @@ class LoginController extends Controller
         return $loginService->register($request);
     }
 
-    public function logout()
+    public function logout($id)
     {
-        Auth::logout();
+        User::find($id)->tokens()->delete();
+       // Auth::logout();
     }
 
 

@@ -113,11 +113,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Filiali",
   data: function data() {
     return {
+      modificaSwitch: false,
       filiale: {},
       headers: [{
         text: 'Nome',
@@ -159,19 +167,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
     fetchFiliali: 'fetchFiliali',
     addFiliale: 'addFiliale',
+    modificaFiliale: 'modificaFiliale',
     eliminaFiliale: 'eliminaFiliale'
   })), {}, {
     aggiungi: function aggiungi() {
-      this.addFiliale(this.filiale);
+      if (this.modificaSwitch) {
+        this.modificaFiliale(this.filiale);
+      } else {
+        this.addFiliale(this.filiale);
+      }
+
+      this.modificaSwitch = false;
       this.filiale = {};
     },
     elimina: function elimina(id) {
       this.eliminaFiliale(id);
+    },
+    modifica: function modifica(filialeSelezionata) {
+      this.modificaSwitch = true;
+      this.filiale = filialeSelezionata;
+      this.$store.commit('filiali/eliminaFiliale', this.filiale.id);
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
     getFiliali: 'getFiliali'
-  }))
+  })), {}, {
+    btnName: function btnName() {
+      return this.modificaSwitch ? 'modifica' : 'inserisci';
+    }
+  })
 });
 
 /***/ }),
@@ -392,7 +416,7 @@ var render = function() {
               attrs: { dark: "", color: "indigo" },
               on: { click: _vm.aggiungi }
             },
-            [_vm._v("\n            Inserisci\n        ")]
+            [_vm._v("\n            " + _vm._s(_vm.btnName) + "\n        ")]
           ),
           _vm._v(" "),
           _c("v-data-table", {
@@ -421,6 +445,23 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                    mdi-delete\n                "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-icon",
+                      {
+                        attrs: { color: "blue", small: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.modifica(item)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    mdi-pencil\n                "
                         )
                       ]
                     )

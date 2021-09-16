@@ -193,7 +193,7 @@
                     nota:null
                 },
                 menu:false,
-                tipoAppuntamento: ['Prima Visista', 'Esame Audio', 'Controllo Prova', 'fine prova', 'Assistenza'],
+                tipoAppuntamento: ['Prima Visita', 'Esame Audio', 'Controllo Prova', 'fine prova', 'Assistenza'],
 
                 headers: [
                     { text: 'Giorno', align: 'start', sortable: false, value: 'giorno', class: "indigo white--text" },

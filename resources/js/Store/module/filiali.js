@@ -38,42 +38,74 @@ const getters = {
 
 const actions = {
     async fetchFiliali({commit}){
-        const response = await axios.get(`${help().linkfiliali}`);
+        const response = await axios.get(`${help().linkfiliali}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchFiliali', response.data);
     },
 
     async fetchFilialeById({commit}, idFiliale){
-        const response = await axios.get(`${help().linkfilialebyid}`+'/'+idFiliale);
+        const response = await axios.get(`${help().linkfilialebyid}`+'/'+idFiliale, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchFilialeById', response.data);
     },
 
     async fetchFilialiPerInserimento({commit}){
-        const response = await axios.get(`${help().linkfiliali}`);
+        const response = await axios.get(`${help().linkfiliali}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchFilialiPerInserimento', response.data);
     },
 
     async fetchFilialiByUser({commit}, idUser){
-        const response = await axios.get(`${help().linkfilialiuser}`+'/'+idUser);
+        const response = await axios.get(`${help().linkfilialiuser}`+'/'+idUser, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchFiliali', response.data);
     },
 
     async fetchAssociazioni({commit}){
-        const response = await axios.get(`${help().linkassociazioniPersonale}`);
+        const response = await axios.get(`${help().linkassociazioniPersonale}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAssociazioni', response.data);
     },
 
     async fetchSituazioneMese({commit}){
-        const response = await axios.get(`${help().linksituazionemese}`);
+        const response = await axios.get(`${help().linksituazionemese}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchSituazioneMese', response.data);
     },
 
     async fetchAssocia({commit}, payload){
-        const response = await axios.post(`${help().linkaggiungiAssociazione}`, payload);
+        const response = await axios.post(`${help().linkaggiungiAssociazione}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchAssocia', response.data);
     },
 
     async fetchDissocia({commit}, id){
-        const response = await axios.get(`${help().linkeliminaAssociazione}`+'/'+id);
+        const response = await axios.get(`${help().linkeliminaAssociazione}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchDissocia', response.data);
     },
 
@@ -85,17 +117,38 @@ const actions = {
             'telefono': payload.telefono,
             'cap': payload.cap,
             'provincia': payload.provincia,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('addFiliale', response.data);
     },
 
     async eliminaFiliale({commit}, id){
-        await axios.delete(`${help().linkfiliali}`+'/'+id);
+        await axios.delete(`${help().linkfiliali}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaFiliale', id);
     },
 
+    async modificaFiliale({commit}, payload){
+        const response = await axios.post(`${help().linkmodificafiliale}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('modificaFiliale', response.data);
+    },
+
     async fetchRichiestaApparecchi({commit}){
-        const response = await axios.get(`${help().linklistarichiestaapparecchi}`);
+        const response = await axios.get(`${help().linklistarichiestaapparecchi}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchRichiestaApparecchi', response.data);
     },
 };
@@ -130,6 +183,10 @@ const mutations = {
     },
 
     addFiliale(state, payload){
+        state.filiali.unshift(payload);
+    },
+
+    modificaFiliale(state, payload){
         state.filiali.unshift(payload);
     },
 

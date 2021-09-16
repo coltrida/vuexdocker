@@ -222,6 +222,64 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -568,375 +626,314 @@ var render = function() {
     [
       _c("h2", [_vm._v("Listino")]),
       _vm._v(" "),
+      _vm.dialogSoglie
+        ? _c("soglie", {
+            attrs: {
+              soglie: _vm.soglieSelezione,
+              "dialog-pro": _vm.dialogSoglie
+            },
+            on: { chiudiSoglie: _vm.chiudiSoglie }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _c(
-        "v-container",
+        "v-row",
         [
-          _vm.dialogSoglie
-            ? _c("soglie", {
-                attrs: {
-                  soglie: _vm.soglieSelezione,
-                  "dialog-pro": _vm.dialogSoglie
-                },
-                on: { chiudiSoglie: _vm.chiudiSoglie }
-              })
-            : _vm._e(),
-          _vm._v(" "),
           _c(
-            "v-row",
+            "v-col",
+            { attrs: { cols: "8" } },
             [
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "Nome Prodotto"
-                    },
-                    model: {
-                      value: _vm.listino.nome,
-                      callback: function($$v) {
-                        _vm.$set(_vm.listino, "nome", $$v)
-                      },
-                      expression: "listino.nome"
-                    }
-                  })
-                ],
-                1
-              ),
+              _c("v-text-field", {
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Ricerca",
+                  "single-line": "",
+                  "hide-details": ""
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              }),
               _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "nome",
-                      items: _vm.getFornitori,
-                      label: "fornitore"
-                    },
-                    model: {
-                      value: _vm.listino.fornitore_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.listino, "fornitore_id", $$v)
-                      },
-                      expression: "listino.fornitore_id"
+              _c("v-data-table", {
+                staticClass: "elevation-1 mt-3",
+                attrs: {
+                  headers: _vm.headers,
+                  items: _vm.getListino,
+                  search: _vm.search,
+                  "items-per-page": 15
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-tooltip",
+                          {
+                            attrs: { bottom: "" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    var attrs = ref.attrs
+                                    return [
+                                      _c(
+                                        "v-icon",
+                                        _vm._g(
+                                          _vm._b(
+                                            {
+                                              attrs: {
+                                                color: "red",
+                                                small: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.elimina(item.id)
+                                                }
+                                              }
+                                            },
+                                            "v-icon",
+                                            attrs,
+                                            false
+                                          ),
+                                          on
+                                        ),
+                                        [
+                                          _vm._v(
+                                            "\n                                    mdi-delete\n                                "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [_vm._v(" "), _c("span", [_vm._v("Elimina")])]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-tooltip",
+                          {
+                            attrs: { bottom: "" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    var attrs = ref.attrs
+                                    return [
+                                      _c(
+                                        "v-icon",
+                                        _vm._g(
+                                          _vm._b(
+                                            {
+                                              attrs: {
+                                                color: "blue",
+                                                small: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.seleziona(
+                                                    item.filiale
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            "v-icon",
+                                            attrs,
+                                            false
+                                          ),
+                                          on
+                                        ),
+                                        [
+                                          _vm._v(
+                                            "\n                                    mdi-eye\n                                "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [_vm._v(" "), _c("span", [_vm._v("Soglie Minime")])]
+                        )
+                      ]
                     }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "nome",
-                      items: _vm.getCategorie,
-                      label: "cat"
-                    },
-                    model: {
-                      value: _vm.listino.categoria_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.listino, "categoria_id", $$v)
-                      },
-                      expression: "listino.categoria_id"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "costo"
-                    },
-                    model: {
-                      value: _vm.listino.costo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.listino, "costo", $$v)
-                      },
-                      expression: "listino.costo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "prezzo listino"
-                    },
-                    model: {
-                      value: _vm.listino.prezzolistino,
-                      callback: function($$v) {
-                        _vm.$set(_vm.listino, "prezzolistino", $$v)
-                      },
-                      expression: "listino.prezzolistino"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { counter: "25", label: "iva" },
-                    model: {
-                      value: _vm.listino.iva,
-                      callback: function($$v) {
-                        _vm.$set(_vm.listino, "iva", $$v)
-                      },
-                      expression: "listino.iva"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { counter: "25", label: "gg di reso" },
-                    model: {
-                      value: _vm.listino.giorniTempoDiReso,
-                      callback: function($$v) {
-                        _vm.$set(_vm.listino, "giorniTempoDiReso", $$v)
-                      },
-                      expression: "listino.giorniTempoDiReso"
-                    }
-                  })
-                ],
-                1
-              )
+                  }
+                ])
+              })
             ],
             1
           ),
           _vm._v(" "),
           _c(
-            "v-row",
-            { staticClass: "align-center" },
+            "v-col",
+            { attrs: { cols: "4" } },
             [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "Nome Prodotto"
+                },
+                model: {
+                  value: _vm.listino.nome,
+                  callback: function($$v) {
+                    _vm.$set(_vm.listino, "nome", $$v)
+                  },
+                  expression: "listino.nome"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: {
+                  "item-value": "id",
+                  "item-text": "nome",
+                  items: _vm.getFornitori,
+                  label: "fornitore"
+                },
+                model: {
+                  value: _vm.listino.fornitore_id,
+                  callback: function($$v) {
+                    _vm.$set(_vm.listino, "fornitore_id", $$v)
+                  },
+                  expression: "listino.fornitore_id"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: {
+                  "item-value": "id",
+                  "item-text": "nome",
+                  items: _vm.getCategorie,
+                  label: "cat"
+                },
+                model: {
+                  value: _vm.listino.categoria_id,
+                  callback: function($$v) {
+                    _vm.$set(_vm.listino, "categoria_id", $$v)
+                  },
+                  expression: "listino.categoria_id"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "costo"
+                },
+                model: {
+                  value: _vm.listino.costo,
+                  callback: function($$v) {
+                    _vm.$set(_vm.listino, "costo", $$v)
+                  },
+                  expression: "listino.costo"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "prezzo listino"
+                },
+                model: {
+                  value: _vm.listino.prezzolistino,
+                  callback: function($$v) {
+                    _vm.$set(_vm.listino, "prezzolistino", $$v)
+                  },
+                  expression: "listino.prezzolistino"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: { counter: "25", label: "iva" },
+                model: {
+                  value: _vm.listino.iva,
+                  callback: function($$v) {
+                    _vm.$set(_vm.listino, "iva", $$v)
+                  },
+                  expression: "listino.iva"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: { counter: "25", label: "gg di reso" },
+                model: {
+                  value: _vm.listino.giorniTempoDiReso,
+                  callback: function($$v) {
+                    _vm.$set(_vm.listino, "giorniTempoDiReso", $$v)
+                  },
+                  expression: "listino.giorniTempoDiReso"
+                }
+              }),
+              _vm._v(" "),
               _c(
-                "v-col",
-                { attrs: { cols: "3" } },
-                [
-                  _c(
-                    "v-list",
-                    _vm._l(_vm.getFiliali, function(item, index) {
-                      return _c(
-                        "v-list-item",
-                        { key: item.id, attrs: { dense: "" } },
+                "v-list",
+                _vm._l(_vm.getFiliali, function(item, index) {
+                  return _c(
+                    "v-list-item",
+                    { key: item.id, attrs: { dense: "" } },
+                    [
+                      _c(
+                        "v-list-item-content",
+                        [_c("v-list-item-title", [_vm._v(_vm._s(item.nome))])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-avatar",
+                        { staticClass: "align-center" },
                         [
-                          _c(
-                            "v-list-item-content",
-                            [
-                              _c("v-list-item-title", [
-                                _vm._v(_vm._s(item.nome))
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-list-item-avatar",
-                            { staticClass: "align-center" },
-                            [
-                              _c("v-text-field", {
-                                attrs: { type: "number" },
-                                model: {
-                                  value: _vm.listino.soglie[index],
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.listino.soglie, index, $$v)
-                                  },
-                                  expression: "listino.soglie[index]"
-                                }
-                              })
-                            ],
-                            1
-                          )
+                          _c("v-text-field", {
+                            attrs: { type: "number" },
+                            model: {
+                              value: _vm.listino.soglie[index],
+                              callback: function($$v) {
+                                _vm.$set(_vm.listino.soglie, index, $$v)
+                              },
+                              expression: "listino.soglie[index]"
+                            }
+                          })
                         ],
                         1
                       )
-                    }),
+                    ],
                     1
                   )
-                ],
+                }),
                 1
               ),
               _vm._v(" "),
               _c(
-                "v-col",
-                [
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { dark: "", color: "indigo" },
-                      on: { click: _vm.aggiungi }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Inserisci\n                "
-                      )
-                    ]
-                  )
-                ],
-                1
+                "v-btn",
+                {
+                  attrs: { dark: "", color: "indigo" },
+                  on: { click: _vm.aggiungi }
+                },
+                [_vm._v("\n                    Inserisci\n                ")]
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("v-text-field", {
-            attrs: {
-              "append-icon": "mdi-magnify",
-              label: "Ricerca",
-              "single-line": "",
-              "hide-details": ""
-            },
-            model: {
-              value: _vm.search,
-              callback: function($$v) {
-                _vm.search = $$v
-              },
-              expression: "search"
-            }
-          }),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.getListino,
-              search: _vm.search,
-              "items-per-page": 10
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-tooltip",
-                      {
-                        attrs: { bottom: "" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "activator",
-                              fn: function(ref) {
-                                var on = ref.on
-                                var attrs = ref.attrs
-                                return [
-                                  _c(
-                                    "v-icon",
-                                    _vm._g(
-                                      _vm._b(
-                                        {
-                                          attrs: { color: "red", small: "" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.elimina(item.id)
-                                            }
-                                          }
-                                        },
-                                        "v-icon",
-                                        attrs,
-                                        false
-                                      ),
-                                      on
-                                    ),
-                                    [
-                                      _vm._v(
-                                        "\n                            mdi-delete\n                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          true
-                        )
-                      },
-                      [_vm._v(" "), _c("span", [_vm._v("Elimina")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-tooltip",
-                      {
-                        attrs: { bottom: "" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "activator",
-                              fn: function(ref) {
-                                var on = ref.on
-                                var attrs = ref.attrs
-                                return [
-                                  _c(
-                                    "v-icon",
-                                    _vm._g(
-                                      _vm._b(
-                                        {
-                                          attrs: { color: "blue", small: "" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.seleziona(item.filiale)
-                                            }
-                                          }
-                                        },
-                                        "v-icon",
-                                        attrs,
-                                        false
-                                      ),
-                                      on
-                                    ),
-                                    [
-                                      _vm._v(
-                                        "\n                            mdi-eye\n                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          true
-                        )
-                      },
-                      [_vm._v(" "), _c("span", [_vm._v("Soglie Minime")])]
-                    )
-                  ]
-                }
-              }
-            ])
-          })
+          )
         ],
         1
       )

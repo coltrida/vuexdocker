@@ -1,8 +1,6 @@
 <template>
     <div>
         <h2>Fornitori</h2>
-        <v-container>
-
             <v-row>
                 <v-col
                     cols="3"
@@ -116,7 +114,7 @@
             </v-row>
 
             <v-btn @click="aggiungi" color="success" dark>
-                Inserisci
+                {{btnName}}
             </v-btn>
 
                 <v-data-table
@@ -133,11 +131,16 @@
                         >
                             mdi-delete
                         </v-icon>
+                        <v-icon
+                            color="blue"
+                            small
+                            @click="modifica(item)"
+                        >
+                            mdi-pencil
+                        </v-icon>
                     </template>
 
                 </v-data-table>
-
-        </v-container>
     </div>
 
 </template>
@@ -149,6 +152,7 @@
 
         data(){
             return {
+                modificaSwitch: false,
                 fornitore:{},
                 headers: [
                     {
@@ -180,23 +184,39 @@
             ...mapActions('fornitori', {
                 fetchFornitori:'fetchFornitori',
                 addFornitore:'addFornitore',
+                modificaFornitore:'modificaFornitore',
                 eliminaFornitore:'eliminaFornitore',
             }),
 
             aggiungi(){
-                this.addFornitore(this.fornitore);
+                if (this.modificaSwitch){
+                    this.modificaFornitore(this.fornitore);
+                } else {
+                    this.addFornitore(this.fornitore);
+                }
+                this.modificaSwitch = false;
                 this.fornitore = {};
             },
 
             elimina(id){
                 this.eliminaFornitore(id)
+            },
+
+            modifica(eleSelezionato){
+                this.modificaSwitch = true;
+                this.fornitore = eleSelezionato;
+                this.$store.commit('fornitori/eliminaFornitore', this.fornitore.id);
             }
         },
 
         computed:{
             ...mapGetters('fornitori', {
                 getFornitori:'getFornitori',
-            })
+            }),
+
+            btnName(){
+                return this.modificaSwitch ? 'modifica' : 'inserisci'
+            }
         },
     }
 </script>

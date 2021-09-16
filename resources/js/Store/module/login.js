@@ -52,8 +52,12 @@ const actions = {
         commit('login', response.data);
     },
 
-    async logout({commit}){
-        await axios.get(`${help().linklogout}`);
+    async logout({commit}, id){
+        await axios.get(`${help().linklogout}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('logout');
     },
 
@@ -62,7 +66,11 @@ const actions = {
     },
 
     async fetchUser({commit}, id){
-        const response = await axios.get(`${help().linkuser}`+'/'+id);
+        const response = await axios.get(`${help().linkuser}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchUser', response.data);
     },
 };

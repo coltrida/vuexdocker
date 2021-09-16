@@ -162,11 +162,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Fornitore",
   data: function data() {
     return {
+      modificaSwitch: false,
       fornitore: {},
       headers: [{
         text: 'Nome',
@@ -220,19 +224,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori',
     addFornitore: 'addFornitore',
+    modificaFornitore: 'modificaFornitore',
     eliminaFornitore: 'eliminaFornitore'
   })), {}, {
     aggiungi: function aggiungi() {
-      this.addFornitore(this.fornitore);
+      if (this.modificaSwitch) {
+        this.modificaFornitore(this.fornitore);
+      } else {
+        this.addFornitore(this.fornitore);
+      }
+
+      this.modificaSwitch = false;
       this.fornitore = {};
     },
     elimina: function elimina(id) {
       this.eliminaFornitore(id);
+    },
+    modifica: function modifica(eleSelezionato) {
+      this.modificaSwitch = true;
+      this.fornitore = eleSelezionato;
+      this.$store.commit('fornitori/eliminaFornitore', this.fornitore.id);
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('fornitori', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('fornitori', {
     getFornitori: 'getFornitori'
-  }))
+  })), {}, {
+    btnName: function btnName() {
+      return this.modificaSwitch ? 'modifica' : 'inserisci';
+    }
+  })
 });
 
 /***/ }),
@@ -331,264 +351,272 @@ var render = function() {
       _c("h2", [_vm._v("Fornitori")]),
       _vm._v(" "),
       _c(
-        "v-container",
+        "v-row",
         [
           _c(
-            "v-row",
+            "v-col",
+            { attrs: { cols: "3", sm: "3" } },
             [
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "Nome Fornitore"
-                    },
-                    model: {
-                      value: _vm.fornitore.nome,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "nome", $$v)
-                      },
-                      expression: "fornitore.nome"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "Indirizzo"
-                    },
-                    model: {
-                      value: _vm.fornitore.indirizzo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "indirizzo", $$v)
-                      },
-                      expression: "fornitore.indirizzo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "Citta"
-                    },
-                    model: {
-                      value: _vm.fornitore.citta,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "citta", $$v)
-                      },
-                      expression: "fornitore.citta"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "cap"
-                    },
-                    model: {
-                      value: _vm.fornitore.cap,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "cap", $$v)
-                      },
-                      expression: "fornitore.cap"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "telefono"
-                    },
-                    model: {
-                      value: _vm.fornitore.telefono,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "telefono", $$v)
-                      },
-                      expression: "fornitore.telefono"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "provincia"
-                    },
-                    model: {
-                      value: _vm.fornitore.provincia,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "provincia", $$v)
-                      },
-                      expression: "fornitore.provincia"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "email"
-                    },
-                    model: {
-                      value: _vm.fornitore.email,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "email", $$v)
-                      },
-                      expression: "fornitore.email"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "pec"
-                    },
-                    model: {
-                      value: _vm.fornitore.pec,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "pec", $$v)
-                      },
-                      expression: "fornitore.pec"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "univoco"
-                    },
-                    model: {
-                      value: _vm.fornitore.univoco,
-                      callback: function($$v) {
-                        _vm.$set(_vm.fornitore, "univoco", $$v)
-                      },
-                      expression: "fornitore.univoco"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            {
-              attrs: { color: "success", dark: "" },
-              on: { click: _vm.aggiungi }
-            },
-            [_vm._v("\n            Inserisci\n        ")]
-          ),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.getFornitori,
-              "items-per-page": 5
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { color: "red", small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.elimina(item.id)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                        mdi-delete\n                    "
-                        )
-                      ]
-                    )
-                  ]
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "Nome Fornitore"
+                },
+                model: {
+                  value: _vm.fornitore.nome,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "nome", $$v)
+                  },
+                  expression: "fornitore.nome"
                 }
-              }
-            ])
-          })
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "3", sm: "3" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "Indirizzo"
+                },
+                model: {
+                  value: _vm.fornitore.indirizzo,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "indirizzo", $$v)
+                  },
+                  expression: "fornitore.indirizzo"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "3", sm: "3" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "Citta"
+                },
+                model: {
+                  value: _vm.fornitore.citta,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "citta", $$v)
+                  },
+                  expression: "fornitore.citta"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "3", sm: "3" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "cap"
+                },
+                model: {
+                  value: _vm.fornitore.cap,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "cap", $$v)
+                  },
+                  expression: "fornitore.cap"
+                }
+              })
+            ],
+            1
+          )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "telefono"
+                },
+                model: {
+                  value: _vm.fornitore.telefono,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "telefono", $$v)
+                  },
+                  expression: "fornitore.telefono"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "provincia"
+                },
+                model: {
+                  value: _vm.fornitore.provincia,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "provincia", $$v)
+                  },
+                  expression: "fornitore.provincia"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "3", sm: "3" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "email"
+                },
+                model: {
+                  value: _vm.fornitore.email,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "email", $$v)
+                  },
+                  expression: "fornitore.email"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "3", sm: "3" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "pec"
+                },
+                model: {
+                  value: _vm.fornitore.pec,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "pec", $$v)
+                  },
+                  expression: "fornitore.pec"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  counter: "25",
+                  hint: "Massimo 25 caratteri",
+                  label: "univoco"
+                },
+                model: {
+                  value: _vm.fornitore.univoco,
+                  callback: function($$v) {
+                    _vm.$set(_vm.fornitore, "univoco", $$v)
+                  },
+                  expression: "fornitore.univoco"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        { attrs: { color: "success", dark: "" }, on: { click: _vm.aggiungi } },
+        [_vm._v("\n            " + _vm._s(_vm.btnName) + "\n        ")]
+      ),
+      _vm._v(" "),
+      _c("v-data-table", {
+        staticClass: "elevation-1 mt-3",
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.getFornitori,
+          "items-per-page": 5
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "item.actions",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c(
+                  "v-icon",
+                  {
+                    attrs: { color: "red", small: "" },
+                    on: {
+                      click: function($event) {
+                        return _vm.elimina(item.id)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        mdi-delete\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-icon",
+                  {
+                    attrs: { color: "blue", small: "" },
+                    on: {
+                      click: function($event) {
+                        return _vm.modifica(item)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        mdi-pencil\n                    "
+                    )
+                  ]
+                )
+              ]
+            }
+          }
+        ])
+      })
     ],
     1
   )

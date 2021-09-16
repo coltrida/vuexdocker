@@ -43,6 +43,8 @@ use function config;
  * @method static \Illuminate\Database\Eloquent\Builder|Filiale whereTelefono($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Filiale whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Listino[] $listino
+ * @property-read int|null $listino_count
  */
 class Filiale extends Model
 {

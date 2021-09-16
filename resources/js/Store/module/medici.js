@@ -39,57 +39,101 @@ const getters = {
 const actions = {
 
     async fetchMedici({commit}, idUser){
-        const response = await axios.get(`${help().linklistamedici}`+'/'+idUser);
+        const response = await axios.get(`${help().linklistamedici}`+'/'+idUser, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchMedici', response.data);
     },
 
     async addMedico({commit}, payload){
-        const response = await axios.post(`${help().linkaddmedico}`, payload);
+        const response = await axios.post(`${help().linkaddmedico}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('addMedico', response.data);
     },
 
     async eliminaMedico({commit}, idMedico){
-        await axios.delete(`${help().linklistamedici}`+'/'+idMedico);
+        await axios.delete(`${help().linklistamedici}`+'/'+idMedico, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaMedico', idMedico);
     },
 
     async caricaOrari({commit}, idDottore){
-        const response = await axios.get(`${help().linkcaricaorari}`+'/'+idDottore);
+        const response = await axios.get(`${help().linkcaricaorari}`+'/'+idDottore, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('caricaOrari', response.data);
     },
 
     async caricaOrarioDottore({commit}, dottore){
-        const response = await axios.get(`${help().linkcaricaorariodottore}`+'/'+dottore);
+        const response = await axios.get(`${help().linkcaricaorariodottore}`+'/'+dottore, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('caricaOrari', response.data);
     },
 
     async addOrario({commit}, payload){
-        const response = await axios.post(`${help().linkaddorario}`, payload);
+        const response = await axios.post(`${help().linkaddorario}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('addOrario', response.data);
     },
 
     async eliminaOrario({commit}, idOrario){
-        await axios.delete(`${help().linkeliminaOrario}`+'/'+idOrario);
+        await axios.delete(`${help().linkeliminaOrario}`+'/'+idOrario, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaOrario', idOrario);
     },
 
     async inviiMedici({commit}, payload){
-        const response = await axios.post(`${help().linkinviimedici}`, payload);
+        const response = await axios.post(`${help().linkinviimedici}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('inviiMedici', response.data);
     },
 
     async totaleInviiMedici({commit}, payload){
-        const response = await axios.post(`${help().linktotaleinviimedici}`, payload);
+        const response = await axios.post(`${help().linktotaleinviimedici}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('totaleInviiMedici', response.data);
     },
 
     async statisticheInviiMedici({commit}, payload){
-        const response = await axios.post(`${help().linkstatisticheinviimedici}`, payload);
+        const response = await axios.post(`${help().linkstatisticheinviimedici}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('statisticheInviiMedici', response.data);
     },
 
     async statisticheTotaleInviiMedici({commit}, payload){
-        const response = await axios.post(`${help().linkstatistichetotaleinviimedici}`, payload);
+        const response = await axios.post(`${help().linkstatistichetotaleinviimedici}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('statisticheTotaleInviiMedici', response.data);
     },
 };

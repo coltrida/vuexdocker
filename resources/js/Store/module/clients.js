@@ -10,12 +10,17 @@ const state = () => ({
     client: {},
     situazioneAnnoClientiAudio:[],
     situazioneAnnoResiAudio:[],
-    messaggioBackup:''
+    messaggioBackup:'',
+    riepilogo: []
 });
 
 const getters = {
     getClients(state){
         return state.clients;
+    },
+
+    getRiepilogo(state){
+        return state.riepilogo;
     },
 
     getMessaggioBackup(state){
@@ -58,76 +63,140 @@ const getters = {
 
 const actions = {
     async fetchClients({commit}){
-        const response = await axios.get(`${help().linkclients}`);
+        const response = await axios.get(`${help().linkclients}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchClients', response.data.data);
     },
 
+    async fetchRiepilogo({commit}){
+        const response = await axios.get(`${help().linkriepilogoclients}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchRiepilogo', response.data);
+    },
+
     async fetchProvince({commit}){
-        const response = await axios.get(`${help().linkprovince}`);
+        const response = await axios.get(`${help().linkprovince}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchProvince', response.data);
     },
 
     async fetchCittaByProvincia({commit}, provincia){
-        const response = await axios.get(`${help().linkcittabyprovincia}`+'/'+provincia);
+        const response = await axios.get(`${help().linkcittabyprovincia}`+'/'+provincia, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchCittaByProvincia', response.data);
     },
 
     async fetchCompleanni({commit}, idAudio){
-        const response = await axios.get(`${help().linkcompleanni}`+'/'+idAudio);
+        const response = await axios.get(`${help().linkcompleanni}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchCompleanni', response.data.data);
     },
 
     async fetchClientsFiliale({commit}, idFiliale){
-        const response = await axios.get(`${help().linkclientsfiliale}`+'/'+idFiliale);
+        const response = await axios.get(`${help().linkclientsfiliale}`+'/'+idFiliale, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchClients', response.data.data);
     },
 
     async fetchClient({commit}, id){
-        const response = await axios.get(`${help().linkclients}`+'/'+id);
+        const response = await axios.get(`${help().linkclients}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchClient', response.data.data);
     },
 
     async ricercaNominativi({commit}, payload){
-        const response = await axios.post(`${help().linkricercanominativi}`, payload);
+        const response = await axios.post(`${help().linkricercanominativi}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('ricercaNominativi', response.data.data);
     },
 
     async addClient({commit}, payload){
-        const response = await axios.post(`${help().linkaddclient}`, payload);
+        const response = await axios.post(`${help().linkaddclient}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('addClient', response.data.data);
     },
 
     async modificaClient({commit}, payload){
-        const response = await axios.post(`${help().linkmodificaclient}`, payload);
+        const response = await axios.post(`${help().linkmodificaclient}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('modificaClient', response.data.data);
     },
 
     async smsInvio({commit}, payload){
         await axios.post(`${help().linkinviasms}`, {
             'testo': payload
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
     },
 
     async eliminaClient({commit}, payload){
-        await axios.post(`${help().linkeliminaclient}`, payload);
+        await axios.post(`${help().linkeliminaclient}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaClient', payload.clientId);
     },
 
     async importClients(){
-        await axios.get(`${help().linkimportclients}`);
+        await axios.get(`${help().linkimportclients}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
     },
 
     async importClientsXml({commit}, payload){
         const response = await axios.post(`${help().linkimportclientsxml}`, {
             nomeFile: payload.nomeFile,
             idUser: payload.idUser,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('importClientsXml', response.data);
     },
 
     async importClientsByFiliale({commit}, payload){
         const config = {
-            headers: { 'content-type': 'multipart/form-data' }
+            headers: {
+                'content-type': 'multipart/form-data' ,
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         };
         let formData = new FormData();
         formData.append('file', payload.fileUp);
@@ -138,17 +207,29 @@ const actions = {
     },
 
     async fetchSituazioneAnnoClientiAudio({commit}, payload){
-        const response = await axios.post(`${help().linkSituazioneAnnoClientiAudio}`, payload);
+        const response = await axios.post(`${help().linkSituazioneAnnoClientiAudio}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchSituazioneAnnoClientiAudio', response.data);
     },
 
     async fetchSituazioneAnnoResiAudio({commit}, payload){
-        const response = await axios.post(`${help().linkSituazioneAnnoResiAudio}`, payload);
+        const response = await axios.post(`${help().linkSituazioneAnnoResiAudio}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchSituazioneAnnoResiAudio', response.data);
     },
 
     async eseguiBackup({commit}){
-        const response = await axios.get(`${help().linkbackup}`);
+        const response = await axios.get(`${help().linkbackup}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eseguiBackup', response.data);
     },
 };
@@ -156,6 +237,10 @@ const actions = {
 const mutations = {
     fetchClients(state, payload){
         state.clients = payload;
+    },
+
+    fetchRiepilogo(state, payload){
+        state.riepilogo = payload;
     },
 
     ricercaNominativi(state, payload){

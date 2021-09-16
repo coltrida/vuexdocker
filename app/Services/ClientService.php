@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Appuntamento;
 use App\Models\Audiometria;
 use App\Models\Client;
+use App\Models\Filiale;
 use App\Models\Prova;
 use App\Models\Recapito;
 use App\Models\Telefonata;
@@ -275,7 +276,7 @@ class ClientService
         $xmlDataString = file_get_contents(asset('/storage/'.$request['nomeFile']));
         $res = 0;
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
-
+//dd($xml->Patient);
         foreach ($xml->Patient as $ele){
             //dd($ele->Patient);
             $client = Client::firstOrCreate(
@@ -299,7 +300,8 @@ class ClientService
 //                    'tipologia_id' => $ele->Patient->Province ? $ele->Patient->Province : null,
                     'tipologia_id' => 6,
 //                    'filiale_id' => User::find($ele->Patient->CreatedBy)->filiale[0]->id,
-                    'filiale_id' => User::find($request->idUser)->filiale[0]->id,
+                    'filiale_id' => $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
+                        Str::of(Str::upper($ele->Patient->City))->trim()),
                 ]
             );
             $audiometriad = null;
@@ -401,6 +403,46 @@ class ClientService
         return $res;
     }
 
+    private function getFilialeFromPlace($provincia, $citta)
+    {
+        $filiale = Filiale::where('provincia', $provincia)->get();
+        if (count($filiale) == 1){
+            return $filiale[0]->id;
+        } else {
+            if(in_array($citta , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO', 'FALCONARA MARITTIMA', 'OSTRA',
+                'MONTESICURO', 'CAMERANO'])) {
+                return Filiale::where('nome', 'ANCONA')->first()->id;
+            } elseif (in_array($citta , ['LORETO',
+                'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'PORTO RECANATI',
+                'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'MONTECOSARO', 'MORROVALLE'])) {
+                return Filiale::where('nome', 'CIVITANOVA')->first()->id;
+            } elseif (in_array($citta , ['MACERATA', 'CAMERINO'])) {
+                return Filiale::where('nome', 'MACERATA')->first()->id;
+            } elseif (in_array($citta , ['PISA', 'CASCINA', 'MARINA DI PISA', 'SAN GIULIANO TERME', 'SAN GIULIANO TERME(GELLO)',
+                'SAN GIULIANO TERME(AGNANO)', 'GELLO(S.GILULIANO TERME)', 'SAN GIULIANO TERME(GHEZZANO)', 'FIRENZE', 'NODICA',
+                "MADONNA DELL'ACQUA( S.G.T.)", 'S.G.TERME', 'VECCHIANO', 'MIGLIARINO', 'PONTASSERCHIO(S.G.T)', 'PORTA A MARE',
+                'GHEZZANO', 'PISA(ARENA METATO)', 'NODICA(SGT)', 'GHEZZANO(SGT)', 'COLIGNOLA(SGT)', 'SAN LORENZO ALLE CORTI',
+                'ASCIANO PISANO', 'ASCIANO (SGTERME)', 'BIENTINA', 'BUTI', 'CALCI', 'CALCINAIA', 'CAPANNOLI',
+                'CASTELFRANCO DI SOTTO', 'PONSACCO', 'PECCIOLI', 'SAN GIULIANO TERME'])) {
+                return Filiale::where('nome', 'PISA')->first()->id;
+            } elseif (in_array($citta , ['VIAREGGIO', 'FORTE DEI MARMI', 'MASSA', 'TORRE DEL LAGO', 'LIDO DI CAMAIORE',
+                'LA SPEZIA', 'FILATTIERA(PONTREMOLI)', 'TONFANO(PIETRASANTA)', 'QUERCETA', 'MONTIGNOSO', 'PIETRASANTA',
+                'VITTORIA APUANA', 'SOLAIO(PIETRASANTA)', 'STRETTOIA(PIETRASANAT)', 'LUNI'])) {
+                return Filiale::where('nome', 'VIAREGGIO')->first()->id;
+            } elseif (in_array($citta , ['LIVORNO', 'CECINA', 'LARI', 'CASCIANA TERME', 'PIOMBINO', 'TIRRENIA', 'COLLESALVETTI'])) {
+                return Filiale::where('nome', 'LIVORNO')->first()->id;
+            } elseif (in_array($citta , ['LUCCA', 'BARGA', 'PORCARI', 'GRAGNANO', 'GRAGNANO(LUCCA)', 'LAPPATO', 'ANTRACCOLI(LUCCA)',
+                'CAPANNORI', 'SANTA MARIA A COLLE', 'ZONE', 'SANTA ANDREA IN CAPRILE', 'MARLIA', 'SAN COLOMBANO',
+                'CAPANNORI(MARLIA)', 'CAMIGLIANO', 'CAMIGLIANO(CAPANNORI)', 'SEGROMIGNO IN PIANO', 'SAN MACARIO IN PIANO(LUCCA)',
+                'GRAGNANO(CAPANNORI)', 'NOZZANO(SAN PIETRO) LUCCA', 'TEMPAGNANO(LUCCA)', 'SEGROMIGNO IN MONTE', 'LAPPATO(CAPANNORI)',
+                "SANT'ANGELO IN CAMPO", 'ALTOPASCIO', 'SERRAVEZZA', 'SERRAVEZZA(RIPA)', 'SAN GENNARO',
+                'SAN GENNARO(CAPANNORI)', 'VICOPELAGO', 'SAN CASSIANO A VICO', 'SESTO DI MORIANO', 'SANTISSIMA ANNUNZIATA(LUCCA)',
+                'LAMMARI', 'SANTISSIMA ANNUNZIATA(LU)', 'SANTA MARIA DEL GIUDICE'])) {
+                return Filiale::where('nome', 'LUCCA')->first()->id;
+            }
+        }
+    }
+
     public function ricercaNominativi($request)
     {
         $condizioni = [];
@@ -448,6 +490,39 @@ class ClientService
                 $t->where('nome', 'RESO');
             })
             ->latest()
+            ->get();
+    }
+
+    public function riepilogo()
+    {
+        return Filiale::
+            withCount(['clients as cli' => function($q){
+                $q->whereHas('tipologia', function ($z){
+                    $z->where('nome', 'CLIENTE');
+                });
+            }])
+            ->withCount(['clients as pc' => function($q){
+                $q->whereHas('tipologia', function ($z){
+                    $z->where('nome', 'PC');
+                });
+            }])
+            ->withCount(['clients as clc' => function($q){
+                $q->whereHas('tipologia', function ($z){
+                    $z->where('nome', 'CLC');
+                });
+            }])
+            ->withCount(['clients as normo' => function($q){
+                $q->whereHas('tipologia', function ($z){
+                    $z->where('nome', 'NORMO');
+                });
+            }])
+            ->withCount(['clients as le' => function($q){
+                $q->whereHas('tipologia', function ($z){
+                    $z->where('nome', 'LE');
+                });
+            }])
+            ->withCount('clients as tot')
+            ->orderBy('nome')
             ->get();
     }
 }

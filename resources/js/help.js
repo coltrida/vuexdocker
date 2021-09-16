@@ -1,5 +1,5 @@
 const help = () => {
-    // let base = 'http://vuexdocker.test/api/';
+     //let base = 'http://vuexdocker.test/api/';
     let base = 'https://www.centrouditogroup.it/api/';
     return {
 
@@ -137,6 +137,10 @@ const help = () => {
         linksoglie: base+'controlloSoglie',
         linkbackup: base+'backup',
         linkrestore: base+'restore',
+        linkprovepassate: base+'provePassate',
+        linkriepilogoclients: base+'riepilogoClienti',
+        linkmodificafiliale: base+'modificaFiliale',
+        linkmodificafornitore: base+'modificaFornitore',
     };
 };
 export default help;

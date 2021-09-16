@@ -37,6 +37,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereUserId($value)
  * @mixin \Eloquent
+ * @property string $tipo
+ * @property-read mixed $calcologiorno
+ * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereTipo($value)
  */
 class Appuntamento extends Model
 {

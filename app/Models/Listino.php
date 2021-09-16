@@ -35,6 +35,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Listino wherePrezzolistino($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listino whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Filiale[] $filiale
+ * @property-read int|null $filiale_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $product
+ * @property-read int|null $product_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Listino apparecchi()
  */
 class Listino extends Model
 {

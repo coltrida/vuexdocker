@@ -33,7 +33,7 @@ class ClientResource extends JsonResource
             'marketing_id' => $this->marketing_id,
             'user' => $this->user_id ? $this->user->name : null,
             'user_id' => $this->user_id,
-            'filiale' => $this->filiale->nome,
+            'filiale' => $this->filiale_id ? $this->filiale->nome : null,
             'filiale_id' => $this->filiale_id,
             'mail' => $this->mail,
             'recapito' => isset($this->recapito->nome) ? $this->recapito->nome : null,

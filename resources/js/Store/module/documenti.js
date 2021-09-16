@@ -12,14 +12,21 @@ const getters = {
 
 const actions = {
     async fetchDocumenti({commit}, idClient){
-        const response = await axios.get(`${help().linklistadocumenti}`+'/'+idClient);
+        const response = await axios.get(`${help().linklistadocumenti}`+'/'+idClient, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchDocumenti', response.data.data);
     },
 
     async addDocumento({commit}, payload){
         //console.log(payload.fileUp);
         const config = {
-            headers: { 'content-type': 'multipart/form-data' }
+            headers: {
+                'content-type': 'multipart/form-data',
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         };
         let formData = new FormData();
         formData.append('file', payload.fileUp);
@@ -38,7 +45,11 @@ const actions = {
 
     async eliminaDocumento({commit}, idDocumento){
         //console.log(idDocumento);
-        await axios.delete(`${help().linkeliminadocumento}`+'/'+idDocumento);
+        await axios.delete(`${help().linkeliminadocumento}`+'/'+idDocumento, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaDocumento', idDocumento);
     },
 };

@@ -40,6 +40,7 @@ const routes = [
     { path: '/situazioneAudio', component: () => import('../Pages/clients/SituazioneAudio'), name: 'situazioneAudio' },
     { path: '/backup', component: () => import('../Pages/gestione/Backup'), name: 'backup' },
     { path: '/restore', component: () => import('../Pages/gestione/Restore'), name: 'restore' },
+    { path: '/riepilogoClienti', component: () => import('../Pages/clients/Riepilogo'), name: 'riepilogoClienti' },
 ];
 
 export default routes;

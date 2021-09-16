@@ -43,14 +43,14 @@
                 </template>
 
                 <template v-slot:item.rate="{ item }">
-                    <v-btn @click="seleziona(item.rate)" color="green" dark>
                         <v-icon
-                            color="white"
+                            @click="seleziona(item.rate)"
+                            color="green"
+                            dark
                             small
                         >
                             mdi-format-list-bulleted-square
                         </v-icon>
-                    </v-btn>
                 </template>
 
             </v-data-table>

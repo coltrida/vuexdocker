@@ -235,11 +235,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchAudioConBgt();
+    this.fetchAudioConBgtAssegnato();
     this.fetchAudioSenzaBgt();
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
-    fetchAudioConBgt: 'fetchAudioConBgt',
+    fetchAudioConBgtAssegnato: 'fetchAudioConBgtAssegnato',
     fetchAudioSenzaBgt: 'fetchAudioSenzaBgt',
     assegnaBgt: 'assegnaBgt',
     modificaBgt: 'modificaBgt'

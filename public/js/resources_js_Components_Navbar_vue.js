@@ -109,6 +109,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1190,10 +1197,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getIdUser: 'getIdUser'
   })),
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('login', {
-    fetchUser: 'fetchUser'
+    fetchUser: 'fetchUser',
+    logout: 'logout'
   })), {}, {
-    logout: function logout() {
-      this.$store.commit('login/logout');
+    logoutBtn: function logoutBtn() {
+      this.logout(this.getIdUser);
       this.$router.push({
         name: 'home'
       });
@@ -2761,6 +2769,25 @@ var render = function() {
           _c(
             "v-list",
             [
+              _c(
+                "div",
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "riepilogoClienti" } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v("RIEPILOGO")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               _vm._l(_vm.getFiliali, function(item, index) {
                 return _c(
                   "div",
@@ -4329,7 +4356,7 @@ var render = function() {
                     "v-btn",
                     {
                       attrs: { text: "", color: "red" },
-                      on: { click: _vm.logout }
+                      on: { click: _vm.logoutBtn }
                     },
                     [_vm._v("\n                Logout\n            ")]
                   ),

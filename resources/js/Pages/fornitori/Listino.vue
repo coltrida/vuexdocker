@@ -1,14 +1,142 @@
 <template>
     <div>
         <h2>Listino</h2>
-        <v-container>
-
            <soglie
                :soglie="soglieSelezione"
                :dialog-pro="dialogSoglie"
                v-if="dialogSoglie"
                @chiudiSoglie="chiudiSoglie"
            />
+
+        <v-row>
+            <v-col cols="8">
+                <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Ricerca"
+                    single-line
+                    hide-details
+                ></v-text-field>
+
+                <v-data-table
+                    :headers="headers"
+                    :items="getListino"
+                    :search="search"
+                    :items-per-page="15"
+                    class="elevation-1 mt-3"
+                >
+                    <template v-slot:item.actions="{ item }">
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon
+                                    color="red"
+                                    small
+                                    @click="elimina(item.id)"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-delete
+                                </v-icon>
+                            </template>
+                            <span>Elimina</span>
+                        </v-tooltip>
+
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon
+                                    @click="seleziona(item.filiale)"
+                                    color="blue"
+                                    small
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-eye
+                                </v-icon>
+                            </template>
+                            <span>Soglie Minime</span>
+                        </v-tooltip>
+
+                        <!--<v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon
+                                    color="blue"
+                                    small
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-eye
+                                </v-icon>
+                            </template>
+                            <span>Soglie Minime</span>
+                        </v-tooltip>-->
+                    </template>
+                </v-data-table>
+            </v-col>
+            <v-col cols="4">
+                <v-text-field
+                    v-model="listino.nome"
+                    counter="25"
+                    hint="Massimo 25 caratteri"
+                    label="Nome Prodotto"
+                ></v-text-field>
+                <v-select
+                    v-model="listino.fornitore_id"
+                    item-value="id"
+                    item-text="nome"
+                    :items="getFornitori"
+                    label="fornitore"
+                ></v-select>
+                <v-select
+                    v-model="listino.categoria_id"
+                    item-value="id"
+                    item-text="nome"
+                    :items="getCategorie"
+                    label="cat"
+                ></v-select>
+                <v-text-field
+                    v-model="listino.costo"
+                    counter="25"
+                    hint="Massimo 25 caratteri"
+                    label="costo"
+                ></v-text-field>
+                <v-text-field
+                    v-model="listino.prezzolistino"
+                    counter="25"
+                    hint="Massimo 25 caratteri"
+                    label="prezzo listino"
+                ></v-text-field>
+                <v-text-field
+                    v-model="listino.iva"
+                    counter="25"
+                    label="iva"
+                ></v-text-field>
+                <v-text-field
+                    v-model="listino.giorniTempoDiReso"
+                    counter="25"
+                    label="gg di reso"
+                ></v-text-field>
+                <v-list>
+                    <v-list-item
+                        dense
+                        v-for="(item, index) in getFiliali"
+                        :key="item.id"
+                    >
+                        <v-list-item-content>
+                            <v-list-item-title >{{item.nome}}</v-list-item-title>
+                        </v-list-item-content>
+
+                        <v-list-item-avatar class="align-center">
+                            <v-text-field type="number" v-model="listino.soglie[index]"></v-text-field>
+                        </v-list-item-avatar>
+                    </v-list-item>
+                </v-list>
+                <v-btn @click="aggiungi" dark color="indigo">
+                    Inserisci
+                </v-btn>
+
+            </v-col>
+        </v-row>
+<!--
 
             <v-row>
                 <v-col
@@ -105,14 +233,6 @@
                             v-for="(item, index) in getFiliali"
                             :key="item.id"
                         >
-                            <!--<v-list-item-icon class="align-center pt-4">
-                                <v-checkbox
-                                    v-model="listino.idFiliali"
-                                    :label="item.nome"
-                                    :value="item.id"
-                                ></v-checkbox>
-                            </v-list-item-icon>-->
-
                             <v-list-item-content>
                                 <v-list-item-title >{{item.nome}}</v-list-item-title>
                             </v-list-item-content>
@@ -131,72 +251,10 @@
                 </v-col>
             </v-row>
 
+-->
 
 
-            <v-text-field
-                v-model="search"
-                append-icon="mdi-magnify"
-                label="Ricerca"
-                single-line
-                hide-details
-            ></v-text-field>
 
-            <v-data-table
-                :headers="headers"
-                :items="getListino"
-                :search="search"
-                :items-per-page="10"
-                class="elevation-1 mt-3"
-            >
-                <template v-slot:item.actions="{ item }">
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                                color="red"
-                                small
-                                @click="elimina(item.id)"
-                                v-bind="attrs"
-                                v-on="on"
-                            >
-                                mdi-delete
-                            </v-icon>
-                        </template>
-                        <span>Elimina</span>
-                    </v-tooltip>
-
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                                @click="seleziona(item.filiale)"
-                                color="blue"
-                                small
-                                v-bind="attrs"
-                                v-on="on"
-                            >
-                                mdi-eye
-                            </v-icon>
-                    </template>
-                        <span>Soglie Minime</span>
-                    </v-tooltip>
-
-                    <!--<v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                                color="blue"
-                                small
-                                v-bind="attrs"
-                                v-on="on"
-                            >
-                                mdi-eye
-                            </v-icon>
-                        </template>
-                        <span>Soglie Minime</span>
-                    </v-tooltip>-->
-                </template>
-
-            </v-data-table>
-
-        </v-container>
     </div>
 
 </template>

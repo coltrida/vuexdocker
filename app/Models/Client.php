@@ -97,6 +97,12 @@ use function substr;
  * @property int|null $medico_id
  * @property-read \App\Models\Medico|null $medico
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereMedicoId($value)
+ * @property string|null $luogoNascita
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Telefonata[] $recalls
+ * @property-read int|null $recalls_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Client clienti()
+ * @method static \Illuminate\Database\Eloquent\Builder|Client possibili()
+ * @method static \Illuminate\Database\Eloquent\Builder|Client whereLuogoNascita($value)
  */
 class Client extends Model
 {

@@ -43,6 +43,6 @@
     <tr>
         <td style="border: 1px solid black;width: 33%; padding: 5px">Acconto: {{$fattura->acconto}}</td>
         <td style="border: 1px solid black;width: 34%; padding: 5px">Rate: {{$fattura->nr_rate}}</td>
-        <td style="border: 1px solid black;width: 33%; padding: 5px">Tot: €{{$fattura->tot_fattura}}</td>
+        <td style="border: 1px solid black;width: 33%; padding: 5px">Tot: € {{$fattura->tot_fattura}}</td>
     </tr>
 </table>

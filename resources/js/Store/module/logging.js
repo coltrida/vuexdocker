@@ -13,7 +13,11 @@ const getters = {
 const actions = {
 
     async fetchLoggings({commit}){
-        const response = await axios.get(`${help().linklogging}`);
+        const response = await axios.get(`${help().linklogging}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchLoggings', response.data.data);
     },
 };

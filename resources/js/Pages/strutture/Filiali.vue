@@ -66,7 +66,7 @@
             </v-row>
 
             <v-btn @click="aggiungi" dark color="indigo">
-                Inserisci
+                {{btnName}}
             </v-btn>
 
 
@@ -84,6 +84,13 @@
                     >
                         mdi-delete
                     </v-icon>
+                    <v-icon
+                        color="blue"
+                        small
+                        @click="modifica(item)"
+                    >
+                        mdi-pencil
+                    </v-icon>
                 </template>
 
             </v-data-table>
@@ -100,6 +107,7 @@
 
         data(){
             return {
+                modificaSwitch: false,
                 filiale:{},
                 headers: [
                     {
@@ -128,16 +136,28 @@
             ...mapActions('filiali', {
                 fetchFiliali:'fetchFiliali',
                 addFiliale:'addFiliale',
+                modificaFiliale:'modificaFiliale',
                 eliminaFiliale:'eliminaFiliale',
             }),
 
             aggiungi(){
-                this.addFiliale(this.filiale);
+                if (this.modificaSwitch){
+                    this.modificaFiliale(this.filiale);
+                } else {
+                    this.addFiliale(this.filiale);
+                }
+                this.modificaSwitch = false;
                 this.filiale = {};
             },
 
             elimina(id){
                 this.eliminaFiliale(id)
+            },
+
+            modifica(filialeSelezionata){
+                this.modificaSwitch = true;
+                this.filiale = filialeSelezionata;
+                this.$store.commit('filiali/eliminaFiliale', this.filiale.id);
             }
         },
 
@@ -145,6 +165,10 @@
             ...mapGetters('filiali', {
                 getFiliali:'getFiliali',
             }),
+
+            btnName(){
+                return this.modificaSwitch ? 'modifica' : 'inserisci'
+            }
 
         },
     }

@@ -23,17 +23,29 @@ const getters = {
 const actions = {
 
     async fetchListino({commit}){
-        const response = await axios.get(`${help().linklistino}`);
+        const response = await axios.get(`${help().linklistino}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchListino', response.data.data);
     },
 
     async fetchNomiApa({commit}){
-        const response = await axios.get(`${help().linknomiApa}`);
+        const response = await axios.get(`${help().linknomiApa}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchNomiApa', response.data);
     },
 
     async fetchListinoFromFornitore({commit}, idFornitore){
-        const response = await axios.get(`${help().linklistino}`+'/'+idFornitore);
+        const response = await axios.get(`${help().linklistino}`+'/'+idFornitore, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchListinoFromFornitore', response.data);
     },
 
@@ -48,17 +60,29 @@ const actions = {
             'giorniTempoDiReso': payload.giorniTempoDiReso,
             'idFiliali':payload.idFiliali,
             'soglie':payload.soglie,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
         });
         commit('addListino', response.data.data);
     },
 
     async eliminaListino({commit}, id){
-        await axios.delete(`${help().linklistino}`+'/'+id);
+        await axios.delete(`${help().linklistino}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('eliminaListino', id);
     },
 
     async fetchEleListino({commit}, id){
-        const response = await axios.get(`${help().linkelelistino}`+'/'+id);
+        const response = await axios.get(`${help().linkelelistino}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
         commit('fetchEleListino', response.data);
     },
 };

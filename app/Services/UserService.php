@@ -226,7 +226,7 @@ class UserService
     public function dettaglioAudio()
     {
         $anno = Carbon::now()->year;
-        return User::audio()
+        return User::audio(1)
             ->with(['pezzi','fatturati','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
                 $q->orderBy('mese_fine');
             }])

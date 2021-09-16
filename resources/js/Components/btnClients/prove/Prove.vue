@@ -1,5 +1,17 @@
 <template>
     <v-row class="mt-3 flex-column">
+        <v-dialog
+            v-model="dialog"
+            width="500"
+        >
+            <lista-prodotti
+                v-if="dialog"
+                :prodotti="listaPro"
+                @chiudiLista = "chiudiLista"
+            />
+        </v-dialog>
+
+
         <!---------- Header --------->
         <v-row>
             <v-col cols="6">
@@ -12,9 +24,6 @@
             </v-col>
         </v-row>
             <!---------- End Header --------->
-
-
-
 
                 <!---------- Fattura --------->
                 <a v-if="idFattura" target="_blank"
@@ -41,7 +50,7 @@
                 <!---------- Seleziono i prodotti per la nuova prova createa --------->
         <v-row v-else>
                     <v-col
-                        cols="3"
+                        cols="12" md="3" lg="3"
                     >
                         <v-select
                             @change="caricaProdotti()"
@@ -54,7 +63,7 @@
                     </v-col>
 
                     <v-col
-                        cols="3"
+                        cols="12" md="3" lg="3"
                     >
                         <v-select
                             @change="caricaPrezzoProdotto()"
@@ -67,7 +76,7 @@
                     </v-col>
 
                     <v-col
-                        cols="2"
+                        cols="12" md="2" lg="2"
                     >
                         <v-select
                             v-model="nuovaProva.orecchio"
@@ -79,7 +88,7 @@
                     </v-col>
 
                     <v-col
-                        cols="2"
+                        cols="12" md="2" lg="2"
                     >
                         <v-text-field
                             v-model="nuovaProva.prezzolistino"
@@ -88,7 +97,7 @@
                     </v-col>
 
                     <v-col
-                        cols="2"
+                        cols="12" md="2" lg="2"
                     >
                         <!---------- Bottone per inserire il prodotto nella nuova prova --------->
                         <v-btn color="primary" dark @click="inserisciInProva">
@@ -99,7 +108,7 @@
                 <!---------- End Seleziono i prodotti per la nuova prova createa --------->
 
                 <v-row>
-                    <v-col cols="6">
+                    <v-col cols="12" md="6" lg="6">
                         <div style="display: flex; justify-content: space-between;">
                             <div>
                                 <h3>Nuova Prova</h3>
@@ -142,7 +151,7 @@
                     </v-col>
 
 
-                    <v-col cols="6">
+                    <v-col cols="12" md="6" lg="6">
                         <h3>Prove</h3>
                         <v-data-table
                             :headers="headerProve"
@@ -150,58 +159,14 @@
                             class="elevation-1 mt-5"
                             hide-default-footer
                         >
-
                             <template v-slot:item.actions="{ item }">
-                                <v-dialog
-                                    v-model="dialog"
-                                    width="500"
+                                <v-icon
+                                    color="blue"
+                                    small
+                                    @click.stop="apriLista(item.product)"
                                 >
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                                color="blue"
-                                                small
-                                                v-bind="attrs"
-                                                v-on="on"
-
-                                        >
-                                            mdi-format-list-bulleted-square
-                                        </v-icon>
-                                    </template>
-
-                                    <v-card>
-                                        <v-card-title class="headline grey lighten-2">
-                                            Prodotti
-                                        </v-card-title>
-
-                                        <v-card-text class="mt-2">
-                                            <v-row class="mt-2" v-for="prodotto in item.product" :key="prodotto.id">
-                                                <v-col cols="4">
-                                                    <h3>{{ prodotto.matricola }}</h3>
-                                                </v-col>
-                                                <v-col cols="4">
-                                                    <h3>{{ prodotto.listino.nome }}</h3>
-                                                </v-col>
-                                                <v-col cols="4">
-                                                    <h3>{{ prodotto.pivot.prezzo }}</h3>
-                                                </v-col>
-                                            </v-row>
-
-                                        </v-card-text>
-
-                                        <v-divider></v-divider>
-
-                                        <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn
-                                                color="primary"
-                                                text
-                                                @click="dialog = false"
-                                            >
-                                                Chiudi
-                                            </v-btn>
-                                        </v-card-actions>
-                                    </v-card>
-                                </v-dialog>
+                                    mdi-format-list-bulleted-square
+                                </v-icon>
 
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on, attrs }">
@@ -284,13 +249,15 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     import Fattura from "./Fattura";
+    import ListaProdotti from "./ListaProdotti";
     export default {
         name: "Prove",
-        components: {Fattura},
+        components: {ListaProdotti, Fattura},
         props: ['proveClient'],
 
         data(){
             return {
+                listaPro:[],
                 carica: false,
                 dialog: false,
                 idFattura: '',
@@ -327,7 +294,7 @@
 
         mounted() {
             this.fetchFornitori();
-            this.fetchProvePassate(this.proveClient.prove);
+            this.fetchProvePassate(this.proveClient.id);
         },
 
         methods: {
@@ -436,6 +403,16 @@
             visualizzaFattura(idProva){
                 this.idFattura = idProva;
            //     console.log(this.fatturaPdf)
+            },
+
+            apriLista(prodotti){
+                this.dialog = true;
+                this.listaPro = prodotti;
+            },
+
+            chiudiLista(){
+                this.dialog = false;
+                this.listaPro = []
             }
         },
 
