@@ -372,20 +372,20 @@ class ElaborazioneService
         }
 
         // -------------- Backup ---------- //
-        $mysqlDatabaseName =env('DB_DATABASE');
-        $mysqlUserName = env('DB_USERNAME');
-        $mysqlPassword = env('DB_PASSWORD');
-        $mysqlHostName = env('DB_HOST');
-        $mysqlExportPath ='backup.sql';
+        $mysqlDatabaseName = env('DB_DATABASE');
+        $mysqlUserName     = env('DB_USERNAME');
+        $mysqlPassword     = env('DB_PASSWORD');
+        $mysqlHostName     = env('DB_HOST');
+        $mysqlExportPath   = 'backup.sql';
 
         $command='mysqldump --opt -h' .$mysqlHostName .' -u' .$mysqlUserName .' -p' .$mysqlPassword .' ' .$mysqlDatabaseName .' > storage/' .$mysqlExportPath;
         exec($command,$output,$worked);
 
 
         // -------------- Invio e-mail per remind appuntamento ---------- //
-        $appuntamentiDomani = Appuntamento::with('client')->where('giorno', $oggi->addDay())->get();
-        $primoCliente = Client::first();
-        $primoAppuntamento = Appuntamento::first();
-        \Mail::to('coltrida@gmail.com')->later(now()->addHours(8), new \App\Mail\Appuntamento($primoCliente, $primoAppuntamento));
+//        $appuntamentiDomani = Appuntamento::with('client')->where('giorno', $oggi->addDay())->get();
+//        $primoCliente = Client::first();
+//        $primoAppuntamento = Appuntamento::first();
+//        \Mail::to('coltrida@gmail.com')->later(now()->addHours(8), new \App\Mail\Appuntamento($primoCliente, $primoAppuntamento));
     }
 }

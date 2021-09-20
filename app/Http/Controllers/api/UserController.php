@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\DettaglioAudioResource;
 use App\Http\Resources\SituazioneMeseResource;
 use App\Http\Resources\VisualizzaSituazioneAnnoResource;
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -92,5 +93,19 @@ class UserController extends Controller
     public function ventaglioAnno(UserService $userService)
     {
         return $userService->ventaglioAnno();
+    }
+
+    public function switchSimulazione(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        $user->delta_id = $user->delta_id == 0 ? 1 : 0;
+        $user->save();
+        return $user->delta_id == 1 ? 'SIMULAZIONE' : 'REALE';
+    }
+
+    public function infoDatabase(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        return $user->delta_id == 1 ? 'SIMULAZIONE' : 'REALE';
     }
 }

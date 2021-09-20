@@ -3,6 +3,7 @@ import help from "../../help";
 const state = () => ({
     recalls: [],
     recallOggi: [],
+    recallDomani: [],
     telefonateFatteOggi: [],
     numeroTelefonateFatteOggi: '',
     numeroAppuntamentiPresiOggi: '',
@@ -18,6 +19,10 @@ const getters = {
 
     getRecallOggi(state){
         return state.recallOggi;
+    },
+
+    getRecallDomani(state){
+        return state.recallDomani;
     },
 
     getTelefonateFatteOggi(state){
@@ -62,6 +67,15 @@ const actions = {
             }
         });
         commit('fetchRecallOggi', response.data);
+    },
+
+    async fetchRecallDomani({commit}){
+        const response = await axios.get(`${help().linkrecalldomani}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchRecallDomani', response.data);
     },
 
     async fetchTelefonateFatteOggi({commit}){
@@ -144,6 +158,10 @@ const mutations = {
 
     fetchRecallOggi(state, payload){
         state.recallOggi = payload;
+    },
+
+    fetchRecallDomani(state, payload){
+        state.recallDomani = payload;
     },
 
     fetchTelefonateFatteOggi(state, payload){

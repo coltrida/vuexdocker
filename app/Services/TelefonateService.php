@@ -27,6 +27,22 @@ class TelefonateService
         })->orderBy('user_id')->get();
     }
 
+    public function recallDomani()
+    {
+        if(Carbon::now()->dayOfWeek != 6){
+            $domani = Carbon::now()->addDay()->format('Y-m-d');
+        } else {
+            $domani = Carbon::now()->addDays(2)->format('Y-m-d');
+        }
+        return Client::with(['tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+                $q->with('copiaComm')->first();
+            }])
+            ->whereHas('recalls', function ($q) use($domani){
+                $q->where([['datarecall', $domani], ['effettuata', 0]]);
+            })->orderBy('user_id')->get();
+    }
+
     public function telefonateFatteOggi()
     {
         $oggi = Carbon::now()->format('Y-m-d');

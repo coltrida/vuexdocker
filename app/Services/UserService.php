@@ -5,47 +5,35 @@ namespace App\Services;
 
 use App\Models\Agenda;
 use App\Models\Budget;
-use App\Models\Client;
-use App\Models\Delta;
-use App\Models\Fatturati;
-use App\Models\Pezzi;
-use App\Models\Product;
-use App\Models\Prova;
 use App\Models\User;
 use App\Models\Ventaglio;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use function array_push;
-use function array_sum;
-use function collect;
-use function config;
-use function count;
-use function dd;
-use function floatval;
-use function number_format;
 use function setlocale;
 use function trim;
 use const LC_TIME;
 
-class UserService
+class UserService extends BaseService
 {
     public function audio()
     {
-        return User::audio()->orderBy('name')->get();
+        return User::on($this->nomeDB)->audio()->orderBy('name')->get();
     }
 
     public function userAgenda()
     {
-        return User::whereHas('ruolo', function ($r){
-            $r->where('nome', '<>', 'admin');
-        })->with(['agenda' => function($q){
-            $q->orderBy('settimana')->orderBy('nome');
-        }])->orderBy('name')->get();
+        return User::on($this->nomeDB)
+            ->whereHas('ruolo', function ($r){
+                $r->where('nome', '<>', 'admin');
+            })->with(['agenda' => function($q){
+                $q->orderBy('settimana')->orderBy('nome');
+            }])->orderBy('name')
+            ->get();
     }
 
     public function specificoUserAgenda($id)
     {
-        return User::with(['agenda' => function($q){
+        return User::on($this->nomeDB)->with(['agenda' => function($q){
             $q->orderBy('settimana')->orderBy('nome');
         }])->find($id)->agenda;
     }
@@ -55,7 +43,7 @@ class UserService
         $user_id = $request->user_id;
         $settimana = $request->settimana;
         $tempo = $request->tempo;
-        $agendaEsistente = Agenda::where([
+        $agendaEsistente = Agenda::on($this->nomeDB)->where([
             ['user_id', $user_id],
             ['settimana', $settimana],
             ['nome', $tempo]
@@ -75,7 +63,7 @@ class UserService
             $agendaEsistente->save();
             return $agendaEsistente;
         } else {
-            $agenda = new Agenda();
+            $agenda = (new Agenda())->on($this->nomeDB);
             $agenda->nome = $tempo;
             $agenda->settimana = $settimana;
             $agenda->user_id = $user_id;
@@ -98,27 +86,27 @@ class UserService
 
     public function audioConBgt()
     {
-        return User::audio(1)->with('budget')->orderBy('name')->get();
+        return User::audio(1)->on($this->nomeDB)->with('budget')->orderBy('name')->get();
     }
 
     public function audioSenzaBgt()
     {
-        return User::audio(2)->orderBy('name')->get();
+        return User::audio(2)->on($this->nomeDB)->orderBy('name')->get();
     }
 
     public function amm()
     {
-        return User::amm()->orderBy('name')->get();
+        return User::amm()->on($this->nomeDB)->orderBy('name')->get();
     }
 
     public function callCenter()
     {
-        return User::callcenter()->orderBy('name')->get();
+        return User::callcenter()->on($this->nomeDB)->orderBy('name')->get();
     }
 
     public function aggiungi($request)
     {
-        $new = new User();
+        $new = (new User())->on($this->nomeDB);
         $new->name = trim(Str::upper($request->name));
         $new->email = trim(Str::upper($request->email));
         $new->ruolo_id = $request->ruolo_id;
@@ -128,12 +116,12 @@ class UserService
 
     public function elimina($id)
     {
-        return User::find($id)->delete();
+        return User::on($this->nomeDB)->find($id)->delete();
     }
 
     public function assegnaBgt($request)
     {
-        $user = User::find($request->idAudio);
+        $user = User::on($this->nomeDB)->find($request->idAudio);
 
         $budget = new Budget();
         $budget->budgetAnno = $request->budgetAnno;
@@ -185,7 +173,7 @@ class UserService
 
     public function user($id)
     {
-        return User::with('ruolo', 'recapito')->find($id);
+        return User::on($this->nomeDB)->with('ruolo', 'recapito')->find($id);
     }
 
     public function situazioneMese($idAudio)
@@ -198,7 +186,7 @@ class UserService
         $anno = Carbon::now()->year;
 
         if($idAudio){
-            return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+            return User::on($this->nomeDB)->audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
                 $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
             },'provaReso' => function($r) use($mese, $anno){
                 $r->where([['mese_fine', $mese], ['anno_fine', $anno]]);
@@ -210,7 +198,7 @@ class UserService
                 ->find($idAudio);
         }
 
-        return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+        return User::on($this->nomeDB)->audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
             $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
         },'provaReso' => function($r) use($mese, $anno){
             $r->where([['mese_fine', $mese], ['anno_fine', $anno]]);
@@ -226,8 +214,8 @@ class UserService
     public function dettaglioAudio()
     {
         $anno = Carbon::now()->year;
-        return User::audio(1)
-            ->with(['pezzi','fatturati','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
+        return User::on($this->nomeDB)
+            ->audio(1)->with(['pezzi','fatturati','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
                 $q->orderBy('mese_fine');
             }])
             ->withCount(['prova' => function($q) use($anno){
@@ -239,12 +227,12 @@ class UserService
 
     public function visualizzaSituazioneAnno()
     {
-        $audios = User::audio(1)->get();
+        $audios = User::on($this->nomeDB)->audio(1)->get();
 
         foreach ($audios as $audio){
-            $valori = User::audio(1)->with('moltiBudget')->find($audio->id)->moltiBudget
-                ->concat(User::audio(1)->with('moltiFatturati')->find($audio->id)->moltiFatturati)
-                ->concat(User::audio(1)->with('moltiDelta')->find($audio->id)->moltiDelta);
+            $valori = User::on($this->nomeDB)->audio(1)->with('moltiBudget')->find($audio->id)->moltiBudget
+                ->concat(User::on($this->nomeDB)->audio(1)->with('moltiFatturati')->find($audio->id)->moltiFatturati)
+                ->concat(User::on($this->nomeDB)->audio(1)->with('moltiDelta')->find($audio->id)->moltiDelta);
        //         ->concat(User::audio(1)->with('moltiPezzi')->find($audio->id)->moltiPezzi);
             $audio->valori = $valori;
         }
@@ -254,12 +242,12 @@ class UserService
 
     public function appuntamenti($idAudio)
     {
-        return User::with('client')->find($idAudio)->client;
+        return User::on($this->nomeDB)->with('client')->find($idAudio)->client;
     }
 
     public function ventaglioAnno()
     {
         $anno = Carbon::now()->year;
-        return Ventaglio::with('user')->where('anno', $anno)->get();
+        return Ventaglio::on($this->nomeDB)->with('user')->where('anno', $anno)->get();
     }
 }

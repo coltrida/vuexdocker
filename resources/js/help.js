@@ -122,6 +122,7 @@ const help = () => {
         linkstatistichetotaleinviimedici: base+'statisticheTotaleInviiMedici',
         linkfilialebyid: base+'filialeById',
         linkrecalloggi: base+'recallOggi',
+        linkrecalldomani: base+'recallDomani',
         linktelefonatefatteoggi: base+'telefonateFatteOggi',
         linknumerotelefonatefatteoggi: base+'numeroTelefonateFatteOggi',
         linknumeroappuntamentipresioggi: base+'numeroAppuntamentiPresiOggi',
@@ -141,6 +142,8 @@ const help = () => {
         linkriepilogoclients: base+'riepilogoClienti',
         linkmodificafiliale: base+'modificaFiliale',
         linkmodificafornitore: base+'modificaFornitore',
+        linkuserinfodatabase: base+'infoDatabase',
+        linkswitchdatabase: base+'switchSimulazione',
     };
 };
 export default help;

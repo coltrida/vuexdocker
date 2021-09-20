@@ -5,16 +5,16 @@
         </v-card-title>
 
         <v-card-text class="mt-2">
-            <v-row class="mt-2" v-for="prodotto in prodotti" :key="prodotto.id">
-                <v-col cols="4">
-                    <h3>{{ prodotto.matricola }}</h3>
-                </v-col>
-                <v-col cols="4">
-                    <h3>{{ prodotto.listino.nome }}</h3>
-                </v-col>
-                <v-col cols="4">
-                    <h3>{{ prodotto.pivot.prezzo }}</h3>
-                </v-col>
+            <v-row>
+                <v-col><h3>Matricola</h3></v-col>
+                <v-col><h3>Modello</h3></v-col>
+                <v-col><h3>Prezzo</h3></v-col>
+            </v-row>
+
+            <v-row v-for="item in prodotti" :key="item.id">
+                <v-col>{{item.matricola}}</v-col>
+                <v-col>{{item.listino.nome}}</v-col>
+                <v-col>{{item.pivot.prezzo_formattato}}</v-col>
             </v-row>
 
         </v-card-text>

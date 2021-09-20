@@ -1743,6 +1743,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     eliminaElementoDallaProva: function eliminaElementoDallaProva(id, idProduct) {
       this.eliminaEle(id);
       this.switchRimuoviDallaProva(idProduct);
+      this.nuovaProva = {};
     },
     salvaProva: function salvaProva() {
       var _this2 = this;
@@ -43387,27 +43388,35 @@ var render = function() {
       _c(
         "v-card-text",
         { staticClass: "mt-2" },
-        _vm._l(_vm.prodotti, function(prodotto) {
-          return _c(
+        [
+          _c(
             "v-row",
-            { key: prodotto.id, staticClass: "mt-2" },
             [
-              _c("v-col", { attrs: { cols: "4" } }, [
-                _c("h3", [_vm._v(_vm._s(prodotto.matricola))])
-              ]),
+              _c("v-col", [_c("h3", [_vm._v("Matricola")])]),
               _vm._v(" "),
-              _c("v-col", { attrs: { cols: "4" } }, [
-                _c("h3", [_vm._v(_vm._s(prodotto.listino.nome))])
-              ]),
+              _c("v-col", [_c("h3", [_vm._v("Modello")])]),
               _vm._v(" "),
-              _c("v-col", { attrs: { cols: "4" } }, [
-                _c("h3", [_vm._v(_vm._s(prodotto.pivot.prezzo))])
-              ])
+              _c("v-col", [_c("h3", [_vm._v("Prezzo")])])
             ],
             1
-          )
-        }),
-        1
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.prodotti, function(item) {
+            return _c(
+              "v-row",
+              { key: item.id },
+              [
+                _c("v-col", [_vm._v(_vm._s(item.matricola))]),
+                _vm._v(" "),
+                _c("v-col", [_vm._v(_vm._s(item.listino.nome))]),
+                _vm._v(" "),
+                _c("v-col", [_vm._v(_vm._s(item.pivot.prezzo_formattato))])
+              ],
+              1
+            )
+          })
+        ],
+        2
       ),
       _vm._v(" "),
       _c("v-divider"),

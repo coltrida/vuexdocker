@@ -26,7 +26,7 @@ class ProdottiInFilialeFornitoreResource extends JsonResource
             'iva' => $this->listino->iva.' %',
             'giorniTempoDiReso' => $this->listino->giorniTempoDiReso,
             'listinoId' => $this->listino->id,
-            'nomeMatricola' => $this->listino->nome.' - '.$this->matricola
+            'nomeMatricola' => $this->listino->nome.' - matr. '.$this->matricola
         ];
     }
 }

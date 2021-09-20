@@ -247,6 +247,11 @@ const mutations = {
         state.ricercaNominativi = payload;
     },
 
+    resetRicercaNominativi(state){
+        state.ricercaNominativi = [];
+        state.cittaByProvincia = [];
+    },
+
     fetchProvince(state, payload){
         state.province = payload;
     },

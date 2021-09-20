@@ -87,6 +87,7 @@ class ClientController extends Controller
 
     public function importClients()
     {
+        ini_set('max_execution_time', 300);
         Excel::import(new ClientsImport, storage_path('app/public/file.xlsx'));
     }
 

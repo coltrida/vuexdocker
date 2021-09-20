@@ -23,7 +23,6 @@ use App\Http\Controllers\api\TipologiaController;
 use App\Http\Controllers\api\UserController;
 
 
-
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register']);
 
@@ -52,6 +51,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/appuntamenti/{idAudio}', [UserController::class, 'appuntamenti']);
 
         Route::get('/logout/{id}', [LoginController::class, 'logout']);
+
+        Route::get('switchSimulazione', [UserController::class, 'switchSimulazione']);
+        Route::get('infoDatabase', [UserController::class, 'infoDatabase']);
 
         // ----------------- filiali -------------------------
         Route::get('/filiali', [FilialiController::class, 'index']);
@@ -221,6 +223,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         // ----------------- telefonate -----------------------
         Route::get('/recallOggi', [TelefonateController::class, 'recallOggi']);
+        Route::get('/recallDomani', [TelefonateController::class, 'recallDomani']);
         Route::get('/telefonateFatteOggi', [TelefonateController::class, 'telefonateFatteOggi']);
         Route::get('/numeroTelefonateFatteOggi', [TelefonateController::class, 'numeroTelefonateFatteOggi']);
         Route::get('/numeroAppuntamentiPresiOggi', [TelefonateController::class, 'numeroAppuntamentiPresiOggi']);

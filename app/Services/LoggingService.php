@@ -11,11 +11,11 @@ use Storage;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\DbDumper\Databases\MySql;
 
-class LoggingService
+class LoggingService extends BaseService
 {
     public function scriviLog($oggetto, $soggetto, $nomeSoggetto, $propieta, $testo)
     {
-        $log = new Activitylog();
+        $log = (new Activitylog())->on($this->nomeDB);
         $log->description = $testo;
         $log->log_name = $propieta;
         $log->event = $oggetto;
@@ -34,7 +34,7 @@ class LoggingService
 
     public function lista()
     {
-        return Activitylog::latest()->get();
+        return Activitylog::on($this->nomeDB)->latest()->get();
     }
 
     public function backup()

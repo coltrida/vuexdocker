@@ -100,6 +100,9 @@
                     <v-btn @click="trova" color="success" dark>
                         Ricerca
                     </v-btn>
+                    <v-btn @click="resetRicerca" color="warning" dark>
+                        Reset
+                    </v-btn>
                 </v-col>
             </v-row>
 
@@ -286,6 +289,7 @@
         },
 
         mounted() {
+            this.resetRicerca();
             this.fetchTipologie();
             this.fetchProvince();
             this.fetchFilialiPerInserimento();
@@ -435,6 +439,11 @@
                 this.ricercaNominativi(this.ricerca).then(() => {
                     this.carica = false;
                 })
+            },
+
+            resetRicerca(){
+                this.$store.commit('clients/resetRicercaNominativi');
+                this.ricerca = {};
             }
 
         },

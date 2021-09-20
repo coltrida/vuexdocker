@@ -18,11 +18,11 @@ use Illuminate\Support\Str;
 use function dd;
 use function trim;
 
-class ClientService
+class ClientService extends BaseService
 {
     public function lista()
     {
-        return Client::with(['tipologia:id,nome',
+        return Client::on($this->nomeDB)->with(['tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
@@ -31,7 +31,7 @@ class ClientService
 
     public function clienteFiliale($idFiliale)
     {
-        return Client::with(['tipologia:id,nome',
+        return Client::on($this->nomeDB)->with(['tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
@@ -40,18 +40,18 @@ class ClientService
 
     public function cliente($id)
     {
-        return Client::with('tipologia:id,nome',
+        return Client::on($this->nomeDB)->with('tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome')->find($id);
     }
 
     public function compleanni($idAudio)
     {
-        return User::with('clientCompleanno')->find($idAudio)->clientCompleanno;
+        return User::on($this->nomeDB)->with('clientCompleanno')->find($idAudio)->clientCompleanno;
     }
 
     public function aggiungi($request)
     {
-        $new = new Client();
+        $new = (new Client())->on($this->nomeDB);
         $new->nome = trim(Str::upper($request->nome));
         $new->cognome = trim(Str::upper($request->cognome));
         $new->codfisc = trim(Str::upper($request->codfisc)) == '' ? null : trim(Str::upper($request->codfisc));
@@ -84,7 +84,7 @@ class ClientService
         $new->anno = Carbon::now()->year;
         $new->save();
 
-        $telefonata = new Telefonata();
+        $telefonata = (new Telefonata())->on($this->nomeDB);
         $telefonata->user_id = $new->user_id;
         $telefonata->client_id = $new->id;
         $telefonata->note = "recall automatico dell'inserimento paziente";
@@ -92,7 +92,7 @@ class ClientService
         $telefonata->effettuata = false;
         $telefonata->save();
 
-        $utente = User::find($request->user_id);
+        $utente = User::on($this->nomeDB)->find($request->user_id);
         $propieta = 'client';
         $log = new LoggingService();
         $testo = $utente->name.' ha inserito il nominativo '.$new->cognome.' '.$new->nome;
@@ -103,7 +103,7 @@ class ClientService
 
     public function modifica($request)
     {
-        $new = Client::find($request->id);
+        $new = Client::on($this->nomeDB)->find($request->id);
         $new->nome = trim(Str::upper($request->nome));
         $new->cognome = trim(Str::upper($request->cognome));
         $new->codfisc = trim(Str::upper($request->codfisc)) == '' ? null : trim(Str::upper($request->codfisc));
@@ -132,7 +132,7 @@ class ClientService
         $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
         $new->save();
 
-        $utente = User::find($request->user_id);
+        $utente = User::on($this->nomeDB)->find($request->user_id);
         $propieta = 'client';
         $log = new LoggingService();
         $testo = $utente->name.' ha modificato il nominativo '.$new->cognome.' '.$new->nome;
@@ -144,14 +144,14 @@ class ClientService
     public function calcolaRecall($tipologia_id)
     {
         $oggi = Carbon::now();
-        $tipo = Tipologia::find($tipologia_id);
+        $tipo = Tipologia::on($this->nomeDB)->find($tipologia_id);
         return $oggi->addDays($tipo->recall)->format('Y-m-d');
     }
 
     public function elimina($request)
     {
-        $client = Client::find($request->clientId);
-        $user = User::find($request->userId);
+        $client = Client::on($this->nomeDB)->find($request->clientId);
+        $user = User::on($this->nomeDB)->find($request->userId);
         $propieta = 'client';
         $log = new LoggingService();
         $testo = $user->name.' ha eliminato il nominativo '.$client->cognome.' '.$client->nome;
@@ -161,7 +161,7 @@ class ClientService
 
     public function ingressiRecapiti()
     {
-        return Recapito::
+        return Recapito::on($this->nomeDB)->
             withcount('clients')
             ->withCount(['clients as clientsPc' => function($q){
                 $q->where('tipologia_id', 1);
@@ -182,7 +182,7 @@ class ClientService
     public function ingressiRecapitiMesi()
     {
         $annoOggi = Carbon::now()->year;
-        return Recapito::
+        return Recapito::on($this->nomeDB)->
             withcount('clients')
             ->withCount(['clients as gen' => function($q) use($annoOggi){
                 $q->where([
@@ -262,12 +262,12 @@ class ClientService
 
     public function province()
     {
-        return Client::orderBy('provincia')->pluck('provincia');
+        return Client::on($this->nomeDB)->orderBy('provincia')->pluck('provincia');
     }
 
     public function cittaByProvincia($provincia)
     {
-        return Client::where('provincia', $provincia)->orderBy('citta')->pluck('citta');
+        return Client::on($this->nomeDB)->where('provincia', $provincia)->orderBy('citta')->pluck('citta');
     }
 
     public function importClientsFromNoah($request)
@@ -279,7 +279,7 @@ class ClientService
 //dd($xml->Patient);
         foreach ($xml->Patient as $ele){
             //dd($ele->Patient);
-            $client = Client::firstOrCreate(
+            $client = Client::on($this->nomeDB)->firstOrCreate(
                 [
                     'nome' => trim(Str::upper($ele->Patient->FirstName)),
                     'cognome' => trim(Str::upper($ele->Patient->LastName)),
@@ -370,7 +370,7 @@ class ClientService
             }
 
 
-            $audiom = Audiometria::where('client_id', $client->id)->firstOrNew();
+            $audiom = Audiometria::on($this->nomeDB)->where('client_id', $client->id)->firstOrNew();
 
             if(!isset($audiom->client_id)){
                 $audiom->client_id = $client->id;
@@ -405,32 +405,32 @@ class ClientService
 
     private function getFilialeFromPlace($provincia, $citta)
     {
-        $filiale = Filiale::where('provincia', $provincia)->get();
+        $filiale = Filiale::on($this->nomeDB)->where('provincia', $provincia)->get();
         if (count($filiale) == 1){
             return $filiale[0]->id;
         } else {
             if(in_array($citta , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO', 'FALCONARA MARITTIMA', 'OSTRA',
                 'MONTESICURO', 'CAMERANO'])) {
-                return Filiale::where('nome', 'ANCONA')->first()->id;
+                return Filiale::on($this->nomeDB)->where('nome', 'ANCONA')->first()->id;
             } elseif (in_array($citta , ['LORETO',
                 'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'PORTO RECANATI',
                 'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'MONTECOSARO', 'MORROVALLE'])) {
-                return Filiale::where('nome', 'CIVITANOVA')->first()->id;
+                return Filiale::on($this->nomeDB)->where('nome', 'CIVITANOVA')->first()->id;
             } elseif (in_array($citta , ['MACERATA', 'CAMERINO'])) {
-                return Filiale::where('nome', 'MACERATA')->first()->id;
+                return Filiale::on($this->nomeDB)->where('nome', 'MACERATA')->first()->id;
             } elseif (in_array($citta , ['PISA', 'CASCINA', 'MARINA DI PISA', 'SAN GIULIANO TERME', 'SAN GIULIANO TERME(GELLO)',
                 'SAN GIULIANO TERME(AGNANO)', 'GELLO(S.GILULIANO TERME)', 'SAN GIULIANO TERME(GHEZZANO)', 'FIRENZE', 'NODICA',
                 "MADONNA DELL'ACQUA( S.G.T.)", 'S.G.TERME', 'VECCHIANO', 'MIGLIARINO', 'PONTASSERCHIO(S.G.T)', 'PORTA A MARE',
                 'GHEZZANO', 'PISA(ARENA METATO)', 'NODICA(SGT)', 'GHEZZANO(SGT)', 'COLIGNOLA(SGT)', 'SAN LORENZO ALLE CORTI',
                 'ASCIANO PISANO', 'ASCIANO (SGTERME)', 'BIENTINA', 'BUTI', 'CALCI', 'CALCINAIA', 'CAPANNOLI',
                 'CASTELFRANCO DI SOTTO', 'PONSACCO', 'PECCIOLI', 'SAN GIULIANO TERME'])) {
-                return Filiale::where('nome', 'PISA')->first()->id;
+                return Filiale::on($this->nomeDB)->where('nome', 'PISA')->first()->id;
             } elseif (in_array($citta , ['VIAREGGIO', 'FORTE DEI MARMI', 'MASSA', 'TORRE DEL LAGO', 'LIDO DI CAMAIORE',
                 'LA SPEZIA', 'FILATTIERA(PONTREMOLI)', 'TONFANO(PIETRASANTA)', 'QUERCETA', 'MONTIGNOSO', 'PIETRASANTA',
                 'VITTORIA APUANA', 'SOLAIO(PIETRASANTA)', 'STRETTOIA(PIETRASANAT)', 'LUNI'])) {
-                return Filiale::where('nome', 'VIAREGGIO')->first()->id;
+                return Filiale::on($this->nomeDB)->where('nome', 'VIAREGGIO')->first()->id;
             } elseif (in_array($citta , ['LIVORNO', 'CECINA', 'LARI', 'CASCIANA TERME', 'PIOMBINO', 'TIRRENIA', 'COLLESALVETTI'])) {
-                return Filiale::where('nome', 'LIVORNO')->first()->id;
+                return Filiale::on($this->nomeDB)->where('nome', 'LIVORNO')->first()->id;
             } elseif (in_array($citta , ['LUCCA', 'BARGA', 'PORCARI', 'GRAGNANO', 'GRAGNANO(LUCCA)', 'LAPPATO', 'ANTRACCOLI(LUCCA)',
                 'CAPANNORI', 'SANTA MARIA A COLLE', 'ZONE', 'SANTA ANDREA IN CAPRILE', 'MARLIA', 'SAN COLOMBANO',
                 'CAPANNORI(MARLIA)', 'CAMIGLIANO', 'CAMIGLIANO(CAPANNORI)', 'SEGROMIGNO IN PIANO', 'SAN MACARIO IN PIANO(LUCCA)',
@@ -438,7 +438,7 @@ class ClientService
                 "SANT'ANGELO IN CAMPO", 'ALTOPASCIO', 'SERRAVEZZA', 'SERRAVEZZA(RIPA)', 'SAN GENNARO',
                 'SAN GENNARO(CAPANNORI)', 'VICOPELAGO', 'SAN CASSIANO A VICO', 'SESTO DI MORIANO', 'SANTISSIMA ANNUNZIATA(LUCCA)',
                 'LAMMARI', 'SANTISSIMA ANNUNZIATA(LU)', 'SANTA MARIA DEL GIUDICE'])) {
-                return Filiale::where('nome', 'LUCCA')->first()->id;
+                return Filiale::on($this->nomeDB)->where('nome', 'LUCCA')->first()->id;
             }
         }
     }
@@ -459,7 +459,7 @@ class ClientService
             array_push($condizioni, ['filiale_id', $request->filiale]);
         }
 
-        return Client::with('tipologia:id,nome',
+        return Client::on($this->nomeDB)->with('tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')
             ->where($condizioni)
             ->orderBy('cognome')->get();
@@ -467,7 +467,7 @@ class ClientService
 
     public function situazioneAnnoClientiAudio($request)
     {
-        return Prova::
+        return Prova::on($this->nomeDB)->
                 with('client')
                 ->where([
                     ['user_id', $request->userId],
@@ -481,7 +481,7 @@ class ClientService
 
     public function situazioneAnnoResiAudio($request)
     {
-        return Prova::
+        return Prova::on($this->nomeDB)->
         with('client')
             ->where([
                 ['user_id', $request->userId],
@@ -495,7 +495,7 @@ class ClientService
 
     public function riepilogo()
     {
-        return Filiale::
+        return Filiale::on($this->nomeDB)->
             withCount(['clients as cli' => function($q){
                 $q->whereHas('tipologia', function ($z){
                     $z->where('nome', 'CLIENTE');

@@ -93,6 +93,6 @@
     }
 
     .style-4 {
-        background-color: rgb(95, 102, 97)
+        background-color: rgb(184, 185, 206)
     }
 </style>

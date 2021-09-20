@@ -13,13 +13,18 @@ const state = () => ({
     callCenter: [],
     agenda:[],
     totFatt: 0,
-    totBgtProg: 0
+    totBgtProg: 0,
+    userInformazioni: ''
 });
 
 const getters = {
 
     getAudio(state){
         return state.audio;
+    },
+
+    getUserInformazioni(state){
+        return state.userInformazioni;
     },
 
     getTotFatt(state){
@@ -79,6 +84,24 @@ const actions = {
             }
         });
         commit('fetchAudio', response.data);
+    },
+
+    async fetchUserInformazioniDatabase({commit}){
+        const response = await axios.get(`${help().linkuserinfodatabase}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchUserInformazioniDatabase', response.data);
+    },
+
+    async switchDatabase({commit}){
+        const response = await axios.get(`${help().linkswitchdatabase}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('switchDatabase', response.data);
     },
 
     async fetchCommerciale({commit}){
@@ -288,6 +311,14 @@ const actions = {
 const mutations = {
     fetchAudio(state, payload){
         state.audio = payload;
+    },
+
+    switchDatabase(state, payload){
+        state.userInformazioni = payload;
+    },
+
+    fetchUserInformazioniDatabase(state, payload){
+        state.userInformazioni = payload;
     },
 
     fetchCommerciale(state, payload){

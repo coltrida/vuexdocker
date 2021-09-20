@@ -34,6 +34,10 @@
                     ></recalls>
 
                     <div v-if="showClients">
+                        <v-btn @click="recuperaInfo">
+                            switch
+                        </v-btn>
+                        {{getUserInformazioni}}
                         <h2>Recall di oggi</h2>
                             <v-data-table
                                 :headers="headers1"
@@ -109,6 +113,82 @@
                                 </template>
 
                             </v-data-table>
+
+                        <h2 class="mt-10">Recall di domani</h2>
+                        <v-data-table
+                            :headers="headers1"
+                            dense
+                            :items="getRecallDomani"
+                            class="elevation-1 mt-3"
+                        >
+
+                            <template v-slot:item.nome="{ item }">
+                                {{ item.nome }} {{item.cognome}}
+                            </template>
+
+                            <template v-slot:item.actions="{ item }">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="purple"
+                                            small
+                                            @click="appuntamento(item)"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-calendar-edit
+                                        </v-icon>
+                                    </template>
+                                    <span>Appuntamento</span>
+                                </v-tooltip>
+
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="orange"
+                                            small
+                                            @click="prove(item)"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-ear-hearing
+                                        </v-icon>
+                                    </template>
+                                    <span>Prova</span>
+                                </v-tooltip>
+
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="light-blue darken-4"
+                                            small
+                                            @click="documenti(item)"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-file-document
+                                        </v-icon>
+                                    </template>
+                                    <span>Documenti</span>
+                                </v-tooltip>
+
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="green"
+                                            small
+                                            @click="recalls(item)"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-phone
+                                        </v-icon>
+                                    </template>
+                                    <span>Recalls</span>
+                                </v-tooltip>
+                            </template>
+
+                        </v-data-table>
 
                         <h2 class="mt-10">Clienti Mai Richiamati</h2>
                         <v-data-table
@@ -390,18 +470,30 @@
 
         mounted() {
             this.caricaTelefonate();
+            this.fetchUserInformazioniDatabase();
         },
 
         methods: {
             ...mapActions('telefonate', {
                 fetchRecallOggi: 'fetchRecallOggi',
+                fetchRecallDomani: 'fetchRecallDomani',
                 fetchClientiMaiRichiamati: 'fetchClientiMaiRichiamati',
                 fetchClientiNonHannoMaiPresoAppuntamenti: 'fetchClientiNonHannoMaiPresoAppuntamenti',
                 fetchClientiUnAnnoUltimoAppuntamento: 'fetchClientiUnAnnoUltimoAppuntamento',
             }),
 
+            ...mapActions('users', {
+                switchDatabase: 'switchDatabase',
+                fetchUserInformazioniDatabase: 'fetchUserInformazioniDatabase',
+            }),
+
+            recuperaInfo(){
+                this.switchDatabase();
+            },
+
             caricaTelefonate(){
                 this.fetchRecallOggi();
+                this.fetchRecallDomani();
                 this.fetchClientiMaiRichiamati();
                 this.fetchClientiNonHannoMaiPresoAppuntamenti();
                 this.fetchClientiUnAnnoUltimoAppuntamento();
@@ -517,9 +609,14 @@
         computed: {
             ...mapGetters('telefonate', {
                 getRecallOggi: 'getRecallOggi',
+                getRecallDomani: 'getRecallDomani',
                 getClientiMaiRichiamati: 'getClientiMaiRichiamati',
                 getClientiNonHannoMaiPresoAppuntamenti: 'getClientiNonHannoMaiPresoAppuntamenti',
                 getClientiUnAnnoUltimoAppuntamento: 'getClientiUnAnnoUltimoAppuntamento',
+            }),
+
+            ...mapGetters('users', {
+                getUserInformazioni: 'getUserInformazioni',
             }),
 
         },

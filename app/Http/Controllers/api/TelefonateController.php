@@ -15,6 +15,11 @@ class TelefonateController extends Controller
         return $telefonateService->recallOggi();
     }
 
+    public function recallDomani(TelefonateService $telefonateService)
+    {
+        return $telefonateService->recallDomani();
+    }
+
     public function telefonateFatteOggi(TelefonateService $telefonateService)
     {
         return $telefonateService->telefonateFatteOggi();

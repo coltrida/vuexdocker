@@ -367,6 +367,7 @@
             eliminaElementoDallaProva(id, idProduct){
                 this.eliminaEle(id);
                 this.switchRimuoviDallaProva(idProduct);
+                this.nuovaProva = {};
             },
 
             salvaProva(){
