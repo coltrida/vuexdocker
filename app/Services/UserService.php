@@ -13,17 +13,17 @@ use function setlocale;
 use function trim;
 use const LC_TIME;
 
-class UserService extends BaseService
+class UserService
 {
     public function audio()
     {
-        return User::on($this->nomeDB)->audio()->orderBy('name')->get();
+        return User::audio()->orderBy('name')->get();
     }
 
     public function userAgenda()
     {
-        return User::on($this->nomeDB)
-            ->whereHas('ruolo', function ($r){
+        return User::
+            whereHas('ruolo', function ($r){
                 $r->where('nome', '<>', 'admin');
             })->with(['agenda' => function($q){
                 $q->orderBy('settimana')->orderBy('nome');
@@ -33,7 +33,7 @@ class UserService extends BaseService
 
     public function specificoUserAgenda($id)
     {
-        return User::on($this->nomeDB)->with(['agenda' => function($q){
+        return User::with(['agenda' => function($q){
             $q->orderBy('settimana')->orderBy('nome');
         }])->find($id)->agenda;
     }
@@ -43,7 +43,7 @@ class UserService extends BaseService
         $user_id = $request->user_id;
         $settimana = $request->settimana;
         $tempo = $request->tempo;
-        $agendaEsistente = Agenda::on($this->nomeDB)->where([
+        $agendaEsistente = Agenda::where([
             ['user_id', $user_id],
             ['settimana', $settimana],
             ['nome', $tempo]
@@ -63,7 +63,18 @@ class UserService extends BaseService
             $agendaEsistente->save();
             return $agendaEsistente;
         } else {
-            $agenda = (new Agenda())->on($this->nomeDB);
+            $agenda = Agenda::create([
+                'nome' => $tempo,
+                'settimana' => $settimana,
+                'user_id' => $user_id,
+                'lun' => $request->giorno == 'lun' ? $request->testo : null,
+                'mar' => $request->giorno == 'mar' ? $request->testo : null,
+                'mer' => $request->giorno == 'mer' ? $request->testo : null,
+                'gio' => $request->giorno == 'gio' ? $request->testo : null,
+                'ven' => $request->giorno == 'ven' ? $request->testo : null,
+            ]);
+
+            /*$agenda = (new Agenda())->on($this->nomeDB);
             $agenda->nome = $tempo;
             $agenda->settimana = $settimana;
             $agenda->user_id = $user_id;
@@ -78,7 +89,7 @@ class UserService extends BaseService
             } elseif ($request->giorno == 'ven'){
                 $agenda->ven = $request->testo;
             }
-            $agenda->save();
+            $agenda->save();*/
         }
 
         return $agenda;
@@ -86,44 +97,70 @@ class UserService extends BaseService
 
     public function audioConBgt()
     {
-        return User::audio(1)->on($this->nomeDB)->with('budget')->orderBy('name')->get();
+        return User::audio(1)->with('budget')->orderBy('name')->get();
     }
 
     public function audioSenzaBgt()
     {
-        return User::audio(2)->on($this->nomeDB)->orderBy('name')->get();
+        return User::audio(2)->orderBy('name')->get();
     }
 
     public function amm()
     {
-        return User::amm()->on($this->nomeDB)->orderBy('name')->get();
+        return User::amm()->orderBy('name')->get();
     }
 
     public function callCenter()
     {
-        return User::callcenter()->on($this->nomeDB)->orderBy('name')->get();
+        return User::callcenter()->orderBy('name')->get();
     }
 
     public function aggiungi($request)
     {
-        $new = (new User())->on($this->nomeDB);
+        return User::create([
+            'name' => trim(Str::upper($request->name)),
+            'email' => trim(Str::upper($request->email)),
+            'ruolo_id' => $request->ruolo_id,
+        ]);
+
+        /*$new = (new User())->on($this->nomeDB);
         $new->name = trim(Str::upper($request->name));
         $new->email = trim(Str::upper($request->email));
         $new->ruolo_id = $request->ruolo_id;
         $new->save();
-        return $new;
+        return $new;*/
     }
 
     public function elimina($id)
     {
-        return User::on($this->nomeDB)->find($id)->delete();
+        return User::find($id)->delete();
     }
 
     public function assegnaBgt($request)
     {
-        $user = User::on($this->nomeDB)->find($request->idAudio);
+        $user = User::find($request->idAudio);
 
-        $budget = new Budget();
+        $budget = Budget::create([
+            'budgetAnno' => $request->budgetAnno,
+            'user_id' => $request->idAudio,
+            'nome' => 'Budget',
+            'stipendio' => $request->stipendio,
+            'provvigione' => $request->provvigione,
+            'gennaio' => $request->budgetAnno * $request->mese[1] / 100,
+            'febbraio' => $request->budgetAnno * $request->mese[2] / 100,
+            'marzo' => $request->budgetAnno * $request->mese[3] / 100,
+            'aprile' => $request->budgetAnno * $request->mese[4] / 100,
+            'maggio' => $request->budgetAnno * $request->mese[5] / 100,
+            'giugno' => $request->budgetAnno * $request->mese[6] / 100,
+            'luglio' => $request->budgetAnno * $request->mese[7] / 100,
+            'agosto' => $request->budgetAnno * $request->mese[8] / 100,
+            'settembre' => $request->budgetAnno * $request->mese[9] / 100,
+            'ottobre' => $request->budgetAnno * $request->mese[10] / 100,
+            'novembre' => $request->budgetAnno * $request->mese[11] / 100,
+            'dicembre' => $request->budgetAnno * $request->mese[12] / 100,
+        ]);
+
+        /*$budget = new Budget();
         $budget->budgetAnno = $request->budgetAnno;
         $budget->user_id = $request->idAudio;
         $budget->nome = 'Budget';
@@ -141,7 +178,7 @@ class UserService extends BaseService
         $budget->ottobre = $request->budgetAnno * $request->mese[10] / 100;
         $budget->novembre = $request->budgetAnno * $request->mese[11] / 100;
         $budget->dicembre = $request->budgetAnno * $request->mese[12] / 100;
-        $budget->save();
+        $budget->save();*/
 
         $user->budget_id = $budget->id;
         $user->save();
@@ -173,7 +210,7 @@ class UserService extends BaseService
 
     public function user($id)
     {
-        return User::on($this->nomeDB)->with('ruolo', 'recapito')->find($id);
+        return User::with('ruolo', 'recapito')->find($id);
     }
 
     public function situazioneMese($idAudio)
@@ -186,11 +223,11 @@ class UserService extends BaseService
         $anno = Carbon::now()->year;
 
         if($idAudio){
-            return User::on($this->nomeDB)->audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+            return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
                 $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
             },'provaReso' => function($r) use($mese, $anno){
                 $r->where([['mese_fine', $mese], ['anno_fine', $anno]]);
-            }, "budget:id,budgetAnno,$nomeMese as target"])
+            }, "budget:id,user_id,budgetAnno,$nomeMese as target"])
                 ->withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', $mese], ['anno_fine', $anno]]);
                 }], 'tot')
@@ -198,7 +235,7 @@ class UserService extends BaseService
                 ->find($idAudio);
         }
 
-        return User::on($this->nomeDB)->audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+        return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
             $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
         },'provaReso' => function($r) use($mese, $anno){
             $r->where([['mese_fine', $mese], ['anno_fine', $anno]]);
@@ -214,12 +251,18 @@ class UserService extends BaseService
     public function dettaglioAudio()
     {
         $anno = Carbon::now()->year;
-        return User::on($this->nomeDB)
-            ->audio(1)->with(['pezzi','fatturati','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
+        return User::
+            audio(1)->with(['pezzi','fatturati','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
                 $q->orderBy('mese_fine');
             }])
             ->withCount(['prova' => function($q) use($anno){
                 $q->where('anno_inizio', $anno);
+            }])
+            ->withCount(['provaFinalizzata as nuova' => function($q){
+                $q->where('tipologia', 'Nuovo');
+            }])
+            ->withCount(['provaFinalizzata as riacquisto' => function($q){
+                $q->where('tipologia', 'Riacquisto');
             }])
             ->orderBy('name')
             ->get();
@@ -227,12 +270,12 @@ class UserService extends BaseService
 
     public function visualizzaSituazioneAnno()
     {
-        $audios = User::on($this->nomeDB)->audio(1)->get();
+        $audios = User::audio(1)->get();
 
         foreach ($audios as $audio){
-            $valori = User::on($this->nomeDB)->audio(1)->with('moltiBudget')->find($audio->id)->moltiBudget
-                ->concat(User::on($this->nomeDB)->audio(1)->with('moltiFatturati')->find($audio->id)->moltiFatturati)
-                ->concat(User::on($this->nomeDB)->audio(1)->with('moltiDelta')->find($audio->id)->moltiDelta);
+            $valori = User::audio(1)->with('moltiBudget')->find($audio->id)->moltiBudget
+                ->concat(User::audio(1)->with('moltiFatturati')->find($audio->id)->moltiFatturati)
+                ->concat(User::audio(1)->with('moltiDelta')->find($audio->id)->moltiDelta);
        //         ->concat(User::audio(1)->with('moltiPezzi')->find($audio->id)->moltiPezzi);
             $audio->valori = $valori;
         }
@@ -242,12 +285,12 @@ class UserService extends BaseService
 
     public function appuntamenti($idAudio)
     {
-        return User::on($this->nomeDB)->with('client')->find($idAudio)->client;
+        return User::with('client')->find($idAudio)->client;
     }
 
     public function ventaglioAnno()
     {
         $anno = Carbon::now()->year;
-        return Ventaglio::on($this->nomeDB)->with('user')->where('anno', $anno)->get();
+        return Ventaglio::with('user')->where('anno', $anno)->get();
     }
 }

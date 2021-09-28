@@ -312,6 +312,7 @@
                 listino: {},
                 headers: [
                     {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
                     {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
@@ -321,7 +322,6 @@
                     {text: 'telefono', width: 130, value: 'telefono', class: "indigo white--text"},
                     {text: 'telefono 2', width: 130, value: 'telefono2', class: "indigo white--text"},
                     {text: 'telefono 3', width: 130, value: 'telefono3', class: "indigo white--text"},
-                    {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
                     {text: 'Data di Nascita', width: 150, value: 'datanascita', class: "indigo white--text"},
                     {text: 'E-mail', width: 180, value: 'mail', class: "indigo white--text"},
                     {text: 'fonte', width: 200, value: 'marketing', class: "indigo white--text"},
@@ -453,7 +453,7 @@
                 this.recallsClient = client;
             },
 
-            chiudiRecalls(){
+            chiudiRecalls(cliente){
                 this.showDocumenti = false;
                 this.showRecalls = false;
                 this.showProve = false;
@@ -461,6 +461,13 @@
                 this.showAppuntamento = false;
                 this.showClients = true;
                 this.recallsClient = {};
+
+                if (cliente){
+                    this.showClients = false;
+                    this.showAppuntamento = true;
+                    this.appuntamentoClient = cliente;
+                }
+
             },
 
             chiudiDocumenti(){

@@ -11,6 +11,8 @@ use App\Models\Fatturati;
 use App\Models\Listino;
 use App\Models\Product;
 use App\Models\Prova;
+use App\Models\Risultatitel;
+use App\Models\Telefonata;
 use App\Models\User;
 use App\Models\Ventaglio;
 use Carbon\Carbon;
@@ -369,6 +371,36 @@ class ElaborazioneService
             if($oggi->diffInDays($prodotto->datacarico) > (int)$prodotto->listino->giorniTempoDiReso - 10){
                 $prodotto->pericoloRestituzione = true;
             };
+        }
+
+        // -------------- statistiche telefonate ---------- //
+        setlocale(LC_TIME, 'it_IT');
+        Carbon::setLocale('it');
+        for ($meseRecall = 1; $meseRecall <= 12; $meseRecall++){
+            $telefonateFatte = Telefonata::where([
+                ['anno', $anno],
+                ['effettuata', 1],
+                ['mese', $meseRecall],
+            ])->count();
+            $appuntamenti = Telefonata::where([
+                ['anno', $anno],
+                ['effettuata', 1],
+                ['mese', $meseRecall],
+                ['esito', 'Preso Appuntamento'],
+            ])->count();
+            if ($telefonateFatte > 0){
+                Risultatitel::updateOrCreate(
+                    [
+                        'anno' => $anno,
+                        'mesenumero' => $meseRecall,
+                    ],
+                    [
+                        'mese' => Carbon::make('01-'.$meseRecall.'-'.$anno)->monthName,
+                        'telefonate' => $telefonateFatte,
+                        'appuntamenti' => $appuntamenti,
+                    ]
+                );
+            }
         }
 
         // -------------- Backup ---------- //

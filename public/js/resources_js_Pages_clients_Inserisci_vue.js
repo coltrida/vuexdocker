@@ -243,10 +243,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -425,6 +421,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     origineFonte: function origineFonte() {
       return this.newClient.marketing_id == 5 ? this.getMedici : this.getRecapiti;
+    },
+    verificaCampi: function verificaCampi() {
+      return this.newClient.nome != '' && this.newClient.nome != null && this.newClient.cognome != '' && this.newClient.cognome && this.newClient.indirizzo != '' && this.newClient.indirizzo && this.newClient.citta != '' && this.newClient.citta && this.newClient.cap != '' && this.newClient.cap && this.newClient.provincia != '' && this.newClient.provincia && this.newClient.telefono != '' && this.newClient.telefono && this.newClient.marketing_id != '' && this.newClient.marketing_id ? false : true;
     }
   })
 });
@@ -750,9 +749,7 @@ var render = function() {
                           "item-value": "id",
                           "item-text": "nome",
                           items: _vm.getTipologie,
-                          label: "tipo*",
-                          rules: _vm.tipoRules,
-                          required: ""
+                          label: "tipo"
                         },
                         model: {
                           value: _vm.newClient.tipologia_id,
@@ -834,10 +831,8 @@ var render = function() {
                                       _vm._b(
                                         {
                                           attrs: {
-                                            label: "Data di Nascita*",
-                                            "prepend-icon": "mdi-calendar",
-                                            rules: _vm.nascitaRules,
-                                            required: ""
+                                            label: "Data di Nascita",
+                                            "prepend-icon": "mdi-calendar"
                                           },
                                           model: {
                                             value: _vm.newClient.datanascita,
@@ -1078,7 +1073,7 @@ var render = function() {
               _c(
                 "v-btn",
                 {
-                  attrs: { color: "success", dark: "" },
+                  attrs: { color: "success", disabled: _vm.verificaCampi },
                   on: { click: _vm.aggiungiModifica }
                 },
                 [_vm._v("\n            " + _vm._s(_vm.nomeBtn) + "\n        ")]

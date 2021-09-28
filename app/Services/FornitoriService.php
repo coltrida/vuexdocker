@@ -17,7 +17,18 @@ class FornitoriService
 
     public function addFornitore($request)
     {
-        $fornitore = new Fornitore();
+        return Fornitore::create([
+            'nome' => trim(Str::upper($request['nome'])),
+            'indirizzo' => trim(Str::upper($request['indirizzo'])),
+            'citta' => trim(Str::upper($request['citta'])),
+            'telefono' => $request['telefono'],
+            'cap' => $request['cap'],
+            'email' => trim(Str::upper($request['email'])),
+            'pec' => trim(Str::upper($request['pec'])),
+            'univoco' => trim(Str::upper($request['univoco'])),
+            'provincia' => trim(Str::upper($request['provincia'])),
+        ]);
+        /*$fornitore = new Fornitore();
 
         $fornitore->nome = trim(Str::upper($request['nome']));
         $fornitore->indirizzo = trim(Str::upper($request['indirizzo']));
@@ -29,7 +40,7 @@ class FornitoriService
         $fornitore->univoco = trim(Str::upper($request['codunivoco']));
         $fornitore->provincia = trim(Str::upper($request['provincia']));
         $fornitore->save();
-        return $fornitore;
+        return $fornitore;*/
     }
 
     public function eliminaFornitore($id)

@@ -42,11 +42,17 @@ class RateService
 
     public function addRata($request)
     {
-        $new = new Ratefattura();
+        Ratefattura::create([
+            'importo' => $request->importo,
+            'fattura_id' => $request->fatturaId,
+            'note' => $request->note,
+        ]);
+
+        /*$new = new Ratefattura();
         $new->importo = $request->importo;
         $new->fattura_id = $request->fatturaId;
         $new->note = $request->note;
-        $new->save();
+        $new->save();*/
 
         $fattura = Fattura::find($request->fatturaId);
         $fattura->al_saldo -= $request->importo;

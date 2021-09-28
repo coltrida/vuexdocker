@@ -38,6 +38,7 @@ class Recapito extends Model
     use HasFactory;
 
     protected $table = 'recapitos';
+    protected $guarded = [];
 
     public function clients()
     {

@@ -40,12 +40,12 @@
                 quando: ['mattina', 'pomeriggio'],
                 headers1: [
                     { text: 'Nome', align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
-                    { text: 'Settimana', align: 'start', sortable: false, value: 'settimana', class: "indigo white--text" },
-                    { text: 'lun', width:220, align: 'start', sortable: false, value: 'lun', class: "indigo white--text" },
-                    { text: 'mar', width:220, align: 'start', sortable: false, value: 'mar', class: "indigo white--text" },
-                    { text: 'mer', width:220, align: 'start', sortable: false, value: 'mer', class: "indigo white--text" },
-                    { text: 'gio', width:220, align: 'start', sortable: false, value: 'gio', class: "indigo white--text" },
-                    { text: 'ven', width:220, align: 'start', sortable: false, value: 'ven', class: "indigo white--text" },
+                    { text: 'Settimana', align: 'center', sortable: false, value: 'settimana', class: "indigo white--text" },
+                    { text: 'lun', width:220, align: 'center', sortable: false, value: 'lun', class: "indigo white--text" },
+                    { text: 'mar', width:220, align: 'center', sortable: false, value: 'mar', class: "indigo white--text" },
+                    { text: 'mer', width:220, align: 'center', sortable: false, value: 'mer', class: "indigo white--text" },
+                    { text: 'gio', width:220, align: 'center', sortable: false, value: 'gio', class: "indigo white--text" },
+                    { text: 'ven', width:220, align: 'center', sortable: false, value: 'ven', class: "indigo white--text" },
                 ],
             }
         },

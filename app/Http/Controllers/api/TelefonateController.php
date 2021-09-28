@@ -64,4 +64,9 @@ class TelefonateController extends Controller
     {
         return TelefonateResource::collection($telefonateService->recallsByIdClient($idClient));
     }
+
+    public function statistiche(TelefonateService $telefonateService)
+    {
+        return $telefonateService->statistiche();
+    }
 }

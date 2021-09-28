@@ -17,15 +17,15 @@ class TipologiaSeeder extends Seeder
         Tipologia::insert([
             [
                 'nome' => 'PC',
-                'recall' => 6
+                'recall' => 240
             ],
             [
                 'nome' => 'CL',
-                'recall' => 12
+                'recall' => null
             ],
             [
                 'nome' => 'CLC',
-                'recall' => 12
+                'recall' => null
             ],
             [
                 'nome' => 'NORMO',

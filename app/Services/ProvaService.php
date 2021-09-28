@@ -30,7 +30,18 @@ class ProvaService
 
     public function nuova($request)
     {
-        $new = new Prova();
+        return Prova::create([
+            'user_id' => $request->user_id,
+            'client_id' => $request->client_id,
+            'marketing_id' => $request->marketing_id,
+            'filiale_id' => $request->filiale_id,
+            'stato_id' => 7,
+            'inizio_prova' => Carbon::now()->format('Y-m-d'),
+            'mese_inizio' => Carbon::now()->month,
+            'anno_inizio' => Carbon::now()->year,
+            'tipologia' => Client::with('tipologia')->find($request->client_id)->tipologia->nome == 'CL' ? 'Riacquisto' : 'Nuovo',
+        ]);
+        /*$new = new Prova();
         $new->user_id = $request->user_id;
         $new->client_id = $request->client_id;
         $new->marketing_id = $request->marketing_id;
@@ -41,19 +52,27 @@ class ProvaService
         $new->anno_inizio = Carbon::now()->year;
 
         $new->save();
-        return $new;
+        return $new;*/
     }
 
     public function addEle($request)
     {
-        $new = new ProductProva();
+        return ProductProva::create([
+            'prova_id' => $request->prova_id,
+            'product_id' => $request->product_id,
+            'orecchio' => $request->orecchio,
+            'prezzo' => $request->prezzo,
+            'prezzo_formattato' => '€ '.number_format( (float) $request->prezzo, '0', ',', '.'),
+        ]);
+
+        /*$new = new ProductProva();
         $new->prova_id = $request->prova_id;
         $new->product_id = $request->product_id;
         $new->orecchio = $request->orecchio;
         $new->prezzo = $request->prezzo;
 
         $new->save();
-        return $new;
+        return $new;*/
     }
 
     public function eliminaProdotto($id)
@@ -73,21 +92,37 @@ class ProvaService
         $mese = Carbon::now()->month;
         $anno = Carbon::now()->year;
 
-        $documento = new Documento();
+        $filename = 'CopiaComm'.$giorno.$mese.$anno.'.pdf';
+        Documento::create([
+            'client_id' => $prova->client->id,
+            'prova_id' => $prova->id,
+            'tipo' => 'copiaComm',
+            'link' => '/storage/documenti/'.$prova->client->id.'/'.$filename,
+        ]);
+
+        /*$documento = new Documento();
         $documento->client_id = $prova->client->id;
         $documento->prova_id = $prova->id;
         $documento->tipo = 'copiaComm';
         $filename = 'CopiaComm'.$giorno.$mese.$anno.'.pdf';
         $documento->link = '/storage/documenti/'.$prova->client->id.'/'.$filename;
-        $documento->save();
+        $documento->save();*/
 
-        $informativa = new Documento();
+        $filenameInformativa = 'Informativa'.$giorno.$mese.$anno.'.pdf';
+        Documento::create([
+            'client_id' => $prova->client->id,
+            'prova_id' => $prova->id,
+            'tipo' => 'informativa',
+            'link' => '/storage/documenti/'.$prova->client->id.'/'.$filenameInformativa,
+        ]);
+
+        /*$informativa = new Documento();
         $informativa->client_id = $prova->client->id;
         $informativa->prova_id = $prova->id;
         $informativa->tipo = 'informativa';
         $filenameInformativa = 'Informativa'.$giorno.$mese.$anno.'.pdf';
         $informativa->link = '/storage/documenti/'.$prova->client->id.'/'.$filenameInformativa;
-        $informativa->save();
+        $informativa->save();*/
 
         $provaSalvata = Prova::with('stato', 'user', 'product', 'client', 'copiaComm')->find($request->id);
 
@@ -105,14 +140,14 @@ class ProvaService
         broadcast(new ProveEvent($provaSalvata))->toOthers();
 
         $propieta = 'prova';
-        $log = new LoggingService();
+        $log = new LoggingService($request);
         $testo = $provaSalvata->user->name.' ha aperto una prova per il paziente '.$provaSalvata->client->cognome.' '.$provaSalvata->client->nome;
         $log->scriviLog($provaSalvata->client->cognome.' '.$provaSalvata->client->nome, $provaSalvata->user, $provaSalvata->user->name, $propieta, $testo);
 
         return $provaSalvata;
     }
 
-    public function reso($idProva)
+    public function reso($idProva, $request)
     {
         $prova = Prova::with('product', 'stato', 'user')->find($idProva);
         foreach ($prova->product as $item){
@@ -128,7 +163,7 @@ class ProvaService
         broadcast(new ProveEvent($provaSalvata))->toOthers();
 
         $propieta = 'prova';
-        $log = new LoggingService();
+        $log = new LoggingService($request);
         $testo = $prova->user->name.' ha reso la prova per il paziente '.$prova->client->cognome.' '.$prova->client->nome;
         $log->scriviLog($provaSalvata->client->cognome.' '.$provaSalvata->client->nome, $prova->user, $prova->user->name, $propieta, $testo);
 
@@ -150,7 +185,21 @@ class ProvaService
         $client->tipologia_id = 2;
         $client->save();
 
-        $fattura = new Fattura();
+        $fattura = Fattura::create([
+            'prova_id' => $prova->id,
+            'user_id' => $prova->user_id,
+            'data_fattura' => $prova->fine_prova,
+            'mese_fattura' => Carbon::now()->month,
+            'anno_fattura' => Carbon::now()->year,
+            'acconto' => $request->acconto,
+            'nr_rate' => $request->rate,
+            'tot_fattura' => $request->totFatturaReale,
+            'al_saldo' => (int)$request->totFatturaReale - (int)$request->acconto,
+            'saldata' => (int)$request->totFatturaReale - (int)$request->acconto === 0 ? true : false,
+            'data_saldo' => (int)$request->totFatturaReale - (int)$request->acconto === 0 ? Carbon::now() : null,
+        ]);
+
+        /*$fattura = new Fattura();
         $fattura->prova_id = $prova->id;
         $fattura->user_id = $prova->user_id;
         $fattura->data_fattura = $prova->fine_prova;
@@ -164,10 +213,16 @@ class ProvaService
             $fattura->saldata = true;
             $fattura->data_saldo = Carbon::now();
         }
-        $fattura->save();
+        $fattura->save();*/
 
         if ($request->acconto) {
-            $newRata = new Ratefattura();
+            Ratefattura::create([
+                'fattura_id' => $fattura->id,
+                'importo' => $request->acconto,
+                'note' => $request->acconto == $request->totFatturaReale ? 'Saldo' : 'Acconto'
+            ]);
+
+            /*$newRata = new Ratefattura();
             $newRata->fattura_id = $fattura->id;
             $newRata->importo = $request->acconto;
             if($request->acconto == $request->totFatturaReale){
@@ -175,7 +230,7 @@ class ProvaService
             } else {
                 $newRata->note = 'Acconto';
             }
-            $newRata->save();
+            $newRata->save();*/
 
             $fattura->ultima_rata = Carbon::now();
             $fattura->save();
@@ -194,6 +249,8 @@ class ProvaService
             ])->first();
 
             $tabellaPivot->prezzo = $prodotti[$item]['pivot']['prezzo'];
+            $tabellaPivot->prezzo_formattato =
+                '€ '.number_format( (float) $prodotti[$item]['pivot']['prezzo'], '0', ',', '.');
             $tabellaPivot->save();
         }
 
@@ -203,7 +260,7 @@ class ProvaService
         broadcast(new ProveEvent($provaFattura))->toOthers();
 
         $propieta = 'prova';
-        $log = new LoggingService();
+        $log = new LoggingService($request);
         $testo = $provaFattura->user->name.' ha fatturato la prova per il paziente '.$provaFattura->client->cognome.' '.$provaFattura->client->nome;
         $log->scriviLog($provaFattura->client->cognome.' '.$provaFattura->client->nome, $provaFattura->user, $provaFattura->user->name, $propieta, $testo);
 
@@ -221,11 +278,17 @@ class ProvaService
         $pdf->loadHTML(view('pdf.fattura', compact('fattura')))
             ->save("storage/fatture/2021/$fattura->id.pdf")
             ->save($link);
-        $documento = new Documento();
+        Documento::create([
+            'client_id' => $fattura->prova->client_id,
+            'tipo' => 'fattura',
+            'link' => '/'.$link,
+        ]);
+
+        /*$documento = new Documento();
         $documento->client_id = $fattura->prova->client_id;
         $documento->tipo = 'fattura';
         $documento->link = '/'.$link;
-        $documento->save();
+        $documento->save();*/
     }
 
     public function provePassate($idClient)

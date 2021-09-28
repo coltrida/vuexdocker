@@ -39,6 +39,7 @@ class Ddt extends Model
     use HasFactory;
 
     protected $table = 'ddts';
+    protected $guarded = [];
 
     public function filiale()
     {

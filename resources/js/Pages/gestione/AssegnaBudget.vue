@@ -98,6 +98,27 @@
                         mdi-pencil
                     </v-icon>
                 </template>
+
+                <template slot="body.append">
+                    <tr class="pink--text">
+                        <th class="title">Totali</th>
+                        <th class="title">{{ sumField('budget.budgetAnno') }}</th>
+                        <th class="title"></th>
+                        <th class="title"></th>
+                        <th class="title">{{ sumField('budget.gennaio') }}</th>
+                        <th class="title">{{ sumField('budget.febbraio') }}</th>
+                        <th class="title">{{ sumField('budget.marzo') }}</th>
+                        <th class="title">{{ sumField('budget.aprile') }}</th>
+                        <th class="title">{{ sumField('budget.maggio') }}</th>
+                        <th class="title">{{ sumField('budget.giugno') }}</th>
+                        <th class="title">{{ sumField('budget.luglio') }}</th>
+                        <th class="title">{{ sumField('budget.agosto') }}</th>
+                        <th class="title">{{ sumField('budget.settembre') }}</th>
+                        <th class="title">{{ sumField('budget.ottobre') }}</th>
+                        <th class="title">{{ sumField('budget.novembre') }}</th>
+                        <th class="title">{{ sumField('budget.dicembre') }}</th>
+                    </tr>
+                </template>
             </v-data-table>
 
         </div>
@@ -207,6 +228,10 @@
                 this.assegna.mese[10] = item.budget.ottobre;
                 this.assegna.mese[11] = item.budget.novembre;
                 this.assegna.mese[12] = item.budget.dicembre;
+            },
+
+            sumField(key) {
+                return this.getAudioConBgt.reduce((a, b) => parseInt(a) + (parseInt(b[key]) || 0), 0)
             }
         },
 

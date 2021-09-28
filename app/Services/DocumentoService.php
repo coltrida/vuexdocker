@@ -23,13 +23,18 @@ class DocumentoService
             $filename = $request->tipo.$mese.$anno.'.pdf';
             Storage::disk('public')->putFileAs('/documenti/'.$request->idClient.'/', $file, $filename);
 
-            $documento = new Documento();
+            return Documento::create([
+                'client_id' => $request->idClient,
+                'tipo' => $request->tipo,
+                'link' => '/storage/documenti/'.$request->idClient.'/'.$filename,
+            ]);
+
+            /*$documento = new Documento();
             $documento->client_id = $request->idClient;
             $documento->tipo = $request->tipo;
             $documento->link = '/storage/documenti/'.$request->idClient.'/'.$filename;
-            $documento->save();
+            $documento->save();*/
 
-            return $documento;
         }
     }
 

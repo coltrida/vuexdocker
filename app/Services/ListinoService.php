@@ -13,7 +13,9 @@ class ListinoService
 {
     public function listino()
     {
-        return Listino::with('categoria', 'filiale', 'fornitore:id,nome')->orderBy('fornitore_id')->orderBy('categoria_id')->get();
+        return Listino::with(['categoria', 'filiale' => function($f){
+            $f->orderBy('nome');
+        }, 'fornitore:id,nome'])->orderBy('fornitore_id')->orderBy('categoria_id')->get();
     }
 
     public function listinoFromFornitore($idFornitore)
@@ -29,16 +31,16 @@ class ListinoService
     public function inserisci($request)
     {
         //dd($request->idFiliale);
-        $listino = new Listino();
 
-        $listino->categoria_id = $request['categoria_id'];
-        $listino->nome = trim(Str::upper($request['nome']));
-        $listino->costo = trim($request['costo']);
-        $listino->giorniTempoDiReso = trim($request['giorniTempoDiReso']);
-        $listino->fornitore_id = $request['fornitore_id'];
-        $listino->prezzolistino = trim($request['prezzolistino']);
-        $listino->iva = trim($request['iva']);
-        $listino->save();
+        $listino = Listino::create([
+            'categoria_id' => $request['categoria_id'],
+            'nome' => trim(Str::upper($request['nome'])),
+            'costo' => $request['costo'],
+            'giorniTempoDiReso' => trim(Str::upper($request['giorniTempoDiReso'])),
+            'fornitore_id' => $request['fornitore_id'],
+            'prezzolistino' => trim(Str::upper($request['prezzolistino'])),
+            'iva' => $request['iva']
+        ]);
 
         for ($i=0; $i < count($request->soglie); $i++){
             if ($request->soglie[$i] != null){
@@ -51,7 +53,46 @@ class ListinoService
             $table->$type(str_replace(' ', '', $listino->nome))->default(0);
         });
 
-        return Listino::with('categoria', 'fornitore:id,nome')->find($listino->id);
+        return Listino::with(['categoria', 'filiale' => function($f){
+            $f->orderBy('nome');
+        }, 'fornitore:id,nome'])->find($listino->id);
+    }
+
+    public function modifica($request)
+    {
+        $listino = Listino::find($request['id']);
+        $vecchioNome = $listino->nome;
+        $nuovoNome = trim(Str::upper($request['nome']));
+        //dd($request);
+        $listino->categoria_id = $request['categoria_id'];
+        $listino->nome = $nuovoNome;
+        $listino->costo = $request['costo'];
+        $listino->giorniTempoDiReso = trim(Str::upper($request['giorniTempoDiReso']));
+        $listino->fornitore_id = $request['fornitore_id'];
+        $listino->prezzolistino = trim(Str::upper($request['prezzolistino']));
+        $listino->iva = $request['iva'];
+        $listino->save();
+
+       // $listino->filiale()->updateExistingPivot($request->idFiliali[$i], $request->soglie[$i]);
+
+        for ($i=0; $i < count($request->soglie); $i++){
+            if ($request->soglie[$i] != null){
+                $listino->filiale()->updateExistingPivot($request->idFiliali[$i], [
+                    'soglia' => $request->soglie[$i]
+                ]);
+            }
+        }
+
+        if ($vecchioNome != $nuovoNome){
+            Schema::table('ventaglios', function (Blueprint $table) use ($vecchioNome, $nuovoNome) {
+                $table->renameColumn($vecchioNome, $nuovoNome);
+            });
+        }
+        
+
+        return Listino::with(['categoria', 'filiale' => function($f){
+            $f->orderBy('nome');
+        }, 'fornitore:id,nome'])->find($listino->id);
     }
 
     public function rimuovi($id)

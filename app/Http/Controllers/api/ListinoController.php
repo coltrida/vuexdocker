@@ -17,7 +17,11 @@ class ListinoController extends Controller
     public function aggiungi(ListinoRequest $request, ListinoService $listinoService)
     {
         return new ListinoResource($listinoService->inserisci($request));
+    }
 
+    public function modifica(ListinoRequest $request, ListinoService $listinoService)
+    {
+        return new ListinoResource($listinoService->modifica($request));
     }
 
     public function elimina($id, ListinoService $listinoService)

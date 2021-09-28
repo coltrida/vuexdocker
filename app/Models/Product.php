@@ -61,6 +61,7 @@ use const LC_TIME;
 class Product extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function prova()
     {

@@ -148,7 +148,7 @@
                 </v-row>
 
                 <v-btn @click="inserisci" color="primary" class="my-2">
-                    Inserisci
+                    {{btnName}}
                 </v-btn>
                 </v-form>
 
@@ -167,6 +167,13 @@
                         >
                             mdi-delete
                         </v-icon>
+                        <v-icon
+                            color="blue"
+                            small
+                            @click="modifica(item)"
+                        >
+                            mdi-pencil
+                        </v-icon>
                     </template>
 
                 </v-data-table>
@@ -182,6 +189,7 @@
 
         data(){
             return {
+                modificaSwitch: false,
                 modal2: false,
                 valid: true,
                 giornoRules: [ v => !!v || 'il giorno è obbligatorio'],
@@ -225,6 +233,7 @@
             ...mapActions('appuntamenti', {
                 fetchAppuntamenti:'fetchAppuntamenti',
                 addAppuntamento:'addAppuntamento',
+                modificaAppuntamento:'modificaAppuntamento',
                 eliminaAppuntamento:'eliminaAppuntamento',
             }),
 
@@ -247,15 +256,29 @@
                 this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
                 this.newAppuntamento.client_id = this.appuntamentoClient.id;
 
-                this.addAppuntamento(this.newAppuntamento).then(() =>{
-                    this.$refs.form.resetValidation();
-                    this.newAppuntamento = {
-                        filiale_id:null,
-                        recapito_id:null,
-                        tipo:null,
-                        nota:null
-                    }
-                });
+                if (this.modificaSwitch){
+                    this.modificaAppuntamento(this.newAppuntamento).then(() =>{
+                        this.$refs.form.resetValidation();
+                        this.newAppuntamento = {
+                            filiale_id:null,
+                            recapito_id:null,
+                            tipo:null,
+                            nota:null
+                        }
+                    });
+                } else {
+                    this.addAppuntamento(this.newAppuntamento).then(() =>{
+                        this.$refs.form.resetValidation();
+                        this.newAppuntamento = {
+                            filiale_id:null,
+                            recapito_id:null,
+                            tipo:null,
+                            nota:null
+                        }
+                    });
+                }
+
+                this.modificaSwitch = false;
 
             },
 
@@ -265,6 +288,13 @@
                     idUser: this.getIdUser
                 };
                 this.eliminaAppuntamento(payload);
+            },
+
+            modifica(eleSelezionato){
+                this.modificaSwitch = true;
+                this.newAppuntamento = eleSelezionato;
+                this.newAppuntamento.giorno = eleSelezionato.giornoOriginale;
+                this.$store.commit('appuntamenti/eliminaAppuntamento', this.newAppuntamento.id);
             }
 
         },
@@ -286,6 +316,10 @@
             ...mapGetters('filiali', {
                 getFiliali: 'getFiliali',
             }),
+
+            btnName(){
+                return this.modificaSwitch ? 'modifica' : 'inserisci'
+            }
         }
 
     }

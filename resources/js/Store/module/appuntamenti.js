@@ -2,6 +2,7 @@ import help from "../../help";
 
 const state = () => ({
     appuntamenti: [],
+    appuntamentiOggi: [],
     appuntamentiDomani: [],
     dateSettimana: [],
     appLun: [],
@@ -14,6 +15,10 @@ const state = () => ({
 const getters = {
     getAppuntamenti(state){
         return state.appuntamenti;
+    },
+
+    getAppuntamentiOggi(state){
+        return state.appuntamentiOggi;
     },
 
     getAppuntamentiDomani(state){
@@ -62,7 +67,7 @@ const actions = {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('fetchAppuntamenti', response.data.data);
+        commit('fetchAppuntamentiOggi', response.data.data);
     },
 
     async prossimoLunedi({commit}, idAudio){
@@ -173,6 +178,15 @@ const actions = {
         commit('addAppuntamento', response.data.data);
     },
 
+    async modificaAppuntamento({commit}, payload){
+        const response = await axios.post(`${help().linkmodificaappuntamento}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('modificaAppuntamento', response.data.data);
+    },
+
     async eliminaAppuntamento({commit}, payload){
         await axios.delete(`${help().linkappuntamenti}`+'/'+payload.idAppuntamento+'/'+payload.idUser, {
             headers: {
@@ -271,11 +285,19 @@ const mutations = {
         state.appVen = payload;
     },
 
+    fetchAppuntamentiOggi(state, payload){
+        state.appuntamentiOggi = payload;
+    },
+
     fetchAppuntamentiDomani(state, payload){
         state.appuntamentiDomani = payload;
     },
 
     addAppuntamento(state, payload){
+        state.appuntamenti.unshift(payload);
+    },
+
+    modificaAppuntamento(state, payload){
         state.appuntamenti.unshift(payload);
     },
 

@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Client;
+use App\Models\Risultatitel;
 use App\Models\Telefonata;
 use App\Models\Tipologia;
 use App\Models\User;
@@ -47,7 +48,7 @@ class TelefonateService
     {
         $oggi = Carbon::now()->format('Y-m-d');
         return Client::with(['tipologia:id,nome',
-            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'recalls', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
             ->whereHas('recalls', function ($q) use($oggi){
@@ -126,24 +127,27 @@ class TelefonateService
     public function addTelefonata($request)
     {
         $client = Client::with('user')->find($request->clientId);
-        $prossimaTelefonata = new Telefonata();
-        $prossimaTelefonata->user_id = $client->user->id;
-        $prossimaTelefonata->client_id = $request->clientId;
-        $prossimaTelefonata->datarecall = $request->giorno;
-        $prossimaTelefonata->esito = $request->esito;
-        $prossimaTelefonata->note = $request->note;
-        $prossimaTelefonata->effettuata = $request->esito ? 1 : 0;
-        $prossimaTelefonata->created_at = Carbon::now()->format('Y-m-d');
-        $prossimaTelefonata->updated_at = Carbon::now()->format('Y-m-d');
-        $prossimaTelefonata->save();
+
+        $prossimaTelefonata = Telefonata::create([
+            'user_id' => $client->user->id,
+            'client_id' => $request->clientId,
+            'datarecall' => $request->giorno,
+            'mese' => Carbon::make($request->giorno)->month,
+            'anno' => Carbon::make($request->giorno)->year,
+            'esito' => $request->esito,
+            'note' => $request->note,
+            'effettuata' => $request->esito ? 1 : 0,
+            'created_at' => Carbon::now()->format('Y-m-d'),
+            'updated_at' => Carbon::now()->format('Y-m-d'),
+        ]);
 
         $utente = User::find($request->userId);
         $log = new LoggingService();
         $propieta = 'recall';
         if($request->esito){
-            $testo = $utente->name.' ha telefonato a '.$client->cognome.' '.$client->nome.' con esito: '.$request->esito;
+            $testo = $utente->name.' ha telefonato a '.$client->cognome.' '.$client->nome.' ( '.$client->user->name.' ) con esito: '.$request->esito;
         }else{
-            $testo = $utente->name.' ha inserito la telefonata da fare per '.$client->cognome.' '.$client->nome;
+            $testo = $utente->name.' ha inserito la telefonata da fare per '.$client->cognome.' '.$client->nome.' ( '.$client->user->name.' )';
         }
         $log->scriviLog($client->cognome.' '.$client->nome, $utente, $utente->name, $propieta, $testo);
 
@@ -168,6 +172,11 @@ class TelefonateService
         $log->scriviLog($telefonata->client->cognome.' '.$telefonata->client->nome, $utente, $utente->name, $propieta, $testo);
 
         return $telefonata;
+    }
+
+    public function statistiche()
+    {
+        return Risultatitel::orderBy('anno')->orderBy('mesenumero')->get();
     }
 
 }

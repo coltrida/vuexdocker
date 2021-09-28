@@ -26,6 +26,7 @@ class AppuntamentiResource extends JsonResource
             'provincia' => $this->client->provincia,
             'telefono' => $this->client->telefono,
             'giorno' => Carbon::make($this->giorno)->format('d-m-Y'),
+            'giornoOriginale' => $this->giorno,
             'orario' => Str::substr($this->orario, 0, 5),
             'luogo' => $this->filiale_id ? $this->filiale->nome : $this->recapito->nome,
             'nota' => $this->nota,

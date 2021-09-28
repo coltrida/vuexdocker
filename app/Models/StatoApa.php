@@ -26,4 +26,5 @@ class StatoApa extends Model
     use HasFactory;
 
     protected $table = 'stato_apas';
+    protected $guarded = [];
 }

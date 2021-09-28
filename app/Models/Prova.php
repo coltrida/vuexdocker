@@ -65,7 +65,8 @@ class Prova extends Model
     use HasFactory;
 
     protected $table = 'provas';
-    protected $appends = ['tot_formattato'];
+    protected $guarded = [];
+    protected $appends = ['tot_formattato', 'fine_formattata'];
 
     public function user()
     {
@@ -95,7 +96,7 @@ class Prova extends Model
     public function product()
     {
         return $this->belongsToMany(Product::class, 'product_prova', 'prova_id', 'product_id')
-            ->withPivot('prezzo')->with('listino');
+            ->withPivot('prezzo','prezzo_formattato')->with('listino');
     }
 
     public function fattura()
@@ -111,6 +112,11 @@ class Prova extends Model
     public function getTotFormattatoAttribute()
     {
         return $this->tot ? '€ '.number_format( (float) $this->tot, '0', ',', '.') : null;
+    }
+
+    public function getFineFormattataAttribute()
+    {
+        return $this->fine_prova ? Carbon::make($this->fine_prova)->format('d-m-Y') : null;
     }
 
     public function getGiorniInProvaAttribute()

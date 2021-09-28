@@ -136,6 +136,36 @@ class AppuntamentiService
 
     }
 
+    public function modificaAppuntamento($request)
+    {
+        $appuntamento = Appuntamento::find($request->id);
+
+        $appuntamento->giorno = $request->giorno;
+        $appuntamento->orario = $request->orario;
+        $appuntamento->nota = $request->nota;
+        $appuntamento->tipo = $request->tipo;
+        $appuntamento->client_id = $request->client_id;
+        $appuntamento->user_id = $request->user_id;
+        $appuntamento->filiale_id = $request->filiale_id;
+        $appuntamento->recapito_id = $request->recapito_id;
+        $appuntamento->save();
+
+        $dove = $request->filiale_id ? 'Filiale di '.Filiale::find($request->filiale_id)->nome : 'Recapito '.Recapito::find($request->recapito_id)->nome;
+        $utente = User::find($request->user_id);
+        $cliente = Client::find($request->client_id);
+        $propieta = 'appuntamento';
+        $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$request->giorno.' alle ore '.$request->orario.' presso '.$dove;
+
+        $log = new LoggingService();
+        $log->scriviLog($cliente->cognome.' '.$cliente->nome, $utente, $utente->name, $propieta, $testo);
+
+        if ($cliente->mail){
+            Mail::to($cliente->mail)->send(new \App\Mail\Appuntamento($cliente, $appuntamento));
+        }
+
+        return Appuntamento::with('filiale', 'recapito', 'client')->find($appuntamento->id);
+    }
+
     public function eliminaAppuntamento($id, $idUser)
     {
         $utente = User::find($idUser);

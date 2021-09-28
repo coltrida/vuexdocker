@@ -18,7 +18,7 @@
                 <v-row v-for="item in prodotti" :key="item.id">
                     <v-col>{{item.matricola}}</v-col>
                     <v-col>{{item.listino.nome}}</v-col>
-                    <v-col>{{item.pivot.prezzo}}</v-col>
+                    <v-col>{{item.pivot.prezzo_formattato}}</v-col>
                 </v-row>
             </v-card-text>
 

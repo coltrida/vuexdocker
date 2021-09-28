@@ -98,12 +98,18 @@ class ProductService
     {
         $prodotti = [];
         for($i=1; $i <= $request->quantita; $i++){
-            $prodotto = new Product();
+            $prodotto = Product::create([
+                'stato_id' => $request->stato_id,
+                'filiale_id' => $request->filiale_id,
+                'listino_id' => $request->listino_id,
+                'fornitore_id' => $request->fornitore_id,
+            ]);
+            /*$prodotto = new Product();
             $prodotto->stato_id = $request->stato_id;
             $prodotto->filiale_id = $request->filiale_id;
             $prodotto->listino_id = $request->listino_id;
             $prodotto->fornitore_id = $request->fornitore_id;
-            $prodotto->save();
+            $prodotto->save();*/
             array_push($prodotti, $prodotto);
         }
         broadcast(new LogisticaEvent($prodotti))->toOthers();
@@ -125,15 +131,24 @@ class ProductService
 
     public function creaDDT($request)
     {
-        $nuovoDDT = new Ddt();
+      //  $nuovoDDT = new Ddt();
         $filiale = Filiale::find($request['filiale_id']);
-        $nuovoDDT->filiale_id = $request['filiale_id'];
+
+        $nuovoDDT = Ddt::create([
+            'filiale_id' => $request['filiale_id'],
+            'nome_destinazione' => 'Centro Udito '.$filiale->citta,
+            'indirizzo_destinazione' => $request['filiale_id'],
+            'citta_destinazione' => $filiale->citta,
+            'cap_destinazione' => $filiale->cap,
+            'provincia_destinazione' => $filiale->provincia,
+        ]);
+        /*$nuovoDDT->filiale_id = $request['filiale_id'];
         $nuovoDDT->nome_destinazione = 'Centro Udito '.$filiale->citta;
         $nuovoDDT->indirizzo_destinazione = $filiale->indirizzo;
         $nuovoDDT->citta_destinazione = $filiale->citta;
         $nuovoDDT->cap_destinazione = $filiale->cap;
         $nuovoDDT->provincia_destinazione = $filiale->provincia;
-        $nuovoDDT->save();
+        $nuovoDDT->save();*/
 
         return $nuovoDDT->id;
     }

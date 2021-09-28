@@ -26,11 +26,16 @@ class TipologiaService
 
     public function aggiungi($request)
     {
-        $new = new Tipologia();
+        return Tipologia::create([
+            'nome' => trim(Str::upper($request->nome)),
+            'recall' => $request->recall,
+        ]);
+
+        /*$new = new Tipologia();
         $new->nome = trim(Str::upper($request->nome));
         $new->recall = $request->recall;
         $new->save();
-        return $new;
+        return $new;*/
     }
 
     public function elimina($id)

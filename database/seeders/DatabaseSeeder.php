@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             BudgetSeeder::class,
             ProductSeeder::class,
             TipologiaSeeder::class,
-     //       AgendaSeeder::class,
+            AgendaSeeder::class,
             FilialeListinoSeeder::class,
    //         AppuntamentoSeeder::class
    //         ProvaSeeder::class,

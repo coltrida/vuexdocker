@@ -17,10 +17,13 @@ class RuoloService
 
     public function aggiungi($request)
     {
-        $new = new Ruolo();
+        return Ruolo::create([
+            'nome' => trim(Str::upper($request->nome))
+        ]);
+        /*$new = new Ruolo();
         $new->nome = trim(Str::upper($request->nome));
         $new->save();
-        return $new;
+        return $new;*/
     }
 
     public function elimina($id)

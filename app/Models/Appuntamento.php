@@ -46,6 +46,7 @@ class Appuntamento extends Model
     use HasFactory;
 
     protected $table = 'appuntamentos';
+    protected $guarded = [];
 
     public function getCalcologiornoAttribute()
     {

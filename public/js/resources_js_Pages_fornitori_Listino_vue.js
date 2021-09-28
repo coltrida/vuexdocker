@@ -162,124 +162,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -289,6 +171,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      modificaSwitch: false,
       soglieSelezione: [],
       dialogSoglie: false,
       search: '',
@@ -349,7 +232,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('listino', {
     fetchListino: 'fetchListino',
     addListino: 'addListino',
-    eliminaListino: 'eliminaListino'
+    eliminaListino: 'eliminaListino',
+    modificaListino: 'modificaListino'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('categorie', {
@@ -360,21 +244,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     aggiungi: function aggiungi() {
       var _this2 = this;
 
-      this.addListino(this.listino).then(function () {
-        _this2.listino = {
-          nome: '',
-          fornitore_id: '',
-          categoria_id: '',
-          costo: '',
-          prezzolistino: '',
-          iva: '',
-          giorniTempoDiReso: '',
-          soglie: []
-        };
-      });
+      if (this.modificaSwitch) {
+        this.modificaListino(this.listino).then(function () {
+          _this2.listino = {
+            nome: '',
+            fornitore_id: '',
+            categoria_id: '',
+            costo: '',
+            prezzolistino: '',
+            iva: '',
+            giorniTempoDiReso: '',
+            soglie: []
+          };
+        });
+      } else {
+        this.addListino(this.listino).then(function () {
+          _this2.listino = {
+            nome: '',
+            fornitore_id: '',
+            categoria_id: '',
+            costo: '',
+            prezzolistino: '',
+            iva: '',
+            giorniTempoDiReso: '',
+            soglie: []
+          };
+        });
+      }
+
+      this.modificaSwitch = false;
     },
     elimina: function elimina(id) {
       this.eliminaListino(id);
+    },
+    modifica: function modifica(eleSelezionato) {
+      this.modificaSwitch = true;
+      this.listino.id = eleSelezionato.id;
+      this.listino.nome = eleSelezionato.nome;
+      this.listino.fornitore_id = eleSelezionato.fornitore_id;
+      this.listino.categoria_id = eleSelezionato.categoria_id;
+      this.listino.costo = eleSelezionato.costoOriginal;
+      this.listino.prezzolistino = eleSelezionato.prezzoOriginal;
+      this.listino.iva = eleSelezionato.ivaOriginal;
+      this.listino.giorniTempoDiReso = eleSelezionato.giorniTempoDiReso;
+
+      for (var i = 1; i <= eleSelezionato.filiale.length; i++) {
+        this.listino.soglie[i - 1] = eleSelezionato.filiale[i - 1].pivot.soglia;
+      }
+
+      console.log(eleSelezionato);
+      this.$store.commit('listino/eliminaListino', this.listino.id);
     },
     seleziona: function seleziona(items) {
       this.dialogSoglie = true;
@@ -385,7 +304,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.soglieSelezione = [];
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('listino', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('listino', {
     getListino: 'getListino'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('fornitori', {
     getFornitori: 'getFornitori'
@@ -393,7 +312,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getCategorie: 'getCategorie'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('filiali', {
     getFiliali: 'getFiliali'
-  }))
+  })), {}, {
+    btnName: function btnName() {
+      return this.modificaSwitch ? 'modifica' : 'inserisci';
+    }
+  })
 });
 
 /***/ }),
@@ -708,7 +631,7 @@ var render = function() {
                                         ),
                                         [
                                           _vm._v(
-                                            "\n                                    mdi-delete\n                                "
+                                            "\n                                mdi-delete\n                            "
                                           )
                                         ]
                                       )
@@ -741,7 +664,7 @@ var render = function() {
                                           _vm._b(
                                             {
                                               attrs: {
-                                                color: "blue",
+                                                color: "green",
                                                 small: ""
                                               },
                                               on: {
@@ -760,7 +683,57 @@ var render = function() {
                                         ),
                                         [
                                           _vm._v(
-                                            "\n                                    mdi-eye\n                                "
+                                            "\n                                mdi-eye\n                            "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [_vm._v(" "), _c("span", [_vm._v("Soglie Minime")])]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-tooltip",
+                          {
+                            attrs: { bottom: "" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    var attrs = ref.attrs
+                                    return [
+                                      _c(
+                                        "v-icon",
+                                        _vm._g(
+                                          _vm._b(
+                                            {
+                                              attrs: {
+                                                color: "blue",
+                                                small: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.modifica(item)
+                                                }
+                                              }
+                                            },
+                                            "v-icon",
+                                            attrs,
+                                            false
+                                          ),
+                                          on
+                                        ),
+                                        [
+                                          _vm._v(
+                                            "\n                                mdi-pencil\n                            "
                                           )
                                         ]
                                       )
@@ -929,7 +902,13 @@ var render = function() {
                   attrs: { dark: "", color: "indigo" },
                   on: { click: _vm.aggiungi }
                 },
-                [_vm._v("\n                    Inserisci\n                ")]
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.btnName) +
+                      "\n            "
+                  )
+                ]
               )
             ],
             1

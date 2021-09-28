@@ -63,6 +63,7 @@ class Fattura extends Model
     use HasFactory;
 
     protected $table = 'fatturas';
+    protected $guarded = [];
 
     public function rate()
     {

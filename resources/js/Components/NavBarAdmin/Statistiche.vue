@@ -35,6 +35,7 @@
                 { title: 'Ing. Recapiti', link: 'ingressiRecapiti' },
                 { title: 'Ventaglio Prodotti', link: 'ventaglioProdotti' },
                 { title: 'Medici', link: 'statisticheMedici' },
+                { title: 'Call Center', link: 'statisticheCallcenter' },
             ],
         }),
     }

@@ -28,4 +28,5 @@ class Tipologia extends Model
     use HasFactory;
 
     protected $table = 'tipologias';
+    protected $guarded = [];
 }

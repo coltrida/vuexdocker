@@ -27,7 +27,7 @@ class ClientResource extends JsonResource
             'telefono' => $this->telefono,
             'telefono2' => $this->telefono2,
             'telefono3' => $this->telefono3,
-            'tipologia' => $this->tipologia->nome,
+            'tipologia' => $this->tipologia_id ? $this->tipologia->nome : null,
             'tipologia_id' => $this->tipologia_id,
             'marketing' => isset($this->marketing->name) ? $this->marketing->name : null,
             'marketing_id' => $this->marketing_id,

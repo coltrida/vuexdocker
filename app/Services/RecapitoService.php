@@ -30,14 +30,22 @@ class RecapitoService
 
     public function aggiungi($request)
     {
-        $new = new Recapito();
+        return Recapito::create([
+            'nome' => trim(Str::upper($request->nome)),
+            'indirizzo' => trim(Str::upper($request->indirizzo)),
+            'citta' => trim(Str::upper($request->citta)),
+            'user_id' => $request->user_id,
+            'provincia' => trim(Str::upper($request->provincia)),
+        ]);
+
+        /*$new = new Recapito();
         $new->nome = trim(Str::upper($request->nome));
         $new->indirizzo = trim(Str::upper($request->indirizzo));
         $new->citta = trim(Str::upper($request->citta));
         $new->user_id = $request->user_id;
         $new->provincia = trim(Str::upper($request->provincia));
         $new->save();
-        return $new;
+        return $new;*/
     }
 
     public function elimina($id)

@@ -167,7 +167,7 @@
                     <div>
                         <v-data-table
                             :headers="headers4"
-                            :items="getAppuntamenti"
+                            :items="getAppuntamentiOggi"
                             class="elevation-1 mt-3"
                             hide-default-footer
                         >
@@ -232,17 +232,17 @@
                 expanded: [],
                 headers1: [
                     {text: 'Nome', width:170, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:80,  value: 'tot_formattato', sortable: false, class: "indigo white--text"},
-                    {text: 'GG in prova', width:120, value: 'giorni_prova', sortable: false, class: "indigo white--text"},
-                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
+                    {text: 'Tot', width:80, align: 'center', value: 'tot_formattato', sortable: false, class: "indigo white--text"},
+                    {text: 'GG in prova', align: 'center', width:120, value: 'giorni_prova', sortable: false, class: "indigo white--text"},
+                    { text: 'Actions', align: 'center', value: 'actions', sortable: false, class: "indigo white--text" },
                     /*{text: 'budget', value:'product', sortable: false, class: "indigo white--text"},*/
                 ],
 
                 headers2: [
                     {text: 'Nome', width:170, value: 'client.fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Tot', width:80, value: 'tot_formattato', sortable: false, class: "indigo white--text"},
-                    {text: 'Finalizzato', width:120, value: 'fine_prova', sortable: false, class: "indigo white--text"},
-                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
+                    {text: 'Tot', align: 'center', width:80, value: 'tot_formattato', sortable: false, class: "indigo white--text"},
+                    {text: 'Finalizzato', align: 'center', width:120, value: 'fine_formattata', sortable: false, class: "indigo white--text"},
+                    { text: 'Actions', align: 'center', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
 
                 headers3: [
@@ -312,7 +312,7 @@
             }),
 
             ...mapGetters('appuntamenti', {
-                getAppuntamenti: 'getAppuntamenti',
+                getAppuntamentiOggi: 'getAppuntamentiOggi',
                 getAppuntamentiDomani: 'getAppuntamentiDomani',
             }),
 

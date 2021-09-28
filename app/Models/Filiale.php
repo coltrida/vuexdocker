@@ -51,6 +51,7 @@ class Filiale extends Model
     use HasFactory;
 
     protected $table = 'filiales';
+    protected $guarded = [];
 
     public function users()
     {

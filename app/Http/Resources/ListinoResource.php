@@ -19,10 +19,15 @@ class ListinoResource extends JsonResource
             'id' => $this->id,
             'nome' => $this->nome,
             'fornitore' => $this->fornitore->nome,
+            'fornitore_id' => $this->fornitore_id,
             'categoria' => $this->categoria->nome,
+            'categoria_id' => $this->categoria_id,
             'costo' => '€ '.number_format($this->costo, 0, ',', '.'),
+            'costoOriginal' => $this->costo,
             'prezzolistino' => '€ '.number_format($this->prezzolistino, 0, ',', '.'),
+            'prezzoOriginal' => $this->prezzolistino,
             'iva' => $this->iva.' %',
+            'ivaOriginal' => $this->iva,
             'giorniTempoDiReso' => $this->giorniTempoDiReso,
             'filiale' => $this->filiale
         ];

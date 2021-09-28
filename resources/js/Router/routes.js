@@ -41,6 +41,7 @@ const routes = [
     { path: '/backup', component: () => import('../Pages/gestione/Backup'), name: 'backup' },
     { path: '/restore', component: () => import('../Pages/gestione/Restore'), name: 'restore' },
     { path: '/riepilogoClienti', component: () => import('../Pages/clients/Riepilogo'), name: 'riepilogoClienti' },
+    { path: '/statisticheCallcenter', component: () => import('../Pages/statistiche/Callcenter'), name: 'statisticheCallcenter' },
 ];
 
 export default routes;

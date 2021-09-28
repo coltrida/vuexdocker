@@ -11,16 +11,23 @@ use Storage;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\DbDumper\Databases\MySql;
 
-class LoggingService extends BaseService
+class LoggingService
 {
     public function scriviLog($oggetto, $soggetto, $nomeSoggetto, $propieta, $testo)
     {
-        $log = (new Activitylog())->on($this->nomeDB);
+        Activitylog::create([
+            'description' => $testo,
+            'log_name' => $propieta,
+            'event' => $oggetto,
+            'subject_type' => $nomeSoggetto,
+        ]);
+
+        /*$log = (new Activitylog())->on($this->nomeDB);
         $log->description = $testo;
         $log->log_name = $propieta;
         $log->event = $oggetto;
         $log->subject_type = $nomeSoggetto;
-        $log->save();
+        $log->save();*/
 
         /*activity()
             ->performedOn($oggetto)
@@ -34,7 +41,7 @@ class LoggingService extends BaseService
 
     public function lista()
     {
-        return Activitylog::on($this->nomeDB)->latest()->get();
+        return Activitylog::latest()->get();
     }
 
     public function backup()

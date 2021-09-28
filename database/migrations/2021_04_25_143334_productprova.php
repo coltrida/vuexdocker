@@ -19,6 +19,7 @@ class Productprova extends Migration
             $table->bigInteger('product_id')->unsigned();
             $table->string('orecchio')->nullable();
             $table->string('prezzo')->nullable();
+            $table->string('prezzo_formattato')->nullable();
             $table->timestamps();
         });
     }

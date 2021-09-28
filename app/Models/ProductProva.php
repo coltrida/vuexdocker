@@ -33,15 +33,11 @@ class ProductProva extends Model
     use HasFactory;
 
     protected $table = 'product_prova';
-    protected $appends = ['prezzo_formattato'];
+    protected $guarded = [];
 
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function getPrezzoFormattatoAttribute()
-    {
-        return $this->prezzo ? '€ '.number_format( (float) $this->prezzo, '0', ',', '.') : null;
-    }
 }

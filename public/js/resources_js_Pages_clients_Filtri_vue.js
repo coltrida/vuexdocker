@@ -252,11 +252,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Appuntamento",
   data: function data() {
     return {
+      modificaSwitch: false,
       modal2: false,
       valid: true,
       giornoRules: [function (v) {
@@ -324,6 +332,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
     fetchAppuntamenti: 'fetchAppuntamenti',
     addAppuntamento: 'addAppuntamento',
+    modificaAppuntamento: 'modificaAppuntamento',
     eliminaAppuntamento: 'eliminaAppuntamento'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
     fetchRecapitiByAudio: 'fetchRecapitiByAudio',
@@ -341,16 +350,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs.form.validate();
       this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
       this.newAppuntamento.client_id = this.appuntamentoClient.id;
-      this.addAppuntamento(this.newAppuntamento).then(function () {
-        _this.$refs.form.resetValidation();
 
-        _this.newAppuntamento = {
-          filiale_id: null,
-          recapito_id: null,
-          tipo: null,
-          nota: null
-        };
-      });
+      if (this.modificaSwitch) {
+        this.modificaAppuntamento(this.newAppuntamento).then(function () {
+          _this.$refs.form.resetValidation();
+
+          _this.newAppuntamento = {
+            filiale_id: null,
+            recapito_id: null,
+            tipo: null,
+            nota: null
+          };
+        });
+      } else {
+        this.addAppuntamento(this.newAppuntamento).then(function () {
+          _this.$refs.form.resetValidation();
+
+          _this.newAppuntamento = {
+            filiale_id: null,
+            recapito_id: null,
+            tipo: null,
+            nota: null
+          };
+        });
+      }
+
+      this.modificaSwitch = false;
     },
     elimina: function elimina(id) {
       var payload = {
@@ -358,9 +383,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         idUser: this.getIdUser
       };
       this.eliminaAppuntamento(payload);
+    },
+    modifica: function modifica(eleSelezionato) {
+      this.modificaSwitch = true;
+      this.newAppuntamento = eleSelezionato;
+      this.newAppuntamento.giorno = eleSelezionato.giornoOriginale;
+      this.$store.commit('appuntamenti/eliminaAppuntamento', this.newAppuntamento.id);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
     getAppuntamenti: 'getAppuntamenti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getIdUser: 'getIdUser',
@@ -369,7 +400,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getRecapiti: 'getRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
     getFiliali: 'getFiliali'
-  }))
+  })), {}, {
+    btnName: function btnName() {
+      return this.modificaSwitch ? 'modifica' : 'inserisci';
+    }
+  })
 });
 
 /***/ }),
@@ -1586,6 +1621,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1956,6 +2013,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Docunenti",
@@ -1965,9 +2027,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       telefonata: {},
       telefonataDaAggiornare: {},
       menu: false,
-      tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Non Risponde', 'Richiamare', 'Non vuole essere richiamato', 'Deceduto'],
+      tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Non Risponde', 'Richiamare', 'Non vuole essere richiamato'],
       header: [{
-        text: 'Data',
+        text: 'Data Telefonata',
         width: 120,
         align: 'start',
         sortable: false,
@@ -2024,6 +2086,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this2.$emit('chiudiRecalls', _this2.recallsClient);
         }
       });
+    },
+    appuntamento: function appuntamento() {
+      this.telefonata = {};
+      this.$emit('chiudiRecalls', this.recallsClient);
     },
     cancella: function cancella() {
       this.$emit('chiudiRecalls', null);
@@ -42044,7 +42110,13 @@ var render = function() {
                       attrs: { color: "primary" },
                       on: { click: _vm.inserisci }
                     },
-                    [_vm._v("\n                Inserisci\n            ")]
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.btnName) +
+                          "\n            "
+                      )
+                    ]
                   )
                 ],
                 1
@@ -42076,6 +42148,23 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                        mdi-delete\n                    "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: { color: "blue", small: "" },
+                            on: {
+                              click: function($event) {
+                                return _vm.modifica(item)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-pencil\n                    "
                             )
                           ]
                         )
@@ -43704,6 +43793,63 @@ var render = function() {
                 },
                 scopedSlots: _vm._u([
                   {
+                    key: "item.stato.nome",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        item.stato.nome == "RESO"
+                          ? _c(
+                              "v-chip",
+                              {
+                                attrs: {
+                                  color: "red",
+                                  label: "",
+                                  "text-color": "white"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(item.stato.nome) +
+                                    "\n                            "
+                                )
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        item.stato.nome == "FATTURA"
+                          ? _c(
+                              "v-chip",
+                              {
+                                attrs: {
+                                  color: "green",
+                                  label: "",
+                                  "text-color": "white"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(item.stato.nome) +
+                                    "\n                            "
+                                )
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        item.stato.nome == "PROVA"
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(item.stato.nome) +
+                                  "\n                            "
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    }
+                  },
+                  {
                     key: "item.actions",
                     fn: function(ref) {
                       var item = ref.item
@@ -44339,6 +44485,35 @@ var render = function() {
                                   [
                                     _vm._v(
                                       "\n                            Aggiorna\n                        "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        item.esito == "Preso Appuntamento"
+                          ? _c(
+                              "div",
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      small: "",
+                                      color: "success",
+                                      dark: ""
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.appuntamento()
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            Vedi Appuntamento\n                        "
                                     )
                                   ]
                                 )

@@ -64,6 +64,7 @@ class Fatturati extends Model
 {
     use HasFactory;
     protected $table = 'fatturatis';
+    protected $guarded = [];
 
     public function user()
     {

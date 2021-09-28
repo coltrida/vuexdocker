@@ -39,6 +39,9 @@ class MarketingSeeder extends Seeder
             [
                 'name' => 'SOCIAL/WEB',
             ],
+            [
+                'name' => 'RIACQUISTO',
+            ],
         ]);
     }
 }

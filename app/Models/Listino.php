@@ -46,6 +46,7 @@ class Listino extends Model
     use HasFactory;
 
     protected $table = 'listinos';
+    protected $guarded = [];
 
     public function fornitore()
     {

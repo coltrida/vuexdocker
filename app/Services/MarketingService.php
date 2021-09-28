@@ -18,10 +18,13 @@ class MarketingService
 
     public function addCanale($request)
     {
-        $newCanale = new Marketing();
+        return Marketing::create([
+            'name' => trim(Str::upper($request->newCanale))
+        ]);
+        /*$newCanale = new Marketing();
         $newCanale->name = trim(Str::upper($request->newCanale));
         $newCanale->save();
-        return $newCanale;
+        return $newCanale;*/
     }
 
     public function eliminaCanale($id)

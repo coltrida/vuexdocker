@@ -23,7 +23,16 @@ class FilialeService
 
     public function aggiungi($request)
     {
-        $new = new Filiale();
+        return Filiale::create([
+            'nome' => trim(Str::upper($request->nome)),
+            'indirizzo' => trim(Str::upper($request->indirizzo)),
+            'citta' => trim(Str::upper($request->citta)),
+            'telefono' => $request->telefono,
+            'cap' => $request->cap,
+            'provincia' => trim(Str::upper($request->provincia)),
+        ]);
+
+        /*$new = new Filiale();
         $new->nome = trim(Str::upper($request->nome));
         $new->indirizzo = trim(Str::upper($request->indirizzo));
         $new->citta = trim(Str::upper($request->citta));
@@ -31,7 +40,7 @@ class FilialeService
         $new->cap = $request->cap;
         $new->provincia = trim(Str::upper($request->provincia));
         $new->save();
-        return $new;
+        return $new;*/
     }
 
     public function elimina($id)
@@ -52,17 +61,25 @@ class FilialeService
     public function aggiungiAssociazione($request)
     {
         foreach($request->Audio as $audio){
-            $associazione = new FilialeUser();
+            FilialeUser::create([
+                'user_id' => $audio['id'],
+                'filiale_id' => $request->idFiliale,
+            ]);
+            /*$associazione = new FilialeUser();
             $associazione->user_id = $audio['id'];
             $associazione->filiale_id = $request->idFiliale;
-            $associazione->save();
+            $associazione->save();*/
         }
 
         foreach($request->Amm as $amm){
-            $associazione = new FilialeUser();
+            FilialeUser::create([
+                'user_id' => $amm['id'],
+                'filiale_id' => $request->idFiliale,
+            ]);
+            /*$associazione = new FilialeUser();
             $associazione->user_id = $amm['id'];
             $associazione->filiale_id = $request->idFiliale;
-            $associazione->save();
+            $associazione->save();*/
         }
 
         return Filiale::with('users:id,name')->orderBy('nome')->get();

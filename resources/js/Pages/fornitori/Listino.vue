@@ -45,7 +45,7 @@
                             <template v-slot:activator="{ on, attrs }">
                                 <v-icon
                                     @click="seleziona(item.filiale)"
-                                    color="blue"
+                                    color="green"
                                     small
                                     v-bind="attrs"
                                     v-on="on"
@@ -56,19 +56,20 @@
                             <span>Soglie Minime</span>
                         </v-tooltip>
 
-                        <!--<v-tooltip bottom>
+                        <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-icon
                                     color="blue"
                                     small
+                                    @click="modifica(item)"
                                     v-bind="attrs"
                                     v-on="on"
                                 >
-                                    mdi-eye
+                                    mdi-pencil
                                 </v-icon>
                             </template>
                             <span>Soglie Minime</span>
-                        </v-tooltip>-->
+                        </v-tooltip>
                     </template>
                 </v-data-table>
             </v-col>
@@ -131,130 +132,11 @@
                     </v-list-item>
                 </v-list>
                 <v-btn @click="aggiungi" dark color="indigo">
-                    Inserisci
+                    {{btnName}}
                 </v-btn>
 
             </v-col>
         </v-row>
-<!--
-
-            <v-row>
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
-                    <v-text-field
-                        v-model="listino.nome"
-                        counter="25"
-                        hint="Massimo 25 caratteri"
-                        label="Nome Prodotto"
-                    ></v-text-field>
-                </v-col>
-
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
-                    <v-select
-                        v-model="listino.fornitore_id"
-                        item-value="id"
-                        item-text="nome"
-                        :items="getFornitori"
-                        label="fornitore"
-                    ></v-select>
-                </v-col>
-
-                <v-col
-                    cols="1"
-                    sm="1"
-                >
-                    <v-select
-                        v-model="listino.categoria_id"
-                        item-value="id"
-                        item-text="nome"
-                        :items="getCategorie"
-                        label="cat"
-                    ></v-select>
-                </v-col>
-
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
-                    <v-text-field
-                        v-model="listino.costo"
-                        counter="25"
-                        hint="Massimo 25 caratteri"
-                        label="costo"
-                    ></v-text-field>
-                </v-col>
-
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
-                    <v-text-field
-                        v-model="listino.prezzolistino"
-                        counter="25"
-                        hint="Massimo 25 caratteri"
-                        label="prezzo listino"
-                    ></v-text-field>
-                </v-col>
-
-                <v-col
-                    cols="1"
-                    sm="1"
-                >
-                    <v-text-field
-                        v-model="listino.iva"
-                        counter="25"
-                        label="iva"
-                    ></v-text-field>
-                </v-col>
-
-                <v-col
-                    cols="1"
-                    sm="1"
-                >
-                    <v-text-field
-                        v-model="listino.giorniTempoDiReso"
-                        counter="25"
-                        label="gg di reso"
-                    ></v-text-field>
-                </v-col>
-
-            </v-row>
-
-            <v-row class="align-center">
-                <v-col cols="3">
-                    <v-list>
-                        <v-list-item
-                            dense
-                            v-for="(item, index) in getFiliali"
-                            :key="item.id"
-                        >
-                            <v-list-item-content>
-                                <v-list-item-title >{{item.nome}}</v-list-item-title>
-                            </v-list-item-content>
-
-                            <v-list-item-avatar class="align-center">
-                                <v-text-field type="number" v-model="listino.soglie[index]"></v-text-field>
-                            </v-list-item-avatar>
-                        </v-list-item>
-                    </v-list>
-
-                </v-col>
-                <v-col>
-                    <v-btn @click="aggiungi" dark color="indigo">
-                        Inserisci
-                    </v-btn>
-                </v-col>
-            </v-row>
-
--->
-
-
-
     </div>
 
 </template>
@@ -268,6 +150,7 @@
         components: {Soglie},
         data(){
             return {
+                modificaSwitch: false,
                 soglieSelezione: [],
                 dialogSoglie: false,
                 search: '',
@@ -312,6 +195,7 @@
                 fetchListino:'fetchListino',
                 addListino:'addListino',
                 eliminaListino:'eliminaListino',
+                modificaListino:'modificaListino',
             }),
 
             ...mapActions('fornitori', {
@@ -327,23 +211,56 @@
             }),
 
             aggiungi(){
-                this.addListino(this.listino).then(() => {
-                    this.listino = {
-                        nome:'',
-                        fornitore_id:'',
-                        categoria_id:'',
-                        costo:'',
-                        prezzolistino:'',
-                        iva:'',
-                        giorniTempoDiReso:'',
-                        soglie:[],
-                    };
-                });
+                if (this.modificaSwitch){
+                    this.modificaListino(this.listino).then(() => {
+                        this.listino = {
+                            nome:'',
+                            fornitore_id:'',
+                            categoria_id:'',
+                            costo:'',
+                            prezzolistino:'',
+                            iva:'',
+                            giorniTempoDiReso:'',
+                            soglie:[],
+                        };
+                    });
+                } else {
+                    this.addListino(this.listino).then(() => {
+                        this.listino = {
+                            nome:'',
+                            fornitore_id:'',
+                            categoria_id:'',
+                            costo:'',
+                            prezzolistino:'',
+                            iva:'',
+                            giorniTempoDiReso:'',
+                            soglie:[],
+                        };
+                    });
+                }
 
+                this.modificaSwitch = false;
             },
 
             elimina(id){
                 this.eliminaListino(id)
+            },
+
+            modifica(eleSelezionato){
+                this.modificaSwitch = true;
+                this.listino.id = eleSelezionato.id;
+                this.listino.nome = eleSelezionato.nome;
+                this.listino.fornitore_id = eleSelezionato.fornitore_id;
+                this.listino.categoria_id = eleSelezionato.categoria_id;
+                this.listino.costo = eleSelezionato.costoOriginal;
+                this.listino.prezzolistino = eleSelezionato.prezzoOriginal;
+                this.listino.iva = eleSelezionato.ivaOriginal;
+                this.listino.giorniTempoDiReso = eleSelezionato.giorniTempoDiReso;
+                for(let i=1; i <= eleSelezionato.filiale.length; i++){
+                    this.listino.soglie[i-1] = eleSelezionato.filiale[i-1].pivot.soglia
+                }
+                console.log(eleSelezionato);
+                this.$store.commit('listino/eliminaListino', this.listino.id);
             },
 
             seleziona(items){
@@ -373,6 +290,10 @@
             ...mapGetters('filiali', {
                 getFiliali:'getFiliali',
             }),
+
+            btnName(){
+                return this.modificaSwitch ? 'modifica' : 'inserisci'
+            }
 
         },
     }

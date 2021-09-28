@@ -34,7 +34,8 @@ Route::get('/resetSpecial', function (){
     Artisan::call('db:seed');
 });
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+//Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group([], function () {
         // ---------------- user -------------------------
         Route::get('/audio', [UserController::class, 'audio']);
         Route::get('/userAgenda', [UserController::class, 'userAgenda']);
@@ -85,6 +86,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/listino', [ListinoController::class, 'index']);
         Route::delete('/listino/{id}', [ListinoController::class, 'elimina']);
         Route::post('/addListino', [ListinoController::class, 'aggiungi']);
+        Route::post('/modificaListino', [ListinoController::class, 'modifica']);
         Route::get('/listino/{idFornitore}', [ListinoController::class, 'productFromFornitore']);
         Route::get('/eleListino/{idListino}', [ListinoController::class, 'listinoFromId']);
         Route::get('/nomiApa', [ListinoController::class, 'nomiApa']);
@@ -181,6 +183,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/appuntamentiVenerdiProssimoAudio/{idAudio}', [AppuntamentiController::class, 'venerdiProssimo']);
         Route::delete('/appuntamentiCliente/{id}/{idUser}', [AppuntamentiController::class, 'elimina']);
         Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
+        Route::post('/modificaAppuntamento', [AppuntamentiController::class, 'modifica']);
         Route::get('/dateSettimana', [AppuntamentiController::class, 'dateSettimana']);
         Route::get('/dateSettimanaProssima', [AppuntamentiController::class, 'dateSettimanaProssima']);
 
@@ -189,8 +192,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/salvaFileXmlFromFiliale', [DocumentoController::class, 'salvaFileXmlFromFiliale']);
         Route::get('/caricaDocumenti/{idClient}', [DocumentoController::class, 'caricaDocumenti']);
         Route::delete('/eliminaDocumento/{idDocumento}', [DocumentoController::class, 'eliminaDocumento']);
-
-
 
         // ----------------- statistiche -----------------------
         Route::get('/dettaglioAudio', [UserController::class, 'dettaglioAudio']);
@@ -202,6 +203,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/ventaglioAnno', [UserController::class, 'ventaglioAnno']);
         Route::post('/statisticheInviiMedici', [DottoreController::class, 'statisticheInviiMedici']);
         Route::post('/statisticheTotaleInviiMedici', [DottoreController::class, 'statisticheTotaleInviiMedici']);
+        Route::get('/statisticheCallcenter', [TelefonateController::class, 'statistiche']);
 
         // ----------------- rate -----------------------
         Route::get('/clientiDaSaldare', [RateController::class, 'allClientiDaSaldare']);

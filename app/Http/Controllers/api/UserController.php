@@ -71,7 +71,8 @@ class UserController extends Controller
     public function situazioneMese(UserService $userService, $idAudio = '')
     {
         return $userService->situazioneMese($idAudio);
-     //   return SituazioneMeseResource::collection($userService->situazioneMese($idAudio));
+     //  return new SituazioneMeseResource($userService->situazioneMese($idAudio));
+     //  return SituazioneMeseResource::collection($userService->situazioneMese($idAudio));
     }
 
     public function dettaglioAudio(UserService $userService)

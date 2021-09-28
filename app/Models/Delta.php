@@ -59,4 +59,5 @@ class Delta extends Model
 {
     use HasFactory;
     protected $table = 'deltas';
+    protected $guarded = [];
 }

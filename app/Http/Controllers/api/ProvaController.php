@@ -31,9 +31,9 @@ class ProvaController extends Controller
         return $provaService->salvaProva($request);
     }
 
-    public function reso($idProva, ProvaService $provaService)
+    public function reso($idProva, Request $request, ProvaService $provaService)
     {
-        return $provaService->reso($idProva);
+        return $provaService->reso($idProva, $request);
     }
 
     public function salvaFattura(Request $request, ProvaService $provaService)

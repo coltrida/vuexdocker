@@ -509,6 +509,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Medici',
         link: 'statisticheMedici'
+      }, {
+        title: 'Call Center',
+        link: 'statisticheCallcenter'
       }]
     };
   }

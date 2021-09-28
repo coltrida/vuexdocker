@@ -32,12 +32,16 @@ class DottoreService
 
     public function aggiungi($request)
     {
-        $new = new Medico();
+        $new = Medico::create([
+            'nome' => trim(Str::upper($request->nome)). ' '.trim(Str::upper($request->cognome)),
+        ]);
+
+  /*      $new = new Medico();
         $nome = trim(Str::upper($request->nome));
         $cognome = trim(Str::upper($request->cognome));
         $new->nome = $cognome.' '.$nome;
       //  $new->user_id = $request->userId;
-        $new->save();
+        $new->save();*/
 
         $new->user()->attach($request->userId);
 
@@ -51,14 +55,21 @@ class DottoreService
 
     public function aggiungiOrario($request)
     {
-        $new = new OrarioMedico();
+        return OrarioMedico::create([
+            'medico_id' => $request->idDottore,
+            'dove' => $request->dove,
+            'giorno' => $request->giorno,
+            'orario' => $request->orario,
+        ]);
+
+        /*$new = new OrarioMedico();
         $new->medico_id = $request->idDottore;
         $new->dove = $request->dove;
         $new->giorno = $request->giorno;
         $new->orario = $request->orario;
         $new->save();
 
-        return $new;
+        return $new;*/
     }
 
     public function eliminaOrario($idOrario)

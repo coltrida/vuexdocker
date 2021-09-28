@@ -159,6 +159,28 @@
                             class="elevation-1 mt-5"
                             hide-default-footer
                         >
+                            <template v-slot:item.stato.nome="{ item }">
+                                <v-chip
+                                    v-if="item.stato.nome == 'RESO'"
+                                    color="red"
+                                    label
+                                    text-color="white"
+                                >
+                                    {{item.stato.nome}}
+                                </v-chip>
+                                <v-chip
+                                    v-if="item.stato.nome == 'FATTURA'"
+                                    color="green"
+                                    label
+                                    text-color="white"
+                                >
+                                    {{item.stato.nome}}
+                                </v-chip>
+                                <div v-if="item.stato.nome == 'PROVA'">
+                                    {{item.stato.nome}}
+                                </div>
+                            </template>
+
                             <template v-slot:item.actions="{ item }">
                                 <v-icon
                                     color="blue"

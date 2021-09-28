@@ -26,4 +26,5 @@ class Ruolo extends Model
     use HasFactory;
 
     protected $table = 'ruolos';
+    protected $guarded = [];
 }

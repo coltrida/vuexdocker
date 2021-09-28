@@ -142,7 +142,7 @@
                 headers1: [
                     {text: 'Actions', width: 70, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'Audio', width:180, value: 'user.name', sortable: false, class: "indigo white--text"},
-                    {text: 'Nome', width:240, value: 'nome', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:240, value: 'fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Telefono', width:120, value: 'telefono', sortable: false, class: "indigo white--text" },
                     {text: 'Indirizzo', width:220,  value: 'indirizzo', sortable: false, class: "indigo white--text"},
                     {text: 'Città', width:180,  value: 'citta', sortable: false, class: "indigo white--text"},

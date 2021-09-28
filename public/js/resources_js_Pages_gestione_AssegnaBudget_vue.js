@@ -124,6 +124,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -293,6 +314,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.assegna.mese[10] = item.budget.ottobre;
       this.assegna.mese[11] = item.budget.novembre;
       this.assegna.mese[12] = item.budget.dicembre;
+    },
+    sumField: function sumField(key) {
+      return this.getAudioConBgt.reduce(function (a, b) {
+        return parseInt(a) + (parseInt(b[key]) || 0);
+      }, 0);
     }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
@@ -632,47 +658,115 @@ var render = function() {
           _vm._v(" "),
           _c("h3", [_vm._v("Audioprotesisti Con Budget")]),
           _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers2,
-              items: _vm.getAudioConBgt,
-              "hide-default-footer": ""
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { color: "blue", small: "" },
-                        on: {
-                          click: function($event) {
-                            _vm.modifica(
-                              item,
-                              _vm.getAudioConBgt
-                                .map(function(x) {
-                                  return x.id
-                                })
-                                .indexOf(item.id)
-                            )
+          _c(
+            "v-data-table",
+            {
+              staticClass: "elevation-1 mt-3",
+              attrs: {
+                headers: _vm.headers2,
+                items: _vm.getAudioConBgt,
+                "hide-default-footer": ""
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "item.actions",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { color: "blue", small: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.modifica(
+                                item,
+                                _vm.getAudioConBgt
+                                  .map(function(x) {
+                                    return x.id
+                                  })
+                                  .indexOf(item.id)
+                              )
+                            }
                           }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    mdi-pencil\n                "
-                        )
-                      ]
-                    )
-                  ]
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-pencil\n                "
+                          )
+                        ]
+                      )
+                    ]
+                  }
                 }
-              }
-            ])
-          })
+              ])
+            },
+            [
+              _vm._v(" "),
+              _c("template", { slot: "body.append" }, [
+                _c("tr", { staticClass: "pink--text" }, [
+                  _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.budgetAnno")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.gennaio")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.febbraio")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.marzo")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.aprile")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.maggio")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.giugno")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.luglio")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.agosto")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.settembre")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.ottobre")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.novembre")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "title" }, [
+                    _vm._v(_vm._s(_vm.sumField("budget.dicembre")))
+                  ])
+                ])
+              ])
+            ],
+            2
+          )
         ],
         1
       )

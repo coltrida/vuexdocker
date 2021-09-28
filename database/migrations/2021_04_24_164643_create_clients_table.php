@@ -25,7 +25,7 @@ class CreateClientsTable extends Migration
             $table->string('telefono')->nullable();
             $table->string('telefono2')->nullable();
             $table->string('telefono3')->nullable();
-            $table->bigInteger('tipologia_id');
+            $table->bigInteger('tipologia_id')->nullable();
             $table->string('mail')->nullable();
             $table->date('datanascita')->nullable();
             $table->string('luogoNascita')->nullable();

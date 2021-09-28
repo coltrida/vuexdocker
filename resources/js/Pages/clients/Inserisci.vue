@@ -92,9 +92,7 @@
                         item-value="id"
                         item-text="nome"
                         :items="getTipologie"
-                        label="tipo*"
-                        :rules="tipoRules"
-                        required
+                        label="tipo"
                     ></v-select>
                 </v-col>
 
@@ -120,10 +118,8 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-text-field
                                 v-model="newClient.datanascita"
-                                label="Data di Nascita*"
+                                label="Data di Nascita"
                                 prepend-icon="mdi-calendar"
-                                :rules="nascitaRules"
-                                required
                                 v-bind="attrs"
                                 v-on="on"
                             ></v-text-field>
@@ -213,7 +209,7 @@
                 </v-col>
             </v-row>
 
-            <v-btn @click="aggiungiModifica" color="success" dark>
+            <v-btn @click="aggiungiModifica" color="success"  :disabled="verificaCampi">
                 {{nomeBtn}}
             </v-btn>
 
@@ -402,6 +398,17 @@
 
             origineFonte(){
                 return this.newClient.marketing_id == 5 ? this.getMedici : this.getRecapiti;
+            },
+
+            verificaCampi(){
+                return this.newClient.nome != '' && this.newClient.nome != null
+                    && this.newClient.cognome != '' && this.newClient.cognome
+                    && this.newClient.indirizzo != '' && this.newClient.indirizzo
+                    && this.newClient.citta != '' && this.newClient.citta
+                    && this.newClient.cap != '' && this.newClient.cap
+                    && this.newClient.provincia != '' && this.newClient.provincia
+                    && this.newClient.telefono != '' && this.newClient.telefono
+                    && this.newClient.marketing_id != '' && this.newClient.marketing_id ? false : true;
             }
         },
     }

@@ -70,42 +70,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Settimana',
-        align: 'start',
+        align: 'center',
         sortable: false,
         value: 'settimana',
         "class": "indigo white--text"
       }, {
         text: 'lun',
         width: 220,
-        align: 'start',
+        align: 'center',
         sortable: false,
         value: 'lun',
         "class": "indigo white--text"
       }, {
         text: 'mar',
         width: 220,
-        align: 'start',
+        align: 'center',
         sortable: false,
         value: 'mar',
         "class": "indigo white--text"
       }, {
         text: 'mer',
         width: 220,
-        align: 'start',
+        align: 'center',
         sortable: false,
         value: 'mer',
         "class": "indigo white--text"
       }, {
         text: 'gio',
         width: 220,
-        align: 'start',
+        align: 'center',
         sortable: false,
         value: 'gio',
         "class": "indigo white--text"
       }, {
         text: 'ven',
         width: 220,
-        align: 'start',
+        align: 'center',
         sortable: false,
         value: 'ven',
         "class": "indigo white--text"

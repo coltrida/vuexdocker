@@ -19,6 +19,7 @@ const help = () => {
         linklistino: base+'listino',
         linkelelistino: base+'eleListino',
         linkaddlistino: base+'addListino',
+        linkmodificalistino: base+'modificaListino',
         linkcategorie: base+'categorie',
         linkaddcategoria: base+'addCategoria',
         linkruoli: base+'ruoli',
@@ -67,6 +68,7 @@ const help = () => {
         linkproductrimuovirichiesta: base+'productRimuoviRichiesta',
         linkappuntamenti: base+'appuntamentiCliente',
         linkaddappuntamento: base+'addAppuntamento',
+        linkmodificaappuntamento: base+'modificaAppuntamento',
         linkcompleanni: base+'compleanni',
         linkappuntamentioggi: base+'appuntamentiOggiAudio',
         linkappuntamentidomani: base+'appuntamentiDomaniAudio',
@@ -144,6 +146,7 @@ const help = () => {
         linkmodificafornitore: base+'modificaFornitore',
         linkuserinfodatabase: base+'infoDatabase',
         linkswitchdatabase: base+'switchSimulazione',
+        linkstatistichetelefonate: base+'statisticheCallcenter',
     };
 };
 export default help;

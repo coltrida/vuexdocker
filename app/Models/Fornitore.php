@@ -46,6 +46,7 @@ class Fornitore extends Model
     use HasFactory;
 
     protected $table = 'fornitores';
+    protected $guarded = [];
 
     public function listino()
     {

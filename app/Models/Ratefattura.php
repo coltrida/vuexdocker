@@ -30,5 +30,6 @@ class Ratefattura extends Model
     use HasFactory;
 
     protected $table = 'ratefatturas';
+    protected $guarded = [];
 
 }

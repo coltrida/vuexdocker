@@ -117,6 +117,7 @@ use function config;
 class User extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
+    protected $guarded = [];
 
     /**
      * The attributes that are mass assignable.

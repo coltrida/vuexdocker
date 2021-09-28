@@ -34,10 +34,10 @@
                     ></recalls>
 
                     <div v-if="showClients">
-                        <v-btn @click="recuperaInfo">
+                        <!--<v-btn @click="recuperaInfo">
                             switch
                         </v-btn>
-                        {{getUserInformazioni}}
+                        {{getUserInformazioni}}-->
                         <h2>Recall di oggi</h2>
                             <v-data-table
                                 :headers="headers1"

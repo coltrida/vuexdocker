@@ -122,6 +122,11 @@
                                 Aggiorna
                             </v-btn>
                         </div>
+                        <div v-if="item.esito == 'Preso Appuntamento'">
+                            <v-btn small color="success" dark @click="appuntamento()">
+                                Vedi Appuntamento
+                            </v-btn>
+                        </div>
                     </template>
                 </v-data-table>
             </v-col>
@@ -150,11 +155,10 @@
                         'Non Risponde',
                         'Richiamare',
                         'Non vuole essere richiamato',
-                        'Deceduto'
                     ],
 
                 header: [
-                    { text: 'Data', width:120,  align: 'start', sortable: false, value: 'datarecall', class: "indigo white--text" },
+                    { text: 'Data Telefonata', width:120,  align: 'start', sortable: false, value: 'datarecall', class: "indigo white--text" },
                     { text: 'Esito', sortable: false, value: 'esito', class: "indigo white--text" },
                     { text: 'note', sortable: false, value: 'note', class: "indigo white--text" },
                     { text: 'Azioni',  sortable: false, value: 'action', class: "indigo white--text" },
@@ -193,6 +197,11 @@
                         this.$emit('chiudiRecalls', this.recallsClient)
                     }
                 });
+            },
+
+            appuntamento(){
+                this.telefonata = {};
+                this.$emit('chiudiRecalls', this.recallsClient)
             },
 
             cancella(){

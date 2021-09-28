@@ -66,6 +66,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -250,6 +252,14 @@ var render = function() {
                   _c("h4", [
                     _vm._v("Prove aperte: " + _vm._s(audio.prova_count))
                   ])
+                ]),
+                _vm._v(" "),
+                _c("v-col", [
+                  _c("h4", [_vm._v("New Vendite: " + _vm._s(audio.nuova))])
+                ]),
+                _vm._v(" "),
+                _c("v-col", [
+                  _c("h4", [_vm._v("Riacquisti: " + _vm._s(audio.riacquisto))])
                 ])
               ],
               1

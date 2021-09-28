@@ -10,6 +10,8 @@
                     <v-col><h4>Nr. Cl: {{audio.delta.stipendio}}</h4></v-col>
                     <v-col><h4>Media v.: {{audio.fatturati.provvigione}}</h4></v-col>
                     <v-col><h4>Prove aperte: {{audio.prova_count}}</h4></v-col>
+                    <v-col><h4>New Vendite: {{audio.nuova}}</h4></v-col>
+                    <v-col><h4>Riacquisti: {{audio.riacquisto}}</h4></v-col>
                     <!--<v-col><h4>% conv.: {{audio.pezzi.budgetAnno ? audio.pezzi.budgetAnno / (audio.pezzi.budgetAnno + audio.pezzi.premio) * 100 : 0 }}%</h4></v-col>-->
                 </v-row>
 

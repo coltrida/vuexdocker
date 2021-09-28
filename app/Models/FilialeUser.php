@@ -28,4 +28,5 @@ class FilialeUser extends Model
     use HasFactory;
 
     protected $table = 'filiale_user';
+    protected $guarded = [];
 }
