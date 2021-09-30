@@ -7538,6 +7538,33 @@ var actions = {
         }
       }, _callee6);
     }))();
+  },
+  dissociaStrumento: function dissociaStrumento(_ref7, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkdissociastrumento) + '/' + id, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context7.sent;
+              commit('dissociaStrumento', response.data);
+
+            case 5:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
   }
 };
 var mutations = {
@@ -7562,6 +7589,16 @@ var mutations = {
     state.associazioni.find(function (u) {
       return u.id === payload.filiale.id;
     }).strumentazione.unshift(payload);
+  },
+  dissociaStrumento: function dissociaStrumento(state, payload) {
+    state.associazioni.find(function (u) {
+      return u.id === payload.filTrans;
+    }).strumentazione = state.associazioni.find(function (u) {
+      return u.id === payload.filTrans;
+    }).strumentazione.filter(function (v) {
+      return v.id !== payload.id;
+    });
+    state.strumenti.unshift(payload);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -9272,7 +9309,8 @@ var help = function help() {
     linkaddstrumentazione: base + 'addStrumentazione',
     linkmodificastrumentazione: base + 'modificaStrumentazione',
     linkstrumentazioneassociata: base + 'strumentazioneAssociata',
-    linkassociastrumento: base + 'associaStrumentazione'
+    linkassociastrumento: base + 'associaStrumentazione',
+    linkdissociastrumento: base + 'dissociaStrumentazione'
   };
 };
 

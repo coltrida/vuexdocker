@@ -152,6 +152,7 @@ const help = () => {
         linkmodificastrumentazione: base+'modificaStrumentazione',
         linkstrumentazioneassociata: base+'strumentazioneAssociata',
         linkassociastrumento: base+'associaStrumentazione',
+        linkdissociastrumento: base+'dissociaStrumentazione',
     };
 };
 export default help;

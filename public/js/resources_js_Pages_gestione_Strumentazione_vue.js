@@ -266,7 +266,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     modificaStrumento: 'modificaStrumento',
     eliminaStrumento: 'eliminaStrumento',
     fetchAssociazioni: 'fetchAssociazioni',
-    associaStrumento: 'associaStrumento'
+    associaStrumento: 'associaStrumento',
+    dissociaStrumento: 'dissociaStrumento'
   })), {}, {
     inserisciStrumentazione: function inserisciStrumentazione() {
       var _this = this;
@@ -293,8 +294,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.strumentoDaAssociare = {};
       });
     },
-    elimina: function elimina(id) {
-      this.fetchDissocia(id);
+    dissocia: function dissocia(id) {
+      this.dissociaStrumento(id);
     },
     modificaStrumentazione: function modificaStrumentazione(strumento) {
       this.modificaSwitch = true;
@@ -727,7 +728,7 @@ var render = function() {
                                     attrs: { color: "red", small: "" },
                                     on: {
                                       click: function($event) {
-                                        return _vm.elimina(item.pivot.id)
+                                        return _vm.dissocia(item.id)
                                       }
                                     }
                                   },

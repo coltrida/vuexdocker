@@ -37,4 +37,9 @@ class StrumentazioneController extends Controller
     {
         return $strumentazioneService->associaStrumentazione($request);
     }
+
+    public function dissociaStrumentazione($id, StrumentazioneService $strumentazioneService)
+    {
+        return $strumentazioneService->dissociaStrumentazione($id);
+    }
 }

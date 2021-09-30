@@ -136,7 +136,7 @@
                                 <v-icon
                                     color="red"
                                     small
-                                    @click="elimina(item.pivot.id)"
+                                    @click="dissocia(item.id)"
                                 >
                                     mdi-delete
                                 </v-icon>
@@ -214,6 +214,7 @@
                 eliminaStrumento:'eliminaStrumento',
                 fetchAssociazioni:'fetchAssociazioni',
                 associaStrumento:'associaStrumento',
+                dissociaStrumento:'dissociaStrumento',
             }),
 
             inserisciStrumentazione(){
@@ -239,8 +240,8 @@
                 });
             },
 
-            elimina(id){
-                this.fetchDissocia(id);
+            dissocia(id){
+                this.dissociaStrumento(id);
             },
 
             modificaStrumentazione(strumento){

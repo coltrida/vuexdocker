@@ -151,7 +151,7 @@ Route::group([], function () {
         Route::post('/modificaStrumentazione', [StrumentazioneController::class, 'modifica']);
         Route::post('/addStrumentazione', [StrumentazioneController::class, 'aggiungi']);
         Route::post('/associaStrumentazione', [StrumentazioneController::class, 'associaStrumentazione']);
-        Route::post('/dissociaStrumentazione', [StrumentazioneController::class, 'dissociaStrumentazione']);
+        Route::get('/dissociaStrumentazione/{id}', [StrumentazioneController::class, 'dissociaStrumentazione']);
 
         // ----------------- gestione -------------------------
         Route::get('/associazioniPersonale', [GestioneController::class, 'associazioniPersonale']);

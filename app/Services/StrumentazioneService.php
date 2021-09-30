@@ -68,4 +68,17 @@ class StrumentazioneService
 
         return Strumentazione::with('filiale', 'medico', 'user')->find($idStrumento);
     }
+
+    public function dissociaStrumentazione($id)
+    {
+        $strumento = Strumentazione::find($id);
+        $filialeId = $strumento->filiale_id;
+        $strumento->user_id = null;
+        $strumento->filiale_id = null;
+        $strumento->medico_id = null;
+        $strumento->save();
+        $stru = Strumentazione::with('filiale', 'medico', 'user')->find($id);
+        $stru->filTrans = $filialeId;
+        return $stru;
+    }
 }
