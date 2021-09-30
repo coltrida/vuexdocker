@@ -16,7 +16,7 @@ class DottoreService
 {
     public function lista($idUser)
     {
-        return User::with('medici')->find($idUser)->medici;
+        return $idUser ? User::with('medici')->find($idUser)->medici : Medico::orderBy('nome')->get();
     }
 
     public function caricaOrari($idDottore)

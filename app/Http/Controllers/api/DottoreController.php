@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class DottoreController extends Controller
 {
-    public function lista($idUser, DottoreService $dottoreService)
+    public function lista(DottoreService $dottoreService, $idUser=null)
     {
         return $dottoreService->lista($idUser);
     }

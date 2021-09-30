@@ -18,6 +18,7 @@ use App\Http\Controllers\api\ProvaController;
 use App\Http\Controllers\api\RateController;
 use App\Http\Controllers\api\RecapitiController;
 use App\Http\Controllers\api\RuoloController;
+use App\Http\Controllers\api\StrumentazioneController;
 use App\Http\Controllers\api\TelefonateController;
 use App\Http\Controllers\api\TipologiaController;
 use App\Http\Controllers\api\UserController;
@@ -143,6 +144,15 @@ Route::group([], function () {
         Route::post('/modificaTipologia', [TipologiaController::class, 'modifica']);
         Route::post('/addTipologia', [TipologiaController::class, 'aggiungi']);
 
+        // ----------------- strumentazione -------------------------
+        Route::get('/strumentazioneNonAssociata', [StrumentazioneController::class, 'nonAssociata']);
+        Route::get('/strumentazioneAssociata', [StrumentazioneController::class, 'associata']);
+        Route::delete('/strumentazioneNonAssociata/{id}', [StrumentazioneController::class, 'elimina']);
+        Route::post('/modificaStrumentazione', [StrumentazioneController::class, 'modifica']);
+        Route::post('/addStrumentazione', [StrumentazioneController::class, 'aggiungi']);
+        Route::post('/associaStrumentazione', [StrumentazioneController::class, 'associaStrumentazione']);
+        Route::post('/dissociaStrumentazione', [StrumentazioneController::class, 'dissociaStrumentazione']);
+
         // ----------------- gestione -------------------------
         Route::get('/associazioniPersonale', [GestioneController::class, 'associazioniPersonale']);
         Route::post('/addAssocia', [GestioneController::class, 'aggiungiAssociazione']);
@@ -213,7 +223,7 @@ Route::group([], function () {
         Route::get('/caricaFattura/{idFattura}', [RateController::class, 'caricaFattura']);
 
         // ----------------- dottori -----------------------
-        Route::get('/listaDottori/{idUser}', [DottoreController::class, 'lista']);
+        Route::get('/listaDottori/{idUser?}', [DottoreController::class, 'lista']);
         Route::get('/caricaOrari/{idDottore}', [DottoreController::class, 'caricaOrari']);
         Route::get('/caricaOrarioDottore/{dottore}', [DottoreController::class, 'caricaOrarioDottore']);
         Route::delete('/listaDottori/{idMedico}', [DottoreController::class, 'elimina']);

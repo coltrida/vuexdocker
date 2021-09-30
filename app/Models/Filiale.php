@@ -45,6 +45,8 @@ use function config;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Listino[] $listino
  * @property-read int|null $listino_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Strumentazione[] $strumentazione
+ * @property-read int|null $strumentazione_count
  */
 class Filiale extends Model
 {
@@ -67,6 +69,11 @@ class Filiale extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function strumentazione()
+    {
+        return $this->hasMany(Strumentazione::class);
     }
 
     public function productsRichiesti()

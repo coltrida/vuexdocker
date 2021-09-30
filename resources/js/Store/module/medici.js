@@ -47,6 +47,15 @@ const actions = {
         commit('fetchMedici', response.data);
     },
 
+    async fetchTuttiMedici({commit}, idUser){
+        const response = await axios.get(`${help().linklistamedici}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchMedici', response.data);
+    },
+
     async addMedico({commit}, payload){
         const response = await axios.post(`${help().linkaddmedico}`, payload, {
             headers: {

@@ -36,6 +36,7 @@
                 { title: 'Invio sms', link: 'inviaSms' },
                 { title: 'Backup', link: 'backup' },
                 { title: 'Restore', link: 'restore' },
+                { title: 'Strumentazione', link: 'strumentazione' },
                 { title: 'Logging', link: 'logging' },
             ],
         }),

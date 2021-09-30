@@ -290,9 +290,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       for (var i = 1; i <= eleSelezionato.filiale.length; i++) {
         this.listino.soglie[i - 1] = eleSelezionato.filiale[i - 1].pivot.soglia;
-      }
+      } //       console.log(eleSelezionato);
 
-      console.log(eleSelezionato);
+
       this.$store.commit('listino/eliminaListino', this.listino.id);
     },
     seleziona: function seleziona(items) {

@@ -59,6 +59,7 @@ use const LC_TIME;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Documento[] $copiaComm
  * @property-read int|null $copia_comm_count
  * @property-read mixed $tot_formattato
+ * @property-read mixed $fine_formattata
  */
 class Prova extends Model
 {

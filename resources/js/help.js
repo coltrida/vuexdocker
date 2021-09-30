@@ -147,6 +147,11 @@ const help = () => {
         linkuserinfodatabase: base+'infoDatabase',
         linkswitchdatabase: base+'switchSimulazione',
         linkstatistichetelefonate: base+'statisticheCallcenter',
+        linkstrumentazione: base+'strumentazioneNonAssociata',
+        linkaddstrumentazione: base+'addStrumentazione',
+        linkmodificastrumentazione: base+'modificaStrumentazione',
+        linkstrumentazioneassociata: base+'strumentazioneAssociata',
+        linkassociastrumento: base+'associaStrumentazione',
     };
 };
 export default help;

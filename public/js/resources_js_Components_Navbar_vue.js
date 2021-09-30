@@ -206,6 +206,9 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Restore',
         link: 'restore'
       }, {
+        title: 'Strumentazione',
+        link: 'strumentazione'
+      }, {
         title: 'Logging',
         link: 'logging'
       }]
