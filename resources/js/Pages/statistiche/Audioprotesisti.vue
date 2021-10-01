@@ -10,10 +10,17 @@
             </v-chip>
                 -
             <v-chip
+                color="green"
+                outlined
+            >
+            Bgt Anno. {{totBgt}}
+            </v-chip>
+            -
+            <v-chip
                 color="deep-purple accent-4"
                 outlined
             >
-            Bgt Prog. {{getTotBgtProg}}
+                Bgt Prog. {{getTotBgtProg}}
             </v-chip>
         </h2>
 
@@ -62,7 +69,7 @@
         components: {IncorporaGrafico, Grafico},
         data(){
             return {
-                elementi: [],
+                totBgt: 0,
                 AudioSelected: [],
                 switch: 0,
                 singleSelect: true,
@@ -122,7 +129,9 @@
 
         mounted() {
             this.fetchSituazioneAnno().then(() => {
-                this.elementi = this.getAudioConBgt
+                this.getAudioConBgt.forEach(ele =>  {
+                    this.totBgt += ele.valori[0].budgetAnno;
+                });
             });
         },
 

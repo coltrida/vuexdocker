@@ -10,6 +10,7 @@ const state = () => ({
     appMer: [],
     appGio: [],
     appVen: [],
+    settimanaVisualizzata: ''
 });
 
 const getters = {
@@ -47,6 +48,10 @@ const getters = {
 
     getDateSettimana(state){
         return state.dateSettimana;
+    },
+
+    getSettimanaVisualizzata(state){
+        return state.settimanaVisualizzata;
     },
 };
 
@@ -323,6 +328,10 @@ const mutations = {
         state.appMer = [];
         state.appGio = [];
         state.appVen = [];
+    },
+
+    setSettimanaDaVisualizzare(state, payload){
+        state.settimanaVisualizzata = payload;
     }
 };
 

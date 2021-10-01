@@ -110,6 +110,56 @@
                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._6000d),
                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._8000d),
                             ]
+                        },
+                        {
+                            label: 'Oss D',
+                            backgroundColor: '#f87979',
+                            borderColor: 'rgb(192,8,0)',
+                            pointStyle: 'triangle',
+                            rotation: 90,
+                            showLine:false,
+                            radius: 7,
+                            tension: 0,
+                            fill: false,
+                            data: [
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._125d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._250d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._500d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._1000d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._1500d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._2000d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._3000d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._4000d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._6000d)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._8000d)+5,
+                            ]
+                        },
+                        {
+                            label: 'Normoudente',
+                            backgroundColor: 'rgba(115,250,10,0.2)',
+                            borderColor: 'rgba(126,192,88,0.11)',
+                            radius: 1,
+                            tension: 0,
+                            fill: true,
+                            data: [-20, -20, -20, -20, -20, -20, -20, -25, -30, -30]
+                        },
+                        {
+                            label: 'ipoacusia',
+                            backgroundColor: 'rgba(250,235,45,0.2)',
+                            borderColor: 'rgba(192,186,118,0.11)',
+                            radius: 1,
+                            tension: 0,
+                            fill: true,
+                            data: [-40, -40, -45, -45, -50, -60, -65, -70, -70, -70]
+                        },
+                        {
+                            label: 'ipoacusia grave',
+                            backgroundColor: 'rgba(250,107,50,0.2)',
+                            borderColor: 'rgba(192,106,110,0.11)',
+                            radius: 1,
+                            tension: 0,
+                            fill: true,
+                            data: [-70, -70, -75, -75, -80, -90, -100, -100, -100, -100]
                         }
                     ]
                 }
@@ -124,6 +174,7 @@
                             backgroundColor: '#a8c3f8',
                             borderColor: 'rgb(0,1,192)',
                             pointStyle: 'cross',
+                            rotation: 30,
                             radius: 7,
                             tension: 0,
                             fill: false,
@@ -139,6 +190,56 @@
                                 - parseInt(this.audiogrammaClient.audiometria[this.indice]._6000s),
                                 - parseInt(this.audiogrammaClient.audiometria[this.indice]._8000s),
                             ]
+                        },
+                        {
+                            label: 'Oss S',
+                            backgroundColor: '#a8c3f8',
+                            borderColor: 'rgb(0,1,192)',
+                            pointStyle: 'triangle',
+                            rotation: 30,
+                            showLine:false,
+                            radius: 7,
+                            tension: 0,
+                            fill: false,
+                            data: [
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._125s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._250s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._500s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._1000s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._1500s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._2000s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._3000s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._4000s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._6000s)+5,
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._8000s)+5,
+                            ]
+                        },
+                        {
+                            label: 'Normoudente',
+                            backgroundColor: 'rgba(115,250,10,0.2)',
+                            borderColor: 'rgba(126,192,88,0.11)',
+                            radius: 1,
+                            tension: 0,
+                            fill: true,
+                            data: [-20, -20, -20, -20, -20, -20, -20, -25, -30, -30]
+                        },
+                        {
+                            label: 'ipoacusia',
+                            backgroundColor: 'rgba(250,235,45,0.2)',
+                            borderColor: 'rgba(192,186,118,0.11)',
+                            radius: 1,
+                            tension: 0,
+                            fill: true,
+                            data: [-40, -40, -45, -45, -50, -60, -65, -70, -70, -70]
+                        },
+                        {
+                            label: 'ipoacusia grave',
+                            backgroundColor: 'rgba(250,107,50,0.2)',
+                            borderColor: 'rgba(192,106,110,0.11)',
+                            radius: 1,
+                            tension: 0,
+                            fill: true,
+                            data: [-70, -70, -75, -75, -80, -90, -100, -100, -100, -100]
                         }
                     ]
                 }

@@ -14,6 +14,7 @@
                         item-text="name"
                         :items="getAudio"
                         label="Seleziona"
+                        :readonly="fissaAudio"
                     ></v-select>
                 </v-col>
 
@@ -249,10 +250,12 @@
     export default {
         name: "Calendar",
 
+        props:['audioprot', 'fissaNome'],
+
         data(){
             return {
                 text: 'left',
-                userId:'',
+                userId:this.audioprot,
                 headers1: [
                     { text: 'Orario', width: 30, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
                     { text: 'Nome', width: 100, align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
@@ -268,6 +271,10 @@
             this.fetchAudio();
             this.fetchDateSettimana();
             this.$store.commit('appuntamenti/resetAppuntamenti');
+            this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'attuale');
+            if(this.audioprot){
+                this.visualizza();
+            }
         },
 
         methods:{
@@ -294,6 +301,7 @@
 
             visualizza(){
                 this.text = 'left';
+                this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'attuale');
                 this.fetchAppuntamentiLunedi(this.userId);
                 this.fetchAppuntamentiMartedi(this.userId);
                 this.fetchAppuntamentiMercoledi(this.userId);
@@ -304,6 +312,7 @@
             },
 
             prossima(){
+                this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'prossima');
                 this.prossimoLunedi(this.userId);
                 this.prossimoMartedi(this.userId);
                 this.prossimoMarcoledi(this.userId);
@@ -329,6 +338,10 @@
 
                 getDateSettimana:'getDateSettimana',
             }),
+
+            fissaAudio(){
+                return this.fissaNome ? true : false;
+            }
 
         },
     }

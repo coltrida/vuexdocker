@@ -75,6 +75,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -86,7 +93,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      elementi: [],
+      totBgt: 0,
       AudioSelected: [],
       "switch": 0,
       singleSelect: true,
@@ -195,7 +202,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.fetchSituazioneAnno().then(function () {
-      _this.elementi = _this.getAudioConBgt;
+      _this.getAudioConBgt.forEach(function (ele) {
+        _this.totBgt += ele.valori[0].budgetAnno;
+      });
     });
   },
   methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('users', {
@@ -38531,12 +38540,16 @@ var render = function() {
             ]
           ),
           _vm._v("\n            -\n        "),
+          _c("v-chip", { attrs: { color: "green", outlined: "" } }, [
+            _vm._v("\n        Bgt Anno. " + _vm._s(_vm.totBgt) + "\n        ")
+          ]),
+          _vm._v("\n        -\n        "),
           _c(
             "v-chip",
             { attrs: { color: "deep-purple accent-4", outlined: "" } },
             [
               _vm._v(
-                "\n        Bgt Prog. " +
+                "\n            Bgt Prog. " +
                   _vm._s(_vm.getTotBgtProg) +
                   "\n        "
               )

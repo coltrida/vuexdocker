@@ -3,6 +3,7 @@
         <v-row>
             <v-col cols="6">
                 <h2>{{appuntamentoClient.nome}} {{appuntamentoClient.cognome}}</h2>
+                <h4>Dottore di riferimento: {{appuntamentoClient.user}}</h4>
             </v-col>
             <v-col cols="6" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">
@@ -11,8 +12,8 @@
             </v-col>
         </v-row>
 
-        <div class="row">
-            <v-container class="py-4">
+        <v-row>
+            <v-col cols="6">
                 <v-form ref="form"
                         v-model="valid"
                         lazy-validation>
@@ -177,16 +178,20 @@
                     </template>
 
                 </v-data-table>
-            </v-container>
-        </div>
+            </v-col>
+            <v-col cols="6">
+                <calendar :audioprot="appuntamentoClient.user_id" :fissaNome="true"/>
+            </v-col>
+        </v-row>
     </v-row>
 </template>
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import Calendar from "../../../Pages/personale/Calendar";
     export default {
         name: "Appuntamento",
-
+        components: {Calendar},
         data(){
             return {
                 modificaSwitch: false,
@@ -235,6 +240,18 @@
                 addAppuntamento:'addAppuntamento',
                 modificaAppuntamento:'modificaAppuntamento',
                 eliminaAppuntamento:'eliminaAppuntamento',
+
+                fetchAppuntamentiLunedi:'fetchAppuntamentiLunedi',
+                fetchAppuntamentiMartedi:'fetchAppuntamentiMartedi',
+                fetchAppuntamentiMercoledi:'fetchAppuntamentiMercoledi',
+                fetchAppuntamentiGiovedi:'fetchAppuntamentiGiovedi',
+                fetchAppuntamentiVenerdi:'fetchAppuntamentiVenerdi',
+
+                prossimoLunedi:'prossimoLunedi',
+                prossimoMartedi:'prossimoMartedi',
+                prossimoMarcoledi:'prossimoMarcoledi',
+                prossimoGiovedi:'prossimoGiovedi',
+                prossimoVenerdi:'prossimoVenerdi',
             }),
 
             ...mapActions('recapiti', {
@@ -259,6 +276,7 @@
                 if (this.modificaSwitch){
                     this.modificaAppuntamento(this.newAppuntamento).then(() =>{
                         this.$refs.form.resetValidation();
+                        this.caricaAppuntamenti();
                         this.newAppuntamento = {
                             filiale_id:null,
                             recapito_id:null,
@@ -269,6 +287,7 @@
                 } else {
                     this.addAppuntamento(this.newAppuntamento).then(() =>{
                         this.$refs.form.resetValidation();
+                        this.caricaAppuntamenti();
                         this.newAppuntamento = {
                             filiale_id:null,
                             recapito_id:null,
@@ -279,6 +298,23 @@
                 }
 
                 this.modificaSwitch = false;
+
+            },
+
+            caricaAppuntamenti(){
+                if (this.getSettimanaVisualizzata === 'attuale'){
+                    this.fetchAppuntamentiLunedi(this.appuntamentoClient.user_id);
+                    this.fetchAppuntamentiMartedi(this.appuntamentoClient.user_id);
+                    this.fetchAppuntamentiMercoledi(this.appuntamentoClient.user_id);
+                    this.fetchAppuntamentiGiovedi(this.appuntamentoClient.user_id);
+                    this.fetchAppuntamentiVenerdi(this.appuntamentoClient.user_id);
+                } else {
+                    this.prossimoLunedi(this.appuntamentoClient.user_id);
+                    this.prossimoMartedi(this.appuntamentoClient.user_id);
+                    this.prossimoMarcoledi(this.appuntamentoClient.user_id);
+                    this.prossimoGiovedi(this.appuntamentoClient.user_id);
+                    this.prossimoVenerdi(this.appuntamentoClient.user_id);
+                }
 
             },
 
@@ -302,6 +338,7 @@
         computed: {
             ...mapGetters('appuntamenti', {
                 getAppuntamenti: 'getAppuntamenti',
+                getSettimanaVisualizzata: 'getSettimanaVisualizzata',
             }),
 
             ...mapGetters('login', {

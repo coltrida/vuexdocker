@@ -86,14 +86,14 @@ const actions = {
         commit('fetchAudio', response.data);
     },
 
-    async fetchUserInformazioniDatabase({commit}){
+    /*async fetchUserInformazioniDatabase({commit}){
         const response = await axios.get(`${help().linkuserinfodatabase}`, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
         commit('fetchUserInformazioniDatabase', response.data);
-    },
+    },*/
 
     async switchDatabase({commit}){
         const response = await axios.get(`${help().linkswitchdatabase}`, {

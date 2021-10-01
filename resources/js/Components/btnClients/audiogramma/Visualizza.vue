@@ -13,8 +13,9 @@
                 default: null
             }
         },
+
         mounted () {
-            this.renderChart(this.chartdata, this.options)
+            this.renderChart(this.chartdata, this.options);
         },
 
         watch:{

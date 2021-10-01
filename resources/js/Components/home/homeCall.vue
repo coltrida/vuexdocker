@@ -1,39 +1,36 @@
 <template>
     <div class="flex justify-start align-center mt-2">
-            <v-row>
+
+                <appuntamento
+                    v-if="showAppuntamento"
+                    :appuntamentoClient="appuntamentoClient"
+                    @chiudiAppuntamento = "chiudiAppuntamento"
+                />
+                <audiogramma
+                    v-if="showAudiogramma"
+                    :audiogrammaClient="audiogrammaClient"
+                    @chiudiAudiogramma = "chiudiAudiogramma"
+                ></audiogramma>
+                <prove
+                    v-if="showProve"
+                    :proveClient="proveClient"
+                    @chiudiProve = "chiudiProve"
+                ></prove>
+                <docunenti
+                    v-if="showDocumenti"
+                    :documentiClient="documentiClient"
+                    @chiudiDocumenti="chiudiDocumenti"
+                ></docunenti>
+
+                <recalls
+                    v-if="showRecalls"
+                    :recallsClient="recallsClient"
+                    @chiudiRecalls="chiudiRecalls"
+                ></recalls>
+
+        <v-row v-if="showClients">
                 <v-col cols="6">
-
-                    <audiogramma
-                        v-if="showAudiogramma"
-                        :audiogrammaClient="audiogrammaClient"
-                        @chiudiAudiogramma = "chiudiAudiogramma"
-                    ></audiogramma>
-
-                    <appuntamento
-                        v-if="showAppuntamento"
-                        :appuntamentoClient="appuntamentoClient"
-                        @chiudiAppuntamento = "chiudiAppuntamento"
-                    />
-
-                    <prove
-                        v-if="showProve"
-                        :proveClient="proveClient"
-                        @chiudiProve = "chiudiProve"
-                    ></prove>
-
-                    <docunenti
-                        v-if="showDocumenti"
-                        :documentiClient="documentiClient"
-                        @chiudiDocumenti="chiudiDocumenti"
-                    ></docunenti>
-
-                    <recalls
-                        v-if="showRecalls"
-                        :recallsClient="recallsClient"
-                        @chiudiRecalls="chiudiRecalls"
-                    ></recalls>
-
-                    <div v-if="showClients">
+                    <div>
                         <!--<v-btn @click="recuperaInfo">
                             switch
                         </v-btn>
@@ -47,7 +44,10 @@
                             >
 
                                 <template v-slot:item.nome="{ item }">
-                                        {{ item.nome }} {{item.cognome}}
+                                    <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                        {{item.fullname}}
+                                    </router-link>
                                 </template>
 
                                 <template v-slot:item.actions="{ item }">
@@ -114,81 +114,7 @@
 
                             </v-data-table>
 
-                        <h2 class="mt-10">Recall di domani</h2>
-                        <v-data-table
-                            :headers="headers1"
-                            dense
-                            :items="getRecallDomani"
-                            class="elevation-1 mt-3"
-                        >
 
-                            <template v-slot:item.nome="{ item }">
-                                {{ item.nome }} {{item.cognome}}
-                            </template>
-
-                            <template v-slot:item.actions="{ item }">
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                            color="purple"
-                                            small
-                                            @click="appuntamento(item)"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                        >
-                                            mdi-calendar-edit
-                                        </v-icon>
-                                    </template>
-                                    <span>Appuntamento</span>
-                                </v-tooltip>
-
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                            color="orange"
-                                            small
-                                            @click="prove(item)"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                        >
-                                            mdi-ear-hearing
-                                        </v-icon>
-                                    </template>
-                                    <span>Prova</span>
-                                </v-tooltip>
-
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                            color="light-blue darken-4"
-                                            small
-                                            @click="documenti(item)"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                        >
-                                            mdi-file-document
-                                        </v-icon>
-                                    </template>
-                                    <span>Documenti</span>
-                                </v-tooltip>
-
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                            color="green"
-                                            small
-                                            @click="recalls(item)"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                        >
-                                            mdi-phone
-                                        </v-icon>
-                                    </template>
-                                    <span>Recalls</span>
-                                </v-tooltip>
-                            </template>
-
-                        </v-data-table>
 
                         <h2 class="mt-10">Clienti Mai Richiamati</h2>
                         <v-data-table
@@ -199,7 +125,10 @@
                         >
 
                             <template v-slot:item.nome="{ item }">
-                                {{ item.nome }} {{item.cognome}}
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                    {{item.fullname}}
+                                </router-link>
                             </template>
 
                             <template v-slot:item.actions="{ item }">
@@ -275,7 +204,10 @@
                         >
 
                             <template v-slot:item.nome="{ item }">
-                                {{ item.nome }} {{item.cognome}}
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                    {{item.fullname}}
+                                </router-link>
                             </template>
 
                             <template v-slot:item.actions="{ item }">
@@ -342,86 +274,168 @@
 
                         </v-data-table>
 
-                        <h2 class="mt-10">Clienti ad un anno Ultimo Appuntamento</h2>
-                        <v-data-table
-                            :headers="headers1"
-                            dense
-                            :items="getClientiUnAnnoUltimoAppuntamento"
-                            class="elevation-1 mt-3 mb-10"
-                        >
 
-                            <template v-slot:item.nome="{ item }">
-                                {{ item.nome }} {{item.cognome}}
-                            </template>
-
-                            <template v-slot:item.actions="{ item }">
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                            color="purple"
-                                            small
-                                            @click="appuntamento(item)"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                        >
-                                            mdi-calendar-edit
-                                        </v-icon>
-                                    </template>
-                                    <span>Appuntamento</span>
-                                </v-tooltip>
-
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                            color="orange"
-                                            small
-                                            @click="prove(item)"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                        >
-                                            mdi-ear-hearing
-                                        </v-icon>
-                                    </template>
-                                    <span>Prova</span>
-                                </v-tooltip>
-
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                            color="light-blue darken-4"
-                                            small
-                                            @click="documenti(item)"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                        >
-                                            mdi-file-document
-                                        </v-icon>
-                                    </template>
-                                    <span>Documenti</span>
-                                </v-tooltip>
-
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                            color="green"
-                                            small
-                                            @click="recalls(item)"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                        >
-                                            mdi-phone
-                                        </v-icon>
-                                    </template>
-                                    <span>Recalls</span>
-                                </v-tooltip>
-                            </template>
-
-                        </v-data-table>
                     </div>
                 </v-col>
 
                 <v-col cols="6">
-                    <calendar />
+                    <h2>Recall di domani</h2>
+                    <v-data-table
+                        :headers="headers1"
+                        dense
+                        :items="getRecallDomani"
+                        class="elevation-1 mt-3"
+                    >
+
+                        <template v-slot:item.nome="{ item }">
+                            <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                {{item.fullname}}
+                            </router-link>
+                        </template>
+
+                        <template v-slot:item.actions="{ item }">
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="purple"
+                                        small
+                                        @click="appuntamento(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-calendar-edit
+                                    </v-icon>
+                                </template>
+                                <span>Appuntamento</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="orange"
+                                        small
+                                        @click="prove(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-ear-hearing
+                                    </v-icon>
+                                </template>
+                                <span>Prova</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="light-blue darken-4"
+                                        small
+                                        @click="documenti(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-file-document
+                                    </v-icon>
+                                </template>
+                                <span>Documenti</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="green"
+                                        small
+                                        @click="recalls(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-phone
+                                    </v-icon>
+                                </template>
+                                <span>Recalls</span>
+                            </v-tooltip>
+                        </template>
+
+                    </v-data-table>
+
+                    <h2 class="mt-10">Clienti ad un anno Ultimo Appuntamento</h2>
+                    <v-data-table
+                        :headers="headers1"
+                        dense
+                        :items="getClientiUnAnnoUltimoAppuntamento"
+                        class="elevation-1 mt-3 mb-10"
+                    >
+
+                        <template v-slot:item.nome="{ item }">
+                            <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                {{item.fullname}}
+                            </router-link>
+                        </template>
+
+                        <template v-slot:item.actions="{ item }">
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="purple"
+                                        small
+                                        @click="appuntamento(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-calendar-edit
+                                    </v-icon>
+                                </template>
+                                <span>Appuntamento</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="orange"
+                                        small
+                                        @click="prove(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-ear-hearing
+                                    </v-icon>
+                                </template>
+                                <span>Prova</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="light-blue darken-4"
+                                        small
+                                        @click="documenti(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-file-document
+                                    </v-icon>
+                                </template>
+                                <span>Documenti</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="green"
+                                        small
+                                        @click="recalls(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-phone
+                                    </v-icon>
+                                </template>
+                                <span>Recalls</span>
+                            </v-tooltip>
+                        </template>
+
+                    </v-data-table>
                 </v-col>
 
             </v-row>
@@ -470,7 +484,7 @@
 
         mounted() {
             this.caricaTelefonate();
-            this.fetchUserInformazioniDatabase();
+            /*this.fetchUserInformazioniDatabase();*/
         },
 
         methods: {

@@ -2364,7 +2364,8 @@ var state = function state() {
     appMar: [],
     appMer: [],
     appGio: [],
-    appVen: []
+    appVen: [],
+    settimanaVisualizzata: ''
   };
 };
 
@@ -2395,6 +2396,9 @@ var getters = {
   },
   getDateSettimana: function getDateSettimana(state) {
     return state.dateSettimana;
+  },
+  getSettimanaVisualizzata: function getSettimanaVisualizzata(state) {
+    return state.settimanaVisualizzata;
   }
 };
 var actions = {
@@ -3070,6 +3074,9 @@ var mutations = {
     state.appMer = [];
     state.appGio = [];
     state.appVen = [];
+  },
+  setSettimanaDaVisualizzare: function setSettimanaDaVisualizzare(state, payload) {
+    state.settimanaVisualizzata = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -8342,7 +8349,16 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchUserInformazioniDatabase: function fetchUserInformazioniDatabase(_ref2) {
+
+  /*async fetchUserInformazioniDatabase({commit}){
+      const response = await axios.get(`${help().linkuserinfodatabase}`, {
+          headers: {
+              'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+          }
+      });
+      commit('fetchUserInformazioniDatabase', response.data);
+  },*/
+  switchDatabase: function switchDatabase(_ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -8351,7 +8367,7 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuserinfodatabase), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitchdatabase), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8359,7 +8375,7 @@ var actions = {
 
             case 3:
               response = _context2.sent;
-              commit('fetchUserInformazioniDatabase', response.data);
+              commit('switchDatabase', response.data);
 
             case 5:
             case "end":
@@ -8369,7 +8385,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  switchDatabase: function switchDatabase(_ref3) {
+  fetchCommerciale: function fetchCommerciale(_ref3) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -8378,7 +8394,7 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitchdatabase), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksituazionemese), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8386,7 +8402,7 @@ var actions = {
 
             case 3:
               response = _context3.sent;
-              commit('switchDatabase', response.data);
+              commit('fetchCommerciale', response.data);
 
             case 5:
             case "end":
@@ -8396,7 +8412,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  fetchCommerciale: function fetchCommerciale(_ref4) {
+  fetchUserAgenda: function fetchUserAgenda(_ref4) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -8405,7 +8421,7 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksituazionemese), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuseragenda), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8413,7 +8429,7 @@ var actions = {
 
             case 3:
               response = _context4.sent;
-              commit('fetchCommerciale', response.data);
+              commit('fetchUserAgenda', response.data);
 
             case 5:
             case "end":
@@ -8423,7 +8439,7 @@ var actions = {
       }, _callee4);
     }))();
   },
-  fetchUserAgenda: function fetchUserAgenda(_ref5) {
+  fetchSpecificoUserAgenda: function fetchSpecificoUserAgenda(_ref5, idAudio) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -8432,7 +8448,7 @@ var actions = {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuseragenda), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuseragenda) + '/' + idAudio, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8440,7 +8456,7 @@ var actions = {
 
             case 3:
               response = _context5.sent;
-              commit('fetchUserAgenda', response.data);
+              commit('fetchSpecificoUserAgenda', response.data);
 
             case 5:
             case "end":
@@ -8450,44 +8466,17 @@ var actions = {
       }, _callee5);
     }))();
   },
-  fetchSpecificoUserAgenda: function fetchSpecificoUserAgenda(_ref6, idAudio) {
+  fetchSituazioneMese: function fetchSituazioneMese(_ref6) {
+    var _arguments = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-      var commit, response;
+      var commit, idAudio, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               commit = _ref6.commit;
-              _context6.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuseragenda) + '/' + idAudio, {
-                headers: {
-                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
-                }
-              });
-
-            case 3:
-              response = _context6.sent;
-              commit('fetchSpecificoUserAgenda', response.data);
-
-            case 5:
-            case "end":
-              return _context6.stop();
-          }
-        }
-      }, _callee6);
-    }))();
-  },
-  fetchSituazioneMese: function fetchSituazioneMese(_ref7) {
-    var _arguments = arguments;
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-      var commit, idAudio, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              commit = _ref7.commit;
               idAudio = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : '';
-              _context7.next = 4;
+              _context6.next = 4;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksituazionemese) + '/' + idAudio, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -8495,10 +8484,37 @@ var actions = {
               });
 
             case 4:
-              response = _context7.sent;
+              response = _context6.sent;
               commit('fetchSituazioneMese', response.data);
 
             case 6:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+  fetchSituazioneAnno: function fetchSituazioneAnno(_ref7) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkvisualizzasituazioneanno), {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context7.sent;
+              commit('fetchAudioConBgt', response.data.data);
+
+            case 5:
             case "end":
               return _context7.stop();
           }
@@ -8506,7 +8522,7 @@ var actions = {
       }, _callee7);
     }))();
   },
-  fetchSituazioneAnno: function fetchSituazioneAnno(_ref8) {
+  fetchAudioConBgt: function fetchAudioConBgt(_ref8) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
@@ -8515,7 +8531,7 @@ var actions = {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkvisualizzasituazioneanno), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudioconbgt), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8523,7 +8539,7 @@ var actions = {
 
             case 3:
               response = _context8.sent;
-              commit('fetchAudioConBgt', response.data.data);
+              commit('fetchAudioConBgt', response.data);
 
             case 5:
             case "end":
@@ -8533,7 +8549,7 @@ var actions = {
       }, _callee8);
     }))();
   },
-  fetchAudioConBgt: function fetchAudioConBgt(_ref9) {
+  fetchAudioConFatt: function fetchAudioConFatt(_ref9) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
@@ -8542,7 +8558,7 @@ var actions = {
             case 0:
               commit = _ref9.commit;
               _context9.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudioconbgt), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatistichedettagliaudio), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8550,7 +8566,7 @@ var actions = {
 
             case 3:
               response = _context9.sent;
-              commit('fetchAudioConBgt', response.data);
+              commit('fetchAudioConFatt', response.data);
 
             case 5:
             case "end":
@@ -8560,7 +8576,7 @@ var actions = {
       }, _callee9);
     }))();
   },
-  fetchAudioConFatt: function fetchAudioConFatt(_ref10) {
+  fetchAudioConBgtAssegnato: function fetchAudioConBgtAssegnato(_ref10) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
@@ -8569,7 +8585,7 @@ var actions = {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatistichedettagliaudio), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudioconbgt), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8577,7 +8593,7 @@ var actions = {
 
             case 3:
               response = _context10.sent;
-              commit('fetchAudioConFatt', response.data);
+              commit('fetchAudioConBgtAssegnato', response.data);
 
             case 5:
             case "end":
@@ -8587,7 +8603,7 @@ var actions = {
       }, _callee10);
     }))();
   },
-  fetchAudioConBgtAssegnato: function fetchAudioConBgtAssegnato(_ref11) {
+  fetchAudioSenzaBgt: function fetchAudioSenzaBgt(_ref11) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
@@ -8596,7 +8612,7 @@ var actions = {
             case 0:
               commit = _ref11.commit;
               _context11.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudioconbgt), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudiosenzabgt), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8604,7 +8620,7 @@ var actions = {
 
             case 3:
               response = _context11.sent;
-              commit('fetchAudioConBgtAssegnato', response.data);
+              commit('fetchAudioSenzaBgt', response.data);
 
             case 5:
             case "end":
@@ -8614,7 +8630,7 @@ var actions = {
       }, _callee11);
     }))();
   },
-  fetchAudioSenzaBgt: function fetchAudioSenzaBgt(_ref12) {
+  fetchAmm: function fetchAmm(_ref12) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee12() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee12$(_context12) {
@@ -8623,7 +8639,7 @@ var actions = {
             case 0:
               commit = _ref12.commit;
               _context12.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaudiosenzabgt), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkamm), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8631,7 +8647,7 @@ var actions = {
 
             case 3:
               response = _context12.sent;
-              commit('fetchAudioSenzaBgt', response.data);
+              commit('fetchAmm', response.data);
 
             case 5:
             case "end":
@@ -8641,7 +8657,7 @@ var actions = {
       }, _callee12);
     }))();
   },
-  fetchAmm: function fetchAmm(_ref13) {
+  fetchCall: function fetchCall(_ref13) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
@@ -8650,7 +8666,7 @@ var actions = {
             case 0:
               commit = _ref13.commit;
               _context13.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkamm), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcallcenter), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8658,7 +8674,7 @@ var actions = {
 
             case 3:
               response = _context13.sent;
-              commit('fetchAmm', response.data);
+              commit('fetchCall', response.data);
 
             case 5:
             case "end":
@@ -8668,7 +8684,7 @@ var actions = {
       }, _callee13);
     }))();
   },
-  fetchCall: function fetchCall(_ref14) {
+  addAudio: function addAudio(_ref14, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee14() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee14$(_context14) {
@@ -8677,7 +8693,11 @@ var actions = {
             case 0:
               commit = _ref14.commit;
               _context14.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcallcenter), {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkadduser), {
+                'name': payload.name,
+                'email': payload.email,
+                'ruolo_id': payload.ruolo_id
+              }, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8685,7 +8705,7 @@ var actions = {
 
             case 3:
               response = _context14.sent;
-              commit('fetchCall', response.data);
+              commit('addAudio', response.data);
 
             case 5:
             case "end":
@@ -8695,7 +8715,7 @@ var actions = {
       }, _callee14);
     }))();
   },
-  addAudio: function addAudio(_ref15, payload) {
+  addAmm: function addAmm(_ref15, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee15() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee15$(_context15) {
@@ -8716,7 +8736,7 @@ var actions = {
 
             case 3:
               response = _context15.sent;
-              commit('addAudio', response.data);
+              commit('addAmm', response.data);
 
             case 5:
             case "end":
@@ -8726,7 +8746,7 @@ var actions = {
       }, _callee15);
     }))();
   },
-  addAmm: function addAmm(_ref16, payload) {
+  addCall: function addCall(_ref16, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee16() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee16$(_context16) {
@@ -8747,7 +8767,7 @@ var actions = {
 
             case 3:
               response = _context16.sent;
-              commit('addAmm', response.data);
+              commit('addCall', response.data);
 
             case 5:
             case "end":
@@ -8757,30 +8777,25 @@ var actions = {
       }, _callee16);
     }))();
   },
-  addCall: function addCall(_ref17, payload) {
+  eliminaAudio: function eliminaAudio(_ref17, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee17() {
-      var commit, response;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee17$(_context17) {
         while (1) {
           switch (_context17.prev = _context17.next) {
             case 0:
               commit = _ref17.commit;
               _context17.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkadduser), {
-                'name': payload.name,
-                'email': payload.email,
-                'ruolo_id': payload.ruolo_id
-              }, {
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuser) + '/' + id, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              response = _context17.sent;
-              commit('addCall', response.data);
+              commit('eliminaAudio', id);
 
-            case 5:
+            case 4:
             case "end":
               return _context17.stop();
           }
@@ -8788,7 +8803,7 @@ var actions = {
       }, _callee17);
     }))();
   },
-  eliminaAudio: function eliminaAudio(_ref18, id) {
+  eliminaAmm: function eliminaAmm(_ref18, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee18() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee18$(_context18) {
@@ -8804,7 +8819,7 @@ var actions = {
               });
 
             case 3:
-              commit('eliminaAudio', id);
+              commit('eliminaAmm', id);
 
             case 4:
             case "end":
@@ -8814,7 +8829,7 @@ var actions = {
       }, _callee18);
     }))();
   },
-  eliminaAmm: function eliminaAmm(_ref19, id) {
+  eliminaCall: function eliminaCall(_ref19, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee19() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee19$(_context19) {
@@ -8830,7 +8845,7 @@ var actions = {
               });
 
             case 3:
-              commit('eliminaAmm', id);
+              commit('eliminaCall', id);
 
             case 4:
             case "end":
@@ -8840,25 +8855,26 @@ var actions = {
       }, _callee19);
     }))();
   },
-  eliminaCall: function eliminaCall(_ref20, id) {
+  assegnaBgt: function assegnaBgt(_ref20, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee20() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee20$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
             case 0:
               commit = _ref20.commit;
               _context20.next = 3;
-              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuser) + '/' + id, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnabgt), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              commit('eliminaCall', id);
+              response = _context20.sent;
+              commit('assegnaBgt', response.data);
 
-            case 4:
+            case 5:
             case "end":
               return _context20.stop();
           }
@@ -8866,7 +8882,7 @@ var actions = {
       }, _callee20);
     }))();
   },
-  assegnaBgt: function assegnaBgt(_ref21, payload) {
+  modificaBgt: function modificaBgt(_ref21, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee21() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee21$(_context21) {
@@ -8875,7 +8891,7 @@ var actions = {
             case 0:
               commit = _ref21.commit;
               _context21.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnabgt), payload, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificabgt), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8883,7 +8899,7 @@ var actions = {
 
             case 3:
               response = _context21.sent;
-              commit('assegnaBgt', response.data);
+              commit('modificaBgt', response.data);
 
             case 5:
             case "end":
@@ -8893,7 +8909,7 @@ var actions = {
       }, _callee21);
     }))();
   },
-  modificaBgt: function modificaBgt(_ref22, payload) {
+  addAgenda: function addAgenda(_ref22, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee22() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee22$(_context22) {
@@ -8902,7 +8918,7 @@ var actions = {
             case 0:
               commit = _ref22.commit;
               _context22.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificabgt), payload, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuseragenda), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8910,7 +8926,7 @@ var actions = {
 
             case 3:
               response = _context22.sent;
-              commit('modificaBgt', response.data);
+              commit('addAgenda', response.data);
 
             case 5:
             case "end":
@@ -8920,7 +8936,7 @@ var actions = {
       }, _callee22);
     }))();
   },
-  addAgenda: function addAgenda(_ref23, payload) {
+  fetchVentaglioAnno: function fetchVentaglioAnno(_ref23) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee23() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee23$(_context23) {
@@ -8929,33 +8945,6 @@ var actions = {
             case 0:
               commit = _ref23.commit;
               _context23.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkuseragenda), payload, {
-                headers: {
-                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
-                }
-              });
-
-            case 3:
-              response = _context23.sent;
-              commit('addAgenda', response.data);
-
-            case 5:
-            case "end":
-              return _context23.stop();
-          }
-        }
-      }, _callee23);
-    }))();
-  },
-  fetchVentaglioAnno: function fetchVentaglioAnno(_ref24) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee24() {
-      var commit, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee24$(_context24) {
-        while (1) {
-          switch (_context24.prev = _context24.next) {
-            case 0:
-              commit = _ref24.commit;
-              _context24.next = 3;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkventaglio), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -8963,15 +8952,15 @@ var actions = {
               });
 
             case 3:
-              response = _context24.sent;
+              response = _context23.sent;
               commit('fetchVentaglioAnno', response.data);
 
             case 5:
             case "end":
-              return _context24.stop();
+              return _context23.stop();
           }
         }
-      }, _callee24);
+      }, _callee23);
     }))();
   }
 };
@@ -33710,7 +33699,12 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticStyle: { padding: "0 50px", "margin-bottom": "50px" } },
+              {
+                staticStyle: {
+                  padding: "0 50px 50px 50px",
+                  "margin-bottom": "50px"
+                }
+              },
               [_c("router-view")],
               1
             ),

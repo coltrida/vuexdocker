@@ -12,6 +12,12 @@
                     <v-col><h4>Prove aperte: {{audio.prova_count}}</h4></v-col>
                     <v-col><h4>New Vendite: {{audio.nuova}}</h4></v-col>
                     <v-col><h4>Riacquisti: {{audio.riacquisto}}</h4></v-col>
+
+                    <v-col>
+                        <h4>
+                            T.M.Chiusura: {{calcolaMediaGiorniProva(audio.prova_finalizzata)}} gg.
+                        </h4>
+                    </v-col>
                     <!--<v-col><h4>% conv.: {{audio.pezzi.budgetAnno ? audio.pezzi.budgetAnno / (audio.pezzi.budgetAnno + audio.pezzi.premio) * 100 : 0 }}%</h4></v-col>-->
                 </v-row>
 
@@ -35,6 +41,13 @@
                                         {{ele.listino.nome}}
                                     </div>
                                     <!-- {{ item.product}}-->
+                                </template>
+
+                                <template v-slot:item.client.fullname="{ item }">
+                                    <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.fullname, }}">
+                                        {{item.client.fullname}}
+                                    </router-link>
                                 </template>
 
                             </v-data-table>
@@ -76,6 +89,17 @@
             ...mapActions('users', {
                 fetchAudioConFatt:'fetchAudioConFatt',
             }),
+
+            calcolaMediaGiorniProva(prove){
+                let tot = 0;
+                if (prove.length > 0){
+                    prove.forEach(ele => {
+                        tot += parseInt(ele.giorni_prova)
+                    });
+                    tot = tot / prove.length;
+                }
+                return tot;
+            }
 
         },
 

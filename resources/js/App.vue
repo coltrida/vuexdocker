@@ -2,7 +2,7 @@
     <v-app>
         <div v-if="!$vuetify.breakpoint.xs">
             <Navbar style="border: none"></Navbar>
-            <div style="padding: 0 50px; margin-bottom: 50px">
+            <div style="padding: 0 50px 50px 50px; margin-bottom: 50px">
                 <router-view></router-view>
             </div>
             <Footer></Footer>

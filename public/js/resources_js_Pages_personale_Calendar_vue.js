@@ -263,13 +263,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Calendar",
+  props: ['audioprot', 'fissaNome'],
   data: function data() {
     return {
       text: 'left',
-      userId: '',
+      userId: this.audioprot,
       headers1: [{
         text: 'Orario',
         width: 30,
@@ -312,6 +314,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchAudio();
     this.fetchDateSettimana();
     this.$store.commit('appuntamenti/resetAppuntamenti');
+    this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'attuale');
+
+    if (this.audioprot) {
+      this.visualizza();
+    }
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudio: 'fetchAudio'
@@ -331,6 +338,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     visualizza: function visualizza() {
       this.text = 'left';
+      this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'attuale');
       this.fetchAppuntamentiLunedi(this.userId);
       this.fetchAppuntamentiMartedi(this.userId);
       this.fetchAppuntamentiMercoledi(this.userId);
@@ -339,6 +347,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchDateSettimana();
     },
     prossima: function prossima() {
+      this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'prossima');
       this.prossimoLunedi(this.userId);
       this.prossimoMartedi(this.userId);
       this.prossimoMarcoledi(this.userId);
@@ -347,7 +356,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchDateSettimanaProssima();
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getAudio: 'getAudio'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
     getAppLun: 'getAppLun',
@@ -356,7 +365,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAppGio: 'getAppGio',
     getAppVen: 'getAppVen',
     getDateSettimana: 'getDateSettimana'
-  }))
+  })), {}, {
+    fissaAudio: function fissaAudio() {
+      return this.fissaNome ? true : false;
+    }
+  })
 });
 
 /***/ }),
@@ -467,7 +480,8 @@ var render = function() {
                     "item-value": "id",
                     "item-text": "name",
                     items: _vm.getAudio,
-                    label: "Seleziona"
+                    label: "Seleziona",
+                    readonly: _vm.fissaAudio
                   },
                   on: {
                     change: function($event) {

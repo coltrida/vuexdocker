@@ -68,6 +68,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -107,9 +120,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.fetchAudioConFatt();
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudioConFatt: 'fetchAudioConFatt'
-  })),
+  })), {}, {
+    calcolaMediaGiorniProva: function calcolaMediaGiorniProva(prove) {
+      var tot = 0;
+
+      if (prove.length > 0) {
+        prove.forEach(function (ele) {
+          tot += parseInt(ele.giorni_prova);
+        });
+        tot = tot / prove.length;
+      }
+
+      return tot;
+    }
+  }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getAudioConFatt: 'getAudioConFatt'
   }))
@@ -260,6 +286,18 @@ var render = function() {
                 _vm._v(" "),
                 _c("v-col", [
                   _c("h4", [_vm._v("Riacquisti: " + _vm._s(audio.riacquisto))])
+                ]),
+                _vm._v(" "),
+                _c("v-col", [
+                  _c("h4", [
+                    _vm._v(
+                      "\n                        T.M.Chiusura: " +
+                        _vm._s(
+                          _vm.calcolaMediaGiorniProva(audio.prova_finalizzata)
+                        ) +
+                        " gg.\n                    "
+                    )
+                  ])
                 ])
               ],
               1
@@ -314,6 +352,37 @@ var render = function() {
                                       )
                                     ])
                                   })
+                                }
+                              },
+                              {
+                                key: "item.client.fullname",
+                                fn: function(ref) {
+                                  var item = ref.item
+                                  return [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticStyle: { color: "black" },
+                                        attrs: {
+                                          to: {
+                                            name: "clientsFiliale",
+                                            params: {
+                                              filialeId: item.filiale_id,
+                                              nomRicerca: item.client.nome,
+                                              cogRicerca: item.client.fullname
+                                            }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(item.client.fullname) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
+                                  ]
                                 }
                               }
                             ],
