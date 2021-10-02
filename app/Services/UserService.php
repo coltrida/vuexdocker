@@ -223,7 +223,7 @@ class UserService
         $anno = Carbon::now()->year;
 
         if($idAudio){
-            return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+            $utente = User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
                 $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
             },'provaReso' => function($r) use($mese, $anno){
                 $r->where([['mese_fine', $mese], ['anno_fine', $anno]]);
@@ -233,9 +233,17 @@ class UserService
                 }], 'tot')
                 ->withCount('provaInCorso')
                 ->find($idAudio);
+
+            $utente->budget->target = $utente->budget_id ?
+                number_format( (float) $utente->budget->target, '0', ',', '.')
+                : null;
+            $utente->prova_finalizzata_sum_tot = $utente->prova_finalizzata_sum_tot ?
+                number_format( (float) $utente->prova_finalizzata_sum_tot, '0', ',', '.')
+                : null;
+            return $utente;
         }
 
-        return User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
+        $utenti = User::audio(1)->with(['provaInCorso', 'provaFinalizzata' => function($z) use($mese, $anno){
             $z->where([['mese_fine', $mese], ['anno_fine', $anno]]);
         },'provaReso' => function($r) use($mese, $anno){
             $r->where([['mese_fine', $mese], ['anno_fine', $anno]]);
@@ -246,6 +254,15 @@ class UserService
             ->withCount('provaInCorso')
             ->get();
 
+        foreach ($utenti as $utente){
+            $utente->budget->target = $utente->budget_id ?
+                number_format( (float) $utente->budget->target, '0', ',', '.')
+                : null;
+            $utente->prova_finalizzata_sum_tot = $utente->prova_finalizzata_sum_tot ?
+                number_format( (float) $utente->prova_finalizzata_sum_tot, '0', ',', '.')
+                : null;
+        }
+        return $utenti;
     }
 
     public function dettaglioAudio()

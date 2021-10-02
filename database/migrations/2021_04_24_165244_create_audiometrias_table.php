@@ -36,6 +36,26 @@ class CreateAudiometriasTable extends Migration
             $table->string('_4000s')->nullable();
             $table->string('_6000s')->nullable();
             $table->string('_8000s')->nullable();
+            $table->string('_125ossd')->nullable();
+            $table->string('_250ossd')->nullable();
+            $table->string('_500ossd')->nullable();
+            $table->string('_1000ossd')->nullable();
+            $table->string('_1500ossd')->nullable();
+            $table->string('_2000ossd')->nullable();
+            $table->string('_3000ossd')->nullable();
+            $table->string('_4000ossd')->nullable();
+            $table->string('_6000ossd')->nullable();
+            $table->string('_8000ossd')->nullable();
+            $table->string('_125osss')->nullable();
+            $table->string('_250osss')->nullable();
+            $table->string('_500osss')->nullable();
+            $table->string('_1000osss')->nullable();
+            $table->string('_1500osss')->nullable();
+            $table->string('_2000osss')->nullable();
+            $table->string('_3000osss')->nullable();
+            $table->string('_4000osss')->nullable();
+            $table->string('_6000osss')->nullable();
+            $table->string('_8000osss')->nullable();
             $table->timestamps();
         });
     }

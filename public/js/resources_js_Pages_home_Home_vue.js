@@ -509,7 +509,7 @@ __webpack_require__.r(__webpack_exports__);
           radius: 7,
           tension: 0,
           fill: false,
-          data: [-parseInt(this.audiogrammaClient.audiometria[this.indice]._125d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._250d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._500d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._1000d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._1500d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._2000d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._3000d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._4000d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._6000d) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._8000d) + 5]
+          data: [-parseInt(this.audiogrammaClient.audiometria[this.indice]._125ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._250ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._500ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1500ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._2000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._3000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._4000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._6000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._8000ossd)]
         }, {
           label: 'Normoudente',
           backgroundColor: 'rgba(115,250,10,0.2)',
@@ -545,7 +545,7 @@ __webpack_require__.r(__webpack_exports__);
           backgroundColor: '#a8c3f8',
           borderColor: 'rgb(0,1,192)',
           pointStyle: 'cross',
-          rotation: 30,
+          rotation: 40,
           radius: 7,
           tension: 0,
           fill: false,
@@ -560,7 +560,7 @@ __webpack_require__.r(__webpack_exports__);
           radius: 7,
           tension: 0,
           fill: false,
-          data: [-parseInt(this.audiogrammaClient.audiometria[this.indice]._125s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._250s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._500s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._1000s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._1500s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._2000s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._3000s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._4000s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._6000s) + 5, -parseInt(this.audiogrammaClient.audiometria[this.indice]._8000s) + 5]
+          data: [-parseInt(this.audiogrammaClient.audiometria[this.indice]._125osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._250osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._500osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1000osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1500osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._2000osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._3000osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._4000osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._6000osss), -parseInt(this.audiogrammaClient.audiometria[this.indice]._8000osss)]
         }, {
           label: 'Normoudente',
           backgroundColor: 'rgba(115,250,10,0.2)',
@@ -2468,6 +2468,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'GG in prova',
+        align: 'center',
         width: 120,
         value: 'giorni_prova',
         sortable: false,

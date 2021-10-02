@@ -316,6 +316,9 @@ class ClientService
                             if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0])){
                                 $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
                             }
+                            if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[2])){
+                                $ossead = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[2];
+                            }
                         }
                     }
                 }
@@ -328,10 +331,14 @@ class ClientService
                             if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1])){
                                 $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
                             }
+                            if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[3])){
+                                $osseas = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[3];
+                            }
                         }
                     }
                 }
             }
+
             /*$audiometriad = isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]) ?
                 $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0] : null;
             $audiometrias = isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1]) ?
@@ -359,6 +366,28 @@ class ClientService
             $s6000 = null;
             $s8000 = null;
 
+            $ossd125 = null;
+            $ossd250 = null;
+            $ossd500 = null;
+            $ossd1000 = null;
+            $ossd1500 = null;
+            $ossd2000 = null;
+            $ossd3000 = null;
+            $ossd4000 = null;
+            $ossd6000 = null;
+            $ossd8000 = null;
+
+            $osss125 = null;
+            $osss250 = null;
+            $osss500 = null;
+            $osss1000 = null;
+            $osss1500 = null;
+            $osss2000 = null;
+            $osss3000 = null;
+            $osss4000 = null;
+            $osss6000 = null;
+            $osss8000 = null;
+
             if (isset($audiometriad->TonePoints)) {
                 foreach ($audiometriad->TonePoints as $tono){
                     ${'d'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
@@ -368,6 +397,18 @@ class ClientService
             if (isset($audiometrias->TonePoints)) {
                 foreach ($audiometrias->TonePoints as $tono){
                     ${'s'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+                }
+            }
+
+            if (isset($ossead->TonePoints)) {
+                foreach ($ossead->TonePoints as $tono){
+                    ${'ossd'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+                }
+            }
+
+            if (isset($osseas->TonePoints)) {
+                foreach ($osseas->TonePoints as $tono){
+                    ${'osss'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
                 }
             }
 
@@ -397,6 +438,28 @@ class ClientService
                 $audiom->_4000s = (int)$s4000? (int)$s4000 : ( (int)$s3000 + (int)$s6000 ) / 2;
                 $audiom->_6000s = (int)$s6000? (int)$s6000 : ( (int)$s4000 + (int)$s8000 ) / 2;
                 $audiom->_8000s = (int)$s8000? (int)$s8000 :  (int)$s6000;
+
+                $audiom->_125ossd = (int)$ossd125 ? (int)$ossd125 : null;
+                $audiom->_250ossd = (int)$ossd250 ? (int)$ossd250 : null;
+                $audiom->_500ossd = (int)$ossd500 ? (int)$ossd500 : null;
+                $audiom->_1000ossd = (int)$ossd1000? (int)$ossd1000 : null;
+                $audiom->_1500ossd = (int)$ossd1500? (int)$ossd1500 : null;
+                $audiom->_2000ossd = (int)$ossd2000? (int)$ossd2000 : null;
+                $audiom->_3000ossd = (int)$ossd3000? (int)$ossd3000 : null;
+                $audiom->_4000ossd = (int)$ossd4000? (int)$ossd4000 : null;
+                $audiom->_6000ossd = (int)$ossd6000? (int)$ossd6000 : null;
+                $audiom->_8000ossd = (int)$ossd8000? (int)$ossd8000 :  null;
+
+                $audiom->_125osss = (int)$osss125 ? (int)$osss125 : null;
+                $audiom->_250osss = (int)$osss250 ? (int)$osss250 : null;
+                $audiom->_500osss = (int)$osss500 ? (int)$osss500 : null;
+                $audiom->_1000osss = (int)$osss1000? (int)$osss1000 : null;
+                $audiom->_1500osss = (int)$osss1500? (int)$osss1500 : null;
+                $audiom->_2000osss = (int)$osss2000? (int)$osss2000 : null;
+                $audiom->_3000osss = (int)$osss3000? (int)$osss3000 : null;
+                $audiom->_4000osss = (int)$osss4000? (int)$osss4000 : null;
+                $audiom->_6000osss = (int)$osss6000? (int)$osss6000 : null;
+                $audiom->_8000osss = (int)$osss8000? (int)$osss8000 :  null;
 
                 $res = $audiom->save();
 
