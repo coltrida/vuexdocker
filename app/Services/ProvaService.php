@@ -8,6 +8,7 @@ use App\Events\ProveEvent;
 use App\Models\Client;
 use App\Models\Documento;
 use App\Models\Fattura;
+use App\Models\Informazione;
 use App\Models\Product;
 use App\Models\ProductProva;
 use App\Models\Prova;
@@ -116,6 +117,13 @@ class ProvaService
             'link' => '/storage/documenti/'.$prova->client->id.'/'.$filenameInformativa,
         ]);
 
+        Informazione::create([
+            'client_id' => $prova->client_id,
+            'giorno' => Carbon::now()->format('Y-m-d'),
+            'tipo' => 'PROVA',
+            'note' => 'Aperta Prova per € '.number_format( (float) $prova->tot, '0', ',', '.')
+        ]);
+
         /*$informativa = new Documento();
         $informativa->client_id = $prova->client->id;
         $informativa->prova_id = $prova->id;
@@ -159,6 +167,14 @@ class ProvaService
         $prova->mese_fine = Carbon::now()->month;
         $prova->anno_fine = Carbon::now()->year;
         $prova->save();
+
+        Informazione::create([
+            'client_id' => $prova->client_id,
+            'giorno' => Carbon::now()->format('Y-m-d'),
+            'tipo' => 'RESO',
+            'note' => 'Reso prova di € '.number_format( (float) $prova->tot, '0', ',', '.')
+        ]);
+
         $provaSalvata = Prova::with('product', 'stato', 'user', 'client', 'copiaComm')->find($idProva);
         broadcast(new ProveEvent($provaSalvata))->toOthers();
 
@@ -199,21 +215,12 @@ class ProvaService
             'data_saldo' => (int)$request->totFatturaReale - (int)$request->acconto === 0 ? Carbon::now() : null,
         ]);
 
-        /*$fattura = new Fattura();
-        $fattura->prova_id = $prova->id;
-        $fattura->user_id = $prova->user_id;
-        $fattura->data_fattura = $prova->fine_prova;
-        $fattura->mese_fattura = Carbon::now()->month;
-        $fattura->anno_fattura = Carbon::now()->year;
-        $fattura->acconto = $request->acconto;
-        $fattura->nr_rate = $request->rate;
-        $fattura->tot_fattura = $request->totFatturaReale;
-        $fattura->al_saldo = (int)$request->totFatturaReale - (int)$request->acconto;
-        if ($fattura->al_saldo === 0){
-            $fattura->saldata = true;
-            $fattura->data_saldo = Carbon::now();
-        }
-        $fattura->save();*/
+        Informazione::create([
+            'client_id' => $prova->client_id,
+            'giorno' => Carbon::now()->format('Y-m-d'),
+            'tipo' => 'FATTURA',
+            'note' => 'Fatturata prova di € '.number_format( (float) $fattura->tot_fattura, '0', ',', '.')
+        ]);
 
         if ($request->acconto) {
             Ratefattura::create([
@@ -234,6 +241,12 @@ class ProvaService
 
             $fattura->ultima_rata = Carbon::now();
             $fattura->save();
+
+            Informazione::create([
+                'giorno' => Carbon::now()->format('Y-m-d'),
+                'tipo' => 'ACCONTO',
+                'note' => 'Acconto di € '.number_format( (float) $request->acconto, '0', ',', '.')
+            ]);
         }
 
         $prodotti = $request->product;

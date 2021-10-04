@@ -52,6 +52,12 @@
                 @chiudiDocumenti="chiudiDocumenti"
             ></documenti>
 
+            <informazioni
+                v-if="showInformazioni"
+                :informazioniClient="informazioniClient"
+                @chiudiInformazioni="chiudiInformazioni"
+            ></informazioni>
+
             <recalls
                 v-if="showRecalls"
                 :recallsClient="recallsClient"
@@ -265,6 +271,31 @@
                         </template>
                         <span>Recalls</span>
                     </v-tooltip>
+
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                                v-if="!$vuetify.breakpoint.xs"
+                                color="black"
+                                small
+                                @click="informazioni(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-information-outline
+                            </v-icon>
+                            <v-icon
+                                v-else
+                                color="black"
+                                @click="informazioni(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                            >
+                                mdi-information-outline
+                            </v-icon>
+                        </template>
+                        <span>Informazioni</span>
+                    </v-tooltip>
                 </template>
 
 
@@ -281,13 +312,14 @@
     import Audiogramma from "../../Components/btnClients/audiogramma/Audiogramma";
     import Prove from "../../Components/btnClients/prove/Prove";
     import Documenti from "../../Components/btnClients/documenti/Docunenti";
+    import Informazioni from "../../Components/btnClients/informazioni/Informazioni";
     import Recalls from "../../Components/btnClients/recalls/Recalls";
     import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
     import Messaggioelimina from "../../Components/btnClients/elimina/Messaggioelimina";
 
     export default {
         name: "ClientsFiliale",
-        components: {Messaggioelimina, Prove, Documenti, Audiogramma, Messaggio, Appuntamento, Recalls},
+        components: {Messaggioelimina, Prove, Documenti, Audiogramma, Messaggio, Appuntamento, Recalls, Informazioni},
         data() {
             return {
                 carica: false,
@@ -295,6 +327,7 @@
                 showClients: true,
                 showProve: false,
                 showDocumenti: false,
+                showInformazioni: false,
                 showRecalls: false,
                 showAudiogramma: false,
                 textMessaggio: null,
@@ -304,6 +337,7 @@
                 appuntamentoClient: {},
                 proveClient: {},
                 documentiClient: {},
+                informazioniClient: {},
                 recallsClient: {},
                 search: '',
                 idElimina: '',
@@ -311,7 +345,7 @@
                 cognomeElimina: '',
                 listino: {},
                 headers: [
-                    {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width: 190, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
@@ -405,6 +439,7 @@
 
             audiogramma(client){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = true;
@@ -415,6 +450,7 @@
 
             appuntamento(client){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
@@ -425,6 +461,7 @@
 
             prove(client){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = true;
                 this.showAudiogramma = false;
@@ -435,6 +472,7 @@
 
             documenti(client){
                 this.showDocumenti = true;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = false;
                 this.showAppuntamento = false;
@@ -443,8 +481,20 @@
                 this.documentiClient = client;
             },
 
+            informazioni(client){
+                this.showDocumenti = false;
+                this.showInformazioni = true;
+                this.showRecalls = false;
+                this.showProve = false;
+                this.showAppuntamento = false;
+                this.showAudiogramma = false;
+                this.showClients = false;
+                this.informazioniClient = client;
+            },
+
             recalls(client){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = true;
                 this.showProve = false;
                 this.showAppuntamento = false;
@@ -455,6 +505,7 @@
 
             chiudiRecalls(cliente){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
@@ -472,6 +523,7 @@
 
             chiudiDocumenti(){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
@@ -482,6 +534,7 @@
 
             chiudiAudiogramma(){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
@@ -492,6 +545,7 @@
 
             chiudiAppuntamento(){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = false;
                 this.showAppuntamento = false;
@@ -502,12 +556,30 @@
 
             chiudiProve(){
                 this.showDocumenti = false;
+                this.showInformazioni = false;
                 this.showRecalls = false;
                 this.showProve = false;
                 this.showAudiogramma = false;
                 this.showAppuntamento = false;
                 this.showClients = true;
                 this.proveClient = {};
+            },
+
+            chiudiInformazioni(cliente){
+                this.showDocumenti = false;
+                this.showInformazioni = false;
+                this.showRecalls = false;
+                this.showProve = false;
+                this.showAudiogramma = false;
+                this.showAppuntamento = false;
+                this.showClients = true;
+                this.informazioniClient = {};
+
+                if (cliente){
+                    this.showClients = false;
+                    this.showProve = true;
+                    this.proveClient = cliente;
+                }
             },
 
             reset(){

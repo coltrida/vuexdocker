@@ -9,6 +9,13 @@
             :items="lista"
             class="elevation-1 mt-3"
         >
+            <template v-slot:item.prova.client.fullname="{ item }">
+                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.prova.client.filiale_id, nomRicerca:item.prova.client.nome, cogRicerca:item.prova.client.fullname, }}">
+                    {{item.prova.client.fullname}}
+                </router-link>
+            </template>
+
             <template v-slot:item.rate="{ item }">
                     <v-icon
                         @click="seleziona(item.rate)"

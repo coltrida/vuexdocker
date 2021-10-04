@@ -76,16 +76,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      show1: false,
-      user: {
-        email: '',
-        password: '',
-        repeatpassword: ''
-      },
+      valid: true,
+      emailRules: [function (v) {
+        return !!v || 'la mail è obbligatoria';
+      }],
+      passwordRules: [function (v) {
+        return !!v || 'la password è obbligatoria';
+      }],
+      userRegister: {},
       rules: {
         required: function required(value) {
           return !!value || 'Campo obbligatorio.';
@@ -96,16 +105,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+  mounted: function mounted() {
+    this.userRegister.email = '';
+    this.userRegister.oldPassword = '';
+  },
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getMessaggio: 'getMessaggio',
     getLogged: 'getLogged'
-  })),
+  })), {}, {
+    verificaCampi: function verificaCampi() {
+      return this.userRegister.email != '' && this.userRegister.email != null && this.userRegister.oldPassword != '' && this.userRegister.oldPassword && this.userRegister.password != '' && this.userRegister.password && this.userRegister.repeatpassword != '' && this.userRegister.repeatpassword ? false : true;
+    }
+  }),
   methods: {
     register: function register() {
       var _this = this;
 
-      this.$store.dispatch('login/register', this.user).then(function () {
+      this.$store.dispatch('login/register', this.userRegister).then(function () {
         if (_this.getLogged === true) {
+          _this.userRegister = {};
+
           _this.$router.push({
             name: 'home'
           });
@@ -223,9 +242,9 @@ var render = function() {
                 [
                   _c("v-col", { staticClass: "grow" }, [
                     _vm._v(
-                      "\n                " +
+                      "\n                    " +
                         _vm._s(_vm.getMessaggio) +
-                        "\n            "
+                        "\n                "
                     )
                   ]),
                   _vm._v(" "),
@@ -250,38 +269,32 @@ var render = function() {
       _c(
         "v-form",
         {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.register($event)
-            }
+          ref: "form",
+          attrs: { "lazy-validation": "" },
+          model: {
+            value: _vm.valid,
+            callback: function($$v) {
+              _vm.valid = $$v
+            },
+            expression: "valid"
           }
         },
         [
           _c("v-text-field", {
-            staticClass: "input-group--focused ",
-            attrs: {
-              rules: [_vm.rules.required],
-              type: "text",
-              name: "input-10-2",
-              label: "e-mail"
-            },
+            attrs: { rules: _vm.emailRules, label: "e-mail*", required: "" },
             model: {
-              value: _vm.user.email,
+              value: _vm.userRegister.email,
               callback: function($$v) {
-                _vm.$set(_vm.user, "email", $$v)
+                _vm.$set(_vm.userRegister, "email", $$v)
               },
-              expression: "user.email"
+              expression: "userRegister.email"
             }
           }),
           _vm._v(" "),
           _c("v-text-field", {
             attrs: {
-              "append-icon": _vm.show1 ? "mdi-eye" : "mdi-eye-off",
-              rules: [_vm.rules.required, _vm.rules.min],
-              type: _vm.show1 ? "text" : "password",
-              name: "input-10-1",
-              label: "password",
+              rules: _vm.passwordRules,
+              label: "vecchia password",
               hint: "minimo 6 caratteri",
               counter: ""
             },
@@ -291,21 +304,18 @@ var render = function() {
               }
             },
             model: {
-              value: _vm.user.password,
+              value: _vm.userRegister.oldPassword,
               callback: function($$v) {
-                _vm.$set(_vm.user, "password", $$v)
+                _vm.$set(_vm.userRegister, "oldPassword", $$v)
               },
-              expression: "user.password"
+              expression: "userRegister.oldPassword"
             }
           }),
           _vm._v(" "),
           _c("v-text-field", {
             attrs: {
-              "append-icon": _vm.show1 ? "mdi-eye" : "mdi-eye-off",
-              rules: [_vm.rules.required, _vm.rules.min],
-              type: _vm.show1 ? "text" : "password",
-              name: "input-10-1",
-              label: "ripeti password",
+              rules: _vm.passwordRules,
+              label: "vecchia password",
               hint: "minimo 6 caratteri",
               counter: ""
             },
@@ -315,11 +325,32 @@ var render = function() {
               }
             },
             model: {
-              value: _vm.user.repeatpassword,
+              value: _vm.userRegister.password,
               callback: function($$v) {
-                _vm.$set(_vm.user, "repeatpassword", $$v)
+                _vm.$set(_vm.userRegister, "password", $$v)
               },
-              expression: "user.repeatpassword"
+              expression: "userRegister.password"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              rules: _vm.passwordRules,
+              label: "vecchia password",
+              hint: "minimo 6 caratteri",
+              counter: ""
+            },
+            on: {
+              "click:append": function($event) {
+                _vm.show1 = !_vm.show1
+              }
+            },
+            model: {
+              value: _vm.userRegister.repeatpassword,
+              callback: function($$v) {
+                _vm.$set(_vm.userRegister, "repeatpassword", $$v)
+              },
+              expression: "userRegister.repeatpassword"
             }
           }),
           _vm._v(" "),
@@ -327,9 +358,10 @@ var render = function() {
             "v-btn",
             {
               staticClass: "mr-4",
-              attrs: { color: "success", type: "submit" }
+              attrs: { color: "success", disabled: _vm.verificaCampi },
+              on: { click: _vm.register }
             },
-            [_vm._v("\n        Cambia password\n    ")]
+            [_vm._v("\n            Cambia password\n        ")]
           )
         ],
         1

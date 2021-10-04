@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Fattura;
+use App\Models\Informazione;
 use App\Models\Ratefattura;
 use App\Models\Ruolo;
 use App\Models\User;
@@ -55,13 +56,28 @@ class RateService
         $new->save();*/
 
         $fattura = Fattura::find($request->fatturaId);
+        if ($fattura->al_saldo == $fattura->tot_fattura){
+            $tipoNota = 'Acconto per un importo di € '.number_format( (float) $request->importo, '0', ',', '.');
+        }else{
+            $tipoNota = 'Rata per un importo di € '.number_format( (float) $request->importo, '0', ',', '.');
+        }
         $fattura->al_saldo -= $request->importo;
         if ($fattura->al_saldo === 0){
             $fattura->saldata = true;
+            $tipoNota = 'Saldo per un importo di € '.number_format( (float) $request->importo, '0', ',', '.');
             $fattura->data_saldo = Carbon::now();
         }
         $fattura->ultima_rata = Carbon::now();
         $fattura->save();
+
+
+
+        Informazione::create([
+            'client_id' => $fattura->prova->client_id,
+            'giorno' => Carbon::now()->format('Y-m-d'),
+            'tipo' => 'PAGAMENTI',
+            'note' => $tipoNota
+        ]);
     }
 
     public function caricaFattura($idFattura)

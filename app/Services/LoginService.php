@@ -33,16 +33,16 @@ class LoginService
     {
         $user = User::with('ruolo', 'recapito')->where('email', $request->email)->first();
 
-        if (!$user) {
+        if (!$user || !Hash::check($request->oldPassword, $user->password)) {
             return [
-                'message' => ['Utente inesistente'],
+                'message' => 'Le Credenziali non corrispondono',
                 'stato' => 'errore'
             ];
         }
 
-        if ($request->repeatpassword <> $request->password) {
+        if ($request->repeatpassword !== $request->password) {
             return [
-                'message' => ['Le Password non coincidono'],
+                'message' => 'La nuova password e la ripetizione password non coincidono',
                 'stato' => 'errore'
             ];
         }

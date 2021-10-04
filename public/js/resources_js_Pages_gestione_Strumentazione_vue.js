@@ -639,7 +639,7 @@ var render = function() {
                   _c(
                     "v-col",
                     [
-                      _c("h3", [_vm._v("Medici")]),
+                      _c("h3", [_vm._v("Altri")]),
                       _vm._v(" "),
                       _c("v-data-table", {
                         staticClass: "elevation-1",

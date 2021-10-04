@@ -10,6 +10,7 @@ use App\Http\Controllers\api\ElaborazioneController;
 use App\Http\Controllers\api\FilialiController;
 use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\GestioneController;
+use App\Http\Controllers\api\InformazioniController;
 use App\Http\Controllers\api\ListinoController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
@@ -245,6 +246,10 @@ Route::group([], function () {
         Route::get('/clientiNonHannoMaiPresoAppuntamenti', [TelefonateController::class, 'clientiNonHannoMaiPresoAppuntamenti']);
         Route::get('/clientiUnAnnoUltimoAppuntamento', [TelefonateController::class, 'clientiUnAnnoUltimoAppuntamento']);
         Route::get('/recallsByIdClient/{idClient}', [TelefonateController::class, 'recallsByIdClient']);
+
+    // ----------------- informazioni -----------------------
+    Route::get('/informazioni/{id}', [InformazioniController::class, 'lista']);
+    Route::post('/aggiungiInformazione', [InformazioniController::class, 'aggiungi']);
 });
 
 // ----------------- debugBar -----------------------

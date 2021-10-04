@@ -144,6 +144,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -293,6 +300,13 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -842,6 +856,37 @@ var render = function() {
         },
         scopedSlots: _vm._u([
           {
+            key: "item.prova.client.fullname",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c(
+                  "router-link",
+                  {
+                    staticStyle: { color: "black" },
+                    attrs: {
+                      to: {
+                        name: "clientsFiliale",
+                        params: {
+                          filialeId: item.prova.client.filiale_id,
+                          nomRicerca: item.prova.client.nome,
+                          cogRicerca: item.prova.client.fullname
+                        }
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(item.prova.client.fullname) +
+                        "\n                "
+                    )
+                  ]
+                )
+              ]
+            }
+          },
+          {
             key: "item.rata",
             fn: function(ref) {
               var item = ref.item
@@ -1021,6 +1066,37 @@ var render = function() {
           items: _vm.lista
         },
         scopedSlots: _vm._u([
+          {
+            key: "item.prova.client.fullname",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c(
+                  "router-link",
+                  {
+                    staticStyle: { color: "black" },
+                    attrs: {
+                      to: {
+                        name: "clientsFiliale",
+                        params: {
+                          filialeId: item.prova.client.filiale_id,
+                          nomRicerca: item.prova.client.nome,
+                          cogRicerca: item.prova.client.fullname
+                        }
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.prova.client.fullname) +
+                        "\n            "
+                    )
+                  ]
+                )
+              ]
+            }
+          },
           {
             key: "item.rate",
             fn: function(ref) {

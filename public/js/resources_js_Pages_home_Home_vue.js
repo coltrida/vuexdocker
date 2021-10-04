@@ -46215,7 +46215,7 @@ var render = function() {
                                             ),
                                             [
                                               _vm._v(
-                                                "\n                                        mdi-check\n                                    "
+                                                "\n                                        mdi-currency-usd\n                                    "
                                               )
                                             ]
                                           )

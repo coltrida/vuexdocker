@@ -231,7 +231,7 @@
                                                 v-on="on"
                                                 @click="apriFattura(item)"
                                         >
-                                            mdi-check
+                                            mdi-currency-usd
                                         </v-icon>
                                     </template>
                                     <span>Produci Fattura</span>

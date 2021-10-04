@@ -96,7 +96,7 @@
                             </v-data-table>
                         </v-col>
                         <v-col>
-                            <h3>Medici</h3>
+                            <h3>Altri</h3>
                             <v-data-table
                                 dense
                                 v-model="strumentoDaAssociare.medico_id"

@@ -2256,8 +2256,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -2279,6 +2279,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_medici__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./module/medici */ "./resources/js/Store/module/medici.js");
 /* harmony import */ var _module_telefonate__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./module/telefonate */ "./resources/js/Store/module/telefonate.js");
 /* harmony import */ var _module_strumentazione__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./module/strumentazione */ "./resources/js/Store/module/strumentazione.js");
+/* harmony import */ var _module_informazioni__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./module/informazioni */ "./resources/js/Store/module/informazioni.js");
 
 
 
@@ -2302,8 +2303,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_21__.default.use(vuex__WEBPACK_IMPORTED_MODULE_22__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_22__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_22__.default.use(vuex__WEBPACK_IMPORTED_MODULE_23__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_23__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2325,7 +2327,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_22__.default.Store({
     rate: _module_rate__WEBPACK_IMPORTED_MODULE_17__.default,
     medici: _module_medici__WEBPACK_IMPORTED_MODULE_18__.default,
     telefonate: _module_telefonate__WEBPACK_IMPORTED_MODULE_19__.default,
-    strumentazione: _module_strumentazione__WEBPACK_IMPORTED_MODULE_20__.default
+    strumentazione: _module_strumentazione__WEBPACK_IMPORTED_MODULE_20__.default,
+    informazioni: _module_informazioni__WEBPACK_IMPORTED_MODULE_21__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -4761,6 +4764,113 @@ var mutations = {
 
 /***/ }),
 
+/***/ "./resources/js/Store/module/informazioni.js":
+/*!***************************************************!*\
+  !*** ./resources/js/Store/module/informazioni.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    informazioni: []
+  };
+};
+
+var getters = {
+  getInformazioni: function getInformazioni(state) {
+    return state.informazioni;
+  }
+};
+var actions = {
+  fetchInformazioni: function fetchInformazioni(_ref, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkinformazioni) + '/' + id, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context.sent;
+              commit('fetchInformazioni', response.data.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  addInformazione: function addInformazione(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaggiungiinformazione), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context2.sent;
+              commit('addInformazione', response.data.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  }
+};
+var mutations = {
+  fetchInformazioni: function fetchInformazioni(state, payload) {
+    state.informazioni = payload;
+  },
+  addInformazione: function addInformazione(state, payload) {
+    state.informazioni.unshift(payload);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
 /***/ "./resources/js/Store/module/listino.js":
 /*!**********************************************!*\
   !*** ./resources/js/Store/module/listino.js ***!
@@ -5216,8 +5326,9 @@ var actions = {
               _context2.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkregister), {
                 'email': payload.email,
+                'oldPassword': payload.oldPassword,
                 'password': payload.password,
-                'repeatpassword': payload.password
+                'repeatpassword': payload.repeatpassword
               });
 
             case 3:
@@ -5317,7 +5428,7 @@ var mutations = {
       state.ruolo = payload.user.ruolo.nome;
       state.messaggio = '';
     } else {
-      state.messaggio = "Credenziali errate";
+      state.messaggio = payload.message;
     }
   },
   logout: function logout(state) {
@@ -9299,7 +9410,9 @@ var help = function help() {
     linkmodificastrumentazione: base + 'modificaStrumentazione',
     linkstrumentazioneassociata: base + 'strumentazioneAssociata',
     linkassociastrumento: base + 'associaStrumentazione',
-    linkdissociastrumento: base + 'dissociaStrumentazione'
+    linkdissociastrumento: base + 'dissociaStrumentazione',
+    linkinformazioni: base + 'informazioni',
+    linkaggiungiinformazione: base + 'aggiungiInformazione'
   };
 };
 

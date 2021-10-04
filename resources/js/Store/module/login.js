@@ -46,8 +46,9 @@ const actions = {
     async register({commit}, payload){
         const response = await axios.post(`${help().linkregister}`, {
             'email': payload.email,
+            'oldPassword': payload.oldPassword,
             'password': payload.password,
-            'repeatpassword': payload.password,
+            'repeatpassword': payload.repeatpassword,
         });
         commit('login', response.data);
     },
@@ -90,7 +91,7 @@ const mutations = {
             state.ruolo = payload.user.ruolo.nome;
             state.messaggio = '';
         }else{
-            state.messaggio = "Credenziali errate"
+            state.messaggio = payload.message
         }
     },
 

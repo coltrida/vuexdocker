@@ -33,7 +33,7 @@ class ListinoSeeder extends Seeder
                 'categoria_id' => 1,
                 'costo' => 800,
                 'giorniTempoDiReso' => 90,
-                'prezzolistino' => 3000,
+                'prezzolistino' => 2600,
                 'iva' => 4
             ],
             [
@@ -42,7 +42,7 @@ class ListinoSeeder extends Seeder
                 'categoria_id' => 1,
                 'costo' => 700,
                 'giorniTempoDiReso' => 90,
-                'prezzolistino' => 2800,
+                'prezzolistino' => 2100,
                 'iva' => 4
             ],
             [
@@ -51,7 +51,7 @@ class ListinoSeeder extends Seeder
                 'categoria_id' => 1,
                 'costo' => 500,
                 'giorniTempoDiReso' => 90,
-                'prezzolistino' => 2300,
+                'prezzolistino' => 1700,
                 'iva' => 4
             ],
             [

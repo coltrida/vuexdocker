@@ -141,6 +141,11 @@ class Client extends Model
         return $this->belongsTo(Filiale::class);
     }
 
+    public function informazione()
+    {
+        return $this->hasMany(Informazione::class);
+    }
+
     public function prova()
     {
         return $this->hasMany(Prova::class)->with('stato', 'user', 'product', 'client');

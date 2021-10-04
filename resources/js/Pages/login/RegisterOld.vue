@@ -11,21 +11,22 @@
             </v-row>
         </v-alert>
 
-<!--    <v-form @submit.prevent="register">-->
-        <v-form ref="form"
-                v-model="valid"
-                lazy-validation>
-
+    <v-form @submit.prevent="register">
         <v-text-field
             v-model="userRegister.email"
-            :rules="emailRules"
-            label="e-mail*"
-            required
+            :rules="[rules.required]"
+            type="text"
+            name="input-10-2"
+            label="e-mail"
+            class="input-group--focused "
         ></v-text-field>
 
         <v-text-field
             v-model="userRegister.oldPassword"
-            :rules="passwordRules"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
             label="vecchia password"
             hint="minimo 6 caratteri"
             counter
@@ -34,8 +35,11 @@
 
         <v-text-field
             v-model="userRegister.password"
-            :rules="passwordRules"
-            label="vecchia password"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
+            label="password"
             hint="minimo 6 caratteri"
             counter
             @click:append="show1 = !show1"
@@ -43,18 +47,19 @@
 
         <v-text-field
             v-model="userRegister.repeatpassword"
-            :rules="passwordRules"
-            label="vecchia password"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
+            label="ripeti password"
             hint="minimo 6 caratteri"
             counter
             @click:append="show1 = !show1"
         ></v-text-field>
-
         <v-btn
             color="success"
             class="mr-4"
-            :disabled="verificaCampi"
-            @click="register"
+            type="submit"
         >
             Cambia password
         </v-btn>
@@ -68,9 +73,7 @@
     export default {
         data() {
             return {
-                valid: true,
-                emailRules: [ v => !!v || 'la mail è obbligatoria'],
-                passwordRules: [ v => !!v || 'la password è obbligatoria'],
+                show1: false,
                 userRegister: {},
                 rules: {
                     required: value => !!value || 'Campo obbligatorio.',
@@ -80,22 +83,14 @@
         },
 
         mounted() {
-            this.userRegister.email = '';
-            this.userRegister.oldPassword = '';
+            this.userRegister = {}
         },
 
         computed:{
             ...mapGetters('login', {
                 getMessaggio:'getMessaggio',
                 getLogged:'getLogged',
-            }),
-
-            verificaCampi(){
-                return this.userRegister.email != '' && this.userRegister.email != null
-                && this.userRegister.oldPassword != '' && this.userRegister.oldPassword
-                && this.userRegister.password != '' && this.userRegister.password
-                && this.userRegister.repeatpassword != '' && this.userRegister.repeatpassword ? false : true;
-            }
+            })
         },
 
         methods: {
