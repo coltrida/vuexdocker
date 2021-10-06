@@ -114,7 +114,7 @@ class Client extends Model
      * @var array
      */
     protected $guarded = [];
-    protected $appends = ['fullname'];
+    protected $appends = ['fullname', 'fullricerca'];
 
     public function notes()
     {
@@ -205,6 +205,11 @@ class Client extends Model
     public function getFullnameAttribute()
     {
         return $this->cognome.' '.$this->nome;
+    }
+
+    public function getFullricercaAttribute()
+    {
+        return $this->cognome.' '.$this->nome.' '.$this->cognome;
     }
 
     public function scopeCompleanno($query, $mese, $giorno)

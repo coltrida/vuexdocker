@@ -179,4 +179,15 @@ class TelefonateService
         return Risultatitel::orderBy('anno')->orderBy('mesenumero')->get();
     }
 
+    public function daRichiamare()
+    {
+        return Client::with(['tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+                $q->with('copiaComm')->first();
+            }])
+            ->whereHas('recalls', function ($q){
+                $q->where([['esito', 'Richiamare'], ['effettuata', 1]]);
+            })->orderBy('user_id')->get();
+    }
+
 }

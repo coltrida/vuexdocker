@@ -165,7 +165,6 @@
                     [
                         'Preso Appuntamento',
                         'Non Interessato',
-                        'Non Risponde',
                         'Richiamare',
                         'Non vuole essere richiamato',
                     ],

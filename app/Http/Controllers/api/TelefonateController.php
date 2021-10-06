@@ -69,4 +69,9 @@ class TelefonateController extends Controller
     {
         return $telefonateService->statistiche();
     }
+
+    public function daRichiamare(TelefonateService $telefonateService)
+    {
+        return $telefonateService->daRichiamare();
+    }
 }

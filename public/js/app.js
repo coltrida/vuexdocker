@@ -7762,13 +7762,17 @@ var state = function state() {
     clientiMaiRichiamati: [],
     clientiNonHannoMaiPresoAppuntamenti: [],
     clientiUnAnnoUltimoAppuntamento: [],
-    statisticheTelefonate: []
+    statisticheTelefonate: [],
+    daRichiamare: []
   };
 };
 
 var getters = {
   getRecalls: function getRecalls(state) {
     return state.recalls;
+  },
+  getDaRichiamare: function getDaRichiamare(state) {
+    return state.daRichiamare;
   },
   getStatisticheTelefonate: function getStatisticheTelefonate(state) {
     return state.statisticheTelefonate;
@@ -7826,7 +7830,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchStatisticheTelefonate: function fetchStatisticheTelefonate(_ref2) {
+  fetchDaRichiamare: function fetchDaRichiamare(_ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -7835,7 +7839,7 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatistichetelefonate), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkdarichiamare), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7843,7 +7847,7 @@ var actions = {
 
             case 3:
               response = _context2.sent;
-              commit('fetchStatisticheTelefonate', response.data);
+              commit('fetchDaRichiamare', response.data);
 
             case 5:
             case "end":
@@ -7853,7 +7857,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  fetchRecallOggi: function fetchRecallOggi(_ref3) {
+  fetchStatisticheTelefonate: function fetchStatisticheTelefonate(_ref3) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -7862,7 +7866,7 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecalloggi), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatistichetelefonate), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7870,7 +7874,7 @@ var actions = {
 
             case 3:
               response = _context3.sent;
-              commit('fetchRecallOggi', response.data);
+              commit('fetchStatisticheTelefonate', response.data);
 
             case 5:
             case "end":
@@ -7880,7 +7884,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  fetchRecallDomani: function fetchRecallDomani(_ref4) {
+  fetchRecallOggi: function fetchRecallOggi(_ref4) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -7889,7 +7893,7 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecalldomani), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecalloggi), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7897,7 +7901,7 @@ var actions = {
 
             case 3:
               response = _context4.sent;
-              commit('fetchRecallDomani', response.data);
+              commit('fetchRecallOggi', response.data);
 
             case 5:
             case "end":
@@ -7907,7 +7911,7 @@ var actions = {
       }, _callee4);
     }))();
   },
-  fetchTelefonateFatteOggi: function fetchTelefonateFatteOggi(_ref5) {
+  fetchRecallDomani: function fetchRecallDomani(_ref5) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -7916,7 +7920,7 @@ var actions = {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linktelefonatefatteoggi), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecalldomani), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7924,7 +7928,7 @@ var actions = {
 
             case 3:
               response = _context5.sent;
-              commit('fetchTelefonateFatteOggi', response.data);
+              commit('fetchRecallDomani', response.data);
 
             case 5:
             case "end":
@@ -7934,7 +7938,7 @@ var actions = {
       }, _callee5);
     }))();
   },
-  fetchNumeroTelefonateFatteOggi: function fetchNumeroTelefonateFatteOggi(_ref6) {
+  fetchTelefonateFatteOggi: function fetchTelefonateFatteOggi(_ref6) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
@@ -7943,7 +7947,7 @@ var actions = {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linknumerotelefonatefatteoggi), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linktelefonatefatteoggi), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7951,7 +7955,7 @@ var actions = {
 
             case 3:
               response = _context6.sent;
-              commit('fetchNumeroTelefonateFatteOggi', response.data);
+              commit('fetchTelefonateFatteOggi', response.data);
 
             case 5:
             case "end":
@@ -7961,7 +7965,7 @@ var actions = {
       }, _callee6);
     }))();
   },
-  fetchNumeroAppuntamentiPresiOggi: function fetchNumeroAppuntamentiPresiOggi(_ref7) {
+  fetchNumeroTelefonateFatteOggi: function fetchNumeroTelefonateFatteOggi(_ref7) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
@@ -7970,7 +7974,7 @@ var actions = {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linknumeroappuntamentipresioggi), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linknumerotelefonatefatteoggi), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7978,7 +7982,7 @@ var actions = {
 
             case 3:
               response = _context7.sent;
-              commit('fetchNumeroAppuntamentiPresiOggi', response.data);
+              commit('fetchNumeroTelefonateFatteOggi', response.data);
 
             case 5:
             case "end":
@@ -7988,7 +7992,7 @@ var actions = {
       }, _callee7);
     }))();
   },
-  addTelefonata: function addTelefonata(_ref8, payload) {
+  fetchNumeroAppuntamentiPresiOggi: function fetchNumeroAppuntamentiPresiOggi(_ref8) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
@@ -7997,7 +8001,7 @@ var actions = {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddtelefonata), payload, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linknumeroappuntamentipresioggi), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8005,7 +8009,7 @@ var actions = {
 
             case 3:
               response = _context8.sent;
-              commit('addTelefonata', response.data.data);
+              commit('fetchNumeroAppuntamentiPresiOggi', response.data);
 
             case 5:
             case "end":
@@ -8015,7 +8019,7 @@ var actions = {
       }, _callee8);
     }))();
   },
-  aggiornaTelefonata: function aggiornaTelefonata(_ref9, payload) {
+  addTelefonata: function addTelefonata(_ref9, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
@@ -8024,7 +8028,7 @@ var actions = {
             case 0:
               commit = _ref9.commit;
               _context9.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaggiornatelefonata), payload, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddtelefonata), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8032,7 +8036,7 @@ var actions = {
 
             case 3:
               response = _context9.sent;
-              commit('aggiornaTelefonata', response.data.data);
+              commit('addTelefonata', response.data.data);
 
             case 5:
             case "end":
@@ -8042,7 +8046,7 @@ var actions = {
       }, _callee9);
     }))();
   },
-  fetchClientiMaiRichiamati: function fetchClientiMaiRichiamati(_ref10) {
+  aggiornaTelefonata: function aggiornaTelefonata(_ref10, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
@@ -8051,7 +8055,7 @@ var actions = {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientimairichiamati), {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaggiornatelefonata), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8059,7 +8063,7 @@ var actions = {
 
             case 3:
               response = _context10.sent;
-              commit('fetchClientiMaiRichiamati', response.data);
+              commit('aggiornaTelefonata', response.data.data);
 
             case 5:
             case "end":
@@ -8069,7 +8073,7 @@ var actions = {
       }, _callee10);
     }))();
   },
-  fetchClientiNonHannoMaiPresoAppuntamenti: function fetchClientiNonHannoMaiPresoAppuntamenti(_ref11) {
+  fetchClientiMaiRichiamati: function fetchClientiMaiRichiamati(_ref11) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
@@ -8078,7 +8082,7 @@ var actions = {
             case 0:
               commit = _ref11.commit;
               _context11.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientinonhannomaipresoappuntamenti), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientimairichiamati), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8086,7 +8090,7 @@ var actions = {
 
             case 3:
               response = _context11.sent;
-              commit('fetchClientiNonHannoMaiPresoAppuntamenti', response.data);
+              commit('fetchClientiMaiRichiamati', response.data);
 
             case 5:
             case "end":
@@ -8096,7 +8100,7 @@ var actions = {
       }, _callee11);
     }))();
   },
-  fetchClientiUnAnnoUltimoAppuntamento: function fetchClientiUnAnnoUltimoAppuntamento(_ref12) {
+  fetchClientiNonHannoMaiPresoAppuntamenti: function fetchClientiNonHannoMaiPresoAppuntamenti(_ref12) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee12() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee12$(_context12) {
@@ -8105,7 +8109,7 @@ var actions = {
             case 0:
               commit = _ref12.commit;
               _context12.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientiunannoultimoappuntamento), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientinonhannomaipresoappuntamenti), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -8113,7 +8117,7 @@ var actions = {
 
             case 3:
               response = _context12.sent;
-              commit('fetchClientiUnAnnoUltimoAppuntamento', response.data);
+              commit('fetchClientiNonHannoMaiPresoAppuntamenti', response.data);
 
             case 5:
             case "end":
@@ -8122,11 +8126,41 @@ var actions = {
         }
       }, _callee12);
     }))();
+  },
+  fetchClientiUnAnnoUltimoAppuntamento: function fetchClientiUnAnnoUltimoAppuntamento(_ref13) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
+        while (1) {
+          switch (_context13.prev = _context13.next) {
+            case 0:
+              commit = _ref13.commit;
+              _context13.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientiunannoultimoappuntamento), {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context13.sent;
+              commit('fetchClientiUnAnnoUltimoAppuntamento', response.data);
+
+            case 5:
+            case "end":
+              return _context13.stop();
+          }
+        }
+      }, _callee13);
+    }))();
   }
 };
 var mutations = {
   fetchRecallsByIdClient: function fetchRecallsByIdClient(state, payload) {
     state.recalls = payload;
+  },
+  fetchDaRichiamare: function fetchDaRichiamare(state, payload) {
+    state.daRichiamare = payload;
   },
   fetchStatisticheTelefonate: function fetchStatisticheTelefonate(state, payload) {
     state.statisticheTelefonate = payload;
@@ -9412,7 +9446,8 @@ var help = function help() {
     linkassociastrumento: base + 'associaStrumentazione',
     linkdissociastrumento: base + 'dissociaStrumentazione',
     linkinformazioni: base + 'informazioni',
-    linkaggiungiinformazione: base + 'aggiungiInformazione'
+    linkaggiungiinformazione: base + 'aggiungiInformazione',
+    linkdarichiamare: base + 'daRichiamare'
   };
 };
 

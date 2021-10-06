@@ -114,8 +114,6 @@
 
                             </v-data-table>
 
-
-
                         <h2 class="mt-10">Clienti Mai Richiamati</h2>
                         <v-data-table
                             :headers="headers1"
@@ -273,7 +271,6 @@
                             </template>
 
                         </v-data-table>
-
 
                     </div>
                 </v-col>
@@ -436,6 +433,85 @@
                         </template>
 
                     </v-data-table>
+
+                    <h2 class="mt-10">Telefonate da Richiamare - in sospeso</h2>
+                    <v-data-table
+                        :headers="headers1"
+                        dense
+                        :items="getDaRichiamare"
+                        class="elevation-1 mt-3 mb-10"
+                    >
+
+                        <template v-slot:item.nome="{ item }">
+                            <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                {{item.fullname}}
+                            </router-link>
+                        </template>
+
+                        <template v-slot:item.actions="{ item }">
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="purple"
+                                        small
+                                        @click="appuntamento(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-calendar-edit
+                                    </v-icon>
+                                </template>
+                                <span>Appuntamento</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="orange"
+                                        small
+                                        @click="prove(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-ear-hearing
+                                    </v-icon>
+                                </template>
+                                <span>Prova</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="light-blue darken-4"
+                                        small
+                                        @click="documenti(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-file-document
+                                    </v-icon>
+                                </template>
+                                <span>Documenti</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="green"
+                                        small
+                                        @click="recalls(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-phone
+                                    </v-icon>
+                                </template>
+                                <span>Recalls</span>
+                            </v-tooltip>
+                        </template>
+
+                    </v-data-table>
                 </v-col>
 
             </v-row>
@@ -494,6 +570,7 @@
                 fetchClientiMaiRichiamati: 'fetchClientiMaiRichiamati',
                 fetchClientiNonHannoMaiPresoAppuntamenti: 'fetchClientiNonHannoMaiPresoAppuntamenti',
                 fetchClientiUnAnnoUltimoAppuntamento: 'fetchClientiUnAnnoUltimoAppuntamento',
+                fetchDaRichiamare: 'fetchDaRichiamare',
             }),
 
             ...mapActions('users', {
@@ -511,6 +588,7 @@
                 this.fetchClientiMaiRichiamati();
                 this.fetchClientiNonHannoMaiPresoAppuntamenti();
                 this.fetchClientiUnAnnoUltimoAppuntamento();
+                this.fetchDaRichiamare();
             },
 
             audiogramma(client){
@@ -627,6 +705,7 @@
                 getClientiMaiRichiamati: 'getClientiMaiRichiamati',
                 getClientiNonHannoMaiPresoAppuntamenti: 'getClientiNonHannoMaiPresoAppuntamenti',
                 getClientiUnAnnoUltimoAppuntamento: 'getClientiUnAnnoUltimoAppuntamento',
+                getDaRichiamare: 'getDaRichiamare',
             }),
 
             ...mapGetters('users', {

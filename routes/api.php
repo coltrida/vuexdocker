@@ -246,6 +246,7 @@ Route::group([], function () {
         Route::get('/clientiNonHannoMaiPresoAppuntamenti', [TelefonateController::class, 'clientiNonHannoMaiPresoAppuntamenti']);
         Route::get('/clientiUnAnnoUltimoAppuntamento', [TelefonateController::class, 'clientiUnAnnoUltimoAppuntamento']);
         Route::get('/recallsByIdClient/{idClient}', [TelefonateController::class, 'recallsByIdClient']);
+        Route::get('/daRichiamare', [TelefonateController::class, 'daRichiamare']);
 
     // ----------------- informazioni -----------------------
     Route::get('/informazioni/{id}', [InformazioniController::class, 'lista']);

@@ -43,6 +43,7 @@ class ClientResource extends JsonResource
             'audiometria' => $this->audiometria,
             'prove' => $this->prova,
             'fullname' => $this->fullname,
+            'fullricerca' => $this->fullricerca,
         ];
     }
 }

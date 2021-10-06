@@ -2345,7 +2345,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       telefonata: {},
       telefonataDaAggiornare: {},
       menu: false,
-      tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Non Risponde', 'Richiamare', 'Non vuole essere richiamato'],
+      tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Richiamare', 'Non vuole essere richiamato'],
       header: [{
         text: 'Data Telefonata',
         width: 120,
@@ -2756,6 +2756,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2797,6 +2807,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       informazioniClient: {},
       recallsClient: {},
       search: '',
+      ricercaBtn: false,
       idElimina: '',
       nomeElimina: '',
       cognomeElimina: '',
@@ -2881,7 +2892,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'nominativo',
         width: 130,
-        value: 'fullname',
+        value: 'fullricerca',
         "class": "indigo white--text"
       }]
     };
@@ -2931,6 +2942,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.cognomeRicerca) {
         this.search = this.cognomeRicerca;
+        this.ricercaBtn = true;
       }
     },
     elimina: function elimina(id, nome, cognome) {
@@ -3083,6 +3095,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     reset: function reset() {
       this.$store.commit('clients/resetClientMessaggio');
+    },
+    clearSearch: function clearSearch() {
+      this.search = '';
+      this.ricercaBtn = false;
+    },
+    cerca: function cerca() {
+      this.ricercaBtn = true;
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_8__.mapGetters)('clients', {
@@ -3094,6 +3113,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_8__.mapGetters)('login', {
     getRuolo: 'getRuolo'
   })), {}, {
+    searchTrigger: function searchTrigger() {
+      if (this.search !== '') {
+        if (this.ricercaBtn) {
+          this.ricercaBtn = false;
+          return this.search;
+        }
+      }
+    },
     rottaIdFiliale: function rottaIdFiliale() {
       return this.$route.params.filialeId ? this.$route.params.filialeId : null;
     },
@@ -46099,9 +46126,30 @@ var render = function() {
                   _c("v-text-field", {
                     attrs: {
                       "append-icon": "mdi-magnify",
+                      clearable: "",
+                      "clear-icon": "mdi-close-circle",
                       label: "Ricerca",
                       "single-line": "",
                       "hide-details": ""
+                    },
+                    on: {
+                      "click:clear": _vm.clearSearch,
+                      "click:append": _vm.cerca,
+                      keydown: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.cerca($event)
+                      }
                     },
                     model: {
                       value: _vm.search,
@@ -46117,7 +46165,7 @@ var render = function() {
                     attrs: {
                       headers: _vm.headers,
                       items: _vm.getClients,
-                      search: _vm.search,
+                      search: _vm.searchTrigger,
                       "items-per-page": 10
                     },
                     scopedSlots: _vm._u(
@@ -46819,11 +46867,30 @@ var render = function() {
                               )
                             ]
                           }
+                        },
+                        {
+                          key: "item.fullricerca",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "div",
+                                { staticStyle: { "font-size": "6px" } },
+                                [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(item.fullricerca) +
+                                      "\n                "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
                         }
                       ],
                       null,
                       false,
-                      2777446617
+                      2675309461
                     )
                   })
                 ],

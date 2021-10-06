@@ -93,6 +93,9 @@
             verificaCampi(){
                 return this.userRegister.email != '' && this.userRegister.email != null
                 && this.userRegister.oldPassword != '' && this.userRegister.oldPassword
+                && this.userRegister.oldPassword.length > 5
+                && this.userRegister.password.length > 5
+                && this.userRegister.repeatpassword.length > 5
                 && this.userRegister.password != '' && this.userRegister.password
                 && this.userRegister.repeatpassword != '' && this.userRegister.repeatpassword ? false : true;
             }

@@ -10,12 +10,17 @@ const state = () => ({
     clientiMaiRichiamati: [],
     clientiNonHannoMaiPresoAppuntamenti: [],
     clientiUnAnnoUltimoAppuntamento: [],
-    statisticheTelefonate: []
+    statisticheTelefonate: [],
+    daRichiamare: [],
 });
 
 const getters = {
     getRecalls(state){
         return state.recalls;
+    },
+
+    getDaRichiamare(state){
+        return state.daRichiamare;
     },
 
     getStatisticheTelefonate(state){
@@ -63,6 +68,15 @@ const actions = {
             }
         });
         commit('fetchRecallsByIdClient', response.data.data);
+    },
+
+    async fetchDaRichiamare({commit}){
+        const response = await axios.get(`${help().linkdarichiamare}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchDaRichiamare', response.data);
     },
 
     async fetchStatisticheTelefonate({commit}){
@@ -168,6 +182,10 @@ const actions = {
 const mutations = {
     fetchRecallsByIdClient(state, payload){
         state.recalls = payload;
+    },
+
+    fetchDaRichiamare(state, payload){
+        state.daRichiamare = payload;
     },
 
     fetchStatisticheTelefonate(state, payload){

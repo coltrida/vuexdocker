@@ -2154,7 +2154,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       telefonata: {},
       telefonataDaAggiornare: {},
       menu: false,
-      tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Non Risponde', 'Richiamare', 'Non vuole essere richiamato'],
+      tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Richiamare', 'Non vuole essere richiamato'],
       header: [{
         text: 'Data Telefonata',
         width: 120,

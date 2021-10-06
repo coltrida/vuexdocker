@@ -155,6 +155,7 @@ const help = () => {
         linkdissociastrumento: base+'dissociaStrumentazione',
         linkinformazioni: base+'informazioni',
         linkaggiungiinformazione: base+'aggiungiInformazione',
+        linkdarichiamare: base+'daRichiamare',
     };
 };
 export default help;

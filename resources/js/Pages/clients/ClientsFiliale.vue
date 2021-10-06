@@ -84,6 +84,11 @@
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
+                clearable
+                clear-icon="mdi-close-circle"
+                @click:clear="clearSearch"
+                @click:append="cerca"
+                @keydown.enter="cerca"
                 label="Ricerca"
                 single-line
                 hide-details
@@ -92,7 +97,7 @@
             <v-data-table
                 :headers="headers"
                 :items="getClients"
-                :search="search"
+                :search="searchTrigger"
                 :items-per-page="10"
                 class="elevation-1 mt-3"
             >
@@ -298,6 +303,11 @@
                     </v-tooltip>
                 </template>
 
+                <template v-slot:item.fullricerca="{ item }">
+                    <div style="font-size: 6px">
+                        {{item.fullricerca}}
+                    </div>
+                </template>
 
             </v-data-table>
             </div>
@@ -340,6 +350,7 @@
                 informazioniClient: {},
                 recallsClient: {},
                 search: '',
+                ricercaBtn: false,
                 idElimina: '',
                 nomeElimina: '',
                 cognomeElimina: '',
@@ -360,7 +371,7 @@
                     {text: 'E-mail', width: 180, value: 'mail', class: "indigo white--text"},
                     {text: 'fonte', width: 200, value: 'marketing', class: "indigo white--text"},
                     {text: 'user', width: 130, value: 'user', class: "indigo white--text"},
-                    {text: 'nominativo', width: 130, value: 'fullname', class: "indigo white--text"},
+                    {text: 'nominativo', width: 130, value: 'fullricerca', class: "indigo white--text"},
 
                 ],
             }
@@ -414,6 +425,7 @@
 
                 if(this.cognomeRicerca){
                     this.search = this.cognomeRicerca;
+                    this.ricercaBtn = true;
                 }
             },
 
@@ -584,6 +596,15 @@
 
             reset(){
                 this.$store.commit('clients/resetClientMessaggio');
+            },
+
+            clearSearch () {
+                this.search = '';
+                this.ricercaBtn = false;
+            },
+
+            cerca(){
+                this.ricercaBtn = true;
             }
         },
 
@@ -601,6 +622,15 @@
             ...mapGetters('login', {
                 getRuolo: 'getRuolo',
             }),
+
+            searchTrigger () {
+                if (this.search !== '') {
+                    if(this.ricercaBtn){
+                        this.ricercaBtn = false;
+                        return this.search;
+                    }
+                }
+            },
 
             rottaIdFiliale(){
                 return this.$route.params.filialeId ? this.$route.params.filialeId : null;
