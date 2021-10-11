@@ -106,6 +106,18 @@
                 </v-col>
             </v-row>
 
+            <v-row v-if="ricerca.tipo == 2">
+                <v-col cols="3">
+                    <v-text-field
+                        v-model="ricerca.acquistatoAnniFa"
+                        prefix="Acquistato da più di:"
+                        type="number"
+                        min="0"
+                        suffix="anni fa"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
+
     <div>
         <div class="text-center" v-if="carica">
             <v-progress-circular

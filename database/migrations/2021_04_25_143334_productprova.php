@@ -15,12 +15,16 @@ class Productprova extends Migration
     {
         Schema::create('product_prova', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('prova_id')->unsigned();
+     //       $table->bigInteger('prova_id')->onDelete('cascade')->unsigned();
             $table->bigInteger('product_id')->unsigned();
             $table->string('orecchio')->nullable();
             $table->string('prezzo')->nullable();
             $table->string('prezzo_formattato')->nullable();
             $table->timestamps();
+            $table->foreignId('prova_id')
+                ->constrained('provas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

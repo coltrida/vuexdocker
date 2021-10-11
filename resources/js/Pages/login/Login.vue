@@ -35,6 +35,7 @@
             color="success"
             class="mr-4"
             type="submit"
+            :block="$vuetify.breakpoint.xs"
         >
             login
         </v-btn>

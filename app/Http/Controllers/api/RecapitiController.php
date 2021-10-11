@@ -28,6 +28,11 @@ class RecapitiController extends Controller
         return $recapitoService->aggiungi($request);
     }
 
+    public function modifica(Request $request, RecapitoService $recapitoService)
+    {
+        return $recapitoService->modifica($request);
+    }
+
     public function elimina($id, RecapitoService $recapitoService)
     {
         return $recapitoService->elimina($id);

@@ -13,7 +13,7 @@
         </v-row>
 
         <v-row>
-            <v-col cols="6">
+            <v-col cols="12" md="12" lg="6" xs="12" sm="12">
                 <v-form ref="form"
                         v-model="valid"
                         lazy-validation>
@@ -179,7 +179,7 @@
 
                 </v-data-table>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" md="12" lg="6" xs="12" sm="12">
                 <calendar :audioprot="appuntamentoClient.user_id" :fissaNome="true"/>
             </v-col>
         </v-row>

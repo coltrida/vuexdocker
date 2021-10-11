@@ -67,10 +67,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -263,7 +259,15 @@ var render = function() {
                 [
                   _c(
                     "v-col",
-                    { attrs: { cols: "4", sm: "4" } },
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "4",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c("v-file-input", {
                         attrs: { "truncate-length": "15", accept: ".xml" },
@@ -281,12 +285,24 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "2", sm: "2" } },
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "2",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "success", dark: "" },
+                          attrs: {
+                            color: "success",
+                            dark: "",
+                            block: _vm.$vuetify.breakpoint.xs
+                          },
                           on: { click: _vm.importaXml }
                         },
                         [

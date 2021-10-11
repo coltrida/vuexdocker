@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
                 'matricola' => '123',
                 'stato_id' => 5,
                 'filiale_id' => 1,
-                'listino_id' => 4,
+                'listino_id' => 3,
                 'fornitore_id' => 1,
                 'fattura_id' => null,
                 'user_id' => null,

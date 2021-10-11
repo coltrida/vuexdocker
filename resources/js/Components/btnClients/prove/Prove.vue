@@ -39,18 +39,37 @@
 
         <v-row v-if="switchInserisci">
                 <!---------- Creo nuova prova con pulsante NUOVA PROVA --------->
-                <v-col >
-                    <v-btn color="primary" dark @click="nuovaProvaInCorso" class="mt-2">
-                        Nuova Prova
-                    </v-btn>
-                </v-col>
+                <div class="text-center" v-if="carica2">
+                    <v-progress-circular
+                        indeterminate
+                        color="primary"
+                    ></v-progress-circular>
+                </div>
+                <div v-else>
+                    <v-col >
+                        <v-btn color="primary" dark @click="nuovaProvaInCorso" class="mt-2">
+                            Nuova Prova
+                        </v-btn>
+                    </v-col>
+                </div>
+
         </v-row>
                 <!---------- End Creo nuova prova con pulsante NUOVA PROVA --------->
 
                 <!---------- Seleziono i prodotti per la nuova prova createa --------->
         <v-row v-else>
                     <v-col
-                        cols="12" md="3" lg="3"
+                        cols="12" md="2" lg="2"
+                    >
+                        <v-select
+                            @change="selezionaTipologia()"
+                            v-model="tipologiaSelezionata"
+                            :items="tipologia"
+                            label="Tipologia"
+                        ></v-select>
+                    </v-col>
+                    <v-col
+                        cols="12" md="2" lg="2"
                     >
                         <v-select
                             @change="caricaProdotti()"
@@ -59,6 +78,7 @@
                             item-text="nome"
                             :items="getFornitori"
                             label="fornitore"
+                            :disabled="!abilitaFornitore"
                         ></v-select>
                     </v-col>
 
@@ -70,13 +90,27 @@
                             v-model="nuovaProva.prodotto"
                             item-text="nomeMatricola"
                             :items="getInFiliale"
-                            label="prodotti"
+                            :label="tipologiaSelezionata"
                             return-object
                         ></v-select>
                     </v-col>
 
                     <v-col
-                        cols="12" md="2" lg="2"
+                        cols="12" md="1" lg="1"
+                    >
+                        <v-text-field
+                            @change="calcolaPrezzoScontato()"
+                            @input="calcolaPrezzoScontato()"
+                            type="number"
+                            min="0"
+                            v-model="sconto"
+                            label="sconto"
+                        ></v-text-field>
+                        <v-chip small v-if="nuovaProva.scontoMax">Sconto max: {{nuovaProva.scontoMax}} %</v-chip>
+                    </v-col>
+
+                    <v-col
+                        cols="12" md="1" lg="1"
                     >
                         <v-select
                             v-model="nuovaProva.orecchio"
@@ -88,9 +122,10 @@
                     </v-col>
 
                     <v-col
-                        cols="12" md="2" lg="2"
+                        cols="12" md="1" lg="1"
                     >
                         <v-text-field
+                            type="number"
                             v-model="nuovaProva.prezzolistino"
                             label="prezzo"
                         ></v-text-field>
@@ -100,7 +135,7 @@
                         cols="12" md="2" lg="2"
                     >
                         <!---------- Bottone per inserire il prodotto nella nuova prova --------->
-                        <v-btn color="primary" dark @click="inserisciInProva">
+                        <v-btn color="primary" dark @click="inserisciInProva" :disabled="!abilitaInProva">
                             In Prova
                         </v-btn>
                     </v-col>
@@ -153,7 +188,14 @@
 
                     <v-col cols="12" md="6" lg="6">
                         <h3>Prove</h3>
-                        <v-data-table
+                        <div class="text-center" v-if="carica2">
+                            <v-progress-circular
+                                indeterminate
+                                color="primary"
+                            ></v-progress-circular>
+                        </div>
+                        <div v-else>
+                            <v-data-table
                             :headers="headerProve"
                             :items="getProvePassate"
                             class="elevation-1 mt-5"
@@ -258,6 +300,7 @@
                             </template>
 
                         </v-data-table>
+                        </div>
                     </v-col>
                 </v-row>
 
@@ -280,9 +323,14 @@
         data(){
             return {
                 listaPro:[],
+                tipologia:['Prodotti','Servizi'],
+                tipologiaSelezionata:'',
+                abilitaFornitore: false,
                 carica: false,
+                carica2: false,
                 dialog: false,
                 idFattura: '',
+                sconto: 0,
                 dialogFattura: false,
                 prova:{},
                 itemFattura:{},
@@ -315,8 +363,15 @@
         },
 
         mounted() {
+            this.$store.commit('prove/svuotaElementiNuovaProva');
+            this.carica2 = true;
+            this.deleteProveSenzaProdotti(this.proveClient.id).then(() => {
+                this.fetchProvePassate(this.proveClient.id).then(() => {
+                    this.carica2 = false;
+                });
+            });
             this.fetchFornitori();
-            this.fetchProvePassate(this.proveClient.id);
+
         },
 
         methods: {
@@ -329,6 +384,7 @@
                 switchInProva:'switchInProva',
                 switchRimuoviDallaProva:'switchRimuoviDallaProva',
                 fetchSoglie: 'fetchSoglie',
+                fetchServizi: 'fetchServizi',
             }),
 
             ...mapActions('prove', {
@@ -338,6 +394,7 @@
                 salvaProvaInCorso:'salvaProvaInCorso',
                 fetchProvePassate:'fetchProvePassate',
                 resoProva:'resoProva',
+                deleteProveSenzaProdotti:'deleteProveSenzaProdotti',
             }),
 
             nuovaProvaInCorso(){
@@ -365,18 +422,29 @@
             },
 
             caricaPrezzoProdotto(){
-                this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzolistino;
+               // console.log(this.nuovaProva.prodotto);
+                this.sconto = 0;
+                if (this.tipologiaSelezionata === 'Prodotti'){
+                    this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzolistino;
+                    this.nuovaProva.scontoMax = this.nuovaProva.prodotto.scontoMax.toString();
+                } else {
+                    this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzoOriginal;
+                }
             },
 
             inserisciInProva(){
                 this.nuovaProva.prova_id = this.prova.id;
+                this.nuovaProva.tipologia = this.tipologiaSelezionata;
                 this.AddEleInNuovaProva(this.nuovaProva);
-                this.switchInProva({
-                    'idProduct':this.nuovaProva.prodotto.id,
-                    'user_id':this.proveClient.user_id,
-                    'client_id':this.proveClient.id,
-                });
-                this.eliminaElementoDallaListaPresenti();
+                if (this.tipologiaSelezionata === 'Prodotti'){
+                    this.switchInProva({
+                        'idProduct':this.nuovaProva.prodotto.id,
+                        'user_id':this.proveClient.user_id,
+                        'client_id':this.proveClient.id,
+                    });
+                    this.eliminaElementoDallaListaPresenti();
+                }
+
             },
 
             eliminaElementoDallaListaPresenti(){
@@ -436,7 +504,31 @@
             chiudiLista(){
                 this.dialog = false;
                 this.listaPro = []
+            },
+
+            calcolaPrezzoScontato(){
+                if (this.tipologiaSelezionata === 'Prodotti'){
+                    this.nuovaProva.prezzolistino = (this.sconto === 0 || this.sconto == null || this.sconto === '') ? this.nuovaProva.prodotto.prezzolistino :
+                        ( parseInt(this.nuovaProva.prodotto.prezzolistino) * (100 - parseInt(this.sconto) ) ) / 100
+                } else {
+                    this.nuovaProva.prezzolistino = (this.sconto === 0 || this.sconto == null || this.sconto === '') ? this.nuovaProva.prodotto.prezzoOriginal :
+                        ( parseInt(this.nuovaProva.prodotto.prezzoOriginal) * (100 - parseInt(this.sconto) ) ) / 100
+                }
+
+            },
+
+            selezionaTipologia(){
+                this.nuovaProva.prodotto = null;
+                this.nuovaProva.prezzolistino = null;
+                this.sconto = 0;
+                if (this.tipologiaSelezionata === 'Prodotti'){
+                    this.abilitaFornitore = true;
+                } else {
+                    this.abilitaFornitore = false;
+                    this.fetchServizi();
+                }
             }
+
         },
 
         computed: {
@@ -456,6 +548,10 @@
 
             fatturaPdf(){
                 return 'http://vuexdocker.local/storage/fatture/2021/'+this.idFattura+'.pdf';
+            },
+
+            abilitaInProva(){
+                return this.nuovaProva.prezzolistino ? true : false;
             }
         },
     }

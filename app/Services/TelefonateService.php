@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Client;
+use App\Models\Informazione;
 use App\Models\Risultatitel;
 use App\Models\Telefonata;
 use App\Models\Tipologia;
@@ -146,6 +147,12 @@ class TelefonateService
         $propieta = 'recall';
         if($request->esito){
             $testo = $utente->name.' ha telefonato a '.$client->cognome.' '.$client->nome.' ( '.$client->user->name.' ) con esito: '.$request->esito;
+            Informazione::create([
+                'client_id' => $client->id,
+                'giorno' => Carbon::now()->format('Y-m-d'),
+                'tipo' => 'TELEFONATA',
+                'note' => $testo
+            ]);
         }else{
             $testo = $utente->name.' ha inserito la telefonata da fare per '.$client->cognome.' '.$client->nome.' ( '.$client->user->name.' )';
         }
@@ -168,6 +175,12 @@ class TelefonateService
         $propieta = 'recall';
         if($request->esito){
             $testo = $utente->name.' ha telefonato a '.$telefonata->client->cognome.' '.$telefonata->client->nome.' con esito: '.$request->esito;
+            Informazione::create([
+                'client_id' => $telefonata->client->id,
+                'giorno' => Carbon::now()->format('Y-m-d'),
+                'tipo' => 'TELEFONATA',
+                'note' => $testo
+            ]);
         }
         $log->scriviLog($telefonata->client->cognome.' '.$telefonata->client->nome, $utente, $utente->name, $propieta, $testo);
 
@@ -181,12 +194,13 @@ class TelefonateService
 
     public function daRichiamare()
     {
+        $oggi = Carbon::now()->format('Y-m-d');
         return Client::with(['tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
-            ->whereHas('recalls', function ($q){
-                $q->where([['esito', 'Richiamare'], ['effettuata', 1]]);
+            ->whereHas('recalls', function ($q) use($oggi){
+                $q->where([['datarecall', '<', $oggi], ['effettuata', 0]]);
             })->orderBy('user_id')->get();
     }
 

@@ -9,11 +9,21 @@
             </template>
             <v-list>
                 <div v-if="getFiliali[0]">
-                    <router-link :to="{ name: 'clientsFiliale', params: { filialeId: getFiliali[0].id }}">
+                    <!--<router-link :to="{ name: 'clientsFiliale', params: { filialeId: getFiliali[0].id }}">
                         <v-list-item>
                             <v-list-item-title>{{ getFiliali[0].nome }}</v-list-item-title>
                         </v-list-item>
-                    </router-link>
+                    </router-link>-->
+
+                    <div v-for="(item, index) in getFiliali"
+                         :key="index">
+                        <router-link :to="{ name: 'clientsFiliale', params: { filialeId: item.id }}">
+                            <v-list-item>
+                                <v-list-item-title>{{ item.nome }}</v-list-item-title>
+                            </v-list-item>
+                        </router-link>
+                    </div>
+
                     <router-link :to="{ name: 'importByFiliale'}">
                         <v-list-item>
                             <v-list-item-title>IMPORTA</v-list-item-title>
@@ -69,10 +79,11 @@
                 </v-list-item>
             </template>
             <v-list>
-                <div v-if="getFiliali[0]">
-                    <router-link :to="{ name: 'magazzino', params: { filialeId: getFiliali[0].id }}">
+                <div v-for="(item, index) in getFiliali"
+                     :key="index">
+                    <router-link :to="{ name: 'magazzino', params: { filialeId: item.id }}">
                         <v-list-item>
-                            <v-list-item-title>{{ getFiliali[0].nome }}</v-list-item-title>
+                            <v-list-item-title>{{ item.nome }}</v-list-item-title>
                         </v-list-item>
                     </router-link>
                 </div>

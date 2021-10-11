@@ -17,9 +17,9 @@
         </v-row>
 
         <v-row>
-            <v-col cols="6">
+            <v-col cols="12" md="12" lg="6" xs="12" sm="12">
                 <v-row>
-                    <v-col>
+                    <v-col cols="12" md="12" lg="6" xs="12" sm="12">
                         <v-menu
                             ref="menu"
                             v-model="menu"
@@ -65,80 +65,91 @@
                         </v-menu>
                     </v-col>
 
-                    <v-col>
+                    <v-col cols="12" md="12" lg="6" xs="12" sm="12">
                         <v-select
                             v-model="telefonata.esito"
                             :items="tipologiaEsito"
                             label="esito"
                         ></v-select>
                     </v-col>
-                    <v-col>
+
+                    <v-col cols="12" md="12" lg="8" xs="12" sm="12">
                         <v-text-field
                             v-model="telefonata.note"
                             label="Note"
                         ></v-text-field>
                     </v-col>
 
-                    <v-col>
-                        <v-btn color="primary" dark @click="inserisci">
+                    <v-col cols="12" md="12" lg="4" xs="12" sm="12">
+                        <v-btn color="primary" dark @click="inserisci" :block="$vuetify.breakpoint.xs">
                             Inserisci
                         </v-btn>
                     </v-col>
                 </v-row>
+
                 <v-row class="mb-6">
                     <v-col cols="12">
-                        <v-data-table
-                            :headers="header"
-                            :items="getRecalls"
-                            hide-default-footer
-                            class="elevation-1"
-                        >
+                        <div class="text-center" v-if="carica">
+                            <v-progress-circular
+                                indeterminate
+                                color="primary"
+                            ></v-progress-circular>
+                        </div>
+                        <div v-else>
+                            <v-data-table
+                                :headers="header"
+                                :items="getRecalls"
+                                hide-default-footer
+                                class="elevation-1"
+                            >
 
-                            <template v-slot:item.esito="{ item }">
-                                <div v-if="item.esito == null">
-                                    <v-select
-                                        class="mt-4"
-                                        v-model="telefonataDaAggiornare.esito"
-                                        :items="tipologiaEsito"
-                                        outlined
-                                        dense
-                                        label="esito"
-                                    ></v-select>
-                                </div>
-                                <div v-else>
-                                    {{item.esito}}
-                                </div>
-                            </template>
+                                <template v-slot:item.esito="{ item }">
+                                    <div v-if="item.esito == null">
+                                        <v-select
+                                            class="mt-4"
+                                            v-model="telefonataDaAggiornare.esito"
+                                            :items="tipologiaEsito"
+                                            outlined
+                                            dense
+                                            label="esito"
+                                        ></v-select>
+                                    </div>
+                                    <div v-else>
+                                        {{item.esito}}
+                                    </div>
+                                </template>
 
-                            <template v-slot:item.note="{ item }">
-                                <div v-if="item.note == null && item.esito == null">
-                                    <v-text-field
-                                        v-model="telefonataDaAggiornare.note"
-                                        label="Note"
-                                    ></v-text-field>
-                                </div>
-                                <div v-else>
-                                    {{item.note}}
-                                </div>
-                            </template>
+                                <template v-slot:item.note="{ item }">
+                                    <div v-if="item.note == null && item.esito == null">
+                                        <v-text-field
+                                            v-model="telefonataDaAggiornare.note"
+                                            label="Note"
+                                        ></v-text-field>
+                                    </div>
+                                    <div v-else>
+                                        {{item.note}}
+                                    </div>
+                                </template>
 
-                            <template v-slot:item.action="{ item }">
-                                <div v-if="item.esito == null">
-                                    <v-btn small color="success" dark @click="aggiorna(item)">
-                                        Aggiorna
-                                    </v-btn>
-                                </div>
-                                <div v-if="item.esito == 'Preso Appuntamento'">
-                                    <v-btn small color="success" dark @click="appuntamento()">
-                                        Vedi Appuntamento
-                                    </v-btn>
-                                </div>
-                            </template>
-                        </v-data-table>
+                                <template v-slot:item.action="{ item }">
+                                    <div v-if="item.esito == null">
+                                        <v-btn small color="success" dark @click="aggiorna(item)">
+                                            Aggiorna
+                                        </v-btn>
+                                    </div>
+                                    <div v-if="item.esito == 'Preso Appuntamento'">
+                                        <v-btn small color="success" dark @click="appuntamento()">
+                                            Vedi Appuntamento
+                                        </v-btn>
+                                    </div>
+                                </template>
+                            </v-data-table>
+                        </div>
+
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" md="12" lg="6" xs="12" sm="12">
                 <calendar :audioprot="recallsClient.user_id" :fissaNome="true"/>
             </v-col>
         </v-row>
@@ -158,6 +169,7 @@
 
         data(){
             return {
+                carica: false,
                 telefonata:{},
                 telefonataDaAggiornare:{},
                 menu:false,
@@ -179,7 +191,10 @@
         },
 
         mounted() {
-            this.fetchRecallsByIdClient(this.recallsClient.id);
+            this.carica = true;
+            this.fetchRecallsByIdClient(this.recallsClient.id).then(() => {
+                this.carica = false;
+            });
         },
 
         methods:{

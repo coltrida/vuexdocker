@@ -151,6 +151,18 @@ class Client extends Model
         return $this->hasMany(Prova::class)->with('stato', 'user', 'product', 'client');
     }
 
+    public function proveSenzaProdotti()
+    {
+        return $this->hasMany(Prova::class)
+            ->whereDoesntHave('product');
+    }
+
+    public function proveSenzaDocumenti()
+    {
+        return $this->hasMany(Prova::class)->with('product')
+            ->whereDoesntHave('documento');
+    }
+
     public function provePassate()
     {
         return $this->hasMany(Prova::class)->where('stato', '!=', config('enum.statoAPA.prova'));
@@ -159,6 +171,24 @@ class Client extends Model
     public function provaInCorso()
     {
         return $this->hasMany(Prova::class)->where('stato', config('enum.statoAPA.prova'));
+    }
+
+    public function scopeClientidapiudianni($query, $anni)
+    {
+        $annoOggi = Carbon::now()->year;
+        $annoRicerca = $annoOggi - $anni;
+
+        return $query->whereHas(['prova', function($p) use($annoRicerca){
+            $p->where('anno_fine', '<', $annoRicerca)->whereHas('stato', function($q){
+                $q->where('nome', 'FATTURA');
+            }) ;
+        }]);
+
+        /*return $this->hasMany(Prova::class)
+            ->where('anno_fine', '<', $annoRicerca)
+            ->whereHas('stato', function($q){
+                $q->where('nome', 'FATTURA');
+        });*/
     }
 
     public function provaFattura()

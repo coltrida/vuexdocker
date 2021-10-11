@@ -8,7 +8,7 @@
                     v-if="dialogProdotti"
                     @chiudiProdotti="chiudiProdotti"
                 />
-                <v-col md="5" lg="5" xs="12" sm="12">
+                <v-col cols="12" md="12" lg="5" xs="12" sm="12">
                     <h2>Prove in Corso:</h2>
                     <div>
                         <v-data-table
@@ -162,7 +162,7 @@
                     </div>
                 </v-col>
 
-                <v-col md="7" lg="7" xs="12" sm="12">
+                <v-col cols="12" md="12" lg="7" xs="12" sm="12">
                     <h2>Appuntamenti Oggi:</h2>
                     <div>
                         <v-data-table

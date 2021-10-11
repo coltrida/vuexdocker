@@ -1914,6 +1914,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "App",
   components: {
@@ -5009,6 +5011,7 @@ var actions = {
                 'categoria_id': payload.categoria_id,
                 'costo': payload.costo,
                 'prezzolistino': payload.prezzolistino,
+                'scontoMax': payload.scontoMax,
                 'iva': payload.iva,
                 'giorniTempoDiReso': payload.giorniTempoDiReso,
                 'idFiliali': payload.idFiliali,
@@ -5047,6 +5050,7 @@ var actions = {
                 'categoria_id': payload.categoria_id,
                 'costo': payload.costo,
                 'prezzolistino': payload.prezzolistino,
+                'scontoMax': payload.scontoMax,
                 'iva': payload.iva,
                 'giorniTempoDiReso': payload.giorniTempoDiReso,
                 'idFiliali': payload.idFiliali,
@@ -6514,6 +6518,33 @@ var actions = {
         }
       }, _callee14);
     }))();
+  },
+  fetchServizi: function fetchServizi(_ref15) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee15() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee15$(_context15) {
+        while (1) {
+          switch (_context15.prev = _context15.next) {
+            case 0:
+              commit = _ref15.commit;
+              _context15.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkservizi), {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context15.sent;
+              commit('fetchInFiliale', response.data.data);
+
+            case 5:
+            case "end":
+              return _context15.stop();
+          }
+        }
+      }, _callee15);
+    }))();
   }
 };
 var mutations = {
@@ -6674,7 +6705,8 @@ var actions = {
                 'prova_id': payload.prova_id,
                 'product_id': payload.prodotto.id,
                 'orecchio': payload.orecchio,
-                'prezzo': payload.prezzolistino
+                'prezzo': payload.prezzolistino,
+                'tipologia': payload.tipologia
               }, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -6802,6 +6834,29 @@ var actions = {
         }
       }, _callee7);
     }))();
+  },
+  deleteProveSenzaProdotti: function deleteProveSenzaProdotti(_ref8, idClient) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              commit = _ref8.commit;
+              _context8.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkdeleteprovesenzaprodotti) + '/' + idClient, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    }))();
   }
 };
 var mutations = {
@@ -6834,6 +6889,9 @@ var mutations = {
       return u.id !== payload.id;
     });
     state.provePassate.unshift(payload);
+  },
+  svuotaElementiNuovaProva: function svuotaElementiNuovaProva(state) {
+    state.elementiNuovaProva = [];
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7241,7 +7299,8 @@ var actions = {
                 'citta': payload.citta,
                 'telefono': payload.telefono,
                 'user_id': payload.user_id,
-                'provincia': payload.provincia
+                'provincia': payload.provincia,
+                'informazioni': payload.informazioni
               }, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -7260,15 +7319,51 @@ var actions = {
       }, _callee6);
     }))();
   },
-  eliminaRecapito: function eliminaRecapito(_ref7, payload) {
+  modificaRecapito: function modificaRecapito(_ref7, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificarecapito), {
+                'id': payload.id,
+                'nome': payload.nome,
+                'indirizzo': payload.indirizzo,
+                'citta': payload.citta,
+                'telefono': payload.telefono,
+                'user_id': payload.user_id,
+                'provincia': payload.provincia,
+                'informazioni': payload.informazioni
+              }, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context7.sent;
+              commit('addRecapito', response.data);
+
+            case 5:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }))();
+  },
+  eliminaRecapito: function eliminaRecapito(_ref8, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              commit = _ref8.commit;
+              _context8.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrecapiti) + '/' + payload.id, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -7280,10 +7375,10 @@ var actions = {
 
             case 4:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7);
+      }, _callee8);
     }))();
   }
 };
@@ -9328,6 +9423,7 @@ var help = function help() {
     linkrecapiti: base + 'recapiti',
     linkrecapitiperaudio: base + 'recapitiPerAudio',
     linkaddrecapito: base + 'addRecapito',
+    linkmodificarecapito: base + 'modificaRecapito',
     linkrichiestaprodotti: base + 'richiestaProdotti',
     linkclients: base + 'clients',
     linkeliminaclient: base + 'eliminaClient',
@@ -9447,7 +9543,9 @@ var help = function help() {
     linkdissociastrumento: base + 'dissociaStrumentazione',
     linkinformazioni: base + 'informazioni',
     linkaggiungiinformazione: base + 'aggiungiInformazione',
-    linkdarichiamare: base + 'daRichiamare'
+    linkdarichiamare: base + 'daRichiamare',
+    linkdeleteprovesenzaprodotti: base + 'eliminaProveSenzaProdotti',
+    linkservizi: base + 'servizi'
   };
 };
 
@@ -33939,7 +34037,19 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("v-card-text", [_c("router-view")], 1),
+            _c("v-card-text", [
+              _c(
+                "div",
+                {
+                  staticStyle: {
+                    padding: "0 5px 5px 5px",
+                    "margin-bottom": "50px"
+                  }
+                },
+                [_c("router-view")],
+                1
+              )
+            ]),
             _vm._v(" "),
             _c("Footer")
           ],

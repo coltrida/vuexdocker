@@ -75,6 +75,25 @@ const actions = {
             'telefono': payload.telefono,
             'user_id': payload.user_id,
             'provincia': payload.provincia,
+            'informazioni': payload.informazioni,
+        }, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('addRecapito', response.data);
+    },
+
+    async modificaRecapito({commit}, payload){
+        const response = await axios.post(`${help().linkmodificarecapito}`, {
+            'id': payload.id,
+            'nome': payload.nome,
+            'indirizzo': payload.indirizzo,
+            'citta': payload.citta,
+            'telefono': payload.telefono,
+            'user_id': payload.user_id,
+            'provincia': payload.provincia,
+            'informazioni': payload.informazioni,
         }, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')

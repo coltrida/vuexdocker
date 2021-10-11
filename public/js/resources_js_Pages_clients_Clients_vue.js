@@ -508,7 +508,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -1753,6 +1752,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1766,9 +1808,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       listaPro: [],
+      tipologia: ['Prodotti', 'Servizi'],
+      tipologiaSelezionata: '',
+      abilitaFornitore: false,
       carica: false,
+      carica2: false,
       dialog: false,
       idFattura: '',
+      sconto: 0,
       dialogFattura: false,
       prova: {},
       itemFattura: {},
@@ -1845,8 +1892,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
+    this.$store.commit('prove/svuotaElementiNuovaProva');
+    this.carica2 = true;
+    this.deleteProveSenzaProdotti(this.proveClient.id).then(function () {
+      _this.fetchProvePassate(_this.proveClient.id).then(function () {
+        _this.carica2 = false;
+      });
+    });
     this.fetchFornitori();
-    this.fetchProvePassate(this.proveClient.id);
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
@@ -1854,17 +1909,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchInFilialeFornitore: 'fetchInFilialeFornitore',
     switchInProva: 'switchInProva',
     switchRimuoviDallaProva: 'switchRimuoviDallaProva',
-    fetchSoglie: 'fetchSoglie'
+    fetchSoglie: 'fetchSoglie',
+    fetchServizi: 'fetchServizi'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('prove', {
     AddEleInNuovaProva: 'AddEleInNuovaProva',
     creaNuovaProva: 'creaNuovaProva',
     eliminaEle: 'eliminaEle',
     salvaProvaInCorso: 'salvaProvaInCorso',
     fetchProvePassate: 'fetchProvePassate',
-    resoProva: 'resoProva'
+    resoProva: 'resoProva',
+    deleteProveSenzaProdotti: 'deleteProveSenzaProdotti'
   })), {}, {
     nuovaProvaInCorso: function nuovaProvaInCorso() {
-      var _this = this;
+      var _this2 = this;
 
       this.switchInserisci = false;
       this.prova.user_id = this.proveClient.user_id;
@@ -1872,7 +1929,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.prova.marketing_id = this.proveClient.marketing_id;
       this.prova.filiale_id = this.proveClient.filiale_id;
       this.creaNuovaProva(this.prova).then(function () {
-        _this.prova.id = _this.getNuovaProvaCreata.id;
+        _this2.prova.id = _this2.getNuovaProvaCreata.id;
       });
     },
     cancella: function cancella() {
@@ -1887,17 +1944,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     caricaPrezzoProdotto: function caricaPrezzoProdotto() {
-      this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzolistino;
+      // console.log(this.nuovaProva.prodotto);
+      this.sconto = 0;
+
+      if (this.tipologiaSelezionata === 'Prodotti') {
+        this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzolistino;
+        this.nuovaProva.scontoMax = this.nuovaProva.prodotto.scontoMax.toString();
+      } else {
+        this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzoOriginal;
+      }
     },
     inserisciInProva: function inserisciInProva() {
       this.nuovaProva.prova_id = this.prova.id;
+      this.nuovaProva.tipologia = this.tipologiaSelezionata;
       this.AddEleInNuovaProva(this.nuovaProva);
-      this.switchInProva({
-        'idProduct': this.nuovaProva.prodotto.id,
-        'user_id': this.proveClient.user_id,
-        'client_id': this.proveClient.id
-      });
-      this.eliminaElementoDallaListaPresenti();
+
+      if (this.tipologiaSelezionata === 'Prodotti') {
+        this.switchInProva({
+          'idProduct': this.nuovaProva.prodotto.id,
+          'user_id': this.proveClient.user_id,
+          'client_id': this.proveClient.id
+        });
+        this.eliminaElementoDallaListaPresenti();
+      }
     },
     eliminaElementoDallaListaPresenti: function eliminaElementoDallaListaPresenti() {
       var posizione = this.getInFiliale.map(function (ele) {
@@ -1913,7 +1982,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.nuovaProva = {};
     },
     salvaProva: function salvaProva() {
-      var _this2 = this;
+      var _this3 = this;
 
       //console.log(this.getElementiNuovaProva[0]);
       //console.log(this.getElementiNuovaProva.length);
@@ -1924,16 +1993,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo);
         }) : this.getElementiNuovaProva[0].originalPrezzo
       }).then(function () {
-        _this2.carica = false;
+        _this3.carica = false;
 
-        _this2.fetchSoglie(_this2.proveClient.filiale_id);
+        _this3.fetchSoglie(_this3.proveClient.filiale_id);
       });
     },
     reso: function reso(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.resoProva(id).then(function () {
-        _this3.fetchSoglie(_this3.proveClient.filiale_id);
+        _this4.fetchSoglie(_this4.proveClient.filiale_id);
       });
     },
     apriFattura: function apriFattura(item) {
@@ -1953,6 +2022,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     chiudiLista: function chiudiLista() {
       this.dialog = false;
       this.listaPro = [];
+    },
+    calcolaPrezzoScontato: function calcolaPrezzoScontato() {
+      if (this.tipologiaSelezionata === 'Prodotti') {
+        this.nuovaProva.prezzolistino = this.sconto === 0 || this.sconto == null || this.sconto === '' ? this.nuovaProva.prodotto.prezzolistino : parseInt(this.nuovaProva.prodotto.prezzolistino) * (100 - parseInt(this.sconto)) / 100;
+      } else {
+        this.nuovaProva.prezzolistino = this.sconto === 0 || this.sconto == null || this.sconto === '' ? this.nuovaProva.prodotto.prezzoOriginal : parseInt(this.nuovaProva.prodotto.prezzoOriginal) * (100 - parseInt(this.sconto)) / 100;
+      }
+    },
+    selezionaTipologia: function selezionaTipologia() {
+      this.nuovaProva.prodotto = null;
+      this.nuovaProva.prezzolistino = null;
+      this.sconto = 0;
+
+      if (this.tipologiaSelezionata === 'Prodotti') {
+        this.abilitaFornitore = true;
+      } else {
+        this.abilitaFornitore = false;
+        this.fetchServizi();
+      }
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('fornitori', {
@@ -1966,6 +2054,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     fatturaPdf: function fatturaPdf() {
       return 'http://vuexdocker.local/storage/fatture/2021/' + this.idFattura + '.pdf';
+    },
+    abilitaInProva: function abilitaInProva() {
+      return this.nuovaProva.prezzolistino ? true : false;
     }
   })
 });
@@ -2141,6 +2232,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2151,6 +2253,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['recallsClient'],
   data: function data() {
     return {
+      carica: false,
       telefonata: {},
       telefonataDaAggiornare: {},
       menu: false,
@@ -2181,7 +2284,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchRecallsByIdClient(this.recallsClient.id);
+    var _this = this;
+
+    this.carica = true;
+    this.fetchRecallsByIdClient(this.recallsClient.id).then(function () {
+      _this.carica = false;
+    });
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('telefonate', {
     fetchRecallsByIdClient: 'fetchRecallsByIdClient',
@@ -2189,28 +2297,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     aggiornaTelefonata: 'aggiornaTelefonata'
   })), {}, {
     inserisci: function inserisci() {
-      var _this = this;
+      var _this2 = this;
 
       this.telefonata.clientId = this.recallsClient.id;
       this.telefonata.userId = this.getIdUser;
       this.addTelefonata(this.telefonata).then(function () {
-        if (_this.telefonata.esito == 'Preso Appuntamento') {
-          _this.telefonata = {};
+        if (_this2.telefonata.esito == 'Preso Appuntamento') {
+          _this2.telefonata = {};
 
-          _this.$emit('chiudiRecalls', _this.recallsClient);
+          _this2.$emit('chiudiRecalls', _this2.recallsClient);
         }
 
-        _this.telefonata = {};
+        _this2.telefonata = {};
       });
     },
     aggiorna: function aggiorna(recall) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.telefonataDaAggiornare.id = recall.id;
       this.telefonataDaAggiornare.userId = this.getIdUser;
       this.aggiornaTelefonata(this.telefonataDaAggiornare).then(function () {
-        if (_this2.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
-          _this2.$emit('chiudiRecalls', _this2.recallsClient);
+        if (_this3.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
+          _this3.$emit('chiudiRecalls', _this3.recallsClient);
         }
       });
     },
@@ -42197,7 +42305,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "6" } },
+            { attrs: { cols: "12", md: "12", lg: "6", xs: "12", sm: "12" } },
             [
               _c(
                 "v-form",
@@ -42702,7 +42810,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "6" } },
+            { attrs: { cols: "12", md: "12", lg: "6", xs: "12", sm: "12" } },
             [
               _c("calendar", {
                 attrs: {
@@ -42745,7 +42853,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-row",
-    { staticClass: "my-3 flex-column" },
+    { staticClass: "mt-3 flex-column" },
     [
       _c(
         "v-row",
@@ -42793,90 +42901,140 @@ var render = function() {
             ],
             1
           )
-        : _c("div", [
-            _c("div", { staticClass: "row" }, [
-              _vm.audiogrammaClient.audiometria.length > 0
-                ? _c(
-                    "div",
-                    { staticClass: "col-10 flex" },
-                    [
-                      _c("Visualizza", {
-                        attrs: {
-                          chartdata: _vm.chartDataS,
-                          options: _vm.chartOptions
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("Visualizza", {
-                        attrs: {
-                          chartdata: _vm.chartDataD,
-                          options: _vm.chartOptions
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
+        : _c(
+            "div",
+            [
               _c(
-                "div",
-                { staticClass: "col-2" },
+                "v-row",
+                { staticClass: "flex-row" },
                 [
-                  _c(
-                    "div",
-                    [
-                      _c(
-                        "v-btn",
+                  _vm.audiogrammaClient.audiometria.length > 0
+                    ? _c(
+                        "v-col",
                         {
-                          attrs: { color: "success", dark: "" },
-                          on: { click: _vm.aggiungiAudiogramma }
+                          attrs: {
+                            cols: "12",
+                            md: "12",
+                            lg: "5",
+                            xs: "12",
+                            sm: "12"
+                          }
                         },
                         [
-                          _vm._v(
-                            "\n                        Nuovo\n                    "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _vm._l(_vm.audiogrammaClient.audiometria, function(
-                    audio,
-                    index
-                  ) {
-                    return _c(
-                      "div",
-                      { key: audio.id },
-                      [
-                        _c(
-                          "v-btn",
-                          {
-                            staticClass: "mt-2",
-                            attrs: { color: "purple", dark: "" },
-                            on: {
-                              click: function($event) {
-                                return _vm.visualizzaAudiogramma(index)
-                              }
+                          _c("Visualizza", {
+                            attrs: {
+                              chartdata: _vm.chartDataS,
+                              options: _vm.chartOptions
                             }
-                          },
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.audiogrammaClient.audiometria.length > 0
+                    ? _c(
+                        "v-col",
+                        {
+                          attrs: {
+                            cols: "12",
+                            md: "12",
+                            lg: "5",
+                            xs: "12",
+                            sm: "12"
+                          }
+                        },
+                        [
+                          _c("Visualizza", {
+                            attrs: {
+                              chartdata: _vm.chartDataD,
+                              options: _vm.chartOptions
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "2",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                color: "success",
+                                dark: "",
+                                block: _vm.$vuetify.breakpoint.xs
+                              },
+                              on: { click: _vm.aggiungiAudiogramma }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        Nuovo\n                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.audiogrammaClient.audiometria, function(
+                        audio,
+                        index
+                      ) {
+                        return _c(
+                          "div",
+                          { key: audio.id },
                           [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(audio.created_at.substring(0, 10)) +
-                                "\n                    "
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "mt-2",
+                                attrs: {
+                                  color: "purple",
+                                  dark: "",
+                                  block: _vm.$vuetify.breakpoint.xs
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.visualizzaAudiogramma(index)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(audio.created_at.substring(0, 10)) +
+                                    "\n                    "
+                                )
+                              ]
                             )
-                          ]
+                          ],
+                          1
                         )
-                      ],
-                      1
-                    )
-                  })
+                      })
+                    ],
+                    2
+                  )
                 ],
-                2
+                1
               )
-            ])
-          ])
+            ],
+            1
+          )
     ],
     1
   )
@@ -43223,6 +43381,7 @@ var render = function() {
         [
           _c(
             "v-col",
+            { attrs: { cols: "12", md: "12", lg: "5", xs: "12", sm: "12" } },
             [
               _c("v-select", {
                 attrs: { items: _vm.tipiFile, label: "Tipo" },
@@ -43240,6 +43399,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "12", md: "12", lg: "5", xs: "12", sm: "12" } },
             [
               _c("v-file-input", {
                 attrs: { "truncate-length": "15", accept: ".pdf" },
@@ -43257,11 +43417,16 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "12", md: "12", lg: "2", xs: "12", sm: "12" } },
             [
               _c(
                 "v-btn",
                 {
-                  attrs: { color: "primary", dark: "" },
+                  attrs: {
+                    color: "primary",
+                    dark: "",
+                    block: _vm.$vuetify.breakpoint.xs
+                  },
                   on: { click: _vm.carica }
                 },
                 [_vm._v("\n                Carica\n            ")]
@@ -44074,44 +44239,81 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.switchInserisci
-        ? _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                [
-                  _c(
-                    "v-btn",
-                    {
-                      staticClass: "mt-2",
-                      attrs: { color: "primary", dark: "" },
-                      on: { click: _vm.nuovaProvaInCorso }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Nuova Prova\n                "
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
+        ? _c("v-row", [
+            _vm.carica2
+              ? _c(
+                  "div",
+                  { staticClass: "text-center" },
+                  [
+                    _c("v-progress-circular", {
+                      attrs: { indeterminate: "", color: "primary" }
+                    })
+                  ],
+                  1
+                )
+              : _c(
+                  "div",
+                  [
+                    _c(
+                      "v-col",
+                      [
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "mt-2",
+                            attrs: { color: "primary", dark: "" },
+                            on: { click: _vm.nuovaProvaInCorso }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        Nuova Prova\n                    "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+          ])
         : _c(
             "v-row",
             [
               _c(
                 "v-col",
-                { attrs: { cols: "12", md: "3", lg: "3" } },
+                { attrs: { cols: "12", md: "2", lg: "2" } },
+                [
+                  _c("v-select", {
+                    attrs: { items: _vm.tipologia, label: "Tipologia" },
+                    on: {
+                      change: function($event) {
+                        return _vm.selezionaTipologia()
+                      }
+                    },
+                    model: {
+                      value: _vm.tipologiaSelezionata,
+                      callback: function($$v) {
+                        _vm.tipologiaSelezionata = $$v
+                      },
+                      expression: "tipologiaSelezionata"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "12", md: "2", lg: "2" } },
                 [
                   _c("v-select", {
                     attrs: {
                       "item-value": "id",
                       "item-text": "nome",
                       items: _vm.getFornitori,
-                      label: "fornitore"
+                      label: "fornitore",
+                      disabled: !_vm.abilitaFornitore
                     },
                     on: {
                       change: function($event) {
@@ -44138,7 +44340,7 @@ var render = function() {
                     attrs: {
                       "item-text": "nomeMatricola",
                       items: _vm.getInFiliale,
-                      label: "prodotti",
+                      label: _vm.tipologiaSelezionata,
                       "return-object": ""
                     },
                     on: {
@@ -44160,7 +44362,43 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "12", md: "2", lg: "2" } },
+                { attrs: { cols: "12", md: "1", lg: "1" } },
+                [
+                  _c("v-text-field", {
+                    attrs: { type: "number", min: "0", label: "sconto" },
+                    on: {
+                      change: function($event) {
+                        return _vm.calcolaPrezzoScontato()
+                      },
+                      input: function($event) {
+                        return _vm.calcolaPrezzoScontato()
+                      }
+                    },
+                    model: {
+                      value: _vm.sconto,
+                      callback: function($$v) {
+                        _vm.sconto = $$v
+                      },
+                      expression: "sconto"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.nuovaProva.scontoMax
+                    ? _c("v-chip", { attrs: { small: "" } }, [
+                        _vm._v(
+                          "Sconto max: " +
+                            _vm._s(_vm.nuovaProva.scontoMax) +
+                            " %"
+                        )
+                      ])
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "12", md: "1", lg: "1" } },
                 [
                   _c("v-select", {
                     attrs: {
@@ -44183,10 +44421,10 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "12", md: "2", lg: "2" } },
+                { attrs: { cols: "12", md: "1", lg: "1" } },
                 [
                   _c("v-text-field", {
-                    attrs: { label: "prezzo" },
+                    attrs: { type: "number", label: "prezzo" },
                     model: {
                       value: _vm.nuovaProva.prezzolistino,
                       callback: function($$v) {
@@ -44206,7 +44444,11 @@ var render = function() {
                   _c(
                     "v-btn",
                     {
-                      attrs: { color: "primary", dark: "" },
+                      attrs: {
+                        color: "primary",
+                        dark: "",
+                        disabled: !_vm.abilitaInProva
+                      },
                       on: { click: _vm.inserisciInProva }
                     },
                     [
@@ -44315,340 +44557,361 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", md: "6", lg: "6" } },
-            [
-              _c("h3", [_vm._v("Prove")]),
-              _vm._v(" "),
-              _c("v-data-table", {
-                staticClass: "elevation-1 mt-5",
-                attrs: {
-                  headers: _vm.headerProve,
-                  items: _vm.getProvePassate,
-                  "hide-default-footer": ""
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "item.stato.nome",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return [
-                        item.stato.nome == "RESO"
-                          ? _c(
-                              "v-chip",
-                              {
-                                attrs: {
-                                  color: "red",
-                                  label: "",
-                                  "text-color": "white"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(item.stato.nome) +
-                                    "\n                            "
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        item.stato.nome == "FATTURA"
-                          ? _c(
-                              "v-chip",
-                              {
-                                attrs: {
-                                  color: "green",
-                                  label: "",
-                                  "text-color": "white"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(item.stato.nome) +
-                                    "\n                            "
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        item.stato.nome == "PROVA"
-                          ? _c("div", [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(item.stato.nome) +
-                                  "\n                            "
-                              )
-                            ])
-                          : _vm._e()
-                      ]
-                    }
-                  },
-                  {
-                    key: "item.actions",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return [
-                        _c(
-                          "v-icon",
-                          {
-                            attrs: { color: "blue", small: "" },
-                            on: {
-                              click: function($event) {
-                                $event.stopPropagation()
-                                return _vm.apriLista(item.product)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                mdi-format-list-bulleted-square\n                            "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u(
-                              [
-                                {
-                                  key: "activator",
-                                  fn: function(ref) {
-                                    var on = ref.on
-                                    var attrs = ref.attrs
-                                    return [
-                                      item.stato.nome === "PROVA"
-                                        ? _c(
-                                            "v-icon",
-                                            _vm._g(
-                                              _vm._b(
-                                                {
-                                                  attrs: {
-                                                    color: "red",
-                                                    small: ""
-                                                  },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.reso(item.id)
-                                                    }
-                                                  }
-                                                },
-                                                "v-icon",
-                                                attrs,
-                                                false
-                                              ),
-                                              on
-                                            ),
-                                            [
-                                              _vm._v(
-                                                "\n                                        mdi-delete\n                                    "
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e()
+          _c("v-col", { attrs: { cols: "12", md: "6", lg: "6" } }, [
+            _c("h3", [_vm._v("Prove")]),
+            _vm._v(" "),
+            _vm.carica2
+              ? _c(
+                  "div",
+                  { staticClass: "text-center" },
+                  [
+                    _c("v-progress-circular", {
+                      attrs: { indeterminate: "", color: "primary" }
+                    })
+                  ],
+                  1
+                )
+              : _c(
+                  "div",
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-5",
+                      attrs: {
+                        headers: _vm.headerProve,
+                        items: _vm.getProvePassate,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "item.stato.nome",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              item.stato.nome == "RESO"
+                                ? _c(
+                                    "v-chip",
+                                    {
+                                      attrs: {
+                                        color: "red",
+                                        label: "",
+                                        "text-color": "white"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(item.stato.nome) +
+                                          "\n                            "
+                                      )
                                     ]
-                                  }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          },
-                          [_vm._v(" "), _c("span", [_vm._v("Reso")])]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u(
-                              [
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              item.stato.nome == "FATTURA"
+                                ? _c(
+                                    "v-chip",
+                                    {
+                                      attrs: {
+                                        color: "green",
+                                        label: "",
+                                        "text-color": "white"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(item.stato.nome) +
+                                          "\n                            "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              item.stato.nome == "PROVA"
+                                ? _c("div", [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.stato.nome) +
+                                        "\n                            "
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]
+                          }
+                        },
+                        {
+                          key: "item.actions",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-icon",
                                 {
-                                  key: "activator",
-                                  fn: function(ref) {
-                                    var on = ref.on
-                                    var attrs = ref.attrs
-                                    return [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: {
-                                            href:
-                                              "https://www.centrouditogroup.it/storage/fatture/2021/" +
-                                              item.id +
-                                              ".pdf",
-                                            target: "_blank"
-                                          }
-                                        },
-                                        [
-                                          item.stato.nome === "FATTURA"
-                                            ? _c(
-                                                "v-icon",
-                                                _vm._g(
-                                                  _vm._b(
-                                                    {
-                                                      attrs: {
-                                                        color: "black",
-                                                        small: ""
-                                                      }
-                                                    },
-                                                    "v-icon",
-                                                    attrs,
-                                                    false
+                                  attrs: { color: "blue", small: "" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.stopPropagation()
+                                      return _vm.apriLista(item.product)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                mdi-format-list-bulleted-square\n                            "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            item.stato.nome === "PROVA"
+                                              ? _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "red",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.reso(
+                                                              item.id
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
                                                   ),
-                                                  on
-                                                ),
-                                                [
-                                                  _vm._v(
-                                                    "\n                                            mdi-check\n                                        "
-                                                  )
-                                                ]
-                                              )
-                                            : _vm._e()
-                                        ],
-                                        1
-                                      )
-                                    ]
-                                  }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          },
-                          [_vm._v(" "), _c("span", [_vm._v("Fattura")])]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u(
-                              [
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                        mdi-delete\n                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("Reso")])]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
                                 {
-                                  key: "activator",
-                                  fn: function(ref) {
-                                    var on = ref.on
-                                    var attrs = ref.attrs
-                                    return [
-                                      item.stato.nome === "PROVA"
-                                        ? _c(
-                                            "v-icon",
-                                            _vm._g(
-                                              _vm._b(
-                                                {
-                                                  attrs: {
-                                                    color: "green",
-                                                    small: ""
-                                                  },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.apriFattura(
-                                                        item
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                "v-icon",
-                                                attrs,
-                                                false
-                                              ),
-                                              on
-                                            ),
-                                            [
-                                              _vm._v(
-                                                "\n                                        mdi-currency-usd\n                                    "
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e()
-                                    ]
-                                  }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          },
-                          [_vm._v(" "), _c("span", [_vm._v("Produci Fattura")])]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u(
-                              [
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "a",
+                                              {
+                                                attrs: {
+                                                  href:
+                                                    "https://www.centrouditogroup.it/storage/fatture/2021/" +
+                                                    item.id +
+                                                    ".pdf",
+                                                  target: "_blank"
+                                                }
+                                              },
+                                              [
+                                                item.stato.nome === "FATTURA"
+                                                  ? _c(
+                                                      "v-icon",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            attrs: {
+                                                              color: "black",
+                                                              small: ""
+                                                            }
+                                                          },
+                                                          "v-icon",
+                                                          attrs,
+                                                          false
+                                                        ),
+                                                        on
+                                                      ),
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                            mdi-check\n                                        "
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _vm._e()
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("Fattura")])]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
                                 {
-                                  key: "activator",
-                                  fn: function(ref) {
-                                    var on = ref.on
-                                    var attrs = ref.attrs
-                                    return [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: {
-                                            href:
-                                              "https://www.centrouditogroup.it" +
-                                              item.copia_comm[0].link,
-                                            target: "_blank"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            _vm._g(
-                                              _vm._b(
-                                                {
-                                                  staticStyle: {
-                                                    "font-size": "25px"
-                                                  },
-                                                  attrs: {
-                                                    color: "orange",
-                                                    small: ""
-                                                  }
-                                                },
-                                                "v-icon",
-                                                attrs,
-                                                false
-                                              ),
-                                              on
-                                            ),
-                                            [
-                                              _vm._v(
-                                                "\n                                            mdi-closed-caption\n                                        "
-                                              )
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ]
-                                  }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          },
-                          [
-                            _vm._v(" "),
-                            _c("span", [_vm._v("Copia Commissione")])
-                          ]
-                        )
-                      ]
-                    }
-                  }
-                ])
-              })
-            ],
-            1
-          )
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            item.stato.nome === "PROVA"
+                                              ? _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "green",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.apriFattura(
+                                                              item
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                        mdi-currency-usd\n                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("Produci Fattura")])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "a",
+                                              {
+                                                attrs: {
+                                                  href:
+                                                    "https://www.centrouditogroup.it" +
+                                                    item.copia_comm[0].link,
+                                                  target: "_blank"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        staticStyle: {
+                                                          "font-size": "25px"
+                                                        },
+                                                        attrs: {
+                                                          color: "orange",
+                                                          small: ""
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                            mdi-closed-caption\n                                        "
+                                                    )
+                                                  ]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("Copia Commissione")])
+                                ]
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  ],
+                  1
+                )
+          ])
         ],
         1
       )
@@ -44756,13 +45019,22 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "6" } },
+            { attrs: { cols: "12", md: "12", lg: "6", xs: "12", sm: "12" } },
             [
               _c(
                 "v-row",
                 [
                   _c(
                     "v-col",
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "6",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c(
                         "v-menu",
@@ -44900,6 +45172,15 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "6",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c("v-select", {
                         attrs: { items: _vm.tipologiaEsito, label: "esito" },
@@ -44917,6 +45198,15 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "8",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Note" },
@@ -44934,11 +45224,24 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "4",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "primary", dark: "" },
+                          attrs: {
+                            color: "primary",
+                            dark: "",
+                            block: _vm.$vuetify.breakpoint.xs
+                          },
                           on: { click: _vm.inserisci }
                         },
                         [
@@ -44958,170 +45261,184 @@ var render = function() {
                 "v-row",
                 { staticClass: "mb-6" },
                 [
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "12" } },
-                    [
-                      _c("v-data-table", {
-                        staticClass: "elevation-1",
-                        attrs: {
-                          headers: _vm.header,
-                          items: _vm.getRecalls,
-                          "hide-default-footer": ""
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "item.esito",
-                            fn: function(ref) {
-                              var item = ref.item
-                              return [
-                                item.esito == null
-                                  ? _c(
-                                      "div",
-                                      [
-                                        _c("v-select", {
-                                          staticClass: "mt-4",
-                                          attrs: {
-                                            items: _vm.tipologiaEsito,
-                                            outlined: "",
-                                            dense: "",
-                                            label: "esito"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.telefonataDaAggiornare.esito,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.telefonataDaAggiornare,
-                                                "esito",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "telefonataDaAggiornare.esito"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c("div", [
-                                      _vm._v(
-                                        "\n                                " +
-                                          _vm._s(item.esito) +
-                                          "\n                            "
-                                      )
-                                    ])
-                              ]
-                            }
-                          },
-                          {
-                            key: "item.note",
-                            fn: function(ref) {
-                              var item = ref.item
-                              return [
-                                item.note == null && item.esito == null
-                                  ? _c(
-                                      "div",
-                                      [
-                                        _c("v-text-field", {
-                                          attrs: { label: "Note" },
-                                          model: {
-                                            value:
-                                              _vm.telefonataDaAggiornare.note,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.telefonataDaAggiornare,
-                                                "note",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "telefonataDaAggiornare.note"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  : _c("div", [
-                                      _vm._v(
-                                        "\n                                " +
-                                          _vm._s(item.note) +
-                                          "\n                            "
-                                      )
-                                    ])
-                              ]
-                            }
-                          },
-                          {
-                            key: "item.action",
-                            fn: function(ref) {
-                              var item = ref.item
-                              return [
-                                item.esito == null
-                                  ? _c(
-                                      "div",
-                                      [
-                                        _c(
-                                          "v-btn",
-                                          {
-                                            attrs: {
-                                              small: "",
-                                              color: "success",
-                                              dark: ""
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.aggiorna(item)
-                                              }
-                                            }
-                                          },
-                                          [
+                  _c("v-col", { attrs: { cols: "12" } }, [
+                    _vm.carica
+                      ? _c(
+                          "div",
+                          { staticClass: "text-center" },
+                          [
+                            _c("v-progress-circular", {
+                              attrs: { indeterminate: "", color: "primary" }
+                            })
+                          ],
+                          1
+                        )
+                      : _c(
+                          "div",
+                          [
+                            _c("v-data-table", {
+                              staticClass: "elevation-1",
+                              attrs: {
+                                headers: _vm.header,
+                                items: _vm.getRecalls,
+                                "hide-default-footer": ""
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "item.esito",
+                                  fn: function(ref) {
+                                    var item = ref.item
+                                    return [
+                                      item.esito == null
+                                        ? _c(
+                                            "div",
+                                            [
+                                              _c("v-select", {
+                                                staticClass: "mt-4",
+                                                attrs: {
+                                                  items: _vm.tipologiaEsito,
+                                                  outlined: "",
+                                                  dense: "",
+                                                  label: "esito"
+                                                },
+                                                model: {
+                                                  value:
+                                                    _vm.telefonataDaAggiornare
+                                                      .esito,
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      _vm.telefonataDaAggiornare,
+                                                      "esito",
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression:
+                                                    "telefonataDaAggiornare.esito"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        : _c("div", [
                                             _vm._v(
-                                              "\n                                    Aggiorna\n                                "
+                                              "\n                                    " +
+                                                _vm._s(item.esito) +
+                                                "\n                                "
                                             )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                item.esito == "Preso Appuntamento"
-                                  ? _c(
-                                      "div",
-                                      [
-                                        _c(
-                                          "v-btn",
-                                          {
-                                            attrs: {
-                                              small: "",
-                                              color: "success",
-                                              dark: ""
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.appuntamento()
-                                              }
-                                            }
-                                          },
-                                          [
+                                          ])
+                                    ]
+                                  }
+                                },
+                                {
+                                  key: "item.note",
+                                  fn: function(ref) {
+                                    var item = ref.item
+                                    return [
+                                      item.note == null && item.esito == null
+                                        ? _c(
+                                            "div",
+                                            [
+                                              _c("v-text-field", {
+                                                attrs: { label: "Note" },
+                                                model: {
+                                                  value:
+                                                    _vm.telefonataDaAggiornare
+                                                      .note,
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      _vm.telefonataDaAggiornare,
+                                                      "note",
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression:
+                                                    "telefonataDaAggiornare.note"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        : _c("div", [
                                             _vm._v(
-                                              "\n                                    Vedi Appuntamento\n                                "
+                                              "\n                                    " +
+                                                _vm._s(item.note) +
+                                                "\n                                "
                                             )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  : _vm._e()
-                              ]
-                            }
-                          }
-                        ])
-                      })
-                    ],
-                    1
-                  )
+                                          ])
+                                    ]
+                                  }
+                                },
+                                {
+                                  key: "item.action",
+                                  fn: function(ref) {
+                                    var item = ref.item
+                                    return [
+                                      item.esito == null
+                                        ? _c(
+                                            "div",
+                                            [
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    small: "",
+                                                    color: "success",
+                                                    dark: ""
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.aggiorna(item)
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                        Aggiorna\n                                    "
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      item.esito == "Preso Appuntamento"
+                                        ? _c(
+                                            "div",
+                                            [
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    small: "",
+                                                    color: "success",
+                                                    dark: ""
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.appuntamento()
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                        Vedi Appuntamento\n                                    "
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  }
+                                }
+                              ])
+                            })
+                          ],
+                          1
+                        )
+                  ])
                 ],
                 1
               )
@@ -45131,7 +45448,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "6" } },
+            { attrs: { cols: "12", md: "12", lg: "6", xs: "12", sm: "12" } },
             [
               _c("calendar", {
                 attrs: { audioprot: _vm.recallsClient.user_id, fissaNome: true }

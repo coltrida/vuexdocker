@@ -20,6 +20,7 @@ class CreateListinosTable extends Migration
             $table->bigInteger('categoria_id')->nullable();
             $table->string('costo')->nullable();
             $table->string('prezzolistino')->nullable();
+            $table->integer('scontoMax')->nullable();
             $table->string('iva')->nullable();
             $table->string('giorniTempoDiReso')->nullable();
             $table->timestamps();

@@ -9,7 +9,7 @@
            />
 
         <v-row>
-            <v-col cols="8">
+            <v-col cols="9">
                 <v-text-field
                     v-model="search"
                     append-icon="mdi-magnify"
@@ -73,11 +73,9 @@
                     </template>
                 </v-data-table>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="3">
                 <v-text-field
                     v-model="listino.nome"
-                    counter="25"
-                    hint="Massimo 25 caratteri"
                     label="Nome Prodotto"
                 ></v-text-field>
                 <v-select
@@ -96,24 +94,24 @@
                 ></v-select>
                 <v-text-field
                     v-model="listino.costo"
-                    counter="25"
-                    hint="Massimo 25 caratteri"
                     label="costo"
                 ></v-text-field>
                 <v-text-field
                     v-model="listino.prezzolistino"
-                    counter="25"
-                    hint="Massimo 25 caratteri"
                     label="prezzo listino"
                 ></v-text-field>
                 <v-text-field
+                    type="number"
+                    min="0"
+                    v-model="listino.scontoMax"
+                    label="sconto massimo"
+                ></v-text-field>
+                <v-text-field
                     v-model="listino.iva"
-                    counter="25"
                     label="iva"
                 ></v-text-field>
                 <v-text-field
                     v-model="listino.giorniTempoDiReso"
-                    counter="25"
                     label="gg di reso"
                 ></v-text-field>
                 <v-list>
@@ -170,6 +168,7 @@
                     { text: 'Categoria', value: 'categoria', class: "indigo white--text" },
                     { text: 'Costo', value: 'costo', class: "indigo white--text" },
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
+                    { text: 'Sconto Max', value: 'scontoMax', class: "indigo white--text" },
                     { text: 'iva', value: 'iva', class: "indigo white--text" },
                     { text: 'GG Reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
@@ -218,7 +217,8 @@
                             fornitore_id:'',
                             categoria_id:'',
                             costo:'',
-                            prezzolistino:'',
+                            prezzolistino:0,
+                            scontoMax:'',
                             iva:'',
                             giorniTempoDiReso:'',
                             soglie:[],
@@ -231,7 +231,8 @@
                             fornitore_id:'',
                             categoria_id:'',
                             costo:'',
-                            prezzolistino:'',
+                            prezzolistino:0,
+                            scontoMax:'',
                             iva:'',
                             giorniTempoDiReso:'',
                             soglie:[],

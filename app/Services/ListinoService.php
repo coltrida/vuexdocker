@@ -38,6 +38,7 @@ class ListinoService
             'costo' => $request['costo'],
             'giorniTempoDiReso' => trim(Str::upper($request['giorniTempoDiReso'])),
             'fornitore_id' => $request['fornitore_id'],
+            'scontoMax' => $request['scontoMax'],
             'prezzolistino' => trim(Str::upper($request['prezzolistino'])),
             'iva' => $request['iva']
         ]);
@@ -69,6 +70,7 @@ class ListinoService
         $listino->costo = $request['costo'];
         $listino->giorniTempoDiReso = trim(Str::upper($request['giorniTempoDiReso']));
         $listino->fornitore_id = $request['fornitore_id'];
+        $listino->scontoMax = $request['scontoMax'];
         $listino->prezzolistino = trim(Str::upper($request['prezzolistino']));
         $listino->iva = $request['iva'];
         $listino->save();
@@ -88,7 +90,7 @@ class ListinoService
                 $table->renameColumn($vecchioNome, $nuovoNome);
             });
         }
-        
+
 
         return Listino::with(['categoria', 'filiale' => function($f){
             $f->orderBy('nome');

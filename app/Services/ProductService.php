@@ -215,4 +215,11 @@ class ProductService
         $product->save();
         return $product;
     }
+
+    public function servizi()
+    {
+        return Listino::with('fornitore', 'categoria')->whereHas('categoria', function ($q){
+            $q->where('nome', 'SERV');
+        })->orderBy('nome')->get();
+    }
 }

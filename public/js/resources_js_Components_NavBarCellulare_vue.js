@@ -227,6 +227,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "NavBarCellulareAudio",
@@ -718,29 +729,38 @@ var render = function() {
               ? _c(
                   "div",
                   [
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: {
-                            name: "clientsFiliale",
-                            params: { filialeId: _vm.getFiliali[0].id }
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "v-list-item",
-                          [
-                            _c("v-list-item-title", [
-                              _vm._v(_vm._s(_vm.getFiliali[0].nome))
-                            ])
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    ),
+                    _vm._l(_vm.getFiliali, function(item, index) {
+                      return _c(
+                        "div",
+                        { key: index },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to: {
+                                  name: "clientsFiliale",
+                                  params: { filialeId: item.id }
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "v-list-item",
+                                [
+                                  _c("v-list-item-title", [
+                                    _vm._v(_vm._s(item.nome))
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    }),
                     _vm._v(" "),
                     _c(
                       "router-link",
@@ -781,7 +801,7 @@ var render = function() {
                       1
                     )
                   ],
-                  1
+                  2
                 )
               : _vm._e()
           ])
@@ -903,39 +923,38 @@ var render = function() {
         },
         [
           _vm._v(" "),
-          _c("v-list", [
-            _vm.getFiliali[0]
-              ? _c(
-                  "div",
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: {
-                            name: "magazzino",
-                            params: { filialeId: _vm.getFiliali[0].id }
-                          }
+          _c(
+            "v-list",
+            _vm._l(_vm.getFiliali, function(item, index) {
+              return _c(
+                "div",
+                { key: index },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "magazzino",
+                          params: { filialeId: item.id }
                         }
-                      },
-                      [
-                        _c(
-                          "v-list-item",
-                          [
-                            _c("v-list-item-title", [
-                              _vm._v(_vm._s(_vm.getFiliali[0].nome))
-                            ])
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              : _vm._e()
-          ])
+                      }
+                    },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v(_vm._s(item.nome))])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            }),
+            0
+          )
         ],
         1
       ),

@@ -168,6 +168,15 @@ const actions = {
         });
         commit('switchArrivato', response.data.data);
     },
+
+    async fetchServizi({commit}){
+        const response = await axios.get(`${help().linkservizi}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchInFiliale', response.data.data);
+    },
 };
 
 const mutations = {

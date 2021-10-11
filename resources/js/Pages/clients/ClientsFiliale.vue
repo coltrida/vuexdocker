@@ -101,6 +101,7 @@
                 :items-per-page="10"
                 class="elevation-1 mt-3"
             >
+
                 <template v-slot:item.actions="{ item }">
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
@@ -115,6 +116,7 @@
                                 mdi-delete
                             </v-icon>
                             <v-icon
+                                style="font-size: 30px"
                                 v-else
                                 color="red"
                                 @click="elimina(item.id, item.nome, item.cognome)"
@@ -141,6 +143,7 @@
                                 </v-icon>
                                 <v-icon
                                     v-else
+                                    style="font-size: 30px"
                                     color="blue"
                                     v-bind="attrs"
                                     v-on="on"
@@ -166,6 +169,7 @@
                             </v-icon>
                             <v-icon
                                 v-else
+                                style="font-size: 30px"
                                 color="green"
                                 @click="audiogramma(item)"
                                 v-bind="attrs"
@@ -191,6 +195,7 @@
                             </v-icon>
                             <v-icon
                                 v-else
+                                style="font-size: 30px"
                                 color="purple"
                                 @click="appuntamento(item)"
                                 v-bind="attrs"
@@ -216,6 +221,7 @@
                             </v-icon>
                             <v-icon
                                 v-else
+                                style="font-size: 30px"
                                 color="orange"
                                 @click="prove(item)"
                                 v-bind="attrs"
@@ -241,6 +247,7 @@
                             </v-icon>
                             <v-icon
                                 v-else
+                                style="font-size: 30px"
                                 color="light-blue darken-4"
                                 @click="documenti(item)"
                                 v-bind="attrs"
@@ -266,6 +273,7 @@
                             </v-icon>
                             <v-icon
                                 v-else
+                                style="font-size: 30px"
                                 color="green"
                                 @click="recalls(item)"
                                 v-bind="attrs"
@@ -291,6 +299,7 @@
                             </v-icon>
                             <v-icon
                                 v-else
+                                style="font-size: 30px"
                                 color="black"
                                 @click="informazioni(item)"
                                 v-bind="attrs"

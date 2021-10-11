@@ -68,7 +68,9 @@ class Filiale extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class)->whereHas('listino.categoria', function ($q){
+            $q->where('nome', '!=', 'SERV');
+        });
     }
 
     public function strumentazione()

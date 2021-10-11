@@ -12,7 +12,7 @@
                     color="indigo darken-4"
                     dark
                 >
-                    <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+                    <v-app-bar-nav-icon  @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
                     <v-spacer></v-spacer>
 
@@ -49,7 +49,9 @@
                 </v-navigation-drawer>
 
                 <v-card-text>
-                    <router-view></router-view>
+                    <div style="padding: 0 5px 5px 5px; margin-bottom: 50px">
+                        <router-view></router-view>
+                    </div>
                 </v-card-text>
             <Footer></Footer>
         </div>

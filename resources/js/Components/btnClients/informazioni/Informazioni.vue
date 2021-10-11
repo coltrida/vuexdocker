@@ -12,7 +12,7 @@
         </v-row>
 
         <v-row>
-            <v-col>
+            <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                 <v-menu
                     ref="menu"
                     v-model="menu"
@@ -54,21 +54,21 @@
                     </v-date-picker>
                 </v-menu>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                 <v-select
                     v-model="newInfo.tipo"
                     :items="tipiInfo"
                     label="Tipo"
                 ></v-select>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                 <v-text-field
                     v-model="newInfo.note"
                     label="Note"
                 ></v-text-field>
             </v-col>
-            <v-col>
-                <v-btn color="primary" dark @click="inserisci">
+            <v-col cols="12" md="12" lg="3" xs="12" sm="12">
+                <v-btn color="primary" dark @click="inserisci" :block="$vuetify.breakpoint.xs">
                     inserisci
                 </v-btn>
             </v-col>
@@ -86,7 +86,6 @@
                     <v-data-table
                         :headers="header"
                         :items="getInformazioni"
-                        hide-default-footer
                         class="elevation-1"
                     >
                         <template v-slot:item.tipo="{ item }">

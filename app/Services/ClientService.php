@@ -35,7 +35,12 @@ class ClientService
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
-                ->where('filiale_id', $idFiliale)->orderBy('cognome')->get();
+                ->where('filiale_id', $idFiliale)
+            ->whereHas('tipologia', function($q){
+                $q->where('nome', '!=', 'DEC');
+            })
+            ->orderBy('cognome')
+            ->get();
     }
 
     public function cliente($id)
@@ -522,6 +527,16 @@ class ClientService
         }
         if ($request->filiale){
             array_push($condizioni, ['filiale_id', $request->filiale]);
+        }
+        if ($request->acquistatoAnniFa){
+            $annoRicerca = Carbon::now()->year - $request->acquistatoAnniFa;
+            return Client::whereHas('prova', function($p) use($annoRicerca){
+                $p->where('anno_fine', '<=', $annoRicerca)->whereHas('stato', function($q){
+                    $q->where('nome', 'FATTURA');
+                }) ;
+            })
+                ->where($condizioni)
+                ->orderBy('cognome')->get();
         }
 
         return Client::with('tipologia:id,nome',

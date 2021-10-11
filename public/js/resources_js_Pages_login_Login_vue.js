@@ -63,6 +63,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -291,7 +292,11 @@ var render = function() {
             "v-btn",
             {
               staticClass: "mr-4",
-              attrs: { color: "success", type: "submit" }
+              attrs: {
+                color: "success",
+                type: "submit",
+                block: _vm.$vuetify.breakpoint.xs
+              }
             },
             [_vm._v("\n        login\n    ")]
           )

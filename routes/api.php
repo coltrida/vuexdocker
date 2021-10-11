@@ -72,6 +72,7 @@ Route::group([], function () {
         Route::get('/recapiti/{idAudio}', [RecapitiController::class, 'recapitiByAudio']);
         Route::delete('/recapiti/{id}', [RecapitiController::class, 'elimina']);
         Route::post('/addRecapito', [RecapitiController::class, 'aggiungi']);
+        Route::post('/modificaRecapito', [RecapitiController::class, 'modifica']);
 
         // ----------------- marketing -----------------------
         Route::get('/canali', [MarketingController::class, 'index']);
@@ -119,6 +120,7 @@ Route::group([], function () {
         Route::get('/listaProdottiRichiesti', [ProductController::class, 'listaProdottiRichiesti']);
         Route::get('/prodottiImmatricolati/{idFiliale}', [ProductController::class, 'prodottiImmatricolati']);
         Route::get('/productSwitchArrivato/{id}', [ProductController::class, 'switchArrivato']);
+        Route::get('/servizi', [ProductController::class, 'servizi']);
 
         // ---------------- client -------------------------
         Route::get('/clients', [ClientController::class, 'index']);
@@ -177,6 +179,7 @@ Route::group([], function () {
         Route::post('/addEleInProva', [ProvaController::class, 'addEle']);
         Route::post('/salvaFattura', [ProvaController::class, 'salvaFattura']);
         Route::get('/provePassate/{idClient}', [ProvaController::class, 'provePassate']);
+        Route::get('/eliminaProveSenzaProdotti/{idClient}', [ProvaController::class, 'eliminaProveSenzaProdotti']);
 
         // ----------------- appuntamenti -----------------------
         Route::get('/appuntamentiCliente/{idClient}', [AppuntamentiController::class, 'index']);

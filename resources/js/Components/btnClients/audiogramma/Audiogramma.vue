@@ -1,5 +1,5 @@
 <template>
-    <v-row class="my-3 flex-column">
+    <v-row class="mt-3 flex-column">
         <v-row>
             <v-col cols="6">
                 <h2>{{audiogrammaClient.nome}} {{audiogrammaClient.cognome}}</h2>
@@ -19,28 +19,27 @@
             />
         </div>
         <div v-else>
-            <div class="row">
-                <div class="col-10 flex" v-if="audiogrammaClient.audiometria.length > 0">
+            <v-row class="flex-row">
+                <v-col cols="12" md="12" lg="5" xs="12" sm="12" v-if="audiogrammaClient.audiometria.length > 0">
                     <Visualizza :chartdata="chartDataS" :options="chartOptions" />
+                </v-col>
+                <v-col cols="12" md="12" lg="5" xs="12" sm="12" v-if="audiogrammaClient.audiometria.length > 0">
                     <Visualizza :chartdata="chartDataD" :options="chartOptions" />
-                </div>
-                <div class="col-2">
+                </v-col>
+                <v-col cols="12" md="12" lg="2" xs="12" sm="12">
                     <div>
-                        <v-btn @click="aggiungiAudiogramma" color="success" dark>
+                        <v-btn @click="aggiungiAudiogramma" color="success" dark :block="$vuetify.breakpoint.xs">
                             Nuovo
                         </v-btn>
                     </div>
 
                     <div v-for="(audio, index) in audiogrammaClient.audiometria" :key="audio.id">
-                        <v-btn @click="visualizzaAudiogramma(index)" color="purple" dark class="mt-2">
+                        <v-btn @click="visualizzaAudiogramma(index)" color="purple" dark class="mt-2" :block="$vuetify.breakpoint.xs">
                             {{audio.created_at.substring(0, 10)}}
                         </v-btn>
                     </div>
-
-                </div>
-            </div>
-
-
+                </v-col>
+            </v-row>
         </div>
     </v-row>
 </template>
@@ -99,16 +98,16 @@
                             tension: 0,
                             fill: false,
                             data: [
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._125d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._250d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._500d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._1000d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._1500d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._2000d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._3000d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._4000d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._6000d),
-                               - parseInt(this.audiogrammaClient.audiometria[this.indice]._8000d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._125d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._250d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._500d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._1000d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._1500d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._2000d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._3000d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._4000d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._6000d),
+                                - parseInt(this.audiogrammaClient.audiometria[this.indice]._8000d),
                             ]
                         },
                         {

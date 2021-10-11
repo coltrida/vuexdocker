@@ -114,11 +114,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Recapiti",
   data: function data() {
     return {
+      modificaSwitch: false,
       recapito: {},
       headers: [{
         text: 'Nome',
@@ -139,6 +151,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'provincia',
         "class": "indigo white--text"
       }, {
+        text: 'Informazioni',
+        value: 'informazioni',
+        "class": "indigo white--text"
+      }, {
         text: 'Actions',
         value: 'actions',
         sortable: false,
@@ -153,13 +169,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
     fetchRecapitiPerAudio: 'fetchRecapitiPerAudio',
     addRecapito: 'addRecapito',
+    modificaRecapito: 'modificaRecapito',
     eliminaRecapito: 'eliminaRecapito'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudio: 'fetchAudio'
   })), {}, {
     aggiungi: function aggiungi() {
-      this.addRecapito(this.recapito);
+      if (this.modificaSwitch) {
+        this.modificaRecapito(this.recapito);
+      } else {
+        this.addRecapito(this.recapito);
+      }
+
       this.recapito = {};
+      this.modificaSwitch = false;
     },
     elimina: function elimina(id, idUser, indice) {
       this.eliminaRecapito({
@@ -167,13 +190,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'idUser': idUser,
         'indice': indice
       });
+    },
+    modifica: function modifica(rec, idUser, indice) {
+      //console.log(rec);
+      this.modificaSwitch = true;
+      this.recapito = rec;
+      this.$store.commit('recapiti/eliminaRecapito', {
+        'id': rec.id,
+        'idUser': idUser,
+        'indice': indice
+      });
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
     getRecapiti: 'getRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getAudio: 'getAudio'
-  }))
+  })), {}, {
+    btnName: function btnName() {
+      return this.modificaSwitch ? 'modifica' : 'inserisci';
+    }
+  })
 });
 
 /***/ }),
@@ -272,192 +309,237 @@ var render = function() {
       _c("h2", [_vm._v("Recapiti")]),
       _vm._v(" "),
       _c(
-        "v-container",
+        "v-row",
         [
           _c(
-            "v-row",
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
             [
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Nome Recapito" },
-                    model: {
-                      value: _vm.recapito.nome,
-                      callback: function($$v) {
-                        _vm.$set(_vm.recapito, "nome", $$v)
-                      },
-                      expression: "recapito.nome"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "3", sm: "3" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Indirizzo" },
-                    model: {
-                      value: _vm.recapito.indirizzo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.recapito, "indirizzo", $$v)
-                      },
-                      expression: "recapito.indirizzo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Citta'" },
-                    model: {
-                      value: _vm.recapito.citta,
-                      callback: function($$v) {
-                        _vm.$set(_vm.recapito, "citta", $$v)
-                      },
-                      expression: "recapito.citta"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "PR" },
-                    model: {
-                      value: _vm.recapito.provincia,
-                      callback: function($$v) {
-                        _vm.$set(_vm.recapito, "provincia", $$v)
-                      },
-                      expression: "recapito.provincia"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      "item-value": "id",
-                      "item-text": "name",
-                      items: _vm.getAudio,
-                      label: "Audio"
-                    },
-                    model: {
-                      value: _vm.recapito.user_id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.recapito, "user_id", $$v)
-                      },
-                      expression: "recapito.user_id"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c(
-                    "v-btn",
-                    {
-                      staticClass: "mb-5",
-                      attrs: { dark: "", color: "indigo" },
-                      on: { click: _vm.aggiungi }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Inserisci\n                "
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
+              _c("v-text-field", {
+                attrs: { label: "Nome Recapito" },
+                model: {
+                  value: _vm.recapito.nome,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "nome", $$v)
+                  },
+                  expression: "recapito.nome"
+                }
+              })
             ],
             1
           ),
           _vm._v(" "),
-          _vm._l(_vm.getRecapiti, function(audio) {
-            return _c(
-              "div",
-              { key: audio.id },
-              [
-                _c("h2", [_vm._v(_vm._s(audio.name))]),
-                _vm._v(" "),
-                _c("v-data-table", {
-                  staticClass: "elevation-1 mt-3",
-                  attrs: {
-                    headers: _vm.headers,
-                    items: audio.recapito,
-                    "items-per-page": 10
+          _c(
+            "v-col",
+            { attrs: { cols: "3", sm: "3" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "Indirizzo" },
+                model: {
+                  value: _vm.recapito.indirizzo,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "indirizzo", $$v)
                   },
-                  scopedSlots: _vm._u(
-                    [
-                      {
-                        key: "item.actions",
-                        fn: function(ref) {
-                          var item = ref.item
-                          return [
-                            _c(
-                              "v-icon",
-                              {
-                                attrs: { color: "red", small: "" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.elimina(
-                                      item.id,
-                                      audio.id,
-                                      audio.recapito
-                                        .map(function(x) {
-                                          return x.id
-                                        })
-                                        .indexOf(item.id)
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        mdi-delete\n                    "
+                  expression: "recapito.indirizzo"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "Citta'" },
+                model: {
+                  value: _vm.recapito.citta,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "citta", $$v)
+                  },
+                  expression: "recapito.citta"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "1", sm: "1" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "PR" },
+                model: {
+                  value: _vm.recapito.provincia,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "provincia", $$v)
+                  },
+                  expression: "recapito.provincia"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  "item-value": "id",
+                  "item-text": "name",
+                  items: _vm.getAudio,
+                  label: "Audio"
+                },
+                model: {
+                  value: _vm.recapito.user_id,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "user_id", $$v)
+                  },
+                  expression: "recapito.user_id"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c(
+                "v-btn",
+                {
+                  staticClass: "mb-5",
+                  attrs: { dark: "", color: "indigo" },
+                  on: { click: _vm.aggiungi }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.btnName) +
+                      "\n                "
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "Informazioni" },
+                model: {
+                  value: _vm.recapito.informazioni,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "informazioni", $$v)
+                  },
+                  expression: "recapito.informazioni"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.getRecapiti, function(audio) {
+        return _c(
+          "div",
+          { key: audio.id },
+          [
+            _c("h2", [_vm._v(_vm._s(audio.name))]),
+            _vm._v(" "),
+            _c("v-data-table", {
+              staticClass: "elevation-1 mt-3",
+              attrs: {
+                headers: _vm.headers,
+                items: audio.recapito,
+                "items-per-page": 10
+              },
+              scopedSlots: _vm._u(
+                [
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: { color: "red", small: "" },
+                            on: {
+                              click: function($event) {
+                                _vm.elimina(
+                                  item.id,
+                                  audio.id,
+                                  audio.recapito
+                                    .map(function(x) {
+                                      return x.id
+                                    })
+                                    .indexOf(item.id)
                                 )
-                              ]
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-delete\n                    "
                             )
                           ]
-                        }
-                      }
-                    ],
-                    null,
-                    true
-                  )
-                })
-              ],
-              1
-            )
-          })
-        ],
-        2
-      )
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: { color: "blue", small: "" },
+                            on: {
+                              click: function($event) {
+                                _vm.modifica(
+                                  item,
+                                  audio.id,
+                                  audio.recapito
+                                    .map(function(x) {
+                                      return x.id
+                                    })
+                                    .indexOf(item.id)
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-pencil\n                    "
+                            )
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ],
+                null,
+                true
+              )
+            })
+          ],
+          1
+        )
+      })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

@@ -160,8 +160,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -200,6 +198,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Prezzo',
         value: 'prezzolistino',
+        "class": "indigo white--text"
+      }, {
+        text: 'Sconto Max',
+        value: 'scontoMax',
         "class": "indigo white--text"
       }, {
         text: 'iva',
@@ -251,7 +253,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             fornitore_id: '',
             categoria_id: '',
             costo: '',
-            prezzolistino: '',
+            prezzolistino: 0,
+            scontoMax: '',
             iva: '',
             giorniTempoDiReso: '',
             soglie: []
@@ -264,7 +267,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             fornitore_id: '',
             categoria_id: '',
             costo: '',
-            prezzolistino: '',
+            prezzolistino: 0,
+            scontoMax: '',
             iva: '',
             giorniTempoDiReso: '',
             soglie: []
@@ -564,7 +568,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "8" } },
+            { attrs: { cols: "9" } },
             [
               _c("v-text-field", {
                 attrs: {
@@ -758,14 +762,10 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "4" } },
+            { attrs: { cols: "3" } },
             [
               _c("v-text-field", {
-                attrs: {
-                  counter: "25",
-                  hint: "Massimo 25 caratteri",
-                  label: "Nome Prodotto"
-                },
+                attrs: { label: "Nome Prodotto" },
                 model: {
                   value: _vm.listino.nome,
                   callback: function($$v) {
@@ -808,11 +808,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("v-text-field", {
-                attrs: {
-                  counter: "25",
-                  hint: "Massimo 25 caratteri",
-                  label: "costo"
-                },
+                attrs: { label: "costo" },
                 model: {
                   value: _vm.listino.costo,
                   callback: function($$v) {
@@ -823,11 +819,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("v-text-field", {
-                attrs: {
-                  counter: "25",
-                  hint: "Massimo 25 caratteri",
-                  label: "prezzo listino"
-                },
+                attrs: { label: "prezzo listino" },
                 model: {
                   value: _vm.listino.prezzolistino,
                   callback: function($$v) {
@@ -838,7 +830,18 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("v-text-field", {
-                attrs: { counter: "25", label: "iva" },
+                attrs: { type: "number", min: "0", label: "sconto massimo" },
+                model: {
+                  value: _vm.listino.scontoMax,
+                  callback: function($$v) {
+                    _vm.$set(_vm.listino, "scontoMax", $$v)
+                  },
+                  expression: "listino.scontoMax"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: { label: "iva" },
                 model: {
                   value: _vm.listino.iva,
                   callback: function($$v) {
@@ -849,7 +852,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("v-text-field", {
-                attrs: { counter: "25", label: "gg di reso" },
+                attrs: { label: "gg di reso" },
                 model: {
                   value: _vm.listino.giorniTempoDiReso,
                   callback: function($$v) {

@@ -45,4 +45,9 @@ class ProvaController extends Controller
     {
         return $provaService->provePassate($idClient);
     }
+
+    public function eliminaProveSenzaProdotti($idClient, ProvaService $provaService)
+    {
+        $provaService->eliminaProveSenzaProdotti($idClient);
+    }
 }

@@ -65,7 +65,9 @@ class Listino extends Model
 
     public function scopeFromfornitore($query, $idFornitore)
     {
-        return $query->where('fornitore_id', $idFornitore);
+        return $query->where('fornitore_id', $idFornitore)->whereHas('categoria', function ($q){
+            $q->where('nome', '!=', 'SERV');
+        });
     }
 
     public function scopeApparecchi($query)

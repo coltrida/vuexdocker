@@ -100,6 +100,11 @@ class Prova extends Model
             ->withPivot('prezzo','prezzo_formattato')->with('listino');
     }
 
+    public function documento()
+    {
+        return $this->hasMany(Documento::class);
+    }
+
     public function fattura()
     {
         return $this->hasOne(Fattura::class);

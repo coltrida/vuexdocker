@@ -413,6 +413,11 @@ class ElaborazioneService
         $command='mysqldump --opt -h' .$mysqlHostName .' -u' .$mysqlUserName .' -p' .$mysqlPassword .' ' .$mysqlDatabaseName .' > storage/' .$mysqlExportPath;
         exec($command,$output,$worked);
 
+        // -------------- Eliminazione dei servizi rimasti nei prodotti senza essere in una prova ---------- //
+        Product::where([
+            ['matricola', null],
+            ['stato_id', 5],
+        ])->delete();
 
         // -------------- Invio e-mail per remind appuntamento ---------- //
 //        $appuntamentiDomani = Appuntamento::with('client')->where('giorno', $oggi->addDay())->get();

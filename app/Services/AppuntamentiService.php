@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Appuntamento;
 use App\Models\Client;
 use App\Models\Filiale;
+use App\Models\Informazione;
 use App\Models\Recapito;
 use App\Models\User;
 use Carbon\Carbon;
@@ -124,6 +125,13 @@ class AppuntamentiService
         $propieta = 'appuntamento';
         $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$request->giorno.' alle ore '.$request->orario.' presso '.$dove;
 
+        Informazione::create([
+            'client_id' => $request->client_id,
+            'giorno' => Carbon::now()->format('Y-m-d'),
+            'tipo' => 'APPUNTAMENTO',
+            'note' => $testo
+        ]);
+
         $log = new LoggingService();
         $log->scriviLog($cliente->cognome.' '.$cliente->nome, $utente, $utente->name, $propieta, $testo);
 
@@ -139,6 +147,14 @@ class AppuntamentiService
     public function modificaAppuntamento($request)
     {
         $appuntamento = Appuntamento::find($request->id);
+        $informazione = Informazione::where([
+            ['client_id', $request->client_id],
+            ['tipo', 'APPUNTAMENTO'],
+            ['giorno', $appuntamento->giorno]
+        ])->first();
+
+        $informazione->giorno = $request->giorno;
+        $informazione->save();
 
         $appuntamento->giorno = $request->giorno;
         $appuntamento->orario = $request->orario;
@@ -172,6 +188,13 @@ class AppuntamentiService
         $appuntamento = Appuntamento::with('client')->find($id);
         $propieta = 'appuntamento';
         $testo = $utente->name.' ha eliminato un appuntamento con id = '.$id.' per il giorno '.$appuntamento->giorno.' delle ore '.$appuntamento->orario;
+
+        Informazione::create([
+            'client_id' => $appuntamento->client->id,
+            'giorno' => Carbon::now()->format('Y-m-d'),
+            'tipo' => 'APPUNTAMENTO',
+            'note' => $testo
+        ]);
 
         $log = new LoggingService();
         $log->scriviLog($appuntamento->client->cognome.''.$appuntamento->client->nome, $utente, $utente->name, $propieta, $testo);

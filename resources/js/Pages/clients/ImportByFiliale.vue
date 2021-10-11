@@ -22,10 +22,8 @@
             </div>
 
             <v-row v-else>
-                <v-col
-                    cols="4"
-                    sm="4"
-                >
+                <v-col cols="12" md="12" lg="4" xs="12" sm="12">
+
                     <v-file-input
                         v-model="caricaFile.fileUp"
                         truncate-length="15"
@@ -33,11 +31,9 @@
                     ></v-file-input>
                 </v-col>
 
-                <v-col
-                    cols="2"
-                    sm="2"
-                >
-                    <v-btn @click="importaXml" color="success" dark>
+                <v-col cols="12" md="12" lg="2" xs="12" sm="12">
+
+                    <v-btn @click="importaXml" color="success" dark :block="$vuetify.breakpoint.xs">
                         Importa
                     </v-btn>
 

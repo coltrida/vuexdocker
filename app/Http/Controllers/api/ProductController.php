@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ListinoResource;
 use App\Http\Resources\ProdottiInFilialeFornitoreResource;
 use App\Http\Resources\ProductInProvaResource;
 use App\Http\Resources\ProductResource;
@@ -84,5 +85,10 @@ class ProductController extends Controller
     public function switchArrivato($id, ProductService $productService)
     {
         return new ProductResource($productService->switchArrivato($id));
+    }
+
+    public function servizi(ProductService $productService)
+    {
+        return ListinoResource::collection($productService->servizi());
     }
 }

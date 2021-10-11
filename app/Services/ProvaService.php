@@ -9,11 +9,13 @@ use App\Models\Client;
 use App\Models\Documento;
 use App\Models\Fattura;
 use App\Models\Informazione;
+use App\Models\Listino;
 use App\Models\Product;
 use App\Models\ProductProva;
 use App\Models\Prova;
 use App\Models\Ratefattura;
 use App\Models\Ruolo;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use function broadcast;
@@ -58,9 +60,21 @@ class ProvaService
 
     public function addEle($request)
     {
+        if($request->tipologia === 'Servizi'){
+            $prodottoServizio = new Product();
+            $prodottoServizio->matricola = null;
+            $prodottoServizio->stato_id = 3;
+            $prodottoServizio->filiale_id = Prova::find($request->prova_id)->filiale_id;;
+            $prodottoServizio->listino_id = $request->product_id;
+            $prodottoServizio->fornitore_id = Listino::find($request->product_id)->fornitore_id;
+            $prodottoServizio->user_id = Prova::find($request->prova_id)->user_id;
+            $prodottoServizio->client_id = Prova::find($request->prova_id)->client_id;
+            $prodottoServizio->save();
+        };
+
         return ProductProva::create([
             'prova_id' => $request->prova_id,
-            'product_id' => $request->product_id,
+            'product_id' => $request->tipologia === 'Servizi' ? $prodottoServizio->id : $request->product_id,
             'orecchio' => $request->orecchio,
             'prezzo' => $request->prezzo,
             'prezzo_formattato' => '€ '.number_format( (float) $request->prezzo, '0', ',', '.'),
@@ -311,6 +325,28 @@ class ProvaService
         }])
             ->find($idClient)
             ->prova;
+    }
+
+    public function eliminaProveSenzaProdotti($idClient)
+    {
+        $proveSenzaProdotti = Client::with('proveSenzaProdotti')->find($idClient)->proveSenzaProdotti;
+        foreach ($proveSenzaProdotti as $prova){
+            //dd($prova);
+            $prova->delete();
+        }
+
+        $proveSenzaDocumenti = Client::with('proveSenzaProdotti')->find($idClient)->proveSenzaDocumenti;
+        foreach ($proveSenzaDocumenti as $prova){
+
+            foreach ($prova->product as $prodotto){
+                //dd($prodotto);
+                $prodotto->stato_id = 5;
+                $prodotto->user_id = null;
+                $prodotto->client_id = null;
+                $prodotto->save();
+            };
+            $prova->delete();
+        }
     }
 }
 

@@ -12,22 +12,22 @@
         </v-row>
 
         <v-row>
-            <v-col>
+            <v-col cols="12" md="12" lg="5" xs="12" sm="12">
                 <v-select
                     v-model="caricaFile.tipo"
                     :items="tipiFile"
                     label="Tipo"
                 ></v-select>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="12" lg="5" xs="12" sm="12">
                 <v-file-input
                     v-model="caricaFile.fileUp"
                     truncate-length="15"
                     accept=".pdf"
                 ></v-file-input>
             </v-col>
-            <v-col>
-                <v-btn color="primary" dark @click="carica">
+            <v-col cols="12" md="12" lg="2" xs="12" sm="12">
+                <v-btn color="primary" dark @click="carica" :block="$vuetify.breakpoint.xs">
                     Carica
                 </v-btn>
             </v-col>

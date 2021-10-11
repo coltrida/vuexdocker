@@ -36,16 +36,22 @@ class RecapitoService
             'citta' => trim(Str::upper($request->citta)),
             'user_id' => $request->user_id,
             'provincia' => trim(Str::upper($request->provincia)),
+            'informazioni' => trim(Str::upper($request->informazioni)),
         ]);
+    }
 
-        /*$new = new Recapito();
-        $new->nome = trim(Str::upper($request->nome));
-        $new->indirizzo = trim(Str::upper($request->indirizzo));
-        $new->citta = trim(Str::upper($request->citta));
-        $new->user_id = $request->user_id;
-        $new->provincia = trim(Str::upper($request->provincia));
-        $new->save();
-        return $new;*/
+    public function modifica($request)
+    {
+        $recapito = Recapito::find($request->id);
+        $recapito->nome = trim(Str::upper($request->nome));
+        $recapito->indirizzo = trim(Str::upper($request->indirizzo));
+        $recapito->citta = trim(Str::upper($request->citta));
+        $recapito->user_id = $request->user_id;
+        $recapito->provincia = trim(Str::upper($request->provincia));
+        $recapito->informazioni = trim(Str::upper($request->informazioni));
+        $recapito->save();
+
+        return $recapito;
     }
 
     public function elimina($id)

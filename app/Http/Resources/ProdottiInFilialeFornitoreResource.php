@@ -23,6 +23,7 @@ class ProdottiInFilialeFornitoreResource extends JsonResource
             'categoria' => $this->listino->categoria->nome,
             'costo' => '€ '.number_format($this->listino->costo, 0, ',', '.'),
             'prezzolistino' => $this->listino->prezzolistino,
+            'scontoMax' => $this->listino->scontoMax,
             'iva' => $this->listino->iva.' %',
             'giorniTempoDiReso' => $this->listino->giorniTempoDiReso,
             'listinoId' => $this->listino->id,

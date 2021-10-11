@@ -4,10 +4,7 @@
         <v-container>
 
             <v-row v-if="getRuolo != 'admin'">
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                     <v-select
                         @change="caricaProdotti()"
                         v-model="productRichiesto.fornitore_id"
@@ -18,10 +15,7 @@
                     ></v-select>
                 </v-col>
 
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                     <v-select
                         v-model="productRichiesto.listino_id"
                         item-value="id"
@@ -31,18 +25,15 @@
                     ></v-select>
                 </v-col>
 
-                <v-col
-                    cols="3"
-                    sm="3"
-                >
+                <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                     <v-text-field
                         v-model="productRichiesto.quantita"
                         label="quantita"
                     ></v-text-field>
                 </v-col>
 
-                <v-col>
-                    <v-btn @click="richiedi" color="success" dark>
+                <v-col cols="12" md="12" lg="3" xs="12" sm="12">
+                    <v-btn @click="richiedi" color="success" dark :block="$vuetify.breakpoint.xs">
                         Richiedi
                     </v-btn>
                 </v-col>

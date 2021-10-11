@@ -168,15 +168,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
@@ -549,7 +540,15 @@ var render = function() {
                 [
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "3",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c("v-select", {
                         attrs: {
@@ -577,7 +576,15 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "3",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c("v-select", {
                         attrs: {
@@ -600,7 +607,15 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "3", sm: "3" } },
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "3",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c("v-text-field", {
                         attrs: { label: "quantita" },
@@ -618,11 +633,24 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "3",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
                     [
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "success", dark: "" },
+                          attrs: {
+                            color: "success",
+                            dark: "",
+                            block: _vm.$vuetify.breakpoint.xs
+                          },
                           on: { click: _vm.richiedi }
                         },
                         [

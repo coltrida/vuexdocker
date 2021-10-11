@@ -22,36 +22,40 @@ class ListinoSeeder extends Seeder
                 'nome' => 'M90',
                 'fornitore_id' => 1,
                 'categoria_id' => 1,
-                'costo' => 1000,
+                'costo' => 945,
                 'giorniTempoDiReso' => 90,
-                'prezzolistino' => 3200,
+                'prezzolistino' => 4200,
+                'scontoMax' => 10,
                 'iva' => 4
             ],
             [
                 'nome' => 'M70',
                 'fornitore_id' => 1,
                 'categoria_id' => 1,
-                'costo' => 800,
+                'costo' => 708,
                 'giorniTempoDiReso' => 90,
-                'prezzolistino' => 2600,
+                'prezzolistino' => 3200,
+                'scontoMax' => 10,
                 'iva' => 4
             ],
             [
                 'nome' => 'M50',
                 'fornitore_id' => 1,
                 'categoria_id' => 1,
-                'costo' => 700,
+                'costo' => 573,
                 'giorniTempoDiReso' => 90,
-                'prezzolistino' => 2100,
+                'prezzolistino' => 2400,
+                'scontoMax' => 10,
                 'iva' => 4
             ],
             [
                 'nome' => 'M30',
                 'fornitore_id' => 1,
                 'categoria_id' => 1,
-                'costo' => 500,
+                'costo' => 445,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 1700,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
@@ -61,6 +65,7 @@ class ListinoSeeder extends Seeder
                 'costo' => 664,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 2800,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
@@ -70,6 +75,7 @@ class ListinoSeeder extends Seeder
                 'costo' => 469,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 2500,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
@@ -79,6 +85,7 @@ class ListinoSeeder extends Seeder
                 'costo' => 359,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 2200,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
@@ -88,6 +95,7 @@ class ListinoSeeder extends Seeder
                 'costo' => 265,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 1700,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
@@ -97,6 +105,7 @@ class ListinoSeeder extends Seeder
                 'costo' => 729,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 3200,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
@@ -106,6 +115,7 @@ class ListinoSeeder extends Seeder
                 'costo' => 509,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 2600,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
@@ -115,6 +125,7 @@ class ListinoSeeder extends Seeder
                 'costo' => 399,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 2300,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
@@ -124,25 +135,78 @@ class ListinoSeeder extends Seeder
                 'costo' => 306,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 1800,
+                'scontoMax' => 0,
                 'iva' => 4
             ],
             [
                 'nome' => Str::upper('Charger ricaricabile'),
-                'fornitore_id' => 2,
+                'fornitore_id' => 1,
                 'categoria_id' => 2,
                 'costo' => 53,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 55,
-                'iva' => 4
+                'scontoMax' => 0,
+                'iva' => 22
+            ],
+            [
+                'nome' => Str::upper('RemoteControl'),
+                'fornitore_id' => 1,
+                'categoria_id' => 2,
+                'costo' => 150,
+                'giorniTempoDiReso' => 90,
+                'prezzolistino' => 170,
+                'scontoMax' => 0,
+                'iva' => 22
+            ],
+            [
+                'nome' => Str::upper('Ricevitore esterno'),
+                'fornitore_id' => 1,
+                'categoria_id' => 2,
+                'costo' => 35,
+                'giorniTempoDiReso' => 90,
+                'prezzolistino' => 36,
+                'scontoMax' => 0,
+                'iva' => 22
+            ],
+            [
+                'nome' => Str::upper('Paracerume CeruShield'),
+                'fornitore_id' => 1,
+                'categoria_id' => 2,
+                'costo' => 2.5,
+                'giorniTempoDiReso' => 90,
+                'prezzolistino' => 3,
+                'scontoMax' => 0,
+                'iva' => 22
+            ],
+            [
+                'nome' => Str::upper('Paracerume Nowax'),
+                'fornitore_id' => 1,
+                'categoria_id' => 2,
+                'costo' => 13,
+                'giorniTempoDiReso' => 90,
+                'prezzolistino' => 15,
+                'scontoMax' => 0,
+                'iva' => 22
+            ],
+            [
+                'nome' => Str::upper('TVLink II'),
+                'fornitore_id' => 1,
+                'categoria_id' => 2,
+                'costo' => 70,
+                'giorniTempoDiReso' => 90,
+                'prezzolistino' => 100,
+                'scontoMax' => 0,
+                'iva' => 22
             ],
             [
                 'nome' => Str::upper('Garanzia 3* anno'),
-                'fornitore_id' => 2,
+                'fornitore_id' => 1,
                 'categoria_id' => 3,
                 'costo' => 60,
                 'giorniTempoDiReso' => 90,
                 'prezzolistino' => 70,
-                'iva' => 4
+                'scontoMax' => 0,
+                'iva' => 22
             ],
         ]);
 

@@ -36,6 +36,7 @@ const help = () => {
         linkrecapiti: base+'recapiti',
         linkrecapitiperaudio: base+'recapitiPerAudio',
         linkaddrecapito: base+'addRecapito',
+        linkmodificarecapito: base+'modificaRecapito',
         linkrichiestaprodotti: base+'richiestaProdotti',
         linkclients: base+'clients',
         linkeliminaclient: base+'eliminaClient',
@@ -156,6 +157,8 @@ const help = () => {
         linkinformazioni: base+'informazioni',
         linkaggiungiinformazione: base+'aggiungiInformazione',
         linkdarichiamare: base+'daRichiamare',
+        linkdeleteprovesenzaprodotti: base+'eliminaProveSenzaProdotti',
+        linkservizi: base+'servizi',
     };
 };
 export default help;

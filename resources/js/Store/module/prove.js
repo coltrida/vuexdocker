@@ -46,6 +46,7 @@ const actions = {
             'product_id': payload.prodotto.id,
             'orecchio': payload.orecchio,
             'prezzo': payload.prezzolistino,
+            'tipologia': payload.tipologia,
         }, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
@@ -92,6 +93,14 @@ const actions = {
         });
         commit('salvaFattura', response.data);
     },
+
+    async deleteProveSenzaProdotti({commit}, idClient){
+        await axios.get(`${help().linkdeleteprovesenzaprodotti}`+'/'+idClient, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+    },
 };
 
 const mutations = {
@@ -125,6 +134,10 @@ const mutations = {
         state.provePassate = state.provePassate.filter(u => u.id !== payload.id);
         state.provePassate.unshift(payload);
     },
+
+    svuotaElementiNuovaProva(state){
+        state.elementiNuovaProva = [];
+    }
 
 };
 
