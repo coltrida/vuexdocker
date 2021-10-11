@@ -8,6 +8,7 @@ use App\Models\Appuntamento;
 use App\Models\Audiometria;
 use App\Models\Client;
 use App\Models\Filiale;
+use App\Models\Informazione;
 use App\Models\Prova;
 use App\Models\Recapito;
 use App\Models\Telefonata;
@@ -285,32 +286,47 @@ class ClientService
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
 //dd($xml->Patient);
         foreach ($xml->Patient as $ele){
-            //dd($ele->Patient);
-            $client = Client::firstOrCreate(
+            //dd((string)$ele->Patient->CreateDate);
+            $client = Client::updateOrCreate(
                 [
-                    'nome' => trim(Str::upper($ele->Patient->FirstName)),
-                    'cognome' => trim(Str::upper($ele->Patient->LastName)),
-                    'citta' => $ele->Patient->City ? trim(Str::upper($ele->Patient->City)) : null,
-                    'indirizzo' => $ele->Patient->Address1 ? trim(Str::upper($ele->Patient->Address1)) : null],
+                    'nome'          => trim(Str::upper($ele->Patient->FirstName)),
+                    'cognome'       => trim(Str::upper($ele->Patient->LastName)),
+                    'created_at'    => Carbon::make((string)$ele->Patient->CreateDate),
+                ],
                 [
-                    'cap' => $ele->Patient->Zip ? trim(Str::upper($ele->Patient->Zip)) : null,
-                    'telefono' => $ele->Patient->MobilePhone ? trim(Str::upper($ele->Patient->MobilePhone)) : null,
-                    'telefono2' => $ele->Patient->WorkPhone ? trim(Str::upper($ele->Patient->WorkPhone)) : null,
-                    'telefono3' => $ele->Patient->HomePhone ? trim(Str::upper($ele->Patient->HomePhone)) : null,
-                    'provincia' => $ele->Patient->Other1 ? trim(Str::upper($ele->Patient->Other1)) : null,
+                    'citta'         => $ele->Patient->City ? trim(Str::upper($ele->Patient->City)) : null,
+                    'indirizzo'     => $ele->Patient->Address1 ? trim(Str::upper($ele->Patient->Address1)) : null,
+                    'cap'           => $ele->Patient->Zip ? trim(Str::upper($ele->Patient->Zip)) : null,
+                    'telefono'      => $ele->Patient->MobilePhone ? trim(Str::upper($ele->Patient->MobilePhone)) : null,
+                    'telefono2'     => $ele->Patient->WorkPhone ? trim(Str::upper($ele->Patient->WorkPhone)) : null,
+                    'telefono3'     => $ele->Patient->HomePhone ? trim(Str::upper($ele->Patient->HomePhone)) : null,
+                    'provincia'     => $ele->Patient->Other1 ? trim(Str::upper($ele->Patient->Other1)) : null,
 //                    'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
-                    'user_id' => $request['idUser'],
-                    'datanascita' => $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null,
+                    'user_id'       => $request['idUser'],
+                    'datanascita'   => $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null,
 //                    'recapito_id' => $ele->Patient->Other2 ? $ele->Patient->Other2 : null,
-                    'recapito_id' => null,
-                    'mail' => is_string($ele->Patient->EMail) ? (string)$ele->Patient->EMail : null,
+                    'recapito_id'   => null,
+                    'mail'          => is_string($ele->Patient->EMail) ? (string)$ele->Patient->EMail : null,
 //                    'tipologia_id' => $ele->Patient->Province ? $ele->Patient->Province : null,
-                    'tipologia_id' => 6,
+                    'tipologia_id'  => 6,
 //                    'filiale_id' => User::find($ele->Patient->CreatedBy)->filiale[0]->id,
-                    'filiale_id' => $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
+                    'filiale_id'    => $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
                         Str::of(Str::upper($ele->Patient->City))->trim()),
+                    'updated_at'    => Carbon::make((string)$ele->Patient->CreateDate),
+                    'mese'          => Carbon::make((string)$ele->Patient->CreateDate)->month,
+                    'anno'          => Carbon::make((string)$ele->Patient->CreateDate)->year,
                 ]
             );
+
+            if ($client->wasRecentlyCreated){
+                Informazione::create([
+                    'client_id' => $client->id,
+                    'tipo' => 'INGRESSO',
+                    'note' => 'Ingresso presso.....',
+                    'giorno' => $client->created_at->format('Y-m-d'),
+                ]);
+            }
+
             $audiometriad = null;
             $audiometrias = null;
 //dd($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]);
@@ -495,7 +511,7 @@ class ClientService
                 'ASCIANO PISANO', 'ASCIANO (SGTERME)', 'BIENTINA', 'BUTI', 'CALCI', 'CALCINAIA', 'CAPANNOLI',
                 'CASTELFRANCO DI SOTTO', 'PONSACCO', 'PECCIOLI', 'SAN GIULIANO TERME'])) {
                 return Filiale::where('nome', 'PISA')->first()->id;
-            } elseif (in_array($citta , ['VIAREGGIO', 'FORTE DEI MARMI', 'MASSA', 'TORRE DEL LAGO', 'LIDO DI CAMAIORE',
+            } elseif (in_array($citta , ['VIAREGGIO', 'FORTE DEI MARMI', 'FORTE DEI MARIMI', 'MASSA', 'TORRE DEL LAGO', 'LIDO DI CAMAIORE',
                 'LA SPEZIA', 'FILATTIERA(PONTREMOLI)', 'TONFANO(PIETRASANTA)', 'QUERCETA', 'MONTIGNOSO', 'PIETRASANTA',
                 'VITTORIA APUANA', 'SOLAIO(PIETRASANTA)', 'STRETTOIA(PIETRASANAT)', 'LUNI'])) {
                 return Filiale::where('nome', 'VIAREGGIO')->first()->id;
