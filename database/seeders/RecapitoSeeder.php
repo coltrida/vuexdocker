@@ -21,7 +21,8 @@ class RecapitoSeeder extends Seeder
                 'citta' => 'LAMMARI',
                 'provincia' => 'LU',
                 'telefono' => '0583174896',
-                'user_id' => 3,
+                'informazioni' => 'STUDI MEDICI, SOPRA LA FARMACIA COMUNALE',
+                'user_id' => 2,
             ],
             [
                 'nome' => 'OTTICA APPOLLONI',
@@ -29,6 +30,7 @@ class RecapitoSeeder extends Seeder
                 'citta' => 'QUERCETA DI SERAVEZZA',
                 'provincia' => 'LU',
                 'telefono' => '0584760689',
+                'informazioni' => "E' IN UNA TRAVERSA DELLA STRADA STATALE",
                 'user_id' => 3,
             ],
             [
@@ -37,6 +39,7 @@ class RecapitoSeeder extends Seeder
                 'citta' => 'TACCOLI',
                 'provincia' => 'MC',
                 'telefono' => '0733639051',
+                'informazioni' => "AL PRIMO PIANO DELLO STABILE NELLA PIAZZA",
                 'user_id' => 9,
             ],
         ]);

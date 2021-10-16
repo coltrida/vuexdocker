@@ -68,24 +68,29 @@ const actions = {
     },
 
     async addRecapito({commit}, payload){
-        const response = await axios.post(`${help().linkaddrecapito}`, {
-            'nome': payload.nome,
-            'indirizzo': payload.indirizzo,
-            'citta': payload.citta,
-            'telefono': payload.telefono,
-            'user_id': payload.user_id,
-            'provincia': payload.provincia,
-            'informazioni': payload.informazioni,
-        }, {
+        const config = {
             headers: {
+                'content-type': 'multipart/form-data' ,
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
-        });
+        };
+
+        let formData = new FormData();
+        formData.append('file', payload.fileUp);
+        formData.append('nome', payload.nome);
+        formData.append('indirizzo', payload.indirizzo);
+        formData.append('citta', payload.citta);
+        formData.append('telefono', payload.telefono);
+        formData.append('user_id', payload.user_id);
+        formData.append('provincia', payload.provincia);
+        formData.append('informazioni', payload.informazioni);
+
+        const response = await axios.post(`${help().linkaddrecapito}`, formData, config);
         commit('addRecapito', response.data);
     },
 
     async modificaRecapito({commit}, payload){
-        const response = await axios.post(`${help().linkmodificarecapito}`, {
+        /*const response = await axios.post(`${help().linkmodificarecapito}`, {
             'id': payload.id,
             'nome': payload.nome,
             'indirizzo': payload.indirizzo,
@@ -94,11 +99,35 @@ const actions = {
             'user_id': payload.user_id,
             'provincia': payload.provincia,
             'informazioni': payload.informazioni,
+            'fileUp': payload.fileUp
         }, {
             headers: {
+                'content-type': 'multipart/form-data' ,
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
+
+        commit('addRecapito', response.data);*/
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data' ,
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        };
+
+        let formData = new FormData();
+        formData.append('file', payload.fileUp);
+        formData.append('nome', payload.nome);
+        formData.append('id', payload.id);
+        formData.append('indirizzo', payload.indirizzo);
+        formData.append('citta', payload.citta);
+        formData.append('telefono', payload.telefono);
+        formData.append('user_id', payload.user_id);
+        formData.append('provincia', payload.provincia);
+        formData.append('informazioni', payload.informazioni);
+
+        const response = await axios.post(`${help().linkmodificarecapito}`, formData, config);
         commit('addRecapito', response.data);
     },
 
@@ -126,11 +155,11 @@ const mutations = {
     },
 
     addRecapito(state, payload){
-        state.recapiti.find(u => u.id === payload.user_id).recapito.unshift(payload);
+        state.recapiti.find(u => u.id === parseInt(payload.user_id)).recapito.unshift(payload);
     },
 
     eliminaRecapito(state, payload){
-        state.recapiti.find(u => u.id === payload.idUser).recapito.splice(payload.indice, 1);
+        state.recapiti.find(u => u.id === parseInt(payload.idUser)).recapito.splice(payload.indice, 1);
     },
 };
 

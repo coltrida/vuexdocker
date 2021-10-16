@@ -264,6 +264,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -273,6 +283,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      carica: false,
       modificaSwitch: false,
       modal2: false,
       valid: true,
@@ -328,7 +339,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   props: ['appuntamentoClient'],
   mounted: function mounted() {
-    this.fetchAppuntamenti(this.appuntamentoClient.id);
+    var _this = this;
+
+    this.carica = true;
+    this.fetchAppuntamenti(this.appuntamentoClient.id).then(function () {
+      _this.carica = false;
+    });
 
     if (this.getRuolo == 'call') {
       this.fetchFiliali();
@@ -364,19 +380,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('chiudiAppuntamento');
     },
     inserisci: function inserisci() {
-      var _this = this;
+      var _this2 = this;
 
       this.$refs.form.validate();
       this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
+      this.newAppuntamento.telefonista_id = this.getIdUser;
       this.newAppuntamento.client_id = this.appuntamentoClient.id;
 
       if (this.modificaSwitch) {
         this.modificaAppuntamento(this.newAppuntamento).then(function () {
-          _this.$refs.form.resetValidation();
+          _this2.$refs.form.resetValidation();
 
-          _this.caricaAppuntamenti();
+          _this2.caricaAppuntamenti();
 
-          _this.newAppuntamento = {
+          _this2.newAppuntamento = {
             filiale_id: null,
             recapito_id: null,
             tipo: null,
@@ -385,11 +402,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       } else {
         this.addAppuntamento(this.newAppuntamento).then(function () {
-          _this.$refs.form.resetValidation();
+          _this2.$refs.form.resetValidation();
 
-          _this.caricaAppuntamenti();
+          _this2.caricaAppuntamenti();
 
-          _this.newAppuntamento = {
+          _this2.newAppuntamento = {
             filiale_id: null,
             recapito_id: null,
             tipo: null,
@@ -2243,6 +2260,71 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2253,6 +2335,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['recallsClient'],
   data: function data() {
     return {
+      dialog: false,
+      informazioneRecapito: '',
       carica: false,
       telefonata: {},
       telefonataDaAggiornare: {},
@@ -2287,14 +2371,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.carica = true;
+    this.fetchRecapitiByAudio(this.recallsClient.user_id);
     this.fetchRecallsByIdClient(this.recallsClient.id).then(function () {
       _this.carica = false;
     });
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('telefonate', {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('telefonate', {
     fetchRecallsByIdClient: 'fetchRecallsByIdClient',
     addTelefonata: 'addTelefonata',
     aggiornaTelefonata: 'aggiornaTelefonata'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('recapiti', {
+    fetchRecapitiByAudio: 'fetchRecapitiByAudio'
   })), {}, {
     inserisci: function inserisci() {
       var _this2 = this;
@@ -2328,10 +2415,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     cancella: function cancella() {
       this.$emit('chiudiRecalls', null);
+    },
+    infoRecapito: function infoRecapito(recapito) {
+      this.informazioneRecapito = recapito;
+      this.dialog = true;
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('telefonate', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('telefonate', {
     getRecalls: 'getRecalls'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('recapiti', {
+    getRecapiti: 'getRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   }))
@@ -42753,57 +42846,74 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-data-table", {
-                staticClass: "elevation-1 my-4",
-                attrs: {
-                  headers: _vm.headers,
-                  items: _vm.getAppuntamenti,
-                  "hide-default-footer": ""
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "item.actions",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return [
-                        _c(
-                          "v-icon",
+              _vm.carica
+                ? _c(
+                    "div",
+                    { staticClass: "text-center" },
+                    [
+                      _c("v-progress-circular", {
+                        attrs: { indeterminate: "", color: "primary" }
+                      })
+                    ],
+                    1
+                  )
+                : _c(
+                    "div",
+                    [
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 my-4",
+                        attrs: {
+                          headers: _vm.headers,
+                          items: _vm.getAppuntamenti,
+                          "hide-default-footer": ""
+                        },
+                        scopedSlots: _vm._u([
                           {
-                            attrs: { color: "red", small: "" },
-                            on: {
-                              click: function($event) {
-                                return _vm.elimina(item.id)
-                              }
+                            key: "item.actions",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    attrs: { color: "red", small: "" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.elimina(item.id)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            mdi-delete\n                        "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-icon",
+                                  {
+                                    attrs: { color: "blue", small: "" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.modifica(item)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            mdi-pencil\n                        "
+                                    )
+                                  ]
+                                )
+                              ]
                             }
-                          },
-                          [
-                            _vm._v(
-                              "\n                        mdi-delete\n                    "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-icon",
-                          {
-                            attrs: { color: "blue", small: "" },
-                            on: {
-                              click: function($event) {
-                                return _vm.modifica(item)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                        mdi-pencil\n                    "
-                            )
-                          ]
-                        )
-                      ]
-                    }
-                  }
-                ])
-              })
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  )
             ],
             1
           ),
@@ -44464,457 +44574,465 @@ var render = function() {
             1
           ),
       _vm._v(" "),
-      _c(
-        "v-row",
-        [
-          _c(
-            "v-col",
-            { attrs: { cols: "12", md: "6", lg: "6" } },
+      _vm.carica2
+        ? _c(
+            "div",
+            { staticClass: "text-center" },
             [
-              _c(
-                "div",
-                {
-                  staticStyle: {
-                    display: "flex",
-                    "justify-content": "space-between"
-                  }
-                },
-                [
-                  _c("div", [_c("h3", [_vm._v("Nuova Prova")])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _vm.carica
-                      ? _c(
-                          "div",
-                          { staticClass: "text-center" },
-                          [
-                            _c("v-progress-circular", {
-                              attrs: { indeterminate: "", color: "primary" }
-                            })
-                          ],
-                          1
-                        )
-                      : _c(
-                          "div",
-                          [
-                            _c(
-                              "v-btn",
-                              {
-                                attrs: { color: "primary", dark: "" },
-                                on: { click: _vm.salvaProva }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                    Salva\n                                "
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("v-data-table", {
-                staticClass: "elevation-1 mt-3",
-                attrs: {
-                  headers: _vm.headerNuovaProva,
-                  items: _vm.getElementiNuovaProva,
-                  "hide-default-footer": ""
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "item.actions",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return [
-                        _c(
-                          "v-icon",
-                          {
-                            attrs: { color: "red", small: "" },
-                            on: {
-                              click: function($event) {
-                                return _vm.eliminaElementoDallaProva(
-                                  item.id,
-                                  item.idProduct
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                mdi-delete\n                            "
-                            )
-                          ]
-                        )
-                      ]
-                    }
-                  }
-                ])
+              _c("v-progress-circular", {
+                attrs: { indeterminate: "", color: "primary" }
               })
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("v-col", { attrs: { cols: "12", md: "6", lg: "6" } }, [
-            _c("h3", [_vm._v("Prove")]),
-            _vm._v(" "),
-            _vm.carica2
-              ? _c(
-                  "div",
-                  { staticClass: "text-center" },
-                  [
-                    _c("v-progress-circular", {
-                      attrs: { indeterminate: "", color: "primary" }
-                    })
-                  ],
-                  1
-                )
-              : _c(
-                  "div",
-                  [
-                    _c("v-data-table", {
-                      staticClass: "elevation-1 mt-5",
-                      attrs: {
-                        headers: _vm.headerProve,
-                        items: _vm.getProvePassate,
-                        "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u([
+          )
+        : _c(
+            "div",
+            [
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "6", lg: "6" } },
+                    [
+                      _c(
+                        "div",
                         {
-                          key: "item.stato.nome",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              item.stato.nome == "RESO"
-                                ? _c(
-                                    "v-chip",
-                                    {
-                                      attrs: {
-                                        color: "red",
-                                        label: "",
-                                        "text-color": "white"
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                " +
-                                          _vm._s(item.stato.nome) +
-                                          "\n                            "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              item.stato.nome == "FATTURA"
-                                ? _c(
-                                    "v-chip",
-                                    {
-                                      attrs: {
-                                        color: "green",
-                                        label: "",
-                                        "text-color": "white"
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                " +
-                                          _vm._s(item.stato.nome) +
-                                          "\n                            "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              item.stato.nome == "PROVA"
-                                ? _c("div", [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(item.stato.nome) +
-                                        "\n                            "
-                                    )
-                                  ])
-                                : _vm._e()
-                            ]
+                          staticStyle: {
+                            display: "flex",
+                            "justify-content": "space-between"
                           }
                         },
-                        {
-                          key: "item.actions",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "v-icon",
-                                {
-                                  attrs: { color: "blue", small: "" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.stopPropagation()
-                                      return _vm.apriLista(item.product)
+                        [
+                          _c("div", [_c("h3", [_vm._v("Nuova Prova")])]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _vm.carica
+                              ? _c(
+                                  "div",
+                                  { staticClass: "text-center" },
+                                  [
+                                    _c("v-progress-circular", {
+                                      attrs: {
+                                        indeterminate: "",
+                                        color: "primary"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: { color: "primary", dark: "" },
+                                        on: { click: _vm.salvaProva }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                        Salva\n                                    "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          headers: _vm.headerNuovaProva,
+                          items: _vm.getElementiNuovaProva,
+                          "hide-default-footer": ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.actions",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    attrs: { color: "red", small: "" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.eliminaElementoDallaProva(
+                                          item.id,
+                                          item.idProduct
+                                        )
+                                      }
                                     }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                mdi-format-list-bulleted-square\n                            "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function(ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            item.stato.nome === "PROVA"
-                                              ? _c(
-                                                  "v-icon",
-                                                  _vm._g(
-                                                    _vm._b(
-                                                      {
-                                                        attrs: {
-                                                          color: "red",
-                                                          small: ""
-                                                        },
-                                                        on: {
-                                                          click: function(
-                                                            $event
-                                                          ) {
-                                                            return _vm.reso(
-                                                              item.id
-                                                            )
-                                                          }
-                                                        }
-                                                      },
-                                                      "v-icon",
-                                                      attrs,
-                                                      false
-                                                    ),
-                                                    on
-                                                  ),
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                        mdi-delete\n                                    "
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        }
-                                      }
-                                    ],
-                                    null,
-                                    true
-                                  )
-                                },
-                                [_vm._v(" "), _c("span", [_vm._v("Reso")])]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function(ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href:
-                                                    "https://www.centrouditogroup.it/storage/fatture/2021/" +
-                                                    item.id +
-                                                    ".pdf",
-                                                  target: "_blank"
-                                                }
-                                              },
-                                              [
-                                                item.stato.nome === "FATTURA"
-                                                  ? _c(
-                                                      "v-icon",
-                                                      _vm._g(
-                                                        _vm._b(
-                                                          {
-                                                            attrs: {
-                                                              color: "black",
-                                                              small: ""
-                                                            }
-                                                          },
-                                                          "v-icon",
-                                                          attrs,
-                                                          false
-                                                        ),
-                                                        on
-                                                      ),
-                                                      [
-                                                        _vm._v(
-                                                          "\n                                            mdi-check\n                                        "
-                                                        )
-                                                      ]
-                                                    )
-                                                  : _vm._e()
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        }
-                                      }
-                                    ],
-                                    null,
-                                    true
-                                  )
-                                },
-                                [_vm._v(" "), _c("span", [_vm._v("Fattura")])]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function(ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            item.stato.nome === "PROVA"
-                                              ? _c(
-                                                  "v-icon",
-                                                  _vm._g(
-                                                    _vm._b(
-                                                      {
-                                                        attrs: {
-                                                          color: "green",
-                                                          small: ""
-                                                        },
-                                                        on: {
-                                                          click: function(
-                                                            $event
-                                                          ) {
-                                                            return _vm.apriFattura(
-                                                              item
-                                                            )
-                                                          }
-                                                        }
-                                                      },
-                                                      "v-icon",
-                                                      attrs,
-                                                      false
-                                                    ),
-                                                    on
-                                                  ),
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                        mdi-currency-usd\n                                    "
-                                                    )
-                                                  ]
-                                                )
-                                              : _vm._e()
-                                          ]
-                                        }
-                                      }
-                                    ],
-                                    null,
-                                    true
-                                  )
-                                },
-                                [
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Produci Fattura")])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function(ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href:
-                                                    "https://www.centrouditogroup.it" +
-                                                    item.copia_comm[0].link,
-                                                  target: "_blank"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "v-icon",
-                                                  _vm._g(
-                                                    _vm._b(
-                                                      {
-                                                        staticStyle: {
-                                                          "font-size": "25px"
-                                                        },
-                                                        attrs: {
-                                                          color: "orange",
-                                                          small: ""
-                                                        }
-                                                      },
-                                                      "v-icon",
-                                                      attrs,
-                                                      false
-                                                    ),
-                                                    on
-                                                  ),
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                            mdi-closed-caption\n                                        "
-                                                    )
-                                                  ]
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          ]
-                                        }
-                                      }
-                                    ],
-                                    null,
-                                    true
-                                  )
-                                },
-                                [
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Copia Commissione")])
-                                ]
-                              )
-                            ]
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    mdi-delete\n                                "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
                           }
-                        }
-                      ])
-                    })
-                  ],
-                  1
-                )
-          ])
-        ],
-        1
-      )
+                        ])
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "6", lg: "6" } },
+                    [
+                      _c("h3", [_vm._v("Prove")]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-5",
+                        attrs: {
+                          headers: _vm.headerProve,
+                          items: _vm.getProvePassate,
+                          "hide-default-footer": ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.stato.nome",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                item.stato.nome == "RESO"
+                                  ? _c(
+                                      "v-chip",
+                                      {
+                                        attrs: {
+                                          color: "red",
+                                          label: "",
+                                          "text-color": "white"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(item.stato.nome) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.stato.nome == "FATTURA"
+                                  ? _c(
+                                      "v-chip",
+                                      {
+                                        attrs: {
+                                          color: "green",
+                                          label: "",
+                                          "text-color": "white"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(item.stato.nome) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.stato.nome == "PROVA"
+                                  ? _c("div", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(item.stato.nome) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.actions",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "v-icon",
+                                  {
+                                    attrs: { color: "blue", small: "" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.stopPropagation()
+                                        return _vm.apriLista(item.product)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    mdi-format-list-bulleted-square\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              item.stato.nome === "PROVA"
+                                                ? _c(
+                                                    "v-icon",
+                                                    _vm._g(
+                                                      _vm._b(
+                                                        {
+                                                          attrs: {
+                                                            color: "red",
+                                                            small: ""
+                                                          },
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.reso(
+                                                                item.id
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        "v-icon",
+                                                        attrs,
+                                                        false
+                                                      ),
+                                                      on
+                                                    ),
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                            mdi-delete\n                                        "
+                                                      )
+                                                    ]
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [_vm._v(" "), _c("span", [_vm._v("Reso")])]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              _c(
+                                                "a",
+                                                {
+                                                  attrs: {
+                                                    href:
+                                                      "https://www.centrouditogroup.it/storage/fatture/2021/" +
+                                                      item.id +
+                                                      ".pdf",
+                                                    target: "_blank"
+                                                  }
+                                                },
+                                                [
+                                                  item.stato.nome === "FATTURA"
+                                                    ? _c(
+                                                        "v-icon",
+                                                        _vm._g(
+                                                          _vm._b(
+                                                            {
+                                                              attrs: {
+                                                                color: "black",
+                                                                small: ""
+                                                              }
+                                                            },
+                                                            "v-icon",
+                                                            attrs,
+                                                            false
+                                                          ),
+                                                          on
+                                                        ),
+                                                        [
+                                                          _vm._v(
+                                                            "\n                                                mdi-check\n                                            "
+                                                          )
+                                                        ]
+                                                      )
+                                                    : _vm._e()
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [_vm._v(" "), _c("span", [_vm._v("Fattura")])]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              item.stato.nome === "PROVA"
+                                                ? _c(
+                                                    "v-icon",
+                                                    _vm._g(
+                                                      _vm._b(
+                                                        {
+                                                          attrs: {
+                                                            color: "green",
+                                                            small: ""
+                                                          },
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.apriFattura(
+                                                                item
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        "v-icon",
+                                                        attrs,
+                                                        false
+                                                      ),
+                                                      on
+                                                    ),
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                            mdi-currency-usd\n                                        "
+                                                      )
+                                                    ]
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Produci Fattura")])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-tooltip",
+                                  {
+                                    attrs: { bottom: "" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "activator",
+                                          fn: function(ref) {
+                                            var on = ref.on
+                                            var attrs = ref.attrs
+                                            return [
+                                              _c(
+                                                "a",
+                                                {
+                                                  attrs: {
+                                                    href:
+                                                      "https://www.centrouditogroup.it" +
+                                                      item.copia_comm[0].link,
+                                                    target: "_blank"
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    _vm._g(
+                                                      _vm._b(
+                                                        {
+                                                          staticStyle: {
+                                                            "font-size": "25px"
+                                                          },
+                                                          attrs: {
+                                                            color: "orange",
+                                                            small: ""
+                                                          }
+                                                        },
+                                                        "v-icon",
+                                                        attrs,
+                                                        false
+                                                      ),
+                                                      on
+                                                    ),
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                mdi-closed-caption\n                                            "
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Copia Commissione")])
+                                  ]
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
     ],
     1
   )
@@ -44947,9 +45065,80 @@ var render = function() {
     { staticClass: "mt-3 flex-column" },
     [
       _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "600" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-img", {
+                staticClass: "black--text align-end",
+                attrs: {
+                  height: "400px",
+                  width: "600px",
+                  src:
+                    "https://www.centrouditogroup.it/storage/recapiti/" +
+                    _vm.informazioneRecapito.id +
+                    ".jpg"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-card-title", { staticClass: "text-h5" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.informazioneRecapito.nome) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("v-card-text", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.informazioneRecapito.informazioni) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "green darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    Chiudi\n                ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-row",
         [
-          _c("v-col", { attrs: { cols: "6" } }, [
+          _c("v-col", { attrs: { cols: "4" } }, [
             _c("h2", [
               _vm._v(
                 "\n                " +
@@ -44997,7 +45186,35 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { staticClass: "flex justify-end", attrs: { cols: "6" } },
+            { attrs: { cols: "4" } },
+            [
+              _c(
+                "v-row",
+                { attrs: { justify: "center" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      items: _vm.getRecapiti,
+                      "return-object": "",
+                      "item-text": "nome",
+                      label: "Informazioni Recapito"
+                    },
+                    on: {
+                      change: function($event) {
+                        return _vm.infoRecapito($event)
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { staticClass: "flex justify-end", attrs: { cols: "4" } },
             [
               _c(
                 "v-btn",

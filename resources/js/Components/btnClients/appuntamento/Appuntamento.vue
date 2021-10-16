@@ -153,31 +153,41 @@
                 </v-btn>
                 </v-form>
 
-                <v-data-table
-                    :headers="headers"
-                    :items="getAppuntamenti"
-                    hide-default-footer
-                    class="elevation-1 my-4"
-                >
+                <div class="text-center" v-if="carica">
+                    <v-progress-circular
+                        indeterminate
+                        color="primary"
+                    ></v-progress-circular>
+                </div>
+                <div v-else>
+                    <v-data-table
+                        :headers="headers"
+                        :items="getAppuntamenti"
+                        hide-default-footer
+                        class="elevation-1 my-4"
+                    >
 
-                    <template v-slot:item.actions="{ item }">
-                        <v-icon
-                            color="red"
-                            small
-                            @click="elimina(item.id)"
-                        >
-                            mdi-delete
-                        </v-icon>
-                        <v-icon
-                            color="blue"
-                            small
-                            @click="modifica(item)"
-                        >
-                            mdi-pencil
-                        </v-icon>
-                    </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-icon
+                                color="red"
+                                small
+                                @click="elimina(item.id)"
+                            >
+                                mdi-delete
+                            </v-icon>
+                            <v-icon
+                                color="blue"
+                                small
+                                @click="modifica(item)"
+                            >
+                                mdi-pencil
+                            </v-icon>
+                        </template>
 
-                </v-data-table>
+                    </v-data-table>
+                </div>
+
+
             </v-col>
             <v-col cols="12" md="12" lg="6" xs="12" sm="12">
                 <calendar :audioprot="appuntamentoClient.user_id" :fissaNome="true"/>
@@ -194,6 +204,7 @@
         components: {Calendar},
         data(){
             return {
+                carica: false,
                 modificaSwitch: false,
                 modal2: false,
                 valid: true,
@@ -222,7 +233,10 @@
         props: [ 'appuntamentoClient' ],
 
         mounted() {
-            this.fetchAppuntamenti(this.appuntamentoClient.id);
+            this.carica = true;
+            this.fetchAppuntamenti(this.appuntamentoClient.id).then(() => {
+                this.carica = false;
+            });
 
             if (this.getRuolo == 'call'){
                 this.fetchFiliali();
@@ -271,6 +285,7 @@
             inserisci(){
                 this.$refs.form.validate();
                 this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
+                this.newAppuntamento.telefonista_id = this.getIdUser;
                 this.newAppuntamento.client_id = this.appuntamentoClient.id;
 
                 if (this.modificaSwitch){

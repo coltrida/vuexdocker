@@ -1,7 +1,40 @@
 <template>
     <v-row class="mt-3 flex-column">
+        <v-dialog
+            v-model="dialog"
+            max-width="600"
+        >
+            <v-card>
+                <v-img
+                    class="black--text align-end"
+                    height="400px"
+                    width="600px"
+                    :src="'https://www.centrouditogroup.it/storage/recapiti/'+informazioneRecapito.id+'.jpg'"
+                >
+                </v-img>
+                <v-card-title class="text-h5">
+                    {{ informazioneRecapito.nome }}
+                </v-card-title>
+
+                <v-card-text>
+                    {{ informazioneRecapito.informazioni }}
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn
+                        color="green darken-1"
+                        text
+                        @click="dialog = false"
+                    >
+                        Chiudi
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-row>
-            <v-col cols="6">
+            <v-col cols="4">
                 <h2>
                     {{recallsClient.nome}} {{recallsClient.cognome}} {{recallsClient.telefono ? ' - '+recallsClient.telefono : null}}
                     {{recallsClient.telefono2 ? ' - '+recallsClient.telefono2 : null}} {{recallsClient.telefono3 ? ' - '+recallsClient.telefono3 : null}}
@@ -9,7 +42,39 @@
                 <h4>{{recallsClient.indirizzo}} - {{recallsClient.citta}} - {{recallsClient.provincia}}</h4>
                 <h4>Dottore di riferimento: {{recallsClient.user}}</h4>
             </v-col>
-            <v-col cols="6" class="flex justify-end">
+            <v-col cols="4">
+                <!--<v-select
+                    @change="infoRecapito($event)"
+                    :items="getRecapiti"
+                    item-value="informazioni"
+                    item-text="nome"
+                    label="Informazioni Recapito"
+                ></v-select>
+                {{ informazioneRecapito }}-->
+
+                    <v-row justify="center">
+                        <!--<v-btn
+                            color="primary"
+                            dark
+                            @click.stop="dialog = true"
+                        >
+                            Open Dialog
+                        </v-btn>-->
+
+                        <v-select
+                            @change="infoRecapito($event)"
+                            :items="getRecapiti"
+                            return-object
+                            item-text="nome"
+                            label="Informazioni Recapito"
+                        ></v-select>
+
+
+                    </v-row>
+
+
+            </v-col>
+            <v-col cols="4" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">
                     Chiudi
                 </v-btn>
@@ -169,6 +234,8 @@
 
         data(){
             return {
+                dialog: false,
+                informazioneRecapito: '',
                 carica: false,
                 telefonata:{},
                 telefonataDaAggiornare:{},
@@ -192,6 +259,7 @@
 
         mounted() {
             this.carica = true;
+            this.fetchRecapitiByAudio(this.recallsClient.user_id);
             this.fetchRecallsByIdClient(this.recallsClient.id).then(() => {
                 this.carica = false;
             });
@@ -202,6 +270,10 @@
                 fetchRecallsByIdClient:'fetchRecallsByIdClient',
                 addTelefonata:'addTelefonata',
                 aggiornaTelefonata:'aggiornaTelefonata',
+            }),
+
+            ...mapActions('recapiti', {
+                fetchRecapitiByAudio:'fetchRecapitiByAudio',
             }),
 
             inserisci(){
@@ -235,11 +307,20 @@
                 this.$emit('chiudiRecalls', null)
             },
 
+            infoRecapito(recapito){
+                this.informazioneRecapito = recapito;
+                this.dialog = true;
+            }
+
         },
 
         computed:{
             ...mapGetters('telefonate', {
                 getRecalls: 'getRecalls',
+            }),
+
+            ...mapGetters('recapiti', {
+                getRecapiti: 'getRecapiti',
             }),
 
             ...mapGetters('login', {

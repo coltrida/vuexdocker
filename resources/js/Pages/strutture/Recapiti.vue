@@ -65,23 +65,39 @@
 
             <v-row>
                 <v-col
-                    cols="12"
+                    cols="8"
                 >
                     <v-text-field
                         v-model="recapito.informazioni"
                         label="Informazioni"
                     ></v-text-field>
                 </v-col>
+                <v-col cols="4">
+                    <v-file-input
+                        v-model="recapito.fileUp"
+                        truncate-length="15"
+                    ></v-file-input>
+                </v-col>
             </v-row>
 
             <div v-for="audio in getRecapiti" :key="audio.id">
                 <h2>{{audio.name}}</h2>
                 <v-data-table
+                    dense
                     :headers="headers"
                     :items="audio.recapito"
                     :items-per-page="10"
                     class="elevation-1 mt-3"
                 >
+
+                    <template v-slot:item.foto="{ item }">
+                        <v-img
+                            max-height="150"
+                            max-width="150"
+                            :src="'https://www.centrouditogroup.it/storage/recapiti/'+item.id+'.jpg'"
+                        ></v-img>
+                    </template>
+
                     <template v-slot:item.actions="{ item }">
                         <v-icon
                             color="red"
@@ -113,19 +129,23 @@
         data(){
             return {
                 modificaSwitch: false,
-                recapito:{},
+                recapito:{
+                    fileUp:{},
+                },
                 headers: [
                     {
                         text: 'Nome',
                         align: 'start',
                         sortable: false,
                         value: 'nome',
+                        width: 200,
                         class: "indigo white--text"
                     },
-                    { text: 'Indirizzo', value: 'indirizzo', class: "indigo white--text" },
-                    { text: 'Citta', value: 'citta', class: "indigo white--text" },
-                    { text: 'Provincia', value: 'provincia', class: "indigo white--text" },
-                    { text: 'Informazioni', value: 'informazioni', class: "indigo white--text" },
+                    { text: 'Indirizzo', width: 200, value: 'indirizzo', class: "indigo white--text" },
+                    { text: 'Citta', width: 150, value: 'citta', class: "indigo white--text" },
+                    { text: 'Provincia', width: 150, value: 'provincia', class: "indigo white--text" },
+                    { text: 'Informazioni', width: 200, value: 'informazioni', class: "indigo white--text" },
+                    { text: 'Foto', width: 200, value: 'foto', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
 
                 ],
@@ -150,6 +170,7 @@
             }),
 
             aggiungi(){
+                //console.log(this.recapito)
                 if (this.modificaSwitch){
                     this.modificaRecapito(this.recapito);
                 } else {

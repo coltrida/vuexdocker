@@ -120,7 +120,7 @@ class AppuntamentiService
         $newAppuntamento->save();
 
         $dove = $request->filiale_id ? 'Filiale di '.Filiale::find($request->filiale_id)->nome : 'Recapito '.Recapito::find($request->recapito_id)->nome;
-        $utente = User::find($request->user_id);
+        $utente = User::find($request->telefonista_id);
         $cliente = Client::find($request->client_id);
         $propieta = 'appuntamento';
         $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$request->giorno.' alle ore '.$request->orario.' presso '.$dove;

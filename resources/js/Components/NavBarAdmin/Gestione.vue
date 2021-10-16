@@ -37,6 +37,7 @@
                 { title: 'Backup', link: 'backup' },
                 { title: 'Restore', link: 'restore' },
                 { title: 'Strumentazione', link: 'strumentazione' },
+                { title: 'Reset', link: 'resetSpecial' },
                 { title: 'Logging', link: 'logging' },
             ],
         }),

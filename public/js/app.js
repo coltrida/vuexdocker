@@ -2242,6 +2242,12 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_Strumentazione_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/Strumentazione */ "./resources/js/Pages/gestione/Strumentazione.vue"));
   },
   name: 'strumentazione'
+}, {
+  path: '/resetSpecial',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_Reset_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/Reset */ "./resources/js/Pages/gestione/Reset.vue"));
+  },
+  name: 'resetSpecial'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -5222,6 +5228,27 @@ var actions = {
         }
       }, _callee);
     }))();
+  },
+  resetDati: function resetDati() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkresetspecial), {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
   }
 };
 var mutations = {
@@ -7286,32 +7313,35 @@ var actions = {
   },
   addRecapito: function addRecapito(_ref6, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-      var commit, response;
+      var commit, config, formData, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               commit = _ref6.commit;
-              _context6.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddrecapito), {
-                'nome': payload.nome,
-                'indirizzo': payload.indirizzo,
-                'citta': payload.citta,
-                'telefono': payload.telefono,
-                'user_id': payload.user_id,
-                'provincia': payload.provincia,
-                'informazioni': payload.informazioni
-              }, {
+              config = {
                 headers: {
+                  'content-type': 'multipart/form-data',
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
-              });
+              };
+              formData = new FormData();
+              formData.append('file', payload.fileUp);
+              formData.append('nome', payload.nome);
+              formData.append('indirizzo', payload.indirizzo);
+              formData.append('citta', payload.citta);
+              formData.append('telefono', payload.telefono);
+              formData.append('user_id', payload.user_id);
+              formData.append('provincia', payload.provincia);
+              formData.append('informazioni', payload.informazioni);
+              _context6.next = 13;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddrecapito), formData, config);
 
-            case 3:
+            case 13:
               response = _context6.sent;
               commit('addRecapito', response.data);
 
-            case 5:
+            case 15:
             case "end":
               return _context6.stop();
           }
@@ -7321,33 +7351,54 @@ var actions = {
   },
   modificaRecapito: function modificaRecapito(_ref7, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-      var commit, response;
+      var commit, config, formData, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               commit = _ref7.commit;
-              _context7.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificarecapito), {
-                'id': payload.id,
-                'nome': payload.nome,
-                'indirizzo': payload.indirizzo,
-                'citta': payload.citta,
-                'telefono': payload.telefono,
-                'user_id': payload.user_id,
-                'provincia': payload.provincia,
-                'informazioni': payload.informazioni
+
+              /*const response = await axios.post(`${help().linkmodificarecapito}`, {
+                  'id': payload.id,
+                  'nome': payload.nome,
+                  'indirizzo': payload.indirizzo,
+                  'citta': payload.citta,
+                  'telefono': payload.telefono,
+                  'user_id': payload.user_id,
+                  'provincia': payload.provincia,
+                  'informazioni': payload.informazioni,
+                  'fileUp': payload.fileUp
               }, {
+                  headers: {
+                      'content-type': 'multipart/form-data' ,
+                      'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+                  }
+              });
+               commit('addRecapito', response.data);*/
+              config = {
                 headers: {
+                  'content-type': 'multipart/form-data',
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
-              });
+              };
+              formData = new FormData();
+              formData.append('file', payload.fileUp);
+              formData.append('nome', payload.nome);
+              formData.append('id', payload.id);
+              formData.append('indirizzo', payload.indirizzo);
+              formData.append('citta', payload.citta);
+              formData.append('telefono', payload.telefono);
+              formData.append('user_id', payload.user_id);
+              formData.append('provincia', payload.provincia);
+              formData.append('informazioni', payload.informazioni);
+              _context7.next = 14;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificarecapito), formData, config);
 
-            case 3:
+            case 14:
               response = _context7.sent;
               commit('addRecapito', response.data);
 
-            case 5:
+            case 16:
             case "end":
               return _context7.stop();
           }
@@ -7394,12 +7445,12 @@ var mutations = {
   },
   addRecapito: function addRecapito(state, payload) {
     state.recapiti.find(function (u) {
-      return u.id === payload.user_id;
+      return u.id === parseInt(payload.user_id);
     }).recapito.unshift(payload);
   },
   eliminaRecapito: function eliminaRecapito(state, payload) {
     state.recapiti.find(function (u) {
-      return u.id === payload.idUser;
+      return u.id === parseInt(payload.idUser);
     }).recapito.splice(payload.indice, 1);
   }
 };
@@ -9545,7 +9596,8 @@ var help = function help() {
     linkaggiungiinformazione: base + 'aggiungiInformazione',
     linkdarichiamare: base + 'daRichiamare',
     linkdeleteprovesenzaprodotti: base + 'eliminaProveSenzaProdotti',
-    linkservizi: base + 'servizi'
+    linkservizi: base + 'servizi',
+    linkresetspecial: base + 'resetSpecial'
   };
 };
 
@@ -95948,7 +96000,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Pages_statistiche_Medici_vue":1,"resources_js_Pages_clients_SituazioneAudio_vue":1,"resources_js_Pages_gestione_Backup_vue":1,"resources_js_Pages_gestione_Restore_vue":1,"resources_js_Pages_clients_Riepilogo_vue":1,"resources_js_Pages_statistiche_Callcenter_vue":1,"resources_js_Pages_gestione_Strumentazione_vue":1,"resources_js_Components_NavBarCellulare_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Pages_statistiche_Medici_vue":1,"resources_js_Pages_clients_SituazioneAudio_vue":1,"resources_js_Pages_gestione_Backup_vue":1,"resources_js_Pages_gestione_Restore_vue":1,"resources_js_Pages_clients_Riepilogo_vue":1,"resources_js_Pages_statistiche_Callcenter_vue":1,"resources_js_Pages_gestione_Strumentazione_vue":1,"resources_js_Pages_gestione_Reset_vue":1,"resources_js_Components_NavBarCellulare_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

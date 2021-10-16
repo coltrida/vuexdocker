@@ -125,34 +125,62 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Recapiti",
   data: function data() {
     return {
       modificaSwitch: false,
-      recapito: {},
+      recapito: {
+        fileUp: {}
+      },
       headers: [{
         text: 'Nome',
         align: 'start',
         sortable: false,
         value: 'nome',
+        width: 200,
         "class": "indigo white--text"
       }, {
         text: 'Indirizzo',
+        width: 200,
         value: 'indirizzo',
         "class": "indigo white--text"
       }, {
         text: 'Citta',
+        width: 150,
         value: 'citta',
         "class": "indigo white--text"
       }, {
         text: 'Provincia',
+        width: 150,
         value: 'provincia',
         "class": "indigo white--text"
       }, {
         text: 'Informazioni',
+        width: 200,
         value: 'informazioni',
+        "class": "indigo white--text"
+      }, {
+        text: 'Foto',
+        width: 200,
+        value: 'foto',
         "class": "indigo white--text"
       }, {
         text: 'Actions',
@@ -175,6 +203,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchAudio: 'fetchAudio'
   })), {}, {
     aggiungi: function aggiungi() {
+      //console.log(this.recapito)
       if (this.modificaSwitch) {
         this.modificaRecapito(this.recapito);
       } else {
@@ -437,7 +466,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "12" } },
+            { attrs: { cols: "8" } },
             [
               _c("v-text-field", {
                 attrs: { label: "Informazioni" },
@@ -447,6 +476,24 @@ var render = function() {
                     _vm.$set(_vm.recapito, "informazioni", $$v)
                   },
                   expression: "recapito.informazioni"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "4" } },
+            [
+              _c("v-file-input", {
+                attrs: { "truncate-length": "15" },
+                model: {
+                  value: _vm.recapito.fileUp,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "fileUp", $$v)
+                  },
+                  expression: "recapito.fileUp"
                 }
               })
             ],
@@ -466,12 +513,31 @@ var render = function() {
             _c("v-data-table", {
               staticClass: "elevation-1 mt-3",
               attrs: {
+                dense: "",
                 headers: _vm.headers,
                 items: audio.recapito,
                 "items-per-page": 10
               },
               scopedSlots: _vm._u(
                 [
+                  {
+                    key: "item.foto",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("v-img", {
+                          attrs: {
+                            "max-height": "150",
+                            "max-width": "150",
+                            src:
+                              "https://www.centrouditogroup.it/storage/recapiti/" +
+                              item.id +
+                              ".jpg"
+                          }
+                        })
+                      ]
+                    }
+                  },
                   {
                     key: "item.actions",
                     fn: function(ref) {

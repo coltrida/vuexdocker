@@ -31,13 +31,15 @@ Route::post('/register', [LoginController::class, 'register']);
 
 // ----------------- elaborazioneGiornaliera -----------------------
 Route::get('/situazioneAnno', [ElaborazioneController::class, 'situazioneAnno']);
-Route::get('/resetSpecial', function (){
-    Artisan::call('migrate:fresh');
-    Artisan::call('db:seed');
-});
 
-//Route::group(['middleware' => ['auth:sanctum']], function () {
-Route::group([], function () {
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+//Route::group([], function () {
+        Route::get('/resetSpecial', function (){
+            Artisan::call('migrate:fresh');
+            Artisan::call('db:seed');
+        });
+
         // ---------------- user -------------------------
         Route::get('/audio', [UserController::class, 'audio']);
         Route::get('/userAgenda', [UserController::class, 'userAgenda']);

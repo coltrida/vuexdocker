@@ -20,6 +20,14 @@ const actions = {
         });
         commit('fetchLoggings', response.data.data);
     },
+
+    async resetDati(){
+        await axios.get(`${help().linkresetspecial}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+    },
 };
 
 const mutations = {

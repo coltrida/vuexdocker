@@ -43,6 +43,7 @@ const routes = [
     { path: '/riepilogoClienti', component: () => import('../Pages/clients/Riepilogo'), name: 'riepilogoClienti' },
     { path: '/statisticheCallcenter', component: () => import('../Pages/statistiche/Callcenter'), name: 'statisticheCallcenter' },
     { path: '/strumentazione', component: () => import('../Pages/gestione/Strumentazione'), name: 'strumentazione' },
+    { path: '/resetSpecial', component: () => import('../Pages/gestione/Reset'), name: 'resetSpecial' },
 ];
 
 export default routes;

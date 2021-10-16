@@ -142,167 +142,167 @@
         </v-row>
                 <!---------- End Seleziono i prodotti per la nuova prova createa --------->
 
-                <v-row>
-                    <v-col cols="12" md="6" lg="6">
-                        <div style="display: flex; justify-content: space-between;">
-                            <div>
-                                <h3>Nuova Prova</h3>
-                            </div>
-                            <div>
-                                <!---------- Bottone per salvare la prova --------->
-                                <div class="text-center" v-if="carica">
-                                    <v-progress-circular
-                                        indeterminate
-                                        color="primary"
-                                    ></v-progress-circular>
+                <div class="text-center" v-if="carica2">
+                    <v-progress-circular
+                        indeterminate
+                        color="primary"
+                    ></v-progress-circular>
+                </div>
+                <div v-else>
+                    <v-row>
+                        <v-col cols="12" md="6" lg="6">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h3>Nuova Prova</h3>
                                 </div>
-                                <div v-else>
-                                    <v-btn color="primary" dark @click="salvaProva">
-                                        Salva
-                                    </v-btn>
+                                <div>
+                                    <!---------- Bottone per salvare la prova --------->
+                                    <div class="text-center" v-if="carica">
+                                        <v-progress-circular
+                                            indeterminate
+                                            color="primary"
+                                        ></v-progress-circular>
+                                    </div>
+                                    <div v-else>
+                                        <v-btn color="primary" dark @click="salvaProva">
+                                            Salva
+                                        </v-btn>
+                                    </div>
+
                                 </div>
-
                             </div>
-                        </div>
 
-                        <v-data-table
-                            :headers="headerNuovaProva"
-                            :items="getElementiNuovaProva"
-                            class="elevation-1 mt-3"
-                            hide-default-footer
-                        >
-
-                            <template v-slot:item.actions="{ item }">
-                                <v-icon
-                                    color="red"
-                                    small
-                                    @click="eliminaElementoDallaProva(item.id, item.idProduct)"
-                                >
-                                    mdi-delete
-                                </v-icon>
-                            </template>
-
-                        </v-data-table>
-                    </v-col>
-
-
-                    <v-col cols="12" md="6" lg="6">
-                        <h3>Prove</h3>
-                        <div class="text-center" v-if="carica2">
-                            <v-progress-circular
-                                indeterminate
-                                color="primary"
-                            ></v-progress-circular>
-                        </div>
-                        <div v-else>
                             <v-data-table
-                            :headers="headerProve"
-                            :items="getProvePassate"
-                            class="elevation-1 mt-5"
-                            hide-default-footer
-                        >
-                            <template v-slot:item.stato.nome="{ item }">
-                                <v-chip
-                                    v-if="item.stato.nome == 'RESO'"
-                                    color="red"
-                                    label
-                                    text-color="white"
-                                >
-                                    {{item.stato.nome}}
-                                </v-chip>
-                                <v-chip
-                                    v-if="item.stato.nome == 'FATTURA'"
-                                    color="green"
-                                    label
-                                    text-color="white"
-                                >
-                                    {{item.stato.nome}}
-                                </v-chip>
-                                <div v-if="item.stato.nome == 'PROVA'">
-                                    {{item.stato.nome}}
-                                </div>
-                            </template>
+                                :headers="headerNuovaProva"
+                                :items="getElementiNuovaProva"
+                                class="elevation-1 mt-3"
+                                hide-default-footer
+                            >
 
-                            <template v-slot:item.actions="{ item }">
-                                <v-icon
-                                    color="blue"
-                                    small
-                                    @click.stop="apriLista(item.product)"
-                                >
-                                    mdi-format-list-bulleted-square
-                                </v-icon>
+                                <template v-slot:item.actions="{ item }">
+                                    <v-icon
+                                        color="red"
+                                        small
+                                        @click="eliminaElementoDallaProva(item.id, item.idProduct)"
+                                    >
+                                        mdi-delete
+                                    </v-icon>
+                                </template>
 
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon v-if="item.stato.nome === 'PROVA'"
-                                                color="red"
-                                                small
-                                                v-bind="attrs"
-                                                v-on="on"
-                                                @click="reso(item.id)"
-                                        >
-                                            mdi-delete
-                                        </v-icon>
-                                    </template>
-                                    <span>Reso</span>
-                                </v-tooltip>
+                            </v-data-table>
+                        </v-col>
 
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <a :href="'https://www.centrouditogroup.it/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
-                                           <v-icon v-if="item.stato.nome === 'FATTURA'"
-                                                    color="black"
+                        <v-col cols="12" md="6" lg="6">
+                            <h3>Prove</h3>
+                            <v-data-table
+                                :headers="headerProve"
+                                :items="getProvePassate"
+                                class="elevation-1 mt-5"
+                                hide-default-footer
+                            >
+                                <template v-slot:item.stato.nome="{ item }">
+                                    <v-chip
+                                        v-if="item.stato.nome == 'RESO'"
+                                        color="red"
+                                        label
+                                        text-color="white"
+                                    >
+                                        {{item.stato.nome}}
+                                    </v-chip>
+                                    <v-chip
+                                        v-if="item.stato.nome == 'FATTURA'"
+                                        color="green"
+                                        label
+                                        text-color="white"
+                                    >
+                                        {{item.stato.nome}}
+                                    </v-chip>
+                                    <div v-if="item.stato.nome == 'PROVA'">
+                                        {{item.stato.nome}}
+                                    </div>
+                                </template>
+
+                                <template v-slot:item.actions="{ item }">
+                                    <v-icon
+                                        color="blue"
+                                        small
+                                        @click.stop="apriLista(item.product)"
+                                    >
+                                        mdi-format-list-bulleted-square
+                                    </v-icon>
+
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-icon v-if="item.stato.nome === 'PROVA'"
+                                                    color="red"
                                                     small
                                                     v-bind="attrs"
                                                     v-on="on"
+                                                    @click="reso(item.id)"
                                             >
-                                                mdi-check
+                                                mdi-delete
                                             </v-icon>
-                                        </a>
+                                        </template>
+                                        <span>Reso</span>
+                                    </v-tooltip>
 
-                                    </template>
-                                    <span>Fattura</span>
-                                </v-tooltip>
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <a :href="'https://www.centrouditogroup.it/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
+                                                <v-icon v-if="item.stato.nome === 'FATTURA'"
+                                                        color="black"
+                                                        small
+                                                        v-bind="attrs"
+                                                        v-on="on"
+                                                >
+                                                    mdi-check
+                                                </v-icon>
+                                            </a>
 
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon v-if="item.stato.nome === 'PROVA'"
-                                                color="green"
-                                                small
-                                                v-bind="attrs"
-                                                v-on="on"
-                                                @click="apriFattura(item)"
-                                        >
-                                            mdi-currency-usd
-                                        </v-icon>
-                                    </template>
-                                    <span>Produci Fattura</span>
-                                </v-tooltip>
+                                        </template>
+                                        <span>Fattura</span>
+                                    </v-tooltip>
 
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <a :href="'https://www.centrouditogroup.it'+item.copia_comm[0].link" target="_blank">
-                                            <v-icon
-                                                style="font-size: 25px"
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-icon v-if="item.stato.nome === 'PROVA'"
+                                                    color="green"
+                                                    small
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    @click="apriFattura(item)"
+                                            >
+                                                mdi-currency-usd
+                                            </v-icon>
+                                        </template>
+                                        <span>Produci Fattura</span>
+                                    </v-tooltip>
+
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <a :href="'https://www.centrouditogroup.it'+item.copia_comm[0].link" target="_blank">
+                                                <v-icon
+                                                    style="font-size: 25px"
                                                     color="orange"
                                                     small
                                                     v-bind="attrs"
                                                     v-on="on"
-                                            >
-                                                mdi-closed-caption
-                                            </v-icon>
-                                        </a>
+                                                >
+                                                    mdi-closed-caption
+                                                </v-icon>
+                                            </a>
 
-                                    </template>
-                                    <span>Copia Commissione</span>
-                                </v-tooltip>
+                                        </template>
+                                        <span>Copia Commissione</span>
+                                    </v-tooltip>
 
-                            </template>
+                                </template>
 
-                        </v-data-table>
-                        </div>
-                    </v-col>
-                </v-row>
+                            </v-data-table>
+                        </v-col>
+                    </v-row>
+                </div>
+
 
 
 

@@ -30,7 +30,7 @@ class RecapitoService
 
     public function aggiungi($request)
     {
-        return Recapito::create([
+        $recapito = Recapito::create([
             'nome' => trim(Str::upper($request->nome)),
             'indirizzo' => trim(Str::upper($request->indirizzo)),
             'citta' => trim(Str::upper($request->citta)),
@@ -38,10 +38,20 @@ class RecapitoService
             'provincia' => trim(Str::upper($request->provincia)),
             'informazioni' => trim(Str::upper($request->informazioni)),
         ]);
+
+        if($request->hasfile('file')) {
+            $file = $request->file('file');
+            $filename = $recapito->id.'.jpg';
+            $path = 'recapiti/'.$request->fileName;
+            \Storage::disk('public')->putFileAs($path, $file, $filename);
+        }
+
+        return $recapito;
     }
 
     public function modifica($request)
     {
+       // dd($request);
         $recapito = Recapito::find($request->id);
         $recapito->nome = trim(Str::upper($request->nome));
         $recapito->indirizzo = trim(Str::upper($request->indirizzo));
@@ -50,6 +60,13 @@ class RecapitoService
         $recapito->provincia = trim(Str::upper($request->provincia));
         $recapito->informazioni = trim(Str::upper($request->informazioni));
         $recapito->save();
+
+        if($request->hasfile('file')) {
+            $file = $request->file('file');
+            $filename = $recapito->id.'.jpg';
+            $path = 'recapiti/'.$request->fileName;
+            \Storage::disk('public')->putFileAs($path, $file, $filename);
+        }
 
         return $recapito;
     }

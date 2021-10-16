@@ -209,6 +209,9 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Strumentazione',
         link: 'strumentazione'
       }, {
+        title: 'Reset',
+        link: 'resetSpecial'
+      }, {
         title: 'Logging',
         link: 'logging'
       }]

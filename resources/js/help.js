@@ -159,6 +159,7 @@ const help = () => {
         linkdarichiamare: base+'daRichiamare',
         linkdeleteprovesenzaprodotti: base+'eliminaProveSenzaProdotti',
         linkservizi: base+'servizi',
+        linkresetspecial: base+'resetSpecial',
     };
 };
 export default help;
