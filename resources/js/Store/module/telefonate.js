@@ -12,11 +12,16 @@ const state = () => ({
     clientiUnAnnoUltimoAppuntamento: [],
     statisticheTelefonate: [],
     daRichiamare: [],
+    recallAutomatico: [],
 });
 
 const getters = {
     getRecalls(state){
         return state.recalls;
+    },
+
+    getRecallAutomatico(state){
+        return state.recallAutomatico;
     },
 
     getDaRichiamare(state){
@@ -70,8 +75,17 @@ const actions = {
         commit('fetchRecallsByIdClient', response.data.data);
     },
 
-    async fetchDaRichiamare({commit}){
-        const response = await axios.get(`${help().linkdarichiamare}`, {
+    async fetchRecallAutomatico({commit}, idUser){
+        const response = await axios.get(`${help().linkrecallautomatico}`+'/'+idUser, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchRecallAutomatico', response.data);
+    },
+
+    async fetchDaRichiamare({commit}, idUser){
+        const response = await axios.get(`${help().linkdarichiamare}`+'/'+idUser, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -88,8 +102,8 @@ const actions = {
         commit('fetchStatisticheTelefonate', response.data);
     },
 
-    async fetchRecallOggi({commit}){
-        const response = await axios.get(`${help().linkrecalloggi}`, {
+    async fetchRecallOggi({commit}, idUser){
+        const response = await axios.get(`${help().linkrecalloggi}`+'/'+idUser, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -97,8 +111,8 @@ const actions = {
         commit('fetchRecallOggi', response.data);
     },
 
-    async fetchRecallDomani({commit}){
-        const response = await axios.get(`${help().linkrecalldomani}`, {
+    async fetchRecallDomani({commit}, idUser){
+        const response = await axios.get(`${help().linkrecalldomani}`+'/'+idUser, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -182,6 +196,10 @@ const actions = {
 const mutations = {
     fetchRecallsByIdClient(state, payload){
         state.recalls = payload;
+    },
+
+    fetchRecallAutomatico(state, payload){
+        state.recallAutomatico = payload;
     },
 
     fetchDaRichiamare(state, payload){

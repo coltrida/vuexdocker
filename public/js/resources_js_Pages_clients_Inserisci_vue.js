@@ -291,7 +291,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     //    console.log(this.$vuetify.breakpoint.name);
-    if (this.getRuolo === 'audio') {
+    if (this.getRuolo === 'audio' || this.getRuolo === 'amministrazione') {
       this.newClient.user_id = parseInt(this.getIdUser);
       this.lettura = true;
     }

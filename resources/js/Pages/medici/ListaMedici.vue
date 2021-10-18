@@ -28,38 +28,47 @@
 
         <v-row class="mb-6">
             <v-col cols="12">
-                <v-data-table
-                    :headers="header"
-                    :items="getMedici"
-                    hide-default-footer
-                    class="elevation-1"
-                >
+                <div class="text-center" v-if="carica">
+                    <v-progress-circular
+                        indeterminate
+                        color="primary"
+                    ></v-progress-circular>
+                </div>
+                <div v-else>
+                    <v-data-table
+                        :headers="header"
+                        :items="getMedici"
+                        hide-default-footer
+                        class="elevation-1"
+                    >
 
-                    <template v-slot:item.nome="{ item }">
-                        <router-link style="color: black" :to="{ name: 'orariMedici',
+                        <template v-slot:item.nome="{ item }">
+                            <router-link style="color: black" :to="{ name: 'orariMedici',
                                         params: { dottore:item.nome, }}">
-                            {{item.nome}}
-                        </router-link>
-                    </template>
+                                {{item.nome}}
+                            </router-link>
+                        </template>
 
-                    <template v-slot:item.actions="{ item }">
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-icon
-                                    color="red"
-                                    small
-                                    @click="elimina(item.id)"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                >
-                                    mdi-delete
-                                </v-icon>
-                            </template>
-                            <span>Elimina</span>
-                        </v-tooltip>
-                    </template>
+                        <template v-slot:item.actions="{ item }">
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="red"
+                                        small
+                                        @click="elimina(item.id)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-delete
+                                    </v-icon>
+                                </template>
+                                <span>Elimina</span>
+                            </v-tooltip>
+                        </template>
 
-                </v-data-table>
+                    </v-data-table>
+                </div>
+
             </v-col>
         </v-row>
 
@@ -81,7 +90,7 @@
         data(){
             return {
                 medico:{},
-
+                carica: false,
                 header: [
                     { text: 'Medico',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
@@ -90,7 +99,10 @@
         },
 
         mounted() {
-            this.fetchMedici(this.getIdUser);
+            this.carica = true;
+            this.fetchMedici(this.getIdUser).then(() =>{
+                this.carica = false;
+            });
         },
 
         methods:{

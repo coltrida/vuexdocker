@@ -16,6 +16,21 @@ class RecapitoService
         return Recapito::orderBy('nome')->get();
     }
 
+    public function struttureAudio($idAudio)
+    {
+        $recapiti = User::with('recapito:id,nome,citta,user_id')->find($idAudio)->recapito;
+        $recapiti->each(function ($item){
+            $item->tipologia = 'recapito';
+        });
+
+        $filiali = User::with('filiale:id,nome,citta')->find($idAudio)->filiale;
+        $filiali->each(function ($item){
+            $item->tipologia = 'filiale';
+        });
+
+        return $filiali->concat($recapiti);
+    }
+
     public function listaPerAudio()
     {
         return User::audio()->with(['recapito' => function($recapito){

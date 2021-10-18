@@ -26,7 +26,7 @@ class FilialeSeeder extends Seeder
             [
                 'nome' => 'CIVITANOVA',
                 'indirizzo' => '........',
-                'citta' => '........',
+                'citta' => 'CIVITANOVA',
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'MC',
@@ -34,7 +34,7 @@ class FilialeSeeder extends Seeder
             [
                 'nome' => 'LUCCA',
                 'indirizzo' => '........',
-                'citta' => '........',
+                'citta' => 'LUCCA',
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'LU',
@@ -42,7 +42,7 @@ class FilialeSeeder extends Seeder
             [
                 'nome' => 'ANCONA',
                 'indirizzo' => '........',
-                'citta' => '........',
+                'citta' => 'ANCONA',
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'AN',
@@ -50,7 +50,7 @@ class FilialeSeeder extends Seeder
             [
                 'nome' => 'MACERATA',
                 'indirizzo' => '........',
-                'citta' => '........',
+                'citta' => 'MACERATA',
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'MC',
@@ -58,7 +58,7 @@ class FilialeSeeder extends Seeder
             [
                 'nome' => 'LIVORNO',
                 'indirizzo' => '........',
-                'citta' => '........',
+                'citta' => 'LIVORNO',
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'LI',
@@ -66,7 +66,7 @@ class FilialeSeeder extends Seeder
             [
                 'nome' => 'VIAREGGIO',
                 'indirizzo' => '........',
-                'citta' => '........',
+                'citta' => 'VIAREGGIO',
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'LU',

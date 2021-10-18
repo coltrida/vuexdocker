@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         // ----------------- recapiti -------------------------
         Route::get('/recapiti', [RecapitiController::class, 'index']);
+        Route::get('/struttureAudio/{idAudio}', [RecapitiController::class, 'struttureAudio']);
         Route::get('/recapitiPerAudio', [RecapitiController::class, 'listaPerAudio']);
         Route::get('/recapiti/{idAudio}', [RecapitiController::class, 'recapitiByAudio']);
         Route::delete('/recapiti/{id}', [RecapitiController::class, 'elimina']);
@@ -240,8 +241,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/totaleInviiMedici', [DottoreController::class, 'totaleInviiMedici']);
 
         // ----------------- telefonate -----------------------
-        Route::get('/recallOggi', [TelefonateController::class, 'recallOggi']);
-        Route::get('/recallDomani', [TelefonateController::class, 'recallDomani']);
+        Route::get('/recallOggi/{idUser}', [TelefonateController::class, 'recallOggi']);
+        Route::get('/recallDomani/{idUser}', [TelefonateController::class, 'recallDomani']);
         Route::get('/telefonateFatteOggi', [TelefonateController::class, 'telefonateFatteOggi']);
         Route::get('/numeroTelefonateFatteOggi', [TelefonateController::class, 'numeroTelefonateFatteOggi']);
         Route::get('/numeroAppuntamentiPresiOggi', [TelefonateController::class, 'numeroAppuntamentiPresiOggi']);
@@ -251,7 +252,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/clientiNonHannoMaiPresoAppuntamenti', [TelefonateController::class, 'clientiNonHannoMaiPresoAppuntamenti']);
         Route::get('/clientiUnAnnoUltimoAppuntamento', [TelefonateController::class, 'clientiUnAnnoUltimoAppuntamento']);
         Route::get('/recallsByIdClient/{idClient}', [TelefonateController::class, 'recallsByIdClient']);
-        Route::get('/daRichiamare', [TelefonateController::class, 'daRichiamare']);
+        Route::get('/daRichiamare/{idUser}', [TelefonateController::class, 'daRichiamare']);
+        Route::get('/recallAutomatico/{idUser}', [TelefonateController::class, 'recallAutomatico']);
 
     // ----------------- informazioni -----------------------
     Route::get('/informazioni/{id}', [InformazioniController::class, 'lista']);

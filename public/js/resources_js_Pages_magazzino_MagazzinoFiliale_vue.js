@@ -164,15 +164,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
   data: function data() {
     return {
+      carica: false,
       productRichiesto: {},
       headersRiepilogo: [{
         text: 'Nome',
@@ -348,11 +345,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
 
     if (accesso) {
-      this.fetchInFiliale(this.rottaIdFiliale);
-      this.fetchInProva(this.rottaIdFiliale);
-      this.fetchRichiesti(this.rottaIdFiliale);
-      this.fetchInArrivo(this.rottaIdFiliale);
-      this.fetchSoglie(this.rottaIdFiliale);
+      this.carica = true;
+      this.fetchInFiliale(this.rottaIdFiliale).then(function () {
+        _this.fetchInProva(_this.rottaIdFiliale).then(function () {
+          _this.fetchRichiesti(_this.rottaIdFiliale).then(function () {
+            _this.fetchInArrivo(_this.rottaIdFiliale).then(function () {
+              _this.fetchSoglie(_this.rottaIdFiliale).then(function () {
+                _this.carica = false;
+              });
+            });
+          });
+        });
+      });
       this.fetchFornitori();
       this.fetchFilialeById(this.rottaIdFiliale);
       window.Echo.channel("logisticaChannel").listen(".task-created", function (e) {
@@ -368,11 +372,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   watch: {
     rottaIdFiliale: function rottaIdFiliale() {
-      this.fetchInFiliale(this.rottaIdFiliale);
-      this.fetchInProva(this.rottaIdFiliale);
-      this.fetchRichiesti(this.rottaIdFiliale);
-      this.fetchInArrivo(this.rottaIdFiliale);
-      this.fetchSoglie(this.rottaIdFiliale);
+      var _this2 = this;
+
+      this.carica = true;
+      this.fetchInFiliale(this.rottaIdFiliale).then(function () {
+        _this2.fetchInProva(_this2.rottaIdFiliale).then(function () {
+          _this2.fetchRichiesti(_this2.rottaIdFiliale).then(function () {
+            _this2.fetchInArrivo(_this2.rottaIdFiliale).then(function () {
+              _this2.fetchSoglie(_this2.rottaIdFiliale).then(function () {
+                _this2.carica = false;
+              });
+            });
+          });
+        });
+      });
       this.fetchFilialeById(this.rottaIdFiliale);
     }
   },
@@ -407,10 +420,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.eliminaRichiesta(id);
     },
     arrivato: function arrivato(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.switchArrivato(id).then(function () {
-        _this2.fetchSoglie(_this2.rottaIdFiliale);
+        _this3.fetchSoglie(_this3.rottaIdFiliale);
       });
     }
   }),
@@ -531,362 +544,322 @@ var render = function() {
     [
       _c("h2", [_vm._v("Magazzino " + _vm._s(_vm.getFilialeById.nome))]),
       _vm._v(" "),
-      _c(
-        "v-container",
-        [
-          _vm.getRuolo != "admin"
-            ? _c(
-                "v-row",
+      _vm.getRuolo != "admin"
+        ? _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                {
+                  attrs: { cols: "12", md: "12", lg: "3", xs: "12", sm: "12" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      "item-value": "id",
+                      "item-text": "nome",
+                      items: _vm.getFornitori,
+                      label: "fornitore"
+                    },
+                    on: {
+                      change: function($event) {
+                        return _vm.caricaProdotti()
+                      }
+                    },
+                    model: {
+                      value: _vm.productRichiesto.fornitore_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.productRichiesto, "fornitore_id", $$v)
+                      },
+                      expression: "productRichiesto.fornitore_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  attrs: { cols: "12", md: "12", lg: "3", xs: "12", sm: "12" }
+                },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      "item-value": "id",
+                      "item-text": "nome",
+                      items: _vm.getListino,
+                      label: "listino"
+                    },
+                    model: {
+                      value: _vm.productRichiesto.listino_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.productRichiesto, "listino_id", $$v)
+                      },
+                      expression: "productRichiesto.listino_id"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  attrs: { cols: "12", md: "12", lg: "3", xs: "12", sm: "12" }
+                },
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "quantita" },
+                    model: {
+                      value: _vm.productRichiesto.quantita,
+                      callback: function($$v) {
+                        _vm.$set(_vm.productRichiesto, "quantita", $$v)
+                      },
+                      expression: "productRichiesto.quantita"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  attrs: { cols: "12", md: "12", lg: "3", xs: "12", sm: "12" }
+                },
                 [
                   _c(
-                    "v-col",
+                    "v-btn",
                     {
                       attrs: {
-                        cols: "12",
-                        md: "12",
-                        lg: "3",
-                        xs: "12",
-                        sm: "12"
-                      }
+                        color: "success",
+                        dark: "",
+                        block: _vm.$vuetify.breakpoint.xs
+                      },
+                      on: { click: _vm.richiedi }
                     },
-                    [
-                      _c("v-select", {
-                        attrs: {
-                          "item-value": "id",
-                          "item-text": "nome",
-                          items: _vm.getFornitori,
-                          label: "fornitore"
-                        },
-                        on: {
-                          change: function($event) {
-                            return _vm.caricaProdotti()
-                          }
-                        },
-                        model: {
-                          value: _vm.productRichiesto.fornitore_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.productRichiesto, "fornitore_id", $$v)
-                          },
-                          expression: "productRichiesto.fornitore_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    {
-                      attrs: {
-                        cols: "12",
-                        md: "12",
-                        lg: "3",
-                        xs: "12",
-                        sm: "12"
-                      }
-                    },
-                    [
-                      _c("v-select", {
-                        attrs: {
-                          "item-value": "id",
-                          "item-text": "nome",
-                          items: _vm.getListino,
-                          label: "listino"
-                        },
-                        model: {
-                          value: _vm.productRichiesto.listino_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.productRichiesto, "listino_id", $$v)
-                          },
-                          expression: "productRichiesto.listino_id"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    {
-                      attrs: {
-                        cols: "12",
-                        md: "12",
-                        lg: "3",
-                        xs: "12",
-                        sm: "12"
-                      }
-                    },
-                    [
-                      _c("v-text-field", {
-                        attrs: { label: "quantita" },
-                        model: {
-                          value: _vm.productRichiesto.quantita,
-                          callback: function($$v) {
-                            _vm.$set(_vm.productRichiesto, "quantita", $$v)
-                          },
-                          expression: "productRichiesto.quantita"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    {
-                      attrs: {
-                        cols: "12",
-                        md: "12",
-                        lg: "3",
-                        xs: "12",
-                        sm: "12"
-                      }
-                    },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: {
-                            color: "success",
-                            dark: "",
-                            block: _vm.$vuetify.breakpoint.xs
-                          },
-                          on: { click: _vm.richiedi }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    Richiedi\n                "
-                          )
-                        ]
-                      )
-                    ],
-                    1
+                    [_vm._v("\n                    Richiedi\n                ")]
                   )
                 ],
                 1
               )
-            : _vm._e(),
-          _vm._v(" "),
-          _c("h3", { staticClass: "mt-5" }, [_vm._v("Riepilogo Presenti")]),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: { headers: _vm.headersRiepilogo, items: _vm.getSoglie },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { color: "red", small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.elimina(item.id)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    mdi-delete\n                "
-                        )
-                      ]
-                    )
-                  ]
-                }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("h3", { staticClass: "mt-5" }, [_vm._v("Presenti")]),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers1,
-              items: _vm.getInFiliale,
-              "items-per-page": 10
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { color: "red", small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.elimina(item.id)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    mdi-delete\n                "
-                        )
-                      ]
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.giorniRimasti",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    item.giorniRimasti < 10
-                      ? _c(
-                          "div",
-                          [
-                            _c(
-                              "v-chip",
-                              { attrs: { color: "red", dark: "" } },
-                              [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(item.giorniRimasti) +
-                                    "\n                    "
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      : _c("div", [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(item.giorniRimasti) +
-                              "\n                "
-                          )
-                        ])
-                  ]
-                }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("h3", { staticClass: "mt-5" }, [_vm._v("In prova")]),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers2,
-              items: _vm.getInProva,
-              "items-per-page": 10
-            }
-          }),
-          _vm._v(" "),
-          _c("h3", { staticClass: "mt-5" }, [_vm._v("Richiesti")]),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers4,
-              items: _vm.getRichiesti,
-              "items-per-page": 10
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { color: "red", small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.elimina(item.id)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    mdi-delete\n                "
-                        )
-                      ]
-                    )
-                  ]
-                }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("h3", { staticClass: "mt-5" }, [_vm._v("In Arrivo")]),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers3,
-              items: _vm.getInArrivo,
-              "items-per-page": 10
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-tooltip",
-                      {
-                        attrs: { bottom: "" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "activator",
-                              fn: function(ref) {
-                                var on = ref.on
-                                var attrs = ref.attrs
-                                return [
-                                  _c(
-                                    "v-icon",
-                                    _vm._g(
-                                      _vm._b(
-                                        {
-                                          attrs: { color: "green", small: "" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.arrivato(item.id)
-                                            }
-                                          }
-                                        },
-                                        "v-icon",
-                                        attrs,
-                                        false
-                                      ),
-                                      on
-                                    ),
-                                    [
-                                      _vm._v(
-                                        "\n                            mdi-truck\n                        "
-                                      )
-                                    ]
-                                  )
-                                ]
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.carica
+        ? _c(
+            "div",
+            { staticClass: "text-center" },
+            [
+              _c("v-progress-circular", {
+                attrs: { indeterminate: "", color: "primary" }
+              })
+            ],
+            1
+          )
+        : _c(
+            "div",
+            [
+              _c("h3", { staticClass: "mt-5" }, [_vm._v("Riepilogo Presenti")]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1 mt-3",
+                attrs: { headers: _vm.headersRiepilogo, items: _vm.getSoglie }
+              }),
+              _vm._v(" "),
+              _c("h3", { staticClass: "mt-5" }, [_vm._v("Presenti")]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1 mt-3",
+                attrs: {
+                  headers: _vm.headers1,
+                  items: _vm.getInFiliale,
+                  "items-per-page": 10
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: { color: "red", small: "" },
+                            on: {
+                              click: function($event) {
+                                return _vm.elimina(item.id)
                               }
                             }
-                          ],
-                          null,
-                          true
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-delete\n                    "
+                            )
+                          ]
                         )
-                      },
-                      [_vm._v(" "), _c("span", [_vm._v("Arrivato")])]
-                    )
-                  ]
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.giorniRimasti",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        item.giorniRimasti < 10
+                          ? _c(
+                              "div",
+                              [
+                                _c(
+                                  "v-chip",
+                                  { attrs: { color: "red", dark: "" } },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(item.giorniRimasti) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          : _c("div", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(item.giorniRimasti) +
+                                  "\n                    "
+                              )
+                            ])
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("h3", { staticClass: "mt-5" }, [_vm._v("In prova")]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1 mt-3",
+                attrs: {
+                  headers: _vm.headers2,
+                  items: _vm.getInProva,
+                  "items-per-page": 10
                 }
-              }
-            ])
-          })
-        ],
-        1
-      )
+              }),
+              _vm._v(" "),
+              _c("h3", { staticClass: "mt-5" }, [_vm._v("Richiesti")]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1 mt-3",
+                attrs: {
+                  headers: _vm.headers4,
+                  items: _vm.getRichiesti,
+                  "items-per-page": 10
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            attrs: { color: "red", small: "" },
+                            on: {
+                              click: function($event) {
+                                return _vm.elimina(item.id)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        mdi-delete\n                    "
+                            )
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("h3", { staticClass: "mt-5" }, [_vm._v("In Arrivo")]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1 mt-3",
+                attrs: {
+                  headers: _vm.headers3,
+                  items: _vm.getInArrivo,
+                  "items-per-page": 10
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-tooltip",
+                          {
+                            attrs: { bottom: "" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    var attrs = ref.attrs
+                                    return [
+                                      _c(
+                                        "v-icon",
+                                        _vm._g(
+                                          _vm._b(
+                                            {
+                                              attrs: {
+                                                color: "green",
+                                                small: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.arrivato(item.id)
+                                                }
+                                              }
+                                            },
+                                            "v-icon",
+                                            attrs,
+                                            false
+                                          ),
+                                          on
+                                        ),
+                                        [
+                                          _vm._v(
+                                            "\n                                mdi-truck\n                            "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [_vm._v(" "), _c("span", [_vm._v("Arrivato")])]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
     ],
     1
   )

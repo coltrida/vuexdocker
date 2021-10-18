@@ -93,12 +93,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ListaMedici",
   data: function data() {
     return {
       medico: {},
+      carica: false,
       header: [{
         text: 'Medico',
         align: 'start',
@@ -114,7 +124,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchMedici(this.getIdUser);
+    var _this = this;
+
+    this.carica = true;
+    this.fetchMedici(this.getIdUser).then(function () {
+      _this.carica = false;
+    });
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('medici', {
     fetchMedici: 'fetchMedici',
@@ -122,11 +137,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     eliminaMedico: 'eliminaMedico'
   })), {}, {
     aggiungi: function aggiungi() {
-      var _this = this;
+      var _this2 = this;
 
       this.medico.userId = this.getIdUser;
       this.addMedico(this.medico).then(function () {
-        _this.medico = {};
+        _this2.medico = {};
       });
     },
     elimina: function elimina(idMedico) {
@@ -303,107 +318,121 @@ var render = function() {
         "v-row",
         { staticClass: "mb-6" },
         [
-          _c(
-            "v-col",
-            { attrs: { cols: "12" } },
-            [
-              _c("v-data-table", {
-                staticClass: "elevation-1",
-                attrs: {
-                  headers: _vm.header,
-                  items: _vm.getMedici,
-                  "hide-default-footer": ""
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "item.nome",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return [
-                        _c(
-                          "router-link",
-                          {
-                            staticStyle: { color: "black" },
-                            attrs: {
-                              to: {
-                                name: "orariMedici",
-                                params: { dottore: item.nome }
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(item.nome) +
-                                "\n                    "
-                            )
-                          ]
-                        )
-                      ]
-                    }
-                  },
-                  {
-                    key: "item.actions",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return [
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u(
-                              [
+          _c("v-col", { attrs: { cols: "12" } }, [
+            _vm.carica
+              ? _c(
+                  "div",
+                  { staticClass: "text-center" },
+                  [
+                    _c("v-progress-circular", {
+                      attrs: { indeterminate: "", color: "primary" }
+                    })
+                  ],
+                  1
+                )
+              : _c(
+                  "div",
+                  [
+                    _c("v-data-table", {
+                      staticClass: "elevation-1",
+                      attrs: {
+                        headers: _vm.header,
+                        items: _vm.getMedici,
+                        "hide-default-footer": ""
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "item.nome",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "router-link",
                                 {
-                                  key: "activator",
-                                  fn: function(ref) {
-                                    var on = ref.on
-                                    var attrs = ref.attrs
-                                    return [
-                                      _c(
-                                        "v-icon",
-                                        _vm._g(
-                                          _vm._b(
-                                            {
-                                              attrs: {
-                                                color: "red",
-                                                small: ""
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.elimina(item.id)
-                                                }
-                                              }
-                                            },
-                                            "v-icon",
-                                            attrs,
-                                            false
-                                          ),
-                                          on
-                                        ),
-                                        [
-                                          _vm._v(
-                                            "\n                                mdi-delete\n                            "
-                                          )
-                                        ]
-                                      )
-                                    ]
+                                  staticStyle: { color: "black" },
+                                  attrs: {
+                                    to: {
+                                      name: "orariMedici",
+                                      params: { dottore: item.nome }
+                                    }
                                   }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          },
-                          [_vm._v(" "), _c("span", [_vm._v("Elimina")])]
-                        )
-                      ]
-                    }
-                  }
-                ])
-              })
-            ],
-            1
-          )
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(item.nome) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            ]
+                          }
+                        },
+                        {
+                          key: "item.actions",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-icon",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    attrs: {
+                                                      color: "red",
+                                                      small: ""
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.elimina(
+                                                          item.id
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  "v-icon",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _vm._v(
+                                                  "\n                                    mdi-delete\n                                "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [_vm._v(" "), _c("span", [_vm._v("Elimina")])]
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  ],
+                  1
+                )
+          ])
         ],
         1
       ),

@@ -44,6 +44,7 @@ const routes = [
     { path: '/statisticheCallcenter', component: () => import('../Pages/statistiche/Callcenter'), name: 'statisticheCallcenter' },
     { path: '/strumentazione', component: () => import('../Pages/gestione/Strumentazione'), name: 'strumentazione' },
     { path: '/resetSpecial', component: () => import('../Pages/gestione/Reset'), name: 'resetSpecial' },
+    { path: '/struttureAudio', component: () => import('../Pages/strutture/StruttureAudio'), name: 'struttureAudio' },
 ];
 
 export default routes;

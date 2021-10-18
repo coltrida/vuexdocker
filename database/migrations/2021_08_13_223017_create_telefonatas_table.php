@@ -16,6 +16,7 @@ class CreateTelefonatasTable extends Migration
         Schema::create('telefonatas', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
+            $table->bigInteger('eseguita_id');
             $table->bigInteger('client_id');
             $table->string('esito')->nullable();
             $table->string('note')->nullable();

@@ -39,6 +39,8 @@
                 <h2>Recall di oggi</h2>
                 <v-data-table
                     :headers="headers1"
+                    height="240"
+                    :items-per-page=5
                     dense
                     :items="getRecallOggi"
                     class="elevation-1 mt-3"
@@ -81,6 +83,8 @@
                 <h2>Telefonate Effettuate</h2>
                 <v-data-table
                     :headers="headers1"
+                    height="240"
+                    :items-per-page=5
                     dense
                     :items="getTelefonateFatteOggi"
                     class="elevation-1 mt-3"
@@ -152,7 +156,7 @@
         },
 
         mounted() {
-            this.fetchRecallOggi();
+            this.fetchRecallOggi(this.getIdUser);
             this.fetchTelefonateFatteOggi();
             this.fetchNumeroTelefonateFatteOggi();
             this.fetchNumeroAppuntamentiPresiOggi();
@@ -202,6 +206,10 @@
                 getTelefonateFatteOggi: 'getTelefonateFatteOggi',
                 getNumeroTelefonateFatteOggi: 'getNumeroTelefonateFatteOggi',
                 getNumeroAppuntamentiPresiOggi: 'getNumeroAppuntamentiPresiOggi',
+            }),
+
+            ...mapGetters('login', {
+                getIdUser:'getIdUser',
             }),
         }
     }

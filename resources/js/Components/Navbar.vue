@@ -35,7 +35,7 @@
 
             <router-link :to="{ name: 'home'}">
                 <v-img
-                    v-if="getRuolo === 'audio'  || getRuolo === 'call'"
+                    v-if="getRuolo === 'audio'  || getRuolo === 'call' || getRuolo === 'amministrazione'"
                     lazy-src="/img/logo-centroudito.png"
                     max-height="50"
                     max-width="150"

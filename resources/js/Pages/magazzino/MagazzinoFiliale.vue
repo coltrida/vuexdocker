@@ -1,8 +1,6 @@
 <template>
     <div>
         <h2>Magazzino {{getFilialeById.nome}}</h2>
-        <v-container>
-
             <v-row v-if="getRuolo != 'admin'">
                 <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                     <v-select
@@ -40,111 +38,109 @@
 
             </v-row>
 
-            <h3 class="mt-5">Riepilogo Presenti</h3>
-            <v-data-table
-                :headers="headersRiepilogo"
-                :items="getSoglie"
-                class="elevation-1 mt-3"
-            >
-                <template v-slot:item.actions="{ item }">
-                    <v-icon
-                        color="red"
-                        small
-                        @click="elimina(item.id)"
-                    >
-                        mdi-delete
-                    </v-icon>
-                </template>
-            </v-data-table>
+            <div class="text-center" v-if="carica">
+                <v-progress-circular
+                    indeterminate
+                    color="primary"
+                ></v-progress-circular>
+            </div>
+            <div v-else>
+                <h3 class="mt-5">Riepilogo Presenti</h3>
+                <v-data-table
+                    :headers="headersRiepilogo"
+                    :items="getSoglie"
+                    class="elevation-1 mt-3"
+                >
+                </v-data-table>
 
-            <h3 class="mt-5">Presenti</h3>
-            <v-data-table
-                :headers="headers1"
-                :items="getInFiliale"
-                :items-per-page="10"
-                class="elevation-1 mt-3"
-            >
-                <template v-slot:item.actions="{ item }">
-                    <v-icon
-                        color="red"
-                        small
-                        @click="elimina(item.id)"
-                    >
-                        mdi-delete
-                    </v-icon>
-                </template>
-
-                <template v-slot:item.giorniRimasti="{ item }">
-                    <div v-if="item.giorniRimasti < 10">
-                        <v-chip
+                <h3 class="mt-5">Presenti</h3>
+                <v-data-table
+                    :headers="headers1"
+                    :items="getInFiliale"
+                    :items-per-page="10"
+                    class="elevation-1 mt-3"
+                >
+                    <template v-slot:item.actions="{ item }">
+                        <v-icon
                             color="red"
-                            dark
+                            small
+                            @click="elimina(item.id)"
                         >
-                            {{ item.giorniRimasti }}
-                        </v-chip>
-                    </div>
-                    <div v-else>
-                        {{ item.giorniRimasti }}
-                    </div>
+                            mdi-delete
+                        </v-icon>
+                    </template>
 
-                </template>
-            </v-data-table>
-
-            <h3 class="mt-5">In prova</h3>
-            <v-data-table
-                :headers="headers2"
-                :items="getInProva"
-                :items-per-page="10"
-                class="elevation-1 mt-3"
-            >
-            </v-data-table>
-
-            <h3 class="mt-5">Richiesti</h3>
-            <v-data-table
-                :headers="headers4"
-                :items="getRichiesti"
-                :items-per-page="10"
-                class="elevation-1 mt-3"
-            >
-                <template v-slot:item.actions="{ item }">
-                    <v-icon
-                        color="red"
-                        small
-                        @click="elimina(item.id)"
-                    >
-                        mdi-delete
-                    </v-icon>
-                </template>
-            </v-data-table>
-
-            <h3 class="mt-5">In Arrivo</h3>
-            <v-data-table
-                :headers="headers3"
-                :items="getInArrivo"
-                :items-per-page="10"
-                class="elevation-1 mt-3"
-            >
-
-                <template v-slot:item.actions="{ item }">
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                                color="green"
-                                small
-                                @click="arrivato(item.id)"
-                                v-bind="attrs"
-                                v-on="on"
+                    <template v-slot:item.giorniRimasti="{ item }">
+                        <div v-if="item.giorniRimasti < 10">
+                            <v-chip
+                                color="red"
+                                dark
                             >
-                                mdi-truck
-                            </v-icon>
-                        </template>
-                        <span>Arrivato</span>
-                    </v-tooltip>
-                </template>
+                                {{ item.giorniRimasti }}
+                            </v-chip>
+                        </div>
+                        <div v-else>
+                            {{ item.giorniRimasti }}
+                        </div>
+
+                    </template>
+                </v-data-table>
+
+                <h3 class="mt-5">In prova</h3>
+                <v-data-table
+                    :headers="headers2"
+                    :items="getInProva"
+                    :items-per-page="10"
+                    class="elevation-1 mt-3"
+                >
+                </v-data-table>
+
+                <h3 class="mt-5">Richiesti</h3>
+                <v-data-table
+                    :headers="headers4"
+                    :items="getRichiesti"
+                    :items-per-page="10"
+                    class="elevation-1 mt-3"
+                >
+                    <template v-slot:item.actions="{ item }">
+                        <v-icon
+                            color="red"
+                            small
+                            @click="elimina(item.id)"
+                        >
+                            mdi-delete
+                        </v-icon>
+                    </template>
+                </v-data-table>
+
+                <h3 class="mt-5">In Arrivo</h3>
+                <v-data-table
+                    :headers="headers3"
+                    :items="getInArrivo"
+                    :items-per-page="10"
+                    class="elevation-1 mt-3"
+                >
+
+                    <template v-slot:item.actions="{ item }">
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon
+                                    color="green"
+                                    small
+                                    @click="arrivato(item.id)"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-truck
+                                </v-icon>
+                            </template>
+                            <span>Arrivato</span>
+                        </v-tooltip>
+                    </template>
 
 
-            </v-data-table>
-        </v-container>
+                </v-data-table>
+            </div>
     </div>
 </template>
 
@@ -155,6 +151,7 @@
 
         data(){
             return {
+                carica: false,
                 productRichiesto:{},
                 headersRiepilogo: [
                     { text: 'Nome', align: 'start', value: 'nome', class: "indigo white--text" },
@@ -220,14 +217,20 @@
                 }
             });
             if (accesso){
-                this.fetchInFiliale(this.rottaIdFiliale);
-                this.fetchInProva(this.rottaIdFiliale);
-                this.fetchRichiesti(this.rottaIdFiliale);
-                this.fetchInArrivo(this.rottaIdFiliale);
-                this.fetchSoglie(this.rottaIdFiliale);
+                this.carica = true;
+                this.fetchInFiliale(this.rottaIdFiliale).then(() => {
+                    this.fetchInProva(this.rottaIdFiliale).then(() => {
+                        this.fetchRichiesti(this.rottaIdFiliale).then(() => {
+                            this.fetchInArrivo(this.rottaIdFiliale).then(() => {
+                                this.fetchSoglie(this.rottaIdFiliale).then(() => {
+                                    this.carica = false;
+                                });
+                            });
+                        });
+                    });
+                });
 
                 this.fetchFornitori();
-
                 this.fetchFilialeById(this.rottaIdFiliale);
 
                 window.Echo.channel("logisticaChannel").listen(".task-created", e => {
@@ -242,11 +245,18 @@
 
         watch:{
             rottaIdFiliale(){
-                this.fetchInFiliale(this.rottaIdFiliale);
-                this.fetchInProva(this.rottaIdFiliale);
-                this.fetchRichiesti(this.rottaIdFiliale);
-                this.fetchInArrivo(this.rottaIdFiliale);
-                this.fetchSoglie(this.rottaIdFiliale);
+                this.carica = true;
+                this.fetchInFiliale(this.rottaIdFiliale).then(() => {
+                    this.fetchInProva(this.rottaIdFiliale).then(() => {
+                        this.fetchRichiesti(this.rottaIdFiliale).then(() => {
+                            this.fetchInArrivo(this.rottaIdFiliale).then(() => {
+                                this.fetchSoglie(this.rottaIdFiliale).then(() => {
+                                    this.carica = false;
+                                });
+                            });
+                        });
+                    });
+                });
 
                 this.fetchFilialeById(this.rottaIdFiliale);
             }

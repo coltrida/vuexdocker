@@ -4,11 +4,16 @@ const state = () => ({
     recapiti: [],
     recapitiIngressi: [],
     recapitiIngressiMesi: [],
+    struttureAudio: []
 });
 
 const getters = {
     getRecapiti(state){
         return state.recapiti;
+    },
+
+    getStruttureAudio(state){
+        return state.struttureAudio;
     },
 
     getRecapitiIngressi(state){
@@ -29,6 +34,15 @@ const actions = {
             }
         });
         commit('fetchRecapiti', response.data);
+    },
+
+    async fetchStruttureAudio({commit}, idAudio){
+        const response = await axios.get(`${help().linkstruttureaudio}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchStruttureAudio', response.data);
     },
 
     async fetchRecapitiIngresi({commit}){
@@ -90,25 +104,6 @@ const actions = {
     },
 
     async modificaRecapito({commit}, payload){
-        /*const response = await axios.post(`${help().linkmodificarecapito}`, {
-            'id': payload.id,
-            'nome': payload.nome,
-            'indirizzo': payload.indirizzo,
-            'citta': payload.citta,
-            'telefono': payload.telefono,
-            'user_id': payload.user_id,
-            'provincia': payload.provincia,
-            'informazioni': payload.informazioni,
-            'fileUp': payload.fileUp
-        }, {
-            headers: {
-                'content-type': 'multipart/form-data' ,
-                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
-            }
-        });
-
-        commit('addRecapito', response.data);*/
-
         const config = {
             headers: {
                 'content-type': 'multipart/form-data' ,
@@ -144,6 +139,10 @@ const actions = {
 const mutations = {
     fetchRecapiti(state, payload){
         state.recapiti = payload;
+    },
+
+    fetchStruttureAudio(state, payload){
+        state.struttureAudio = payload;
     },
 
     fetchRecapitiIngresi(state, payload){

@@ -160,6 +160,8 @@ const help = () => {
         linkdeleteprovesenzaprodotti: base+'eliminaProveSenzaProdotti',
         linkservizi: base+'servizi',
         linkresetspecial: base+'resetSpecial',
+        linkstruttureaudio: base+'struttureAudio',
+        linkrecallautomatico: base+'recallAutomatico',
     };
 };
 export default help;

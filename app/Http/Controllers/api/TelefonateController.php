@@ -10,14 +10,14 @@ use Illuminate\Http\Request;
 class TelefonateController extends Controller
 {
 
-    public function recallOggi(TelefonateService $telefonateService)
+    public function recallOggi($idUser, TelefonateService $telefonateService)
     {
-        return $telefonateService->recallOggi();
+        return $telefonateService->recallOggi($idUser);
     }
 
-    public function recallDomani(TelefonateService $telefonateService)
+    public function recallDomani($idUser, TelefonateService $telefonateService)
     {
-        return $telefonateService->recallDomani();
+        return $telefonateService->recallDomani($idUser);
     }
 
     public function telefonateFatteOggi(TelefonateService $telefonateService)
@@ -70,8 +70,13 @@ class TelefonateController extends Controller
         return $telefonateService->statistiche();
     }
 
-    public function daRichiamare(TelefonateService $telefonateService)
+    public function daRichiamare($idUser, TelefonateService $telefonateService)
     {
-        return $telefonateService->daRichiamare();
+        return $telefonateService->daRichiamare($idUser);
+    }
+
+    public function recallAutomatico($idUser, TelefonateService $telefonateService)
+    {
+        return $telefonateService->recallAutomatico($idUser);
     }
 }

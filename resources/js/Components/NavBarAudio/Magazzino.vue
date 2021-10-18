@@ -3,7 +3,7 @@
         <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
                 <v-badge
-                    v-if="getRuolo === 'audio'"
+                    v-if="getRuolo === 'audio' || getRuolo === 'amministrazione'"
                     :content="novita"
                     :value="novita"
                     color="red"

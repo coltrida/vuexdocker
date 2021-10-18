@@ -251,7 +251,7 @@
 
         mounted(){
         //    console.log(this.$vuetify.breakpoint.name);
-            if(this.getRuolo === 'audio'){
+            if(this.getRuolo === 'audio' || this.getRuolo === 'amministrazione'){
                 this.newClient.user_id = parseInt(this.getIdUser);
                 this.lettura = true;
             }

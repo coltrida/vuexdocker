@@ -3911,6 +3911,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3967,6 +3980,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         sortable: false,
         "class": "indigo white--text"
       }, {
+        text: 'Telefono2',
+        width: 120,
+        value: 'telefono2',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
+        text: 'Telefono3',
+        width: 120,
+        value: 'telefono3',
+        sortable: false,
+        "class": "indigo white--text"
+      }, {
         text: 'Indirizzo',
         width: 220,
         value: 'indirizzo',
@@ -3993,7 +4018,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchRecallOggi: 'fetchRecallOggi',
     fetchRecallDomani: 'fetchRecallDomani',
     fetchClientiMaiRichiamati: 'fetchClientiMaiRichiamati',
-    fetchClientiNonHannoMaiPresoAppuntamenti: 'fetchClientiNonHannoMaiPresoAppuntamenti',
+    fetchRecallAutomatico: 'fetchRecallAutomatico',
     fetchClientiUnAnnoUltimoAppuntamento: 'fetchClientiUnAnnoUltimoAppuntamento',
     fetchDaRichiamare: 'fetchDaRichiamare'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)('users', {
@@ -4004,12 +4029,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.switchDatabase();
     },
     caricaTelefonate: function caricaTelefonate() {
-      this.fetchRecallOggi();
-      this.fetchRecallDomani();
+      this.fetchRecallOggi(this.getIdUser);
+      this.fetchRecallDomani(this.getIdUser);
       this.fetchClientiMaiRichiamati();
-      this.fetchClientiNonHannoMaiPresoAppuntamenti();
+      this.fetchRecallAutomatico(this.getIdUser);
       this.fetchClientiUnAnnoUltimoAppuntamento();
-      this.fetchDaRichiamare();
+      this.fetchDaRichiamare(this.getIdUser);
     },
     audiogramma: function audiogramma(client) {
       this.showDocumenti = false;
@@ -4108,15 +4133,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.proveClient = {};
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('telefonate', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('telefonate', {
     getRecallOggi: 'getRecallOggi',
     getRecallDomani: 'getRecallDomani',
     getClientiMaiRichiamati: 'getClientiMaiRichiamati',
-    getClientiNonHannoMaiPresoAppuntamenti: 'getClientiNonHannoMaiPresoAppuntamenti',
+    getRecallAutomatico: 'getRecallAutomatico',
     getClientiUnAnnoUltimoAppuntamento: 'getClientiUnAnnoUltimoAppuntamento',
     getDaRichiamare: 'getDaRichiamare'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('users', {
     getUserInformazioni: 'getUserInformazioni'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
   }))
 });
 
@@ -4142,6 +4169,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -4329,7 +4360,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchRecallOggi();
+    this.fetchRecallOggi(this.getIdUser);
     this.fetchTelefonateFatteOggi();
     this.fetchNumeroTelefonateFatteOggi();
     this.fetchNumeroAppuntamentiPresiOggi();
@@ -4365,11 +4396,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.appuntamentoClient = {};
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('telefonate', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('telefonate', {
     getRecallOggi: 'getRecallOggi',
     getTelefonateFatteOggi: 'getTelefonateFatteOggi',
     getNumeroTelefonateFatteOggi: 'getNumeroTelefonateFatteOggi',
     getNumeroAppuntamentiPresiOggi: 'getNumeroAppuntamentiPresiOggi'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
   }))
 });
 
@@ -48969,6 +49002,8 @@ var render = function() {
                       staticClass: "elevation-1 mt-3",
                       attrs: {
                         headers: _vm.headers1,
+                        height: "240",
+                        "items-per-page": 5,
                         dense: "",
                         items: _vm.getRecallOggi
                       },
@@ -49241,15 +49276,17 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("h2", { staticClass: "mt-10" }, [
-                      _vm._v("Clienti Mai Richiamati")
+                      _vm._v("Recall Automatico")
                     ]),
                     _vm._v(" "),
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
                       attrs: {
+                        height: "240",
+                        "items-per-page": 5,
                         headers: _vm.headers1,
                         dense: "",
-                        items: _vm.getClientiMaiRichiamati
+                        items: _vm.getRecallAutomatico
                       },
                       scopedSlots: _vm._u(
                         [
@@ -49520,15 +49557,17 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("h2", { staticClass: "mt-10" }, [
-                      _vm._v("Clienti Mai Preso Appuntamenti")
+                      _vm._v("Clienti Mai Richiamati")
                     ]),
                     _vm._v(" "),
                     _c("v-data-table", {
                       staticClass: "elevation-1 mt-3",
                       attrs: {
                         headers: _vm.headers1,
+                        height: "240",
+                        "items-per-page": 5,
                         dense: "",
-                        items: _vm.getClientiNonHannoMaiPresoAppuntamenti
+                        items: _vm.getClientiMaiRichiamati
                       },
                       scopedSlots: _vm._u(
                         [
@@ -49812,6 +49851,8 @@ var render = function() {
                     staticClass: "elevation-1 mt-3",
                     attrs: {
                       headers: _vm.headers1,
+                      height: "240",
+                      "items-per-page": 5,
                       dense: "",
                       items: _vm.getRecallDomani
                     },
@@ -50078,6 +50119,8 @@ var render = function() {
                     staticClass: "elevation-1 mt-3 mb-10",
                     attrs: {
                       headers: _vm.headers1,
+                      height: "240",
+                      "items-per-page": 5,
                       dense: "",
                       items: _vm.getClientiUnAnnoUltimoAppuntamento
                     },
@@ -50344,6 +50387,8 @@ var render = function() {
                     staticClass: "elevation-1 mt-3 mb-10",
                     attrs: {
                       headers: _vm.headers1,
+                      height: "240",
+                      "items-per-page": 5,
                       dense: "",
                       items: _vm.getDaRichiamare
                     },
@@ -50727,6 +50772,8 @@ var render = function() {
                         staticClass: "elevation-1 mt-3",
                         attrs: {
                           headers: _vm.headers1,
+                          height: "240",
+                          "items-per-page": 5,
                           dense: "",
                           items: _vm.getRecallOggi
                         },
@@ -50873,6 +50920,8 @@ var render = function() {
                         staticClass: "elevation-1 mt-3",
                         attrs: {
                           headers: _vm.headers1,
+                          height: "240",
+                          "items-per-page": 5,
                           dense: "",
                           items: _vm.getTelefonateFatteOggi
                         },

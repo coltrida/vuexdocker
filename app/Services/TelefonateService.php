@@ -17,19 +17,32 @@ use function trim;
 class TelefonateService
 {
 
-    public function recallOggi()
+    public function recallOggi($idUser)
     {
+       // dd($idUser);
         $oggi = Carbon::now()->format('Y-m-d');
+        $user = User::with('ruolo')->find($idUser);
+
+        if ($user->ruolo->nome === 'admin'){
+            return Client::with(['tipologia:id,nome',
+                'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+                    $q->with('copiaComm')->first();
+                }])
+                ->whereHas('recalls', function ($q) use($oggi){
+                    $q->where([['datarecall', $oggi], ['effettuata', 0]]);
+                })->orderBy('user_id')->get();
+        }
+
         return Client::with(['tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
-            ->whereHas('recalls', function ($q) use($oggi){
-                $q->where([['datarecall', $oggi], ['effettuata', 0]]);
+            ->whereHas('recalls', function ($q) use($oggi, $idUser){
+                $q->where([['datarecall', $oggi], ['effettuata', 0], ['eseguita_id', $idUser]]);
         })->orderBy('user_id')->get();
     }
 
-    public function recallDomani()
+    public function recallDomani($idUser)
     {
         if(Carbon::now()->dayOfWeek != 6){
             $domani = Carbon::now()->addDay()->format('Y-m-d');
@@ -40,8 +53,8 @@ class TelefonateService
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
-            ->whereHas('recalls', function ($q) use($domani){
-                $q->where([['datarecall', $domani], ['effettuata', 0]]);
+            ->whereHas('recalls', function ($q) use($domani, $idUser){
+                $q->where([['datarecall', $domani], ['effettuata', 0], ['eseguita_id', $idUser]]);
             })->orderBy('user_id')->get();
     }
 
@@ -131,6 +144,7 @@ class TelefonateService
 
         $prossimaTelefonata = Telefonata::create([
             'user_id' => $client->user->id,
+            'eseguita_id' => $request->userId,
             'client_id' => $request->clientId,
             'datarecall' => $request->giorno,
             'mese' => Carbon::make($request->giorno)->month,
@@ -192,15 +206,39 @@ class TelefonateService
         return Risultatitel::orderBy('anno')->orderBy('mesenumero')->get();
     }
 
-    public function daRichiamare()
+    public function daRichiamare($idUser)
     {
         $oggi = Carbon::now()->format('Y-m-d');
         return Client::with(['tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
-            ->whereHas('recalls', function ($q) use($oggi){
-                $q->where([['datarecall', '<', $oggi], ['effettuata', 0]]);
+            ->whereHas('recalls', function ($q) use($oggi, $idUser){
+                $q->where([['datarecall', '<', $oggi], ['effettuata', 0], ['eseguita_id', $idUser]]);
+            })->orderBy('user_id')->get();
+    }
+
+    public function recallAutomatico($idUser)
+    {
+        $oggi = Carbon::now()->format('Y-m-d');
+        $user = User::with('filiale', 'ruolo')->find($idUser);
+        $filiali = $user->filiale->pluck('id');
+        if ($user->ruolo->nome === 'amministrazione'){
+            return Client::with(['tipologia:id,nome',
+                'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+                    $q->with('copiaComm')->first();
+                }])
+                ->whereHas('recalls', function ($q) use($oggi, $idUser){
+                    $q->where([['datarecall', $oggi], ['effettuata', 0], ['eseguita_id', null]]);
+                })->orderBy('user_id')->get();
+        }
+        return Client::with(['tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+                $q->with('copiaComm')->first();
+            }])
+            ->whereIn('filiale_id', $filiali)
+            ->whereHas('recalls', function ($q) use($oggi, $idUser){
+                $q->where([['datarecall', $oggi], ['effettuata', 0]]);
             })->orderBy('user_id')->get();
     }
 
