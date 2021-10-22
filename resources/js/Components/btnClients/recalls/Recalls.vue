@@ -43,36 +43,15 @@
                 <h4>Dottore di riferimento: {{recallsClient.user}}</h4>
             </v-col>
             <v-col cols="4">
-                <!--<v-select
-                    @change="infoRecapito($event)"
-                    :items="getRecapiti"
-                    item-value="informazioni"
-                    item-text="nome"
-                    label="Informazioni Recapito"
-                ></v-select>
-                {{ informazioneRecapito }}-->
-
-                    <v-row justify="center">
-                        <!--<v-btn
-                            color="primary"
-                            dark
-                            @click.stop="dialog = true"
-                        >
-                            Open Dialog
-                        </v-btn>-->
-
-                        <v-select
-                            @change="infoRecapito($event)"
-                            :items="getRecapiti"
-                            return-object
-                            item-text="nome"
-                            label="Informazioni Recapito"
-                        ></v-select>
-
-
-                    </v-row>
-
-
+                <v-row justify="center">
+                    <v-select
+                        @change="infoRecapito($event)"
+                        :items="getRecapiti"
+                        return-object
+                        item-text="nome"
+                        label="Informazioni Recapito"
+                    ></v-select>
+                </v-row>
             </v-col>
             <v-col cols="4" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">

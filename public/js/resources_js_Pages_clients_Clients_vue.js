@@ -274,6 +274,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -283,6 +327,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      dialog: false,
+      informazioneRecapito: '',
       carica: false,
       modificaSwitch: false,
       modal2: false,
@@ -444,6 +490,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.newAppuntamento = eleSelezionato;
       this.newAppuntamento.giorno = eleSelezionato.giornoOriginale;
       this.$store.commit('appuntamenti/eliminaAppuntamento', this.newAppuntamento.id);
+    },
+    infoRecapito: function infoRecapito(recapito) {
+      this.informazioneRecapito = recapito;
+      this.dialog = true;
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
@@ -2099,27 +2149,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -42356,9 +42385,80 @@ var render = function() {
     { staticClass: "mt-3 flex-column" },
     [
       _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "600" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-img", {
+                staticClass: "black--text align-end",
+                attrs: {
+                  height: "400px",
+                  width: "600px",
+                  src:
+                    "https://www.centrouditogroup.it/storage/recapiti/" +
+                    _vm.informazioneRecapito.id +
+                    ".jpg"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-card-title", { staticClass: "text-h5" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.informazioneRecapito.nome) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("v-card-text", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.informazioneRecapito.informazioni) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "green darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    Chiudi\n                ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-row",
         [
-          _c("v-col", { attrs: { cols: "6" } }, [
+          _c("v-col", { attrs: { cols: "4" } }, [
             _c("h2", [
               _vm._v(
                 _vm._s(_vm.appuntamentoClient.nome) +
@@ -42376,7 +42476,35 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { staticClass: "flex justify-end", attrs: { cols: "6" } },
+            { attrs: { cols: "4" } },
+            [
+              _c(
+                "v-row",
+                { attrs: { justify: "center" } },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      items: _vm.getRecapiti,
+                      "return-object": "",
+                      "item-text": "nome",
+                      label: "Informazioni Recapito"
+                    },
+                    on: {
+                      change: function($event) {
+                        return _vm.infoRecapito($event)
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { staticClass: "flex justify-end", attrs: { cols: "4" } },
             [
               _c(
                 "v-btn",

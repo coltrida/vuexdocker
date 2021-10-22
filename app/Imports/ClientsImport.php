@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Client;
+use App\Models\Informazione;
 use Carbon\Carbon;
 use Arr;
 use Str;
@@ -56,7 +57,7 @@ class ClientsImport implements ToCollection, WithHeadingRow
                     $filiale = 5;
                     $user = 6;
                 }
-                Client::insert([
+                $client = Client::create([
                     'cognome'       => Str::upper($value['cognome']),
                     'nome'          => Str::upper($value['nome']),
                     'indirizzo'     => Str::upper($value['indirizzo']),
@@ -74,8 +75,14 @@ class ClientsImport implements ToCollection, WithHeadingRow
                     'mese'          => Carbon::now()->month,
                     'anno'          => Carbon::now()->year,
                 ]);
-            }
 
+                Informazione::create([
+                    'client_id' => $client->id,
+                    'tipo' => 'INGRESSO',
+                    'note' => 'Inserito da Lista Esterna',
+                    'giorno' => $client->created_at->format('Y-m-d'),
+                ]);
+            }
         }
     }
 }
