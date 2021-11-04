@@ -18,7 +18,7 @@
             </v-card>
         </v-tab-item>
 
-        <v-tab @click="resetCallCenter">
+        <v-tab>
             CallCenter
         </v-tab>
         <v-tab-item>
@@ -77,12 +77,12 @@
 
             },
 
-            resetCallCenter(){
+            /*resetCallCenter(){
                 this.fetchRecallOggi();
                 this.fetchTelefonateFatteOggi();
                 this.fetchNumeroTelefonateFatteOggi();
                 this.fetchNumeroAppuntamentiPresiOggi();
-            }
+            }*/
         }
     }
 </script>

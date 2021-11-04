@@ -1,34 +1,74 @@
 <template>
     <div>
-        <h2 class="mb-4">Statistiche Audioprotesisti -
+        <h2 class="my-5">Statistiche Audioprotesisti -
             <v-chip
                 color="primary"
                 outlined
                 pill
             >
-            Fatturato tot. {{getTotFatt}}
+            Fatturato tot. {{getTotFatt.toLocaleString('it')}}
             </v-chip>
                 -
             <v-chip
                 color="green"
                 outlined
             >
-            Bgt Anno. {{totBgt}}
+            Bgt Anno. {{totBgt.toLocaleString('it')}}
             </v-chip>
             -
             <v-chip
                 color="deep-purple accent-4"
                 outlined
             >
-                Bgt Prog. {{getTotBgtProg}}
+                Bgt Prog. {{getTotBgtProg.toLocaleString('it')}}
+            </v-chip>
+            -
+            <v-chip
+                color="red accent-4"
+                outlined
+            >
+                Fatt. vs Bgt Prog: {{ (((getTotFatt - getTotBgtProg) / getTotBgtProg) * 100).toFixed(0) }} %
             </v-chip>
         </h2>
 
         <v-row v-for="audio in getAudioConBgt" :key="audio.id" class="mb-5">
-            <v-col cols="8">
+            <v-col cols="8" class="pt-10">
                 <div >
                     <div style="display: flex; align-items: center; justify-content: space-between">
-                        <h3>{{audio.name}} - Budget Progressivo: {{audio.valori[0].premio}}</h3>
+                        <h3>{{audio.name}}
+                            -
+                            <v-chip
+                                color="primary"
+                                label
+                                outlined
+                            >
+                                Fatt. tot. {{audio.valori[1].budgetAnno.toLocaleString('it')}}
+                            </v-chip>
+                            -
+                            <v-chip
+                                color="green"
+                                label
+                                outlined
+                            >
+                                Bgt Anno {{audio.valori[0].budgetAnno.toLocaleString('it')}}
+                            </v-chip>
+                            -
+                            <v-chip
+                                color="deep-purple accent-4"
+                                label
+                                outlined
+                            >
+                                Bgt Prog. {{audio.valori[0].premio.toLocaleString('it')}}
+                            </v-chip>
+                            -
+                            <v-chip
+                                color="red accent-4"
+                                label
+                                outlined
+                            >
+                                Fatt. vs Bgt Prog: {{ (((audio.valori[1].budgetAnno - audio.valori[0].premio) / audio.valori[0].premio) * 100).toFixed(0) }} %
+                            </v-chip>
+                        </h3>
                         <!--<h4>Media Vendita {{audio.valori[1].budgetAnno / audio.valori[3].budgetAnno}}</h4>-->
                     </div>
 
@@ -39,7 +79,24 @@
                         hide-default-footer
                         class="elevation-1 mt-3"
                     >
-
+                        <template v-slot:item="{ item }">
+                            <tr>
+                                <td>{{item.nome}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 ? item.budgetAnno.toLocaleString('it') : item.budgetAnno}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.gennaio ? item.gennaio.toLocaleString('it') : item.gennaio}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.febbraio ? item.febbraio.toLocaleString('it') : item.febbraio}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.marzo ? item.marzo.toLocaleString('it') : item.marzo}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.aprile ? item.aprile.toLocaleString('it') : item.aprile}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.maggio ? item.maggio.toLocaleString('it') : item.maggio}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.giugno ? item.giugno.toLocaleString('it') : item.giugno}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.luglio ? item.luglio.toLocaleString('it') : item.luglio}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.agosto ? item.agosto.toLocaleString('it') : item.agosto}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.settembre ? item.settembre.toLocaleString('it') : item.settembre}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.ottobre ? item.ottobre.toLocaleString('it') : item.ottobre}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.novembre ? item.novembre.toLocaleString('it') : item.novembre}}</td>
+                                <td>{{audio.valori.indexOf(item) < 2 && item.dicembre ? item.dicembre.toLocaleString('it') : item.dicembre}}</td>
+                            </tr>
+                        </template>
                     </v-data-table>
                 </div>
             </v-col>

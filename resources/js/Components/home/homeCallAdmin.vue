@@ -19,17 +19,23 @@
             </v-col>
         </v-row>
 
-        <div>
+        <div class="text-center" v-if="carica">
+            <v-progress-circular
+                indeterminate
+                color="primary"
+            ></v-progress-circular>
+        </div>
+        <div v-else>
             <v-row cols="12" v-if="showClients">
                 <v-col>
                     <v-chip>
-                        Telefonate effettuate: {{getNumeroTelefonateFatteOggi}}
+                        Telefonate effettuate OGGI: {{getNumeroTelefonateFatteOggi}}
                     </v-chip>
 
                 </v-col>
                 <v-col>
                     <v-chip>
-                        Appuntamenti presi: {{getNumeroAppuntamentiPresiOggi}}
+                        Appuntamenti presi OGGI: {{getNumeroAppuntamentiPresiOggi}}
                     </v-chip>
                 </v-col>
             </v-row>
@@ -80,7 +86,7 @@
             </v-col>
 
             <v-col cols="6">
-                <h2>Telefonate Effettuate</h2>
+                <h2>Telefonate Effettuate OGGI</h2>
                 <v-data-table
                     :headers="headers1"
                     height="240"
@@ -137,6 +143,7 @@
         components: {Appuntamento, Recalls},
         data(){
             return {
+                carica: false,
                 showClients: true,
                 showRecalls: false,
                 showAppuntamento: false,
@@ -156,10 +163,15 @@
         },
 
         mounted() {
-            this.fetchRecallOggi(this.getIdUser);
-            this.fetchTelefonateFatteOggi();
-            this.fetchNumeroTelefonateFatteOggi();
-            this.fetchNumeroAppuntamentiPresiOggi();
+            this.carica = true;
+            if(this.getIdUser){
+                this.fetchRecallOggi(this.getIdUser).then(() => {
+                    this.carica = false;
+                    this.fetchTelefonateFatteOggi();
+                    this.fetchNumeroTelefonateFatteOggi();
+                    this.fetchNumeroAppuntamentiPresiOggi();
+                });
+            }
 
         },
 

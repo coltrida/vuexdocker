@@ -238,6 +238,7 @@
 
         mounted() {
             this.carica = true;
+            this.inserimentoDataDiOggi();
             this.fetchRecapitiByAudio(this.recallsClient.user_id);
             this.fetchRecallsByIdClient(this.recallsClient.id).then(() => {
                 this.carica = false;
@@ -255,15 +256,25 @@
                 fetchRecapitiByAudio:'fetchRecapitiByAudio',
             }),
 
+            inserimentoDataDiOggi(){
+                let giornoDiOggi = new Date();
+                let giorno = parseInt(giornoDiOggi.getDay()) < 10 ? '0'+parseInt(giornoDiOggi.getDay()) : parseInt(giornoDiOggi.getDay()) ;
+                let mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0'+parseInt(giornoDiOggi.getMonth()) + 1 : parseInt(giornoDiOggi.getMonth()) + 1;
+                let anno = giornoDiOggi.getFullYear();
+                this.telefonata.giorno = anno+'-'+mese+'-'+giorno;
+            },
+
             inserisci(){
                 this.telefonata.clientId = this.recallsClient.id;
                 this.telefonata.userId = this.getIdUser;
                 this.addTelefonata(this.telefonata).then(() =>{
                 if(this.telefonata.esito == 'Preso Appuntamento'){
                     this.telefonata = {};
+                    this.inserimentoDataDiOggi();
                     this.$emit('chiudiRecalls', this.recallsClient)
                 }
                 this.telefonata = {};
+                this.inserimentoDataDiOggi();
                 });
             },
 
@@ -279,6 +290,7 @@
 
             appuntamento(){
                 this.telefonata = {};
+                this.inserimentoDataDiOggi();
                 this.$emit('chiudiRecalls', this.recallsClient)
             },
 

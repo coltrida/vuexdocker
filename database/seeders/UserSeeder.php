@@ -58,8 +58,8 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123456'),
             ],
             [
-                'name' => 'Alberto Parlagreco',
-                'email' => 'alberto.parlagreco@centrouditogroup.it',
+                'name' => 'Audio Firenze',
+                'email' => 'audio.firenze@centrouditogroup.it',
                 'ruolo' => 2,
                 'budget_id' => 3,
                 'email_verified_at' => now(),

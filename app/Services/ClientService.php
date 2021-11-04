@@ -270,7 +270,11 @@ class ClientService
 
     public function province()
     {
-        return Client::orderBy('provincia')->pluck('provincia');
+        return Client::orderBy('provincia')
+            ->where([['provincia', '!=', null], ['provincia', '!=', '']])
+            ->get()
+            ->unique('provincia')
+            ->pluck('provincia');
     }
 
     public function cittaByProvincia($provincia)
@@ -505,7 +509,7 @@ class ClientService
             } elseif (in_array($citta , ['MACERATA', 'CAMERINO'])) {
                 return Filiale::where('nome', 'MACERATA')->first()->id;
             } elseif (in_array($citta , ['PISA', 'CASCINA', 'MARINA DI PISA', 'SAN GIULIANO TERME', 'SAN GIULIANO TERME(GELLO)',
-                'SAN GIULIANO TERME(AGNANO)', 'GELLO(S.GILULIANO TERME)', 'SAN GIULIANO TERME(GHEZZANO)', 'FIRENZE', 'NODICA',
+                'SAN GIULIANO TERME(AGNANO)', 'GELLO(S.GILULIANO TERME)', 'SAN GIULIANO TERME(GHEZZANO)', 'NODICA',
                 "MADONNA DELL'ACQUA( S.G.T.)", 'S.G.TERME', 'VECCHIANO', 'MIGLIARINO', 'PONTASSERCHIO(S.G.T)', 'PORTA A MARE',
                 'GHEZZANO', 'PISA(ARENA METATO)', 'NODICA(SGT)', 'GHEZZANO(SGT)', 'COLIGNOLA(SGT)', 'SAN LORENZO ALLE CORTI',
                 'ASCIANO PISANO', 'ASCIANO (SGTERME)', 'BIENTINA', 'BUTI', 'CALCI', 'CALCINAIA', 'CAPANNOLI',

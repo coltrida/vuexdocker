@@ -147,6 +147,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       user: {},
       headers1: [{
+        text: 'Id',
+        align: 'start',
+        sortable: false,
+        value: 'id',
+        "class": "indigo white--text"
+      }, {
         text: 'Nome',
         align: 'start',
         sortable: false,
@@ -163,6 +169,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }],
       headers2: [{
+        text: 'Id',
+        align: 'start',
+        sortable: false,
+        value: 'id',
+        "class": "indigo white--text"
+      }, {
         text: 'Nome',
         align: 'start',
         sortable: false,

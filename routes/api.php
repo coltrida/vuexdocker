@@ -33,8 +33,8 @@ Route::post('/register', [LoginController::class, 'register']);
 Route::get('/situazioneAnno', [ElaborazioneController::class, 'situazioneAnno']);
 
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-//Route::group([], function () {
+//Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group([], function () {
         Route::get('/resetSpecial', function (){
             Artisan::call('migrate:fresh');
             Artisan::call('db:seed');

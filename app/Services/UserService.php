@@ -273,7 +273,9 @@ class UserService
                 $q->orderBy('mese_fine');
             }])
             ->withCount(['prova' => function($q) use($anno){
-                $q->where('anno_inizio', $anno);
+                $q->where('anno_inizio', $anno)->whereHas('stato', function ($s){
+                    $s->where('nome', 'RESO')->orWhere('nome', 'FATTURA')->orWhere('nome', 'PROVA');
+                });
             }])
             ->withCount(['provaFinalizzata as nuova' => function($q){
                 $q->where('tipologia', 'Nuovo');

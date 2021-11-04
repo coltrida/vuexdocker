@@ -5,7 +5,7 @@
             <v-card color="blue lighten-4" v-for="audio in getAudioConFatt" :key="audio.id" class="mb-7">
                 <v-row class="pa-5">
                     <!--<v-col><h2>{{audio.name}}</h2></v-col>-->
-                    <v-col><h4>Vendite su Pc: {{audio.delta.premio}} %</h4></v-col>
+                    <v-col><h4>Conv. Prove: {{ (((audio.nuova + audio.riacquisto) / audio.prova_count) * 100).toFixed(0) }}%</h4></v-col>
                     <v-col><h4>Nr. Pc: {{audio.delta.provvigione}}</h4></v-col>
                     <v-col><h4>Nr. Cl: {{audio.delta.stipendio}}</h4></v-col>
                     <v-col><h4>Media v.: {{audio.fatturati.provvigione}}</h4></v-col>

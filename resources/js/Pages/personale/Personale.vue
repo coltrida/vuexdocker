@@ -130,26 +130,16 @@
             return {
                 user:{},
                 headers1: [
-                    {
-                        text: 'Nome',
-                        align: 'start',
-                        sortable: false,
-                        value: 'name',
-                        class: "indigo white--text"
-                    },
+                    { text: 'Id', align: 'start', sortable: false, value: 'id', class: "indigo white--text" },
+                    { text: 'Nome', align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
                     { text: 'email', value: 'email', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
 
                 ],
 
                 headers2: [
-                    {
-                        text: 'Nome',
-                        align: 'start',
-                        sortable: false,
-                        value: 'name',
-                        class: "indigo white--text"
-                    },
+                    { text: 'Id', align: 'start', sortable: false, value: 'id', class: "indigo white--text" },
+                    { text: 'Nome', align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
                     { text: 'email', value: 'email', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
 

@@ -23,7 +23,7 @@ class ClientsImport implements ToCollection, WithHeadingRow
         {
             //dd($value);
 
-            $inArezzo = (in_array(Str::upper($value['comune']) , ['CAMUCIA', 'CASTIGLION FIORENTINO',
+            $inArezzo = (in_array(trim(Str::upper($value['comune'])) , ['CAMUCIA', 'CASTIGLION FIORENTINO',
                 'POZZO DELLA CHIANA', 'PIEVE AL TOPPO', 'RIGUTINO', 'BADIA AL PINO', 'CIVITELLA IN VAL DI CHIANA',
                 'ALBERORO','CAPOLONA', 'CASTIGLION FIBOCCHI', 'CASTIGLIONE DEL LAGO', 'CORTONA', 'CORCIANO', 'CHITIGNANO', 'CESA',
                 'FOIANO DELLA CHIANA', 'GUBBIO', 'LUCIGNANO', 'MONTE SAN SAVINO', 'MARCIANO DELLA CHIANA', 'MONTEVARCHI',
@@ -32,7 +32,7 @@ class ClientsImport implements ToCollection, WithHeadingRow
             if ($value['cognome'] != null && !$inArezzo){
                 $filiale = 1;
                 $user = 2;
-                if(in_array(Str::upper($value['comune']) , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO',
+                if(in_array(trim(Str::upper($value['comune'])) , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO',
                     'FALCONARA MARITTIMA', 'FALCONARA', 'OSTRA', 'AGUGLIANO', 'ALBACINA', 'APIRO', 'ARCEVIA', 'BARBARA',
                     'BELVEDERE OSTRENSE', 'CAMERATA PICENA', 'CASTEL COLONNA', 'CASTELBELLINO', 'CASTELFERRETTI',
                     'CAMERANO', 'CASTELPLANIO', 'CHIARAVALLE', 'CORINALDO', 'CUPRAMONTANA', 'MAIOLATI SPONTINI',
@@ -41,7 +41,7 @@ class ClientsImport implements ToCollection, WithHeadingRow
                     'TRECASTELLI', 'SIROLO', 'GENGA', 'MONTEMARCIANO', 'COLLINE DI SANTA MARIA NUOVA'])) {
                     $filiale = 4;
                     $user = 8;
-                } elseif (in_array(Str::upper($value['comune']) , ['LORETO',
+                } elseif (in_array(trim(Str::upper($value['comune'])) , ['LORETO',
                     'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI',
                     'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'FARMACIA CARDINALI', 'ACI LORETO', 'ALTIDONA',
                     'ASCOLI PICENO', 'ATHANASIA', 'BOLOGNOLA', 'CASTELFIDARDO', 'CASTELRAIMONDO', 'CESSAPALOMBO', 'CINGOLI',
@@ -51,19 +51,23 @@ class ClientsImport implements ToCollection, WithHeadingRow
                     'SERVIGLIANO', 'FIUMINATA'])) {
                     $filiale = 2;
                     $user = 9;
-                } elseif (in_array(Str::upper($value['comune']) , ['MACERATA', 'CAMERINO', 'APPIGNANO', 'CORRIDONIA',
+                } elseif (in_array(trim(Str::upper($value['comune'])) , ['MACERATA', 'CAMERINO', 'APPIGNANO', 'CORRIDONIA',
                     'LORO PICENO', 'MOGLIANO', 'MONTECASSIANO', 'PASSO DI TREIA', 'POLLENZA', 'SAMBUCHETO', 'TREIA',
                     'URBISAGLIA'])) {
                     $filiale = 5;
                     $user = 6;
+                } elseif (in_array(trim(Str::upper($value['comune'])) , ['FIRENZE', 'BAGNO A RIPOLI', 'GRASSINA', 'FIESOLE', 'SESTO FIORENTINO',
+                    'SCANDICCI', 'SIGNA', 'IMPRUNETA'])) {
+                    $filiale = 8;
+                    $user = 5;
                 }
                 $client = Client::create([
                     'cognome'       => Str::upper($value['cognome']),
                     'nome'          => Str::upper($value['nome']),
-                    'indirizzo'     => Str::upper($value['indirizzo']),
-                    'cap'           => Str::upper($value['cap']),
-                    'citta'         => Str::upper($value['comune']),
-                    'provincia'     => Str::upper($value['provincia']),
+                    'indirizzo'     => $value['indirizzo'] ? Str::upper($value['indirizzo']) : null,
+                    'cap'           => $value['cap'] ? trim(Str::upper($value['cap'])) : null,
+                    'citta'         => $value['comune'] ? trim(Str::upper($value['comune'])) : null,
+                    'provincia'     => $value['provincia'] ? trim(Str::upper($value['provincia'])) : null,
                     'telefono'      => $value['numtel'] ? $value['numtel'] : null,
                     'telefono2'     => $value['numtel2'] ? $value['numtel2'] : null,
                     'tipologia_id'  => 6,

@@ -71,6 +71,14 @@ class FilialeSeeder extends Seeder
                 'cap' => '........',
                 'provincia' => 'LU',
             ],
+            [
+                'nome' => 'FIRENZE',
+                'indirizzo' => '........',
+                'citta' => 'FIRENZE',
+                'telefono' => '........',
+                'cap' => '........',
+                'provincia' => 'FI',
+            ],
         ]);
     }
 }

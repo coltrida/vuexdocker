@@ -2047,11 +2047,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -2260,6 +2255,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.resoProva(id).then(function () {
         _this4.fetchSoglie(_this4.proveClient.filiale_id);
+
+        _this4.nuovaProva = {};
       });
     },
     apriFattura: function apriFattura(item) {
@@ -2590,6 +2587,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.carica = true;
+    this.inserimentoDataDiOggi();
     this.fetchRecapitiByAudio(this.recallsClient.user_id);
     this.fetchRecallsByIdClient(this.recallsClient.id).then(function () {
       _this.carica = false;
@@ -2602,6 +2600,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('recapiti', {
     fetchRecapitiByAudio: 'fetchRecapitiByAudio'
   })), {}, {
+    inserimentoDataDiOggi: function inserimentoDataDiOggi() {
+      var giornoDiOggi = new Date();
+      var giorno = parseInt(giornoDiOggi.getDay()) < 10 ? '0' + parseInt(giornoDiOggi.getDay()) : parseInt(giornoDiOggi.getDay());
+      var mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0' + parseInt(giornoDiOggi.getMonth()) + 1 : parseInt(giornoDiOggi.getMonth()) + 1;
+      var anno = giornoDiOggi.getFullYear();
+      this.telefonata.giorno = anno + '-' + mese + '-' + giorno;
+    },
     inserisci: function inserisci() {
       var _this2 = this;
 
@@ -2611,10 +2616,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (_this2.telefonata.esito == 'Preso Appuntamento') {
           _this2.telefonata = {};
 
+          _this2.inserimentoDataDiOggi();
+
           _this2.$emit('chiudiRecalls', _this2.recallsClient);
         }
 
         _this2.telefonata = {};
+
+        _this2.inserimentoDataDiOggi();
       });
     },
     aggiorna: function aggiorna(recall) {
@@ -2630,6 +2639,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     appuntamento: function appuntamento() {
       this.telefonata = {};
+      this.inserimentoDataDiOggi();
       this.$emit('chiudiRecalls', this.recallsClient);
     },
     cancella: function cancella() {

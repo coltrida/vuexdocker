@@ -253,7 +253,15 @@ var render = function() {
                 _c("v-col", [
                   _c("h4", [
                     _vm._v(
-                      "Vendite su Pc: " + _vm._s(audio.delta.premio) + " %"
+                      "Conv. Prove: " +
+                        _vm._s(
+                          (
+                            ((audio.nuova + audio.riacquisto) /
+                              audio.prova_count) *
+                            100
+                          ).toFixed(0)
+                        ) +
+                        "%"
                     )
                   ])
                 ]),

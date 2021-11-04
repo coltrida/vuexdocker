@@ -82,6 +82,63 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -38525,7 +38582,7 @@ var render = function() {
     [
       _c(
         "h2",
-        { staticClass: "mb-4" },
+        { staticClass: "my-5" },
         [
           _vm._v("Statistiche Audioprotesisti -\n        "),
           _c(
@@ -38534,14 +38591,18 @@ var render = function() {
             [
               _vm._v(
                 "\n        Fatturato tot. " +
-                  _vm._s(_vm.getTotFatt) +
+                  _vm._s(_vm.getTotFatt.toLocaleString("it")) +
                   "\n        "
               )
             ]
           ),
           _vm._v("\n            -\n        "),
           _c("v-chip", { attrs: { color: "green", outlined: "" } }, [
-            _vm._v("\n        Bgt Anno. " + _vm._s(_vm.totBgt) + "\n        ")
+            _vm._v(
+              "\n        Bgt Anno. " +
+                _vm._s(_vm.totBgt.toLocaleString("it")) +
+                "\n        "
+            )
           ]),
           _vm._v("\n        -\n        "),
           _c(
@@ -38550,11 +38611,24 @@ var render = function() {
             [
               _vm._v(
                 "\n            Bgt Prog. " +
-                  _vm._s(_vm.getTotBgtProg) +
+                  _vm._s(_vm.getTotBgtProg.toLocaleString("it")) +
                   "\n        "
               )
             ]
-          )
+          ),
+          _vm._v("\n        -\n        "),
+          _c("v-chip", { attrs: { color: "red accent-4", outlined: "" } }, [
+            _vm._v(
+              "\n            Fatt. vs Bgt Prog: " +
+                _vm._s(
+                  (
+                    ((_vm.getTotFatt - _vm.getTotBgtProg) / _vm.getTotBgtProg) *
+                    100
+                  ).toFixed(0)
+                ) +
+                " %\n        "
+            )
+          ])
         ],
         1
       ),
@@ -38564,7 +38638,7 @@ var render = function() {
           "v-row",
           { key: audio.id, staticClass: "mb-5" },
           [
-            _c("v-col", { attrs: { cols: "8" } }, [
+            _c("v-col", { staticClass: "pt-10", attrs: { cols: "8" } }, [
               _c(
                 "div",
                 [
@@ -38578,13 +38652,106 @@ var render = function() {
                       }
                     },
                     [
-                      _c("h3", [
-                        _vm._v(
-                          _vm._s(audio.name) +
-                            " - Budget Progressivo: " +
-                            _vm._s(audio.valori[0].premio)
-                        )
-                      ])
+                      _c(
+                        "h3",
+                        [
+                          _vm._v(
+                            _vm._s(audio.name) +
+                              "\n                        -\n                        "
+                          ),
+                          _c(
+                            "v-chip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                label: "",
+                                outlined: ""
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Fatt. tot. " +
+                                  _vm._s(
+                                    audio.valori[1].budgetAnno.toLocaleString(
+                                      "it"
+                                    )
+                                  ) +
+                                  "\n                        "
+                              )
+                            ]
+                          ),
+                          _vm._v(
+                            "\n                        -\n                        "
+                          ),
+                          _c(
+                            "v-chip",
+                            {
+                              attrs: { color: "green", label: "", outlined: "" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Bgt Anno " +
+                                  _vm._s(
+                                    audio.valori[0].budgetAnno.toLocaleString(
+                                      "it"
+                                    )
+                                  ) +
+                                  "\n                        "
+                              )
+                            ]
+                          ),
+                          _vm._v(
+                            "\n                        -\n                        "
+                          ),
+                          _c(
+                            "v-chip",
+                            {
+                              attrs: {
+                                color: "deep-purple accent-4",
+                                label: "",
+                                outlined: ""
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Bgt Prog. " +
+                                  _vm._s(
+                                    audio.valori[0].premio.toLocaleString("it")
+                                  ) +
+                                  "\n                        "
+                              )
+                            ]
+                          ),
+                          _vm._v(
+                            "\n                        -\n                        "
+                          ),
+                          _c(
+                            "v-chip",
+                            {
+                              attrs: {
+                                color: "red accent-4",
+                                label: "",
+                                outlined: ""
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Fatt. vs Bgt Prog: " +
+                                  _vm._s(
+                                    (
+                                      ((audio.valori[1].budgetAnno -
+                                        audio.valori[0].premio) /
+                                        audio.valori[0].premio) *
+                                      100
+                                    ).toFixed(0)
+                                  ) +
+                                  " %\n                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
                     ]
                   ),
                   _vm._v(" "),
@@ -38595,7 +38762,166 @@ var render = function() {
                       items: audio.valori,
                       "item-key": audio.valori.nome,
                       "hide-default-footer": ""
-                    }
+                    },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "item",
+                          fn: function(ref) {
+                            var item = ref.item
+                            return [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(item.nome))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2
+                                        ? item.budgetAnno.toLocaleString("it")
+                                        : item.budgetAnno
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.gennaio
+                                        ? item.gennaio.toLocaleString("it")
+                                        : item.gennaio
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.febbraio
+                                        ? item.febbraio.toLocaleString("it")
+                                        : item.febbraio
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.marzo
+                                        ? item.marzo.toLocaleString("it")
+                                        : item.marzo
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.aprile
+                                        ? item.aprile.toLocaleString("it")
+                                        : item.aprile
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.maggio
+                                        ? item.maggio.toLocaleString("it")
+                                        : item.maggio
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.giugno
+                                        ? item.giugno.toLocaleString("it")
+                                        : item.giugno
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.luglio
+                                        ? item.luglio.toLocaleString("it")
+                                        : item.luglio
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.agosto
+                                        ? item.agosto.toLocaleString("it")
+                                        : item.agosto
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.settembre
+                                        ? item.settembre.toLocaleString("it")
+                                        : item.settembre
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.ottobre
+                                        ? item.ottobre.toLocaleString("it")
+                                        : item.ottobre
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.novembre
+                                        ? item.novembre.toLocaleString("it")
+                                        : item.novembre
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      audio.valori.indexOf(item) < 2 &&
+                                        item.dicembre
+                                        ? item.dicembre.toLocaleString("it")
+                                        : item.dicembre
+                                    )
+                                  )
+                                ])
+                              ])
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      true
+                    )
                   })
                 ],
                 1

@@ -117,9 +117,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Filiali",
@@ -128,6 +125,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       modificaSwitch: false,
       filiale: {},
       headers: [{
+        text: 'Id',
+        align: 'start',
+        sortable: false,
+        value: 'id',
+        "class": "indigo white--text"
+      }, {
         text: 'Nome',
         align: 'start',
         sortable: false,
@@ -294,185 +297,168 @@ var render = function() {
       _c("h2", [_vm._v("Filiali")]),
       _vm._v(" "),
       _c(
-        "v-container",
+        "v-row",
         [
           _c(
-            "v-row",
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
             [
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Nome Filiale" },
-                    model: {
-                      value: _vm.filiale.nome,
-                      callback: function($$v) {
-                        _vm.$set(_vm.filiale, "nome", $$v)
-                      },
-                      expression: "filiale.nome"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4", sm: "4" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Indirizzo" },
-                    model: {
-                      value: _vm.filiale.indirizzo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.filiale, "indirizzo", $$v)
-                      },
-                      expression: "filiale.indirizzo"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Citta'" },
-                    model: {
-                      value: _vm.filiale.citta,
-                      callback: function($$v) {
-                        _vm.$set(_vm.filiale, "citta", $$v)
-                      },
-                      expression: "filiale.citta"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "PR" },
-                    model: {
-                      value: _vm.filiale.provincia,
-                      callback: function($$v) {
-                        _vm.$set(_vm.filiale, "provincia", $$v)
-                      },
-                      expression: "filiale.provincia"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "1", sm: "1" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "cap" },
-                    model: {
-                      value: _vm.filiale.cap,
-                      callback: function($$v) {
-                        _vm.$set(_vm.filiale, "cap", $$v)
-                      },
-                      expression: "filiale.cap"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "2", sm: "2" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "telefono" },
-                    model: {
-                      value: _vm.filiale.telefono,
-                      callback: function($$v) {
-                        _vm.$set(_vm.filiale, "telefono", $$v)
-                      },
-                      expression: "filiale.telefono"
-                    }
-                  })
-                ],
-                1
-              )
+              _c("v-text-field", {
+                attrs: { label: "Nome Filiale" },
+                model: {
+                  value: _vm.filiale.nome,
+                  callback: function($$v) {
+                    _vm.$set(_vm.filiale, "nome", $$v)
+                  },
+                  expression: "filiale.nome"
+                }
+              })
             ],
             1
           ),
           _vm._v(" "),
           _c(
-            "v-btn",
-            {
-              attrs: { dark: "", color: "indigo" },
-              on: { click: _vm.aggiungi }
-            },
-            [_vm._v("\n            " + _vm._s(_vm.btnName) + "\n        ")]
+            "v-col",
+            { attrs: { cols: "4", sm: "4" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "Indirizzo" },
+                model: {
+                  value: _vm.filiale.indirizzo,
+                  callback: function($$v) {
+                    _vm.$set(_vm.filiale, "indirizzo", $$v)
+                  },
+                  expression: "filiale.indirizzo"
+                }
+              })
+            ],
+            1
           ),
           _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.getFiliali,
-              "items-per-page": 10
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { color: "red", small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.elimina(item.id)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    mdi-delete\n                "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { color: "blue", small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.modifica(item)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    mdi-pencil\n                "
-                        )
-                      ]
-                    )
-                  ]
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "Citta'" },
+                model: {
+                  value: _vm.filiale.citta,
+                  callback: function($$v) {
+                    _vm.$set(_vm.filiale, "citta", $$v)
+                  },
+                  expression: "filiale.citta"
                 }
-              }
-            ])
-          })
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "1", sm: "1" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "PR" },
+                model: {
+                  value: _vm.filiale.provincia,
+                  callback: function($$v) {
+                    _vm.$set(_vm.filiale, "provincia", $$v)
+                  },
+                  expression: "filiale.provincia"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "1", sm: "1" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "cap" },
+                model: {
+                  value: _vm.filiale.cap,
+                  callback: function($$v) {
+                    _vm.$set(_vm.filiale, "cap", $$v)
+                  },
+                  expression: "filiale.cap"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "telefono" },
+                model: {
+                  value: _vm.filiale.telefono,
+                  callback: function($$v) {
+                    _vm.$set(_vm.filiale, "telefono", $$v)
+                  },
+                  expression: "filiale.telefono"
+                }
+              })
+            ],
+            1
+          )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        { attrs: { dark: "", color: "indigo" }, on: { click: _vm.aggiungi } },
+        [_vm._v("\n            " + _vm._s(_vm.btnName) + "\n        ")]
+      ),
+      _vm._v(" "),
+      _c("v-data-table", {
+        staticClass: "elevation-1 mt-3",
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.getFiliali,
+          "items-per-page": 10
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "item.actions",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c(
+                  "v-icon",
+                  {
+                    attrs: { color: "red", small: "" },
+                    on: {
+                      click: function($event) {
+                        return _vm.elimina(item.id)
+                      }
+                    }
+                  },
+                  [_vm._v("\n                    mdi-delete\n                ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-icon",
+                  {
+                    attrs: { color: "blue", small: "" },
+                    on: {
+                      click: function($event) {
+                        return _vm.modifica(item)
+                      }
+                    }
+                  },
+                  [_vm._v("\n                    mdi-pencil\n                ")]
+                )
+              ]
+            }
+          }
+        ])
+      })
     ],
     1
   )

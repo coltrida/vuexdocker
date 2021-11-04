@@ -1,7 +1,6 @@
 <template>
     <div>
         <h2>Filiali</h2>
-        <v-container>
             <v-row>
                 <v-col
                     cols="2"
@@ -94,8 +93,6 @@
                 </template>
 
             </v-data-table>
-
-        </v-container>
     </div>
 
 </template>
@@ -110,13 +107,8 @@
                 modificaSwitch: false,
                 filiale:{},
                 headers: [
-                    {
-                        text: 'Nome',
-                        align: 'start',
-                        sortable: false,
-                        value: 'nome',
-                        class: "indigo white--text"
-                    },
+                    { text: 'Id', align: 'start', sortable: false, value: 'id', class: "indigo white--text" },
+                    { text: 'Nome', align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
                     { text: 'Indirizzo', value: 'indirizzo', class: "indigo white--text" },
                     { text: 'Citta', value: 'citta', class: "indigo white--text" },
                     { text: 'Provincia', value: 'provincia', class: "indigo white--text" },

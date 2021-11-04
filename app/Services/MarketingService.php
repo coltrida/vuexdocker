@@ -49,7 +49,9 @@ class MarketingService
                 $q->where('user_id', $audio->id);
             })
                 ->withSum('provaFattura', 'tot')
-                ->withCount('clients')
+                ->withCount(['clients' => function($q) use($audio){
+                    $q->where('user_id', $audio->id);
+                }])
                 ->get();
 
             $audio->valori = $market;

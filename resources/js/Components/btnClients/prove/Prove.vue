@@ -302,12 +302,7 @@
                         </v-col>
                     </v-row>
                 </div>
-
-
-
-
     </v-row>
-
 
 </template>
 
@@ -479,6 +474,7 @@
             reso(id){
                 this.resoProva(id).then(() =>{
                     this.fetchSoglie(this.proveClient.filiale_id);
+                    this.nuovaProva = {};
                 });
             },
 
