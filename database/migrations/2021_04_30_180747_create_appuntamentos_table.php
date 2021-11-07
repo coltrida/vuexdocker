@@ -24,6 +24,8 @@ class CreateAppuntamentosTable extends Migration
             $table->bigInteger('filiale_id')->nullable();
             $table->bigInteger('recapito_id')->nullable();
             $table->timestamps();
+            $table->integer('mese')->nullable();
+            $table->integer('anno')->nullable();
         });
     }
 

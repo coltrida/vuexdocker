@@ -11,6 +11,7 @@ use App\Models\Telefonata;
 use App\Models\Tipologia;
 use App\Models\User;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Support\Str;
 use function trim;
 
@@ -62,7 +63,9 @@ class TelefonateService
     {
         $oggi = Carbon::now()->format('Y-m-d');
         return Client::with(['tipologia:id,nome',
-            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'recalls', 'prova' => function($q){
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'recalls' => function($a){
+                $a->with('user');
+            }, 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
             ->whereHas('recalls', function ($q) use($oggi){
@@ -240,6 +243,26 @@ class TelefonateService
             ->whereHas('recalls', function ($q) use($oggi, $idUser){
                 $q->where([['datarecall', $oggi], ['effettuata', 0]]);
             })->orderBy('user_id')->get();
+    }
+
+    public function telefonateAnnoMese($anno, $mese)
+    {
+        return DB::table('telefonatas as t')
+            ->where([
+                ['t.anno', $anno],
+                ['t.mese', $mese],
+                ['t.effettuata', 1]
+            ])
+            ->join('clients', 'clients.id', '=', 't.client_id')
+            ->join('users as u', 'u.id', '=', 't.user_id')
+            ->join('users as e', 'e.id', '=', 't.eseguita_id')
+            ->select('t.id as idTelefonata', 't.esito', 't.datarecall', 't.user_id',
+                'clients.nome as nomeCliente', 'clients.cognome as cognomeCliente', 'clients.citta as cittaCliente', 'clients.filiale_id as filiale_id',
+                'u.name as nominativoUser',
+                'e.name as nominativoEseguito')
+            ->orderBy('t.datarecall', 'DESC')
+            ->get()
+            ->groupBy('nominativoUser');
     }
 
 }

@@ -258,7 +258,7 @@
 
             inserimentoDataDiOggi(){
                 let giornoDiOggi = new Date();
-                let giorno = parseInt(giornoDiOggi.getDay()) < 10 ? '0'+parseInt(giornoDiOggi.getDay()) : parseInt(giornoDiOggi.getDay()) ;
+                let giorno = parseInt(giornoDiOggi.getDate()) < 10 ? '0'+parseInt(giornoDiOggi.getDate()) : parseInt(giornoDiOggi.getDate()) ;
                 let mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0'+parseInt(giornoDiOggi.getMonth()) + 1 : parseInt(giornoDiOggi.getMonth()) + 1;
                 let anno = giornoDiOggi.getFullYear();
                 this.telefonata.giorno = anno+'-'+mese+'-'+giorno;

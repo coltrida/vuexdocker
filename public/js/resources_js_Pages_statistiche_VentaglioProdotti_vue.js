@@ -40,12 +40,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
   data: function data() {
     return {
       headers: [{
+        text: 'Audioprotesista',
+        align: 'start',
+        sortable: false,
+        value: 'user.name',
+        "class": "indigo white--text"
+      }, {
+        text: 'Totale',
+        sortable: false,
+        value: 'tot',
+        "class": "indigo white--text"
+      }],
+      headers2: [{
         text: 'Audioprotesista',
         align: 'start',
         sortable: false,
@@ -84,7 +120,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
 
         _this2.headers.push(colonna);
+
+        _this2.headers2.push(colonna);
       });
+    },
+    sumField: function sumField(key) {
+      return parseInt(this.getVentaglioAnno.reduce(function (a, b) {
+        return a + parseInt(b[key] || 0);
+      }, 0));
     }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
@@ -187,11 +230,10 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", [_vm._v("Ventaglio Prodotti")]),
+      _c("h2", { staticClass: "mt-4" }, [_vm._v("Ventaglio Prodotti")]),
       _vm._v(" "),
       _c(
         "v-row",
-        { staticClass: "my-3" },
         [
           _c(
             "v-col",
@@ -204,8 +246,88 @@ var render = function() {
                   items: _vm.getVentaglioAnno,
                   "item-key": _vm.getVentaglioAnno.id,
                   "hide-default-footer": ""
-                }
+                },
+                scopedSlots: _vm._u(
+                  [
+                    _vm._l(_vm.getNomiApa, function(apa) {
+                      return {
+                        key: "item." + apa,
+                        fn: function(ref) {
+                          var item = ref.item
+                          return [
+                            _c("div", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    item.tot > 0
+                                      ? ((item[apa] / item.tot) * 100).toFixed(
+                                          0
+                                        ) + "%"
+                                      : 0
+                                  ) +
+                                  "\n                            "
+                              )
+                            ])
+                          ]
+                        }
+                      }
+                    })
+                  ],
+                  null,
+                  true
+                )
               })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("h2", { staticClass: "mt-10" }, [_vm._v("Pezzi Venduti")]),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c(
+                "v-data-table",
+                {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers,
+                    items: _vm.getVentaglioAnno,
+                    "item-key": _vm.getVentaglioAnno.id,
+                    "hide-default-footer": ""
+                  }
+                },
+                [
+                  _c("template", { slot: "body.append" }, [
+                    _c(
+                      "tr",
+                      { staticClass: "pink--text" },
+                      [
+                        _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "title" }, [
+                          _vm._v(_vm._s(_vm.sumField("tot")))
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.getNomiApa, function(apa) {
+                          return _c("th", { staticClass: "title" }, [
+                            _vm._v(_vm._s(_vm.sumField(apa)))
+                          ])
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ],
+                2
+              )
             ],
             1
           )

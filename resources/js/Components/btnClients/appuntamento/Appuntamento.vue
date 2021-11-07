@@ -284,7 +284,7 @@
                 this.carica = false;
             });
 
-            if (this.getRuolo == 'call'){
+            if (this.getRuolo == 'call' || this.getRuolo == 'amministrazione' || this.getRuolo == 'admin'){
                 this.fetchFiliali();
                 this.fetchRecapitiByAudio(this.appuntamentoClient.user_id);
             } else {

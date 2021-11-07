@@ -203,6 +203,7 @@ Route::group([], function () {
         Route::post('/modificaAppuntamento', [AppuntamentiController::class, 'modifica']);
         Route::get('/dateSettimana', [AppuntamentiController::class, 'dateSettimana']);
         Route::get('/dateSettimanaProssima', [AppuntamentiController::class, 'dateSettimanaProssima']);
+        Route::get('/appuntamentiAnnoMese/{anno}/{mese}', [AppuntamentiController::class, 'appuntamentiAnnoMese']);
 
         // ----------------- documenti -----------------------
         Route::post('/salvaDocumento', [DocumentoController::class, 'salvaDocumento']);
@@ -221,6 +222,7 @@ Route::group([], function () {
         Route::post('/statisticheInviiMedici', [DottoreController::class, 'statisticheInviiMedici']);
         Route::post('/statisticheTotaleInviiMedici', [DottoreController::class, 'statisticheTotaleInviiMedici']);
         Route::get('/statisticheCallcenter', [TelefonateController::class, 'statistiche']);
+        Route::get('/statisticheVenditaApa', [UserController::class, 'statisticheVenditaApa']);
 
         // ----------------- rate -----------------------
         Route::get('/clientiDaSaldare', [RateController::class, 'allClientiDaSaldare']);
@@ -254,6 +256,7 @@ Route::group([], function () {
         Route::get('/recallsByIdClient/{idClient}', [TelefonateController::class, 'recallsByIdClient']);
         Route::get('/daRichiamare/{idUser}', [TelefonateController::class, 'daRichiamare']);
         Route::get('/recallAutomatico/{idUser}', [TelefonateController::class, 'recallAutomatico']);
+        Route::get('/telefonateAnnoMese/{anno}/{mese}', [TelefonateController::class, 'telefonateAnnoMese']);
 
     // ----------------- informazioni -----------------------
     Route::get('/informazioni/{id}', [InformazioniController::class, 'lista']);

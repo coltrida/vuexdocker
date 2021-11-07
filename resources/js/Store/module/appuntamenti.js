@@ -10,12 +10,17 @@ const state = () => ({
     appMer: [],
     appGio: [],
     appVen: [],
-    settimanaVisualizzata: ''
+    settimanaVisualizzata: '',
+    appuntamentiAnnoMese: []
 });
 
 const getters = {
     getAppuntamenti(state){
         return state.appuntamenti;
+    },
+
+    getAppuntamentiAnnoMese(state){
+        return state.appuntamentiAnnoMese;
     },
 
     getAppuntamentiOggi(state){
@@ -64,6 +69,15 @@ const actions = {
             }
         });
          commit('fetchAppuntamenti', response.data.data);
+    },
+
+    async fetchAppuntamentiAnnoMese({commit}, payload){
+        const response = await axios.get(`${help().linkappuntamentiannomese}`+'/'+payload.anno+'/'+payload.mesenumero, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchAppuntamentiAnnoMese', response.data);
     },
 
     async fetchAppuntamentiOggi({commit}, idAudio){
@@ -268,6 +282,10 @@ const actions = {
 const mutations = {
     fetchAppuntamenti(state, payload){
         state.appuntamenti = payload;
+    },
+
+    fetchAppuntamentiAnnoMese(state, payload){
+        state.appuntamentiAnnoMese = payload;
     },
 
     fetchAppuntamentiLunedi(state, payload){

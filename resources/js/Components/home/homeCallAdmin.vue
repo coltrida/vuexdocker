@@ -15,6 +15,12 @@
                         :recallsClient="recallsClient"
                         @chiudiRecalls="chiudiRecalls"
                     ></recalls>
+
+                    <informazioni
+                        v-if="showInformazioni"
+                        :informazioniClient="informazioniClient"
+                        @chiudiInformazioni="chiudiInformazioni"
+                    ></informazioni>
                 </v-row>
             </v-col>
         </v-row>
@@ -29,13 +35,13 @@
             <v-row cols="12" v-if="showClients">
                 <v-col>
                     <v-chip>
-                        Telefonate effettuate OGGI: {{getNumeroTelefonateFatteOggi}}
+                        Telefonate effettuate oggi: {{getNumeroTelefonateFatteOggi}}
                     </v-chip>
 
                 </v-col>
                 <v-col>
                     <v-chip>
-                        Appuntamenti presi OGGI: {{getNumeroAppuntamentiPresiOggi}}
+                        Appuntamenti presi oggi: {{getNumeroAppuntamentiPresiOggi}}
                     </v-chip>
                 </v-col>
             </v-row>
@@ -81,14 +87,29 @@
                             </template>
                             <span>Recalls</span>
                         </v-tooltip>
+
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon
+                                    color="black"
+                                    small
+                                    @click="informazioni(item)"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-information-outline
+                                </v-icon>
+                            </template>
+                            <span>Informazioni</span>
+                        </v-tooltip>
                     </template>
                 </v-data-table>
             </v-col>
 
             <v-col cols="6">
-                <h2>Telefonate Effettuate OGGI</h2>
+                <h2>Telefonate Effettuate oggi</h2>
                 <v-data-table
-                    :headers="headers1"
+                    :headers="headers2"
                     height="240"
                     :items-per-page=5
                     dense
@@ -125,6 +146,21 @@
                             </template>
                             <span>Recalls</span>
                         </v-tooltip>
+
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon
+                                    color="black"
+                                    small
+                                    @click="informazioni(item)"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-information-outline
+                                </v-icon>
+                            </template>
+                            <span>Informazioni</span>
+                        </v-tooltip>
                     </template>
                 </v-data-table>
             </v-col>
@@ -137,21 +173,35 @@
     import {mapActions, mapGetters} from "vuex";
     import Appuntamento from "../btnClients/appuntamento/Appuntamento";
     import Recalls from "../btnClients/recalls/Recalls";
+    import Informazioni from "../../Components/btnClients/informazioni/Informazioni";
 
     export default {
         name: "homeCallAdmin",
-        components: {Appuntamento, Recalls},
+        components: {Appuntamento, Recalls, Informazioni},
         data(){
             return {
                 carica: false,
                 showClients: true,
                 showRecalls: false,
                 showAppuntamento: false,
+                showInformazioni: false,
                 appuntamentoClient: {},
                 recallsClient: {},
+                informazioniClient: {},
 
                 headers1: [
-                    {text: 'Actions', width: 70, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width: 120, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Audio', width:180, value: 'user.name', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:240, value: 'fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Telefono', width:120, value: 'telefono', sortable: false, class: "indigo white--text" },
+                    {text: 'Indirizzo', width:220,  value: 'indirizzo', sortable: false, class: "indigo white--text"},
+                    {text: 'Città', width:180,  value: 'citta', sortable: false, class: "indigo white--text"},
+                    {text: 'PR', width:80, value: 'provincia', sortable: false, class: "indigo white--text" },
+                ],
+
+                headers2: [
+                    {text: 'Actions', width: 120, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Eseguita', width:180, value: 'recalls[0].user.name', sortable: false, class: "indigo white--text"},
                     {text: 'Audio', width:180, value: 'user.name', sortable: false, class: "indigo white--text"},
                     {text: 'Nome', width:240, value: 'fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Telefono', width:120, value: 'telefono', sortable: false, class: "indigo white--text" },
@@ -184,7 +234,6 @@
             }),
 
             appuntamento(client){
-                this.showRecalls = false;
                 this.showClients = false;
                 this.showAppuntamento = true;
                 this.appuntamentoClient = client;
@@ -192,23 +241,32 @@
 
             recalls(client){
                 this.showRecalls = true;
-                this.showAppuntamento = false;
                 this.showClients = false;
                 this.recallsClient = client;
             },
 
+            informazioni(client){
+                this.showInformazioni = true;
+                this.showClients = false;
+                this.informazioniClient = client;
+            },
+
             chiudiRecalls(){
                 this.showRecalls = false;
-                this.showAppuntamento = false;
                 this.showClients = true;
                 this.recallsClient = {};
             },
 
             chiudiAppuntamento(){
-                this.showRecalls = false;
                 this.showAppuntamento = false;
                 this.showClients = true;
                 this.appuntamentoClient = {};
+            },
+
+            chiudiInformazioni(){
+                this.showInformazioni = false;
+                this.showClients = true;
+                this.informazioniClient = {};
             },
         },
 

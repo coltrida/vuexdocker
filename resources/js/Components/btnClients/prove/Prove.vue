@@ -29,7 +29,6 @@
                 <a v-if="idFattura" target="_blank"
                     :href="fatturaPdf"
                 ></a>
-
                 <fattura
                          :itemFattura="itemFattura"
                          :dialogFattura="dialogFattura" v-if="dialogFattura"
@@ -37,7 +36,7 @@
                 />
                 <!---------- End Fattura --------->
 
-        <v-row v-if="switchInserisci">
+        <v-row v-if="switchInserisci" class="mb-5">
                 <!---------- Creo nuova prova con pulsante NUOVA PROVA --------->
                 <div class="text-center" v-if="carica2">
                     <v-progress-circular
@@ -47,12 +46,19 @@
                 </div>
                 <div v-else>
                     <v-col >
+                        <v-select
+                            v-model="prova.marketing_id"
+                            item-value="id"
+                            item-text="name"
+                            :items="getCanali"
+                            required
+                            label="Canale Mkg*"
+                        ></v-select>
                         <v-btn color="primary" dark @click="nuovaProvaInCorso" class="mt-2">
                             Nuova Prova
                         </v-btn>
                     </v-col>
                 </div>
-
         </v-row>
                 <!---------- End Creo nuova prova con pulsante NUOVA PROVA --------->
 
@@ -362,7 +368,10 @@
             this.carica2 = true;
             this.deleteProveSenzaProdotti(this.proveClient.id).then(() => {
                 this.fetchProvePassate(this.proveClient.id).then(() => {
-                    this.carica2 = false;
+                    this.fetchCanali().then(() => {
+                        this.prova.marketing_id = this.proveClient.marketing_id;
+                        this.carica2 = false;
+                    });
                 });
             });
             this.fetchFornitori();
@@ -382,6 +391,10 @@
                 fetchServizi: 'fetchServizi',
             }),
 
+            ...mapActions('marketing', {
+                fetchCanali:'fetchCanali',
+            }),
+
             ...mapActions('prove', {
                 AddEleInNuovaProva:'AddEleInNuovaProva',
                 creaNuovaProva:'creaNuovaProva',
@@ -396,7 +409,6 @@
                 this.switchInserisci = false;
                 this.prova.user_id = this.proveClient.user_id;
                 this.prova.client_id = this.proveClient.id;
-                this.prova.marketing_id = this.proveClient.marketing_id;
                 this.prova.filiale_id = this.proveClient.filiale_id;
                 this.creaNuovaProva(this.prova).then(() => {
                     this.prova.id = this.getNuovaProvaCreata.id;
@@ -536,6 +548,10 @@
                 getInFiliale: 'getInFiliale',
             }),
 
+            ...mapGetters('marketing', {
+                getCanali:'getCanali',
+            }),
+
             ...mapGetters('prove', {
                 getElementiNuovaProva: 'getElementiNuovaProva',
                 getNuovaProvaCreata: 'getNuovaProvaCreata',
@@ -548,7 +564,8 @@
 
             abilitaInProva(){
                 return this.nuovaProva.prezzolistino ? true : false;
-            }
+            },
+
         },
     }
 </script>

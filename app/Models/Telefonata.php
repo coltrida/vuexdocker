@@ -43,4 +43,14 @@ class Telefonata extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'eseguita_id', 'id');
+    }
+
+    public function audio()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

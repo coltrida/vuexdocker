@@ -12,6 +12,7 @@ use App\Models\Recapito;
 use App\Models\User;
 use Carbon\Carbon;
 use Mail;
+use DB;
 
 class AppuntamentiService
 {
@@ -108,6 +109,8 @@ class AppuntamentiService
 
     public function addAppuntamento($request)
     {
+        $giornoDiOggi = Carbon::now();
+
         $newAppuntamento = new Appuntamento();
         $newAppuntamento->giorno = $request->giorno;
         $newAppuntamento->orario = $request->orario;
@@ -117,6 +120,8 @@ class AppuntamentiService
         $newAppuntamento->user_id = $request->user_id;
         $newAppuntamento->filiale_id = $request->filiale_id;
         $newAppuntamento->recapito_id = $request->recapito_id;
+        $newAppuntamento->mese = $giornoDiOggi->month;
+        $newAppuntamento->anno = $giornoDiOggi->year;
         $newAppuntamento->save();
 
         $dove = $request->filiale_id ? 'Filiale di '.Filiale::find($request->filiale_id)->nome : 'Recapito '.Recapito::find($request->recapito_id)->nome;
@@ -127,7 +132,7 @@ class AppuntamentiService
 
         Informazione::create([
             'client_id' => $request->client_id,
-            'giorno' => Carbon::now()->format('Y-m-d'),
+            'giorno' => $giornoDiOggi->format('Y-m-d'),
             'tipo' => 'APPUNTAMENTO',
             'note' => $testo
         ]);
@@ -139,9 +144,7 @@ class AppuntamentiService
             Mail::to($cliente->mail)->send(new \App\Mail\Appuntamento($cliente, $newAppuntamento));
         }
 
-
         return Appuntamento::with('filiale', 'recapito', 'client')->find($newAppuntamento->id);
-
     }
 
     public function modificaAppuntamento($request)
@@ -210,7 +213,6 @@ class AppuntamentiService
         $giorni[2] = Carbon::now()->startOfWeek()->addDays(2)->format('d-m-Y');
         $giorni[3] = Carbon::now()->startOfWeek()->addDays(3)->format('d-m-Y');
         $giorni[4] = Carbon::now()->startOfWeek()->addDays(4)->format('d-m-Y');
-
         return $giorni;
     }
 
@@ -222,7 +224,23 @@ class AppuntamentiService
         $giorni[2] = Carbon::now()->startOfWeek()->addDays(9)->format('d-m-Y');
         $giorni[3] = Carbon::now()->startOfWeek()->addDays(10)->format('d-m-Y');
         $giorni[4] = Carbon::now()->startOfWeek()->addDays(11)->format('d-m-Y');
-
         return $giorni;
+    }
+
+    public function appuntamentiAnnoMese($anno, $mese)
+    {
+        return DB::table('appuntamentos as a')
+            ->where([
+                ['a.anno', $anno],
+                ['a.mese', $mese],
+            ])
+            ->join('clients', 'clients.id', '=', 'a.client_id')
+            ->join('users as u', 'u.id', '=', 'a.user_id')
+            ->select('a.id as idAppuntamento', 'a.giorno', 'a.orario', 'a.tipo',
+                'clients.nome as nomeCliente', 'clients.cognome as cognomeCliente', 'clients.citta as cittaCliente', 'clients.filiale_id as filiale_id',
+                'u.name as nominativoUser')
+            ->orderBy('a.giorno')
+            ->get()
+            ->groupBy('nominativoUser');
     }
 }

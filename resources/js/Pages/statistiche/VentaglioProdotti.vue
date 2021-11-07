@@ -1,8 +1,7 @@
 <template>
     <div>
-        <h2>Ventaglio Prodotti</h2>
-
-        <v-row class="my-3">
+        <h2 class="mt-4">Ventaglio Prodotti</h2>
+        <v-row>
             <v-col cols="12">
                     <v-data-table
                         :headers="headers"
@@ -11,11 +10,36 @@
                         hide-default-footer
                         class="elevation-1 mt-3"
                     >
+                            <template v-for="apa in getNomiApa" v-slot:[`item.${apa}`]="{ item }">
+                                <div>
+                                    {{ item.tot > 0 ? ((item[apa] / item.tot) * 100).toFixed(0)+'%' : 0 }}
+                                </div>
+                            </template>
 
                     </v-data-table>
             </v-col>
         </v-row>
 
+        <h2 class="mt-10">Pezzi Venduti</h2>
+        <v-row>
+            <v-col cols="12">
+                <v-data-table
+                    :headers="headers"
+                    :items="getVentaglioAnno"
+                    :item-key="getVentaglioAnno.id"
+                    hide-default-footer
+                    class="elevation-1 mt-3"
+                >
+                    <template slot="body.append">
+                        <tr class="pink--text">
+                            <th class="title">Totali</th>
+                            <th class="title">{{ sumField('tot') }}</th>
+                            <th v-for="apa in getNomiApa" class="title">{{ sumField(apa) }}</th>
+                        </tr>
+                    </template>
+                </v-data-table>
+            </v-col>
+        </v-row>
 
     </div>
 </template>
@@ -31,6 +55,10 @@
                     { text: 'Totale', sortable: false, value: 'tot', class: "indigo white--text" },
                 ],
 
+                headers2: [
+                    { text: 'Audioprotesista', align: 'start', sortable: false, value: 'user.name', class: "indigo white--text" },
+                    { text: 'Totale', sortable: false, value: 'tot', class: "indigo white--text" },
+                ],
             }
         },
 
@@ -59,7 +87,12 @@
                         class: "indigo white--text"
                     };
                     this.headers.push(colonna);
+                    this.headers2.push(colonna);
                 })
+            },
+
+            sumField(key) {
+                return parseInt(this.getVentaglioAnno.reduce((a, b) => a + parseInt(b[key] || 0), 0))
             }
 
         },

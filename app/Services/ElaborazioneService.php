@@ -80,7 +80,7 @@ class ElaborazioneService
                         ])
                         ->count();
                     $ventaglio->$nomeApa = $calcoloProdotto ?
-                        number_format(  (float) ($calcoloProdotto / $ventaglio->tot) * 100 , 0 ).'%' : 0;
+                        $calcoloProdotto : 0;
                 }
 
                 $ventaglio->save();
@@ -351,29 +351,46 @@ class ElaborazioneService
         }
 
         // -------------- conteggio giorni in prova delle prove in corso ---------- //
-        $prove = Prova::with('stato')->whereHas('stato', function ($q){
-            $q->where('nome', 'PROVA');
-        })->get();
-        foreach ($prove as $prova){
-            $prova->giorni_prova = $oggi->DiffInDays($prova->created_at);
-            $prova->save();
-        }
+        $this->conteggioGiorniDiProva($oggi);
 
         // -------------- conteggio giorni di reso dei prodotti in magazzino o in prova e inserimento allarme ---------- //
-        $oggi = Carbon::now();
-        $prodotti = Product::with('listino')->whereHas('stato', function ($q){
-            $q->where('nome', 'DDT')
-                ->orWhere('nome', 'RESO')
-                ->orWhere('nome', 'PROVA')
-                ->orWhere('nome', 'FILIALE');
-        })->get();
-        foreach ($prodotti as $prodotto){
-            if($oggi->diffInDays($prodotto->datacarico) > (int)$prodotto->listino->giorniTempoDiReso - 10){
-                $prodotto->pericoloRestituzione = true;
-            };
-        }
+        $this->conteggioGiorniDiResoProdottiInMagazzino($oggi);
 
         // -------------- statistiche telefonate ---------- //
+        $this->eseguiStatisticheTelefonate($anno);
+
+        // -------------- Backup ---------- //
+        $this->eseguiBackup();
+
+        // -------------- Eliminazione dei servizi rimasti nei prodotti senza essere in una prova ---------- //
+        $this->eliminaProveSenzaProdotti();
+
+        // -------------- Invio e-mail per remind appuntamento ---------- //
+//        $appuntamentiDomani = Appuntamento::with('client')->where('giorno', $oggi->addDay())->get();
+//        $primoCliente = Client::first();
+//        $primoAppuntamento = Appuntamento::first();
+//        \Mail::to('coltrida@gmail.com')->later(now()->addHours(8), new \App\Mail\Appuntamento($primoCliente, $primoAppuntamento));
+    }
+
+    private function eliminaProveSenzaProdotti(){
+        Product::where([
+            ['matricola', null],
+            ['stato_id', 5],
+        ])->delete();
+    }
+
+    private function eseguiBackup(){
+        $mysqlDatabaseName = env('DB_DATABASE');
+        $mysqlUserName     = env('DB_USERNAME');
+        $mysqlPassword     = env('DB_PASSWORD');
+        $mysqlHostName     = env('DB_HOST');
+        $mysqlExportPath   = 'backup.sql';
+
+        $command='mysqldump --opt -h' .$mysqlHostName .' -u' .$mysqlUserName .' -p' .$mysqlPassword .' ' .$mysqlDatabaseName .' > storage/' .$mysqlExportPath;
+        exec($command,$output,$worked);
+    }
+
+    private function eseguiStatisticheTelefonate($anno){
         setlocale(LC_TIME, 'it_IT');
         Carbon::setLocale('it');
         for ($meseRecall = 1; $meseRecall <= 12; $meseRecall++){
@@ -402,27 +419,29 @@ class ElaborazioneService
                 );
             }
         }
+    }
 
-        // -------------- Backup ---------- //
-        $mysqlDatabaseName = env('DB_DATABASE');
-        $mysqlUserName     = env('DB_USERNAME');
-        $mysqlPassword     = env('DB_PASSWORD');
-        $mysqlHostName     = env('DB_HOST');
-        $mysqlExportPath   = 'backup.sql';
+    private function conteggioGiorniDiResoProdottiInMagazzino($oggi){
+        $prodotti = Product::with('listino')->whereHas('stato', function ($q){
+            $q->where('nome', 'DDT')
+                ->orWhere('nome', 'RESO')
+                ->orWhere('nome', 'PROVA')
+                ->orWhere('nome', 'FILIALE');
+        })->get();
+        foreach ($prodotti as $prodotto){
+            if($oggi->diffInDays($prodotto->datacarico) > (int)$prodotto->listino->giorniTempoDiReso - 10){
+                $prodotto->pericoloRestituzione = true;
+            };
+        }
+    }
 
-        $command='mysqldump --opt -h' .$mysqlHostName .' -u' .$mysqlUserName .' -p' .$mysqlPassword .' ' .$mysqlDatabaseName .' > storage/' .$mysqlExportPath;
-        exec($command,$output,$worked);
-
-        // -------------- Eliminazione dei servizi rimasti nei prodotti senza essere in una prova ---------- //
-        Product::where([
-            ['matricola', null],
-            ['stato_id', 5],
-        ])->delete();
-
-        // -------------- Invio e-mail per remind appuntamento ---------- //
-//        $appuntamentiDomani = Appuntamento::with('client')->where('giorno', $oggi->addDay())->get();
-//        $primoCliente = Client::first();
-//        $primoAppuntamento = Appuntamento::first();
-//        \Mail::to('coltrida@gmail.com')->later(now()->addHours(8), new \App\Mail\Appuntamento($primoCliente, $primoAppuntamento));
+    private function conteggioGiorniDiProva($oggi){
+        $prove = Prova::with('stato')->whereHas('stato', function ($q){
+            $q->where('nome', 'PROVA');
+        })->get();
+        foreach ($prove as $prova){
+            $prova->giorni_prova = $oggi->DiffInDays($prova->created_at);
+            $prova->save();
+        }
     }
 }

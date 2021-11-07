@@ -312,4 +312,5 @@ class UserService
         $anno = Carbon::now()->year;
         return Ventaglio::with('user')->where('anno', $anno)->get();
     }
+
 }

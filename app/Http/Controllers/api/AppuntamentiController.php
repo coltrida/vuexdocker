@@ -98,4 +98,9 @@ class AppuntamentiController extends Controller
     {
         return $appuntamentiService->dateSettimanaProssima();
     }
+
+    public function appuntamentiAnnoMese($anno, $mese, AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->appuntamentiAnnoMese($anno, $mese);
+    }
 }

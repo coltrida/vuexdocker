@@ -392,7 +392,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this.carica = false;
     });
 
-    if (this.getRuolo == 'call') {
+    if (this.getRuolo == 'call' || this.getRuolo == 'amministrazione' || this.getRuolo == 'admin') {
       this.fetchFiliali();
       this.fetchRecapitiByAudio(this.appuntamentoClient.user_id);
     } else {
@@ -1857,6 +1857,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1960,12 +1966,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.carica2 = true;
     this.deleteProveSenzaProdotti(this.proveClient.id).then(function () {
       _this.fetchProvePassate(_this.proveClient.id).then(function () {
-        _this.carica2 = false;
+        _this.fetchCanali().then(function () {
+          _this.prova.marketing_id = _this.proveClient.marketing_id;
+          _this.carica2 = false;
+        });
       });
     });
     this.fetchFornitori();
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('fornitori', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('product', {
     fetchInFilialeFornitore: 'fetchInFilialeFornitore',
@@ -1973,6 +1982,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     switchRimuoviDallaProva: 'switchRimuoviDallaProva',
     fetchSoglie: 'fetchSoglie',
     fetchServizi: 'fetchServizi'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('marketing', {
+    fetchCanali: 'fetchCanali'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('prove', {
     AddEleInNuovaProva: 'AddEleInNuovaProva',
     creaNuovaProva: 'creaNuovaProva',
@@ -1988,7 +1999,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.switchInserisci = false;
       this.prova.user_id = this.proveClient.user_id;
       this.prova.client_id = this.proveClient.id;
-      this.prova.marketing_id = this.proveClient.marketing_id;
       this.prova.filiale_id = this.proveClient.filiale_id;
       this.creaNuovaProva(this.prova).then(function () {
         _this2.prova.id = _this2.getNuovaProvaCreata.id;
@@ -2107,10 +2117,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('fornitori', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('fornitori', {
     getFornitori: 'getFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('product', {
     getInFiliale: 'getInFiliale'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('marketing', {
+    getCanali: 'getCanali'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('prove', {
     getElementiNuovaProva: 'getElementiNuovaProva',
     getNuovaProvaCreata: 'getNuovaProvaCreata',
@@ -2412,7 +2424,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     inserimentoDataDiOggi: function inserimentoDataDiOggi() {
       var giornoDiOggi = new Date();
-      var giorno = parseInt(giornoDiOggi.getDay()) < 10 ? '0' + parseInt(giornoDiOggi.getDay()) : parseInt(giornoDiOggi.getDay());
+      var giorno = parseInt(giornoDiOggi.getDate()) < 10 ? '0' + parseInt(giornoDiOggi.getDate()) : parseInt(giornoDiOggi.getDate());
       var mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0' + parseInt(giornoDiOggi.getMonth()) + 1 : parseInt(giornoDiOggi.getMonth()) + 1;
       var anno = giornoDiOggi.getFullYear();
       this.telefonata.giorno = anno + '-' + mese + '-' + giorno;
@@ -44487,7 +44499,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.switchInserisci
-        ? _c("v-row", [
+        ? _c("v-row", { staticClass: "mb-5" }, [
             _vm.carica2
               ? _c(
                   "div",
@@ -44505,6 +44517,23 @@ var render = function() {
                     _c(
                       "v-col",
                       [
+                        _c("v-select", {
+                          attrs: {
+                            "item-value": "id",
+                            "item-text": "name",
+                            items: _vm.getCanali,
+                            required: "",
+                            label: "Canale Mkg*"
+                          },
+                          model: {
+                            value: _vm.prova.marketing_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.prova, "marketing_id", $$v)
+                            },
+                            expression: "prova.marketing_id"
+                          }
+                        }),
+                        _vm._v(" "),
                         _c(
                           "v-btn",
                           {

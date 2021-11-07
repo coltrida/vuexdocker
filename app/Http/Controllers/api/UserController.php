@@ -109,4 +109,5 @@ class UserController extends Controller
         $user = User::find($request->user()->id);
         return $user->delta_id == 1 ? 'SIMULAZIONE' : 'REALE';
     }
+
 }

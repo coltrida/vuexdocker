@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TelefonateAnnoMeseResource;
 use App\Http\Resources\TelefonateResource;
 use App\Services\TelefonateService;
 use Illuminate\Http\Request;
@@ -78,5 +79,11 @@ class TelefonateController extends Controller
     public function recallAutomatico($idUser, TelefonateService $telefonateService)
     {
         return $telefonateService->recallAutomatico($idUser);
+    }
+
+    public function telefonateAnnoMese($anno, $mese, TelefonateService $telefonateService)
+    {
+        //return TelefonateAnnoMeseResource::collection($telefonateService->telefonateAnnoMese($anno, $mese));
+        return $telefonateService->telefonateAnnoMese($anno, $mese);
     }
 }

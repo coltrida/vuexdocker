@@ -162,6 +162,8 @@ const help = () => {
         linkresetspecial: base+'resetSpecial',
         linkstruttureaudio: base+'struttureAudio',
         linkrecallautomatico: base+'recallAutomatico',
+        linktelefonateannomese: base+'telefonateAnnoMese',
+        linkappuntamentiannomese: base+'appuntamentiAnnoMese',
     };
 };
 export default help;
