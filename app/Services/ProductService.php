@@ -9,6 +9,7 @@ use App\Models\Ddt;
 use App\Models\Filiale;
 use App\Models\Listino;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use function array_push;
 use function create_function;
@@ -112,6 +113,15 @@ class ProductService
             $prodotto->save();*/
             array_push($prodotti, $prodotto);
         }
+
+        $propieta = 'product';
+        $filiale = Filiale::find($request->filiale_id);
+        $prodotto = Listino::find($request->listino_id);
+        $utente = User::find($request->user_id);
+        $testo = $utente->name.' ha richiesto '.$request->quantita. ' '. $prodotto->nome .' per la filiale '.$filiale->nome;
+        $log = new LoggingService();
+        $log->scriviLog($filiale->nome, $utente, $utente->name, $propieta, $testo);
+
         broadcast(new LogisticaEvent($prodotti))->toOthers();
         return $prodotti;
     }

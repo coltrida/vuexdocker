@@ -164,6 +164,7 @@ const help = () => {
         linkrecallautomatico: base+'recallAutomatico',
         linktelefonateannomese: base+'telefonateAnnoMese',
         linkappuntamentiannomese: base+'appuntamentiAnnoMese',
+        linkstrutture: base+'strutture',
     };
 };
 export default help;

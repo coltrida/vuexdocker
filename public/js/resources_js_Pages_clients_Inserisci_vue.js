@@ -291,16 +291,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     //    console.log(this.$vuetify.breakpoint.name);
-    if (this.getRuolo === 'audio' || this.getRuolo === 'amministrazione') {
+    if (this.getRuolo === 'audio') {
       this.newClient.user_id = parseInt(this.getIdUser);
+      this.fetchRecapitiByAudio(parseInt(this.getIdUser));
+      this.fetchFilialiPerInserimento(parseInt(this.getIdUser));
       this.lettura = true;
+    } else {
+      this.fetchRecapiti();
+      this.fetchFiliali();
     }
 
     this.fetchTipologie();
     this.fetchCanali();
     this.fetchAudio();
-    this.fetchFilialiPerInserimento();
-    this.fetchRecapiti();
     this.fetchMedici(this.getIdUser);
 
     if (this.rottaIdClient) {
@@ -331,9 +334,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudio: 'fetchAudio'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
-    fetchFilialiPerInserimento: 'fetchFilialiPerInserimento'
+    fetchFilialiPerInserimento: 'fetchFilialiPerInserimento',
+    fetchFiliali: 'fetchFiliali'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
-    fetchRecapiti: 'fetchRecapiti'
+    fetchRecapiti: 'fetchRecapiti',
+    fetchRecapitiByAudio: 'fetchRecapitiByAudio'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('medici', {
     fetchMedici: 'fetchMedici'
   })), {}, {

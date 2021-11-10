@@ -10,6 +10,7 @@ use App\Models\Ratefattura;
 use App\Models\Ruolo;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Client;
 use Illuminate\Support\Str;
 use function trim;
 
@@ -70,14 +71,21 @@ class RateService
         $fattura->ultima_rata = Carbon::now();
         $fattura->save();
 
-
+        $client = Client::find($fattura->prova->client_id);
+        $utente = User::find($request->user_id);
 
         Informazione::create([
-            'client_id' => $fattura->prova->client_id,
+            'client_id' => $client->id,
             'giorno' => Carbon::now()->format('Y-m-d'),
             'tipo' => 'PAGAMENTI',
             'note' => $tipoNota
         ]);
+
+        $propieta = 'rata';
+        $testo = $utente->name.' ha incassato una rata di euro '.$request->importo.' per una fattura di '.$fattura->tot_fattura.' del cliente '.$client->cognome.' '.$client->nome;
+
+        $log = new LoggingService();
+        $log->scriviLog($client->cognome.' '.$client->nome, $utente, $utente->name, $propieta, $testo);
     }
 
     public function caricaFattura($idFattura)

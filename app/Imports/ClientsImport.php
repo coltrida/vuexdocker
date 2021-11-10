@@ -23,41 +23,51 @@ class ClientsImport implements ToCollection, WithHeadingRow
         {
             //dd($value);
 
-            $inArezzo = (in_array(trim(Str::upper($value['comune'])) , ['CAMUCIA', 'CASTIGLION FIORENTINO',
+            $arezzo = ['CAMUCIA', 'CASTIGLION FIORENTINO',
                 'POZZO DELLA CHIANA', 'PIEVE AL TOPPO', 'RIGUTINO', 'BADIA AL PINO', 'CIVITELLA IN VAL DI CHIANA',
                 'ALBERORO','CAPOLONA', 'CASTIGLION FIBOCCHI', 'CASTIGLIONE DEL LAGO', 'CORTONA', 'CORCIANO', 'CHITIGNANO', 'CESA',
                 'FOIANO DELLA CHIANA', 'GUBBIO', 'LUCIGNANO', 'MONTE SAN SAVINO', 'MARCIANO DELLA CHIANA', 'MONTEVARCHI',
-                'PIEVE SANTO STEFANO', 'SAN LEO', 'TEGOLETO', 'TERONTOLA', 'VITIANO', 'SARTEANO']));
+                'PIEVE SANTO STEFANO', 'SAN LEO', 'TEGOLETO', 'TERONTOLA', 'VITIANO', 'SARTEANO'];
+
+            $ancona = ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO',
+                'FALCONARA MARITTIMA', 'FALCONARA', 'OSTRA', 'AGUGLIANO', 'ALBACINA', 'APIRO', 'ARCEVIA', 'BARBARA',
+                'BELVEDERE OSTRENSE', 'CAMERATA PICENA', 'CASTEL COLONNA', 'CASTELBELLINO', 'CASTELFERRETTI',
+                'CAMERANO', 'CASTELPLANIO', 'CHIARAVALLE', 'CORINALDO', 'CUPRAMONTANA', 'MAIOLATI SPONTINI',
+                'MARINA DI MONTEMARCIANO', 'MERGO', 'MOIE', 'MONSANO', 'MONTE SAN VITO', 'MONTEROBERTO', 'MONTESICURO',
+                'NUMANA', 'OFFAGNA', 'OSTRA VETERE', 'POLVERIGI', 'SAN MARCELLO', 'SANTA MARIA NUOVA', 'TORRETTE',
+                'TRECASTELLI', 'SIROLO', 'GENGA', 'MONTEMARCIANO', 'COLLINE DI SANTA MARIA NUOVA'];
+
+            $civitanova = ['LORETO',
+                'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI',
+                'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'FARMACIA CARDINALI', 'ACI LORETO', 'ALTIDONA',
+                'ASCOLI PICENO', 'ATHANASIA', 'BOLOGNOLA', 'CASTELFIDARDO', 'CASTELRAIMONDO', 'CESSAPALOMBO', 'CINGOLI',
+                'COMUNANZA', 'FALERONE', 'FIASTRA', 'FILOTTRANO', 'MATELICA', 'MONTE SAN GIUSTO', 'MONTECOSARO',
+                'MORESCO', 'MORROVALLE', 'MUMMUIOLA', 'PONZANO DI FERMO', 'PORTO POTENZA PICENA', 'PORTO RECANATI',
+                'SAN BENEDETTO DEL TRONTO', 'SAN GINESIO', 'SAN SEVERINO MARCHE', 'SARNANO', 'TOLENTINO', 'STAFFOLO',
+                'SERVIGLIANO', 'FIUMINATA'];
+
+            $macerata = ['MACERATA', 'CAMERINO', 'APPIGNANO', 'CORRIDONIA',
+                'LORO PICENO', 'MOGLIANO', 'MONTECASSIANO', 'PASSO DI TREIA', 'POLLENZA', 'SAMBUCHETO', 'TREIA',
+                'URBISAGLIA'];
+
+            $firenze = ['FIRENZE', 'BAGNO A RIPOLI', 'GRASSINA', 'FIESOLE', 'SESTO FIORENTINO',
+                'SCANDICCI', 'SIGNA', 'IMPRUNETA'];
+
+            $inArezzo = (in_array(trim(Str::upper($value['comune'])), $arezzo));
 
             if ($value['cognome'] != null && !$inArezzo){
                 $filiale = 1;
                 $user = 2;
-                if(in_array(trim(Str::upper($value['comune'])) , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO',
-                    'FALCONARA MARITTIMA', 'FALCONARA', 'OSTRA', 'AGUGLIANO', 'ALBACINA', 'APIRO', 'ARCEVIA', 'BARBARA',
-                    'BELVEDERE OSTRENSE', 'CAMERATA PICENA', 'CASTEL COLONNA', 'CASTELBELLINO', 'CASTELFERRETTI',
-                    'CAMERANO', 'CASTELPLANIO', 'CHIARAVALLE', 'CORINALDO', 'CUPRAMONTANA', 'MAIOLATI SPONTINI',
-                    'MARINA DI MONTEMARCIANO', 'MERGO', 'MOIE', 'MONSANO', 'MONTE SAN VITO', 'MONTEROBERTO', 'MONTESICURO',
-                    'NUMANA', 'OFFAGNA', 'OSTRA VETERE', 'POLVERIGI', 'SAN MARCELLO', 'SANTA MARIA NUOVA', 'TORRETTE',
-                    'TRECASTELLI', 'SIROLO', 'GENGA', 'MONTEMARCIANO', 'COLLINE DI SANTA MARIA NUOVA'])) {
+                if(in_array(trim(Str::upper($value['comune'])), $ancona)) {
                     $filiale = 4;
                     $user = 8;
-                } elseif (in_array(trim(Str::upper($value['comune'])) , ['LORETO',
-                    'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI',
-                    'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'FARMACIA CARDINALI', 'ACI LORETO', 'ALTIDONA',
-                    'ASCOLI PICENO', 'ATHANASIA', 'BOLOGNOLA', 'CASTELFIDARDO', 'CASTELRAIMONDO', 'CESSAPALOMBO', 'CINGOLI',
-                    'COMUNANZA', 'FALERONE', 'FIASTRA', 'FILOTTRANO', 'MATELICA', 'MONTE SAN GIUSTO', 'MONTECOSARO',
-                    'MORESCO', 'MORROVALLE', 'MUMMUIOLA', 'PONZANO DI FERMO', 'PORTO POTENZA PICENA', 'PORTO RECANATI',
-                    'SAN BENEDETTO DEL TRONTO', 'SAN GINESIO', 'SAN SEVERINO MARCHE', 'SARNANO', 'TOLENTINO', 'STAFFOLO',
-                    'SERVIGLIANO', 'FIUMINATA'])) {
+                } elseif (in_array(trim(Str::upper($value['comune'])), $civitanova)) {
                     $filiale = 2;
                     $user = 9;
-                } elseif (in_array(trim(Str::upper($value['comune'])) , ['MACERATA', 'CAMERINO', 'APPIGNANO', 'CORRIDONIA',
-                    'LORO PICENO', 'MOGLIANO', 'MONTECASSIANO', 'PASSO DI TREIA', 'POLLENZA', 'SAMBUCHETO', 'TREIA',
-                    'URBISAGLIA'])) {
+                } elseif (in_array(trim(Str::upper($value['comune'])), $macerata)) {
                     $filiale = 5;
                     $user = 6;
-                } elseif (in_array(trim(Str::upper($value['comune'])) , ['FIRENZE', 'BAGNO A RIPOLI', 'GRASSINA', 'FIESOLE', 'SESTO FIORENTINO',
-                    'SCANDICCI', 'SIGNA', 'IMPRUNETA'])) {
+                } elseif (in_array(trim(Str::upper($value['comune'])), $firenze)) {
                     $filiale = 8;
                     $user = 5;
                 }

@@ -9,15 +9,19 @@
                     class="black--text align-end"
                     height="400px"
                     width="600px"
-                    :src="'https://www.centrouditogroup.it/storage/recapiti/'+informazioneRecapito.id+'.jpg'"
+                    :src="'https://www.centrouditogroup.it/storage/recapiti/'+informazioneStruttura.codiceIdentificativo+'.jpg'"
                 >
                 </v-img>
                 <v-card-title class="text-h5">
-                    {{ informazioneRecapito.nome }}
+                    {{ informazioneStruttura.nome }}
                 </v-card-title>
 
+                <v-card-subtitle class="text-h6">
+                    {{ informazioneStruttura.indirizzo }} - {{ informazioneStruttura.citta }}
+                </v-card-subtitle>
+
                 <v-card-text>
-                    {{ informazioneRecapito.informazioni }}
+                    {{ informazioneStruttura.informazioni }}
                 </v-card-text>
 
                 <v-card-actions>
@@ -41,11 +45,11 @@
             <v-col cols="4">
                 <v-row justify="center">
                     <v-select
-                        @change="infoRecapito($event)"
-                        :items="getRecapiti"
+                        @change="infoStruttura($event)"
+                        :items="getfilialiRecapiti"
                         return-object
                         item-text="nome"
-                        label="Informazioni Recapito"
+                        label="Informazioni Strutture"
                     ></v-select>
                 </v-row>
             </v-col>
@@ -61,55 +65,55 @@
                 <v-form ref="form"
                         v-model="valid"
                         lazy-validation>
-                <v-row>
-                    <v-col cols="12" md="6" lg="6">
-                        <v-menu
-                            ref="menu"
-                            v-model="menu"
-                            :close-on-content-click="false"
-                            :return-value.sync="newAppuntamento.giorno"
-                            transition="scale-transition"
-                            offset-y
-                            min-width="auto"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field
-                                    v-model="newAppuntamento.giorno"
-                                    label="Data Appuntamento*"
-                                    prepend-icon="mdi-calendar"
-                                    readonly
-                                    :rules="giornoRules"
-                                    required
-                                    v-bind="attrs"
-                                    v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker
-                                v-model="newAppuntamento.giorno"
-                                no-title
-                                first-day-of-week="1"
-                                locale="ITA"
-                                scrollable
+                    <v-row>
+                        <v-col cols="12" md="6" lg="6">
+                            <v-menu
+                                ref="menu"
+                                v-model="menu"
+                                :close-on-content-click="false"
+                                :return-value.sync="newAppuntamento.giorno"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
                             >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                    text
-                                    color="primary"
-                                    @click="menu = false"
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field
+                                        v-model="newAppuntamento.giorno"
+                                        label="Data Appuntamento*"
+                                        prepend-icon="mdi-calendar"
+                                        readonly
+                                        :rules="giornoRules"
+                                        required
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    ></v-text-field>
+                                </template>
+                                <v-date-picker
+                                    v-model="newAppuntamento.giorno"
+                                    no-title
+                                    first-day-of-week="1"
+                                    locale="ITA"
+                                    scrollable
                                 >
-                                    Cancel
-                                </v-btn>
-                                <v-btn
-                                    text
-                                    color="primary"
-                                    @click="$refs.menu.save(newAppuntamento.giorno)"
-                                >
-                                    OK
-                                </v-btn>
-                            </v-date-picker>
-                        </v-menu>
-                    </v-col>
-                    <v-col cols="12" md="6" lg="6">
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                        text
+                                        color="primary"
+                                        @click="menu = false"
+                                    >
+                                        Cancel
+                                    </v-btn>
+                                    <v-btn
+                                        text
+                                        color="primary"
+                                        @click="$refs.menu.save(newAppuntamento.giorno)"
+                                    >
+                                        OK
+                                    </v-btn>
+                                </v-date-picker>
+                            </v-menu>
+                        </v-col>
+                        <v-col cols="12" md="6" lg="6">
                             <v-dialog
                                 ref="dialog"
                                 v-model="modal2"
@@ -151,50 +155,52 @@
                                     </v-btn>
                                 </v-time-picker>
                             </v-dialog>
-                    </v-col>
-                </v-row>
-                        <v-row>
-                            <v-col cols="12" md="4" lg="4">
-                                <v-select
-                                    v-model.lazy="newAppuntamento.filiale_id"
-                                    item-value="id"
-                                    item-text="nome"
-                                    :items="getFiliali"
-                                    label="Filiale"
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="12" md="4" lg="4">
-                                <v-select
-                                    v-model.lazy="newAppuntamento.recapito_id"
-                                    item-value="id"
-                                    item-text="nome"
-                                    :items="getRecapiti"
-                                    label="Recapito"
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="12" md="4" lg="4">
-                                <v-select
-                                    v-model.lazy="newAppuntamento.tipo"
-                                    :items="tipoAppuntamento"
-                                    label="Tipo Visita*"
-                                    :rules="tipoRules"
-                                    required
-                                ></v-select>
-                            </v-col>
-                        </v-row>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="12" md="4" lg="4">
+                            <v-select
+                                v-model.lazy="newAppuntamento.filiale_id"
+                                item-value="id"
+                                item-text="nome"
+                                :items="getFiliali"
+                                label="Filiale"
+                            ></v-select>
+                        </v-col>
+                        <v-col cols="12" md="4" lg="4">
+                            <v-select
+                                v-model.lazy="newAppuntamento.recapito_id"
+                                item-value="id"
+                                item-text="nome"
+                                :items="getRecapiti"
+                                label="Recapito"
+                            ></v-select>
+                        </v-col>
+                        <v-col cols="12" md="4" lg="4">
+                            <v-select
+                                v-model.lazy="newAppuntamento.tipo"
+                                :items="tipoAppuntamento"
+                                label="Tipo Visita*"
+                                :rules="tipoRules"
+                                required
+                            ></v-select>
+                        </v-col>
+                    </v-row>
 
                     <v-row>
-                        <v-col cols="12">
+                        <v-col cols="8">
                             <v-textarea
+                                rows="2"
                                 label="Note"
                                 v-model.lazy="newAppuntamento.nota"
                             ></v-textarea>
                         </v-col>
-                </v-row>
-
-                <v-btn @click="inserisci" color="primary" class="my-2">
-                    {{btnName}}
-                </v-btn>
+                        <v-col cols="4">
+                            <v-btn @click="inserisci" color="primary" class="my-2">
+                                {{btnName}}
+                            </v-btn>
+                        </v-col>
+                    </v-row>
                 </v-form>
 
                 <div class="text-center" v-if="carica">
@@ -204,11 +210,12 @@
                     ></v-progress-circular>
                 </div>
                 <div v-else>
+                    <h3>Storico degli Appuntamenti</h3>
                     <v-data-table
                         :headers="headers"
                         :items="getAppuntamenti"
                         hide-default-footer
-                        class="elevation-1 my-4"
+                        class="elevation-1"
                     >
 
                         <template v-slot:item.actions="{ item }">
@@ -243,40 +250,41 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     import Calendar from "../../../Pages/personale/Calendar";
+
     export default {
         name: "Appuntamento",
         components: {Calendar},
-        data(){
+        data() {
             return {
                 dialog: false,
-                informazioneRecapito: '',
+                informazioneStruttura: '',
                 carica: false,
                 modificaSwitch: false,
                 modal2: false,
                 valid: true,
-                giornoRules: [ v => !!v || 'il giorno è obbligatorio'],
-                tipoRules: [ v => !!v || 'il tipo è obbligatorio'],
-                orarioRules: [ v => !!v || 'orario obbligatorio'],
-                newAppuntamento:{
-                    filiale_id:null,
-                    recapito_id:null,
-                    nota:null
+                giornoRules: [v => !!v || 'il giorno è obbligatorio'],
+                tipoRules: [v => !!v || 'il tipo è obbligatorio'],
+                orarioRules: [v => !!v || 'orario obbligatorio'],
+                newAppuntamento: {
+                    filiale_id: null,
+                    recapito_id: null,
+                    nota: null
                 },
-                menu:false,
+                menu: false,
                 tipoAppuntamento: ['Prima Visita', 'Esame Audio', 'Controllo Prova', 'fine prova', 'Assistenza'],
 
                 headers: [
-                    { text: 'Giorno', align: 'start', sortable: false, value: 'giorno', class: "indigo white--text" },
-                    { text: 'orario', sortable: false, value: 'orario', class: "indigo white--text" },
-                    { text: 'nota', sortable: false, value: 'nota', class: "indigo white--text" },
-                    { text: 'Luogo', sortable: false, value: 'luogo', class: "indigo white--text" },
-                    { text: 'Tipo', sortable: false, value: 'tipo', class: "indigo white--text" },
-                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
+                    {text: 'Giorno', align: 'start', sortable: false, value: 'giorno', class: "indigo white--text"},
+                    {text: 'orario', sortable: false, value: 'orario', class: "indigo white--text"},
+                    {text: 'nota', sortable: false, value: 'nota', class: "indigo white--text"},
+                    {text: 'Luogo', sortable: false, value: 'luogo', class: "indigo white--text"},
+                    {text: 'Tipo', sortable: false, value: 'tipo', class: "indigo white--text"},
+                    {text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
             }
         },
 
-        props: [ 'appuntamentoClient' ],
+        props: ['appuntamentoClient'],
 
         mounted() {
             this.carica = true;
@@ -284,76 +292,79 @@
                 this.carica = false;
             });
 
-            if (this.getRuolo == 'call' || this.getRuolo == 'amministrazione' || this.getRuolo == 'admin'){
+            if (this.getRuolo == 'call' || this.getRuolo == 'amministrazione' || this.getRuolo == 'admin') {
                 this.fetchFiliali();
+                this.fetchStruttureByAudio(this.appuntamentoClient.user_id);
                 this.fetchRecapitiByAudio(this.appuntamentoClient.user_id);
             } else {
                 this.fetchFilialiByUser(this.getIdUser);
+                this.fetchStruttureByAudio(this.getIdUser);
                 this.fetchRecapitiByAudio(this.getIdUser);
             }
 
         },
 
-        methods:{
+        methods: {
             ...mapActions('appuntamenti', {
-                fetchAppuntamenti:'fetchAppuntamenti',
-                addAppuntamento:'addAppuntamento',
-                modificaAppuntamento:'modificaAppuntamento',
-                eliminaAppuntamento:'eliminaAppuntamento',
+                fetchAppuntamenti: 'fetchAppuntamenti',
+                addAppuntamento: 'addAppuntamento',
+                modificaAppuntamento: 'modificaAppuntamento',
+                eliminaAppuntamento: 'eliminaAppuntamento',
 
-                fetchAppuntamentiLunedi:'fetchAppuntamentiLunedi',
-                fetchAppuntamentiMartedi:'fetchAppuntamentiMartedi',
-                fetchAppuntamentiMercoledi:'fetchAppuntamentiMercoledi',
-                fetchAppuntamentiGiovedi:'fetchAppuntamentiGiovedi',
-                fetchAppuntamentiVenerdi:'fetchAppuntamentiVenerdi',
+                fetchAppuntamentiLunedi: 'fetchAppuntamentiLunedi',
+                fetchAppuntamentiMartedi: 'fetchAppuntamentiMartedi',
+                fetchAppuntamentiMercoledi: 'fetchAppuntamentiMercoledi',
+                fetchAppuntamentiGiovedi: 'fetchAppuntamentiGiovedi',
+                fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi',
 
-                prossimoLunedi:'prossimoLunedi',
-                prossimoMartedi:'prossimoMartedi',
-                prossimoMarcoledi:'prossimoMarcoledi',
-                prossimoGiovedi:'prossimoGiovedi',
-                prossimoVenerdi:'prossimoVenerdi',
+                prossimoLunedi: 'prossimoLunedi',
+                prossimoMartedi: 'prossimoMartedi',
+                prossimoMarcoledi: 'prossimoMarcoledi',
+                prossimoGiovedi: 'prossimoGiovedi',
+                prossimoVenerdi: 'prossimoVenerdi',
             }),
 
             ...mapActions('recapiti', {
+                fetchStruttureByAudio: 'fetchStruttureByAudio',
                 fetchRecapitiByAudio:'fetchRecapitiByAudio',
-                fetchRecapiti:'fetchRecapiti',
+                fetchRecapiti: 'fetchRecapiti',
             }),
 
             ...mapActions('filiali', {
-                fetchFilialiByUser:'fetchFilialiByUser',
-                fetchFiliali:'fetchFiliali',
+                fetchFilialiByUser: 'fetchFilialiByUser',
+                fetchFiliali: 'fetchFiliali',
             }),
 
-            cancella(){
+            cancella() {
                 this.$emit('chiudiAppuntamento')
             },
 
-            inserisci(){
+            inserisci() {
                 this.$refs.form.validate();
                 this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
                 this.newAppuntamento.telefonista_id = this.getIdUser;
                 this.newAppuntamento.client_id = this.appuntamentoClient.id;
 
-                if (this.modificaSwitch){
-                    this.modificaAppuntamento(this.newAppuntamento).then(() =>{
+                if (this.modificaSwitch) {
+                    this.modificaAppuntamento(this.newAppuntamento).then(() => {
                         this.$refs.form.resetValidation();
                         this.caricaAppuntamenti();
                         this.newAppuntamento = {
-                            filiale_id:null,
-                            recapito_id:null,
-                            tipo:null,
-                            nota:null
+                            filiale_id: null,
+                            recapito_id: null,
+                            tipo: null,
+                            nota: null
                         }
                     });
                 } else {
-                    this.addAppuntamento(this.newAppuntamento).then(() =>{
+                    this.addAppuntamento(this.newAppuntamento).then(() => {
                         this.$refs.form.resetValidation();
                         this.caricaAppuntamenti();
                         this.newAppuntamento = {
-                            filiale_id:null,
-                            recapito_id:null,
-                            tipo:null,
-                            nota:null
+                            filiale_id: null,
+                            recapito_id: null,
+                            tipo: null,
+                            nota: null
                         }
                     });
                 }
@@ -362,8 +373,8 @@
 
             },
 
-            caricaAppuntamenti(){
-                if (this.getSettimanaVisualizzata === 'attuale'){
+            caricaAppuntamenti() {
+                if (this.getSettimanaVisualizzata === 'attuale') {
                     this.fetchAppuntamentiLunedi(this.appuntamentoClient.user_id);
                     this.fetchAppuntamentiMartedi(this.appuntamentoClient.user_id);
                     this.fetchAppuntamentiMercoledi(this.appuntamentoClient.user_id);
@@ -379,7 +390,7 @@
 
             },
 
-            elimina(id){
+            elimina(id) {
                 let payload = {
                     idAppuntamento: id,
                     idUser: this.getIdUser
@@ -387,15 +398,15 @@
                 this.eliminaAppuntamento(payload);
             },
 
-            modifica(eleSelezionato){
+            modifica(eleSelezionato) {
                 this.modificaSwitch = true;
                 this.newAppuntamento = eleSelezionato;
                 this.newAppuntamento.giorno = eleSelezionato.giornoOriginale;
                 this.$store.commit('appuntamenti/eliminaAppuntamento', this.newAppuntamento.id);
             },
 
-            infoRecapito(recapito){
-                this.informazioneRecapito = recapito;
+            infoStruttura(struttura) {
+                this.informazioneStruttura = struttura;
                 this.dialog = true;
             }
 
@@ -414,13 +425,14 @@
 
             ...mapGetters('recapiti', {
                 getRecapiti: 'getRecapiti',
+                getfilialiRecapiti: 'getfilialiRecapiti',
             }),
 
             ...mapGetters('filiali', {
                 getFiliali: 'getFiliali',
             }),
 
-            btnName(){
+            btnName() {
                 return this.modificaSwitch ? 'modifica' : 'inserisci'
             }
         }

@@ -295,6 +295,7 @@
             richiedi(){
                 this.productRichiesto.filiale_id = this.rottaIdFiliale;
                 this.productRichiesto.stato_id = 6;
+                this.productRichiesto.user_id = parseInt(this.getIdUser);
                 this.richiediProduct(this.productRichiesto);
                 this.productRichiesto = {};
             },
@@ -336,6 +337,7 @@
 
             ...mapGetters('login', {
                 getRuolo:'getRuolo',
+                getIdUser:'getIdUser',
             }),
 
             rottaIdFiliale(){

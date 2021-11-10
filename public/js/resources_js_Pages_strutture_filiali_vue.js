@@ -117,18 +117,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Filiali",
   data: function data() {
     return {
       modificaSwitch: false,
-      filiale: {},
+      filiale: {
+        fileUp: {}
+      },
       headers: [{
-        text: 'Id',
+        text: 'Cod',
         align: 'start',
         sortable: false,
-        value: 'id',
+        value: 'codiceIdentificativo',
         "class": "indigo white--text"
       }, {
         text: 'Nome',
@@ -155,6 +182,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'telefono',
         value: 'telefono',
+        "class": "indigo white--text"
+      }, {
+        text: 'Informazioni',
+        value: 'informazioni',
+        "class": "indigo white--text"
+      }, {
+        text: 'Foto',
+        width: 200,
+        value: 'foto',
         "class": "indigo white--text"
       }, {
         text: 'Actions',
@@ -411,9 +447,67 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-btn",
-        { attrs: { dark: "", color: "indigo" }, on: { click: _vm.aggiungi } },
-        [_vm._v("\n            " + _vm._s(_vm.btnName) + "\n        ")]
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "7" } },
+            [
+              _c("v-textarea", {
+                attrs: { rows: "1", label: "Informazioni" },
+                model: {
+                  value: _vm.filiale.informazioni,
+                  callback: function($$v) {
+                    _vm.$set(_vm.filiale, "informazioni", $$v)
+                  },
+                  expression: "filiale.informazioni"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "3" } },
+            [
+              _c("v-file-input", {
+                attrs: { "truncate-length": "15", label: "Carica Foto" },
+                model: {
+                  value: _vm.filiale.fileUp,
+                  callback: function($$v) {
+                    _vm.$set(_vm.filiale, "fileUp", $$v)
+                  },
+                  expression: "filiale.fileUp"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2" } },
+            [
+              _c(
+                "v-btn",
+                {
+                  attrs: { dark: "", color: "indigo" },
+                  on: { click: _vm.aggiungi }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.btnName) +
+                      "\n                "
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _c("v-data-table", {
@@ -424,6 +518,24 @@ var render = function() {
           "items-per-page": 10
         },
         scopedSlots: _vm._u([
+          {
+            key: "item.foto",
+            fn: function(ref) {
+              var item = ref.item
+              return [
+                _c("v-img", {
+                  attrs: {
+                    "max-height": "150",
+                    "max-width": "150",
+                    src:
+                      "https://www.centrouditogroup.it/storage/recapiti/F" +
+                      item.id +
+                      ".jpg"
+                  }
+                })
+              ]
+            }
+          },
           {
             key: "item.actions",
             fn: function(ref) {

@@ -15,12 +15,14 @@ class CreateFilialesTable extends Migration
     {
         Schema::create('filiales', function (Blueprint $table) {
             $table->id();
+            $table->string('codiceIdentificativo')->nullable();
             $table->string('nome');
             $table->string('indirizzo')->nullable();
             $table->string('citta')->nullable();
             $table->string('telefono')->nullable();
             $table->string('cap')->nullable();
             $table->string('provincia')->nullable();
+            $table->string('informazioni')->nullable();
             $table->timestamps();
         });
     }

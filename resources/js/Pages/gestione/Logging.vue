@@ -1,8 +1,6 @@
 <template>
     <div>
         <h2>Logging</h2>
-        <v-container>
-
             <v-row>
                 <v-col cols="12">
                     <v-data-table
@@ -13,11 +11,7 @@
 
                     </v-data-table>
                 </v-col>
-
             </v-row>
-
-
-        </v-container>
     </div>
 
 </template>
@@ -31,7 +25,7 @@
         data(){
             return {
                 headers1: [
-                    { text: 'Data', align: 'start', value: 'created_at', class: "indigo white--text" },
+                    { text: 'Data', width:170, align: 'start', value: 'created_at', class: "indigo white--text" },
                     { text: 'Soggetto', value: 'subject_type', class: "indigo white--text" },
                     { text: 'Testo', value: 'description', class: "indigo white--text" },
                     { text: 'Settore', value: 'log_name', class: "indigo white--text" },

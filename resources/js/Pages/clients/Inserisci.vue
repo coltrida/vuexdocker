@@ -251,15 +251,19 @@
 
         mounted(){
         //    console.log(this.$vuetify.breakpoint.name);
-            if(this.getRuolo === 'audio' || this.getRuolo === 'amministrazione'){
+            if(this.getRuolo === 'audio'){
                 this.newClient.user_id = parseInt(this.getIdUser);
+                this.fetchRecapitiByAudio(parseInt(this.getIdUser));
+                this.fetchFilialiPerInserimento(parseInt(this.getIdUser));
                 this.lettura = true;
+            } else {
+                this.fetchRecapiti();
+                this.fetchFiliali();
             }
             this.fetchTipologie();
             this.fetchCanali();
             this.fetchAudio();
-            this.fetchFilialiPerInserimento();
-            this.fetchRecapiti();
+
             this.fetchMedici(this.getIdUser);
             if (this.rottaIdClient){
                 this.fetchClient(this.rottaIdClient).then(() => {
@@ -299,10 +303,12 @@
 
             ...mapActions('filiali', {
                 fetchFilialiPerInserimento:'fetchFilialiPerInserimento',
+                fetchFiliali:'fetchFiliali',
             }),
 
             ...mapActions('recapiti', {
                 fetchRecapiti:'fetchRecapiti',
+                fetchRecapitiByAudio:'fetchRecapitiByAudio',
             }),
 
             ...mapActions('medici', {

@@ -64,10 +64,27 @@
 
             </v-row>
 
-            <v-btn @click="aggiungi" dark color="indigo">
-                {{btnName}}
-            </v-btn>
-
+            <v-row>
+                <v-col cols="7">
+                    <v-textarea
+                        rows="1"
+                        label="Informazioni"
+                        v-model.lazy="filiale.informazioni"
+                    ></v-textarea>
+                </v-col>
+                <v-col cols="3">
+                    <v-file-input
+                        v-model="filiale.fileUp"
+                        truncate-length="15"
+                        label="Carica Foto"
+                    ></v-file-input>
+                </v-col>
+                <v-col cols="2">
+                    <v-btn @click="aggiungi" dark color="indigo">
+                        {{btnName}}
+                    </v-btn>
+                </v-col>
+            </v-row>
 
             <v-data-table
                 :headers="headers"
@@ -75,6 +92,14 @@
                 :items-per-page="10"
                 class="elevation-1 mt-3"
             >
+                <template v-slot:item.foto="{ item }">
+                    <v-img
+                        max-height="150"
+                        max-width="150"
+                        :src="'https://www.centrouditogroup.it/storage/recapiti/F'+item.id+'.jpg'"
+                    ></v-img>
+                </template>
+
                 <template v-slot:item.actions="{ item }">
                     <v-icon
                         color="red"
@@ -105,15 +130,19 @@
         data(){
             return {
                 modificaSwitch: false,
-                filiale:{},
+                filiale:{
+                    fileUp:{},
+                },
                 headers: [
-                    { text: 'Id', align: 'start', sortable: false, value: 'id', class: "indigo white--text" },
+                    { text: 'Cod', align: 'start', sortable: false, value: 'codiceIdentificativo', class: "indigo white--text" },
                     { text: 'Nome', align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
                     { text: 'Indirizzo', value: 'indirizzo', class: "indigo white--text" },
                     { text: 'Citta', value: 'citta', class: "indigo white--text" },
                     { text: 'Provincia', value: 'provincia', class: "indigo white--text" },
                     { text: 'Cap', value: 'cap', class: "indigo white--text" },
                     { text: 'telefono', value: 'telefono', class: "indigo white--text" },
+                    { text: 'Informazioni', value: 'informazioni', class: "indigo white--text" },
+                    { text: 'Foto', width: 200, value: 'foto', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
 
                 ],

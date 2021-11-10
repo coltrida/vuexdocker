@@ -22,6 +22,8 @@ class FilialeSeeder extends Seeder
                 'telefono' => '0506206057',
                 'cap' => '56127',
                 'provincia' => 'PI',
+                'informazioni' => 'ACCANTO ALLA QUESTURA',
+                'codiceIdentificativo' => 'F1'
             ],
             [
                 'nome' => 'CIVITANOVA',
@@ -30,6 +32,8 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'MC',
+                'informazioni' => '..........',
+                'codiceIdentificativo' => 'F2'
             ],
             [
                 'nome' => 'LUCCA',
@@ -38,6 +42,8 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'LU',
+                'informazioni' => '..........',
+                'codiceIdentificativo' => 'F3'
             ],
             [
                 'nome' => 'ANCONA',
@@ -46,6 +52,8 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'AN',
+                'informazioni' => '..........',
+                'codiceIdentificativo' => 'F4'
             ],
             [
                 'nome' => 'MACERATA',
@@ -54,14 +62,18 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'MC',
+                'informazioni' => '..........',
+                'codiceIdentificativo' => 'F5'
             ],
             [
-                'nome' => 'LIVORNO',
+                'nome' => 'SAN BENEDETTO',
                 'indirizzo' => '........',
-                'citta' => 'LIVORNO',
+                'citta' => 'SAN BENEDETTO DEL TRONTO',
                 'telefono' => '........',
                 'cap' => '........',
-                'provincia' => 'LI',
+                'provincia' => 'AP',
+                'informazioni' => '..........',
+                'codiceIdentificativo' => 'F6'
             ],
             [
                 'nome' => 'VIAREGGIO',
@@ -70,6 +82,8 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'LU',
+                'informazioni' => '..........',
+                'codiceIdentificativo' => 'F7'
             ],
             [
                 'nome' => 'FIRENZE',
@@ -78,6 +92,8 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'FI',
+                'informazioni' => '..........',
+                'codiceIdentificativo' => 'F8'
             ],
         ]);
     }

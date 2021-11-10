@@ -78,7 +78,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Codice Identificativo',
         align: 'center',
-        value: 'id',
+        value: 'codiceIdentificativo',
         sortable: false,
         "class": "indigo white--text"
       }]
@@ -217,32 +217,7 @@ var render = function() {
                     headers: _vm.header,
                     items: _vm.getStruttureAudio,
                     "hide-default-footer": ""
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "item.id",
-                      fn: function(ref) {
-                        var item = ref.item
-                        return [
-                          item.tipologia === "recapito"
-                            ? _c("div", [
-                                _vm._v(
-                                  "\n                            R" +
-                                    _vm._s(item.id) +
-                                    "\n                        "
-                                )
-                              ])
-                            : _c("div", [
-                                _vm._v(
-                                  "\n                            F" +
-                                    _vm._s(item.id) +
-                                    "\n                        "
-                                )
-                              ])
-                        ]
-                      }
-                    }
-                  ])
+                  }
                 })
               ],
               1

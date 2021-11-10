@@ -150,8 +150,8 @@ class TelefonateService
             'eseguita_id' => $request->userId,
             'client_id' => $request->clientId,
             'datarecall' => $request->giorno,
-            'mese' => Carbon::make($request->giorno)->month,
-            'anno' => Carbon::make($request->giorno)->year,
+            'mese' => $request->esito ? Carbon::now()->month : null,
+            'anno' => $request->esito ? Carbon::now()->year : null,
             'esito' => $request->esito,
             'note' => $request->note,
             'effettuata' => $request->esito ? 1 : 0,
@@ -185,13 +185,17 @@ class TelefonateService
         $telefonata->note = $request->note;
         $telefonata->effettuata = $request->esito ? 1 : 0;
         $telefonata->updated_at = Carbon::now()->format('Y-m-d');
+        if ($request->esito) {
+            $telefonata->mese = Carbon::now()->month;
+            $telefonata->anno = Carbon::now()->year;
+        }
         $telefonata->save();
 
         $utente = User::find($request->userId);
         $log = new LoggingService();
         $propieta = 'recall';
         if($request->esito){
-            $testo = $utente->name.' ha telefonato a '.$telefonata->client->cognome.' '.$telefonata->client->nome.' con esito: '.$request->esito;
+            $testo = $utente->name.' ha telefonato (aggiornando) a '.$telefonata->client->cognome.' '.$telefonata->client->nome.' con esito: '.$request->esito;
             Informazione::create([
                 'client_id' => $telefonata->client->id,
                 'giorno' => Carbon::now()->format('Y-m-d'),

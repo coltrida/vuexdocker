@@ -113,6 +113,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$refs.form.validate();
       this.newRata.fatturaId = this.rottaIdFattura;
+      this.newRata.user_id = this.getIdUser;
       this.addRata(this.newRata).then(function () {
         _this2.newRata = {};
 
@@ -122,8 +123,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('rate', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('rate', {
     getFattura: 'getFattura'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
   })), {}, {
     rottaIdFattura: function rottaIdFattura() {
       return this.$route.params.fatturaId ? this.$route.params.fatturaId : null;

@@ -14,14 +14,14 @@
                         hide-default-footer
                         class="elevation-1"
                     >
-                        <template v-slot:item.id="{ item }">
+                        <!--<template v-slot:item.id="{ item }">
                             <div v-if="item.tipologia === 'recapito'">
                                 R{{item.id}}
                             </div>
                             <div v-else>
                                 F{{item.id}}
                             </div>
-                        </template>
+                        </template>-->
 
                     </v-data-table>
                 </div>
@@ -43,7 +43,7 @@
                     { text: 'Tipologia',  align: 'start', sortable: false, value: 'tipologia', class: "indigo white--text" },
                     { text: 'Nome',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
                     { text: 'Città',  align: 'start', sortable: false, value: 'citta', class: "indigo white--text" },
-                    { text: 'Codice Identificativo', align: 'center', value: 'id', sortable: false, class: "indigo white--text"},
+                    { text: 'Codice Identificativo', align: 'center', value: 'codiceIdentificativo', sortable: false, class: "indigo white--text"},
                 ],
             }
         },

@@ -45,61 +45,73 @@
                     ></v-progress-circular>
                 </div>
                 <div v-else>
-                    <v-col >
-                        <v-select
-                            v-model="prova.marketing_id"
-                            item-value="id"
-                            item-text="name"
-                            :items="getCanali"
-                            required
-                            label="Canale Mkg*"
-                        ></v-select>
-                        <v-btn color="primary" dark @click="nuovaProvaInCorso" class="mt-2">
-                            Nuova Prova
-                        </v-btn>
-                    </v-col>
+                    <v-row>
+                        <v-col
+                            cols="12" md="8" lg="8"
+                        >
+                            <v-select
+                                v-model="prova.marketing_id"
+                                @change="selezionaMkt()"
+                                item-value="id"
+                                item-text="name"
+                                :items="getCanali"
+                                required
+                                hint="Se presente, viene inserito il codice Mkt del Paziente"
+                                persistent-hint
+                                label="Canale Mkg*"
+                            ></v-select>
+                        </v-col>
+                        <v-col
+                            cols="12" md="4" lg="4"
+                        >
+                            <v-btn @click="nuovaProvaInCorso" :disabled="bloccaProva" class="mt-2">
+                                Nuova Prova
+                            </v-btn>
+                        </v-col>
+                    </v-row>
                 </div>
         </v-row>
                 <!---------- End Creo nuova prova con pulsante NUOVA PROVA --------->
 
                 <!---------- Seleziono i prodotti per la nuova prova createa --------->
         <v-row v-else>
-                    <v-col
-                        cols="12" md="2" lg="2"
-                    >
-                        <v-select
-                            @change="selezionaTipologia()"
-                            v-model="tipologiaSelezionata"
-                            :items="tipologia"
-                            label="Tipologia"
-                        ></v-select>
-                    </v-col>
-                    <v-col
-                        cols="12" md="2" lg="2"
-                    >
-                        <v-select
-                            @change="caricaProdotti()"
-                            v-model="nuovaProva.fornitore_id"
-                            item-value="id"
-                            item-text="nome"
-                            :items="getFornitori"
-                            label="fornitore"
-                            :disabled="!abilitaFornitore"
-                        ></v-select>
-                    </v-col>
+                <v-col
+                    cols="12" md="2" lg="2"
+                >
+                    <v-select
+                        @change="selezionaTipologia()"
+                        v-model="tipologiaSelezionata"
+                        :items="tipologia"
+                        label="Tipologia"
+                    ></v-select>
+                </v-col>
 
-                    <v-col
-                        cols="12" md="3" lg="3"
-                    >
-                        <v-select
-                            @change="caricaPrezzoProdotto()"
-                            v-model="nuovaProva.prodotto"
-                            item-text="nomeMatricola"
-                            :items="getInFiliale"
-                            :label="tipologiaSelezionata"
-                            return-object
-                        ></v-select>
-                    </v-col>
+                <v-col
+                    cols="12" md="2" lg="2"
+                >
+                    <v-select
+                        @change="caricaProdotti()"
+                        v-model="nuovaProva.fornitore_id"
+                        item-value="id"
+                        item-text="nome"
+                        :items="getFornitori"
+                        label="fornitore"
+                        :disabled="!abilitaFornitore"
+                    ></v-select>
+                </v-col>
+
+                <v-col
+                    cols="12" md="3" lg="3"
+                >
+                    <v-select
+                        @change="caricaPrezzoProdotto()"
+                        v-model="nuovaProva.prodotto"
+                        item-text="nomeMatricola"
+                        :items="getInFiliale"
+                        :label="tipologiaSelezionata"
+                        return-object
+                    ></v-select>
+                </v-col>
 
                     <v-col
                         cols="12" md="1" lg="1"
@@ -128,7 +140,7 @@
                     </v-col>
 
                     <v-col
-                        cols="12" md="1" lg="1"
+                        cols="12" md="2" lg="2"
                     >
                         <v-text-field
                             type="number"
@@ -138,10 +150,10 @@
                     </v-col>
 
                     <v-col
-                        cols="12" md="2" lg="2"
+                        cols="12" md="1" lg="1"
                     >
                         <!---------- Bottone per inserire il prodotto nella nuova prova --------->
-                        <v-btn color="primary" dark @click="inserisciInProva" :disabled="!abilitaInProva">
+                        <v-btn  @click="inserisciInProva" :disabled="!abilitaInProva">
                             In Prova
                         </v-btn>
                     </v-col>
@@ -323,6 +335,7 @@
 
         data(){
             return {
+                bloccaProva:true,
                 listaPro:[],
                 tipologia:['Prodotti','Servizi'],
                 tipologiaSelezionata:'',
@@ -369,13 +382,13 @@
             this.deleteProveSenzaProdotti(this.proveClient.id).then(() => {
                 this.fetchProvePassate(this.proveClient.id).then(() => {
                     this.fetchCanali().then(() => {
-                        this.prova.marketing_id = this.proveClient.marketing_id;
+                        this.prova.marketing_id = this.proveClient.marketing_id ? this.proveClient.marketing_id : 0;
+                        this.bloccaProva = this.proveClient.marketing_id ? false : true;
                         this.carica2 = false;
                     });
                 });
             });
             this.fetchFornitori();
-
         },
 
         methods: {
@@ -535,6 +548,10 @@
                     this.abilitaFornitore = false;
                     this.fetchServizi();
                 }
+            },
+
+            selezionaMkt(){
+                this.bloccaProva = false;
             }
 
         },

@@ -23,24 +23,27 @@ class FilialeService
 
     public function aggiungi($request)
     {
-        return Filiale::create([
+        $filiale = Filiale::create([
             'nome' => trim(Str::upper($request->nome)),
             'indirizzo' => trim(Str::upper($request->indirizzo)),
             'citta' => trim(Str::upper($request->citta)),
             'telefono' => $request->telefono,
             'cap' => $request->cap,
             'provincia' => trim(Str::upper($request->provincia)),
+            'informazioni' => trim(Str::upper($request->informazioni)),
         ]);
 
-        /*$new = new Filiale();
-        $new->nome = trim(Str::upper($request->nome));
-        $new->indirizzo = trim(Str::upper($request->indirizzo));
-        $new->citta = trim(Str::upper($request->citta));
-        $new->telefono = $request->telefono;
-        $new->cap = $request->cap;
-        $new->provincia = trim(Str::upper($request->provincia));
-        $new->save();
-        return $new;*/
+        if($request->hasfile('file')) {
+            $file = $request->file('file');
+            $filename = 'F'.$filiale->id.'.jpg';
+            $path = 'recapiti/'.$request->fileName;
+            \Storage::disk('public')->putFileAs($path, $file, $filename);
+        }
+
+        $filiale->codiceIdentificativo = 'F'.$filiale->id;
+        $filiale->save();
+
+        return $filiale;
     }
 
     public function elimina($id)
@@ -105,6 +108,7 @@ class FilialeService
         $filiale->telefono = $request->telefono;
         $filiale->cap = $request->cap;
         $filiale->provincia = trim(Str::upper($request->provincia));
+        $filiale->informazioni = trim(Str::upper($request->informazioni));
         $filiale->save();
         return $filiale;
     }

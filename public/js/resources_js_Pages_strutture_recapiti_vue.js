@@ -141,6 +141,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Recapiti",
@@ -151,30 +161,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         fileUp: {}
       },
       headers: [{
+        text: 'Cod',
+        align: 'start',
+        sortable: false,
+        value: 'codiceIdentificativo',
+        width: 50,
+        "class": "indigo white--text"
+      }, {
         text: 'Nome',
         align: 'start',
         sortable: false,
         value: 'nome',
-        width: 200,
+        width: 220,
         "class": "indigo white--text"
       }, {
         text: 'Indirizzo',
-        width: 200,
+        width: 230,
         value: 'indirizzo',
         "class": "indigo white--text"
       }, {
         text: 'Citta',
-        width: 150,
+        width: 170,
         value: 'citta',
         "class": "indigo white--text"
       }, {
-        text: 'Provincia',
-        width: 150,
+        text: 'PR',
+        width: 70,
         value: 'provincia',
         "class": "indigo white--text"
       }, {
+        text: 'Telefono',
+        width: 150,
+        value: 'telefono',
+        "class": "indigo white--text"
+      }, {
         text: 'Informazioni',
-        width: 200,
+        width: 210,
         value: 'informazioni',
         "class": "indigo white--text"
       }, {
@@ -416,6 +438,24 @@ var render = function() {
             "v-col",
             { attrs: { cols: "2", sm: "2" } },
             [
+              _c("v-text-field", {
+                attrs: { label: "telefono" },
+                model: {
+                  value: _vm.recapito.telefono,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "telefono", $$v)
+                  },
+                  expression: "recapito.telefono"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
               _c("v-select", {
                 attrs: {
                   "item-value": "id",
@@ -433,11 +473,53 @@ var render = function() {
               })
             ],
             1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "7" } },
+            [
+              _c("v-text-field", {
+                attrs: { label: "Informazioni" },
+                model: {
+                  value: _vm.recapito.informazioni,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "informazioni", $$v)
+                  },
+                  expression: "recapito.informazioni"
+                }
+              })
+            ],
+            1
           ),
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "3" } },
+            [
+              _c("v-file-input", {
+                attrs: { "truncate-length": "15", label: "Carica Foto" },
+                model: {
+                  value: _vm.recapito.fileUp,
+                  callback: function($$v) {
+                    _vm.$set(_vm.recapito, "fileUp", $$v)
+                  },
+                  expression: "recapito.fileUp"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2" } },
             [
               _c(
                 "v-btn",
@@ -461,57 +543,15 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-row",
-        [
-          _c(
-            "v-col",
-            { attrs: { cols: "8" } },
-            [
-              _c("v-text-field", {
-                attrs: { label: "Informazioni" },
-                model: {
-                  value: _vm.recapito.informazioni,
-                  callback: function($$v) {
-                    _vm.$set(_vm.recapito, "informazioni", $$v)
-                  },
-                  expression: "recapito.informazioni"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "4" } },
-            [
-              _c("v-file-input", {
-                attrs: { "truncate-length": "15" },
-                model: {
-                  value: _vm.recapito.fileUp,
-                  callback: function($$v) {
-                    _vm.$set(_vm.recapito, "fileUp", $$v)
-                  },
-                  expression: "recapito.fileUp"
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
       _vm._l(_vm.getRecapiti, function(audio) {
         return _c(
           "div",
           { key: audio.id },
           [
-            _c("h2", [_vm._v(_vm._s(audio.name))]),
+            _c("h2", { staticClass: "mt-6" }, [_vm._v(_vm._s(audio.name))]),
             _vm._v(" "),
             _c("v-data-table", {
-              staticClass: "elevation-1 mt-3",
+              staticClass: "elevation-1 ",
               attrs: {
                 dense: "",
                 headers: _vm.headers,
@@ -530,7 +570,7 @@ var render = function() {
                             "max-height": "150",
                             "max-width": "150",
                             src:
-                              "https://www.centrouditogroup.it/storage/recapiti/" +
+                              "https://www.centrouditogroup.it/storage/recapiti/R" +
                               item.id +
                               ".jpg"
                           }

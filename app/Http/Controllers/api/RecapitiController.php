@@ -42,4 +42,9 @@ class RecapitiController extends Controller
     {
         return $recapitoService->elimina($id);
     }
+
+    public function strutture($idAudio, RecapitoService $recapitoService)
+    {
+        return $recapitoService->strutture($idAudio);
+    }
 }

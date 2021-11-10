@@ -46,6 +46,16 @@
                     cols="2"
                     sm="2"
                 >
+                    <v-text-field
+                        v-model="recapito.telefono"
+                        label="telefono"
+                    ></v-text-field>
+                </v-col>
+
+                <v-col
+                    cols="2"
+                    sm="2"
+                >
                     <v-select
                         v-model="recapito.user_id"
                         item-value="id"
@@ -55,46 +65,46 @@
                     ></v-select>
                 </v-col>
 
-                <v-col cols="2"
-                       sm="2">
-                    <v-btn @click="aggiungi" dark color="indigo" class="mb-5">
-                        {{btnName}}
-                    </v-btn>
-                </v-col>
             </v-row>
 
             <v-row>
                 <v-col
-                    cols="8"
+                    cols="7"
                 >
                     <v-text-field
                         v-model="recapito.informazioni"
                         label="Informazioni"
                     ></v-text-field>
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="3">
                     <v-file-input
                         v-model="recapito.fileUp"
                         truncate-length="15"
+                        label="Carica Foto"
                     ></v-file-input>
+                </v-col>
+                <v-col cols="2">
+                    <v-btn @click="aggiungi" dark color="indigo" class="mb-5">
+                        {{btnName}}
+                    </v-btn>
                 </v-col>
             </v-row>
 
             <div v-for="audio in getRecapiti" :key="audio.id">
-                <h2>{{audio.name}}</h2>
+                <h2 class="mt-6">{{audio.name}}</h2>
                 <v-data-table
                     dense
                     :headers="headers"
                     :items="audio.recapito"
                     :items-per-page="10"
-                    class="elevation-1 mt-3"
+                    class="elevation-1 "
                 >
 
                     <template v-slot:item.foto="{ item }">
                         <v-img
                             max-height="150"
                             max-width="150"
-                            :src="'https://www.centrouditogroup.it/storage/recapiti/'+item.id+'.jpg'"
+                            :src="'https://www.centrouditogroup.it/storage/recapiti/R'+item.id+'.jpg'"
                         ></v-img>
                     </template>
 
@@ -133,18 +143,13 @@
                     fileUp:{},
                 },
                 headers: [
-                    {
-                        text: 'Nome',
-                        align: 'start',
-                        sortable: false,
-                        value: 'nome',
-                        width: 200,
-                        class: "indigo white--text"
-                    },
-                    { text: 'Indirizzo', width: 200, value: 'indirizzo', class: "indigo white--text" },
-                    { text: 'Citta', width: 150, value: 'citta', class: "indigo white--text" },
-                    { text: 'Provincia', width: 150, value: 'provincia', class: "indigo white--text" },
-                    { text: 'Informazioni', width: 200, value: 'informazioni', class: "indigo white--text" },
+                    { text: 'Cod', align: 'start', sortable: false, value: 'codiceIdentificativo', width: 50, class: "indigo white--text" },
+                    { text: 'Nome', align: 'start', sortable: false, value: 'nome', width: 220, class: "indigo white--text" },
+                    { text: 'Indirizzo', width: 230, value: 'indirizzo', class: "indigo white--text" },
+                    { text: 'Citta', width: 170, value: 'citta', class: "indigo white--text" },
+                    { text: 'PR', width: 70, value: 'provincia', class: "indigo white--text" },
+                    { text: 'Telefono', width: 150, value: 'telefono', class: "indigo white--text" },
+                    { text: 'Informazioni', width: 210, value: 'informazioni', class: "indigo white--text" },
                     { text: 'Foto', width: 200, value: 'foto', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
 

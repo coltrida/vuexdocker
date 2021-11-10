@@ -36,12 +36,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "TempiRecall",
@@ -49,6 +43,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       headers1: [{
         text: 'Data',
+        width: 170,
         align: 'start',
         value: 'created_at',
         "class": "indigo white--text"
@@ -178,22 +173,16 @@ var render = function() {
       _c("h2", [_vm._v("Logging")]),
       _vm._v(" "),
       _c(
-        "v-container",
+        "v-row",
         [
           _c(
-            "v-row",
+            "v-col",
+            { attrs: { cols: "12" } },
             [
-              _c(
-                "v-col",
-                { attrs: { cols: "12" } },
-                [
-                  _c("v-data-table", {
-                    staticClass: "elevation-1 mt-3",
-                    attrs: { headers: _vm.headers1, items: _vm.getLogging }
-                  })
-                ],
-                1
-              )
+              _c("v-data-table", {
+                staticClass: "elevation-1 mt-3",
+                attrs: { headers: _vm.headers1, items: _vm.getLogging }
+              })
             ],
             1
           )

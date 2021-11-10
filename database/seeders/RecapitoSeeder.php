@@ -23,6 +23,7 @@ class RecapitoSeeder extends Seeder
                 'telefono' => '0583174896',
                 'informazioni' => 'STUDI MEDICI, SOPRA LA FARMACIA COMUNALE',
                 'user_id' => 2,
+                'codiceIdentificativo' => 'R1'
             ],
             [
                 'nome' => 'OTTICA APPOLLONI',
@@ -32,6 +33,7 @@ class RecapitoSeeder extends Seeder
                 'telefono' => '0584760689',
                 'informazioni' => "E' IN UNA TRAVERSA DELLA STRADA STATALE",
                 'user_id' => 3,
+                'codiceIdentificativo' => 'R2'
             ],
             [
                 'nome' => 'CENTRO MEDICO BLUGALLERY',
@@ -41,6 +43,7 @@ class RecapitoSeeder extends Seeder
                 'telefono' => '0733639051',
                 'informazioni' => "AL PRIMO PIANO DELLO STABILE NELLA PIAZZA",
                 'user_id' => 9,
+                'codiceIdentificativo' => 'R3'
             ],
         ]);
     }

@@ -145,6 +145,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -153,6 +203,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       AudioSelected: [],
       "switch": 0,
       singleSelect: true,
+      totAnno: 0,
+      totGennaio: 0,
+      totFebbraio: 0,
+      totMarzo: 0,
+      totAprile: 0,
+      totMaggio: 0,
+      totGiugno: 0,
+      totLuglio: 0,
+      totAgosto: 0,
+      totSettembre: 0,
+      totOttobre: 0,
+      totNovembre: 0,
+      totDicembre: 0,
       headers: [{
         text: 'Nome',
         align: 'start',
@@ -170,16 +233,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Bgt Anno',
         sortable: false,
         value: 'budget.budgetAnno',
-        "class": "indigo white--text"
-      }, {
-        text: 'Stipendio',
-        sortable: false,
-        value: 'budget.stipendio',
-        "class": "indigo white--text"
-      }, {
-        text: 'Provv.',
-        sortable: false,
-        value: 'budget.provvigione',
         "class": "indigo white--text"
       }, {
         text: 'Genn',
@@ -256,7 +309,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchAudioConBgtAssegnato();
+    var _this = this;
+
+    this.fetchAudioConBgtAssegnato().then(function () {
+      _this.getAudioConBgt.forEach(function (ele) {
+        _this.totAnno += parseInt(ele.budget.budgetAnno);
+        _this.totGennaio += parseInt(ele.budget.gennaio);
+        _this.totFebbraio += parseInt(ele.budget.febbraio);
+        _this.totMarzo += parseInt(ele.budget.marzo);
+        _this.totAprile += parseInt(ele.budget.aprile);
+        _this.totMaggio += parseInt(ele.budget.maggio);
+        _this.totGiugno += parseInt(ele.budget.giugno);
+        _this.totLuglio += parseInt(ele.budget.luglio);
+        _this.totAgosto += parseInt(ele.budget.agosto);
+        _this.totSettembre += parseInt(ele.budget.settembre);
+        _this.totOttobre += parseInt(ele.budget.ottobre);
+        _this.totNovembre += parseInt(ele.budget.novembre);
+        _this.totDicembre += parseInt(ele.budget.dicembre);
+      });
+    });
     this.fetchAudioSenzaBgt();
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
@@ -266,14 +337,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     modificaBgt: 'modificaBgt'
   })), {}, {
     assegnaBudget: function assegnaBudget() {
-      var _this = this;
+      var _this2 = this;
 
-      this.assegna.idAudio = this.AudioSelected[0].id; //console.log(this.assegna)
+      this.assegna.idAudio = this.AudioSelected[0].id;
 
       if (this["switch"]) {
         this.modificaBgt(this.assegna).then(function () {
-          _this["switch"] = 0;
-          _this.assegna = {
+          _this2["switch"] = 0;
+          _this2.assegna = {
             budgetAnno: 0,
             stipendio: 0,
             provvigione: 0,
@@ -282,8 +353,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       } else {
         this.assegnaBgt(this.assegna).then(function () {
-          _this["switch"] = 0;
-          _this.assegna = {
+          _this2["switch"] = 0;
+          _this2.assegna = {
             budgetAnno: 0,
             stipendio: 0,
             provvigione: 0,
@@ -314,11 +385,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.assegna.mese[10] = item.budget.ottobre;
       this.assegna.mese[11] = item.budget.novembre;
       this.assegna.mese[12] = item.budget.dicembre;
-    },
-    sumField: function sumField(key) {
-      return this.getAudioConBgt.reduce(function (a, b) {
-        return parseInt(a) + (parseInt(b[key]) || 0);
-      }, 0);
     }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
@@ -698,69 +764,243 @@ var render = function() {
                       )
                     ]
                   }
+                },
+                {
+                  key: "item.budget.budgetAnno",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.budgetAnno.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.gennaio",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.gennaio.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.febbraio",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.febbraio.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.marzo",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.marzo.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.aprile",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.aprile.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.maggio",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.maggio.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.giugno",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.giugno.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.luglio",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.luglio.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.agosto",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.agosto.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.settembre",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.settembre.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.ottobre",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.ottobre.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.novembre",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.novembre.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.budget.dicembre",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(item.budget.dicembre.toLocaleString("it")) +
+                          "\n            "
+                      )
+                    ]
+                  }
                 }
               ])
             },
             [
               _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
               _c("template", { slot: "body.append" }, [
                 _c("tr", { staticClass: "pink--text" }, [
                   _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.budgetAnno")))
+                  _c("th", [_vm._v(_vm._s(_vm.totAnno.toLocaleString("it")))]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totGennaio.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "title" }),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.gennaio")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totFebbraio.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.febbraio")))
+                  _c("th", [_vm._v(_vm._s(_vm.totMarzo.toLocaleString("it")))]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totAprile.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.marzo")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totMaggio.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.aprile")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totGiugno.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.maggio")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totLuglio.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.giugno")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totAgosto.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.luglio")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totSettembre.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.agosto")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totOttobre.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.settembre")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totNovembre.toLocaleString("it")))
                   ]),
                   _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.ottobre")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.novembre")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "title" }, [
-                    _vm._v(_vm._s(_vm.sumField("budget.dicembre")))
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totDicembre.toLocaleString("it")))
                   ])
                 ])
               ])

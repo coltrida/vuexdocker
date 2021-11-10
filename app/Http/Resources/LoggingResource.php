@@ -15,7 +15,7 @@ class LoggingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'created_at' => $this->created_at->format('d/m/Y - h:i:s A'),
+            'created_at' => $this->created_at->format('d/m/Y - H:i'),
             'description' => $this->description,
             'log_name' => $this->log_name,
             'event' => $this->event,

@@ -22,25 +22,38 @@
             <v-row>
                 <v-col
                     cols="12"
-                    sm="6"
                 >
-                <v-list>
-                    <v-list-item
-                        v-for="canale in getCanali"
-                        :key="canale.id" style="border-bottom: 1px solid black"
-                    >
-                        <v-list-item-content>
-                            <v-list-item-title v-text="canale.name"></v-list-item-title>
-                        </v-list-item-content>
+                    <div class="text-center" v-if="carica">
+                        <v-progress-circular
+                            indeterminate
+                            color="primary"
+                        ></v-progress-circular>
+                    </div>
+                    <div v-else>
+                        <v-data-table
+                            :headers="header"
+                            :items="getCanali"
+                            class="elevation-1"
+                        >
 
-                        <v-list-item-action>
-                            <v-btn icon>
-                                <v-icon color="red" @click="elimina(canale.id)">mdi-delete</v-icon>
-                            </v-btn>
-                        </v-list-item-action>
+                            <template v-slot:item.actions="{ item }">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="red"
+                                            @click="elimina(item.id)"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-delete
+                                        </v-icon>
+                                    </template>
+                                    <span>Elimina</span>
+                                </v-tooltip>
+                            </template>
 
-                    </v-list-item>
-                </v-list>
+                        </v-data-table>
+                    </div>
                 </v-col>
             </v-row>
         </v-container>
@@ -56,12 +69,20 @@
 
         data(){
             return {
-                newCanale:''
+                newCanale:'',
+                carica: false,
+                header: [
+                    { text: 'Canale Mkt',  align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
+                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
+                ],
             }
         },
 
         mounted(){
-            this.fetchCanali();
+            this.carica = true;
+            this.fetchCanali().then(() =>{
+                this.carica = false;
+            });
         },
 
         methods:{

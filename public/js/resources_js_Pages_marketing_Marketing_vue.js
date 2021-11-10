@@ -68,16 +68,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Marketing",
   data: function data() {
     return {
-      newCanale: ''
+      newCanale: '',
+      carica: false,
+      header: [{
+        text: 'Canale Mkt',
+        align: 'start',
+        sortable: false,
+        value: 'name',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }]
     };
   },
   mounted: function mounted() {
-    this.fetchCanali();
+    var _this = this;
+
+    this.carica = true;
+    this.fetchCanali().then(function () {
+      _this.carica = false;
+    });
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('marketing', {
     fetchCanali: 'fetchCanali',
@@ -235,64 +266,92 @@ var render = function() {
           _c(
             "v-row",
             [
-              _c(
-                "v-col",
-                { attrs: { cols: "12", sm: "6" } },
-                [
-                  _c(
-                    "v-list",
-                    _vm._l(_vm.getCanali, function(canale) {
-                      return _c(
-                        "v-list-item",
-                        {
-                          key: canale.id,
-                          staticStyle: { "border-bottom": "1px solid black" }
-                        },
-                        [
-                          _c(
-                            "v-list-item-content",
-                            [
-                              _c("v-list-item-title", {
-                                domProps: { textContent: _vm._s(canale.name) }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-list-item-action",
-                            [
-                              _c(
-                                "v-btn",
-                                { attrs: { icon: "" } },
-                                [
+              _c("v-col", { attrs: { cols: "12" } }, [
+                _vm.carica
+                  ? _c(
+                      "div",
+                      { staticClass: "text-center" },
+                      [
+                        _c("v-progress-circular", {
+                          attrs: { indeterminate: "", color: "primary" }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1",
+                          attrs: { headers: _vm.header, items: _vm.getCanali },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item.actions",
+                              fn: function(ref) {
+                                var item = ref.item
+                                return [
                                   _c(
-                                    "v-icon",
+                                    "v-tooltip",
                                     {
-                                      attrs: { color: "red" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.elimina(canale.id)
-                                        }
-                                      }
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: { color: "red" },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.elimina(
+                                                              item.id
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                        mdi-delete\n                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
                                     },
-                                    [_vm._v("mdi-delete")]
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Elimina")])
+                                    ]
                                   )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    }),
-                    1
-                  )
-                ],
-                1
-              )
+                                ]
+                              }
+                            }
+                          ])
+                        })
+                      ],
+                      1
+                    )
+              ])
             ],
             1
           )

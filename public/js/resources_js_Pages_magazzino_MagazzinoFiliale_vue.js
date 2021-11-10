@@ -413,6 +413,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     richiedi: function richiedi() {
       this.productRichiesto.filiale_id = this.rottaIdFiliale;
       this.productRichiesto.stato_id = 6;
+      this.productRichiesto.user_id = parseInt(this.getIdUser);
       this.richiediProduct(this.productRichiesto);
       this.productRichiesto = {};
     },
@@ -441,7 +442,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getFiliali: 'getFiliali',
     getFilialeById: 'getFilialeById'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
-    getRuolo: 'getRuolo'
+    getRuolo: 'getRuolo',
+    getIdUser: 'getIdUser'
   })), {}, {
     rottaIdFiliale: function rottaIdFiliale() {
       return this.$route.params.filialeId ? this.$route.params.filialeId : null;

@@ -9,15 +9,19 @@
                     class="black--text align-end"
                     height="400px"
                     width="600px"
-                    :src="'https://www.centrouditogroup.it/storage/recapiti/'+informazioneRecapito.id+'.jpg'"
+                    :src="'https://www.centrouditogroup.it/storage/recapiti/'+informazioneStruttura.codiceIdentificativo+'.jpg'"
                 >
                 </v-img>
                 <v-card-title class="text-h5">
-                    {{ informazioneRecapito.nome }}
+                    {{ informazioneStruttura.nome }}
                 </v-card-title>
 
+                <v-card-subtitle class="text-h6">
+                    {{ informazioneStruttura.indirizzo }} - {{ informazioneStruttura.citta }}
+                </v-card-subtitle>
+
                 <v-card-text>
-                    {{ informazioneRecapito.informazioni }}
+                    {{ informazioneStruttura.informazioni }}
                 </v-card-text>
 
                 <v-card-actions>
@@ -45,11 +49,11 @@
             <v-col cols="4">
                 <v-row justify="center">
                     <v-select
-                        @change="infoRecapito($event)"
-                        :items="getRecapiti"
+                        @change="infoStruttura($event)"
+                        :items="getfilialiRecapiti"
                         return-object
                         item-text="nome"
-                        label="Informazioni Recapito"
+                        label="Informazioni Strutture"
                     ></v-select>
                 </v-row>
             </v-col>
@@ -62,6 +66,21 @@
 
         <v-row>
             <v-col cols="12" md="12" lg="6" xs="12" sm="12">
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            @click="programmaData()"
+                            color="warning"
+                            dark
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            {{nomeBtn}}
+                        </v-btn>
+                    </template>
+                    <span>{{spiegazione}}</span>
+                </v-tooltip>
+
                 <v-row>
                     <v-col cols="12" md="12" lg="6" xs="12" sm="12">
                         <v-menu
@@ -81,6 +100,7 @@
                                     readonly
                                     v-bind="attrs"
                                     v-on="on"
+                                    :disabled="attivaData"
                                 ></v-text-field>
                             </template>
                             <v-date-picker
@@ -113,6 +133,7 @@
                         <v-select
                             v-model="telefonata.esito"
                             :items="tipologiaEsito"
+                            :disabled="!attivaData"
                             label="esito"
                         ></v-select>
                     </v-col>
@@ -121,6 +142,7 @@
                         <v-text-field
                             v-model="telefonata.note"
                             label="Note"
+                            :disabled="!attivaData"
                         ></v-text-field>
                     </v-col>
 
@@ -140,6 +162,7 @@
                             ></v-progress-circular>
                         </div>
                         <div v-else>
+                            <h3>Storico delle Telefonate</h3>
                             <v-data-table
                                 :headers="header"
                                 :items="getRecalls"
@@ -214,7 +237,8 @@
         data(){
             return {
                 dialog: false,
-                informazioneRecapito: '',
+                attivaData: true,
+                informazioneStruttura: '',
                 carica: false,
                 telefonata:{},
                 telefonataDaAggiornare:{},
@@ -239,7 +263,7 @@
         mounted() {
             this.carica = true;
             this.inserimentoDataDiOggi();
-            this.fetchRecapitiByAudio(this.recallsClient.user_id);
+            this.fetchStruttureByAudio(this.recallsClient.user_id);
             this.fetchRecallsByIdClient(this.recallsClient.id).then(() => {
                 this.carica = false;
             });
@@ -253,7 +277,7 @@
             }),
 
             ...mapActions('recapiti', {
-                fetchRecapitiByAudio:'fetchRecapitiByAudio',
+                fetchStruttureByAudio:'fetchStruttureByAudio',
             }),
 
             inserimentoDataDiOggi(){
@@ -298,9 +322,20 @@
                 this.$emit('chiudiRecalls', null)
             },
 
-            infoRecapito(recapito){
-                this.informazioneRecapito = recapito;
+            infoStruttura(struttura){
+                this.informazioneStruttura = struttura;
                 this.dialog = true;
+            },
+
+            programmaData(){
+                if (this.attivaData === true) {
+                    this.telefonata.esito = null;
+                    this.telefonata.note = null;
+                    this.attivaData = false;
+                } else {
+                    this.inserimentoDataDiOggi();
+                    this.attivaData = true;
+                }
             }
 
         },
@@ -311,12 +346,21 @@
             }),
 
             ...mapGetters('recapiti', {
-                getRecapiti: 'getRecapiti',
+                getfilialiRecapiti: 'getfilialiRecapiti',
             }),
 
             ...mapGetters('login', {
                 getIdUser: 'getIdUser',
             }),
+
+            nomeBtn(){
+                return this.attivaData === false ? 'vuoi programmare la tel' : 'vuoi effettuare ora la tel'
+            },
+
+            spiegazione(){
+                return this.attivaData === false ? 'clicca qui se vuoi effettuare ora la telefonata' :
+                    'clicca qui se vuoi programmare in un altro giorno la telefonata'
+            }
         }
     }
 </script>

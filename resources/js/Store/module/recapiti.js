@@ -4,12 +4,17 @@ const state = () => ({
     recapiti: [],
     recapitiIngressi: [],
     recapitiIngressiMesi: [],
-    struttureAudio: []
+    struttureAudio: [],
+    filialiRecapiti: []
 });
 
 const getters = {
     getRecapiti(state){
         return state.recapiti;
+    },
+
+    getfilialiRecapiti(state){
+        return state.filialiRecapiti;
     },
 
     getStruttureAudio(state){
@@ -81,6 +86,15 @@ const actions = {
         commit('fetchRecapiti', response.data);
     },
 
+    async fetchStruttureByAudio({commit}, idAudio){
+        const response = await axios.get(`${help().linkstrutture}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchStruttureByAudio', response.data);
+    },
+
     async addRecapito({commit}, payload){
         const config = {
             headers: {
@@ -139,6 +153,10 @@ const actions = {
 const mutations = {
     fetchRecapiti(state, payload){
         state.recapiti = payload;
+    },
+
+    fetchStruttureByAudio(state, payload){
+        state.filialiRecapiti = payload;
     },
 
     fetchStruttureAudio(state, payload){

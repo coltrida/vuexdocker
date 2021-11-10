@@ -95,6 +95,7 @@
             aggiungi(){
                 this.$refs.form.validate();
                 this.newRata.fatturaId = this.rottaIdFattura;
+                this.newRata.user_id = this.getIdUser;
                 this.addRata(this.newRata).then(() => {
                     this.newRata = {};
                     this.$router.push({ name: 'rateClienti' });
@@ -108,6 +109,9 @@
                 getFattura:'getFattura',
             }),
 
+            ...mapGetters('login', {
+                getIdUser:'getIdUser',
+            }),
 
             rottaIdFattura(){
                 return this.$route.params.fatturaId ? this.$route.params.fatturaId : null;

@@ -15,6 +15,7 @@ class CreateRecapitosTable extends Migration
     {
         Schema::create('recapitos', function (Blueprint $table) {
             $table->id();
+            $table->string('codiceIdentificativo')->nullable();
             $table->string('nome');
             $table->string('indirizzo')->nullable();
             $table->string('citta')->nullable();

@@ -99,24 +99,74 @@
                     </v-icon>
                 </template>
 
+                <template v-slot:item.budget.budgetAnno="{ item }">
+                    {{item.budget.budgetAnno.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.gennaio="{ item }">
+                    {{item.budget.gennaio.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.febbraio="{ item }">
+                    {{item.budget.febbraio.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.marzo="{ item }">
+                    {{item.budget.marzo.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.aprile="{ item }">
+                    {{item.budget.aprile.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.maggio="{ item }">
+                    {{item.budget.maggio.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.giugno="{ item }">
+                    {{item.budget.giugno.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.luglio="{ item }">
+                    {{item.budget.luglio.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.agosto="{ item }">
+                    {{item.budget.agosto.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.settembre="{ item }">
+                    {{item.budget.settembre.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.ottobre="{ item }">
+                    {{item.budget.ottobre.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.novembre="{ item }">
+                    {{item.budget.novembre.toLocaleString('it')}}
+                </template>
+
+                <template v-slot:item.budget.dicembre="{ item }">
+                    {{item.budget.dicembre.toLocaleString('it')}}
+                </template>
+
                 <template slot="body.append">
                     <tr class="pink--text">
                         <th class="title">Totali</th>
-                        <th class="title">{{ sumField('budget.budgetAnno') }}</th>
-                        <th class="title"></th>
-                        <th class="title"></th>
-                        <th class="title">{{ sumField('budget.gennaio') }}</th>
-                        <th class="title">{{ sumField('budget.febbraio') }}</th>
-                        <th class="title">{{ sumField('budget.marzo') }}</th>
-                        <th class="title">{{ sumField('budget.aprile') }}</th>
-                        <th class="title">{{ sumField('budget.maggio') }}</th>
-                        <th class="title">{{ sumField('budget.giugno') }}</th>
-                        <th class="title">{{ sumField('budget.luglio') }}</th>
-                        <th class="title">{{ sumField('budget.agosto') }}</th>
-                        <th class="title">{{ sumField('budget.settembre') }}</th>
-                        <th class="title">{{ sumField('budget.ottobre') }}</th>
-                        <th class="title">{{ sumField('budget.novembre') }}</th>
-                        <th class="title">{{ sumField('budget.dicembre') }}</th>
+                        <th>{{ totAnno.toLocaleString('it') }}</th>
+                        <th>{{ totGennaio.toLocaleString('it') }}</th>
+                        <th>{{ totFebbraio.toLocaleString('it') }}</th>
+                        <th>{{ totMarzo.toLocaleString('it') }}</th>
+                        <th>{{ totAprile.toLocaleString('it') }}</th>
+                        <th>{{ totMaggio.toLocaleString('it') }}</th>
+                        <th>{{ totGiugno.toLocaleString('it') }}</th>
+                        <th>{{ totLuglio.toLocaleString('it') }}</th>
+                        <th>{{ totAgosto.toLocaleString('it') }}</th>
+                        <th>{{ totSettembre.toLocaleString('it') }}</th>
+                        <th>{{ totOttobre.toLocaleString('it') }}</th>
+                        <th>{{ totNovembre.toLocaleString('it') }}</th>
+                        <th>{{ totDicembre.toLocaleString('it') }}</th>
                     </tr>
                 </template>
             </v-data-table>
@@ -135,14 +185,25 @@
                 AudioSelected: [],
                 switch: 0,
                 singleSelect: true,
+                totAnno: 0,
+                totGennaio: 0,
+                totFebbraio: 0,
+                totMarzo: 0,
+                totAprile: 0,
+                totMaggio: 0,
+                totGiugno: 0,
+                totLuglio: 0,
+                totAgosto: 0,
+                totSettembre: 0,
+                totOttobre: 0,
+                totNovembre: 0,
+                totDicembre: 0,
                 headers: [
                     { text: 'Nome', align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
                 ],
                 headers2: [
                     { text: 'Nome', align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
                     { text: 'Bgt Anno', sortable: false, value: 'budget.budgetAnno', class: "indigo white--text" },
-                    { text: 'Stipendio', sortable: false, value: 'budget.stipendio', class: "indigo white--text" },
-                    { text: 'Provv.', sortable: false, value: 'budget.provvigione', class: "indigo white--text" },
                     { text: 'Genn', sortable: false, value: 'budget.gennaio', class: "indigo white--text" },
                     { text: 'Febb', sortable: false, value: 'budget.febbraio', class: "indigo white--text" },
                     { text: 'Marzo', sortable: false, value: 'budget.marzo', class: "indigo white--text" },
@@ -167,7 +228,23 @@
         },
 
         mounted() {
-            this.fetchAudioConBgtAssegnato();
+            this.fetchAudioConBgtAssegnato().then(() => {
+                this.getAudioConBgt.forEach(ele => {
+                    this.totAnno += parseInt(ele.budget.budgetAnno);
+                    this.totGennaio += parseInt(ele.budget.gennaio);
+                    this.totFebbraio += parseInt(ele.budget.febbraio);
+                    this.totMarzo += parseInt(ele.budget.marzo);
+                    this.totAprile += parseInt(ele.budget.aprile);
+                    this.totMaggio += parseInt(ele.budget.maggio);
+                    this.totGiugno += parseInt(ele.budget.giugno);
+                    this.totLuglio += parseInt(ele.budget.luglio);
+                    this.totAgosto += parseInt(ele.budget.agosto);
+                    this.totSettembre += parseInt(ele.budget.settembre);
+                    this.totOttobre += parseInt(ele.budget.ottobre);
+                    this.totNovembre += parseInt(ele.budget.novembre);
+                    this.totDicembre += parseInt(ele.budget.dicembre);
+                });
+            });
             this.fetchAudioSenzaBgt();
         },
 
@@ -181,7 +258,6 @@
 
             assegnaBudget(){
                 this.assegna.idAudio = this.AudioSelected[0].id;
-                //console.log(this.assegna)
                 if (this.switch){
                     this.modificaBgt(this.assegna).then(() => {
                         this.switch = 0;
@@ -230,9 +306,6 @@
                 this.assegna.mese[12] = item.budget.dicembre;
             },
 
-            sumField(key) {
-                return this.getAudioConBgt.reduce((a, b) => parseInt(a) + (parseInt(b[key]) || 0), 0)
-            }
         },
 
         computed:{

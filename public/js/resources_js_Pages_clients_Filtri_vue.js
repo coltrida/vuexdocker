@@ -318,6 +318,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -328,7 +335,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       dialog: false,
-      informazioneRecapito: '',
+      informazioneStruttura: '',
       carica: false,
       modificaSwitch: false,
       modal2: false,
@@ -394,9 +401,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     if (this.getRuolo == 'call' || this.getRuolo == 'amministrazione' || this.getRuolo == 'admin') {
       this.fetchFiliali();
+      this.fetchStruttureByAudio(this.appuntamentoClient.user_id);
       this.fetchRecapitiByAudio(this.appuntamentoClient.user_id);
     } else {
       this.fetchFilialiByUser(this.getIdUser);
+      this.fetchStruttureByAudio(this.getIdUser);
       this.fetchRecapitiByAudio(this.getIdUser);
     }
   },
@@ -416,6 +425,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     prossimoGiovedi: 'prossimoGiovedi',
     prossimoVenerdi: 'prossimoVenerdi'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('recapiti', {
+    fetchStruttureByAudio: 'fetchStruttureByAudio',
     fetchRecapitiByAudio: 'fetchRecapitiByAudio',
     fetchRecapiti: 'fetchRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('filiali', {
@@ -491,8 +501,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.newAppuntamento.giorno = eleSelezionato.giornoOriginale;
       this.$store.commit('appuntamenti/eliminaAppuntamento', this.newAppuntamento.id);
     },
-    infoRecapito: function infoRecapito(recapito) {
-      this.informazioneRecapito = recapito;
+    infoStruttura: function infoStruttura(struttura) {
+      this.informazioneStruttura = struttura;
       this.dialog = true;
     }
   }),
@@ -503,7 +513,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getIdUser: 'getIdUser',
     getRuolo: 'getRuolo'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('recapiti', {
-    getRecapiti: 'getRecapiti'
+    getRecapiti: 'getRecapiti',
+    getfilialiRecapiti: 'getfilialiRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('filiali', {
     getFiliali: 'getFiliali'
   })), {}, {
@@ -1863,6 +1874,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1875,6 +1898,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['proveClient'],
   data: function data() {
     return {
+      bloccaProva: true,
       listaPro: [],
       tipologia: ['Prodotti', 'Servizi'],
       tipologiaSelezionata: '',
@@ -1967,7 +1991,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.deleteProveSenzaProdotti(this.proveClient.id).then(function () {
       _this.fetchProvePassate(_this.proveClient.id).then(function () {
         _this.fetchCanali().then(function () {
-          _this.prova.marketing_id = _this.proveClient.marketing_id;
+          _this.prova.marketing_id = _this.proveClient.marketing_id ? _this.proveClient.marketing_id : 0;
+          _this.bloccaProva = _this.proveClient.marketing_id ? false : true;
           _this.carica2 = false;
         });
       });
@@ -2115,6 +2140,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.abilitaFornitore = false;
         this.fetchServizi();
       }
+    },
+    selezionaMkt: function selezionaMkt() {
+      this.bloccaProva = false;
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('fornitori', {
@@ -2363,6 +2391,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2374,7 +2425,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       dialog: false,
-      informazioneRecapito: '',
+      attivaData: true,
+      informazioneStruttura: '',
       carica: false,
       telefonata: {},
       telefonataDaAggiornare: {},
@@ -2410,7 +2462,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     this.carica = true;
     this.inserimentoDataDiOggi();
-    this.fetchRecapitiByAudio(this.recallsClient.user_id);
+    this.fetchStruttureByAudio(this.recallsClient.user_id);
     this.fetchRecallsByIdClient(this.recallsClient.id).then(function () {
       _this.carica = false;
     });
@@ -2420,7 +2472,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addTelefonata: 'addTelefonata',
     aggiornaTelefonata: 'aggiornaTelefonata'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('recapiti', {
-    fetchRecapitiByAudio: 'fetchRecapitiByAudio'
+    fetchStruttureByAudio: 'fetchStruttureByAudio'
   })), {}, {
     inserimentoDataDiOggi: function inserimentoDataDiOggi() {
       var giornoDiOggi = new Date();
@@ -2467,18 +2519,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     cancella: function cancella() {
       this.$emit('chiudiRecalls', null);
     },
-    infoRecapito: function infoRecapito(recapito) {
-      this.informazioneRecapito = recapito;
+    infoStruttura: function infoStruttura(struttura) {
+      this.informazioneStruttura = struttura;
       this.dialog = true;
+    },
+    programmaData: function programmaData() {
+      if (this.attivaData === true) {
+        this.telefonata.esito = null;
+        this.telefonata.note = null;
+        this.attivaData = false;
+      } else {
+        this.inserimentoDataDiOggi();
+        this.attivaData = true;
+      }
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('telefonate', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('telefonate', {
     getRecalls: 'getRecalls'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('recapiti', {
-    getRecapiti: 'getRecapiti'
+    getfilialiRecapiti: 'getfilialiRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getIdUser: 'getIdUser'
-  }))
+  })), {}, {
+    nomeBtn: function nomeBtn() {
+      return this.attivaData === false ? 'vuoi programmare la tel' : 'vuoi effettuare ora la tel';
+    },
+    spiegazione: function spiegazione() {
+      return this.attivaData === false ? 'clicca qui se vuoi effettuare ora la telefonata' : 'clicca qui se vuoi programmare in un altro giorno la telefonata';
+    }
+  })
 });
 
 /***/ }),
@@ -42496,7 +42565,7 @@ var render = function() {
                   width: "600px",
                   src:
                     "https://www.centrouditogroup.it/storage/recapiti/" +
-                    _vm.informazioneRecapito.id +
+                    _vm.informazioneStruttura.codiceIdentificativo +
                     ".jpg"
                 }
               }),
@@ -42504,7 +42573,17 @@ var render = function() {
               _c("v-card-title", { staticClass: "text-h5" }, [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.informazioneRecapito.nome) +
+                    _vm._s(_vm.informazioneStruttura.nome) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("v-card-subtitle", { staticClass: "text-h6" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.informazioneStruttura.indirizzo) +
+                    " - " +
+                    _vm._s(_vm.informazioneStruttura.citta) +
                     "\n            "
                 )
               ]),
@@ -42512,7 +42591,7 @@ var render = function() {
               _c("v-card-text", [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.informazioneRecapito.informazioni) +
+                    _vm._s(_vm.informazioneStruttura.informazioni) +
                     "\n            "
                 )
               ]),
@@ -42573,14 +42652,14 @@ var render = function() {
                 [
                   _c("v-select", {
                     attrs: {
-                      items: _vm.getRecapiti,
+                      items: _vm.getfilialiRecapiti,
                       "return-object": "",
                       "item-text": "nome",
-                      label: "Informazioni Recapito"
+                      label: "Informazioni Strutture"
                     },
                     on: {
                       change: function($event) {
-                        return _vm.infoRecapito($event)
+                        return _vm.infoStruttura($event)
                       }
                     }
                   })
@@ -42755,7 +42834,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                Cancel\n                            "
+                                        "\n                                    Cancel\n                                "
                                       )
                                     ]
                                   ),
@@ -42774,7 +42853,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                OK\n                            "
+                                        "\n                                    OK\n                                "
                                       )
                                     ]
                                   )
@@ -43025,10 +43104,10 @@ var render = function() {
                     [
                       _c(
                         "v-col",
-                        { attrs: { cols: "12" } },
+                        { attrs: { cols: "8" } },
                         [
                           _c("v-textarea", {
-                            attrs: { label: "Note" },
+                            attrs: { rows: "2", label: "Note" },
                             model: {
                               value: _vm.newAppuntamento.nota,
                               callback: function($$v) {
@@ -43039,25 +43118,32 @@ var render = function() {
                           })
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "4" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "my-2",
+                              attrs: { color: "primary" },
+                              on: { click: _vm.inserisci }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.btnName) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      staticClass: "my-2",
-                      attrs: { color: "primary" },
-                      on: { click: _vm.inserisci }
-                    },
-                    [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(_vm.btnName) +
-                          "\n            "
-                      )
-                    ]
                   )
                 ],
                 1
@@ -43077,8 +43163,10 @@ var render = function() {
                 : _c(
                     "div",
                     [
+                      _c("h3", [_vm._v("Storico degli Appuntamenti")]),
+                      _vm._v(" "),
                       _c("v-data-table", {
-                        staticClass: "elevation-1 my-4",
+                        staticClass: "elevation-1",
                         attrs: {
                           headers: _vm.headers,
                           items: _vm.getAppuntamenti,
@@ -44582,37 +44670,59 @@ var render = function() {
                   "div",
                   [
                     _c(
-                      "v-col",
+                      "v-row",
                       [
-                        _c("v-select", {
-                          attrs: {
-                            "item-value": "id",
-                            "item-text": "name",
-                            items: _vm.getCanali,
-                            required: "",
-                            label: "Canale Mkg*"
-                          },
-                          model: {
-                            value: _vm.prova.marketing_id,
-                            callback: function($$v) {
-                              _vm.$set(_vm.prova, "marketing_id", $$v)
-                            },
-                            expression: "prova.marketing_id"
-                          }
-                        }),
+                        _c(
+                          "v-col",
+                          { attrs: { cols: "12", md: "8", lg: "8" } },
+                          [
+                            _c("v-select", {
+                              attrs: {
+                                "item-value": "id",
+                                "item-text": "name",
+                                items: _vm.getCanali,
+                                required: "",
+                                hint:
+                                  "Se presente, viene inserito il codice Mkt del Paziente",
+                                "persistent-hint": "",
+                                label: "Canale Mkg*"
+                              },
+                              on: {
+                                change: function($event) {
+                                  return _vm.selezionaMkt()
+                                }
+                              },
+                              model: {
+                                value: _vm.prova.marketing_id,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.prova, "marketing_id", $$v)
+                                },
+                                expression: "prova.marketing_id"
+                              }
+                            })
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
                         _c(
-                          "v-btn",
-                          {
-                            staticClass: "mt-2",
-                            attrs: { color: "primary", dark: "" },
-                            on: { click: _vm.nuovaProvaInCorso }
-                          },
+                          "v-col",
+                          { attrs: { cols: "12", md: "4", lg: "4" } },
                           [
-                            _vm._v(
-                              "\n                        Nuova Prova\n                    "
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "mt-2",
+                                attrs: { disabled: _vm.bloccaProva },
+                                on: { click: _vm.nuovaProvaInCorso }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            Nuova Prova\n                        "
+                                )
+                              ]
                             )
-                          ]
+                          ],
+                          1
                         )
                       ],
                       1
@@ -44765,7 +44875,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "12", md: "1", lg: "1" } },
+                { attrs: { cols: "12", md: "2", lg: "2" } },
                 [
                   _c("v-text-field", {
                     attrs: { type: "number", label: "prezzo" },
@@ -44783,16 +44893,12 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "12", md: "2", lg: "2" } },
+                { attrs: { cols: "12", md: "1", lg: "1" } },
                 [
                   _c(
                     "v-btn",
                     {
-                      attrs: {
-                        color: "primary",
-                        dark: "",
-                        disabled: !_vm.abilitaInProva
-                      },
+                      attrs: { disabled: !_vm.abilitaInProva },
                       on: { click: _vm.inserisciInProva }
                     },
                     [
@@ -45321,7 +45427,7 @@ var render = function() {
                   width: "600px",
                   src:
                     "https://www.centrouditogroup.it/storage/recapiti/" +
-                    _vm.informazioneRecapito.id +
+                    _vm.informazioneStruttura.codiceIdentificativo +
                     ".jpg"
                 }
               }),
@@ -45329,7 +45435,17 @@ var render = function() {
               _c("v-card-title", { staticClass: "text-h5" }, [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.informazioneRecapito.nome) +
+                    _vm._s(_vm.informazioneStruttura.nome) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("v-card-subtitle", { staticClass: "text-h6" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.informazioneStruttura.indirizzo) +
+                    " - " +
+                    _vm._s(_vm.informazioneStruttura.citta) +
                     "\n            "
                 )
               ]),
@@ -45337,7 +45453,7 @@ var render = function() {
               _c("v-card-text", [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.informazioneRecapito.informazioni) +
+                    _vm._s(_vm.informazioneStruttura.informazioni) +
                     "\n            "
                 )
               ]),
@@ -45428,14 +45544,14 @@ var render = function() {
                 [
                   _c("v-select", {
                     attrs: {
-                      items: _vm.getRecapiti,
+                      items: _vm.getfilialiRecapiti,
                       "return-object": "",
                       "item-text": "nome",
-                      label: "Informazioni Recapito"
+                      label: "Informazioni Strutture"
                     },
                     on: {
                       change: function($event) {
-                        return _vm.infoRecapito($event)
+                        return _vm.infoStruttura($event)
                       }
                     }
                   })
@@ -45472,6 +45588,51 @@ var render = function() {
             "v-col",
             { attrs: { cols: "12", md: "12", lg: "6", xs: "12", sm: "12" } },
             [
+              _c(
+                "v-tooltip",
+                {
+                  attrs: { bottom: "" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "activator",
+                      fn: function(ref) {
+                        var on = ref.on
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._g(
+                              _vm._b(
+                                {
+                                  attrs: { color: "warning", dark: "" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.programmaData()
+                                    }
+                                  }
+                                },
+                                "v-btn",
+                                attrs,
+                                false
+                              ),
+                              on
+                            ),
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(_vm.nomeBtn) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                },
+                [_vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.spiegazione))])]
+              ),
+              _vm._v(" "),
               _c(
                 "v-row",
                 [
@@ -45521,7 +45682,8 @@ var render = function() {
                                           attrs: {
                                             label: "Data Telefonata",
                                             "prepend-icon": "mdi-calendar",
-                                            readonly: ""
+                                            readonly: "",
+                                            disabled: _vm.attivaData
                                           },
                                           model: {
                                             value: _vm.telefonata.giorno,
@@ -45634,7 +45796,11 @@ var render = function() {
                     },
                     [
                       _c("v-select", {
-                        attrs: { items: _vm.tipologiaEsito, label: "esito" },
+                        attrs: {
+                          items: _vm.tipologiaEsito,
+                          disabled: !_vm.attivaData,
+                          label: "esito"
+                        },
                         model: {
                           value: _vm.telefonata.esito,
                           callback: function($$v) {
@@ -45660,7 +45826,7 @@ var render = function() {
                     },
                     [
                       _c("v-text-field", {
-                        attrs: { label: "Note" },
+                        attrs: { label: "Note", disabled: !_vm.attivaData },
                         model: {
                           value: _vm.telefonata.note,
                           callback: function($$v) {
@@ -45727,6 +45893,8 @@ var render = function() {
                       : _c(
                           "div",
                           [
+                            _c("h3", [_vm._v("Storico delle Telefonate")]),
+                            _vm._v(" "),
                             _c("v-data-table", {
                               staticClass: "elevation-1",
                               attrs: {

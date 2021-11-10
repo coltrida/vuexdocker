@@ -110,6 +110,7 @@ class AppuntamentiService
     public function addAppuntamento($request)
     {
         $giornoDiOggi = Carbon::now();
+        $dataApppuntamentoFormattata = Carbon::make($request->giorno)->format('d-m-Y');
 
         $newAppuntamento = new Appuntamento();
         $newAppuntamento->giorno = $request->giorno;
@@ -128,7 +129,7 @@ class AppuntamentiService
         $utente = User::find($request->telefonista_id);
         $cliente = Client::find($request->client_id);
         $propieta = 'appuntamento';
-        $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$request->giorno.' alle ore '.$request->orario.' presso '.$dove;
+        $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$dataApppuntamentoFormattata.' alle ore '.$request->orario.' presso '.$dove;
 
         Informazione::create([
             'client_id' => $request->client_id,
@@ -149,14 +150,19 @@ class AppuntamentiService
 
     public function modificaAppuntamento($request)
     {
+        $dataApppuntamentoFormattata = Carbon::make($request->giorno)->format('d-m-Y');
         $appuntamento = Appuntamento::find($request->id);
         $informazione = Informazione::where([
             ['client_id', $request->client_id],
             ['tipo', 'APPUNTAMENTO'],
-            ['giorno', $appuntamento->giorno]
+            ['giorno', $appuntamento->created_at->format('Y-m-d')]
         ])->first();
 
-        $informazione->giorno = $request->giorno;
+        $utente = User::find($request->telefonista_id);
+        $cliente = Client::find($request->client_id);
+        $dove = $request->filiale_id ? 'Filiale di '.Filiale::find($request->filiale_id)->nome : 'Recapito '.Recapito::find($request->recapito_id)->nome;
+        $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$dataApppuntamentoFormattata.' alle ore '.$request->orario.' presso '.$dove;
+        $informazione->note = $testo;
         $informazione->save();
 
         $appuntamento->giorno = $request->giorno;
@@ -173,7 +179,6 @@ class AppuntamentiService
         $utente = User::find($request->user_id);
         $cliente = Client::find($request->client_id);
         $propieta = 'appuntamento';
-        $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$request->giorno.' alle ore '.$request->orario.' presso '.$dove;
 
         $log = new LoggingService();
         $log->scriviLog($cliente->cognome.' '.$cliente->nome, $utente, $utente->name, $propieta, $testo);

@@ -18,12 +18,12 @@ class RecapitoService
 
     public function struttureAudio($idAudio)
     {
-        $recapiti = User::with('recapito:id,nome,citta,user_id')->find($idAudio)->recapito;
+        $recapiti = User::with('recapito:id,nome,citta,user_id,codiceIdentificativo')->find($idAudio)->recapito;
         $recapiti->each(function ($item){
             $item->tipologia = 'recapito';
         });
 
-        $filiali = User::with('filiale:id,nome,citta')->find($idAudio)->filiale;
+        $filiali = User::with('filiale:id,nome,citta,codiceIdentificativo')->find($idAudio)->filiale;
         $filiali->each(function ($item){
             $item->tipologia = 'filiale';
         });
@@ -47,33 +47,37 @@ class RecapitoService
     {
         $recapito = Recapito::create([
             'nome' => trim(Str::upper($request->nome)),
-            'indirizzo' => trim(Str::upper($request->indirizzo)),
-            'citta' => trim(Str::upper($request->citta)),
+            'indirizzo' => $request->indirizzo != 'undefined' ? trim(Str::upper($request->indirizzo)) : null,
+            'citta' => $request->citta != 'undefined' ? trim(Str::upper($request->citta)) : null,
+            'telefono' => $request->telefono != 'undefined' ? $request->telefono : null,
             'user_id' => $request->user_id,
-            'provincia' => trim(Str::upper($request->provincia)),
-            'informazioni' => trim(Str::upper($request->informazioni)),
+            'provincia' => $request->provincia != 'undefined' ? trim(Str::upper($request->provincia)) : null,
+            'informazioni' => $request->informazioni != 'undefined' ? trim(Str::upper($request->informazioni)) : null,
         ]);
 
         if($request->hasfile('file')) {
             $file = $request->file('file');
-            $filename = $recapito->id.'.jpg';
+            $filename = 'R'.$recapito->id.'.jpg';
             $path = 'recapiti/'.$request->fileName;
             \Storage::disk('public')->putFileAs($path, $file, $filename);
         }
+
+        $recapito->codiceIdentificativo = 'R'.$recapito->id;
+        $recapito->save();
 
         return $recapito;
     }
 
     public function modifica($request)
     {
-       // dd($request);
         $recapito = Recapito::find($request->id);
         $recapito->nome = trim(Str::upper($request->nome));
-        $recapito->indirizzo = trim(Str::upper($request->indirizzo));
-        $recapito->citta = trim(Str::upper($request->citta));
+        $recapito->indirizzo = $request->indirizzo != 'undefined' ? trim(Str::upper($request->indirizzo)) : null;
+        $recapito->citta = $request->citta != 'undefined' ? trim(Str::upper($request->citta)) : null;
+        $recapito->telefono = $request->telefono != 'undefined' ? $request->telefono : null;
         $recapito->user_id = $request->user_id;
-        $recapito->provincia = trim(Str::upper($request->provincia));
-        $recapito->informazioni = trim(Str::upper($request->informazioni));
+        $recapito->provincia = $request->provincia != 'undefined' ? trim(Str::upper($request->provincia)) : null;
+        $recapito->informazioni = $request->informazioni != 'undefined' ? trim(Str::upper($request->informazioni)) : null;
         $recapito->save();
 
         if($request->hasfile('file')) {
@@ -89,5 +93,19 @@ class RecapitoService
     public function elimina($id)
     {
         return Recapito::find($id)->delete();
+    }
+
+    public function strutture($idAudio)
+    {
+        $recapiti = User::with('recapito:id,codiceIdentificativo,nome,user_id,informazioni,indirizzo,citta')->find($idAudio)->recapito;
+        foreach ($recapiti as $recapito){
+            $recapito->nome = 'Recapito - '.$recapito->nome;
+        }
+        $filiali = User::with('filiale:id,codiceIdentificativo,nome,informazioni,indirizzo,citta')->find($idAudio)->filiale;
+        foreach ($filiali as $filiale){
+            $filiale->nome = 'Filiale - '.$filiale->nome;
+        }
+
+        return $recapiti->concat($filiali);
     }
 }

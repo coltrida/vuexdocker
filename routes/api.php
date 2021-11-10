@@ -76,6 +76,7 @@ Route::group([], function () {
         Route::delete('/recapiti/{id}', [RecapitiController::class, 'elimina']);
         Route::post('/addRecapito', [RecapitiController::class, 'aggiungi']);
         Route::post('/modificaRecapito', [RecapitiController::class, 'modifica']);
+        Route::get('/strutture/{idAudio}', [RecapitiController::class, 'strutture']);
 
         // ----------------- marketing -----------------------
         Route::get('/canali', [MarketingController::class, 'index']);

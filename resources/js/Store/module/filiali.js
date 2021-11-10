@@ -55,8 +55,8 @@ const actions = {
         commit('fetchFilialeById', response.data);
     },
 
-    async fetchFilialiPerInserimento({commit}){
-        const response = await axios.get(`${help().linkfiliali}`, {
+    async fetchFilialiPerInserimento({commit}, idUser){
+        const response = await axios.get(`${help().linkfilialiuser}`+'/'+idUser, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -110,18 +110,24 @@ const actions = {
     },
 
     async addFiliale({commit}, payload){
-        const response = await axios.post(`${help().linkaddfiliale}`, {
-            'nome': payload.nome,
-            'indirizzo': payload.indirizzo,
-            'citta': payload.citta,
-            'telefono': payload.telefono,
-            'cap': payload.cap,
-            'provincia': payload.provincia,
-        }, {
+        const config = {
             headers: {
+                'content-type': 'multipart/form-data' ,
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
-        });
+        };
+
+        let formData = new FormData();
+        formData.append('file', payload.fileUp);
+        formData.append('nome', payload.nome);
+        formData.append('indirizzo', payload.indirizzo);
+        formData.append('citta', payload.citta);
+        formData.append('telefono', payload.telefono);
+        formData.append('cap', payload.cap);
+        formData.append('provincia', payload.provincia);
+        formData.append('informazioni', payload.informazioni);
+
+        const response = await axios.post(`${help().linkaddfiliale}`, formData, config);
         commit('addFiliale', response.data);
     },
 

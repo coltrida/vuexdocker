@@ -106,6 +106,13 @@ class ClientService
         $testo = $utente->name.' ha inserito il nominativo '.$new->cognome.' '.$new->nome;
         $log->scriviLog($new->cognome.' '.$new->nome, $utente, $utente->name, $propieta, $testo);
 
+        Informazione::create([
+            'client_id' => $new->id,
+            'giorno' => Carbon::now()->format('Y-m-d'),
+            'tipo' => 'CLIENTE',
+            'note' => $testo
+        ]);
+
         return $new;
     }
 
@@ -326,7 +333,7 @@ class ClientService
                 Informazione::create([
                     'client_id' => $client->id,
                     'tipo' => 'INGRESSO',
-                    'note' => 'Ingresso presso.....',
+                    'note' => 'Ingresso presso.....tramite il canale mkt....',
                     'giorno' => $client->created_at->format('Y-m-d'),
                 ]);
             }
@@ -490,44 +497,54 @@ class ClientService
 
             }
         }
+
+        $log = new LoggingService();
+        $log->scriviLog('import from Noah', '', User::find($request['idUser'])->name, 'import from Noah', 'import from Noah');
+
         return $res;
     }
 
     private function getFilialeFromPlace($provincia, $citta)
     {
         $filiale = Filiale::where('provincia', $provincia)->get();
+        $ancona = ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO', 'FALCONARA MARITTIMA', 'OSTRA',
+            'MONTESICURO', 'CAMERANO'];
+        $civitanova = ['LORETO',
+            'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'PORTO RECANATI',
+            'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'MONTECOSARO', 'MORROVALLE'];
+        $macerata = ['MACERATA', 'CAMERINO'];
+        $pisa = ['PISA', 'CASCINA', 'MARINA DI PISA', 'SAN GIULIANO TERME', 'SAN GIULIANO TERME(GELLO)',
+            'SAN GIULIANO TERME(AGNANO)', 'GELLO(S.GILULIANO TERME)', 'SAN GIULIANO TERME(GHEZZANO)', 'NODICA',
+            "MADONNA DELL'ACQUA( S.G.T.)", 'S.G.TERME', 'VECCHIANO', 'MIGLIARINO', 'PONTASSERCHIO(S.G.T)', 'PORTA A MARE',
+            'GHEZZANO', 'PISA(ARENA METATO)', 'NODICA(SGT)', 'GHEZZANO(SGT)', 'COLIGNOLA(SGT)', 'SAN LORENZO ALLE CORTI',
+            'ASCIANO PISANO', 'ASCIANO (SGTERME)', 'BIENTINA', 'BUTI', 'CALCI', 'CALCINAIA', 'CAPANNOLI',
+            'CASTELFRANCO DI SOTTO', 'PONSACCO', 'PECCIOLI', 'SAN GIULIANO TERME', 'LIVORNO', 'CECINA', 'LARI',
+            'CASCIANA TERME', 'PIOMBINO', 'TIRRENIA', 'COLLESALVETTI'];
+        $viareggio = ['VIAREGGIO', 'FORTE DEI MARMI', 'FORTE DEI MARIMI', 'MASSA', 'TORRE DEL LAGO', 'LIDO DI CAMAIORE',
+            'LA SPEZIA', 'FILATTIERA(PONTREMOLI)', 'TONFANO(PIETRASANTA)', 'QUERCETA', 'MONTIGNOSO', 'PIETRASANTA',
+            'VITTORIA APUANA', 'SOLAIO(PIETRASANTA)', 'STRETTOIA(PIETRASANAT)', 'LUNI'];
+        $lucca = ['LUCCA', 'BARGA', 'PORCARI', 'GRAGNANO', 'GRAGNANO(LUCCA)', 'LAPPATO', 'ANTRACCOLI(LUCCA)',
+            'CAPANNORI', 'SANTA MARIA A COLLE', 'ZONE', 'SANTA ANDREA IN CAPRILE', 'MARLIA', 'SAN COLOMBANO',
+            'CAPANNORI(MARLIA)', 'CAMIGLIANO', 'CAMIGLIANO(CAPANNORI)', 'SEGROMIGNO IN PIANO', 'SAN MACARIO IN PIANO(LUCCA)',
+            'GRAGNANO(CAPANNORI)', 'NOZZANO(SAN PIETRO) LUCCA', 'TEMPAGNANO(LUCCA)', 'SEGROMIGNO IN MONTE', 'LAPPATO(CAPANNORI)',
+            "SANT'ANGELO IN CAMPO", 'ALTOPASCIO', 'SERRAVEZZA', 'SERRAVEZZA(RIPA)', 'SAN GENNARO',
+            'SAN GENNARO(CAPANNORI)', 'VICOPELAGO', 'SAN CASSIANO A VICO', 'SESTO DI MORIANO', 'SANTISSIMA ANNUNZIATA(LUCCA)',
+            'LAMMARI', 'SANTISSIMA ANNUNZIATA(LU)', 'SANTA MARIA DEL GIUDICE'];
+
         if (count($filiale) == 1){
             return $filiale[0]->id;
         } else {
-            if(in_array($citta , ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO', 'FALCONARA MARITTIMA', 'OSTRA',
-                'MONTESICURO', 'CAMERANO'])) {
+            if(in_array($citta, $ancona)) {
                 return Filiale::where('nome', 'ANCONA')->first()->id;
-            } elseif (in_array($citta , ['LORETO',
-                'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'PORTO RECANATI',
-                'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'MONTECOSARO', 'MORROVALLE'])) {
+            } elseif (in_array($citta, $civitanova)) {
                 return Filiale::where('nome', 'CIVITANOVA')->first()->id;
-            } elseif (in_array($citta , ['MACERATA', 'CAMERINO'])) {
+            } elseif (in_array($citta, $macerata)) {
                 return Filiale::where('nome', 'MACERATA')->first()->id;
-            } elseif (in_array($citta , ['PISA', 'CASCINA', 'MARINA DI PISA', 'SAN GIULIANO TERME', 'SAN GIULIANO TERME(GELLO)',
-                'SAN GIULIANO TERME(AGNANO)', 'GELLO(S.GILULIANO TERME)', 'SAN GIULIANO TERME(GHEZZANO)', 'NODICA',
-                "MADONNA DELL'ACQUA( S.G.T.)", 'S.G.TERME', 'VECCHIANO', 'MIGLIARINO', 'PONTASSERCHIO(S.G.T)', 'PORTA A MARE',
-                'GHEZZANO', 'PISA(ARENA METATO)', 'NODICA(SGT)', 'GHEZZANO(SGT)', 'COLIGNOLA(SGT)', 'SAN LORENZO ALLE CORTI',
-                'ASCIANO PISANO', 'ASCIANO (SGTERME)', 'BIENTINA', 'BUTI', 'CALCI', 'CALCINAIA', 'CAPANNOLI',
-                'CASTELFRANCO DI SOTTO', 'PONSACCO', 'PECCIOLI', 'SAN GIULIANO TERME'])) {
+            } elseif (in_array($citta, $pisa)) {
                 return Filiale::where('nome', 'PISA')->first()->id;
-            } elseif (in_array($citta , ['VIAREGGIO', 'FORTE DEI MARMI', 'FORTE DEI MARIMI', 'MASSA', 'TORRE DEL LAGO', 'LIDO DI CAMAIORE',
-                'LA SPEZIA', 'FILATTIERA(PONTREMOLI)', 'TONFANO(PIETRASANTA)', 'QUERCETA', 'MONTIGNOSO', 'PIETRASANTA',
-                'VITTORIA APUANA', 'SOLAIO(PIETRASANTA)', 'STRETTOIA(PIETRASANAT)', 'LUNI'])) {
+            } elseif (in_array($citta, $viareggio)) {
                 return Filiale::where('nome', 'VIAREGGIO')->first()->id;
-            } elseif (in_array($citta , ['LIVORNO', 'CECINA', 'LARI', 'CASCIANA TERME', 'PIOMBINO', 'TIRRENIA', 'COLLESALVETTI'])) {
-                return Filiale::where('nome', 'LIVORNO')->first()->id;
-            } elseif (in_array($citta , ['LUCCA', 'BARGA', 'PORCARI', 'GRAGNANO', 'GRAGNANO(LUCCA)', 'LAPPATO', 'ANTRACCOLI(LUCCA)',
-                'CAPANNORI', 'SANTA MARIA A COLLE', 'ZONE', 'SANTA ANDREA IN CAPRILE', 'MARLIA', 'SAN COLOMBANO',
-                'CAPANNORI(MARLIA)', 'CAMIGLIANO', 'CAMIGLIANO(CAPANNORI)', 'SEGROMIGNO IN PIANO', 'SAN MACARIO IN PIANO(LUCCA)',
-                'GRAGNANO(CAPANNORI)', 'NOZZANO(SAN PIETRO) LUCCA', 'TEMPAGNANO(LUCCA)', 'SEGROMIGNO IN MONTE', 'LAPPATO(CAPANNORI)',
-                "SANT'ANGELO IN CAMPO", 'ALTOPASCIO', 'SERRAVEZZA', 'SERRAVEZZA(RIPA)', 'SAN GENNARO',
-                'SAN GENNARO(CAPANNORI)', 'VICOPELAGO', 'SAN CASSIANO A VICO', 'SESTO DI MORIANO', 'SANTISSIMA ANNUNZIATA(LUCCA)',
-                'LAMMARI', 'SANTISSIMA ANNUNZIATA(LU)', 'SANTA MARIA DEL GIUDICE'])) {
+            } elseif (in_array($citta, $lucca)) {
                 return Filiale::where('nome', 'LUCCA')->first()->id;
             }
         }

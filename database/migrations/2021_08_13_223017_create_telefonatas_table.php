@@ -20,10 +20,10 @@ class CreateTelefonatasTable extends Migration
             $table->bigInteger('client_id');
             $table->string('esito')->nullable();
             $table->string('note')->nullable();
-            $table->boolean('effettuata');
-            $table->date('datarecall');
-            $table->integer('mese');
-            $table->integer('anno');
+            $table->boolean('effettuata')->nullable();
+            $table->date('datarecall')->nullable();
+            $table->integer('mese')->nullable();
+            $table->integer('anno')->nullable();
             $table->date('created_at');
             $table->date('updated_at');
         });
