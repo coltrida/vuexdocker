@@ -32,11 +32,16 @@ class ClientService
 
     public function clienteFiliale($idFiliale)
     {
+        $oggi = Carbon::now()->format('Y-m-d');
         return Client::with(['tipologia:id,nome',
-            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
+            'marketing', 'user:id,name', 'filiale:id,nome',
+            'recapito:id,nome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
-                ->where('filiale_id', $idFiliale)
+            ->withCount(['recalls' => function($r) use($oggi){
+                $r->where('created_at', $oggi)->orWhere('updated_at', $oggi);
+            }])
+            ->where('filiale_id', $idFiliale)
             ->whereHas('tipologia', function($q){
                 $q->where('nome', '!=', 'DEC');
             })
@@ -292,6 +297,7 @@ class ClientService
     public function importClientsFromNoah($request)
     {
         //dd($request);
+
         $xmlDataString = file_get_contents(asset('/storage/'.$request['nomeFile']));
         $res = 0;
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
@@ -503,6 +509,7 @@ class ClientService
 
         return $res;
     }
+
 
     private function getFilialeFromPlace($provincia, $citta)
     {

@@ -206,7 +206,7 @@
                                     </div>
                                     <div v-if="item.esito == 'Preso Appuntamento'">
                                         <v-btn small color="success" dark @click="appuntamento()">
-                                            Vedi Appuntamento
+                                            Vedi App.
                                         </v-btn>
                                     </div>
                                 </template>
@@ -254,6 +254,7 @@
                 header: [
                     { text: 'Data Telefonata', width:120,  align: 'start', sortable: false, value: 'datarecall', class: "indigo white--text" },
                     { text: 'Esito', sortable: false, value: 'esito', class: "indigo white--text" },
+                    { text: 'Eseguita', sortable: false, value: 'eseguita', class: "indigo white--text" },
                     { text: 'note', sortable: false, value: 'note', class: "indigo white--text" },
                     { text: 'Azioni',  sortable: false, value: 'action', class: "indigo white--text" },
                 ],
@@ -291,10 +292,12 @@
             inserisci(){
                 this.telefonata.clientId = this.recallsClient.id;
                 this.telefonata.userId = this.getIdUser;
+                this.recallsClient.fattaTelefonata = true;
                 this.addTelefonata(this.telefonata).then(() =>{
                 if(this.telefonata.esito == 'Preso Appuntamento'){
                     this.telefonata = {};
                     this.inserimentoDataDiOggi();
+                    this.recallsClient.presoAppuntamento = true;
                     this.$emit('chiudiRecalls', this.recallsClient)
                 }
                 this.telefonata = {};
@@ -305,8 +308,10 @@
             aggiorna(recall){
                 this.telefonataDaAggiornare.id = recall.id;
                 this.telefonataDaAggiornare.userId = this.getIdUser;
+                this.recallsClient.fattaTelefonata = true;
                 this.aggiornaTelefonata(this.telefonataDaAggiornare).then(() => {
                     if(this.telefonataDaAggiornare.esito == 'Preso Appuntamento'){
+                        this.recallsClient.presoAppuntamento = true;
                         this.$emit('chiudiRecalls', this.recallsClient)
                     }
                 });
@@ -319,7 +324,13 @@
             },
 
             cancella(){
-                this.$emit('chiudiRecalls', null)
+                if (this.recallsClient.presoAppuntamento == null || this.recallsClient.presoAppuntamento != true){
+                    this.recallsClient.presoAppuntamento = false;
+                }
+                if (this.recallsClient.fattaTelefonata == null || this.recallsClient.fattaTelefonata != true){
+                    this.recallsClient.fattaTelefonata = false;
+                }
+                this.$emit('chiudiRecalls', this.recallsClient)
             },
 
             infoStruttura(struttura){

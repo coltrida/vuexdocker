@@ -259,28 +259,62 @@
                         <span>Documenti</span>
                     </v-tooltip>
 
-                    <v-tooltip bottom>
+                    <v-tooltip bottom v-if="parseInt(item.telefonateOggi) > 0">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                                v-if="!$vuetify.breakpoint.xs"
-                                color="green"
-                                small
-                                @click="recalls(item)"
-                                v-bind="attrs"
-                                v-on="on"
+                            <v-badge
+                                bordered
+                                bottom
+                                color="deep-purple accent-4"
+                                dot
+                                offset-x="7"
+                                offset-y="5"
                             >
-                                mdi-phone
-                            </v-icon>
-                            <v-icon
-                                v-else
-                                style="font-size: 30px"
-                                color="green"
-                                @click="recalls(item)"
-                                v-bind="attrs"
-                                v-on="on"
-                            >
-                                mdi-phone
-                            </v-icon>
+                                <v-icon
+                                    v-if="!$vuetify.breakpoint.xs"
+                                    color="teal darken-4"
+                                    small
+                                    @click="recalls(item)"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-phone
+                                </v-icon>
+                                <v-icon
+                                    v-else
+                                    style="font-size: 30px"
+                                    color="teal darken-4"
+                                    @click="recalls(item)"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-phone
+                                </v-icon>
+                            </v-badge>
+                        </template>
+                        <span>Telefonata fatta oggi</span>
+                    </v-tooltip>
+                    <v-tooltip bottom v-else>
+                        <template v-slot:activator="{ on, attrs }">
+                                <v-icon
+                                    v-if="!$vuetify.breakpoint.xs"
+                                    color="green"
+                                    small
+                                    @click="recalls(item)"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-phone
+                                </v-icon>
+                                <v-icon
+                                    v-else
+                                    style="font-size: 30px"
+                                    color="green"
+                                    @click="recalls(item)"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    mdi-phone
+                                </v-icon>
                         </template>
                         <span>Recalls</span>
                     </v-tooltip>
@@ -365,8 +399,8 @@
                 cognomeElimina: '',
                 listino: {},
                 headers: [
-                    {text: 'Actions', width: 190, value: 'actions', sortable: false, class: "indigo white--text"},
-                    {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
+                    {text: 'Actions', width: 200, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'COD', width: 80, value: 'tipologia', class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
                     {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
@@ -534,7 +568,11 @@
                 this.showClients = true;
                 this.recallsClient = {};
 
-                if (cliente){
+                if (cliente.fattaTelefonata === true){
+                    this.getClients.find(u => u.id === cliente.id).telefonateOggi = this.getClients.find(u => u.id === cliente.id).telefonateOggi + 1;
+                }
+
+                if (cliente.presoAppuntamento === true){
                     this.showClients = false;
                     this.showAppuntamento = true;
                     this.appuntamentoClient = cliente;

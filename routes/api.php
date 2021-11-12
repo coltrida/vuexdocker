@@ -31,7 +31,7 @@ Route::post('/register', [LoginController::class, 'register']);
 
 // ----------------- elaborazioneGiornaliera -----------------------
 Route::get('/situazioneAnno', [ElaborazioneController::class, 'situazioneAnno']);
-
+Route::get('/download', [ElaborazioneController::class, 'download']);
 
 //Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::group([], function () {
@@ -169,6 +169,7 @@ Route::group([], function () {
         Route::get('/backup', [GestioneController::class, 'backup']);
         Route::get('/restore', [GestioneController::class, 'restore']);
         Route::get('/logging', [GestioneController::class, 'logging']);
+
 
         // ---------------- audiometrie -------------------------
         Route::get('/listaAudiometrie/{idClient}', [AudiometriaController::class, 'index']);

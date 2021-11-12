@@ -15,4 +15,8 @@ class ElaborazioneController extends Controller
         $elaborazioneService->situazioneAnno();
     }
 
+    public function download()
+    {
+        return \Storage::disk('public')->download('export.sql');
+    }
 }

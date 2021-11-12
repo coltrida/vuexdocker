@@ -79,6 +79,11 @@ class Prova extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function marketing()
+    {
+        return $this->belongsTo(Marketing::class);
+    }
+
     public function copiaComm()
     {
         return $this->hasMany(Documento::class)->where('tipo', 'copiaComm');

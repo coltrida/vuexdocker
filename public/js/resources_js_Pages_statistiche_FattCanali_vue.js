@@ -38371,21 +38371,20 @@ var render = function() {
                             "\n                        " +
                               _vm._s(
                                 item.prova_fattura_sum_tot
-                                  ? (
-                                      item.prova_fattura_sum_tot /
-                                      _vm.getCanaliFatturato.reduce(function(
-                                        a,
-                                        b
-                                      ) {
-                                        return {
-                                          prova_fattura_sum_tot:
-                                            a.prova_fattura_sum_tot +
-                                            b.prova_fattura_sum_tot
-                                        }
-                                      }).prova_fattura_sum_tot
-                                    ).toFixed(2) *
-                                      100 +
-                                      " %"
+                                  ? Math.round(
+                                      (item.prova_fattura_sum_tot /
+                                        _vm.getCanaliFatturato.reduce(function(
+                                          a,
+                                          b
+                                        ) {
+                                          return {
+                                            prova_fattura_sum_tot:
+                                              a.prova_fattura_sum_tot +
+                                              b.prova_fattura_sum_tot
+                                          }
+                                        }).prova_fattura_sum_tot) *
+                                        100
+                                    ) + " %"
                                   : 0
                               ) +
                               "\n                "

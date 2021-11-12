@@ -20,6 +20,11 @@
                         </v-list-item>
                     </router-link>
                 </div>
+                <div>
+                    <v-list-item>
+                        <a href="https://www.centrouditogroup.it/api/download">Backup</a>
+                    </v-list-item>
+                </div>
 
             </v-list>
         </v-menu>
@@ -34,8 +39,7 @@
                 { title: 'Assegna Budget', link: 'assegnaBudget' },
                 { title: 'Tipi e Recall', link: 'tempiRecall' },
                 { title: 'Invio sms', link: 'inviaSms' },
-                { title: 'Backup', link: 'backup' },
-                { title: 'Restore', link: 'restore' },
+                /*{ title: 'Backup', link: 'backup' },*/
                 { title: 'Strumentazione', link: 'strumentazione' },
                 { title: 'Reset', link: 'resetSpecial' },
                 { title: 'Logging', link: 'logging' },

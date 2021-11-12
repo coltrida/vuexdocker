@@ -19,6 +19,7 @@ class TelefonateResource extends JsonResource
             'id' => $this->id,
             'datarecall' => Carbon::make($this->datarecall)->format('d-m-Y'),
             'esito' => $this->esito,
+            'eseguita' => $this->user->name,
             'note' => $this->note,
         ];
     }

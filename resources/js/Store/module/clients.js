@@ -224,13 +224,12 @@ const actions = {
         commit('fetchSituazioneAnnoResiAudio', response.data);
     },
 
-    async eseguiBackup({commit}){
-        const response = await axios.get(`${help().linkbackup}`, {
+    async eseguiBackup(){
+        await axios.get(`${help().linkbackup}`, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('eseguiBackup', response.data);
     },
 };
 
@@ -303,9 +302,6 @@ const mutations = {
         state.situazioneAnnoResiAudio = payload;
     },
 
-    eseguiBackup(state, payload){
-        state.messaggioBackup = payload;
-    },
 };
 
 export default{

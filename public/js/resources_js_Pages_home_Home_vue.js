@@ -1492,6 +1492,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1989,13 +1996,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 120,
+        width: 90,
         sortable: false,
         value: 'tot',
         "class": "indigo white--text"
       }, {
-        text: 'Actions',
+        text: 'Cod. Mkt',
         width: 120,
+        sortable: false,
+        value: 'marketing.name',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -2491,6 +2503,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'esito',
         "class": "indigo white--text"
       }, {
+        text: 'Eseguita',
+        sortable: false,
+        value: 'eseguita',
+        "class": "indigo white--text"
+      }, {
         text: 'note',
         sortable: false,
         value: 'note',
@@ -2532,11 +2549,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonata.clientId = this.recallsClient.id;
       this.telefonata.userId = this.getIdUser;
+      this.recallsClient.fattaTelefonata = true;
       this.addTelefonata(this.telefonata).then(function () {
         if (_this2.telefonata.esito == 'Preso Appuntamento') {
           _this2.telefonata = {};
 
           _this2.inserimentoDataDiOggi();
+
+          _this2.recallsClient.presoAppuntamento = true;
 
           _this2.$emit('chiudiRecalls', _this2.recallsClient);
         }
@@ -2551,8 +2571,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonataDaAggiornare.id = recall.id;
       this.telefonataDaAggiornare.userId = this.getIdUser;
+      this.recallsClient.fattaTelefonata = true;
       this.aggiornaTelefonata(this.telefonataDaAggiornare).then(function () {
         if (_this3.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
+          _this3.recallsClient.presoAppuntamento = true;
+
           _this3.$emit('chiudiRecalls', _this3.recallsClient);
         }
       });
@@ -2563,7 +2586,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('chiudiRecalls', this.recallsClient);
     },
     cancella: function cancella() {
-      this.$emit('chiudiRecalls', null);
+      if (this.recallsClient.presoAppuntamento == null || this.recallsClient.presoAppuntamento != true) {
+        this.recallsClient.presoAppuntamento = false;
+      }
+
+      if (this.recallsClient.fattaTelefonata == null || this.recallsClient.fattaTelefonata != true) {
+        this.recallsClient.fattaTelefonata = false;
+      }
+
+      this.$emit('chiudiRecalls', this.recallsClient);
     },
     infoStruttura: function infoStruttura(struttura) {
       this.informazioneStruttura = struttura;
@@ -4718,7 +4749,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       headers2: [{
         text: 'Actions',
-        width: 120,
+        width: 110,
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -46519,7 +46550,12 @@ var render = function() {
                     { attrs: { cols: "3" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "nome" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "nome",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.nome,
                           callback: function($$v) {
@@ -46537,7 +46573,12 @@ var render = function() {
                     { attrs: { cols: "3" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "cognome" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "cognome",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.cognome,
                           callback: function($$v) {
@@ -46558,7 +46599,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "cod. fis."
+                          label: "cod. fis.",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.codfisc,
@@ -46609,7 +46651,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "indirizzo"
+                          label: "indirizzo",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.indirizzo,
@@ -46628,7 +46671,12 @@ var render = function() {
                     { attrs: { cols: "4" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "citta" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "citta",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.citta,
                           callback: function($$v) {
@@ -46646,7 +46694,12 @@ var render = function() {
                     { attrs: { cols: "2" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "cap" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "cap",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.cap,
                           callback: function($$v) {
@@ -46667,7 +46720,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "provincia"
+                          label: "provincia",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.provincia,
@@ -48455,7 +48509,7 @@ var render = function() {
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                                        Vedi Appuntamento\n                                    "
+                                                    "\n                                        Vedi App.\n                                    "
                                                   )
                                                 ]
                                               )
@@ -51732,46 +51786,52 @@ var render = function() {
     "div",
     { staticClass: "flex justify-start align-center mt-2" },
     [
-      _c(
-        "v-row",
-        [
-          _c(
-            "v-col",
-            { attrs: { cols: "12" } },
+      _vm.showAppuntamento || _vm.showRecalls || _vm.showInformazioni
+        ? _c(
+            "v-row",
             [
               _c(
-                "v-row",
-                { staticClass: "pa-10" },
+                "v-col",
+                { attrs: { cols: "12" } },
                 [
-                  _vm.showAppuntamento
-                    ? _c("appuntamento", {
-                        attrs: { appuntamentoClient: _vm.appuntamentoClient },
-                        on: { chiudiAppuntamento: _vm.chiudiAppuntamento }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.showRecalls
-                    ? _c("recalls", {
-                        attrs: { recallsClient: _vm.recallsClient },
-                        on: { chiudiRecalls: _vm.chiudiRecalls }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.showInformazioni
-                    ? _c("informazioni", {
-                        attrs: { informazioniClient: _vm.informazioniClient },
-                        on: { chiudiInformazioni: _vm.chiudiInformazioni }
-                      })
-                    : _vm._e()
+                  _c(
+                    "v-row",
+                    { staticClass: "pa-10" },
+                    [
+                      _vm.showAppuntamento
+                        ? _c("appuntamento", {
+                            attrs: {
+                              appuntamentoClient: _vm.appuntamentoClient
+                            },
+                            on: { chiudiAppuntamento: _vm.chiudiAppuntamento }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.showRecalls
+                        ? _c("recalls", {
+                            attrs: { recallsClient: _vm.recallsClient },
+                            on: { chiudiRecalls: _vm.chiudiRecalls }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.showInformazioni
+                        ? _c("informazioni", {
+                            attrs: {
+                              informazioniClient: _vm.informazioniClient
+                            },
+                            on: { chiudiInformazioni: _vm.chiudiInformazioni }
+                          })
+                        : _vm._e()
+                    ],
+                    1
+                  )
                 ],
                 1
               )
             ],
             1
           )
-        ],
-        1
-      ),
+        : _vm._e(),
       _vm._v(" "),
       _vm.carica
         ? _c(
@@ -51838,7 +51898,7 @@ var render = function() {
                             staticClass: "elevation-1 mt-3",
                             attrs: {
                               headers: _vm.headers1,
-                              height: "240",
+                              height: "270",
                               "items-per-page": 5,
                               dense: "",
                               items: _vm.getRecallOggi
@@ -52043,7 +52103,7 @@ var render = function() {
                             staticClass: "elevation-1 mt-3",
                             attrs: {
                               headers: _vm.headers2,
-                              height: "240",
+                              height: "270",
                               "items-per-page": 5,
                               dense: "",
                               items: _vm.getTelefonateFatteOggi

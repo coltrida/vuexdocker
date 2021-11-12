@@ -1446,6 +1446,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1943,13 +1950,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 120,
+        width: 90,
         sortable: false,
         value: 'tot',
         "class": "indigo white--text"
       }, {
-        text: 'Actions',
+        text: 'Cod. Mkt',
         width: 120,
+        sortable: false,
+        value: 'marketing.name',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -2445,6 +2457,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'esito',
         "class": "indigo white--text"
       }, {
+        text: 'Eseguita',
+        sortable: false,
+        value: 'eseguita',
+        "class": "indigo white--text"
+      }, {
         text: 'note',
         sortable: false,
         value: 'note',
@@ -2486,11 +2503,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonata.clientId = this.recallsClient.id;
       this.telefonata.userId = this.getIdUser;
+      this.recallsClient.fattaTelefonata = true;
       this.addTelefonata(this.telefonata).then(function () {
         if (_this2.telefonata.esito == 'Preso Appuntamento') {
           _this2.telefonata = {};
 
           _this2.inserimentoDataDiOggi();
+
+          _this2.recallsClient.presoAppuntamento = true;
 
           _this2.$emit('chiudiRecalls', _this2.recallsClient);
         }
@@ -2505,8 +2525,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonataDaAggiornare.id = recall.id;
       this.telefonataDaAggiornare.userId = this.getIdUser;
+      this.recallsClient.fattaTelefonata = true;
       this.aggiornaTelefonata(this.telefonataDaAggiornare).then(function () {
         if (_this3.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
+          _this3.recallsClient.presoAppuntamento = true;
+
           _this3.$emit('chiudiRecalls', _this3.recallsClient);
         }
       });
@@ -2517,7 +2540,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('chiudiRecalls', this.recallsClient);
     },
     cancella: function cancella() {
-      this.$emit('chiudiRecalls', null);
+      if (this.recallsClient.presoAppuntamento == null || this.recallsClient.presoAppuntamento != true) {
+        this.recallsClient.presoAppuntamento = false;
+      }
+
+      if (this.recallsClient.fattaTelefonata == null || this.recallsClient.fattaTelefonata != true) {
+        this.recallsClient.fattaTelefonata = false;
+      }
+
+      this.$emit('chiudiRecalls', this.recallsClient);
     },
     infoStruttura: function infoStruttura(struttura) {
       this.informazioneStruttura = struttura;
@@ -44038,7 +44069,12 @@ var render = function() {
                     { attrs: { cols: "3" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "nome" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "nome",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.nome,
                           callback: function($$v) {
@@ -44056,7 +44092,12 @@ var render = function() {
                     { attrs: { cols: "3" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "cognome" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "cognome",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.cognome,
                           callback: function($$v) {
@@ -44077,7 +44118,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "cod. fis."
+                          label: "cod. fis.",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.codfisc,
@@ -44128,7 +44170,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "indirizzo"
+                          label: "indirizzo",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.indirizzo,
@@ -44147,7 +44190,12 @@ var render = function() {
                     { attrs: { cols: "4" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "citta" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "citta",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.citta,
                           callback: function($$v) {
@@ -44165,7 +44213,12 @@ var render = function() {
                     { attrs: { cols: "2" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "cap" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "cap",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.cap,
                           callback: function($$v) {
@@ -44186,7 +44239,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "provincia"
+                          label: "provincia",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.provincia,
@@ -45974,7 +46028,7 @@ var render = function() {
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                                        Vedi Appuntamento\n                                    "
+                                                    "\n                                        Vedi App.\n                                    "
                                                   )
                                                 ]
                                               )

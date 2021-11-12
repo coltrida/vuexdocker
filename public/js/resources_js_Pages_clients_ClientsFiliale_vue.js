@@ -1636,6 +1636,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2133,13 +2140,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 120,
+        width: 90,
         sortable: false,
         value: 'tot',
         "class": "indigo white--text"
       }, {
-        text: 'Actions',
+        text: 'Cod. Mkt',
         width: 120,
+        sortable: false,
+        value: 'marketing.name',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -2635,6 +2647,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'esito',
         "class": "indigo white--text"
       }, {
+        text: 'Eseguita',
+        sortable: false,
+        value: 'eseguita',
+        "class": "indigo white--text"
+      }, {
         text: 'note',
         sortable: false,
         value: 'note',
@@ -2676,11 +2693,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonata.clientId = this.recallsClient.id;
       this.telefonata.userId = this.getIdUser;
+      this.recallsClient.fattaTelefonata = true;
       this.addTelefonata(this.telefonata).then(function () {
         if (_this2.telefonata.esito == 'Preso Appuntamento') {
           _this2.telefonata = {};
 
           _this2.inserimentoDataDiOggi();
+
+          _this2.recallsClient.presoAppuntamento = true;
 
           _this2.$emit('chiudiRecalls', _this2.recallsClient);
         }
@@ -2695,8 +2715,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonataDaAggiornare.id = recall.id;
       this.telefonataDaAggiornare.userId = this.getIdUser;
+      this.recallsClient.fattaTelefonata = true;
       this.aggiornaTelefonata(this.telefonataDaAggiornare).then(function () {
         if (_this3.telefonataDaAggiornare.esito == 'Preso Appuntamento') {
+          _this3.recallsClient.presoAppuntamento = true;
+
           _this3.$emit('chiudiRecalls', _this3.recallsClient);
         }
       });
@@ -2707,7 +2730,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$emit('chiudiRecalls', this.recallsClient);
     },
     cancella: function cancella() {
-      this.$emit('chiudiRecalls', null);
+      if (this.recallsClient.presoAppuntamento == null || this.recallsClient.presoAppuntamento != true) {
+        this.recallsClient.presoAppuntamento = false;
+      }
+
+      if (this.recallsClient.fattaTelefonata == null || this.recallsClient.fattaTelefonata != true) {
+        this.recallsClient.fattaTelefonata = false;
+      }
+
+      this.$emit('chiudiRecalls', this.recallsClient);
     },
     infoStruttura: function infoStruttura(struttura) {
       this.informazioneStruttura = struttura;
@@ -3095,6 +3126,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3143,13 +3208,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       listino: {},
       headers: [{
         text: 'Actions',
-        width: 190,
+        width: 200,
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
       }, {
-        text: 'tipologia',
-        width: 100,
+        text: 'COD',
+        width: 80,
         value: 'tipologia',
         "class": "indigo white--text"
       }, {
@@ -3360,7 +3425,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showClients = true;
       this.recallsClient = {};
 
-      if (cliente) {
+      if (cliente.fattaTelefonata === true) {
+        this.getClients.find(function (u) {
+          return u.id === cliente.id;
+        }).telefonateOggi = this.getClients.find(function (u) {
+          return u.id === cliente.id;
+        }).telefonateOggi + 1;
+      }
+
+      if (cliente.presoAppuntamento === true) {
         this.showClients = false;
         this.showAppuntamento = true;
         this.appuntamentoClient = cliente;
@@ -44897,7 +44970,12 @@ var render = function() {
                     { attrs: { cols: "3" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "nome" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "nome",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.nome,
                           callback: function($$v) {
@@ -44915,7 +44993,12 @@ var render = function() {
                     { attrs: { cols: "3" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "cognome" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "cognome",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.cognome,
                           callback: function($$v) {
@@ -44936,7 +45019,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "cod. fis."
+                          label: "cod. fis.",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.codfisc,
@@ -44987,7 +45071,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "indirizzo"
+                          label: "indirizzo",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.indirizzo,
@@ -45006,7 +45091,12 @@ var render = function() {
                     { attrs: { cols: "4" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "citta" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "citta",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.citta,
                           callback: function($$v) {
@@ -45024,7 +45114,12 @@ var render = function() {
                     { attrs: { cols: "2" } },
                     [
                       _c("v-text-field", {
-                        attrs: { outlined: "", readonly: "", label: "cap" },
+                        attrs: {
+                          outlined: "",
+                          readonly: "",
+                          label: "cap",
+                          required: ""
+                        },
                         model: {
                           value: _vm.itemFattura.client.cap,
                           callback: function($$v) {
@@ -45045,7 +45140,8 @@ var render = function() {
                         attrs: {
                           outlined: "",
                           readonly: "",
-                          label: "provincia"
+                          label: "provincia",
+                          required: ""
                         },
                         model: {
                           value: _vm.itemFattura.client.provincia,
@@ -46833,7 +46929,7 @@ var render = function() {
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                                        Vedi Appuntamento\n                                    "
+                                                    "\n                                        Vedi App.\n                                    "
                                                   )
                                                 ]
                                               )
@@ -47596,93 +47692,210 @@ var render = function() {
                                 [_vm._v(" "), _c("span", [_vm._v("Documenti")])]
                               ),
                               _vm._v(" "),
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u(
+                              parseInt(item.telefonateOggi) > 0
+                                ? _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-badge",
+                                                  {
+                                                    attrs: {
+                                                      bordered: "",
+                                                      bottom: "",
+                                                      color:
+                                                        "deep-purple accent-4",
+                                                      dot: "",
+                                                      "offset-x": "7",
+                                                      "offset-y": "5"
+                                                    }
+                                                  },
+                                                  [
+                                                    !_vm.$vuetify.breakpoint.xs
+                                                      ? _c(
+                                                          "v-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                attrs: {
+                                                                  color:
+                                                                    "teal darken-4",
+                                                                  small: ""
+                                                                },
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    return _vm.recalls(
+                                                                      item
+                                                                    )
+                                                                  }
+                                                                }
+                                                              },
+                                                              "v-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                mdi-phone\n                            "
+                                                            )
+                                                          ]
+                                                        )
+                                                      : _c(
+                                                          "v-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticStyle: {
+                                                                  "font-size":
+                                                                    "30px"
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "teal darken-4"
+                                                                },
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    return _vm.recalls(
+                                                                      item
+                                                                    )
+                                                                  }
+                                                                }
+                                                              },
+                                                              "v-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                mdi-phone\n                            "
+                                                            )
+                                                          ]
+                                                        )
+                                                  ],
+                                                  1
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
                                     [
-                                      {
-                                        key: "activator",
-                                        fn: function(ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            !_vm.$vuetify.breakpoint.xs
-                                              ? _c(
-                                                  "v-icon",
-                                                  _vm._g(
-                                                    _vm._b(
-                                                      {
-                                                        attrs: {
-                                                          color: "green",
-                                                          small: ""
-                                                        },
-                                                        on: {
-                                                          click: function(
-                                                            $event
-                                                          ) {
-                                                            return _vm.recalls(
-                                                              item
-                                                            )
-                                                          }
-                                                        }
-                                                      },
-                                                      "v-icon",
-                                                      attrs,
-                                                      false
-                                                    ),
-                                                    on
-                                                  ),
-                                                  [
-                                                    _vm._v(
-                                                      "\n                            mdi-phone\n                        "
-                                                    )
-                                                  ]
-                                                )
-                                              : _c(
-                                                  "v-icon",
-                                                  _vm._g(
-                                                    _vm._b(
-                                                      {
-                                                        staticStyle: {
-                                                          "font-size": "30px"
-                                                        },
-                                                        attrs: {
-                                                          color: "green"
-                                                        },
-                                                        on: {
-                                                          click: function(
-                                                            $event
-                                                          ) {
-                                                            return _vm.recalls(
-                                                              item
-                                                            )
-                                                          }
-                                                        }
-                                                      },
-                                                      "v-icon",
-                                                      attrs,
-                                                      false
-                                                    ),
-                                                    on
-                                                  ),
-                                                  [
-                                                    _vm._v(
-                                                      "\n                            mdi-phone\n                        "
-                                                    )
-                                                  ]
-                                                )
-                                          ]
-                                        }
-                                      }
-                                    ],
-                                    null,
-                                    true
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v("Telefonata fatta oggi")
+                                      ])
+                                    ]
                                   )
-                                },
-                                [_vm._v(" "), _c("span", [_vm._v("Recalls")])]
-                              ),
+                                : _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                !_vm.$vuetify.breakpoint.xs
+                                                  ? _c(
+                                                      "v-icon",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            attrs: {
+                                                              color: "green",
+                                                              small: ""
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.recalls(
+                                                                  item
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "v-icon",
+                                                          attrs,
+                                                          false
+                                                        ),
+                                                        on
+                                                      ),
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                mdi-phone\n                            "
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _c(
+                                                      "v-icon",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticStyle: {
+                                                              "font-size":
+                                                                "30px"
+                                                            },
+                                                            attrs: {
+                                                              color: "green"
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.recalls(
+                                                                  item
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "v-icon",
+                                                          attrs,
+                                                          false
+                                                        ),
+                                                        on
+                                                      ),
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                mdi-phone\n                            "
+                                                        )
+                                                      ]
+                                                    )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Recalls")])
+                                    ]
+                                  ),
                               _vm._v(" "),
                               _c(
                                 "v-tooltip",
@@ -47799,7 +48012,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      916552117
+                      976331337
                     )
                   })
                 ],

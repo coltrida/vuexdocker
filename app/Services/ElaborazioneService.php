@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Mail\AlarmDatabaseSpace;
 use App\Models\Appuntamento;
 use App\Models\Client;
 use App\Models\Delta;
@@ -17,6 +18,8 @@ use App\Models\User;
 use App\Models\Ventaglio;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
+use MySQLDump;
 
 class ElaborazioneService
 {
@@ -365,6 +368,10 @@ class ElaborazioneService
         // -------------- Eliminazione dei servizi rimasti nei prodotti senza essere in una prova ---------- //
         $this->eliminaProveSenzaProdotti();
 
+        if ((float) $this->controlloDimensioneDataBase() > 800) {
+            \Mail::to('coltrida@gmail.com')->send(new AlarmDatabaseSpace($this->controlloDimensioneDataBase()));
+        }
+
         // -------------- Invio e-mail per remind appuntamento ---------- //
 //        $appuntamentiDomani = Appuntamento::with('client')->where('giorno', $oggi->addDay())->get();
 //        $primoCliente = Client::first();
@@ -384,10 +391,11 @@ class ElaborazioneService
         $mysqlUserName     = env('DB_USERNAME');
         $mysqlPassword     = env('DB_PASSWORD');
         $mysqlHostName     = env('DB_HOST');
-        $mysqlExportPath   = 'backup.sql';
 
-        $command='mysqldump --opt -h' .$mysqlHostName .' -u' .$mysqlUserName .' -p' .$mysqlPassword .' ' .$mysqlDatabaseName .' > storage/' .$mysqlExportPath;
-        exec($command,$output,$worked);
+        $db = new \mysqli($mysqlHostName, $mysqlUserName, $mysqlPassword, $mysqlDatabaseName);
+        $dump = new MySQLDump($db);
+
+        $dump->save('storage/export.sql');
     }
 
     private function eseguiStatisticheTelefonate($anno){
@@ -443,5 +451,16 @@ class ElaborazioneService
             $prova->giorni_prova = $oggi->DiffInDays($prova->created_at);
             $prova->save();
         }
+    }
+
+    private function controlloDimensioneDataBase(){
+        $sql2 = "SELECT
+            table_schema AS 'Sql1398890_4',
+            ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS 'size'
+        FROM
+            information_schema.tables
+        GROUP BY
+            table_schema";
+        return collect(\DB::select($sql2))->sum('size');
     }
 }

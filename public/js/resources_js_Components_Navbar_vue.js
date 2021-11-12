@@ -184,6 +184,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -199,13 +204,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Invio sms',
         link: 'inviaSms'
-      }, {
-        title: 'Backup',
-        link: 'backup'
-      }, {
-        title: 'Restore',
-        link: 'restore'
-      }, {
+      },
+      /*{ title: 'Backup', link: 'backup' },*/
+      {
         title: 'Strumentazione',
         link: 'strumentazione'
       }, {
@@ -3030,28 +3031,52 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-list",
-            _vm._l(_vm.items, function(item, index) {
-              return _c(
+            [
+              _vm._l(_vm.items, function(item, index) {
+                return _c(
+                  "div",
+                  { key: index },
+                  [
+                    _c(
+                      "router-link",
+                      { attrs: { to: { name: item.link } } },
+                      [
+                        _c(
+                          "v-list-item",
+                          [
+                            _c("v-list-item-title", [
+                              _vm._v(_vm._s(item.title))
+                            ])
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c(
                 "div",
-                { key: index },
                 [
-                  _c(
-                    "router-link",
-                    { attrs: { to: { name: item.link } } },
-                    [
-                      _c(
-                        "v-list-item",
-                        [_c("v-list-item-title", [_vm._v(_vm._s(item.title))])],
-                        1
-                      )
-                    ],
-                    1
-                  )
+                  _c("v-list-item", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "https://www.centrouditogroup.it/api/download"
+                        }
+                      },
+                      [_vm._v("Backup")]
+                    )
+                  ])
                 ],
                 1
               )
-            }),
-            0
+            ],
+            2
           )
         ],
         1

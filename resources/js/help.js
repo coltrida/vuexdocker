@@ -139,7 +139,7 @@ const help = () => {
         linkSituazioneAnnoResiAudio: base+'situazioneAnnoResiAudio',
         linknomiApa: base+'nomiApa',
         linksoglie: base+'controlloSoglie',
-        linkbackup: base+'backup',
+        linkbackup: base+'download',
         linkrestore: base+'restore',
         linkprovepassate: base+'provePassate',
         linkriepilogoclients: base+'riepilogoClienti',

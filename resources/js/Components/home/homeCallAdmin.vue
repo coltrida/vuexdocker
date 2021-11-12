@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-start align-center mt-2">
-        <v-row>
+        <v-row v-if="showAppuntamento || showRecalls || showInformazioni">
             <v-col cols="12">
 
                 <v-row class="pa-10">
@@ -51,7 +51,7 @@
                 <h2>Recall di oggi</h2>
                 <v-data-table
                     :headers="headers1"
-                    height="240"
+                    height="270"
                     :items-per-page=5
                     dense
                     :items="getRecallOggi"
@@ -110,7 +110,7 @@
                 <h2>Telefonate Effettuate oggi</h2>
                 <v-data-table
                     :headers="headers2"
-                    height="240"
+                    height="270"
                     :items-per-page=5
                     dense
                     :items="getTelefonateFatteOggi"
@@ -200,7 +200,7 @@
                 ],
 
                 headers2: [
-                    {text: 'Actions', width: 120, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width: 110, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'Eseguita', width:180, value: 'recalls[0].user.name', sortable: false, class: "indigo white--text"},
                     {text: 'Audio', width:180, value: 'user.name', sortable: false, class: "indigo white--text"},
                     {text: 'Nome', width:240, value: 'fullname', sortable: false, class: "indigo white--text"},

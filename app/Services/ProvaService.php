@@ -103,9 +103,10 @@ class ProvaService
         $prova->tot = $request->tot;
         $prova->save();
 
-        $giorno = Carbon::now()->day;
-        $mese = Carbon::now()->month;
-        $anno = Carbon::now()->year;
+        $oggi = Carbon::now();
+        $giorno = $oggi->day;
+        $mese = $oggi->month;
+        $anno = $oggi->year;
 
         $filename = 'CopiaComm'.$giorno.$mese.$anno.'.pdf';
         Documento::create([
@@ -114,14 +115,6 @@ class ProvaService
             'tipo' => 'copiaComm',
             'link' => '/storage/documenti/'.$prova->client->id.'/'.$filename,
         ]);
-
-        /*$documento = new Documento();
-        $documento->client_id = $prova->client->id;
-        $documento->prova_id = $prova->id;
-        $documento->tipo = 'copiaComm';
-        $filename = 'CopiaComm'.$giorno.$mese.$anno.'.pdf';
-        $documento->link = '/storage/documenti/'.$prova->client->id.'/'.$filename;
-        $documento->save();*/
 
         $filenameInformativa = 'Informativa'.$giorno.$mese.$anno.'.pdf';
         Documento::create([
@@ -138,15 +131,12 @@ class ProvaService
             'note' => 'Aperta Prova per € '.number_format( (float) $prova->tot, '0', ',', '.')
         ]);
 
-        /*$informativa = new Documento();
-        $informativa->client_id = $prova->client->id;
-        $informativa->prova_id = $prova->id;
-        $informativa->tipo = 'informativa';
-        $filenameInformativa = 'Informativa'.$giorno.$mese.$anno.'.pdf';
-        $informativa->link = '/storage/documenti/'.$prova->client->id.'/'.$filenameInformativa;
-        $informativa->save();*/
+        $provaSalvata = Prova::with('stato', 'user', 'product', 'client', 'copiaComm', 'marketing')->find($request->id);
 
-        $provaSalvata = Prova::with('stato', 'user', 'product', 'client', 'copiaComm')->find($request->id);
+        if (!$provaSalvata->client->marketing_id) {
+            $provaSalvata->client->marketing_id = $provaSalvata->marketing_id;
+            $provaSalvata->push();
+        }
 
         $pdf = App::make('dompdf.wrapper');
         if (!Storage::disk('public')->exists('/documenti/'.$provaSalvata->client->id.'/')) {
@@ -321,7 +311,7 @@ class ProvaService
     public function provePassate($idClient)
     {
         return Client::with(['prova' => function($q){
-            $q->with('copiaComm');
+            $q->with('copiaComm', 'marketing');
         }])
             ->find($idClient)
             ->prova;

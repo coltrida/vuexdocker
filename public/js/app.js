@@ -3952,26 +3952,20 @@ var actions = {
       }, _callee17);
     }))();
   },
-  eseguiBackup: function eseguiBackup(_ref17) {
+  eseguiBackup: function eseguiBackup() {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee18() {
-      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee18$(_context18) {
         while (1) {
           switch (_context18.prev = _context18.next) {
             case 0:
-              commit = _ref17.commit;
-              _context18.next = 3;
+              _context18.next = 2;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkbackup), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
-            case 3:
-              response = _context18.sent;
-              commit('eseguiBackup', response.data);
-
-            case 5:
+            case 2:
             case "end":
               return _context18.stop();
           }
@@ -4037,9 +4031,6 @@ var mutations = {
   },
   fetchSituazioneAnnoResiAudio: function fetchSituazioneAnnoResiAudio(state, payload) {
     state.situazioneAnnoResiAudio = payload;
-  },
-  eseguiBackup: function eseguiBackup(state, payload) {
-    state.messaggioBackup = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -9739,7 +9730,7 @@ var help = function help() {
     linkSituazioneAnnoResiAudio: base + 'situazioneAnnoResiAudio',
     linknomiApa: base + 'nomiApa',
     linksoglie: base + 'controlloSoglie',
-    linkbackup: base + 'backup',
+    linkbackup: base + 'download',
     linkrestore: base + 'restore',
     linkprovepassate: base + 'provePassate',
     linkriepilogoclients: base + 'riepilogoClienti',

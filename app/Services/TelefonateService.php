@@ -95,7 +95,7 @@ class TelefonateService
     public function recallsByIdClient($idClient)
     {
         return Client::with(['recalls' => function($q){
-            $q->orderBy('datarecall');
+            $q->with('user')->orderBy('datarecall');
         }])->find($idClient)->recalls;
     }
 

@@ -44,6 +44,7 @@ class ClientResource extends JsonResource
             'prove' => $this->prova,
             'fullname' => $this->fullname,
             'fullricerca' => $this->fullricerca,
+            'telefonateOggi' => $this->recalls_count,
         ];
     }
 }

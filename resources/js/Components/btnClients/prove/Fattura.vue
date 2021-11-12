@@ -16,6 +16,7 @@
                             outlined
                             readonly
                             label="nome"
+                            required
                         ></v-text-field>
                     </v-col>
 
@@ -25,6 +26,7 @@
                             outlined
                             readonly
                             label="cognome"
+                            required
                         ></v-text-field>
                     </v-col>
 
@@ -34,6 +36,7 @@
                             outlined
                             readonly
                             label="cod. fis."
+                            required
                         ></v-text-field>
                     </v-col>
 
@@ -54,6 +57,7 @@
                             outlined
                             readonly
                             label="indirizzo"
+                            required
                         ></v-text-field>
                     </v-col>
 
@@ -63,6 +67,7 @@
                             outlined
                             readonly
                             label="citta"
+                            required
                         ></v-text-field>
                     </v-col>
 
@@ -72,6 +77,7 @@
                             outlined
                             readonly
                             label="cap"
+                            required
                         ></v-text-field>
                     </v-col>
 
@@ -81,6 +87,7 @@
                             outlined
                             readonly
                             label="provincia"
+                            required
                         ></v-text-field>
                     </v-col>
                 </v-row>

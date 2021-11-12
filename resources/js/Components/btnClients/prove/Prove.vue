@@ -362,8 +362,9 @@
                     { text: 'Data', width: 120, align: 'start', sortable: false, value: 'inizio_prova', class: "indigo white--text" },
                     { text: 'Stato', width: 120, sortable: false, value: 'stato.nome', class: "indigo white--text" },
                     { text: 'Audio', width: 120, sortable: false, value: 'user.name', class: "indigo white--text" },
-                    { text: 'Tot', width: 120, sortable: false, value: 'tot', class: "indigo white--text" },
-                    { text: 'Actions', width: 120, value: 'actions', sortable: false, class: "indigo white--text"},
+                    { text: 'Tot', width: 90, sortable: false, value: 'tot', class: "indigo white--text" },
+                    { text: 'Cod. Mkt', width: 120, sortable: false, value: 'marketing.name', class: "indigo white--text" },
+                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
 
                 headerNuovaProva: [
