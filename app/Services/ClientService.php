@@ -39,7 +39,13 @@ class ClientService
                 $q->with('copiaComm')->first();
             }])
             ->withCount(['recalls' => function($r) use($oggi){
-                $r->where('created_at', $oggi)->orWhere('updated_at', $oggi);
+                $r->where([
+                    ['created_at', $oggi],
+                    ['effettuata', 1],
+                ])->orWhere([
+                    ['updated_at', $oggi],
+                    ['effettuata', 1],
+                ]);
             }])
             ->where('filiale_id', $idFiliale)
             ->whereHas('tipologia', function($q){
@@ -62,103 +68,71 @@ class ClientService
 
     public function aggiungi($request)
     {
-        $new = new Client();
-        $new->nome = trim(Str::upper($request->nome));
-        $new->cognome = trim(Str::upper($request->cognome));
-        $new->codfisc = trim(Str::upper($request->codfisc)) == '' ? null : trim(Str::upper($request->codfisc));
-        $new->indirizzo = trim(Str::upper($request->indirizzo));
-        $new->citta = trim(Str::upper($request->citta));
-        $new->cap = $request->cap;
-        $new->provincia = trim(Str::upper($request->provincia));
-        $new->telefono = $request->telefono;
-        $new->telefono2 = $request->telefono2;
-        $new->telefono3 = $request->telefono3;
-        $new->tipologia_id = $request->tipologia_id;
-        $new->marketing_id = $request->marketing_id;
-        $new->filiale_id = $request->filiale_id;
+        $sonoInModificaUtente = isset($request->id) ? true : false;
+        $client = $sonoInModificaUtente ? Client::find($request->id) : new Client();
+
+        $client->nome = trim(Str::upper($request->nome));
+        $client->cognome = trim(Str::upper($request->cognome));
+        $client->codfisc = trim(Str::upper($request->codfisc)) == '' ? null : trim(Str::upper($request->codfisc));
+        $client->indirizzo = trim(Str::upper($request->indirizzo));
+        $client->citta = trim(Str::upper($request->citta));
+        $client->cap = $request->cap;
+        $client->provincia = trim(Str::upper($request->provincia));
+        $client->telefono = $request->telefono;
+        $client->telefono2 = $request->telefono2;
+        $client->telefono3 = $request->telefono3;
+        $client->tipologia_id = $request->tipologia_id;
+        $client->marketing_id = $request->marketing_id;
+        $client->filiale_id = $request->filiale_id;
         if($request->marketing_id == 5) {
-            $new->medico_id = $request->recapito_id;
+            $client->medico_id = $request->recapito_id;
         } else {
-            $new->recapito_id = $request->recapito_id;
+            $client->recapito_id = $request->recapito_id;
+        }
+        $client->user_id = $request->user_id;
+        $client->mail = trim(Str::upper($request->mail));
+        $client->datanascita = $request->datanascita;
+        $client->luogoNascita = trim(Str::upper($request->luogoNascita)) == '' ? null : trim(Str::upper($request->luogoNascita));
+        $client->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
+        $client->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
+        $client->save();
+
+        if(!$sonoInModificaUtente){
+            $client->mese = Carbon::now()->month;
+            $client->anno = Carbon::now()->year;
+            $client->save();
         }
 
-        $new->user_id = $request->user_id;
-
-        $new->mail = trim(Str::upper($request->mail));
-        $new->datanascita = $request->datanascita;
-        $new->luogoNascita = trim(Str::upper($request->luogoNascita)) == '' ? null : trim(Str::upper($request->luogoNascita));
-        $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
-        $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
-        $new->save();
-
-        $new->mese = Carbon::now()->month;
-        $new->anno = Carbon::now()->year;
-        $new->save();
-
-        if($new->tipologia_id){
-            $telefonata = new Telefonata();
-            $telefonata->user_id = $new->user_id;
-            $telefonata->client_id = $new->id;
-            $telefonata->note = "recall automatico dell'inserimento paziente";
-            $telefonata->datarecall = $this->calcolaRecall($new->tipologia_id);
-            $telefonata->effettuata = false;
-            $telefonata->save();
+        if($client->tipologia_id && !$sonoInModificaUtente){
+            $this->inserisciRecallAutomatico($client);
         }
 
         $utente = User::find($request->user_id);
         $propieta = 'client';
         $log = new LoggingService();
-        $testo = $utente->name.' ha inserito il nominativo '.$new->cognome.' '.$new->nome;
-        $log->scriviLog($new->cognome.' '.$new->nome, $utente, $utente->name, $propieta, $testo);
+        $testo = $sonoInModificaUtente ? $utente->name.' ha modificato il nominativo '.$client->cognome.' '.$client->nome :
+            $utente->name.' ha inserito il nominativo '.$client->cognome.' '.$client->nome;
+
+        $log->scriviLog($client->cognome.' '.$client->nome, $utente, $utente->name, $propieta, $testo);
 
         Informazione::create([
-            'client_id' => $new->id,
+            'client_id' => $client->id,
             'giorno' => Carbon::now()->format('Y-m-d'),
             'tipo' => 'CLIENTE',
             'note' => $testo
         ]);
 
-        return $new;
+        return $client;
     }
 
-    public function modifica($request)
-    {
-        $new = Client::find($request->id);
-        $new->nome = trim(Str::upper($request->nome));
-        $new->cognome = trim(Str::upper($request->cognome));
-        $new->codfisc = trim(Str::upper($request->codfisc)) == '' ? null : trim(Str::upper($request->codfisc));
-        $new->indirizzo = trim(Str::upper($request->indirizzo));
-        $new->citta = trim(Str::upper($request->citta));
-        $new->cap = $request->cap;
-        $new->provincia = trim(Str::upper($request->provincia));
-        $new->telefono = $request->telefono;
-        $new->telefono2 = $request->telefono2;
-        $new->telefono3 = $request->telefono3;
-        $new->tipologia_id = $request->tipologia_id;
-        $new->marketing_id = $request->marketing_id;
-        $new->filiale_id = $request->filiale_id;
-        if($request->marketing_id == 5) {
-            $new->medico_id = $request->recapito_id;
-        } else {
-            $new->recapito_id = $request->recapito_id;
-        }
-        $new->user_id = $request->user_id;
-     //   $new->recall = 1;
-    //    $new->datarecall = $this->calcolaRecall($request->tipologia_id);
-        $new->mail = trim(Str::upper($request->mail));
-        $new->datanascita = $request->datanascita ? Carbon::make($request->datanascita)->format('Y-m-d') : null;
-        $new->luogoNascita = trim(Str::upper($request->luogoNascita)) == '' ? null : trim(Str::upper($request->luogoNascita));
-        $new->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
-        $new->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
-        $new->save();
-
-        $utente = User::find($request->user_id);
-        $propieta = 'client';
-        $log = new LoggingService();
-        $testo = $utente->name.' ha modificato il nominativo '.$new->cognome.' '.$new->nome;
-        $log->scriviLog($new->cognome.' '.$new->nome, $utente, $utente->name, $propieta, $testo);
-
-        return $new;
+    private function inserisciRecallAutomatico($client){
+        $telefonata = new Telefonata();
+        $telefonata->user_id = $client->user_id;
+        $telefonata->client_id = $client->id;
+        $telefonata->note = "recall automatico dell'inserimento paziente";
+        $telefonata->datarecall = $this->calcolaRecall($client->tipologia_id);
+        $telefonata->effettuata = false;
+        $telefonata->save();
     }
 
     public function calcolaRecall($tipologia_id)
@@ -297,13 +271,13 @@ class ClientService
     public function importClientsFromNoah($request)
     {
         //dd($request);
-
+        $idListaEsterna = Tipologia::where('nome', 'LE')->first()->id;
         $xmlDataString = file_get_contents(asset('/storage/'.$request['nomeFile']));
         $res = 0;
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
 //dd($xml->Patient);
         foreach ($xml->Patient as $ele){
-            //dd((string)$ele->Patient->CreateDate);
+          //  dd((string)$ele->Patient->Province);
             $client = Client::updateOrCreate(
                 [
                     'nome'          => trim(Str::upper($ele->Patient->FirstName)),
@@ -317,16 +291,17 @@ class ClientService
                     'telefono'      => $ele->Patient->MobilePhone ? trim(Str::upper($ele->Patient->MobilePhone)) : null,
                     'telefono2'     => $ele->Patient->WorkPhone ? trim(Str::upper($ele->Patient->WorkPhone)) : null,
                     'telefono3'     => $ele->Patient->HomePhone ? trim(Str::upper($ele->Patient->HomePhone)) : null,
-                    'provincia'     => $ele->Patient->Other1 ? trim(Str::upper($ele->Patient->Other1)) : null,
+                    'provincia'     => $ele->Patient->Country ? trim(Str::upper($ele->Patient->Country)) : null,
 //                    'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
                     'user_id'       => $request['idUser'],
                     'datanascita'   => $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null,
 //                    'recapito_id' => $ele->Patient->Other2 ? $ele->Patient->Other2 : null,
-                    'recapito_id'   => null,
-                    'mail'          => is_string($ele->Patient->EMail) ? (string)$ele->Patient->EMail : null,
-//                    'tipologia_id' => $ele->Patient->Province ? $ele->Patient->Province : null,
-                    'tipologia_id'  => 6,
-//                    'filiale_id' => User::find($ele->Patient->CreatedBy)->filiale[0]->id,
+                    'recapito_id'   => $ele->Patient->Other2 ? trim(Str::substr($ele->Patient->Other2, 1, 1)) : null,
+                    'mail'          => $ele->Patient->EMail ? trim(Str::upper($ele->Patient->EMail)) : null,
+                    'tipologia_id'  => (string)$ele->Patient->Province != '' ? Tipologia::where('nome', trim(Str::upper($ele->Patient->Province)))->first()->id : $idListaEsterna,
+           //         'tipologia_id'  => $ele->Patient->Province ? Tipologia::where('nome', trim(Str::upper($ele->Patient->Province)))->first()->id : null,
+//                    'tipologia_id'  => 6,
+                    'marketing_id'  => $ele->Patient->Other1 ? $ele->Patient->Other1 : null,
                     'filiale_id'    => $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
                         Str::of(Str::upper($ele->Patient->City))->trim()),
                     'updated_at'    => Carbon::make((string)$ele->Patient->CreateDate),
@@ -342,6 +317,10 @@ class ClientService
                     'note' => 'Ingresso presso.....tramite il canale mkt....',
                     'giorno' => $client->created_at->format('Y-m-d'),
                 ]);
+                if ($client->tipologia_id != $idListaEsterna){
+                    $this->inserisciRecallAutomatico($client);
+                }
+
             }
 
             $audiometriad = null;
@@ -514,10 +493,10 @@ class ClientService
     private function getFilialeFromPlace($provincia, $citta)
     {
         $filiale = Filiale::where('provincia', $provincia)->get();
-        $ancona = ['OSIMO', 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO', 'FALCONARA MARITTIMA', 'OSTRA',
+        $ancona = [ 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO', 'FALCONARA MARITTIMA', 'OSTRA',
             'MONTESICURO', 'CAMERANO'];
         $civitanova = ['LORETO',
-            'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'PORTO RECANATI',
+            'POTENZA PICENA', 'OSIMO', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'PORTO RECANATI',
             'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'MONTECOSARO', 'MORROVALLE'];
         $macerata = ['MACERATA', 'CAMERINO'];
         $pisa = ['PISA', 'CASCINA', 'MARINA DI PISA', 'SAN GIULIANO TERME', 'SAN GIULIANO TERME(GELLO)',
@@ -541,9 +520,9 @@ class ClientService
         if (count($filiale) == 1){
             return $filiale[0]->id;
         } else {
-            if(in_array($citta, $ancona)) {
+            /*if(in_array($citta, $ancona)) {
                 return Filiale::where('nome', 'ANCONA')->first()->id;
-            } elseif (in_array($citta, $civitanova)) {
+            }*/ if (in_array($citta, $civitanova)) {
                 return Filiale::where('nome', 'CIVITANOVA')->first()->id;
             } elseif (in_array($citta, $macerata)) {
                 return Filiale::where('nome', 'MACERATA')->first()->id;

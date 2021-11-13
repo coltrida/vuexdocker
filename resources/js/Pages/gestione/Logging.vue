@@ -26,9 +26,9 @@
             return {
                 headers1: [
                     { text: 'Data', width:170, align: 'start', value: 'created_at', class: "indigo white--text" },
-                    { text: 'Soggetto', value: 'subject_type', class: "indigo white--text" },
-                    { text: 'Testo', value: 'description', class: "indigo white--text" },
-                    { text: 'Settore', value: 'log_name', class: "indigo white--text" },
+                    { text: 'Soggetto', width:150, value: 'subject_type', class: "indigo white--text" },
+                    { text: 'Testo', width:700, value: 'description', class: "indigo white--text" },
+                    { text: 'Settore', width:170, value: 'log_name', class: "indigo white--text" },
                     { text: 'Oggetto', value: 'event', class: "indigo white--text" },
                 ],
 

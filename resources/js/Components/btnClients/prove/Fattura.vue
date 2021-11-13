@@ -3,7 +3,10 @@
         v-model="dialog"
         width="900"
     >
-        <v-card>
+        <v-form ref="form"
+                v-model="valid"
+                lazy-validation>
+            <v-card>
             <v-card-title class="headline grey lighten-2">
                 Fattura
             </v-card-title>
@@ -16,6 +19,7 @@
                             outlined
                             readonly
                             label="nome"
+                            :rules="campoRules"
                             required
                         ></v-text-field>
                     </v-col>
@@ -26,6 +30,7 @@
                             outlined
                             readonly
                             label="cognome"
+                            :rules="campoRules"
                             required
                         ></v-text-field>
                     </v-col>
@@ -34,8 +39,8 @@
                         <v-text-field
                             v-model="itemFattura.client.codfisc"
                             outlined
-                            readonly
                             label="cod. fis."
+                            :rules="campoRules"
                             required
                         ></v-text-field>
                     </v-col>
@@ -57,6 +62,7 @@
                             outlined
                             readonly
                             label="indirizzo"
+                            :rules="campoRules"
                             required
                         ></v-text-field>
                     </v-col>
@@ -67,6 +73,7 @@
                             outlined
                             readonly
                             label="citta"
+                            :rules="campoRules"
                             required
                         ></v-text-field>
                     </v-col>
@@ -77,6 +84,7 @@
                             outlined
                             readonly
                             label="cap"
+                            :rules="campoRules"
                             required
                         ></v-text-field>
                     </v-col>
@@ -87,6 +95,7 @@
                             outlined
                             readonly
                             label="provincia"
+                            :rules="campoRules"
                             required
                         ></v-text-field>
                     </v-col>
@@ -164,9 +173,9 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                    color="primary"
                     text
                     @click="salva"
+                    :disabled="verificaCampi"
                 >
                     Salva
                 </v-btn>
@@ -179,6 +188,7 @@
                 </v-btn>
             </v-card-actions>
         </v-card>
+        </v-form>
     </v-dialog>
 </template>
 
@@ -188,7 +198,9 @@
     export default {
         data() {
             return {
-                dialog: this.dialogFattura
+                dialog: this.dialogFattura,
+                valid: true,
+                campoRules: [ v => !!v || 'campo obbligatorio'],
             }
         },
         name: "Fattura",
@@ -203,6 +215,7 @@
             }),
 
             salva() {
+                this.$refs.form.validate();
                 this.itemFattura.totFatturaReale = this.totFatturaReale;
                 this.salvaFattura(this.itemFattura);
                 this.chiudiFattura();
@@ -219,6 +232,16 @@
                         return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo)
                     }) :
                     this.itemFattura.product[0].pivot.prezzo
+            },
+
+            verificaCampi(){
+                return this.itemFattura.client.nome != '' && this.itemFattura.client.nome != null
+                && this.itemFattura.client.cognome != '' && this.itemFattura.client.cognome
+                && this.itemFattura.client.indirizzo != '' && this.itemFattura.client.indirizzo
+                && this.itemFattura.client.citta != '' && this.itemFattura.client.citta
+                && this.itemFattura.client.cap != '' && this.itemFattura.client.cap
+                && this.itemFattura.client.provincia != '' && this.itemFattura.client.provincia
+                && this.itemFattura.client.codfisc != '' && this.itemFattura.client.marketing_id ? false : true;
             }
         }
     }

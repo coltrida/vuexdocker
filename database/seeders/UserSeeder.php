@@ -88,8 +88,8 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123456'),
             ],
             [
-                'name' => 'Chiara Cardinale',
-                'email' => 'chiara.cardinale@centrouditogroup.it',
+                'name' => 'Liliana Cervone',
+                'email' => 'liliana.cervone@centrouditogroup.it',
                 'ruolo' => 2,
                 'budget_id' => 6,
                 'email_verified_at' => now(),

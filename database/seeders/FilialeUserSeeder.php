@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Filiale;
 use App\Models\FilialeUser;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class FilialeUserSeeder extends Seeder
@@ -14,75 +16,110 @@ class FilialeUserSeeder extends Seeder
      */
     public function run()
     {
+        $idCosseddu = User::where('name', 'Federico Cosseddu')->first()->id;
+        $idCaracciolo = User::where('name', 'Selene Caracciolo')->first()->id;
+        $idSerra = User::where('name', 'Matteo Serra')->first()->id;
+        $idAudioFirenze = User::where('name', 'Audio Firenze')->first()->id;
+        $idMantovani = User::where('name', 'Marina Mantovani')->first()->id;
+        $idAmmToscana = User::where('name', 'Amm Toscana')->first()->id;
+        $idAmmMarche = User::where('name', 'Amm Marche')->first()->id;
+        $idCervone = User::where('name', 'Liliana Cervone')->first()->id;
+        $idPapatheodoru = User::where('name', 'Athanasia Papatheodoru')->first()->id;
+        $idcall = User::where('name', 'call center')->first()->id;
+
+        $idPisa = Filiale::where('nome', 'PISA')->first()->id;
+        $idCivitanova = Filiale::where('nome', 'CIVITANOVA')->first()->id;
+        $idLucca = Filiale::where('nome', 'LUCCA')->first()->id;
+        $idMacerata = Filiale::where('nome', 'MACERATA')->first()->id;
+        $idSanBenedetto = Filiale::where('nome', 'SAN BENEDETTO')->first()->id;
+        $idViareggio = Filiale::where('nome', 'VIAREGGIO')->first()->id;
+        $idFirenze = Filiale::where('nome', 'FIRENZE')->first()->id;
+
         FilialeUser::insert([
             [
-                'filiale_id' => 1,
-                'user_id' => 2,
+                'filiale_id' => $idPisa,
+                'user_id' => $idCosseddu,
             ],
             [
-                'filiale_id' => 3,
-                'user_id' => 2,
+                'filiale_id' => $idLucca,
+                'user_id' => $idCosseddu,
+            ],
+            [
+                'filiale_id' => $idViareggio,
+                'user_id' => $idCaracciolo,
+            ],
+            [
+                'filiale_id' => $idFirenze,
+                'user_id' => $idAudioFirenze,
+            ],
+             [
+                 'filiale_id' => $idMacerata,
+                 'user_id' => $idMantovani,
+             ],
+             [
+                 'filiale_id' => $idPisa,
+                 'user_id' => $idAmmToscana,
+             ],
+            [
+                'filiale_id' => $idLucca,
+                'user_id' => $idAmmToscana,
+            ],
+             [
+                 'filiale_id' => $idViareggio,
+                 'user_id' => $idAmmToscana,
+             ],
+            [
+                'filiale_id' => $idFirenze,
+                'user_id' => $idAmmToscana,
+            ],
+            [
+                'filiale_id' => $idCivitanova,
+                'user_id' => $idAmmMarche,
+            ],
+            [
+                'filiale_id' => $idMacerata,
+                'user_id' => $idAmmMarche,
+            ],
+            [
+                'filiale_id' => $idSanBenedetto,
+                'user_id' => $idAmmMarche,
+            ],
+            [
+                'filiale_id' => $idLucca,
+                'user_id' => $idCervone,
+            ],
+            [
+                'filiale_id' => $idCivitanova,
+                'user_id' => $idPapatheodoru,
             ],
 /*            [
-                'filiale_id' => 6,
-                'user_id' => 2,
+                'filiale_id' => $idPisa,
+                'user_id' => $idcall,
+            ],
+            [
+                'filiale_id' => $idCivitanova,
+                'user_id' => $idcall,
+            ],
+            [
+                'filiale_id' => $idLucca,
+                'user_id' => $idcall,
+            ],
+            [
+                'filiale_id' => $idMacerata,
+                'user_id' => $idcall,
+            ],
+            [
+                'filiale_id' => $idSanBenedetto,
+                'user_id' => $idcall,
+            ],
+            [
+                'filiale_id' => $idViareggio,
+                'user_id' => $idcall,
+            ],
+            [
+                'filiale_id' => $idFirenze,
+                'user_id' => $idcall,
             ],*/
-            [
-                'filiale_id' => 7,
-                'user_id' => 2,
-            ],
-            [
-                'filiale_id' => 2,
-                'user_id' => 9,
-            ],
-             [
-                 'filiale_id' => 4,
-                 'user_id' => 8,
-             ],
-             [
-                 'filiale_id' => 5,
-                 'user_id' => 6,
-             ],
-            [
-                'filiale_id' => 8,
-                'user_id' => 5,
-            ],
-             [
-                 'filiale_id' => 7,
-                 'user_id' => 3,
-             ],
-            [
-                'filiale_id' => 1,
-                'user_id' => 7,
-            ],
-            [
-                'filiale_id' => 3,
-                'user_id' => 7,
-            ],
-            [
-                'filiale_id' => 6,
-                'user_id' => 11,
-            ],
-            [
-                'filiale_id' => 7,
-                'user_id' => 7,
-            ],
-            [
-                'filiale_id' => 2,
-                'user_id' => 11,
-            ],
-            [
-                'filiale_id' => 4,
-                'user_id' => 11,
-            ],
-            [
-                'filiale_id' => 5,
-                'user_id' => 11,
-            ],
-            [
-                'filiale_id' => 8,
-                'user_id' => 7,
-            ],
         ]);
     }
 }

@@ -1643,11 +1643,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      dialog: this.dialogFattura
+      dialog: this.dialogFattura,
+      valid: true,
+      campoRules: [function (v) {
+        return !!v || 'campo obbligatorio';
+      }]
     };
   },
   name: "Fattura",
@@ -1659,6 +1673,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     salvaFattura: 'salvaFattura'
   })), {}, {
     salva: function salva() {
+      this.$refs.form.validate();
       this.itemFattura.totFatturaReale = this.totFatturaReale;
       this.salvaFattura(this.itemFattura);
       this.chiudiFattura();
@@ -1672,6 +1687,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.itemFattura.product.length > 1 ? this.itemFattura.product.reduce(function (a, b) {
         return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo);
       }) : this.itemFattura.product[0].pivot.prezzo;
+    },
+    verificaCampi: function verificaCampi() {
+      return this.itemFattura.client.nome != '' && this.itemFattura.client.nome != null && this.itemFattura.client.cognome != '' && this.itemFattura.client.cognome && this.itemFattura.client.indirizzo != '' && this.itemFattura.client.indirizzo && this.itemFattura.client.citta != '' && this.itemFattura.client.citta && this.itemFattura.client.cap != '' && this.itemFattura.client.cap && this.itemFattura.client.provincia != '' && this.itemFattura.client.provincia && this.itemFattura.client.codfisc != '' && this.itemFattura.client.marketing_id ? false : true;
     }
   }
 });
@@ -2693,7 +2711,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.telefonata.clientId = this.recallsClient.id;
       this.telefonata.userId = this.getIdUser;
-      this.recallsClient.fattaTelefonata = true;
+      this.recallsClient.fattaTelefonata = this.telefonata.esito ? true : false;
       this.addTelefonata(this.telefonata).then(function () {
         if (_this2.telefonata.esito == 'Preso Appuntamento') {
           _this2.telefonata = {};
@@ -44951,314 +44969,137 @@ var render = function() {
     },
     [
       _c(
-        "v-card",
+        "v-form",
+        {
+          ref: "form",
+          attrs: { "lazy-validation": "" },
+          model: {
+            value: _vm.valid,
+            callback: function($$v) {
+              _vm.valid = $$v
+            },
+            expression: "valid"
+          }
+        },
         [
-          _c("v-card-title", { staticClass: "headline grey lighten-2" }, [
-            _vm._v("\n            Fattura\n        ")
-          ]),
-          _vm._v(" "),
           _c(
-            "v-card-text",
-            { staticClass: "mt-2" },
+            "v-card",
             [
+              _c("v-card-title", { staticClass: "headline grey lighten-2" }, [
+                _vm._v("\n            Fattura\n        ")
+              ]),
+              _vm._v(" "),
               _c(
-                "v-row",
+                "v-card-text",
                 { staticClass: "mt-2" },
                 [
                   _c(
-                    "v-col",
-                    { attrs: { cols: "3" } },
+                    "v-row",
+                    { staticClass: "mt-2" },
                     [
-                      _c("v-text-field", {
-                        attrs: {
-                          outlined: "",
-                          readonly: "",
-                          label: "nome",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.itemFattura.client.nome,
-                          callback: function($$v) {
-                            _vm.$set(_vm.itemFattura.client, "nome", $$v)
-                          },
-                          expression: "itemFattura.client.nome"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "3" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          outlined: "",
-                          readonly: "",
-                          label: "cognome",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.itemFattura.client.cognome,
-                          callback: function($$v) {
-                            _vm.$set(_vm.itemFattura.client, "cognome", $$v)
-                          },
-                          expression: "itemFattura.client.cognome"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "3" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          outlined: "",
-                          readonly: "",
-                          label: "cod. fis.",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.itemFattura.client.codfisc,
-                          callback: function($$v) {
-                            _vm.$set(_vm.itemFattura.client, "codfisc", $$v)
-                          },
-                          expression: "itemFattura.client.codfisc"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "3" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          outlined: "",
-                          readonly: "",
-                          label: "telefono"
-                        },
-                        model: {
-                          value: _vm.itemFattura.client.telefono,
-                          callback: function($$v) {
-                            _vm.$set(_vm.itemFattura.client, "telefono", $$v)
-                          },
-                          expression: "itemFattura.client.telefono"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-row",
-                { staticClass: "mt-2" },
-                [
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "4" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          outlined: "",
-                          readonly: "",
-                          label: "indirizzo",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.itemFattura.client.indirizzo,
-                          callback: function($$v) {
-                            _vm.$set(_vm.itemFattura.client, "indirizzo", $$v)
-                          },
-                          expression: "itemFattura.client.indirizzo"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "4" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          outlined: "",
-                          readonly: "",
-                          label: "citta",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.itemFattura.client.citta,
-                          callback: function($$v) {
-                            _vm.$set(_vm.itemFattura.client, "citta", $$v)
-                          },
-                          expression: "itemFattura.client.citta"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "2" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          outlined: "",
-                          readonly: "",
-                          label: "cap",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.itemFattura.client.cap,
-                          callback: function($$v) {
-                            _vm.$set(_vm.itemFattura.client, "cap", $$v)
-                          },
-                          expression: "itemFattura.client.cap"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "2" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          outlined: "",
-                          readonly: "",
-                          label: "provincia",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.itemFattura.client.provincia,
-                          callback: function($$v) {
-                            _vm.$set(_vm.itemFattura.client, "provincia", $$v)
-                          },
-                          expression: "itemFattura.client.provincia"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mt-4" },
-                [
-                  _c("v-simple-table", {
-                    attrs: { dense: "" },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function() {
-                          return [
-                            _c("thead", [
-                              _c("tr", [
-                                _c(
-                                  "th",
-                                  {
-                                    staticClass: "text-left",
-                                    staticStyle: { width: "40%" }
-                                  },
-                                  [_c("h2", [_vm._v("Matricola")])]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "th",
-                                  {
-                                    staticClass: "text-left",
-                                    staticStyle: { width: "40%" }
-                                  },
-                                  [_c("h2", [_vm._v("Prodotto")])]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "th",
-                                  {
-                                    staticClass: "text-left",
-                                    staticStyle: { width: "20%" }
-                                  },
-                                  [_c("h2", [_vm._v("Prezzo")])]
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "3" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              outlined: "",
+                              readonly: "",
+                              label: "nome",
+                              rules: _vm.campoRules,
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.itemFattura.client.nome,
+                              callback: function($$v) {
+                                _vm.$set(_vm.itemFattura.client, "nome", $$v)
+                              },
+                              expression: "itemFattura.client.nome"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "3" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              outlined: "",
+                              readonly: "",
+                              label: "cognome",
+                              rules: _vm.campoRules,
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.itemFattura.client.cognome,
+                              callback: function($$v) {
+                                _vm.$set(_vm.itemFattura.client, "cognome", $$v)
+                              },
+                              expression: "itemFattura.client.cognome"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "3" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              outlined: "",
+                              label: "cod. fis.",
+                              rules: _vm.campoRules,
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.itemFattura.client.codfisc,
+                              callback: function($$v) {
+                                _vm.$set(_vm.itemFattura.client, "codfisc", $$v)
+                              },
+                              expression: "itemFattura.client.codfisc"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "3" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              outlined: "",
+                              readonly: "",
+                              label: "telefono"
+                            },
+                            model: {
+                              value: _vm.itemFattura.client.telefono,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.itemFattura.client,
+                                  "telefono",
+                                  $$v
                                 )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "tbody",
-                              _vm._l(_vm.itemFattura.product, function(
-                                prodotto
-                              ) {
-                                return _c("tr", { key: prodotto.id }, [
-                                  _c("td", [
-                                    _vm._v(_vm._s(prodotto.matricola))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(_vm._s(prodotto.listino.nome))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "td",
-                                    { staticStyle: { "padding-top": "15px" } },
-                                    [
-                                      _c("v-text-field", {
-                                        attrs: {
-                                          outlined: "",
-                                          label: "prezzo"
-                                        },
-                                        model: {
-                                          value: prodotto.pivot.prezzo,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              prodotto.pivot,
-                                              "prezzo",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "prodotto.pivot.prezzo"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ])
-                              }),
-                              0
-                            )
-                          ]
-                        },
-                        proxy: true
-                      }
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c("v-divider"),
+                              },
+                              expression: "itemFattura.client.telefono"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-row",
-                    {
-                      staticClass: "my-0 py-0",
-                      staticStyle: { "border-bottom": "1px solid grey" }
-                    },
+                    { staticClass: "mt-2" },
                     [
                       _c(
                         "v-col",
@@ -45268,14 +45109,20 @@ var render = function() {
                             attrs: {
                               outlined: "",
                               readonly: "",
-                              label: "Totale"
+                              label: "indirizzo",
+                              rules: _vm.campoRules,
+                              required: ""
                             },
                             model: {
-                              value: _vm.totFatturaReale,
+                              value: _vm.itemFattura.client.indirizzo,
                               callback: function($$v) {
-                                _vm.totFatturaReale = $$v
+                                _vm.$set(
+                                  _vm.itemFattura.client,
+                                  "indirizzo",
+                                  $$v
+                                )
                               },
-                              expression: "totFatturaReale"
+                              expression: "itemFattura.client.indirizzo"
                             }
                           })
                         ],
@@ -45287,13 +45134,19 @@ var render = function() {
                         { attrs: { cols: "4" } },
                         [
                           _c("v-text-field", {
-                            attrs: { outlined: "", label: "Acconto" },
+                            attrs: {
+                              outlined: "",
+                              readonly: "",
+                              label: "citta",
+                              rules: _vm.campoRules,
+                              required: ""
+                            },
                             model: {
-                              value: _vm.itemFattura.acconto,
+                              value: _vm.itemFattura.client.citta,
                               callback: function($$v) {
-                                _vm.$set(_vm.itemFattura, "acconto", $$v)
+                                _vm.$set(_vm.itemFattura.client, "citta", $$v)
                               },
-                              expression: "itemFattura.acconto"
+                              expression: "itemFattura.client.citta"
                             }
                           })
                         ],
@@ -45302,18 +45155,221 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-col",
-                        { attrs: { cols: "4" } },
+                        { attrs: { cols: "2" } },
                         [
                           _c("v-text-field", {
-                            attrs: { outlined: "", label: "Rate" },
+                            attrs: {
+                              outlined: "",
+                              readonly: "",
+                              label: "cap",
+                              rules: _vm.campoRules,
+                              required: ""
+                            },
                             model: {
-                              value: _vm.itemFattura.rate,
+                              value: _vm.itemFattura.client.cap,
                               callback: function($$v) {
-                                _vm.$set(_vm.itemFattura, "rate", $$v)
+                                _vm.$set(_vm.itemFattura.client, "cap", $$v)
                               },
-                              expression: "itemFattura.rate"
+                              expression: "itemFattura.client.cap"
                             }
                           })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "2" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              outlined: "",
+                              readonly: "",
+                              label: "provincia",
+                              rules: _vm.campoRules,
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.itemFattura.client.provincia,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.itemFattura.client,
+                                  "provincia",
+                                  $$v
+                                )
+                              },
+                              expression: "itemFattura.client.provincia"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "mt-4" },
+                    [
+                      _c("v-simple-table", {
+                        attrs: { dense: "" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function() {
+                              return [
+                                _c("thead", [
+                                  _c("tr", [
+                                    _c(
+                                      "th",
+                                      {
+                                        staticClass: "text-left",
+                                        staticStyle: { width: "40%" }
+                                      },
+                                      [_c("h2", [_vm._v("Matricola")])]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "th",
+                                      {
+                                        staticClass: "text-left",
+                                        staticStyle: { width: "40%" }
+                                      },
+                                      [_c("h2", [_vm._v("Prodotto")])]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "th",
+                                      {
+                                        staticClass: "text-left",
+                                        staticStyle: { width: "20%" }
+                                      },
+                                      [_c("h2", [_vm._v("Prezzo")])]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "tbody",
+                                  _vm._l(_vm.itemFattura.product, function(
+                                    prodotto
+                                  ) {
+                                    return _c("tr", { key: prodotto.id }, [
+                                      _c("td", [
+                                        _vm._v(_vm._s(prodotto.matricola))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(prodotto.listino.nome))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        {
+                                          staticStyle: { "padding-top": "15px" }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              outlined: "",
+                                              label: "prezzo"
+                                            },
+                                            model: {
+                                              value: prodotto.pivot.prezzo,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  prodotto.pivot,
+                                                  "prezzo",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "prodotto.pivot.prezzo"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ])
+                                  }),
+                                  0
+                                )
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("v-divider"),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        {
+                          staticClass: "my-0 py-0",
+                          staticStyle: { "border-bottom": "1px solid grey" }
+                        },
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "4" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  outlined: "",
+                                  readonly: "",
+                                  label: "Totale"
+                                },
+                                model: {
+                                  value: _vm.totFatturaReale,
+                                  callback: function($$v) {
+                                    _vm.totFatturaReale = $$v
+                                  },
+                                  expression: "totFatturaReale"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "4" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { outlined: "", label: "Acconto" },
+                                model: {
+                                  value: _vm.itemFattura.acconto,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.itemFattura, "acconto", $$v)
+                                  },
+                                  expression: "itemFattura.acconto"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "4" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { outlined: "", label: "Rate" },
+                                model: {
+                                  value: _vm.itemFattura.rate,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.itemFattura, "rate", $$v)
+                                  },
+                                  expression: "itemFattura.rate"
+                                }
+                              })
+                            ],
+                            1
+                          )
                         ],
                         1
                       )
@@ -45322,32 +45378,32 @@ var render = function() {
                   )
                 ],
                 1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-actions",
-            [
-              _c("v-spacer"),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: "primary", text: "" },
-                  on: { click: _vm.salva }
-                },
-                [_vm._v("\n                Salva\n            ")]
               ),
               _vm._v(" "),
               _c(
-                "v-btn",
-                {
-                  attrs: { color: "primary", text: "" },
-                  on: { click: _vm.chiudiFattura }
-                },
-                [_vm._v("\n                Chiudi\n            ")]
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "", disabled: _vm.verificaCampi },
+                      on: { click: _vm.salva }
+                    },
+                    [_vm._v("\n                Salva\n            ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", text: "" },
+                      on: { click: _vm.chiudiFattura }
+                    },
+                    [_vm._v("\n                Chiudi\n            ")]
+                  )
+                ],
+                1
               )
             ],
             1

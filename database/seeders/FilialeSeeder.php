@@ -22,8 +22,7 @@ class FilialeSeeder extends Seeder
                 'telefono' => '0506206057',
                 'cap' => '56127',
                 'provincia' => 'PI',
-                'informazioni' => 'ACCANTO ALLA QUESTURA',
-                'codiceIdentificativo' => 'F1'
+                'informazioni' => 'ACCANTO ALLA QUESTURA'
             ],
             [
                 'nome' => 'CIVITANOVA',
@@ -32,8 +31,7 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'MC',
-                'informazioni' => '..........',
-                'codiceIdentificativo' => 'F2'
+                'informazioni' => '..........'
             ],
             [
                 'nome' => 'LUCCA',
@@ -42,18 +40,7 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'LU',
-                'informazioni' => '..........',
-                'codiceIdentificativo' => 'F3'
-            ],
-            [
-                'nome' => 'ANCONA',
-                'indirizzo' => '........',
-                'citta' => 'ANCONA',
-                'telefono' => '........',
-                'cap' => '........',
-                'provincia' => 'AN',
-                'informazioni' => '..........',
-                'codiceIdentificativo' => 'F4'
+                'informazioni' => '..........'
             ],
             [
                 'nome' => 'MACERATA',
@@ -62,8 +49,7 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'MC',
-                'informazioni' => '..........',
-                'codiceIdentificativo' => 'F5'
+                'informazioni' => '..........'
             ],
             [
                 'nome' => 'SAN BENEDETTO',
@@ -72,8 +58,7 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'AP',
-                'informazioni' => '..........',
-                'codiceIdentificativo' => 'F6'
+                'informazioni' => '..........'
             ],
             [
                 'nome' => 'VIAREGGIO',
@@ -82,8 +67,7 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'LU',
-                'informazioni' => '..........',
-                'codiceIdentificativo' => 'F7'
+                'informazioni' => '..........'
             ],
             [
                 'nome' => 'FIRENZE',
@@ -92,9 +76,14 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'FI',
-                'informazioni' => '..........',
-                'codiceIdentificativo' => 'F8'
+                'informazioni' => '..........'
             ],
         ]);
+
+        $filiali = Filiale::all();
+        foreach ($filiali as $filiale){
+            $filiale->codiceIdentificativo = 'F'.$filiale->id;
+            $filiale->save();
+        }
     }
 }

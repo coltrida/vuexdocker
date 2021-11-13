@@ -136,7 +136,7 @@ Route::group([], function () {
         Route::post('/eliminaClient', [ClientController::class, 'elimina']);
         Route::post('/addClient', [ClientController::class, 'aggiungi']);
         Route::post('/ricercaNominativi', [ClientController::class, 'ricercaNominativi']);
-        Route::post('/modificaClient', [ClientController::class, 'modifica']);
+        Route::post('/modificaClient', [ClientController::class, 'aggiungi']);
         Route::post('/inviaSms', [ClientController::class, 'inviaSms']);
         Route::get('/importClients', [ClientController::class, 'importClients']);
         Route::post('/importClientsFromNoah', [ClientController::class, 'importClientsFromNoah']);

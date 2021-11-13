@@ -147,7 +147,7 @@ class TelefonateService
 
         $prossimaTelefonata = Telefonata::create([
             'user_id' => $client->user->id,
-            'eseguita_id' => $request->userId,
+            'eseguita_id' => $request->esito ? $request->userId : 0,
             'client_id' => $request->clientId,
             'datarecall' => $request->giorno,
             'mese' => $request->esito ? Carbon::now()->month : null,
@@ -183,6 +183,7 @@ class TelefonateService
         $telefonata = Telefonata::with('client')->find($request->id);
         $telefonata->esito = $request->esito;
         $telefonata->note = $request->note;
+        $telefonata->eseguita_id = $request->esito ? $request->userId : 0;
         $telefonata->effettuata = $request->esito ? 1 : 0;
         $telefonata->updated_at = Carbon::now()->format('Y-m-d');
         if ($request->esito) {

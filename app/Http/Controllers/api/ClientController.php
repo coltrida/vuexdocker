@@ -55,11 +55,6 @@ class ClientController extends Controller
         return ClientResource::collection($clientService->ricercaNominativi($request));
     }
 
-    public function modifica(Request $request, ClientService $clientService)
-    {
-        return new ClientResource($clientService->modifica($request));
-    }
-
     public function elimina(Request $request, ClientService $clientService)
     {
         return $clientService->elimina($request);

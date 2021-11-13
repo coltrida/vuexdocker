@@ -292,7 +292,7 @@
             inserisci(){
                 this.telefonata.clientId = this.recallsClient.id;
                 this.telefonata.userId = this.getIdUser;
-                this.recallsClient.fattaTelefonata = true;
+                this.recallsClient.fattaTelefonata = this.telefonata.esito ? true : false;
                 this.addTelefonata(this.telefonata).then(() =>{
                 if(this.telefonata.esito == 'Preso Appuntamento'){
                     this.telefonata = {};
