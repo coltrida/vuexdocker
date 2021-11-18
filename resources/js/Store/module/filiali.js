@@ -56,11 +56,20 @@ const actions = {
     },
 
     async fetchFilialiPerInserimento({commit}, idUser){
-        const response = await axios.get(`${help().linkfilialiuser}`+'/'+idUser, {
-            headers: {
-                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
-            }
-        });
+        let response = [];
+        if (idUser !== 0){
+            response = await axios.get(`${help().linkfilialiuser}`+'/'+idUser, {
+                headers: {
+                    'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+                }
+            });
+        } else {
+            response = await axios.get(`${help().linkfiliali}`, {
+                headers: {
+                    'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+                }
+            });
+        }
         commit('fetchFilialiPerInserimento', response.data);
     },
 

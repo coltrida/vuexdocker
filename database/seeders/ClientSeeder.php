@@ -18,7 +18,23 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 2000; $i++){
+
+        Client::create([
+            'nome' => 'MASSIMO',
+            'cognome' => 'TRAINITI',
+            'indirizzo' => 'VIA TEVERE 29',
+            'citta' => 'SAN GIULIANO TERME',
+            'provincia' => 'PI',
+            'telefono' => '321615612',
+            'user_id' => 2,
+            'tipologia_id' => 6,
+            'filiale_id' => 1,
+            'marketing_id' => 4,
+            'mese' => 11,
+            'anno' => 2021,
+        ]);
+
+        /*for ($i = 1; $i < 2000; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'21',
                 'cognome' => 'COGNOME'.$i.'21',
@@ -76,6 +92,6 @@ class ClientSeeder extends Seeder
                 'anno' => Carbon::now()->year,
                 'recapito_id' => rand(1,2)
             ]);
-        }
+        }*/
     }
 }

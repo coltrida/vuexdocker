@@ -2,7 +2,7 @@
     <div>
         <v-row class="mt-5">
             <v-col cols="6">
-                <h2>Appuntamenti: {{infoRecalls.mese}} / {{infoRecalls.anno}}</h2>
+                <h2>Intervenuti: {{infoRecalls.mese}} / {{infoRecalls.anno}}</h2>
             </v-col>
 
             <v-col cols="6" class="flex justify-end">
@@ -19,9 +19,9 @@
             ></v-progress-circular>
         </div>
         <div v-else>
-            <v-row v-for="(item, index) in getAppuntamentiAnnoMese" :key="index">
+            <v-row v-for="(item, index) in getIntervenutiAnnoMese" :key="index">
                 <v-col cols="12">
-                    <h4>Appuntamenti fissati per: {{item[0].nominativoUser}}</h4>
+                    <h4>Intervenuti per: {{item[0].nominativoUser}}</h4>
                     <v-data-table
                         dense
                         item-key="idTelefonata"
@@ -51,7 +51,7 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     export default {
-        name: "InfoAppuntamenti",
+        name: "InfoIntervenuti",
 
         props: ['infoRecalls'],
 
@@ -72,23 +72,23 @@
 
         mounted() {
             this.carica = true;
-            this.fetchAppuntamentiAnnoMese({'anno':this.infoRecalls.anno, 'mesenumero':this.infoRecalls.mesenumero })
+            this.fetchIntervenutiAnnoMese({'anno':this.infoRecalls.anno, 'mesenumero':this.infoRecalls.mesenumero })
                 .then(() => this.carica = false);
         },
 
         methods: {
             ...mapActions('appuntamenti', {
-                fetchAppuntamentiAnnoMese:'fetchAppuntamentiAnnoMese',
+                fetchIntervenutiAnnoMese:'fetchIntervenutiAnnoMese',
             }),
 
             cancella(){
-                this.$emit('chiudiInfoAppuntamenti')
+                this.$emit('chiudiInfoIntervenuti')
             },
         },
 
         computed:{
             ...mapGetters('appuntamenti', {
-                getAppuntamentiAnnoMese:'getAppuntamentiAnnoMese',
+                getIntervenutiAnnoMese:'getIntervenutiAnnoMese',
             }),
         }
     }

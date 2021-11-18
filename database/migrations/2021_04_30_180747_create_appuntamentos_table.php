@@ -21,8 +21,10 @@ class CreateAppuntamentosTable extends Migration
             $table->string('tipo');
             $table->bigInteger('client_id');
             $table->bigInteger('user_id');
+            $table->bigInteger('preso_id');
             $table->bigInteger('filiale_id')->nullable();
             $table->bigInteger('recapito_id')->nullable();
+            $table->boolean('intervenuto')->nullable();
             $table->timestamps();
             $table->integer('mese')->nullable();
             $table->integer('anno')->nullable();

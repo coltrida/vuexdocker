@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductProva whereProvaId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductProva whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $prezzo_formattato
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductProva wherePrezzoFormattato($value)
  */
 class ProductProva extends Model
 {

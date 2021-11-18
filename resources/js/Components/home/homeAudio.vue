@@ -160,6 +160,59 @@
 
                         </v-data-table>
                     </div>
+
+                    <h2 class="mt-6">Appuntamenti in sospeso:</h2>
+                    <div>
+                        <v-data-table
+                            :headers="headers6"
+                            :items="getAppuntamentiInSospeso"
+                            class="elevation-1 mt-3"
+                            hide-default-footer
+                        >
+
+                            <template v-slot:item.fullname="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                    {{item.fullname}}
+                                </router-link>
+                            </template>
+
+                            <template v-slot:item.actions="{ item }">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            @click="nonIntervenuto(item.id)"
+                                            color="red"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+
+                                        >
+                                            mdi-cancel
+                                        </v-icon>
+                                    </template>
+                                    <span>Non Intervenuto</span>
+                                </v-tooltip>
+
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            @click="intervenuto(item.id)"
+                                            color="green"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+
+                                        >
+                                            mdi-check
+                                        </v-icon>
+                                    </template>
+                                    <span>Intervenuto</span>
+                                </v-tooltip>
+                            </template>
+
+                        </v-data-table>
+                    </div>
                 </v-col>
 
                 <v-col cols="12" md="12" lg="7" xs="12" sm="12">
@@ -178,13 +231,57 @@
                                 </router-link>
                             </template>
 
+                            <template v-slot:item.actions="{ item }">
+                                <v-tooltip bottom v-if="item.intervenuto === null">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            @click="nonIntervenutoOggi(item.id)"
+                                            color="red"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+
+                                        >
+                                            mdi-cancel
+                                        </v-icon>
+                                    </template>
+                                    <span>Non Interviene</span>
+                                </v-tooltip>
+                                <v-tooltip bottom v-if="item.intervenuto === 1">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="green"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-calendar-check
+                                        </v-icon>
+                                    </template>
+                                    <span>Intervenuto</span>
+                                </v-tooltip>
+                                <v-tooltip bottom v-if="item.intervenuto === 0">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="red"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-window-close
+                                        </v-icon>
+                                    </template>
+                                    <span>Non Intervenuto</span>
+                                </v-tooltip>
+                            </template>
+
                         </v-data-table>
                     </div>
 
                     <h2 class="mt-6">Appuntamenti Domani:</h2>
                     <div>
                         <v-data-table
-                            :headers="headers4"
+                            :headers="headers5"
                             :items="getAppuntamentiDomani"
                             class="elevation-1 mt-3"
                             hide-default-footer
@@ -259,8 +356,25 @@
                     {text: 'telefono', width:70, value: 'telefono', sortable: false, class: "indigo white--text"},
                     {text: 'Tipo', width:120, value: 'tipo', sortable: false, class: "indigo white--text"},
                     {text: 'Luogo', width:120, value: 'luogo', sortable: false, class: "indigo white--text"},
+                    {text: 'orario', width:90, value: 'orario', sortable: false, class: "indigo white--text"},
+                    {text: 'giorno', width:120, value: 'giorno', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width:80, value: 'actions', sortable: false, class: "indigo white--text"},
+                ],
+
+                headers5: [
+                    {text: 'Nome', width:170, value: 'fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'telefono', width:70, value: 'telefono', sortable: false, class: "indigo white--text"},
+                    {text: 'Tipo', width:120, value: 'tipo', sortable: false, class: "indigo white--text"},
+                    {text: 'Luogo', width:120, value: 'luogo', sortable: false, class: "indigo white--text"},
                     {text: 'orario', width:120, value: 'orario', sortable: false, class: "indigo white--text"},
                     {text: 'giorno', width:120, value: 'giorno', sortable: false, class: "indigo white--text"},
+                ],
+
+                headers6: [
+                    {text: 'Nome', width:170, value: 'fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Città', width:70, value: 'citta', sortable: false, class: "indigo white--text"},
+                    {text: 'Data App.', width:120, value: 'giorno', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width:80, value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
             }
         },
@@ -270,7 +384,7 @@
             this.fetchCompleanni(this.getIdUser);
             this.fetchAppuntamentiOggi(this.getIdUser);
             this.fetchAppuntamentiDomani(this.getIdUser);
-           // console.log(this.$vuetify.breakpoint.xs)
+            this.fetchAppuntamentiInSospeso(this.getIdUser);
         },
 
         methods: {
@@ -285,6 +399,10 @@
             ...mapActions('appuntamenti', {
                 fetchAppuntamentiOggi: 'fetchAppuntamentiOggi',
                 fetchAppuntamentiDomani: 'fetchAppuntamentiDomani',
+                fetchAppuntamentiInSospeso: 'fetchAppuntamentiInSospeso',
+                appuntamentoSaltato: 'appuntamentoSaltato',
+                appuntamentoIntervenuto: 'appuntamentoIntervenuto',
+                oggiNonViene: 'oggiNonViene',
             }),
 
             seleziona(items){
@@ -295,6 +413,18 @@
             chiudiProdotti(){
                 this.dialogProdotti = false;
                 this.prodottiSelezione = [];
+            },
+
+            nonIntervenutoOggi(idAppuntamento){
+                this.oggiNonViene(idAppuntamento);
+            },
+
+            nonIntervenuto(idAppuntamento){
+                this.appuntamentoSaltato(idAppuntamento);
+            },
+
+            intervenuto(idAppuntamento){
+                this.appuntamentoIntervenuto(idAppuntamento);
             }
         },
 
@@ -314,6 +444,7 @@
             ...mapGetters('appuntamenti', {
                 getAppuntamentiOggi: 'getAppuntamentiOggi',
                 getAppuntamentiDomani: 'getAppuntamentiDomani',
+                getAppuntamentiInSospeso: 'getAppuntamentiInSospeso',
             }),
 
             bgtAnno(){

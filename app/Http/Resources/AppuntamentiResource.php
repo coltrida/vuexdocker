@@ -31,6 +31,7 @@ class AppuntamentiResource extends JsonResource
             'luogo' => $this->filiale_id ? $this->filiale->nome : $this->recapito->nome,
             'nota' => $this->nota,
             'tipo' => $this->tipo,
+            'intervenuto' => $this->intervenuto,
             'fullname' => $this->client->fullname,
         ];
     }

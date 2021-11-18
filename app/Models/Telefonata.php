@@ -31,6 +31,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Telefonata whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Telefonata whereUserId($value)
  * @mixin \Eloquent
+ * @property int $eseguita_id
+ * @property int|null $mese
+ * @property int|null $anno
+ * @property-read \App\Models\User $audio
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Telefonata whereAnno($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Telefonata whereEseguitaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Telefonata whereMese($value)
  */
 class Telefonata extends Model
 {

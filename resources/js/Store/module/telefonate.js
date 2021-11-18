@@ -258,6 +258,10 @@ const mutations = {
         state.recallOggi = state.recallOggi.filter(u => u.id !== payload.id);
     },
 
+    eliminaTelefonata(state, id){
+        state.recalls = state.recalls.filter(u => u.id !== id);
+    },
+
     fetchClientiMaiRichiamati(state, payload){
         state.clientiMaiRichiamati = payload;
     },

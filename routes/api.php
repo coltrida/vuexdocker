@@ -59,6 +59,7 @@ Route::group([], function () {
 
         Route::get('switchSimulazione', [UserController::class, 'switchSimulazione']);
         Route::get('infoDatabase', [UserController::class, 'infoDatabase']);
+        Route::get('/audioSeguitiDaAmministrativa/{idAmministrativa}', [UserController::class, 'audioSeguitiDaAmministrativa']);
 
         // ----------------- filiali -------------------------
         Route::get('/filiali', [FilialiController::class, 'index']);
@@ -206,6 +207,10 @@ Route::group([], function () {
         Route::get('/dateSettimana', [AppuntamentiController::class, 'dateSettimana']);
         Route::get('/dateSettimanaProssima', [AppuntamentiController::class, 'dateSettimanaProssima']);
         Route::get('/appuntamentiAnnoMese/{anno}/{mese}', [AppuntamentiController::class, 'appuntamentiAnnoMese']);
+        Route::get('/intervenutiAnnoMese/{anno}/{mese}', [AppuntamentiController::class, 'intervenutiAnnoMese']);
+        Route::get('/appuntamentiInSospeso/{idAudio}', [AppuntamentiController::class, 'inSospeso']);
+        Route::get('/appuntamentoSaltato/{idAppuntamento}', [AppuntamentiController::class, 'appuntamentoSaltato']);
+        Route::get('/appuntamentoIntervenuto/{idAppuntamento}', [AppuntamentiController::class, 'appuntamentoIntervenuto']);
 
         // ----------------- documenti -----------------------
         Route::post('/salvaDocumento', [DocumentoController::class, 'salvaDocumento']);

@@ -11,7 +11,9 @@ const state = () => ({
     appGio: [],
     appVen: [],
     settimanaVisualizzata: '',
-    appuntamentiAnnoMese: []
+    appuntamentiAnnoMese: [],
+    intervenutiAnnoMese: [],
+    appuntamentiInSospeso: [],
 });
 
 const getters = {
@@ -19,8 +21,16 @@ const getters = {
         return state.appuntamenti;
     },
 
+    getAppuntamentiInSospeso(state){
+        return state.appuntamentiInSospeso;
+    },
+
     getAppuntamentiAnnoMese(state){
         return state.appuntamentiAnnoMese;
+    },
+
+    getIntervenutiAnnoMese(state){
+        return state.intervenutiAnnoMese;
     },
 
     getAppuntamentiOggi(state){
@@ -80,6 +90,15 @@ const actions = {
         commit('fetchAppuntamentiAnnoMese', response.data);
     },
 
+    async fetchIntervenutiAnnoMese({commit}, payload){
+        const response = await axios.get(`${help().linkintervenutiannomese}`+'/'+payload.anno+'/'+payload.mesenumero, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchIntervenutiAnnoMese', response.data);
+    },
+
     async fetchAppuntamentiOggi({commit}, idAudio){
         const response = await axios.get(`${help().linkappuntamentioggi}`+'/'+idAudio, {
             headers: {
@@ -87,6 +106,15 @@ const actions = {
             }
         });
         commit('fetchAppuntamentiOggi', response.data.data);
+    },
+
+    async fetchAppuntamentiInSospeso({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentiinsospeso}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchAppuntamentiInSospeso', response.data.data);
     },
 
     async prossimoLunedi({commit}, idAudio){
@@ -277,6 +305,33 @@ const actions = {
         });
         commit('fetchDateSettimana', response.data);
     },
+
+    async appuntamentoSaltato({commit}, idAppuntamento){
+        await axios.get(`${help().linkappuntamentosaltato}`+'/'+idAppuntamento, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('eliminaAppuntamentoInSospeso', idAppuntamento);
+    },
+
+    async oggiNonViene({commit}, idAppuntamento){
+        await axios.get(`${help().linkappuntamentosaltato}`+'/'+idAppuntamento, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('oggiNonViene', idAppuntamento);
+    },
+
+    async appuntamentoIntervenuto({commit}, idAppuntamento){
+        await axios.get(`${help().linkappuntamentointervenuto}`+'/'+idAppuntamento, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('eliminaAppuntamentoInSospeso', idAppuntamento);
+    },
 };
 
 const mutations = {
@@ -284,8 +339,24 @@ const mutations = {
         state.appuntamenti = payload;
     },
 
+    eliminaAppuntamentoInSospeso(state, id){
+        state.appuntamentiInSospeso = state.appuntamentiInSospeso.filter(u => u.id !== id);
+    },
+
+    oggiNonViene(state, id){
+        state.appuntamentiOggi = state.appuntamentiOggi.filter(u => u.id !== id);
+    },
+
+    fetchAppuntamentiInSospeso(state, payload){
+        state.appuntamentiInSospeso = payload;
+    },
+
     fetchAppuntamentiAnnoMese(state, payload){
         state.appuntamentiAnnoMese = payload;
+    },
+
+    fetchIntervenutiAnnoMese(state, payload){
+        state.intervenutiAnnoMese = payload;
     },
 
     fetchAppuntamentiLunedi(state, payload){

@@ -243,6 +243,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -290,27 +291,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
-    //    console.log(this.$vuetify.breakpoint.name);
     if (this.getRuolo === 'audio') {
+      this.fetchAudio();
       this.newClient.user_id = parseInt(this.getIdUser);
       this.fetchRecapitiByAudio(parseInt(this.getIdUser));
       this.fetchFilialiPerInserimento(parseInt(this.getIdUser));
+      this.fetchMedici(parseInt(this.getIdUser));
       this.lettura = true;
+    } else if (this.getRuolo === 'amministrazione') {
+      this.fetchAudioSeguitiDaAmministrativa(parseInt(this.getIdUser));
+      this.fetchFilialiPerInserimento(0);
     } else {
-      this.fetchRecapiti();
-      this.fetchFiliali();
+      this.fetchAudio();
+      this.fetchFilialiPerInserimento(0);
     }
 
     this.fetchTipologie();
     this.fetchCanali();
-    this.fetchAudio();
-    this.fetchMedici(this.getIdUser);
 
     if (this.rottaIdClient) {
       this.fetchClient(this.rottaIdClient).then(function () {
         _this.newClient = _this.getClient;
       });
     }
+    /*if(this.getRuolo === 'audio'){
+        this.newClient.user_id = parseInt(this.getIdUser);
+        this.fetchRecapitiByAudio(parseInt(this.getIdUser));
+        this.fetchFilialiPerInserimento(parseInt(this.getIdUser));
+        this.lettura = true;
+    } else {
+        this.fetchRecapiti();
+        this.fetchFiliali();
+    }
+    this.fetchTipologie();
+    this.fetchCanali();
+    this.fetchAudio();
+    this.fetchMedici(this.getIdUser);
+    if (this.rottaIdClient){
+        this.fetchClient(this.rottaIdClient).then(() => {
+            this.newClient = this.getClient;
+        });
+    }*/
+
   },
   watch: {
     rottaIdClient: function rottaIdClient() {
@@ -332,7 +354,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('marketing', {
     fetchCanali: 'fetchCanali'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
-    fetchAudio: 'fetchAudio'
+    fetchAudio: 'fetchAudio',
+    fetchAudioSeguitiDaAmministrativa: 'fetchAudioSeguitiDaAmministrativa'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
     fetchFilialiPerInserimento: 'fetchFilialiPerInserimento',
     fetchFiliali: 'fetchFiliali'
@@ -387,6 +410,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         });
       }
+    },
+    scegliAudio: function scegliAudio(idAudio) {
+      this.newClient.user_id = idAudio;
+      this.fetchRecapitiByAudio(idAudio);
+      this.fetchFilialiPerInserimento(idAudio);
+      this.fetchMedici(idAudio);
     }
     /*scegliFonte(){
         if(this.newClient.marketing_id == 5) {
@@ -968,6 +997,11 @@ var render = function() {
                           "item-text": "name",
                           items: _vm.getAudio,
                           label: "Audio*"
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.scegliAudio($event)
+                          }
                         },
                         model: {
                           value: _vm.newClient.user_id,

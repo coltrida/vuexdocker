@@ -8,6 +8,7 @@ use App\Models\Budget;
 use App\Models\User;
 use App\Models\Ventaglio;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use function setlocale;
 use function trim;
@@ -311,6 +312,23 @@ class UserService
     {
         $anno = Carbon::now()->year;
         return Ventaglio::with('user')->where('anno', $anno)->get();
+    }
+
+    public function audioSeguitiDaAmministrativa($idAmministrativa)
+    {
+        $audio = [];
+        $filiali = User::with(['filiale' => function($q){
+            $q->with('audioprot');
+        }])->find($idAmministrativa)->filiale;
+        //dd($filiali);
+        foreach ($filiali as $filiale){
+            if (count($filiale->audioprot) > 0) {
+                foreach ($filiale->audioprot as $user){
+                    array_push($audio, $user);
+                }
+            }
+        }
+        return $audio;
     }
 
 }

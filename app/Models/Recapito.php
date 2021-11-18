@@ -32,6 +32,10 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $telefono
  * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereTelefono($value)
+ * @property string|null $codiceIdentificativo
+ * @property string|null $informazioni
+ * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereCodiceIdentificativo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereInformazioni($value)
  */
 class Recapito extends Model
 {

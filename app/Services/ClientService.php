@@ -71,6 +71,8 @@ class ClientService
         $sonoInModificaUtente = isset($request->id) ? true : false;
         $client = $sonoInModificaUtente ? Client::find($request->id) : new Client();
 
+        $idListaEsterna = Tipologia::where('nome', 'LE')->first()->id;
+
         $client->nome = trim(Str::upper($request->nome));
         $client->cognome = trim(Str::upper($request->cognome));
         $client->codfisc = trim(Str::upper($request->codfisc)) == '' ? null : trim(Str::upper($request->codfisc));
@@ -81,7 +83,7 @@ class ClientService
         $client->telefono = $request->telefono;
         $client->telefono2 = $request->telefono2;
         $client->telefono3 = $request->telefono3;
-        $client->tipologia_id = $request->tipologia_id;
+        $client->tipologia_id = $request->tipologia_id ? $request->tipologia_id : $idListaEsterna;
         $client->marketing_id = $request->marketing_id;
         $client->filiale_id = $request->filiale_id;
         if($request->marketing_id == 5) {
@@ -104,7 +106,7 @@ class ClientService
         }
 
         if($client->tipologia_id && !$sonoInModificaUtente){
-            $this->inserisciRecallAutomatico($client);
+            $this->inserisciRecallAutomatico($client, $client->id);
         }
 
         $utente = User::find($request->user_id);
@@ -125,21 +127,24 @@ class ClientService
         return $client;
     }
 
-    private function inserisciRecallAutomatico($client){
-        $telefonata = new Telefonata();
-        $telefonata->user_id = $client->user_id;
-        $telefonata->client_id = $client->id;
-        $telefonata->note = "recall automatico dell'inserimento paziente";
-        $telefonata->datarecall = $this->calcolaRecall($client->tipologia_id);
-        $telefonata->effettuata = false;
-        $telefonata->save();
+    private function inserisciRecallAutomatico($client, $idCliente){
+        if ($this->calcolaRecall($client->tipologia_id)){
+            $telefonata = new Telefonata();
+            $telefonata->user_id = $client->user_id;
+            $telefonata->client_id = $idCliente;
+            $telefonata->note = "recall automatico dell'inserimento paziente";
+            $telefonata->datarecall = $this->calcolaRecall($client->tipologia_id);
+            $telefonata->effettuata = false;
+            $telefonata->save();
+        }
+
     }
 
     public function calcolaRecall($tipologia_id)
     {
         $oggi = Carbon::now();
         $tipo = Tipologia::find($tipologia_id);
-        return $oggi->addDays($tipo->recall)->format('Y-m-d');
+        return $tipo->recall ? $oggi->addDays($tipo->recall)->format('Y-m-d') : null;
     }
 
     public function elimina($request)
@@ -268,6 +273,47 @@ class ClientService
         return Client::where('provincia', $provincia)->orderBy('citta')->pluck('citta');
     }
 
+    private function appuntamentoPresoRecentementeDaCallCenter($client){
+        return Client::with(['appuntamenti' => function($r){
+            $r->where('intervenuto', null);
+        }])->where([
+            ['nome', $client->nome],
+            ['cognome', $client->cognome],
+            ['citta', $client->citta],
+        ])->whereHas('appuntamenti', function ($q){
+            $q->where('intervenuto', null);
+        })
+            ->first();
+    }
+
+    private function copiaAnagrafica($clientInseritoDaCallCenter, $client){
+        $clientInseritoDaCallCenter->nome = $client->nome;
+        $clientInseritoDaCallCenter->cognome = $client->cognome;
+        $clientInseritoDaCallCenter->created_at = $client->created_at;
+        $clientInseritoDaCallCenter->updated_at = $client->updated_at;
+        $clientInseritoDaCallCenter->citta = $client->citta;
+        $clientInseritoDaCallCenter->indirizzo = $client->indirizzo;
+        $clientInseritoDaCallCenter->provincia = $client->provincia;
+        $clientInseritoDaCallCenter->telefono = $client->telefono;
+        $clientInseritoDaCallCenter->telefono2 = $client->telefono2;
+        $clientInseritoDaCallCenter->telefono3 = $client->telefono3;
+        $clientInseritoDaCallCenter->cap = $client->cap;
+        $clientInseritoDaCallCenter->datanascita = $client->datanascita;
+        $clientInseritoDaCallCenter->recapito_id = $client->recapito_id;
+        $clientInseritoDaCallCenter->mail = $client->mail;
+        $clientInseritoDaCallCenter->tipologia_id = $client->tipologia_id;
+        $clientInseritoDaCallCenter->marketing_id = $client->marketing_id;
+        $clientInseritoDaCallCenter->filiale_id = $client->filiale_id;
+        $clientInseritoDaCallCenter->mese = $client->mese;
+        $clientInseritoDaCallCenter->anno = $client->anno;
+        $clientInseritoDaCallCenter->save();
+    }
+
+    private function segnaAppuntamentoIntervenuto(Client $clientInseritoDaCallCenter){
+        $clientInseritoDaCallCenter->appuntamenti[0]->intervenuto = true;
+        $clientInseritoDaCallCenter->push();
+    }
+
     public function importClientsFromNoah($request)
     {
         //dd($request);
@@ -310,17 +356,27 @@ class ClientService
                 ]
             );
 
+            $idCliente = $client->id;
+
             if ($client->wasRecentlyCreated){
-                Informazione::create([
-                    'client_id' => $client->id,
-                    'tipo' => 'INGRESSO',
-                    'note' => 'Ingresso presso.....tramite il canale mkt....',
-                    'giorno' => $client->created_at->format('Y-m-d'),
-                ]);
-                if ($client->tipologia_id != $idListaEsterna){
-                    $this->inserisciRecallAutomatico($client);
+                if($clientInseritoDaCallCenter = $this->appuntamentoPresoRecentementeDaCallCenter($client)){
+                    $this->copiaAnagrafica($clientInseritoDaCallCenter, $client);
+                    $idCliente = $clientInseritoDaCallCenter->id;
+                    $this->segnaAppuntamentoIntervenuto($clientInseritoDaCallCenter);
+                    $client->delete();
                 }
 
+                Informazione::create([
+                    'client_id' => $idCliente,
+                    'tipo' => 'INGRESSO',
+                    'note' => 'Ingresso presso.....tramite il canale mkt....',
+                    'giorno' => $clientInseritoDaCallCenter ? $clientInseritoDaCallCenter->created_at->format('Y-m-d') : $client->created_at->format('Y-m-d'),
+                ]);
+                if (!$clientInseritoDaCallCenter && $client->tipologia_id != $idListaEsterna){
+                    $this->inserisciRecallAutomatico($client, $idCliente);
+                } elseif ($clientInseritoDaCallCenter && $clientInseritoDaCallCenter->tipologia_id != $idListaEsterna){
+                    $this->inserisciRecallAutomatico($clientInseritoDaCallCenter, $idCliente);
+                }
             }
 
             $audiometriad = null;
@@ -430,7 +486,7 @@ class ClientService
             }
 
 
-            $audiom = Audiometria::where('client_id', $client->id)->firstOrNew();
+            $audiom = Audiometria::where('client_id', $idCliente)->firstOrNew();
 
             if(!isset($audiom->client_id)){
                 $audiom->client_id = $client->id;
@@ -628,4 +684,6 @@ class ClientService
             ->orderBy('nome')
             ->get();
     }
+
+
 }

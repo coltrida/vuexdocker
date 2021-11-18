@@ -400,6 +400,7 @@ class ElaborazioneService
 
     private function eseguiStatisticheTelefonate($anno){
         setlocale(LC_TIME, 'it_IT');
+        $idCall = User::where('name', 'call center')->first()->id;
         Carbon::setLocale('it');
         for ($meseRecall = 1; $meseRecall <= 12; $meseRecall++){
             $telefonateFatte = Telefonata::where([
@@ -413,6 +414,12 @@ class ElaborazioneService
                 ['mese', $meseRecall],
                 ['esito', 'Preso Appuntamento'],
             ])->count();
+            $intervenuti = Appuntamento::where([
+                ['anno', $anno],
+                ['intervenuto', 1],
+                ['preso_id', $idCall],
+                ['mese', $meseRecall],
+            ])->count();
             if ($telefonateFatte > 0){
                 Risultatitel::updateOrCreate(
                     [
@@ -423,6 +430,7 @@ class ElaborazioneService
                         'mese' => Carbon::make('01-'.$meseRecall.'-'.$anno)->monthName,
                         'telefonate' => $telefonateFatte,
                         'appuntamenti' => $appuntamenti,
+                        'intervenuti' => $intervenuti,
                     ]
                 );
             }

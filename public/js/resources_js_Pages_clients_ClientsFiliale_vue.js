@@ -325,6 +325,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2634,6 +2664,57 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2654,23 +2735,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Richiamare', 'Non vuole essere richiamato'],
       header: [{
         text: 'Data Telefonata',
-        width: 120,
+        width: 110,
         align: 'start',
         sortable: false,
         value: 'datarecall',
         "class": "indigo white--text"
       }, {
         text: 'Esito',
+        width: 200,
         sortable: false,
         value: 'esito',
         "class": "indigo white--text"
       }, {
         text: 'Eseguita',
+        width: 110,
         sortable: false,
         value: 'eseguita',
         "class": "indigo white--text"
       }, {
         text: 'note',
+        width: 200,
         sortable: false,
         value: 'note',
         "class": "indigo white--text"
@@ -2745,6 +2829,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     appuntamento: function appuntamento() {
       this.telefonata = {};
       this.inserimentoDataDiOggi();
+      this.recallsClient.presoAppuntamento = true;
       this.$emit('chiudiRecalls', this.recallsClient);
     },
     cancella: function cancella() {
@@ -2771,6 +2856,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.inserimentoDataDiOggi();
         this.attivaData = true;
       }
+    },
+    modifica: function modifica(telefonata) {
+      this.$store.commit('telefonate/eliminaTelefonata', telefonata.id);
+      this.attivaData = false;
+      this.telefonata.esito = null;
+      this.telefonata.note = null;
+      this.telefonata.giorno = telefonata.dataoriginale;
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('telefonate', {
@@ -43723,39 +43815,157 @@ var render = function() {
                             fn: function(ref) {
                               var item = ref.item
                               return [
-                                _c(
-                                  "v-icon",
-                                  {
-                                    attrs: { color: "red", small: "" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.elimina(item.id)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                            mdi-delete\n                        "
+                                item.intervenuto === null
+                                  ? _c(
+                                      "div",
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            attrs: { color: "red", small: "" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.elimina(item.id)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                mdi-delete\n                            "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            attrs: { color: "blue", small: "" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.modifica(item)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                mdi-pencil\n                            "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
                                     )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-icon",
-                                  {
-                                    attrs: { color: "blue", small: "" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.modifica(item)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                            mdi-pencil\n                        "
+                                  : _c(
+                                      "div",
+                                      [
+                                        item.intervenuto === 1
+                                          ? _c(
+                                              "v-tooltip",
+                                              {
+                                                attrs: { bottom: "" },
+                                                scopedSlots: _vm._u(
+                                                  [
+                                                    {
+                                                      key: "activator",
+                                                      fn: function(ref) {
+                                                        var on = ref.on
+                                                        var attrs = ref.attrs
+                                                        return [
+                                                          _c(
+                                                            "v-icon",
+                                                            _vm._g(
+                                                              _vm._b(
+                                                                {
+                                                                  attrs: {
+                                                                    color:
+                                                                      "green",
+                                                                    small: ""
+                                                                  }
+                                                                },
+                                                                "v-icon",
+                                                                attrs,
+                                                                false
+                                                              ),
+                                                              on
+                                                            ),
+                                                            [
+                                                              _vm._v(
+                                                                "\n                                        mdi-calendar-check\n                                    "
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      }
+                                                    }
+                                                  ],
+                                                  null,
+                                                  true
+                                                )
+                                              },
+                                              [
+                                                _vm._v(" "),
+                                                _c("span", [
+                                                  _vm._v("Intervenuto")
+                                                ])
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        item.intervenuto === 0
+                                          ? _c(
+                                              "v-tooltip",
+                                              {
+                                                attrs: { bottom: "" },
+                                                scopedSlots: _vm._u(
+                                                  [
+                                                    {
+                                                      key: "activator",
+                                                      fn: function(ref) {
+                                                        var on = ref.on
+                                                        var attrs = ref.attrs
+                                                        return [
+                                                          _c(
+                                                            "v-icon",
+                                                            _vm._g(
+                                                              _vm._b(
+                                                                {
+                                                                  attrs: {
+                                                                    color:
+                                                                      "red",
+                                                                    small: ""
+                                                                  }
+                                                                },
+                                                                "v-icon",
+                                                                attrs,
+                                                                false
+                                                              ),
+                                                              on
+                                                            ),
+                                                            [
+                                                              _vm._v(
+                                                                "\n                                        mdi-window-close\n                                    "
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      }
+                                                    }
+                                                  ],
+                                                  null,
+                                                  true
+                                                )
+                                              },
+                                              [
+                                                _vm._v(" "),
+                                                _c("span", [
+                                                  _vm._v("Non Intervenuto")
+                                                ])
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ],
+                                      1
                                     )
-                                  ]
-                                )
                               ]
                             }
                           }
@@ -46841,10 +47051,12 @@ var render = function() {
                             _vm._v(" "),
                             _c("v-data-table", {
                               staticClass: "elevation-1",
+                              staticStyle: { "font-size": "8px" },
                               attrs: {
                                 headers: _vm.header,
                                 items: _vm.getRecalls,
-                                "hide-default-footer": ""
+                                "hide-default-footer": "",
+                                dense: ""
                               },
                               scopedSlots: _vm._u([
                                 {
@@ -46938,59 +47150,192 @@ var render = function() {
                                     return [
                                       item.esito == null
                                         ? _c(
-                                            "div",
-                                            [
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: {
-                                                    small: "",
-                                                    color: "success",
-                                                    dark: ""
-                                                  },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.aggiorna(item)
+                                            "v-tooltip",
+                                            {
+                                              attrs: { bottom: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function(ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticStyle: {
+                                                                  margin: "0",
+                                                                  padding: "0"
+                                                                },
+                                                                attrs: {
+                                                                  color: "blue",
+                                                                  small: ""
+                                                                },
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    return _vm.aggiorna(
+                                                                      item
+                                                                    )
+                                                                  }
+                                                                }
+                                                              },
+                                                              "v-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                            mdi-check\n                                        "
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
                                                     }
                                                   }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                        Aggiorna\n                                    "
-                                                  )
-                                                ]
+                                                ],
+                                                null,
+                                                true
                                               )
-                                            ],
-                                            1
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [
+                                                _vm._v("Conferma Esito")
+                                              ])
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      item.esito == null
+                                        ? _c(
+                                            "v-tooltip",
+                                            {
+                                              attrs: { bottom: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function(ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                staticStyle: {
+                                                                  margin: "0",
+                                                                  padding: "0"
+                                                                },
+                                                                attrs: {
+                                                                  color:
+                                                                    "orange",
+                                                                  small: ""
+                                                                },
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    return _vm.modifica(
+                                                                      item
+                                                                    )
+                                                                  }
+                                                                }
+                                                              },
+                                                              "v-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                            mdi-pencil\n                                        "
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    }
+                                                  }
+                                                ],
+                                                null,
+                                                true
+                                              )
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [
+                                                _vm._v("Conferma Esito")
+                                              ])
+                                            ]
                                           )
                                         : _vm._e(),
                                       _vm._v(" "),
                                       item.esito == "Preso Appuntamento"
                                         ? _c(
-                                            "div",
-                                            [
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: {
-                                                    small: "",
-                                                    color: "success",
-                                                    dark: ""
-                                                  },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.appuntamento()
+                                            "v-tooltip",
+                                            {
+                                              attrs: { bottom: "" },
+                                              scopedSlots: _vm._u(
+                                                [
+                                                  {
+                                                    key: "activator",
+                                                    fn: function(ref) {
+                                                      var on = ref.on
+                                                      var attrs = ref.attrs
+                                                      return [
+                                                        _c(
+                                                          "v-icon",
+                                                          _vm._g(
+                                                            _vm._b(
+                                                              {
+                                                                attrs: {
+                                                                  color:
+                                                                    "green",
+                                                                  small: ""
+                                                                },
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    return _vm.appuntamento()
+                                                                  }
+                                                                }
+                                                              },
+                                                              "v-icon",
+                                                              attrs,
+                                                              false
+                                                            ),
+                                                            on
+                                                          ),
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                            mdi-eye\n                                        "
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
                                                     }
                                                   }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                        Vedi App.\n                                    "
-                                                  )
-                                                ]
+                                                ],
+                                                null,
+                                                true
                                               )
-                                            ],
-                                            1
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("span", [
+                                                _vm._v("Vedi Appuntamento")
+                                              ])
+                                            ]
                                           )
                                         : _vm._e()
                                     ]

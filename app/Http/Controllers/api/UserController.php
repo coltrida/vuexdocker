@@ -110,4 +110,9 @@ class UserController extends Controller
         return $user->delta_id == 1 ? 'SIMULAZIONE' : 'REALE';
     }
 
+    public function audioSeguitiDaAmministrativa($idAmministrativa, UserService $userService)
+    {
+        return $userService->audioSeguitiDaAmministrativa($idAmministrativa);
+    }
+
 }

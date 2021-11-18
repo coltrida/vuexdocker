@@ -12,6 +12,12 @@
                 @chiudiInfoAppuntamenti = "chiudiInfoAppuntamenti"
             />
         </div>
+        <div v-if="showInfoIntervenuti">
+            <info-intervenuti
+                :infoRecalls="infoRecalls"
+                @chiudiInfoIntervenuti = "chiudiInfoIntervenuti"
+            />
+        </div>
         <div v-if="showRecalls">
             <h2>Statistiche Call Center</h2>
             <v-row>
@@ -68,12 +74,35 @@
                             </v-chip>
                         </template>
 
+                        <template v-slot:item.intervenuti="{ item }">
+                            <v-chip
+                                class="ma-2"
+                                color="primary"
+                                label
+                                style="width: 150px"
+                                @click="infoIntervenuti(item.anno, item.mese, item.mesenumero)"
+                            >
+                                <v-row>
+                                    <v-col>
+                                        <v-icon left>
+                                            mdi-information
+                                        </v-icon>
+                                    </v-col>
+                                    <v-col class="pl-8">
+                                        {{item.appuntamenti}}
+                                    </v-col>
+                                </v-row>
+
+                            </v-chip>
+                        </template>
+
                         <template slot="body.append">
                             <tr class="pink--text">
                                 <th class="title">Totali</th>
                                 <th class="title"></th>
                                 <th class="title text-center">{{ sumField('telefonate') }}</th>
                                 <th class="title text-center">{{ sumField('appuntamenti') }}</th>
+                                <th class="title text-center">{{ sumField('intervenuti') }}</th>
                             </tr>
                         </template>
                     </v-data-table>
@@ -87,13 +116,15 @@
     import {mapActions, mapGetters} from "vuex";
     import InfoTelefonate from "./InfoTelefonate";
     import InfoAppuntamenti from "./InfoAppuntamenti";
+    import InfoIntervenuti from "./InfoIntervenuti";
     export default {
         name: "AssegnaBudget",
-        components: {InfoAppuntamenti, InfoTelefonate},
+        components: {InfoIntervenuti, InfoAppuntamenti, InfoTelefonate},
         data(){
             return {
                 showInfo: false,
                 showInfoAppuntamenti: false,
+                showInfoIntervenuti: false,
                 showRecalls: true,
                 infoRecalls: {},
                 headers: [
@@ -101,6 +132,7 @@
                     { text: 'Mese', value: 'mese', class: "indigo white--text" },
                     { text: 'Telefonate fatte', align: 'center', sortable: false, value: 'telefonate', class: "indigo white--text" },
                     { text: 'Appuntamenti', align: 'center', sortable: false, value: 'appuntamenti', class: "indigo white--text" },
+                    { text: 'Intervenuti', align: 'center', sortable: false, value: 'intervenuti', class: "indigo white--text" },
                 ],
 
             }
@@ -136,6 +168,14 @@
                 this.infoRecalls.mesenumero = mesenumero;
             },
 
+            infoIntervenuti(anno, mese, mesenumero){
+                this.showInfoIntervenuti = true;
+                this.showRecalls = false;
+                this.infoRecalls.anno = anno;
+                this.infoRecalls.mese = mese;
+                this.infoRecalls.mesenumero = mesenumero;
+            },
+
             chiudiInfo(){
                 this.showInfo = false;
                 this.showRecalls= true;
@@ -144,6 +184,12 @@
 
             chiudiInfoAppuntamenti(){
                 this.showInfoAppuntamenti = false;
+                this.showRecalls= true;
+                this.infoRecalls = {};
+            },
+
+            chiudiInfoIntervenuti(){
+                this.showInfoIntervenuti = false;
                 this.showRecalls= true;
                 this.infoRecalls = {};
             }

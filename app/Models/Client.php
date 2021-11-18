@@ -103,6 +103,14 @@ use function substr;
  * @method static \Illuminate\Database\Eloquent\Builder|Client clienti()
  * @method static \Illuminate\Database\Eloquent\Builder|Client possibili()
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereLuogoNascita($value)
+ * @property-read mixed $fullricerca
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Informazione[] $informazione
+ * @property-read int|null $informazione_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $proveSenzaDocumenti
+ * @property-read int|null $prove_senza_documenti_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $proveSenzaProdotti
+ * @property-read int|null $prove_senza_prodotti_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Client clientidapiudianni($anni)
  */
 class Client extends Model
 {

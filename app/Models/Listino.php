@@ -40,6 +40,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $product
  * @property-read int|null $product_count
  * @method static \Illuminate\Database\Eloquent\Builder|Listino apparecchi()
+ * @property int|null $scontoMax
+ * @method static \Illuminate\Database\Eloquent\Builder|Listino whereScontoMax($value)
  */
 class Listino extends Model
 {

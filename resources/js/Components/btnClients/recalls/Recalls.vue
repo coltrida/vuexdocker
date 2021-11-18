@@ -168,6 +168,8 @@
                                 :items="getRecalls"
                                 hide-default-footer
                                 class="elevation-1"
+                                style="font-size: 8px"
+                                dense
                             >
 
                                 <template v-slot:item.esito="{ item }">
@@ -199,7 +201,56 @@
                                 </template>
 
                                 <template v-slot:item.action="{ item }">
-                                    <div v-if="item.esito == null">
+                                    <v-tooltip bottom v-if="item.esito == null">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-icon
+                                                @click="aggiorna(item)"
+                                                color="blue"
+                                                small
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                style="margin: 0; padding: 0"
+                                            >
+                                                mdi-check
+                                            </v-icon>
+                                        </template>
+                                        <span>Conferma Esito</span>
+                                    </v-tooltip>
+
+                                    <v-tooltip bottom v-if="item.esito == null">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-icon
+                                                @click="modifica(item)"
+                                                color="orange"
+                                                small
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                style="margin: 0; padding: 0"
+                                            >
+                                                mdi-pencil
+                                            </v-icon>
+                                        </template>
+                                        <span>Conferma Esito</span>
+                                    </v-tooltip>
+
+                                    <v-tooltip bottom v-if="item.esito == 'Preso Appuntamento'">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-icon
+                                                @click="appuntamento()"
+                                                color="green"
+                                                small
+                                                v-bind="attrs"
+                                                v-on="on"
+
+                                            >
+                                                mdi-eye
+                                            </v-icon>
+                                        </template>
+                                        <span>Vedi Appuntamento</span>
+                                    </v-tooltip>
+
+
+                                    <!--<div v-if="item.esito == null">
                                         <v-btn small color="success" dark @click="aggiorna(item)">
                                             Aggiorna
                                         </v-btn>
@@ -208,7 +259,7 @@
                                         <v-btn small color="success" dark @click="appuntamento()">
                                             Vedi App.
                                         </v-btn>
-                                    </div>
+                                    </div>-->
                                 </template>
                             </v-data-table>
                         </div>
@@ -252,10 +303,10 @@
                     ],
 
                 header: [
-                    { text: 'Data Telefonata', width:120,  align: 'start', sortable: false, value: 'datarecall', class: "indigo white--text" },
-                    { text: 'Esito', sortable: false, value: 'esito', class: "indigo white--text" },
-                    { text: 'Eseguita', sortable: false, value: 'eseguita', class: "indigo white--text" },
-                    { text: 'note', sortable: false, value: 'note', class: "indigo white--text" },
+                    { text: 'Data Telefonata', width:110,  align: 'start', sortable: false, value: 'datarecall', class: "indigo white--text" },
+                    { text: 'Esito', width:200, sortable: false, value: 'esito', class: "indigo white--text" },
+                    { text: 'Eseguita', width:110, sortable: false, value: 'eseguita', class: "indigo white--text" },
+                    { text: 'note', width:200, sortable: false, value: 'note', class: "indigo white--text" },
                     { text: 'Azioni',  sortable: false, value: 'action', class: "indigo white--text" },
                 ],
             }
@@ -320,6 +371,7 @@
             appuntamento(){
                 this.telefonata = {};
                 this.inserimentoDataDiOggi();
+                this.recallsClient.presoAppuntamento = true;
                 this.$emit('chiudiRecalls', this.recallsClient)
             },
 
@@ -347,6 +399,14 @@
                     this.inserimentoDataDiOggi();
                     this.attivaData = true;
                 }
+            },
+
+            modifica(telefonata){
+                this.$store.commit('telefonate/eliminaTelefonata', telefonata.id);
+                this.attivaData = false;
+                this.telefonata.esito = null;
+                this.telefonata.note = null;
+                this.telefonata.giorno = telefonata.dataoriginale;
             }
 
         },

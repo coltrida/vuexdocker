@@ -47,6 +47,10 @@ use function config;
  * @property-read int|null $listino_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Strumentazione[] $strumentazione
  * @property-read int|null $strumentazione_count
+ * @property string|null $codiceIdentificativo
+ * @property string|null $informazioni
+ * @method static \Illuminate\Database\Eloquent\Builder|Filiale whereCodiceIdentificativo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Filiale whereInformazioni($value)
  */
 class Filiale extends Model
 {

@@ -40,6 +40,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $tipo
  * @property-read mixed $calcologiorno
  * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereTipo($value)
+ * @property int|null $mese
+ * @property int|null $anno
+ * @property-read \App\Models\User $preso
+ * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereAnno($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereMese($value)
  */
 class Appuntamento extends Model
 {
@@ -66,6 +71,11 @@ class Appuntamento extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function preso()
+    {
+        return $this->belongsTo(User::class, 'preso_id', 'id');
     }
 
     public function client()

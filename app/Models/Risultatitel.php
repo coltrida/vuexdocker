@@ -12,6 +12,22 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property string $mese
+ * @property int $mesenumero
+ * @property int $anno
+ * @property int $telefonate
+ * @property int $appuntamenti
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereAnno($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereAppuntamenti($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereMese($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereMesenumero($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereTelefonate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereUpdatedAt($value)
  */
 class Risultatitel extends Model
 {

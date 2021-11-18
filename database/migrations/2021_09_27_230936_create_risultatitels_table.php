@@ -20,6 +20,7 @@ class CreateRisultatitelsTable extends Migration
             $table->integer('anno');
             $table->integer('telefonate');
             $table->integer('appuntamenti');
+            $table->integer('intervenuti')->nullable();
             $table->timestamps();
         });
     }

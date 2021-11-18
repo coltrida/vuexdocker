@@ -61,6 +61,46 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Audiometria whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audiometria whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $_125ossd
+ * @property string|null $_250ossd
+ * @property string|null $_500ossd
+ * @property string|null $_1000ossd
+ * @property string|null $_1500ossd
+ * @property string|null $_2000ossd
+ * @property string|null $_3000ossd
+ * @property string|null $_4000ossd
+ * @property string|null $_6000ossd
+ * @property string|null $_8000ossd
+ * @property string|null $_125osss
+ * @property string|null $_250osss
+ * @property string|null $_500osss
+ * @property string|null $_1000osss
+ * @property string|null $_1500osss
+ * @property string|null $_2000osss
+ * @property string|null $_3000osss
+ * @property string|null $_4000osss
+ * @property string|null $_6000osss
+ * @property string|null $_8000osss
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where1000ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where1000osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where125ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where125osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where1500ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where1500osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where2000ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where2000osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where250ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where250osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where3000ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where3000osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where4000ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where4000osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where500ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where500osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where6000ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where6000osss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where8000ossd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audiometria where8000osss($value)
  */
 class Audiometria extends Model
 {

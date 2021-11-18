@@ -164,7 +164,12 @@ const help = () => {
         linkrecallautomatico: base+'recallAutomatico',
         linktelefonateannomese: base+'telefonateAnnoMese',
         linkappuntamentiannomese: base+'appuntamentiAnnoMese',
+        linkintervenutiannomese: base+'intervenutiAnnoMese',
         linkstrutture: base+'strutture',
+        linkappuntamentiinsospeso: base+'appuntamentiInSospeso',
+        linkappuntamentosaltato: base+'appuntamentoSaltato',
+        linkappuntamentointervenuto: base+'appuntamentoIntervenuto',
+        linkaudioseguitidaamministrativa: base+'audioSeguitiDaAmministrativa',
     };
 };
 export default help;

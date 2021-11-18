@@ -119,6 +119,7 @@ class AppuntamentiService
         $newAppuntamento->tipo = $request->tipo;
         $newAppuntamento->client_id = $request->client_id;
         $newAppuntamento->user_id = $request->user_id;
+        $newAppuntamento->preso_id = $request->telefonista_id;
         $newAppuntamento->filiale_id = $request->filiale_id;
         $newAppuntamento->recapito_id = $request->recapito_id;
         $newAppuntamento->mese = $giornoDiOggi->month;
@@ -241,11 +242,54 @@ class AppuntamentiService
             ])
             ->join('clients', 'clients.id', '=', 'a.client_id')
             ->join('users as u', 'u.id', '=', 'a.user_id')
+            ->join('users as p', 'p.id', '=', 'a.preso_id')
             ->select('a.id as idAppuntamento', 'a.giorno', 'a.orario', 'a.tipo',
                 'clients.nome as nomeCliente', 'clients.cognome as cognomeCliente', 'clients.citta as cittaCliente', 'clients.filiale_id as filiale_id',
-                'u.name as nominativoUser')
+                'u.name as nominativoUser',
+                'p.name as presoDa')
             ->orderBy('a.giorno')
             ->get()
             ->groupBy('nominativoUser');
+    }
+
+    public function intervenutiAnnoMese($anno, $mese)
+    {
+        return DB::table('appuntamentos as a')
+            ->where([
+                ['a.anno', $anno],
+                ['a.mese', $mese],
+                ['a.intervenuto', true],
+            ])
+            ->join('clients', 'clients.id', '=', 'a.client_id')
+            ->join('users as u', 'u.id', '=', 'a.user_id')
+            ->join('users as p', 'p.id', '=', 'a.preso_id')
+            ->select('a.id as idAppuntamento', 'a.giorno', 'a.orario', 'a.tipo',
+                'clients.nome as nomeCliente', 'clients.cognome as cognomeCliente', 'clients.citta as cittaCliente', 'clients.filiale_id as filiale_id',
+                'u.name as nominativoUser',
+                'p.name as presoDa')
+            ->orderBy('a.giorno')
+            ->get()
+            ->groupBy('nominativoUser');
+    }
+
+    public function inSospeso($idAudio)
+    {
+        $oggi = Carbon::now()->subDay();
+        return User::with(['appuntamenti' => function($q) use($oggi){
+            $q->with('client')->where([
+                ['giorno', '<', $oggi],
+                ['intervenuto', null]
+            ]);
+        }])->find($idAudio)->appuntamenti;
+    }
+
+    public function appuntamentoSaltato($idAppuntamento)
+    {
+        Appuntamento::find($idAppuntamento)->update(['intervenuto' => false]);
+    }
+
+    public function appuntamentoIntervenuto($idAppuntamento)
+    {
+        Appuntamento::find($idAppuntamento)->update(['intervenuto' => true]);
     }
 }

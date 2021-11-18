@@ -60,6 +60,11 @@ use const LC_TIME;
  * @property-read int|null $copia_comm_count
  * @property-read mixed $tot_formattato
  * @property-read mixed $fine_formattata
+ * @property string|null $tipologia
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Documento[] $documento
+ * @property-read int|null $documento_count
+ * @property-read \App\Models\Marketing|null $marketing
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereTipologia($value)
  */
 class Prova extends Model
 {

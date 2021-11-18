@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AppuntamentiResource;
+use App\Http\Resources\AppuntamentiSospesiResource;
 use App\Services\AppuntamentiService;
 use Illuminate\Http\Request;
 
@@ -102,5 +103,25 @@ class AppuntamentiController extends Controller
     public function appuntamentiAnnoMese($anno, $mese, AppuntamentiService $appuntamentiService)
     {
         return $appuntamentiService->appuntamentiAnnoMese($anno, $mese);
+    }
+
+    public function intervenutiAnnoMese($anno, $mese, AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->intervenutiAnnoMese($anno, $mese);
+    }
+
+    public function inSospeso($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiSospesiResource::collection($appuntamentiService->inSospeso($idAudio));
+    }
+
+    public function appuntamentoSaltato($idAppuntamento, AppuntamentiService $appuntamentiService)
+    {
+        $appuntamentiService->appuntamentoSaltato($idAppuntamento);
+    }
+
+    public function appuntamentoIntervenuto($idAppuntamento, AppuntamentiService $appuntamentiService)
+    {
+        $appuntamentiService->appuntamentoIntervenuto($idAppuntamento);
     }
 }

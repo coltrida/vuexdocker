@@ -162,6 +162,7 @@
 
                 <v-col cols="12" md="2" lg="2">
                     <v-select
+                        @change="scegliAudio($event)"
                         v-model="newClient.user_id"
                         item-value="id"
                         :readonly="lettura"
@@ -250,8 +251,30 @@
         },
 
         mounted(){
-        //    console.log(this.$vuetify.breakpoint.name);
             if(this.getRuolo === 'audio'){
+                this.fetchAudio();
+                this.newClient.user_id = parseInt(this.getIdUser);
+                this.fetchRecapitiByAudio(parseInt(this.getIdUser));
+                this.fetchFilialiPerInserimento(parseInt(this.getIdUser));
+                this.fetchMedici(parseInt(this.getIdUser));
+                this.lettura = true;
+            } else if(this.getRuolo === 'amministrazione') {
+                this.fetchAudioSeguitiDaAmministrativa(parseInt(this.getIdUser));
+                this.fetchFilialiPerInserimento(0);
+            } else {
+                this.fetchAudio();
+                this.fetchFilialiPerInserimento(0);
+            }
+            this.fetchTipologie();
+            this.fetchCanali();
+
+            if (this.rottaIdClient){
+                this.fetchClient(this.rottaIdClient).then(() => {
+                    this.newClient = this.getClient;
+                });
+            }
+
+            /*if(this.getRuolo === 'audio'){
                 this.newClient.user_id = parseInt(this.getIdUser);
                 this.fetchRecapitiByAudio(parseInt(this.getIdUser));
                 this.fetchFilialiPerInserimento(parseInt(this.getIdUser));
@@ -263,13 +286,12 @@
             this.fetchTipologie();
             this.fetchCanali();
             this.fetchAudio();
-
             this.fetchMedici(this.getIdUser);
             if (this.rottaIdClient){
                 this.fetchClient(this.rottaIdClient).then(() => {
                     this.newClient = this.getClient;
                 });
-            }
+            }*/
         },
 
         watch:{
@@ -299,6 +321,7 @@
 
             ...mapActions('users', {
                 fetchAudio:'fetchAudio',
+                fetchAudioSeguitiDaAmministrativa:'fetchAudioSeguitiDaAmministrativa',
             }),
 
             ...mapActions('filiali', {
@@ -345,6 +368,13 @@
                     });
                 }
             },
+
+            scegliAudio(idAudio){
+                this.newClient.user_id = idAudio;
+                this.fetchRecapitiByAudio(idAudio);
+                this.fetchFilialiPerInserimento(idAudio);
+                this.fetchMedici(idAudio);
+            }
 
             /*scegliFonte(){
                 if(this.newClient.marketing_id == 5) {

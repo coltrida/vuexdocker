@@ -25,12 +25,16 @@ class AppuntamentoSeeder extends Seeder
             [
                 'giorno' => $giorno,
                 'orario' => rand(9,18).':00:00',
-                'user_id' => 5,
-                'client_id' => User::find(5)->client->random()->id,
-                'filiale_id' => 3,
-                'created_at' => Carbon::now()
+                'tipo' => 'Prima Visita',
+                'user_id' => 2,
+                'client_id' => 1,
+                'preso_id' => 10,
+                'filiale_id' => 1,
+                'created_at' => Carbon::now(),
+                'mese' => Carbon::now()->month,
+                'anno' => Carbon::now()->year,
             ],
-            [
+/*            [
                 'giorno' => $giorno,
                 'orario' => rand(9,18).':00:00',
                 'user_id' => 5,
@@ -77,7 +81,7 @@ class AppuntamentoSeeder extends Seeder
                 'client_id' => User::find(5)->client->random()->id,
                 'filiale_id' => 3,
                 'created_at' => Carbon::now()
-            ],
+            ],*/
         ]);
     }
 }

@@ -218,21 +218,51 @@
                         class="elevation-1"
                     >
 
-                        <template v-slot:item.actions="{ item }">
-                            <v-icon
-                                color="red"
-                                small
-                                @click="elimina(item.id)"
-                            >
-                                mdi-delete
-                            </v-icon>
-                            <v-icon
-                                color="blue"
-                                small
-                                @click="modifica(item)"
-                            >
-                                mdi-pencil
-                            </v-icon>
+                        <template v-slot:item.actions="{ item }" >
+                            <div v-if="item.intervenuto === null">
+                                <v-icon
+                                    color="red"
+                                    small
+                                    @click="elimina(item.id)"
+                                >
+                                    mdi-delete
+                                </v-icon>
+                                <v-icon
+                                    color="blue"
+                                    small
+                                    @click="modifica(item)"
+                                >
+                                    mdi-pencil
+                                </v-icon>
+                            </div>
+                            <div v-else>
+                                <v-tooltip bottom v-if="item.intervenuto === 1">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="green"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-calendar-check
+                                        </v-icon>
+                                    </template>
+                                    <span>Intervenuto</span>
+                                </v-tooltip>
+                                <v-tooltip bottom v-if="item.intervenuto === 0">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="red"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        >
+                                            mdi-window-close
+                                        </v-icon>
+                                    </template>
+                                    <span>Non Intervenuto</span>
+                                </v-tooltip>
+                            </div>
                         </template>
 
                     </v-data-table>
