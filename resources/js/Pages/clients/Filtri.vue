@@ -304,7 +304,7 @@
             this.resetRicerca();
             this.fetchTipologie();
             this.fetchProvince();
-            this.fetchFilialiPerInserimento();
+            this.fetchFilialiPerInserimento(0);
         },
 
         methods: {

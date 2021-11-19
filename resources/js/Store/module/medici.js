@@ -39,11 +39,21 @@ const getters = {
 const actions = {
 
     async fetchMedici({commit}, idUser){
-        const response = await axios.get(`${help().linklistamedici}`+'/'+idUser, {
-            headers: {
-                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
-            }
-        });
+        let response = [];
+        if (idUser !== 0){
+            response = await axios.get(`${help().linklistamedici}`+'/'+idUser, {
+                headers: {
+                    'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+                }
+            });
+        } else {
+            response = await axios.get(`${help().linklistamedici}`, {
+                headers: {
+                    'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+                }
+            });
+        }
+
         commit('fetchMedici', response.data);
     },
 
@@ -153,6 +163,7 @@ const mutations = {
     },
 
     addMedico(state, payload){
+        state.medici = state.medici.filter(u => u.id !== payload.id);
         state.medici.unshift(payload);
     },
 

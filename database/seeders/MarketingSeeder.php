@@ -17,30 +17,39 @@ class MarketingSeeder extends Seeder
         Marketing::insert([
             [
                 'name' => 'GIORNALE',
+                'cod' => 'G',
             ],
             [
                 'name' => 'SCREENING',
+                'cod' => 'S',
             ],
             [
                 'name' => 'LETTERA',
+                'cod' => 'L',
             ],
             [
                 'name' => 'LISTA ESTERNA',
+                'cod' => 'LE',
             ],
             [
                 'name' => 'MEDICO',
+                'cod' => 'M',
             ],
             [
                 'name' => 'PASSAPAROLA',
+                'cod' => 'P',
             ],
             [
                 'name' => 'VETRINA',
+                'cod' => 'V',
             ],
             [
                 'name' => 'SOCIAL/WEB',
+                'cod' => 'W',
             ],
             [
                 'name' => 'RIACQUISTO',
+                'cod' => 'R',
             ],
         ]);
     }

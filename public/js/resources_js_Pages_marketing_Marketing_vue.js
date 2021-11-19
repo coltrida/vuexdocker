@@ -81,18 +81,146 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Marketing",
   data: function data() {
     return {
       newCanale: '',
+      newOtorino: {},
       carica: false,
       header: [{
+        text: 'Codice',
+        align: 'start',
+        sortable: false,
+        value: 'cod',
+        "class": "indigo white--text"
+      }, {
         text: 'Canale Mkt',
         align: 'start',
         sortable: false,
         value: 'name',
+        "class": "indigo white--text"
+      }, {
+        text: 'Actions',
+        value: 'actions',
+        sortable: false,
+        "class": "indigo white--text"
+      }],
+      headerMedici: [{
+        text: 'Codice',
+        align: 'start',
+        sortable: false,
+        value: 'cod',
+        "class": "indigo white--text"
+      }, {
+        text: 'Nome',
+        align: 'start',
+        sortable: false,
+        value: 'nominativo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Audio',
+        align: 'start',
+        sortable: false,
+        value: 'client',
         "class": "indigo white--text"
       }, {
         text: 'Actions',
@@ -107,24 +235,51 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     this.carica = true;
     this.fetchCanali().then(function () {
-      _this.carica = false;
+      _this.fetchMedici(0).then(function () {
+        _this.fetchAudio().then(function () {
+          _this.carica = false;
+        });
+      });
     });
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('marketing', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('marketing', {
     fetchCanali: 'fetchCanali',
     addCanale: 'addCanale',
     eliminaCanale: 'eliminaCanale'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('medici', {
+    fetchMedici: 'fetchMedici',
+    addMedico: 'addMedico',
+    eliminaMedico: 'eliminaMedico'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
+    fetchAudio: 'fetchAudio'
   })), {}, {
     aggiungi: function aggiungi() {
       this.addCanale(this.newCanale);
       this.newCanale = '';
     },
+    aggiungiOtorino: function aggiungiOtorino() {
+      var _this2 = this;
+
+      this.addMedico(this.newOtorino).then(function () {
+        _this2.newOtorino = {};
+      });
+    },
+    eliminaOtorino: function eliminaOtorino(idMedico) {
+      this.eliminaMedico(idMedico);
+    },
     elimina: function elimina(id) {
       this.eliminaCanale(id);
+    },
+    aggiungiAudio: function aggiungiAudio(medico) {
+      this.newOtorino = medico;
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('marketing', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('marketing', {
     getCanali: 'getCanali'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('medici', {
+    getMedici: 'getMedici'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+    getAudio: 'getAudio'
   }))
 });
 
@@ -219,13 +374,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "v-row",
     [
-      _c("h2", [_vm._v("Canali Marketing")]),
-      _vm._v(" "),
       _c(
-        "v-container",
+        "v-col",
+        { attrs: { cols: "5" } },
         [
+          _c("h2", [_vm._v("Canali Marketing")]),
+          _vm._v(" "),
           _c(
             "v-row",
             [
@@ -234,11 +390,7 @@ var render = function() {
                 { attrs: { cols: "12", sm: "6" } },
                 [
                   _c("v-text-field", {
-                    attrs: {
-                      counter: "25",
-                      hint: "Massimo 25 caratteri",
-                      label: "Nuovo Canale"
-                    },
+                    attrs: { label: "Nuovo Canale" },
                     model: {
                       value: _vm.newCanale,
                       callback: function($$v) {
@@ -307,7 +459,10 @@ var render = function() {
                                                   _vm._g(
                                                     _vm._b(
                                                       {
-                                                        attrs: { color: "red" },
+                                                        attrs: {
+                                                          color: "red",
+                                                          small: ""
+                                                        },
                                                         on: {
                                                           click: function(
                                                             $event
@@ -341,6 +496,299 @@ var render = function() {
                                     [
                                       _vm._v(" "),
                                       _c("span", [_vm._v("Elimina")])
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ])
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "7" } },
+        [
+          _c("h2", [_vm._v("Otorini")]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Nome" },
+                    model: {
+                      value: _vm.newOtorino.nome,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newOtorino, "nome", $$v)
+                      },
+                      expression: "newOtorino.nome"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "Cognome" },
+                    model: {
+                      value: _vm.newOtorino.cognome,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newOtorino, "cognome", $$v)
+                      },
+                      expression: "newOtorino.cognome"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                [
+                  _c("v-select", {
+                    attrs: {
+                      "item-value": "id",
+                      "item-text": "name",
+                      items: _vm.getAudio,
+                      label: "Audio"
+                    },
+                    model: {
+                      value: _vm.newOtorino.userId,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newOtorino, "userId", $$v)
+                      },
+                      expression: "newOtorino.userId"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "indigo", dark: "" },
+                      on: { click: _vm.aggiungiOtorino }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Inserisci\n                "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _c("v-col", { attrs: { cols: "12" } }, [
+                _vm.carica
+                  ? _c(
+                      "div",
+                      { staticClass: "text-center" },
+                      [
+                        _c("v-progress-circular", {
+                          attrs: { indeterminate: "", color: "primary" }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1",
+                          attrs: {
+                            headers: _vm.headerMedici,
+                            items: _vm.getMedici
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item.nominativo",
+                              fn: function(ref) {
+                                var item = ref.item
+                                return [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticStyle: { color: "black" },
+                                      attrs: {
+                                        to: {
+                                          name: "orariMedici",
+                                          params: {
+                                            dottore:
+                                              item.cognome + " " + item.nome
+                                          }
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(
+                                            item.cognome + " " + item.nome
+                                          ) +
+                                          "\n                            "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              }
+                            },
+                            {
+                              key: "item.client",
+                              fn: function(ref) {
+                                var item = ref.item
+                                return _vm._l(item.user, function(ele) {
+                                  return _c("div", { key: ele.id }, [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(ele.name) +
+                                        "\n                            "
+                                    )
+                                  ])
+                                })
+                              }
+                            },
+                            {
+                              key: "item.actions",
+                              fn: function(ref) {
+                                var item = ref.item
+                                return [
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "red",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.eliminaOtorino(
+                                                              item.id
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                        mdi-delete\n                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Elimina")])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "green",
+                                                          small: ""
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.aggiungiAudio(
+                                                              item
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                        mdi-plus\n                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Aggiungi Audio")])
                                     ]
                                   )
                                 ]

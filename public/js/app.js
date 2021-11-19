@@ -5971,18 +5971,40 @@ var actions = {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref.commit;
-              _context.next = 3;
+              response = [];
+
+              if (!(idUser !== 0)) {
+                _context.next = 8;
+                break;
+              }
+
+              _context.next = 5;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistamedici) + '/' + idUser, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
-            case 3:
+            case 5:
               response = _context.sent;
+              _context.next = 11;
+              break;
+
+            case 8:
+              _context.next = 10;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistamedici), {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 10:
+              response = _context.sent;
+
+            case 11:
               commit('fetchMedici', response.data);
 
-            case 5:
+            case 12:
             case "end":
               return _context.stop();
           }
@@ -6291,6 +6313,9 @@ var mutations = {
     state.medici = payload;
   },
   addMedico: function addMedico(state, payload) {
+    state.medici = state.medici.filter(function (u) {
+      return u.id !== payload.id;
+    });
     state.medici.unshift(payload);
   },
   eliminaMedico: function eliminaMedico(state, id) {

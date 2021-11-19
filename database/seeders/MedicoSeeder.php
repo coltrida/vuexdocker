@@ -17,30 +17,48 @@ class MedicoSeeder extends Seeder
     {
         Medico::insert([
             [
-                'nome' => 'SCARAMUZZINO MANELA'
+                'cognome' => 'SCARAMUZZINO',
+                'nome' => 'MANELA',
             ],
             [
-                'nome' => 'FATTORI BRUNO'
+                'cognome' => 'FATTORI',
+                'nome' => 'BRUNO',
             ],
             [
-                'nome' => 'MAGGI DUILIO'
+                'cognome' => 'MAGGI',
+                'nome' => 'DUILIO',
             ],
             [
-                'nome' => 'FIACCHINI GIACOMO'
+                'cognome' => 'FIACCHINI',
+                'nome' => 'GIACOMO',
             ],
             [
-                'nome' => 'SUGLIA MIMMO'
+                'cognome' => 'SUGLIA',
+                'nome' => 'MIMMO',
             ],
             [
-                'nome' => 'NOTTOLI STEFANIA'
+                'cognome' => 'NOTTOLI',
+                'nome' => 'STEFANIA',
             ],
             [
-                'nome' => 'MARSALLI GIULIA'
+                'cognome' => 'MARSALLI',
+                'nome' => 'GIULIA',
             ],
             [
-                'nome' => 'DURSO DOMENICO'
+                'cognome' => 'DURSO',
+                'nome' => 'DOMENICO',
+            ],
+            [
+                'cognome' => 'CIABATTONI',
+                'nome' => 'ANDREA',
             ],
         ]);
+
+        $medici = Medico::all();
+        foreach ($medici as $medico){
+            $medico->cod = 'M'.$medico->id;
+            $medico->save();
+        }
 
         DB::table('medico_user')->insert([
             [
@@ -74,6 +92,10 @@ class MedicoSeeder extends Seeder
             [
                 'medico_id' => 8,
                 'user_id' => 9,
+            ],
+            [
+                'medico_id' => 9,
+                'user_id' => 12,
             ],
 
         ]);

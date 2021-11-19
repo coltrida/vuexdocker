@@ -16,6 +16,8 @@ class CreateMedicosTable extends Migration
         Schema::create('medicos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->string('cognome');
+            $table->string('cod')->nullable();
             $table->timestamps();
         });
     }

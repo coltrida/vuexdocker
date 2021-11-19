@@ -289,7 +289,7 @@ var render = function() {
                 attrs: {
                   items: _vm.getMedici,
                   "item-value": "id",
-                  "item-text": "nome",
+                  "item-text": "fullname",
                   label: "Medico"
                 },
                 on: {

@@ -6,7 +6,7 @@
             </v-col>
         </v-row>
 
-        <v-row>
+        <!--<v-row>
             <v-col>
                 <v-text-field
                     v-model="medico.nome"
@@ -24,7 +24,7 @@
                     Aggiungi
                 </v-btn>
             </v-col>
-        </v-row>
+        </v-row>-->
 
         <v-row class="mb-6">
             <v-col cols="12">
@@ -42,14 +42,14 @@
                         class="elevation-1"
                     >
 
-                        <template v-slot:item.nome="{ item }">
+                        <template v-slot:item.fullname="{ item }">
                             <router-link style="color: black" :to="{ name: 'orariMedici',
-                                        params: { dottore:item.nome, }}">
-                                {{item.nome}}
+                                        params: { dottore:item.fullname, }}">
+                                {{item.fullname}}
                             </router-link>
                         </template>
 
-                        <template v-slot:item.actions="{ item }">
+<!--                        <template v-slot:item.actions="{ item }">
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-icon
@@ -64,7 +64,7 @@
                                 </template>
                                 <span>Elimina</span>
                             </v-tooltip>
-                        </template>
+                        </template>-->
 
                     </v-data-table>
                 </div>
@@ -92,8 +92,7 @@
                 medico:{},
                 carica: false,
                 header: [
-                    { text: 'Medico',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
-                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
+                    { text: 'Medico',  align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
                 ],
             }
         },
@@ -112,16 +111,16 @@
                 eliminaMedico:'eliminaMedico'
             }),
 
-            aggiungi(){
+            /*aggiungi(){
                 this.medico.userId = this.getIdUser;
                 this.addMedico(this.medico).then(() => {
                     this.medico = {};
                 });
-            },
+            },*/
 
-            elimina(idMedico){
+            /*elimina(idMedico){
                 this.eliminaMedico(idMedico);
-            }
+            }*/
         },
 
         computed:{

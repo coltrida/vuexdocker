@@ -3109,7 +3109,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       prodottiSelezione: [],
       headers1: [{
         text: 'Nome',
-        width: 120,
+        width: 180,
         value: 'client.fullname',
         sortable: false,
         "class": "indigo white--text"
@@ -3121,8 +3121,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'GG in prova',
+        width: 100,
         align: 'center',
-        width: 120,
         value: 'giorni_prova',
         sortable: false,
         "class": "indigo white--text"
@@ -3135,7 +3135,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       headers2: [{
         text: 'Nome',
-        width: 160,
+        width: 180,
         value: 'client.fullname',
         sortable: false,
         "class": "indigo white--text"

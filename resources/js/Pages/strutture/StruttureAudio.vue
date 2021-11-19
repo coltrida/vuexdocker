@@ -11,6 +11,7 @@
                     <v-data-table
                         :headers="header"
                         :items="getStruttureAudio"
+                        item-key="codiceIdentificativo"
                         hide-default-footer
                         class="elevation-1"
                     >

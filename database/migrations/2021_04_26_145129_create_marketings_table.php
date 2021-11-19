@@ -16,6 +16,7 @@ class CreateMarketingsTable extends Migration
         Schema::create('marketings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('cod')->nullable();
             $table->timestamps();
         });
     }

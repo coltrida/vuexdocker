@@ -113,12 +113,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Medico',
         align: 'start',
         sortable: false,
-        value: 'nome',
-        "class": "indigo white--text"
-      }, {
-        text: 'Actions',
-        value: 'actions',
-        sortable: false,
+        value: 'fullname',
         "class": "indigo white--text"
       }]
     };
@@ -131,23 +126,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this.carica = false;
     });
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('medici', {
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('medici', {
     fetchMedici: 'fetchMedici',
     addMedico: 'addMedico',
     eliminaMedico: 'eliminaMedico'
-  })), {}, {
-    aggiungi: function aggiungi() {
-      var _this2 = this;
-
-      this.medico.userId = this.getIdUser;
-      this.addMedico(this.medico).then(function () {
-        _this2.medico = {};
-      });
-    },
-    elimina: function elimina(idMedico) {
-      this.eliminaMedico(idMedico);
-    }
-  }),
+  })),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('medici', {
@@ -261,61 +244,6 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-row",
-        [
-          _c(
-            "v-col",
-            [
-              _c("v-text-field", {
-                attrs: { label: "Nome" },
-                model: {
-                  value: _vm.medico.nome,
-                  callback: function($$v) {
-                    _vm.$set(_vm.medico, "nome", $$v)
-                  },
-                  expression: "medico.nome"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            [
-              _c("v-text-field", {
-                attrs: { label: "Cognome" },
-                model: {
-                  value: _vm.medico.cognome,
-                  callback: function($$v) {
-                    _vm.$set(_vm.medico, "cognome", $$v)
-                  },
-                  expression: "medico.cognome"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            [
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: "primary", dark: "" },
-                  on: { click: _vm.aggiungi }
-                },
-                [_vm._v("\n                Aggiungi\n            ")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-row",
         { staticClass: "mb-6" },
         [
           _c("v-col", { attrs: { cols: "12" } }, [
@@ -342,7 +270,7 @@ var render = function() {
                       },
                       scopedSlots: _vm._u([
                         {
-                          key: "item.nome",
+                          key: "item.fullname",
                           fn: function(ref) {
                             var item = ref.item
                             return [
@@ -353,76 +281,17 @@ var render = function() {
                                   attrs: {
                                     to: {
                                       name: "orariMedici",
-                                      params: { dottore: item.nome }
+                                      params: { dottore: item.fullname }
                                     }
                                   }
                                 },
                                 [
                                   _vm._v(
-                                    "\n                            " +
-                                      _vm._s(item.nome) +
-                                      "\n                        "
+                                    "\n                                " +
+                                      _vm._s(item.fullname) +
+                                      "\n                            "
                                   )
                                 ]
-                              )
-                            ]
-                          }
-                        },
-                        {
-                          key: "item.actions",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return [
-                              _c(
-                                "v-tooltip",
-                                {
-                                  attrs: { bottom: "" },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "activator",
-                                        fn: function(ref) {
-                                          var on = ref.on
-                                          var attrs = ref.attrs
-                                          return [
-                                            _c(
-                                              "v-icon",
-                                              _vm._g(
-                                                _vm._b(
-                                                  {
-                                                    attrs: {
-                                                      color: "red",
-                                                      small: ""
-                                                    },
-                                                    on: {
-                                                      click: function($event) {
-                                                        return _vm.elimina(
-                                                          item.id
-                                                        )
-                                                      }
-                                                    }
-                                                  },
-                                                  "v-icon",
-                                                  attrs,
-                                                  false
-                                                ),
-                                                on
-                                              ),
-                                              [
-                                                _vm._v(
-                                                  "\n                                    mdi-delete\n                                "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        }
-                                      }
-                                    ],
-                                    null,
-                                    true
-                                  )
-                                },
-                                [_vm._v(" "), _c("span", [_vm._v("Elimina")])]
                               )
                             ]
                           }

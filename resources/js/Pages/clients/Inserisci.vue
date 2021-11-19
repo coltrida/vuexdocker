@@ -188,21 +188,30 @@
                     <v-select
                         v-model="newClient.recapito_id"
                         item-value="id"
-                        item-text="nome"
-                        :items="origineFonte"
-                        :label="nomeLabel"
+                        item-text='nome'
+                        :items="getRecapiti"
+                        label="Recapito"
                     ></v-select>
                 </v-col>
             </v-row>
 
             <v-row class="mb-10">
-                <v-col cols="12" md="6" lg="6">
+                <v-col cols="12" md="4" lg="4">
+                    <v-select
+                        v-model="newClient.medico_id"
+                        item-value="id"
+                        item-text="fullname"
+                        :items="getMedici"
+                        label="Medico"
+                    ></v-select>
+                </v-col>
+                <v-col cols="12" md="4" lg="4">
                     <v-text-field
                         v-model="newClient.luogoNascita"
                         label="Luogo di Nascita"
                     ></v-text-field>
                 </v-col>
-                <v-col cols="12" md="6" lg="6">
+                <v-col cols="12" md="4" lg="4">
                     <v-text-field
                         v-model="newClient.codfisc"
                         label="Codice Fiscale"
@@ -261,9 +270,11 @@
             } else if(this.getRuolo === 'amministrazione') {
                 this.fetchAudioSeguitiDaAmministrativa(parseInt(this.getIdUser));
                 this.fetchFilialiPerInserimento(0);
+                this.fetchMedici(0);
             } else {
                 this.fetchAudio();
                 this.fetchFilialiPerInserimento(0);
+                this.fetchMedici(0);
             }
             this.fetchTipologie();
             this.fetchCanali();
@@ -436,6 +447,10 @@
                 return this.newClient.marketing_id == 5 ? this.getMedici : this.getRecapiti;
             },
 
+            nomeDaVisualizzare(){
+                return this.newClient.marketing_id == 5 ? 'fullname' : 'nome';
+            },
+
             verificaCampi(){
                 return this.newClient.nome != '' && this.newClient.nome != null
                     && this.newClient.cognome != '' && this.newClient.cognome
@@ -444,6 +459,7 @@
                     && this.newClient.cap != '' && this.newClient.cap
                     && this.newClient.provincia != '' && this.newClient.provincia
                     && this.newClient.telefono != '' && this.newClient.telefono
+                    && this.newClient.filiale_id != '' && this.newClient.filiale_id
                     && this.newClient.marketing_id != '' && this.newClient.marketing_id ? false : true;
             }
         },

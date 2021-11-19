@@ -9,6 +9,7 @@ use App\Models\Audiometria;
 use App\Models\Client;
 use App\Models\Filiale;
 use App\Models\Informazione;
+use App\Models\Marketing;
 use App\Models\Prova;
 use App\Models\Recapito;
 use App\Models\Telefonata;
@@ -35,7 +36,7 @@ class ClientService
         $oggi = Carbon::now()->format('Y-m-d');
         return Client::with(['tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome',
-            'recapito:id,nome', 'audiometria', 'prova' => function($q){
+            'recapito:id,nome', 'medico:id,nome,cognome', 'audiometria', 'prova' => function($q){
                 $q->with('copiaComm')->first();
             }])
             ->withCount(['recalls' => function($r) use($oggi){
@@ -86,11 +87,13 @@ class ClientService
         $client->tipologia_id = $request->tipologia_id ? $request->tipologia_id : $idListaEsterna;
         $client->marketing_id = $request->marketing_id;
         $client->filiale_id = $request->filiale_id;
-        if($request->marketing_id == 5) {
+        $client->medico_id = $request->medico_id;
+        $client->recapito_id = $request->recapito_id;
+        /*if($request->marketing_id == Marketing::where('name', 'MEDICO')->first()->id) {
             $client->medico_id = $request->recapito_id;
         } else {
             $client->recapito_id = $request->recapito_id;
-        }
+        }*/
         $client->user_id = $request->user_id;
         $client->mail = trim(Str::upper($request->mail));
         $client->datanascita = $request->datanascita;
@@ -338,15 +341,11 @@ class ClientService
                     'telefono2'     => $ele->Patient->WorkPhone ? trim(Str::upper($ele->Patient->WorkPhone)) : null,
                     'telefono3'     => $ele->Patient->HomePhone ? trim(Str::upper($ele->Patient->HomePhone)) : null,
                     'provincia'     => $ele->Patient->Country ? trim(Str::upper($ele->Patient->Country)) : null,
-//                    'user_id' => $ele->Patient->CreatedBy ? $ele->Patient->CreatedBy : null,
                     'user_id'       => $request['idUser'],
                     'datanascita'   => $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null,
-//                    'recapito_id' => $ele->Patient->Other2 ? $ele->Patient->Other2 : null,
                     'recapito_id'   => $ele->Patient->Other2 ? trim(Str::substr($ele->Patient->Other2, 1, 1)) : null,
                     'mail'          => $ele->Patient->EMail ? trim(Str::upper($ele->Patient->EMail)) : null,
                     'tipologia_id'  => (string)$ele->Patient->Province != '' ? Tipologia::where('nome', trim(Str::upper($ele->Patient->Province)))->first()->id : $idListaEsterna,
-           //         'tipologia_id'  => $ele->Patient->Province ? Tipologia::where('nome', trim(Str::upper($ele->Patient->Province)))->first()->id : null,
-//                    'tipologia_id'  => 6,
                     'marketing_id'  => $ele->Patient->Other1 ? $ele->Patient->Other1 : null,
                     'filiale_id'    => $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
                         Str::of(Str::upper($ele->Patient->City))->trim()),
@@ -549,44 +548,19 @@ class ClientService
     private function getFilialeFromPlace($provincia, $citta)
     {
         $filiale = Filiale::where('provincia', $provincia)->get();
-        $ancona = [ 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO', 'FALCONARA MARITTIMA', 'OSTRA',
-            'MONTESICURO', 'CAMERANO'];
-        $civitanova = ['LORETO',
-            'POTENZA PICENA', 'OSIMO', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI', 'PORTO RECANATI',
-            'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'MONTECOSARO', 'MORROVALLE'];
-        $macerata = ['MACERATA', 'CAMERINO'];
-        $pisa = ['PISA', 'CASCINA', 'MARINA DI PISA', 'SAN GIULIANO TERME', 'SAN GIULIANO TERME(GELLO)',
-            'SAN GIULIANO TERME(AGNANO)', 'GELLO(S.GILULIANO TERME)', 'SAN GIULIANO TERME(GHEZZANO)', 'NODICA',
-            "MADONNA DELL'ACQUA( S.G.T.)", 'S.G.TERME', 'VECCHIANO', 'MIGLIARINO', 'PONTASSERCHIO(S.G.T)', 'PORTA A MARE',
-            'GHEZZANO', 'PISA(ARENA METATO)', 'NODICA(SGT)', 'GHEZZANO(SGT)', 'COLIGNOLA(SGT)', 'SAN LORENZO ALLE CORTI',
-            'ASCIANO PISANO', 'ASCIANO (SGTERME)', 'BIENTINA', 'BUTI', 'CALCI', 'CALCINAIA', 'CAPANNOLI',
-            'CASTELFRANCO DI SOTTO', 'PONSACCO', 'PECCIOLI', 'SAN GIULIANO TERME', 'LIVORNO', 'CECINA', 'LARI',
-            'CASCIANA TERME', 'PIOMBINO', 'TIRRENIA', 'COLLESALVETTI'];
-        $viareggio = ['VIAREGGIO', 'FORTE DEI MARMI', 'FORTE DEI MARIMI', 'MASSA', 'TORRE DEL LAGO', 'LIDO DI CAMAIORE',
-            'LA SPEZIA', 'FILATTIERA(PONTREMOLI)', 'TONFANO(PIETRASANTA)', 'QUERCETA', 'MONTIGNOSO', 'PIETRASANTA',
-            'VITTORIA APUANA', 'SOLAIO(PIETRASANTA)', 'STRETTOIA(PIETRASANAT)', 'LUNI'];
-        $lucca = ['LUCCA', 'BARGA', 'PORCARI', 'GRAGNANO', 'GRAGNANO(LUCCA)', 'LAPPATO', 'ANTRACCOLI(LUCCA)',
-            'CAPANNORI', 'SANTA MARIA A COLLE', 'ZONE', 'SANTA ANDREA IN CAPRILE', 'MARLIA', 'SAN COLOMBANO',
-            'CAPANNORI(MARLIA)', 'CAMIGLIANO', 'CAMIGLIANO(CAPANNORI)', 'SEGROMIGNO IN PIANO', 'SAN MACARIO IN PIANO(LUCCA)',
-            'GRAGNANO(CAPANNORI)', 'NOZZANO(SAN PIETRO) LUCCA', 'TEMPAGNANO(LUCCA)', 'SEGROMIGNO IN MONTE', 'LAPPATO(CAPANNORI)',
-            "SANT'ANGELO IN CAMPO", 'ALTOPASCIO', 'SERRAVEZZA', 'SERRAVEZZA(RIPA)', 'SAN GENNARO',
-            'SAN GENNARO(CAPANNORI)', 'VICOPELAGO', 'SAN CASSIANO A VICO', 'SESTO DI MORIANO', 'SANTISSIMA ANNUNZIATA(LUCCA)',
-            'LAMMARI', 'SANTISSIMA ANNUNZIATA(LU)', 'SANTA MARIA DEL GIUDICE'];
 
         if (count($filiale) == 1){
             return $filiale[0]->id;
         } else {
-            /*if(in_array($citta, $ancona)) {
-                return Filiale::where('nome', 'ANCONA')->first()->id;
-            }*/ if (in_array($citta, $civitanova)) {
+            if (in_array($citta, config('enum.civitanova'))) {
                 return Filiale::where('nome', 'CIVITANOVA')->first()->id;
-            } elseif (in_array($citta, $macerata)) {
+            } elseif (in_array($citta, config('enum.macerata'))) {
                 return Filiale::where('nome', 'MACERATA')->first()->id;
-            } elseif (in_array($citta, $pisa)) {
+            } elseif (in_array($citta, config('enum.pisa'))) {
                 return Filiale::where('nome', 'PISA')->first()->id;
-            } elseif (in_array($citta, $viareggio)) {
+            } elseif (in_array($citta, config('enum.viareggio'))) {
                 return Filiale::where('nome', 'VIAREGGIO')->first()->id;
-            } elseif (in_array($citta, $lucca)) {
+            } elseif (in_array($citta, config('enum.lucca'))) {
                 return Filiale::where('nome', 'LUCCA')->first()->id;
             }
         }

@@ -16,7 +16,7 @@ class DottoreService
 {
     public function lista($idUser)
     {
-        return $idUser ? User::with('medici')->find($idUser)->medici : Medico::orderBy('nome')->get();
+        return $idUser ? User::with('medici')->find($idUser)->medici : Medico::with('user')->orderBy('nome')->get();
     }
 
     public function caricaOrari($idDottore)
@@ -32,20 +32,18 @@ class DottoreService
 
     public function aggiungi($request)
     {
-        $new = Medico::create([
-            'nome' => trim(Str::upper($request->nome)). ' '.trim(Str::upper($request->cognome)),
+        $new = Medico::firstOrCreate([
+            'nome' => trim(Str::upper($request->nome)),
+            'cognome' => trim(Str::upper($request->cognome)),
         ]);
-
-  /*      $new = new Medico();
-        $nome = trim(Str::upper($request->nome));
-        $cognome = trim(Str::upper($request->cognome));
-        $new->nome = $cognome.' '.$nome;
-      //  $new->user_id = $request->userId;
-        $new->save();*/
 
         $new->user()->attach($request->userId);
 
-        return $new;
+        $newOtorino = Medico::with('user')->find($new->id);
+        $newOtorino->cod = 'M'.$new->id;
+        $newOtorino->save();
+
+        return $newOtorino;
     }
 
     public function elimina($idMedico)

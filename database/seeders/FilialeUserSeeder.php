@@ -25,13 +25,14 @@ class FilialeUserSeeder extends Seeder
         $idAmmMarche = User::where('name', 'Amm Marche')->first()->id;
         $idCervone = User::where('name', 'Liliana Cervone')->first()->id;
         $idPapatheodoru = User::where('name', 'Athanasia Papatheodoru')->first()->id;
+        $idAudioAscoli = User::where('name', 'Audio Ascoli')->first()->id;
         $idcall = User::where('name', 'call center')->first()->id;
 
         $idPisa = Filiale::where('nome', 'PISA')->first()->id;
         $idCivitanova = Filiale::where('nome', 'CIVITANOVA')->first()->id;
         $idLucca = Filiale::where('nome', 'LUCCA')->first()->id;
         $idMacerata = Filiale::where('nome', 'MACERATA')->first()->id;
-        $idSanBenedetto = Filiale::where('nome', 'SAN BENEDETTO')->first()->id;
+        $idAscoli = Filiale::where('nome', 'ASCOLI')->first()->id;
         $idViareggio = Filiale::where('nome', 'VIAREGGIO')->first()->id;
         $idFirenze = Filiale::where('nome', 'FIRENZE')->first()->id;
 
@@ -81,7 +82,7 @@ class FilialeUserSeeder extends Seeder
                 'user_id' => $idAmmMarche,
             ],
             [
-                'filiale_id' => $idSanBenedetto,
+                'filiale_id' => $idAscoli,
                 'user_id' => $idAmmMarche,
             ],
             [
@@ -91,6 +92,10 @@ class FilialeUserSeeder extends Seeder
             [
                 'filiale_id' => $idCivitanova,
                 'user_id' => $idPapatheodoru,
+            ],
+            [
+                'filiale_id' => $idAscoli,
+                'user_id' => $idAudioAscoli,
             ],
 /*            [
                 'filiale_id' => $idPisa,

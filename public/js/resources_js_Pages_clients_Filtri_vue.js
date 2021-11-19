@@ -3082,7 +3082,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.resetRicerca();
     this.fetchTipologie();
     this.fetchProvince();
-    this.fetchFilialiPerInserimento();
+    this.fetchFilialiPerInserimento(0);
   },
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapActions)('clients', {
     fetchClients: 'fetchClients',

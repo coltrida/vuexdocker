@@ -244,6 +244,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -301,9 +310,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     } else if (this.getRuolo === 'amministrazione') {
       this.fetchAudioSeguitiDaAmministrativa(parseInt(this.getIdUser));
       this.fetchFilialiPerInserimento(0);
+      this.fetchMedici(0);
     } else {
       this.fetchAudio();
       this.fetchFilialiPerInserimento(0);
+      this.fetchMedici(0);
     }
 
     this.fetchTipologie();
@@ -456,8 +467,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     origineFonte: function origineFonte() {
       return this.newClient.marketing_id == 5 ? this.getMedici : this.getRecapiti;
     },
+    nomeDaVisualizzare: function nomeDaVisualizzare() {
+      return this.newClient.marketing_id == 5 ? 'fullname' : 'nome';
+    },
     verificaCampi: function verificaCampi() {
-      return this.newClient.nome != '' && this.newClient.nome != null && this.newClient.cognome != '' && this.newClient.cognome && this.newClient.indirizzo != '' && this.newClient.indirizzo && this.newClient.citta != '' && this.newClient.citta && this.newClient.cap != '' && this.newClient.cap && this.newClient.provincia != '' && this.newClient.provincia && this.newClient.telefono != '' && this.newClient.telefono && this.newClient.marketing_id != '' && this.newClient.marketing_id ? false : true;
+      return this.newClient.nome != '' && this.newClient.nome != null && this.newClient.cognome != '' && this.newClient.cognome && this.newClient.indirizzo != '' && this.newClient.indirizzo && this.newClient.citta != '' && this.newClient.citta && this.newClient.cap != '' && this.newClient.cap && this.newClient.provincia != '' && this.newClient.provincia && this.newClient.telefono != '' && this.newClient.telefono && this.newClient.filiale_id != '' && this.newClient.filiale_id && this.newClient.marketing_id != '' && this.newClient.marketing_id ? false : true;
     }
   })
 });
@@ -1048,8 +1062,8 @@ var render = function() {
                         attrs: {
                           "item-value": "id",
                           "item-text": "nome",
-                          items: _vm.origineFonte,
-                          label: _vm.nomeLabel
+                          items: _vm.getRecapiti,
+                          label: "Recapito"
                         },
                         model: {
                           value: _vm.newClient.recapito_id,
@@ -1072,7 +1086,30 @@ var render = function() {
                 [
                   _c(
                     "v-col",
-                    { attrs: { cols: "12", md: "6", lg: "6" } },
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          "item-text": "fullname",
+                          items: _vm.getMedici,
+                          label: "Medico"
+                        },
+                        model: {
+                          value: _vm.newClient.medico_id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newClient, "medico_id", $$v)
+                          },
+                          expression: "newClient.medico_id"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Luogo di Nascita" },
@@ -1090,7 +1127,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { attrs: { cols: "12", md: "6", lg: "6" } },
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Codice Fiscale" },

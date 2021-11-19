@@ -127,6 +127,16 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
                 'password' => Hash::make('123456'),
             ],
+            [
+                'name' => 'Audio Ascoli',
+                'email' => 'audio.ascoli@centrouditogroup.it',
+                'ruolo' => 2,
+                'budget_id' => 3,
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'password' => Hash::make('123456'),
+            ],
         ]);
     }
 }

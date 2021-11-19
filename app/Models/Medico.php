@@ -37,6 +37,7 @@ class Medico extends Model
 
     protected $table = 'medicos';
     protected $guarded = [];
+    protected $appends = ['fullname'];
 
     public function orari()
     {
@@ -56,5 +57,10 @@ class Medico extends Model
     public function user()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function getFullnameAttribute()
+    {
+        return $this->cognome.' '.$this->nome;
     }
 }

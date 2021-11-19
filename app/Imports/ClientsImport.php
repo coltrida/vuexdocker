@@ -25,6 +25,7 @@ class ClientsImport implements ToCollection, WithHeadingRow
         $idCaracciolo = User::where('name', 'Selene Caracciolo')->first()->id;
         $idSerra = User::where('name', 'Matteo Serra')->first()->id;
         $idAudioFirenze = User::where('name', 'Audio Firenze')->first()->id;
+        $idAudioAscoli = User::where('name', 'Audio Ascoli')->first()->id;
         $idMantovani = User::where('name', 'Marina Mantovani')->first()->id;
         $idCervone = User::where('name', 'Liliana Cervone')->first()->id;
         $idPapatheodoru = User::where('name', 'Athanasia Papatheodoru')->first()->id;
@@ -33,7 +34,7 @@ class ClientsImport implements ToCollection, WithHeadingRow
         $idCivitanova = Filiale::where('nome', 'CIVITANOVA')->first()->id;
         $idLucca = Filiale::where('nome', 'LUCCA')->first()->id;
         $idMacerata = Filiale::where('nome', 'MACERATA')->first()->id;
-        $idSanBenedetto = Filiale::where('nome', 'SAN BENEDETTO')->first()->id;
+        $idAscoli = Filiale::where('nome', 'ASCOLI')->first()->id;
         $idViareggio = Filiale::where('nome', 'VIAREGGIO')->first()->id;
         $idFirenze = Filiale::where('nome', 'FIRENZE')->first()->id;
 
@@ -41,38 +42,8 @@ class ClientsImport implements ToCollection, WithHeadingRow
         {
             //dd($value);
 
-            $arezzo = ['CAMUCIA', 'CASTIGLION FIORENTINO',
-                'POZZO DELLA CHIANA', 'PIEVE AL TOPPO', 'RIGUTINO', 'BADIA AL PINO', 'CIVITELLA IN VAL DI CHIANA',
-                'ALBERORO','CAPOLONA', 'CASTIGLION FIBOCCHI', 'CASTIGLIONE DEL LAGO', 'CORTONA', 'CORCIANO', 'CHITIGNANO', 'CESA',
-                'FOIANO DELLA CHIANA', 'GUBBIO', 'LUCIGNANO', 'MONTE SAN SAVINO', 'MARCIANO DELLA CHIANA', 'MONTEVARCHI',
-                'PIEVE SANTO STEFANO', 'SAN LEO', 'TEGOLETO', 'TERONTOLA', 'VITIANO', 'SARTEANO'];
-
-            $ancona = [ 'ANCONA', 'SENIGALLIA', 'JESI', 'FABRIANO',
-                'FALCONARA MARITTIMA', 'FALCONARA', 'OSTRA', 'AGUGLIANO', 'ALBACINA', 'APIRO', 'ARCEVIA', 'BARBARA',
-                'BELVEDERE OSTRENSE', 'CAMERATA PICENA', 'CASTEL COLONNA', 'CASTELBELLINO', 'CASTELFERRETTI',
-                'CAMERANO', 'CASTELPLANIO', 'CHIARAVALLE', 'CORINALDO', 'CUPRAMONTANA', 'MAIOLATI SPONTINI',
-                'MARINA DI MONTEMARCIANO', 'MERGO', 'MOIE', 'MONSANO', 'MONTE SAN VITO', 'MONTEROBERTO', 'MONTESICURO',
-                'NUMANA', 'OFFAGNA', 'OSTRA VETERE', 'POLVERIGI', 'SAN MARCELLO', 'SANTA MARIA NUOVA', 'TORRETTE',
-                'TRECASTELLI', 'SIROLO', 'GENGA', 'MONTEMARCIANO', 'COLLINE DI SANTA MARIA NUOVA'];
-
-            $civitanova = ['LORETO', 'OSIMO',
-                'POTENZA PICENA', 'MONTEGIORGIO', "PORTO SANT'ELPIDIO", 'MONTEGRANARO', 'RECANATI',
-                'CIVITANOVA MARCHE', 'FERMO', 'PORTO SAN GIORGIO', 'FARMACIA CARDINALI', 'ACI LORETO', 'ALTIDONA',
-                'ASCOLI PICENO', 'ATHANASIA', 'BOLOGNOLA', 'CASTELFIDARDO', 'CASTELRAIMONDO', 'CESSAPALOMBO', 'CINGOLI',
-                'COMUNANZA', 'FALERONE', 'FIASTRA', 'FILOTTRANO', 'MATELICA', 'MONTE SAN GIUSTO', 'MONTECOSARO',
-                'MORESCO', 'MORROVALLE', 'MUMMUIOLA', 'PONZANO DI FERMO', 'PORTO POTENZA PICENA', 'PORTO RECANATI',
-                'SAN BENEDETTO DEL TRONTO', 'SAN GINESIO', 'SAN SEVERINO MARCHE', 'SARNANO', 'TOLENTINO', 'STAFFOLO',
-                'SERVIGLIANO', 'FIUMINATA'];
-
-            $macerata = ['MACERATA', 'CAMERINO', 'APPIGNANO', 'CORRIDONIA',
-                'LORO PICENO', 'MOGLIANO', 'MONTECASSIANO', 'PASSO DI TREIA', 'POLLENZA', 'SAMBUCHETO', 'TREIA',
-                'URBISAGLIA'];
-
-            $firenze = ['FIRENZE', 'BAGNO A RIPOLI', 'GRASSINA', 'FIESOLE', 'SESTO FIORENTINO',
-                'SCANDICCI', 'SIGNA', 'IMPRUNETA'];
-
-            $inArezzo = (in_array(trim(Str::upper($value['comune'])), $arezzo));
-            $inAncona = (in_array(trim(Str::upper($value['comune'])), $ancona));
+            $inArezzo = (in_array(trim(Str::upper($value['comune'])), config('enum.arezzo')));
+            $inAncona = (in_array(trim(Str::upper($value['comune'])), config('enum.ancona')));
 
             if ($value['cognome'] != null && !$inArezzo && !$inAncona){
                 $filiale = $idPisa;
@@ -80,13 +51,13 @@ class ClientsImport implements ToCollection, WithHeadingRow
                 /*if(in_array(trim(Str::upper($value['comune'])), $ancona)) {
                     $filiale = 4;
                     $user = 8;
-                }*/ if (in_array(trim(Str::upper($value['comune'])), $civitanova)) {
+                }*/ if (in_array(trim(Str::upper($value['comune'])), config('enum.civitanova'))) {
                     $filiale = $idCivitanova;
                     $user = $idPapatheodoru;
-                } elseif (in_array(trim(Str::upper($value['comune'])), $macerata)) {
+                } elseif (in_array(trim(Str::upper($value['comune'])), config('enum.macerata'))) {
                     $filiale = $idMacerata;
                     $user = $idMantovani;
-                } elseif (in_array(trim(Str::upper($value['comune'])), $firenze)) {
+                } elseif (in_array(trim(Str::upper($value['comune'])), config('enum.firenze'))) {
                     $filiale = $idFirenze;
                     $user = $idAudioFirenze;
                 }

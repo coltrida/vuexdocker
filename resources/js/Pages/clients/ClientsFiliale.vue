@@ -95,6 +95,7 @@
             ></v-text-field>
 
             <v-data-table
+                height="560"
                 :headers="headers"
                 :items="getClients"
                 :search="searchTrigger"
@@ -404,7 +405,7 @@
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
                     {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},
-                    {text: 'Città', width: 150, value: 'citta', class: "indigo white--text"},
+                    {text: 'Città', width: 200, value: 'citta', class: "indigo white--text"},
                     {text: 'cap', width: 70, value: 'cap', class: "indigo white--text"},
                     {text: 'PR', width: 70, value: 'provincia', class: "indigo white--text"},
                     {text: 'telefono', width: 130, value: 'telefono', class: "indigo white--text"},
@@ -413,6 +414,8 @@
                     {text: 'Data di Nascita', width: 150, value: 'datanascita', class: "indigo white--text"},
                     {text: 'E-mail', width: 180, value: 'mail', class: "indigo white--text"},
                     {text: 'fonte', width: 200, value: 'marketing', class: "indigo white--text"},
+                    {text: 'Recapito', width: 200, value: 'recapito', class: "indigo white--text"},
+                    {text: 'Otorino', width: 200, value: 'medico', class: "indigo white--text"},
                     {text: 'user', width: 130, value: 'user', class: "indigo white--text"},
                     {text: 'nominativo', width: 130, value: 'fullricerca', class: "indigo white--text"},
 

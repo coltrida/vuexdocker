@@ -52,9 +52,9 @@ class FilialeSeeder extends Seeder
                 'informazioni' => '..........'
             ],
             [
-                'nome' => 'SAN BENEDETTO',
+                'nome' => 'ASCOLI',
                 'indirizzo' => '........',
-                'citta' => 'SAN BENEDETTO DEL TRONTO',
+                'citta' => 'ASCOLI',
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'AP',

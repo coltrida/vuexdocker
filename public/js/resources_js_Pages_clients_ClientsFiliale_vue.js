@@ -3270,6 +3270,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -3345,7 +3346,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Città',
-        width: 150,
+        width: 200,
         value: 'citta',
         "class": "indigo white--text"
       }, {
@@ -3387,6 +3388,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'fonte',
         width: 200,
         value: 'marketing',
+        "class": "indigo white--text"
+      }, {
+        text: 'Recapito',
+        width: 200,
+        value: 'recapito',
+        "class": "indigo white--text"
+      }, {
+        text: 'Otorino',
+        width: 200,
+        value: 'medico',
         "class": "indigo white--text"
       }, {
         text: 'user',
@@ -47544,6 +47555,7 @@ var render = function() {
                   _c("v-data-table", {
                     staticClass: "elevation-1 mt-3",
                     attrs: {
+                      height: "560",
                       headers: _vm.headers,
                       items: _vm.getClients,
                       search: _vm.searchTrigger,

@@ -176,14 +176,14 @@
                 dialogProdotti: false,
                 prodottiSelezione: [],
                 headers1: [
-                    {text: 'Nome', width:120, value: 'client.fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:180, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:80,  value: 'tot_formattato', sortable: false, class: "indigo white--text"},
-                    {text: 'GG in prova', align: 'center', width:120, value: 'giorni_prova', sortable: false, class: "indigo white--text"},
+                    {text: 'GG in prova', width:100, align: 'center',  value: 'giorni_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Prodotti', align: 'center', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
 
                 headers2: [
-                    {text: 'Nome', width:160, value: 'client.fullname', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:180, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:100, value: 'tot_formattato', sortable: false, class: "indigo white--text"},
                     {text: 'Finalizzato', width:120, value: 'fine_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Actions', align: 'center', value: 'actions', sortable: false, class: "indigo white--text" },
