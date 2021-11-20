@@ -1683,6 +1683,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1719,7 +1720,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }) : this.itemFattura.product[0].pivot.prezzo;
     },
     verificaCampi: function verificaCampi() {
-      return this.itemFattura.client.nome != '' && this.itemFattura.client.nome != null && this.itemFattura.client.cognome != '' && this.itemFattura.client.cognome && this.itemFattura.client.indirizzo != '' && this.itemFattura.client.indirizzo && this.itemFattura.client.citta != '' && this.itemFattura.client.citta && this.itemFattura.client.cap != '' && this.itemFattura.client.cap && this.itemFattura.client.provincia != '' && this.itemFattura.client.provincia && this.itemFattura.client.codfisc != '' && this.itemFattura.client.marketing_id ? false : true;
+      return this.itemFattura.client.codfisc !== null ? false : true;
     }
   }
 });
@@ -2131,6 +2132,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2144,6 +2150,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       bloccaProva: true,
+      bloccaMedici: true,
       listaPro: [],
       tipologia: ['Prodotti', 'Servizi'],
       tipologiaSelezionata: '',
@@ -2241,15 +2248,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.deleteProveSenzaProdotti(this.proveClient.id).then(function () {
       _this.fetchProvePassate(_this.proveClient.id).then(function () {
         _this.fetchCanali().then(function () {
-          _this.prova.marketing_id = _this.proveClient.marketing_id ? _this.proveClient.marketing_id : 0;
-          _this.bloccaProva = _this.proveClient.marketing_id ? false : true;
-          _this.carica2 = false;
+          _this.fetchMedici(parseInt(_this.getIdUser)).then(function () {
+            _this.prova.marketing_id = _this.proveClient.marketing_id ? _this.proveClient.marketing_id : 0;
+            _this.bloccaProva = _this.proveClient.marketing_id ? false : true;
+            _this.carica2 = false;
+            _this.bloccaMedici = _this.getCanali.find(function (u) {
+              return u.name === 'MEDICO';
+            }).id === _this.proveClient.marketing_id ? false : true;
+          });
         });
       });
     });
     this.fetchFornitori();
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('fornitori', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('product', {
     fetchInFilialeFornitore: 'fetchInFilialeFornitore',
@@ -2267,6 +2279,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchProvePassate: 'fetchProvePassate',
     resoProva: 'resoProva',
     deleteProveSenzaProdotti: 'deleteProveSenzaProdotti'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('medici', {
+    fetchMedici: 'fetchMedici'
   })), {}, {
     nuovaProvaInCorso: function nuovaProvaInCorso() {
       var _this2 = this;
@@ -2391,11 +2405,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.fetchServizi();
       }
     },
-    selezionaMkt: function selezionaMkt() {
+    selezionaMkt: function selezionaMkt(event) {
       this.bloccaProva = false;
+      this.bloccaMedici = event == 5 ? false : true;
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('fornitori', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('fornitori', {
     getFornitori: 'getFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('product', {
     getInFiliale: 'getInFiliale'
@@ -2405,6 +2420,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getElementiNuovaProva: 'getElementiNuovaProva',
     getNuovaProvaCreata: 'getNuovaProvaCreata',
     getProvePassate: 'getProvePassate'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('medici', {
+    getMedici: 'getMedici'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('login', {
+    getIdUser: 'getIdUser'
   })), {}, {
     fatturaPdf: function fatturaPdf() {
       return 'http://vuexdocker.local/storage/fatture/2021/' + this.idFattura + '.pdf';
@@ -3398,6 +3417,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Otorino',
         width: 200,
         value: 'medico',
+        "class": "indigo white--text"
+      }, {
+        text: 'Cod. Fisc.',
+        width: 200,
+        value: 'codfisc',
         "class": "indigo white--text"
       }, {
         text: 'user',
@@ -45273,6 +45297,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              readonly: "",
                               label: "cod. fis.",
                               rules: _vm.campoRules,
                               required: ""
@@ -45839,7 +45864,6 @@ var render = function() {
                       [
                         _c(
                           "v-col",
-                          { attrs: { cols: "12", md: "8", lg: "8" } },
                           [
                             _c("v-select", {
                               attrs: {
@@ -45854,7 +45878,7 @@ var render = function() {
                               },
                               on: {
                                 change: function($event) {
-                                  return _vm.selezionaMkt()
+                                  return _vm.selezionaMkt($event)
                                 }
                               },
                               model: {
@@ -45869,9 +45893,32 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
+                        !_vm.bloccaMedici
+                          ? _c(
+                              "v-col",
+                              [
+                                _c("v-select", {
+                                  attrs: {
+                                    "item-value": "id",
+                                    "item-text": "fullname",
+                                    items: _vm.getMedici,
+                                    label: "Medici"
+                                  },
+                                  model: {
+                                    value: _vm.prova.medico_id,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.prova, "medico_id", $$v)
+                                    },
+                                    expression: "prova.medico_id"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
                         _c(
                           "v-col",
-                          { attrs: { cols: "12", md: "4", lg: "4" } },
                           [
                             _c(
                               "v-btn",

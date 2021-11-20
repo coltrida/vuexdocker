@@ -170,6 +170,7 @@ const help = () => {
         linkappuntamentosaltato: base+'appuntamentoSaltato',
         linkappuntamentointervenuto: base+'appuntamentoIntervenuto',
         linkaudioseguitidaamministrativa: base+'audioSeguitiDaAmministrativa',
+        linkmedicimesi: base+'statisticheMensiliMedici',
     };
 };
 export default help;

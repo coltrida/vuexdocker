@@ -131,7 +131,7 @@ class UserSeeder extends Seeder
                 'name' => 'Audio Ascoli',
                 'email' => 'audio.ascoli@centrouditogroup.it',
                 'ruolo' => 2,
-                'budget_id' => 3,
+                'budget_id' => 8,
                 'email_verified_at' => now(),
                 'created_at' => now(),
                 'updated_at' => now(),

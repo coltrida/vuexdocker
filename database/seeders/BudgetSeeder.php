@@ -149,6 +149,25 @@ class BudgetSeeder extends Seeder
                 'novembre' => 2000,
                 'dicembre' => 1200,
             ],
+            [
+                'nome' => 'Budget',
+                'user_id' => 12,
+                'budgetAnno' => 150000,
+                'stipendio' => 3000,
+                'provvigione' => 10,
+                'gennaio' => 9000,
+                'febbraio' => 12000,
+                'marzo' => 15000,
+                'aprile' => 15000,
+                'maggio' => 15000,
+                'giugno' => 15000,
+                'luglio' => 9000,
+                'agosto' => 9000,
+                'settembre' => 12000,
+                'ottobre' => 15000,
+                'novembre' => 15000,
+                'dicembre' => 9000,
+            ],
         ]);
     }
 }

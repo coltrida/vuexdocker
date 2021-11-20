@@ -416,6 +416,7 @@
                     {text: 'fonte', width: 200, value: 'marketing', class: "indigo white--text"},
                     {text: 'Recapito', width: 200, value: 'recapito', class: "indigo white--text"},
                     {text: 'Otorino', width: 200, value: 'medico', class: "indigo white--text"},
+                    {text: 'Cod. Fisc.', width: 200, value: 'codfisc', class: "indigo white--text"},
                     {text: 'user', width: 130, value: 'user', class: "indigo white--text"},
                     {text: 'nominativo', width: 130, value: 'fullricerca', class: "indigo white--text"},
 

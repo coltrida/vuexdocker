@@ -45,6 +45,7 @@ const routes = [
     { path: '/strumentazione', component: () => import('../Pages/gestione/Strumentazione'), name: 'strumentazione' },
     { path: '/resetSpecial', component: () => import('../Pages/gestione/Reset'), name: 'resetSpecial' },
     { path: '/struttureAudio', component: () => import('../Pages/strutture/StruttureAudio'), name: 'struttureAudio' },
+    { path: '/mediciMesi', component: () => import('../Pages/statistiche/MediciMesi'), name: 'mediciMesi' },
 ];
 
 export default routes;

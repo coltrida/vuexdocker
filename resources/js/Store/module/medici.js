@@ -8,11 +8,16 @@ const state = () => ({
 
     statisticheInvii: [],
     statisticheTotInvii: [],
+    mediciMesi: []
 });
 
 const getters = {
     getMedici(state){
         return state.medici;
+    },
+
+    getMediciMesi(state){
+        return state.mediciMesi;
     },
 
     getOrari(state){
@@ -55,6 +60,15 @@ const actions = {
         }
 
         commit('fetchMedici', response.data);
+    },
+
+    async fetchMediciMesi({commit}, payload){
+        const response = await axios.post(`${help().linkmedicimesi}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchMediciMesi', response.data);
     },
 
     async fetchTuttiMedici({commit}, idUser){
@@ -160,6 +174,10 @@ const actions = {
 const mutations = {
     fetchMedici(state, payload){
         state.medici = payload;
+    },
+
+    fetchMediciMesi(state, payload){
+        state.mediciMesi = payload;
     },
 
     addMedico(state, payload){

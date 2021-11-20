@@ -86,6 +86,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "OrariMedici",
@@ -112,9 +123,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'nome',
         "class": "indigo white--text"
       }, {
-        text: 'Importo Fattura',
+        text: 'Importo',
         sortable: false,
         value: 'prova[0].tot',
+        "class": "indigo white--text"
+      }, {
+        text: 'Stato',
+        sortable: false,
+        value: 'prova[0].stato.nome',
         "class": "indigo white--text"
       }],
       header2: [{
@@ -270,21 +286,56 @@ var render = function() {
             "v-col",
             { attrs: { cols: "6" } },
             [
-              _c("v-select", {
-                attrs: { items: _vm.anni, label: "Anno" },
-                on: {
-                  change: function($event) {
-                    return _vm.selezionaAnno()
-                  }
-                },
-                model: {
-                  value: _vm.ricerca.anno,
-                  callback: function($$v) {
-                    _vm.$set(_vm.ricerca, "anno", $$v)
-                  },
-                  expression: "ricerca.anno"
-                }
-              })
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    [
+                      _c("v-select", {
+                        attrs: { items: _vm.anni, label: "Anno" },
+                        on: {
+                          change: function($event) {
+                            return _vm.selezionaAnno()
+                          }
+                        },
+                        model: {
+                          value: _vm.ricerca.anno,
+                          callback: function($$v) {
+                            _vm.$set(_vm.ricerca, "anno", $$v)
+                          },
+                          expression: "ricerca.anno"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { staticClass: "d-flex justify-end align-center" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticStyle: { color: "black" },
+                          attrs: { to: { name: "mediciMesi" } }
+                        },
+                        [
+                          _c("v-btn", { attrs: { color: "primary" } }, [
+                            _vm._v(
+                              "\n                            Dettagli Mensili\n                        "
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )

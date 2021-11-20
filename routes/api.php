@@ -228,6 +228,7 @@ Route::group([], function () {
         Route::get('/ventaglioAnno', [UserController::class, 'ventaglioAnno']);
         Route::post('/statisticheInviiMedici', [DottoreController::class, 'statisticheInviiMedici']);
         Route::post('/statisticheTotaleInviiMedici', [DottoreController::class, 'statisticheTotaleInviiMedici']);
+        Route::post('/statisticheMensiliMedici', [DottoreController::class, 'statisticheMensiliMedici']);
         Route::get('/statisticheCallcenter', [TelefonateController::class, 'statistiche']);
         Route::get('/statisticheVenditaApa', [UserController::class, 'statisticheVenditaApa']);
 

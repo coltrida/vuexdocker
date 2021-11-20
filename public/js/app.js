@@ -2254,6 +2254,12 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_strutture_StruttureAudio_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/strutture/StruttureAudio */ "./resources/js/Pages/strutture/StruttureAudio.vue"));
   },
   name: 'struttureAudio'
+}, {
+  path: '/mediciMesi',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_statistiche_MediciMesi_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/statistiche/MediciMesi */ "./resources/js/Pages/statistiche/MediciMesi.vue"));
+  },
+  name: 'mediciMesi'
 }];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (routes);
 
@@ -5938,13 +5944,17 @@ var state = function state() {
     invii: [],
     totInvii: [],
     statisticheInvii: [],
-    statisticheTotInvii: []
+    statisticheTotInvii: [],
+    mediciMesi: []
   };
 };
 
 var getters = {
   getMedici: function getMedici(state) {
     return state.medici;
+  },
+  getMediciMesi: function getMediciMesi(state) {
+    return state.mediciMesi;
   },
   getOrari: function getOrari(state) {
     return state.orari;
@@ -6012,7 +6022,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchTuttiMedici: function fetchTuttiMedici(_ref2, idUser) {
+  fetchMediciMesi: function fetchMediciMesi(_ref2, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -6021,7 +6031,7 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistamedici), {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmedicimesi), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -6029,7 +6039,7 @@ var actions = {
 
             case 3:
               response = _context2.sent;
-              commit('fetchMedici', response.data);
+              commit('fetchMediciMesi', response.data);
 
             case 5:
             case "end":
@@ -6039,7 +6049,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  addMedico: function addMedico(_ref3, payload) {
+  fetchTuttiMedici: function fetchTuttiMedici(_ref3, idUser) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -6048,7 +6058,7 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddmedico), payload, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistamedici), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -6056,7 +6066,7 @@ var actions = {
 
             case 3:
               response = _context3.sent;
-              commit('addMedico', response.data);
+              commit('fetchMedici', response.data);
 
             case 5:
             case "end":
@@ -6066,15 +6076,42 @@ var actions = {
       }, _callee3);
     }))();
   },
-  eliminaMedico: function eliminaMedico(_ref4, idMedico) {
+  addMedico: function addMedico(_ref4, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddmedico), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context4.sent;
+              commit('addMedico', response.data);
+
+            case 5:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  eliminaMedico: function eliminaMedico(_ref5, idMedico) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistamedici) + '/' + idMedico, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -6086,40 +6123,13 @@ var actions = {
 
             case 4:
             case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4);
-    }))();
-  },
-  caricaOrari: function caricaOrari(_ref5, idDottore) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-      var commit, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              commit = _ref5.commit;
-              _context5.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcaricaorari) + '/' + idDottore, {
-                headers: {
-                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
-                }
-              });
-
-            case 3:
-              response = _context5.sent;
-              commit('caricaOrari', response.data);
-
-            case 5:
-            case "end":
               return _context5.stop();
           }
         }
       }, _callee5);
     }))();
   },
-  caricaOrarioDottore: function caricaOrarioDottore(_ref6, dottore) {
+  caricaOrari: function caricaOrari(_ref6, idDottore) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
@@ -6128,7 +6138,7 @@ var actions = {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcaricaorariodottore) + '/' + dottore, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcaricaorari) + '/' + idDottore, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -6146,7 +6156,7 @@ var actions = {
       }, _callee6);
     }))();
   },
-  addOrario: function addOrario(_ref7, payload) {
+  caricaOrarioDottore: function caricaOrarioDottore(_ref7, dottore) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
@@ -6155,7 +6165,7 @@ var actions = {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddorario), payload, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkcaricaorariodottore) + '/' + dottore, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -6163,7 +6173,7 @@ var actions = {
 
             case 3:
               response = _context7.sent;
-              commit('addOrario', response.data);
+              commit('caricaOrari', response.data);
 
             case 5:
             case "end":
@@ -6173,15 +6183,42 @@ var actions = {
       }, _callee7);
     }))();
   },
-  eliminaOrario: function eliminaOrario(_ref8, idOrario) {
+  addOrario: function addOrario(_ref8, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddorario), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context8.sent;
+              commit('addOrario', response.data);
+
+            case 5:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    }))();
+  },
+  eliminaOrario: function eliminaOrario(_ref9, idOrario) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              commit = _ref9.commit;
+              _context9.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkeliminaOrario) + '/' + idOrario, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -6193,40 +6230,13 @@ var actions = {
 
             case 4:
             case "end":
-              return _context8.stop();
-          }
-        }
-      }, _callee8);
-    }))();
-  },
-  inviiMedici: function inviiMedici(_ref9, payload) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
-      var commit, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
-        while (1) {
-          switch (_context9.prev = _context9.next) {
-            case 0:
-              commit = _ref9.commit;
-              _context9.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkinviimedici), payload, {
-                headers: {
-                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
-                }
-              });
-
-            case 3:
-              response = _context9.sent;
-              commit('inviiMedici', response.data);
-
-            case 5:
-            case "end":
               return _context9.stop();
           }
         }
       }, _callee9);
     }))();
   },
-  totaleInviiMedici: function totaleInviiMedici(_ref10, payload) {
+  inviiMedici: function inviiMedici(_ref10, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
@@ -6235,7 +6245,7 @@ var actions = {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linktotaleinviimedici), payload, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkinviimedici), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -6243,7 +6253,7 @@ var actions = {
 
             case 3:
               response = _context10.sent;
-              commit('totaleInviiMedici', response.data);
+              commit('inviiMedici', response.data);
 
             case 5:
             case "end":
@@ -6253,7 +6263,7 @@ var actions = {
       }, _callee10);
     }))();
   },
-  statisticheInviiMedici: function statisticheInviiMedici(_ref11, payload) {
+  totaleInviiMedici: function totaleInviiMedici(_ref11, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
@@ -6262,7 +6272,7 @@ var actions = {
             case 0:
               commit = _ref11.commit;
               _context11.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatisticheinviimedici), payload, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linktotaleinviimedici), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -6270,7 +6280,7 @@ var actions = {
 
             case 3:
               response = _context11.sent;
-              commit('statisticheInviiMedici', response.data);
+              commit('totaleInviiMedici', response.data);
 
             case 5:
             case "end":
@@ -6280,7 +6290,7 @@ var actions = {
       }, _callee11);
     }))();
   },
-  statisticheTotaleInviiMedici: function statisticheTotaleInviiMedici(_ref12, payload) {
+  statisticheInviiMedici: function statisticheInviiMedici(_ref12, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee12() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee12$(_context12) {
@@ -6289,7 +6299,7 @@ var actions = {
             case 0:
               commit = _ref12.commit;
               _context12.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatistichetotaleinviimedici), payload, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatisticheinviimedici), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -6297,7 +6307,7 @@ var actions = {
 
             case 3:
               response = _context12.sent;
-              commit('statisticheTotaleInviiMedici', response.data);
+              commit('statisticheInviiMedici', response.data);
 
             case 5:
             case "end":
@@ -6306,11 +6316,41 @@ var actions = {
         }
       }, _callee12);
     }))();
+  },
+  statisticheTotaleInviiMedici: function statisticheTotaleInviiMedici(_ref13, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
+        while (1) {
+          switch (_context13.prev = _context13.next) {
+            case 0:
+              commit = _ref13.commit;
+              _context13.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkstatistichetotaleinviimedici), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context13.sent;
+              commit('statisticheTotaleInviiMedici', response.data);
+
+            case 5:
+            case "end":
+              return _context13.stop();
+          }
+        }
+      }, _callee13);
+    }))();
   }
 };
 var mutations = {
   fetchMedici: function fetchMedici(state, payload) {
     state.medici = payload;
+  },
+  fetchMediciMesi: function fetchMediciMesi(state, payload) {
+    state.mediciMesi = payload;
   },
   addMedico: function addMedico(state, payload) {
     state.medici = state.medici.filter(function (u) {
@@ -9986,7 +10026,8 @@ var help = function help() {
     linkappuntamentiinsospeso: base + 'appuntamentiInSospeso',
     linkappuntamentosaltato: base + 'appuntamentoSaltato',
     linkappuntamentointervenuto: base + 'appuntamentoIntervenuto',
-    linkaudioseguitidaamministrativa: base + 'audioSeguitiDaAmministrativa'
+    linkaudioseguitidaamministrativa: base + 'audioSeguitiDaAmministrativa',
+    linkmedicimesi: base + 'statisticheMensiliMedici'
   };
 };
 
@@ -96389,7 +96430,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Pages_statistiche_Medici_vue":1,"resources_js_Pages_clients_SituazioneAudio_vue":1,"resources_js_Pages_gestione_Backup_vue":1,"resources_js_Pages_gestione_Restore_vue":1,"resources_js_Pages_clients_Riepilogo_vue":1,"resources_js_Pages_statistiche_Callcenter_vue":1,"resources_js_Pages_gestione_Strumentazione_vue":1,"resources_js_Pages_gestione_Reset_vue":1,"resources_js_Pages_strutture_StruttureAudio_vue":1,"resources_js_Components_NavBarCellulare_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Pages_statistiche_Medici_vue":1,"resources_js_Pages_clients_SituazioneAudio_vue":1,"resources_js_Pages_gestione_Backup_vue":1,"resources_js_Pages_gestione_Restore_vue":1,"resources_js_Pages_clients_Riepilogo_vue":1,"resources_js_Pages_statistiche_Callcenter_vue":1,"resources_js_Pages_gestione_Strumentazione_vue":1,"resources_js_Pages_gestione_Reset_vue":1,"resources_js_Pages_strutture_StruttureAudio_vue":1,"resources_js_Pages_statistiche_MediciMesi_vue":1,"resources_js_Components_NavBarCellulare_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

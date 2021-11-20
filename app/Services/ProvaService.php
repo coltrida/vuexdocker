@@ -10,6 +10,7 @@ use App\Models\Documento;
 use App\Models\Fattura;
 use App\Models\Informazione;
 use App\Models\Listino;
+use App\Models\Marketing;
 use App\Models\Product;
 use App\Models\ProductProva;
 use App\Models\Prova;
@@ -33,6 +34,14 @@ class ProvaService
 
     public function nuova($request)
     {
+        $idMktMedico = Marketing::where('name', 'MEDICO')->first()->id;
+        $client = Client::with('tipologia')->find($request->client_id);
+
+        if ($request->marketing_id === $idMktMedico){
+            $client->medico_id = $request->medico_id;
+            $client->marketing_id = $request->marketing_id;
+            $client->save();
+        }
         return Prova::create([
             'user_id' => $request->user_id,
             'client_id' => $request->client_id,
@@ -42,20 +51,8 @@ class ProvaService
             'inizio_prova' => Carbon::now()->format('Y-m-d'),
             'mese_inizio' => Carbon::now()->month,
             'anno_inizio' => Carbon::now()->year,
-            'tipologia' => Client::with('tipologia')->find($request->client_id)->tipologia->nome == 'CL' ? 'Riacquisto' : 'Nuovo',
+            'tipologia' => $client->tipologia->nome == 'CL' ? 'Riacquisto' : 'Nuovo',
         ]);
-        /*$new = new Prova();
-        $new->user_id = $request->user_id;
-        $new->client_id = $request->client_id;
-        $new->marketing_id = $request->marketing_id;
-        $new->filiale_id = $request->filiale_id;
-        $new->stato_id = 7;
-        $new->inizio_prova = Carbon::now()->format('Y-m-d');
-        $new->mese_inizio = Carbon::now()->month;
-        $new->anno_inizio = Carbon::now()->year;
-
-        $new->save();
-        return $new;*/
     }
 
     public function addEle($request)

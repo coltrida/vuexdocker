@@ -39,6 +39,7 @@
                         <v-text-field
                             v-model="itemFattura.client.codfisc"
                             outlined
+                            readonly
                             label="cod. fis."
                             :rules="campoRules"
                             required
@@ -235,13 +236,7 @@
             },
 
             verificaCampi(){
-                return this.itemFattura.client.nome != '' && this.itemFattura.client.nome != null
-                && this.itemFattura.client.cognome != '' && this.itemFattura.client.cognome
-                && this.itemFattura.client.indirizzo != '' && this.itemFattura.client.indirizzo
-                && this.itemFattura.client.citta != '' && this.itemFattura.client.citta
-                && this.itemFattura.client.cap != '' && this.itemFattura.client.cap
-                && this.itemFattura.client.provincia != '' && this.itemFattura.client.provincia
-                && this.itemFattura.client.codfisc != '' && this.itemFattura.client.marketing_id ? false : true;
+                return this.itemFattura.client.codfisc !== null ? false : true;
             }
         }
     }

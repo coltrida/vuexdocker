@@ -185,7 +185,11 @@ class ClientService
     {
         $annoOggi = Carbon::now()->year;
         return Recapito::
-            withcount('clients')
+            withcount(['clients' => function($q) use($annoOggi){
+                $q->where([
+                    ['anno', $annoOggi],
+                ]);
+            }])
             ->withCount(['clients as gen' => function($q) use($annoOggi){
                 $q->where([
                     ['anno', $annoOggi],

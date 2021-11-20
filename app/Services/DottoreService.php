@@ -5,10 +5,12 @@ namespace App\Services;
 
 
 use App\Models\Client;
+use App\Models\Marketing;
 use App\Models\Medico;
 use App\Models\OrarioMedico;
-use App\Models\Recapito;
+use App\Models\StatoApa;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use function trim;
 
@@ -88,60 +90,6 @@ class DottoreService
 
     public function totaleInviiMedici($request)
     {
-        /*dd(Medico::
-        withCount(['clients as vendite' => function($q) use($request) {
-            $q->where([
-                ['user_id', $request->idUser],
-                ['marketing_id', 5]
-            ])->whereHas('prova', function ($q) use($request){
-                $q->where([
-                    ['anno_fine', $request->anno],
-                    ['stato_id', 4],
-                ]);
-            });
-        }])
-            ->withCount(['clients as invii' => function($q) use($request) {
-                $q->where([
-                    ['user_id', $request->idUser],
-                    ['marketing_id', 5]
-                ]);
-            }])
-        ->withSum('prova', 'tot')->get());*/
-
-        /*dd(Medico::
-            withCount(['clients as vendite' => function($q) use($request) {
-                $q->where([
-                    ['user_id', $request->idUser],
-                    ['marketing_id', 5]
-                ])->whereHas('prova', function ($q) use($request){
-                    $q->where([
-                        ['anno_fine', $request->anno],
-                        ['stato_id', 4],
-                    ]);
-                });
-            }])
-            ->withCount(['clients as invii' => function($q) use($request) {
-                $q->where([
-                    ['user_id', $request->idUser],
-                    ['marketing_id', 5]
-                ]);
-            }])
-            ->with(['clients' => function($q) use($request) {
-            $q->where([
-                ['user_id', $request->idUser],
-                ['marketing_id', 5]
-            ])->whereHas('prova', function ($q) use($request){
-                $q->where([
-                    ['anno_fine', $request->anno],
-                    ['stato_id', 4],
-                ]);
-            })->withSum(['prova' => function($g) use($request){
-                $g->where('anno_fine', $request->anno);
-            }], 'tot');
-        }])
-            ->orderBy('id')
-            ->get());*/
-
         return Medico::
         withCount(['clients as vendite' => function($q) use($request) {
             $q->where([
@@ -165,34 +113,118 @@ class DottoreService
 
     public function statisticheInviiMedici($request)
     {
+        $idMktMedico = Marketing::where('name', 'MEDICO')->first()->id;
         return Client::where([
-            ['marketing_id', 5],
-            ['anno', $request->anno],
-        ])
-            ->with('prova', 'medico', 'user')
+                ['marketing_id', $idMktMedico],
+            ])
+            ->whereHas('prova', function ($q) use($request){
+                $q->where([
+                    ['anno_inizio', $request->anno],
+                ]);
+            })
+            ->with(['prova' => function($k){
+                $k->with('stato');
+            }, 'medico', 'user'])
             ->orderBy('user_id')->orderBy('medico_id')->get();
     }
 
     public function statisticheTotaleInviiMedici($request)
     {
+        $idMktMedico = Marketing::where('name', 'MEDICO')->first()->id;
+        $idVendita = StatoApa::where('nome', 'FATTURA')->first()->id;
+
         return Medico::
-        withCount(['clients as vendite' => function($q) use($request) {
+        withCount(['clients as vendite' => function($q) use($request, $idMktMedico, $idVendita) {
             $q->where([
-                ['marketing_id', 5]
-            ])->whereHas('prova', function ($q) use($request){
+                ['marketing_id', $idMktMedico]
+            ])->whereHas('prova', function ($q) use($request, $idVendita){
                 $q->where([
                     ['anno_fine', $request->anno],
-                    ['stato_id', 4],
+                    ['stato_id', $idVendita],
                 ]);
             });
         }])
-            ->withCount(['clients as invii' => function($q) use($request) {
+            ->withCount(['clients as invii' => function($q) use($request, $idMktMedico) {
                 $q->where([
-                    ['marketing_id', 5]
+                    ['marketing_id', $idMktMedico]
                 ]);
             }])
             ->withSum('prova', 'tot')
             ->with('user')
+            ->get();
+    }
+
+    public function statisticheMensiliMedici($request)
+    {
+        $annoOggi = $request->anno;
+        return Medico::
+            with('user')
+            ->withcount(['clients' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where('anno_inizio', $annoOggi);
+                });
+            }])
+            ->withCount(['clients as gen' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 1]]);
+                });
+            }])
+            ->withCount(['clients as feb' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 2]]);
+                });
+            }])
+            ->withCount(['clients as mar' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 3]]);
+                });
+            }])
+            ->withCount(['clients as apr' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 4]]);
+                });
+            }])
+            ->withCount(['clients as mag' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 5]]);
+                });
+            }])
+            ->withCount(['clients as giu' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 6]]);
+                });
+            }])
+            ->withCount(['clients as lug' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 7]]);
+                });
+            }])
+            ->withCount(['clients as ago' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 8]]);
+                });
+            }])
+            ->withCount(['clients as set' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 9]]);
+                });
+            }])
+            ->withCount(['clients as ott' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 10]]);
+                });
+            }])
+            ->withCount(['clients as nov' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 11]]);
+                });
+            }])
+            ->withCount(['clients as dic' => function($q) use($annoOggi){
+                $q->whereHas('prova', function ($e) use($annoOggi){
+                    $e->where([['anno_inizio', $annoOggi], ['mese_inizio', 12]]);
+                });
+            }])
+            ->orderBy('nome')
             ->get();
     }
 }

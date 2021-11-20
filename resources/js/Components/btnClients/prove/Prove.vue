@@ -46,12 +46,10 @@
                 </div>
                 <div v-else>
                     <v-row>
-                        <v-col
-                            cols="12" md="8" lg="8"
-                        >
+                        <v-col>
                             <v-select
                                 v-model="prova.marketing_id"
-                                @change="selezionaMkt()"
+                                @change="selezionaMkt($event)"
                                 item-value="id"
                                 item-text="name"
                                 :items="getCanali"
@@ -61,9 +59,16 @@
                                 label="Canale Mkg*"
                             ></v-select>
                         </v-col>
-                        <v-col
-                            cols="12" md="4" lg="4"
-                        >
+                        <v-col v-if="!bloccaMedici">
+                            <v-select
+                                v-model="prova.medico_id"
+                                item-value="id"
+                                item-text="fullname"
+                                :items="getMedici"
+                                label="Medici"
+                            ></v-select>
+                        </v-col>
+                        <v-col>
                             <v-btn @click="nuovaProvaInCorso" :disabled="bloccaProva" class="mt-2">
                                 Nuova Prova
                             </v-btn>
@@ -336,6 +341,7 @@
         data(){
             return {
                 bloccaProva:true,
+                bloccaMedici: true,
                 listaPro:[],
                 tipologia:['Prodotti','Servizi'],
                 tipologiaSelezionata:'',
@@ -383,9 +389,12 @@
             this.deleteProveSenzaProdotti(this.proveClient.id).then(() => {
                 this.fetchProvePassate(this.proveClient.id).then(() => {
                     this.fetchCanali().then(() => {
-                        this.prova.marketing_id = this.proveClient.marketing_id ? this.proveClient.marketing_id : 0;
-                        this.bloccaProva = this.proveClient.marketing_id ? false : true;
-                        this.carica2 = false;
+                        this.fetchMedici(parseInt(this.getIdUser)).then(() => {
+                            this.prova.marketing_id = this.proveClient.marketing_id ? this.proveClient.marketing_id : 0;
+                            this.bloccaProva = this.proveClient.marketing_id ? false : true;
+                            this.carica2 = false;
+                            this.bloccaMedici = this.getCanali.find(u => u.name === 'MEDICO').id === this.proveClient.marketing_id ? false : true;
+                        });
                     });
                 });
             });
@@ -417,6 +426,10 @@
                 fetchProvePassate:'fetchProvePassate',
                 resoProva:'resoProva',
                 deleteProveSenzaProdotti:'deleteProveSenzaProdotti',
+            }),
+
+            ...mapActions('medici', {
+                fetchMedici:'fetchMedici',
             }),
 
             nuovaProvaInCorso(){
@@ -551,8 +564,9 @@
                 }
             },
 
-            selezionaMkt(){
+            selezionaMkt(event){
                 this.bloccaProva = false;
+                this.bloccaMedici = event == 5 ? false : true;
             }
 
         },
@@ -574,6 +588,14 @@
                 getElementiNuovaProva: 'getElementiNuovaProva',
                 getNuovaProvaCreata: 'getNuovaProvaCreata',
                 getProvePassate: 'getProvePassate',
+            }),
+
+            ...mapGetters('medici', {
+                getMedici:'getMedici',
+            }),
+
+            ...mapGetters('login', {
+                getIdUser:'getIdUser',
             }),
 
             fatturaPdf(){

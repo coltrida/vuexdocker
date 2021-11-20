@@ -5,13 +5,24 @@
                 <h2>Prescrizioni Mediche</h2>
             </v-col>
             <v-col cols="6">
+                <v-row>
+                    <v-col>
+                        <v-select
+                            @change="selezionaAnno()"
+                            v-model="ricerca.anno"
+                            :items="anni"
+                            label="Anno"
+                        ></v-select>
+                    </v-col>
+                    <v-col class="d-flex justify-end align-center">
+                        <router-link style="color: black" :to="{ name: 'mediciMesi'}">
+                            <v-btn color="primary">
+                                Dettagli Mensili
+                            </v-btn>
+                        </router-link>
+                    </v-col>
+                </v-row>
 
-                <v-select
-                    @change="selezionaAnno()"
-                    v-model="ricerca.anno"
-                    :items="anni"
-                    label="Anno"
-                ></v-select>
             </v-col>
         </v-row>
 
@@ -81,7 +92,8 @@
                     { text: 'Audio',  align: 'start', sortable: false, value: 'user.name', class: "indigo white--text" },
                     { text: 'Medico',  align: 'start', sortable: false, value: 'medico.fullname', class: "indigo white--text" },
                     { text: 'Nome',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
-                    { text: 'Importo Fattura',  sortable: false, value: 'prova[0].tot', class: "indigo white--text" },
+                    { text: 'Importo',  sortable: false, value: 'prova[0].tot', class: "indigo white--text" },
+                    { text: 'Stato',  sortable: false, value: 'prova[0].stato.nome', class: "indigo white--text" },
                 ],
 
                 header2: [
