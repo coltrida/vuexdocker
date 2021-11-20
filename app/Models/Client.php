@@ -202,7 +202,8 @@ class Client extends Model
     public function provaFattura()
     {
         $anno = Carbon::now()->year;
-        return $this->hasMany(Prova::class)->where([ ['stato_id', 4], ['anno_fine', $anno] ]);
+        $idStatoFattura = StatoApa::where('nome', 'FATTURA')->first()->id;
+        return $this->hasMany(Prova::class)->where([ ['stato_id', $idStatoFattura], ['anno_fine', $anno] ]);
     }
 
     public function provaDdt()

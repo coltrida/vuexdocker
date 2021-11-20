@@ -3,6 +3,7 @@ const routes = [
     { path: '/login', component: () => import('../Pages/login/Login'), name: 'login' },
     { path: '/register', component: () => import('../Pages/login/Register'), name: 'register' },
     { path: '/marketing', component: () => import('../Pages/marketing/Marketing'), name: 'marketing' },
+    { path: '/materiale', component: () => import('../Pages/marketing/Materiale'), name: 'materiale' },
     { path: '/listino', component: () => import('../Pages/fornitori/Listino'), name: 'listino' },
     { path: '/fornitori', component: () => import('../Pages/fornitori/Fornitori'), name: 'fornitori' },
     { path: '/personale', component: () => import('../Pages/personale/Personale'), name: 'personale' },

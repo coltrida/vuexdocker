@@ -21,8 +21,9 @@ import DocumentiModule from './module/documenti';
 import RateModule from './module/rate';
 import MediciModule from './module/medici';
 import TelefonateModule from './module/telefonate';
-import Strumentazione from './module/strumentazione';
-import Informazioni from './module/informazioni';
+import StrumentazioneModule from './module/strumentazione';
+import InformazioniModule from './module/informazioni';
+import MaterialeModule from './module/materiale';
 
 Vue.use(Vuex);
 
@@ -48,8 +49,9 @@ const store = new Vuex.Store({
         rate:RateModule,
         medici:MediciModule,
         telefonate:TelefonateModule,
-        strumentazione:Strumentazione,
-        informazioni:Informazioni,
+        strumentazione:StrumentazioneModule,
+        informazioni:InformazioniModule,
+        materiale:MaterialeModule,
     }
 });
 

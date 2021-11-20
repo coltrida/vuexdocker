@@ -40,12 +40,9 @@
                             {{item.fullname}}
                         </router-link>
                     </template>
-
-                    <!--<template v-slot:item.nominativo="{ item }">
-                        {{item.medico.cognome+' '+item.medico.nome}}
-                    </template>-->
                 </v-data-table>
             </v-col>
+
             <v-col cols="6">
                 <h2>Resoconto Anno</h2>
                 <v-data-table
@@ -58,10 +55,6 @@
                             {{ele.name}}
                         </div>
                     </template>
-
-                    <!--<template v-slot:item.nominativo="{ item }">
-                            {{item.cognome+' '+item.nome}}
-                    </template>-->
 
                 </v-data-table>
             </v-col>
@@ -101,7 +94,7 @@
                     { text: 'Audio',  align: 'start', sortable: false, value: 'audioprotesisti', class: "indigo white--text" },
                     { text: 'Tot invii',  sortable: false, value: 'invii', class: "indigo white--text" },
                     { text: 'Vendite',  sortable: false, value: 'vendite', class: "indigo white--text" },
-                    { text: 'Importo',  sortable: false, value: 'prova_sum_tot', class: "indigo white--text" },
+                    { text: 'Importo',  sortable: false, value: 'prova_finalizzata_sum_tot', class: "indigo white--text" },
                 ],
             }
         },

@@ -171,6 +171,10 @@ const help = () => {
         linkappuntamentointervenuto: base+'appuntamentoIntervenuto',
         linkaudioseguitidaamministrativa: base+'audioSeguitiDaAmministrativa',
         linkmedicimesi: base+'statisticheMensiliMedici',
+        linkmateriale: base+'listaMateriale',
+        linkaddmateriale: base+'aggiungiMateriale',
+        linkmodificamateriale: base+'modificaMateriale',
+        linkeliminamateriale: base+'eliminaMateriale',
     };
 };
 export default help;

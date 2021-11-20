@@ -149,8 +149,9 @@ class DottoreService
                     ['marketing_id', $idMktMedico]
                 ]);
             }])
-            ->withSum('prova', 'tot')
+            ->withSum('provaFinalizzata', 'tot')
             ->with('user')
+            ->orderBy('cognome')
             ->get();
     }
 

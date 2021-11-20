@@ -90,13 +90,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "OrariMedici",
@@ -158,7 +151,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Importo',
         sortable: false,
-        value: 'prova_sum_tot',
+        value: 'prova_finalizzata_sum_tot',
         "class": "indigo white--text"
       }]
     };

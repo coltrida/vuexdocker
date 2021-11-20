@@ -14,6 +14,7 @@ use App\Http\Controllers\api\InformazioniController;
 use App\Http\Controllers\api\ListinoController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\MarketingController;
+use App\Http\Controllers\api\MaterialeController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\ProvaController;
 use App\Http\Controllers\api\RateController;
@@ -266,9 +267,15 @@ Route::group([], function () {
         Route::get('/recallAutomatico/{idUser}', [TelefonateController::class, 'recallAutomatico']);
         Route::get('/telefonateAnnoMese/{anno}/{mese}', [TelefonateController::class, 'telefonateAnnoMese']);
 
-    // ----------------- informazioni -----------------------
-    Route::get('/informazioni/{id}', [InformazioniController::class, 'lista']);
-    Route::post('/aggiungiInformazione', [InformazioniController::class, 'aggiungi']);
+        // ----------------- informazioni -----------------------
+        Route::get('/informazioni/{id}', [InformazioniController::class, 'lista']);
+        Route::post('/aggiungiInformazione', [InformazioniController::class, 'aggiungi']);
+
+        // ----------------- materiale -----------------------
+        Route::get('/listaMateriale', [MaterialeController::class, 'lista']);
+        Route::post('/aggiungiMateriale', [MaterialeController::class, 'aggiungi']);
+        Route::post('/modificaMateriale', [MaterialeController::class, 'modifica']);
+        Route::delete('/eliminaMateriale/{id}', [MaterialeController::class, 'elimina']);
 });
 
 // ----------------- debugBar -----------------------

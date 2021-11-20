@@ -2,7 +2,7 @@
     <v-row>
         <v-col cols="5">
             <h2>Canali Marketing</h2>
-            <v-row>
+            <v-row v-if="getRuolo=='admin'">
                 <v-col
                     cols="12"
                     sm="6"
@@ -35,7 +35,7 @@
                         >
 
                             <template v-slot:item.actions="{ item }">
-                                <v-tooltip bottom>
+                                <v-tooltip bottom v-if="getRuolo=='admin'">
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-icon
                                             color="red"
@@ -59,7 +59,7 @@
 
         <v-col cols="7">
             <h2>Otorini</h2>
-            <v-row>
+            <v-row v-if="getRuolo=='admin'">
                 <v-col>
                     <v-text-field
                         v-model="newOtorino.nome"
@@ -118,7 +118,7 @@
                             </template>
 
                             <template v-slot:item.actions="{ item }">
-                                <v-tooltip bottom>
+                                <v-tooltip bottom v-if="getRuolo=='admin'">
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-icon
                                             color="red"
@@ -133,7 +133,7 @@
                                     <span>Elimina</span>
                                 </v-tooltip>
 
-                                <v-tooltip bottom>
+                                <v-tooltip bottom v-if="getRuolo=='admin'">
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-icon
                                             color="green"
@@ -172,14 +172,14 @@
                 header: [
                     {text: 'Codice', align: 'start', sortable: false, value: 'cod', class: "indigo white--text"},
                     {text: 'Canale Mkt', align: 'start', sortable: false, value: 'name', class: "indigo white--text"},
-                    {text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: ' ', value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
 
                 headerMedici: [
                     {text: 'Codice', align: 'start', sortable: false, value: 'cod', class: "indigo white--text"},
                     {text: 'Nome', align: 'start', sortable: false, value: 'nominativo', class: "indigo white--text"},
                     {text: 'Audio', align: 'start', sortable: false, value: 'client', class: "indigo white--text"},
-                    {text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: ' ', value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
             }
         },
@@ -187,11 +187,20 @@
         mounted() {
             this.carica = true;
             this.fetchCanali().then(() => {
-                this.fetchMedici(0).then(() =>{
-                    this.fetchAudio().then(() => {
-                        this.carica = false;
+                if (this.getRuolo=='admin'){
+                    this.fetchMedici(0).then(() =>{
+                        this.fetchAudio().then(() => {
+                            this.carica = false;
+                        });
                     });
-                });
+                } else {
+                    this.fetchMedici(this.getIdUser).then(() =>{
+                        this.fetchAudio().then(() => {
+                            this.carica = false;
+                        });
+                    });
+                }
+
             });
         },
 
@@ -247,6 +256,11 @@
 
             ...mapGetters('users', {
                 getAudio:'getAudio',
+            }),
+
+            ...mapGetters('login', {
+                getRuolo:'getRuolo',
+                getIdUser:'getIdUser',
             }),
         },
     }

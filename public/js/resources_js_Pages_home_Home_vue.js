@@ -3160,13 +3160,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         "class": "indigo white--text"
       }, {
         text: 'Tot',
-        width: 100,
+        width: 80,
         value: 'tot_formattato',
         sortable: false,
         "class": "indigo white--text"
       }, {
         text: 'Finalizzato',
-        width: 120,
+        width: 100,
         value: 'fine_prova',
         sortable: false,
         "class": "indigo white--text"

@@ -2,6 +2,7 @@
     <div class="flex justify-end align-center">
         <Clients />
         <Strutture />
+        <Marketing />
         <Medici />
         <Magazzino />
         <Agenda />
@@ -14,9 +15,10 @@
     import Magazzino from "./NavBarAudio/Magazzino";
     import Medici from "./NavBarAudio/Medici";
     import Strutture from "./NavBarAudio/Strutture";
+    import Marketing from "./NavBarAudio/Marketing";
     export default {
         name: "NavBarAudio",
-        components: {Medici, Magazzino, Clients, Agenda, Strutture}
+        components: {Marketing, Medici, Magazzino, Clients, Agenda, Strutture}
     }
 </script>
 

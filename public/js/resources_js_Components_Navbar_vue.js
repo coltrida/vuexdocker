@@ -365,18 +365,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  /*data: () => ({
-      items: [
-          { title: 'Lista' },
-      ],
-  }),*/
+  data: function data() {
+    return {
+      items: [{
+        title: 'Codici',
+        link: 'marketing'
+      }, {
+        title: 'Materiale',
+        link: 'materiale'
+      }]
+    };
+  }
 });
 
 /***/ }),
@@ -597,6 +597,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NavBarAudio_Magazzino__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NavBarAudio/Magazzino */ "./resources/js/Components/NavBarAudio/Magazzino.vue");
 /* harmony import */ var _NavBarAudio_Medici__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NavBarAudio/Medici */ "./resources/js/Components/NavBarAudio/Medici.vue");
 /* harmony import */ var _NavBarAudio_Strutture__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NavBarAudio/Strutture */ "./resources/js/Components/NavBarAudio/Strutture.vue");
+/* harmony import */ var _NavBarAudio_Marketing__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NavBarAudio/Marketing */ "./resources/js/Components/NavBarAudio/Marketing.vue");
 //
 //
 //
@@ -607,6 +608,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 
@@ -615,6 +618,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "NavBarAudio",
   components: {
+    Marketing: _NavBarAudio_Marketing__WEBPACK_IMPORTED_MODULE_5__.default,
     Medici: _NavBarAudio_Medici__WEBPACK_IMPORTED_MODULE_3__.default,
     Magazzino: _NavBarAudio_Magazzino__WEBPACK_IMPORTED_MODULE_2__.default,
     Clients: _NavBarAudio_Clients__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -844,6 +848,60 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {
     getSoglie: 'getSoglie'
   }))
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      items: [{
+        title: 'Codici',
+        link: 'marketing'
+      }, {
+        title: 'Materiale',
+        link: 'materiale'
+      }]
+    };
+  }
 });
 
 /***/ }),
@@ -1781,6 +1839,45 @@ component.options.__file = "resources/js/Components/NavBarAudio/Magazzino.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Components/NavBarAudio/Marketing.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/Components/NavBarAudio/Marketing.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Marketing_vue_vue_type_template_id_7298cd7c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Marketing.vue?vue&type=template&id=7298cd7c&scoped=true& */ "./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=template&id=7298cd7c&scoped=true&");
+/* harmony import */ var _Marketing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Marketing.vue?vue&type=script&lang=js& */ "./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Marketing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Marketing_vue_vue_type_template_id_7298cd7c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Marketing_vue_vue_type_template_id_7298cd7c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "7298cd7c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Components/NavBarAudio/Marketing.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Components/NavBarAudio/Medici.vue":
 /*!********************************************************!*\
   !*** ./resources/js/Components/NavBarAudio/Medici.vue ***!
@@ -2301,6 +2398,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Marketing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Marketing.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Marketing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/Components/NavBarAudio/Medici.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************!*\
   !*** ./resources/js/Components/NavBarAudio/Medici.vue?vue&type=script&lang=js& ***!
@@ -2646,6 +2759,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Magazzino_vue_vue_type_template_id_6f566418_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Magazzino_vue_vue_type_template_id_6f566418_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Magazzino.vue?vue&type=template&id=6f566418&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Magazzino.vue?vue&type=template&id=6f566418&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=template&id=7298cd7c&scoped=true&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=template&id=7298cd7c&scoped=true& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Marketing_vue_vue_type_template_id_7298cd7c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Marketing_vue_vue_type_template_id_7298cd7c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Marketing_vue_vue_type_template_id_7298cd7c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Marketing.vue?vue&type=template&id=7298cd7c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=template&id=7298cd7c&scoped=true&");
 
 
 /***/ }),
@@ -3306,12 +3436,61 @@ var render = function() {
     { staticClass: "text-center" },
     [
       _c(
-        "router-link",
-        { attrs: { to: { name: "marketing" } } },
-        [
-          _c("v-btn", { attrs: { text: "", dark: "" } }, [
-            _vm._v("\n            Marketing\n        ")
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      _vm._b(
+                        { attrs: { text: "", dark: "" } },
+                        "v-btn",
+                        attrs,
+                        false
+                      ),
+                      on
+                    ),
+                    [_vm._v("\n                Marketing\n            ")]
+                  )
+                ]
+              }
+            }
           ])
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-list",
+            _vm._l(_vm.items, function(item, index) {
+              return _c(
+                "div",
+                { key: index },
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: item.link } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v(_vm._s(item.title))])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            }),
+            0
+          )
         ],
         1
       )
@@ -3665,6 +3844,8 @@ var render = function() {
       _vm._v(" "),
       _c("Strutture"),
       _vm._v(" "),
+      _c("Marketing"),
+      _vm._v(" "),
       _c("Medici"),
       _vm._v(" "),
       _c("Magazzino"),
@@ -4015,6 +4196,96 @@ var render = function() {
                       _c(
                         "v-list-item",
                         [_c("v-list-item-title", [_vm._v(_vm._s(item.nome))])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            }),
+            0
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=template&id=7298cd7c&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Components/NavBarAudio/Marketing.vue?vue&type=template&id=7298cd7c&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "text-center" },
+    [
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      _vm._b(
+                        { attrs: { text: "", dark: "" } },
+                        "v-btn",
+                        attrs,
+                        false
+                      ),
+                      on
+                    ),
+                    [_vm._v("\n                Marketing\n            ")]
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-list",
+            _vm._l(_vm.items, function(item, index) {
+              return _c(
+                "div",
+                { key: index },
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: item.link } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v(_vm._s(item.title))])],
                         1
                       )
                     ],

@@ -54,6 +54,12 @@ class Medico extends Model
         return $this->hasManyThrough(Prova::class, Client::class);
     }
 
+    public function provaFinalizzata()
+    {
+        return $this->hasManyThrough(Prova::class, Client::class)
+            ->where('stato_id', 4);
+    }
+
     public function user()
     {
         return $this->belongsToMany(User::class);
