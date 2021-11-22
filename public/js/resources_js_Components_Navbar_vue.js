@@ -202,7 +202,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Tipi e Recall',
         link: 'tempiRecall'
       }, {
-        title: 'Invio sms',
+        title: 'Invio Messaggio',
         link: 'inviaSms'
       },
       /*{ title: 'Backup', link: 'backup' },*/

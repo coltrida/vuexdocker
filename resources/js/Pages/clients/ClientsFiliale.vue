@@ -628,7 +628,7 @@
                 this.proveClient = {};
             },
 
-            chiudiInformazioni(cliente){
+            chiudiInformazioni(){
                 this.showDocumenti = false;
                 this.showInformazioni = false;
                 this.showRecalls = false;
@@ -637,12 +637,6 @@
                 this.showAppuntamento = false;
                 this.showClients = true;
                 this.informazioniClient = {};
-
-                if (cliente){
-                    this.showClients = false;
-                    this.showProve = true;
-                    this.proveClient = cliente;
-                }
             },
 
             reset(){

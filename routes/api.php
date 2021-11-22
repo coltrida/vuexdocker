@@ -138,8 +138,8 @@ Route::group([], function () {
         Route::post('/eliminaClient', [ClientController::class, 'elimina']);
         Route::post('/addClient', [ClientController::class, 'aggiungi']);
         Route::post('/ricercaNominativi', [ClientController::class, 'ricercaNominativi']);
+        Route::post('/ricercaNominativiConMail', [ClientController::class, 'ricercaNominativiConMail']);
         Route::post('/modificaClient', [ClientController::class, 'aggiungi']);
-        Route::post('/inviaSms', [ClientController::class, 'inviaSms']);
         Route::get('/importClients', [ClientController::class, 'importClients']);
         Route::post('/importClientsFromNoah', [ClientController::class, 'importClientsFromNoah']);
         Route::post('/situazioneAnnoClientiAudio', [ClientController::class, 'situazioneAnnoClientiAudio']);
@@ -171,7 +171,7 @@ Route::group([], function () {
         Route::get('/backup', [GestioneController::class, 'backup']);
         Route::get('/restore', [GestioneController::class, 'restore']);
         Route::get('/logging', [GestioneController::class, 'logging']);
-
+        Route::post('/inviaSms', [GestioneController::class, 'inviaSms']);
 
         // ---------------- audiometrie -------------------------
         Route::get('/listaAudiometrie/{idClient}', [AudiometriaController::class, 'index']);

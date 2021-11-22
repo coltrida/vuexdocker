@@ -44,6 +44,12 @@
             @chiudiRecalls="chiudiRecalls"
         ></recalls>
 
+        <informazioni
+            v-if="showInformazioni"
+            :informazioniClient="informazioniClient"
+            @chiudiInformazioni="chiudiInformazioni"
+        ></informazioni>
+
         <div v-if="showClients">
             <h2>Filtra ricerca</h2>
             <v-row class="mt-6">
@@ -237,6 +243,21 @@
                     </template>
                     <span>Recalls</span>
                 </v-tooltip>
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                            color="black"
+                            small
+                            @click="informazioni(item)"
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            mdi-information-outline
+                        </v-icon>
+                    </template>
+                    <span>Informazioni</span>
+                </v-tooltip>
             </template>
 
         </v-data-table>
@@ -257,16 +278,18 @@
     import Prove from "../../Components/btnClients/prove/Prove";
     import Docunenti from "../../Components/btnClients/documenti/Docunenti";
     import Recalls from "../../Components/btnClients/recalls/Recalls";
+    import Informazioni from "../../Components/btnClients/informazioni/Informazioni";
 
     export default {
         name: "Clients",
-        components: {Docunenti, Prove, Appuntamento, Audiogramma, Messaggio, Messaggioelimina, Recalls},
+        components: {Informazioni, Docunenti, Prove, Appuntamento, Audiogramma, Messaggio, Messaggioelimina, Recalls},
         data() {
             return {
                 showElimina: false,
                 carica: false,
                 showClients: true,
                 showProve: false,
+                showInformazioni: false,
                 showDocumenti: false,
                 showRecalls: false,
                 showAudiogramma: false,
@@ -278,12 +301,13 @@
                 proveClient: {},
                 documentiClient: {},
                 recallsClient: {},
+                informazioniClient: {},
                 idElimina: '',
                 nomeElimina: '',
                 cognomeElimina: '',
                 ricerca:{},
                 headers: [
-                    {text: 'Actions', width: 170, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Actions', width: 200, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'tipologia', width: 100, value: 'tipologia', class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
@@ -343,103 +367,75 @@
             },
 
             audiogramma(client){
-                this.showDocumenti = false;
-                this.showRecalls = false;
-                this.showProve = false;
-                this.showAppuntamento = false;
                 this.showAudiogramma = true;
                 this.showClients = false;
                 this.audiogrammaClient = client;
             },
 
             appuntamento(client){
-                this.showDocumenti = false;
-                this.showRecalls = false;
-                this.showProve = false;
-                this.showAudiogramma = false;
                 this.showClients = false;
                 this.showAppuntamento = true;
                 this.appuntamentoClient = client;
             },
 
             prove(client){
-                this.showDocumenti = false;
-                this.showRecalls = false;
                 this.showProve = true;
-                this.showAppuntamento = false;
-                this.showAudiogramma = false;
                 this.showClients = false;
                 this.proveClient = client;
             },
 
             documenti(client){
                 this.showDocumenti = true;
-                this.showRecalls = false;
-                this.showProve = false;
-                this.showAppuntamento = false;
-                this.showAudiogramma = false;
                 this.showClients = false;
                 this.documentiClient = client;
             },
 
+            informazioni(client){
+                this.showInformazioni = true;
+                this.showClients = false;
+                this.informazioniClient = client;
+            },
+
             recalls(client){
-                this.showDocumenti = false;
                 this.showRecalls = true;
-                this.showProve = false;
-                this.showAppuntamento = false;
-                this.showAudiogramma = false;
                 this.showClients = false;
                 this.recallsClient = client;
             },
 
             chiudiRecalls(){
-                this.showDocumenti = false;
                 this.showRecalls = false;
-                this.showProve = false;
-                this.showAudiogramma = false;
-                this.showAppuntamento = false;
                 this.showClients = true;
                 this.recallsClient = {};
             },
 
             chiudiDocumenti(){
                 this.showDocumenti = false;
-                this.showRecalls = false;
-                this.showProve = false;
-                this.showAudiogramma = false;
-                this.showAppuntamento = false;
                 this.showClients = true;
                 this.documentiClient = {};
             },
 
             chiudiAudiogramma(){
-                this.showDocumenti = false;
-                this.showRecalls = false;
-                this.showProve = false;
                 this.showAudiogramma = false;
-                this.showAppuntamento = false;
                 this.showClients = true;
                 this.audiogrammaClient = {};
             },
 
             chiudiAppuntamento(){
-                this.showDocumenti = false;
-                this.showRecalls = false;
-                this.showProve = false;
                 this.showAppuntamento = false;
-                this.showAudiogramma = false;
                 this.showClients = true;
                 this.appuntamentoClient = {};
             },
 
             chiudiProve(){
-                this.showDocumenti = false;
-                this.showRecalls = false;
                 this.showProve = false;
-                this.showAudiogramma = false;
-                this.showAppuntamento = false;
                 this.showClients = true;
                 this.proveClient = {};
+            },
+
+            chiudiInformazioni(cliente){
+                this.showInformazioni = false;
+                this.showClients = true;
+                this.informazioniClient = {};
             },
 
             caricaCitta(){

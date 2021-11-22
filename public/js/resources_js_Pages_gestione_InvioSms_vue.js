@@ -111,6 +111,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -120,25 +183,73 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      carica: false,
+      ricerca: {},
       testo: '',
       textMessaggio: null
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('clients', {
+  mounted: function mounted() {
+    this.resetRicerca();
+    this.fetchTipologie();
+    this.fetchProvince();
+    this.fetchFilialiPerInserimento(0);
+  },
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('clients', {
+    fetchClients: 'fetchClients',
+    fetchProvince: 'fetchProvince',
+    fetchCittaByProvincia: 'fetchCittaByProvincia',
+    ricercaNominativiConMail: 'ricercaNominativiConMail'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('tipologie', {
+    fetchTipologie: 'fetchTipologie'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('filiali', {
+    fetchFilialiPerInserimento: 'fetchFilialiPerInserimento'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('clients', {
     smsInvio: 'smsInvio'
   })), {}, {
+    caricaCitta: function caricaCitta() {
+      this.fetchCittaByProvincia(this.ricerca.provincia);
+    },
     invia: function invia() {
       var _this = this;
 
-      this.smsInvio(this.testo).then(function () {
+      this.carica = true;
+      var payload = {
+        'client': this.getRicercaNominativi,
+        'testo': this.testo
+      }; //console.log(this.getRicercaNominativi)
+
+      this.smsInvio(payload).then(function () {
+        _this.carica = false;
         _this.textMessaggio = 'sms inviato';
         _this.testo = '';
       });
     },
     cancellaMessaggio: function cancellaMessaggio() {
       this.textMessaggio = '';
+    },
+    resetRicerca: function resetRicerca() {
+      this.$store.commit('clients/resetRicercaNominativi');
+      this.ricerca = {};
+    },
+    seleziona: function seleziona() {
+      var _this2 = this;
+
+      this.carica = true;
+      this.ricercaNominativiConMail(this.ricerca).then(function () {
+        _this2.carica = false;
+      });
     }
-  })
+  }),
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('clients', {
+    getRicercaNominativi: 'getRicercaNominativi',
+    getProvince: 'getProvince',
+    getCittaByProvincia: 'getCittaByProvincia'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('tipologie', {
+    getTipologie: 'getTipologie'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('filiali', {
+    getFilialiPerInserimento: 'getFilialiPerInserimento'
+  }))
 });
 
 /***/ }),
@@ -381,64 +492,200 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", [_vm._v("Invio sms")]),
+      _c("h2", [_vm._v("Invio Messaggio")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Destinatari")]),
       _vm._v(" "),
       _c(
-        "v-container",
+        "v-row",
+        { staticClass: "mt-6" },
         [
-          _c("messaggio", {
-            attrs: { textMessaggio: _vm.textMessaggio },
-            on: { cancellaMessaggio: _vm.cancellaMessaggio }
-          }),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  "item-value": "id",
+                  "item-text": "nome",
+                  items: _vm.getTipologie,
+                  label: "tipo"
+                },
+                model: {
+                  value: _vm.ricerca.tipo,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "tipo", $$v)
+                  },
+                  expression: "ricerca.tipo"
+                }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
-            "v-row",
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getProvince, label: "Prov." },
+                on: {
+                  change: function($event) {
+                    return _vm.caricaCitta()
+                  }
+                },
+                model: {
+                  value: _vm.ricerca.provincia,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "provincia", $$v)
+                  },
+                  expression: "ricerca.provincia"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getCittaByProvincia, label: "Città" },
+                model: {
+                  value: _vm.ricerca.citta,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "citta", $$v)
+                  },
+                  expression: "ricerca.citta"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "2", sm: "2" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  "item-value": "id",
+                  "item-text": "nome",
+                  items: _vm.getFilialiPerInserimento,
+                  label: "Filiale"
+                },
+                model: {
+                  value: _vm.ricerca.filiale,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "filiale", $$v)
+                  },
+                  expression: "ricerca.filiale"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
             [
               _c(
-                "v-col",
-                { attrs: { cols: "12" } },
+                "v-btn",
+                {
+                  attrs: { color: "success", dark: "" },
+                  on: { click: _vm.seleziona }
+                },
+                [_vm._v("\n                Seleziona\n            ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "warning", dark: "" },
+                  on: { click: _vm.resetRicerca }
+                },
+                [_vm._v("\n                Reset\n            ")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("messaggio", {
+        attrs: { textMessaggio: _vm.textMessaggio },
+        on: { cancellaMessaggio: _vm.cancellaMessaggio }
+      }),
+      _vm._v(" "),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "12" } },
+            [
+              _c(
+                "v-row",
                 [
                   _c(
-                    "v-row",
+                    "v-col",
                     [
-                      _c(
+                      _c("v-textarea", {
+                        attrs: { label: "Testo del messaggio" },
+                        model: {
+                          value: _vm.testo,
+                          callback: function($$v) {
+                            _vm.testo = $$v
+                          },
+                          expression: "testo"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.carica
+                    ? _c(
                         "v-col",
+                        { staticClass: "text-center" },
                         [
-                          _c("v-textarea", {
-                            attrs: { label: "Default style" },
-                            model: {
-                              value: _vm.testo,
-                              callback: function($$v) {
-                                _vm.testo = $$v
-                              },
-                              expression: "testo"
-                            }
+                          _c("v-progress-circular", {
+                            attrs: { indeterminate: "", color: "primary" }
                           })
                         ],
                         1
-                      ),
-                      _vm._v(" "),
-                      _c(
+                      )
+                    : _c(
                         "v-col",
                         [
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { color: "success", dark: "" },
-                              on: { click: _vm.invia }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            Invia\n                        "
+                          _vm.getRicercaNominativi.length > 0
+                            ? _c(
+                                "v-btn",
+                                {
+                                  attrs: { disabled: !(_vm.testo.length > 3) },
+                                  on: { click: _vm.invia }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Invia\n                        "
+                                  )
+                                ]
                               )
-                            ]
+                            : _vm._e(),
+                          _vm._v(
+                            "\n                        Nr. Pazienti Selezionati: "
+                          ),
+                          _c("b", [
+                            _vm._v(_vm._s(_vm.getRicercaNominativi.length))
+                          ]),
+                          _vm._v(
+                            "  con e-mail valorizzata\n                    "
                           )
                         ],
                         1
                       )
-                    ],
-                    1
-                  )
                 ],
                 1
               )

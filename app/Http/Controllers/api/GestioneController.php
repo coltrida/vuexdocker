@@ -4,10 +4,12 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LoggingResource;
+use App\Services\ClientService;
 use App\Services\FilialeService;
 use App\Services\LoggingService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class GestioneController extends Controller
 {
@@ -49,5 +51,17 @@ class GestioneController extends Controller
     public function restore(LoggingService $loggingService)
     {
         return $loggingService->restore();
+    }
+
+    public function inviaSms(Request $request, ClientService $clientService)
+    {
+        //dd($request);
+        return $clientService->inviaMessaggio($request);
+        /*Nexmo::message()->send([
+            'to' => '+393920222125',
+            'from' => '+393920222125',
+            'text' => $request['testo']
+        ]);*/
+
     }
 }

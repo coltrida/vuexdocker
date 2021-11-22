@@ -284,8 +284,6 @@
                     this.newClient = this.getClient;
                 });
             }
-
-            console.log(this.newClient.id);
             /*if(this.getRuolo === 'audio'){
                 this.newClient.user_id = parseInt(this.getIdUser);
                 this.fetchRecapitiByAudio(parseInt(this.getIdUser));

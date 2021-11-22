@@ -6,12 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\CompleanniResource;
 use App\Imports\ClientsImport;
-use App\Models\Client;
-use App\Models\User;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Nexmo\Laravel\Facade\Nexmo;
 
 class ClientController extends Controller
 {
@@ -55,6 +52,11 @@ class ClientController extends Controller
         return ClientResource::collection($clientService->ricercaNominativi($request));
     }
 
+    public function ricercaNominativiConMail(Request $request, ClientService $clientService)
+    {
+        return ClientResource::collection($clientService->ricercaNominativiConMail($request));
+    }
+
     public function elimina(Request $request, ClientService $clientService)
     {
         return $clientService->elimina($request);
@@ -68,16 +70,6 @@ class ClientController extends Controller
     public function ingressiRecapitiMesi(ClientService $clientService)
     {
         return $clientService->ingressiRecapitiMesi();
-    }
-
-    public function inviaSms(Request $request)
-    {
-        Nexmo::message()->send([
-            'to' => '+393920222125',
-            'from' => '+393920222125',
-            'text' => $request['testo']
-        ]);
-
     }
 
     public function importClients()

@@ -325,8 +325,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.newClient = _this.getClient;
       });
     }
-
-    console.log(this.newClient.id);
     /*if(this.getRuolo === 'audio'){
         this.newClient.user_id = parseInt(this.getIdUser);
         this.fetchRecapitiByAudio(parseInt(this.getIdUser));
@@ -345,6 +343,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             this.newClient = this.getClient;
         });
     }*/
+
   },
   watch: {
     rottaIdClient: function rottaIdClient() {

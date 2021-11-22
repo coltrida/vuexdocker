@@ -3631,7 +3631,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showClients = true;
       this.proveClient = {};
     },
-    chiudiInformazioni: function chiudiInformazioni(cliente) {
+    chiudiInformazioni: function chiudiInformazioni() {
       this.showDocumenti = false;
       this.showInformazioni = false;
       this.showRecalls = false;
@@ -3640,12 +3640,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showAppuntamento = false;
       this.showClients = true;
       this.informazioniClient = {};
-
-      if (cliente) {
-        this.showClients = false;
-        this.showProve = true;
-        this.proveClient = cliente;
-      }
     },
     reset: function reset() {
       this.$store.commit('clients/resetClientMessaggio');

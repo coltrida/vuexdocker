@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Mail\inviaMessaggio;
 use App\Models\Appuntamento;
 use App\Models\Audiometria;
 use App\Models\Client;
@@ -643,6 +644,38 @@ class ClientService
             ->orderBy('cognome')->get();
     }
 
+    public function ricercaNominativiConMail($request)
+    {
+        $condizioni = [];
+        if ($request->tipo){
+            array_push($condizioni, ['tipologia_id', $request->tipo]);
+        }
+        if ($request->provincia){
+            array_push($condizioni, ['provincia', $request->provincia]);
+        }
+        if ($request->citta){
+            array_push($condizioni, ['citta', $request->citta]);
+        }
+        if ($request->filiale){
+            array_push($condizioni, ['filiale_id', $request->filiale]);
+        }
+        if ($request->acquistatoAnniFa){
+            $annoRicerca = Carbon::now()->year - $request->acquistatoAnniFa;
+            return Client::whereHas('prova', function($p) use($annoRicerca){
+                $p->where('anno_fine', '<=', $annoRicerca)->whereHas('stato', function($q){
+                    $q->where('nome', 'FATTURA');
+                }) ;
+            })
+                ->where($condizioni)
+                ->orderBy('cognome')->get();
+        }
+
+        return Client::with('tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')
+            ->where($condizioni)->whereNotNull('mail')
+            ->orderBy('cognome')->get();
+    }
+
     public function situazioneAnnoClientiAudio($request)
     {
         return Prova::
@@ -704,5 +737,15 @@ class ClientService
             ->get();
     }
 
+    public function inviaMessaggio($request)
+    {
+        $utenti = $request->client;
+        $messaggio = $request->testo;
+        foreach ($utenti as $utente) {
+            if($utente['mail']){
+                \Mail::to($utente['mail'])->send(new inviaMessaggio($messaggio, $utente));
+            }
+        }
+    }
 
 }

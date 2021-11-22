@@ -134,6 +134,15 @@ const actions = {
         commit('ricercaNominativi', response.data.data);
     },
 
+    async ricercaNominativiConMail({commit}, payload){
+        const response = await axios.post(`${help().linkricercanominativiconmail}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('ricercaNominativi', response.data.data);
+    },
+
     async addClient({commit}, payload){
         const response = await axios.post(`${help().linkaddclient}`, payload, {
             headers: {
@@ -153,9 +162,7 @@ const actions = {
     },
 
     async smsInvio({commit}, payload){
-        await axios.post(`${help().linkinviasms}`, {
-            'testo': payload
-        }, {
+        await axios.post(`${help().linkinviasms}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
