@@ -1120,11 +1120,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     carica: function carica() {
       var _this = this;
 
-      this.caricaFile.idClient = this.documentiClient.id;
-      this.addDocumento(this.caricaFile).then(function () {
-        _this.caricaFile.fileUp = {};
-        _this.caricaFile.tipo = '';
-      });
+      if (this.caricaFile.tipo && this.caricaFile.fileUp.size) {
+        this.caricaFile.idClient = this.documentiClient.id;
+        this.addDocumento(this.caricaFile).then(function () {
+          _this.caricaFile.fileUp = {};
+          _this.caricaFile.tipo = '';
+        });
+      }
     },
     elimina: function elimina(idDocumento) {
       this.eliminaDocumento(idDocumento);
@@ -1155,6 +1157,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -1308,10 +1312,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     inserisci: function inserisci() {
       var _this2 = this;
 
-      this.newInfo.client_id = this.informazioniClient.id;
-      this.addInformazione(this.newInfo).then(function () {
-        _this2.newInfo = {};
-      });
+      if (this.newInfo.giorno && this.newInfo.tipo) {
+        this.newInfo.client_id = this.informazioniClient.id;
+        this.addInformazione(this.newInfo).then(function () {
+          _this2.newInfo = {};
+        });
+      }
     },
     cancella: function cancella() {
       this.$emit('chiudiInformazioni');
@@ -2106,6 +2112,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.fetchCanali().then(function () {
           _this.fetchMedici(parseInt(_this.getIdUser)).then(function () {
             _this.prova.marketing_id = _this.proveClient.marketing_id ? _this.proveClient.marketing_id : 0;
+            _this.prova.medico_id = _this.proveClient.medico_id;
             _this.bloccaProva = _this.proveClient.marketing_id ? false : true;
             _this.carica2 = false;
             _this.bloccaMedici = _this.getCanali.find(function (u) {
@@ -46716,7 +46723,12 @@ var render = function() {
                   _c(
                     "v-date-picker",
                     {
-                      attrs: { "no-title": "", scrollable: "" },
+                      attrs: {
+                        "no-title": "",
+                        "first-day-of-week": "1",
+                        locale: "ITA",
+                        scrollable: ""
+                      },
                       model: {
                         value: _vm.newInfo.giorno,
                         callback: function($$v) {
@@ -47923,6 +47935,17 @@ var render = function() {
                                     _c(
                                       "v-btn",
                                       {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              _vm.getElementiNuovaProva.length >
+                                              0,
+                                            expression:
+                                              "getElementiNuovaProva.length > 0"
+                                          }
+                                        ],
                                         attrs: { color: "primary", dark: "" },
                                         on: { click: _vm.salvaProva }
                                       },
@@ -47987,7 +48010,7 @@ var render = function() {
                       _c("h3", [_vm._v("Prove")]),
                       _vm._v(" "),
                       _c("v-data-table", {
-                        staticClass: "elevation-1 mt-5",
+                        staticClass: "elevation-1 mt-3",
                         attrs: {
                           headers: _vm.headerProve,
                           items: _vm.getProvePassate,

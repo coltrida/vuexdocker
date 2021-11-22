@@ -19,12 +19,9 @@ class MarketingService
     public function addCanale($request)
     {
         return Marketing::create([
-            'name' => trim(Str::upper($request->newCanale))
+            'name' => trim(Str::upper($request->nome)),
+            'cod' => trim(Str::upper($request->cod)),
         ]);
-        /*$newCanale = new Marketing();
-        $newCanale->name = trim(Str::upper($request->newCanale));
-        $newCanale->save();
-        return $newCanale;*/
     }
 
     public function eliminaCanale($id)
@@ -48,7 +45,12 @@ class MarketingService
             whereHas('clients', function ($q) use($audio){
                 $q->where('user_id', $audio->id);
             })
-                ->withSum('provaFattura', 'tot')
+                ->withSum(
+                    ['provaFattura' => function($query) use($audio) {
+                        $query->where('user_id', $audio->id);
+                    }],
+                    'tot'
+                )
                 ->withCount(['clients' => function($q) use($audio){
                     $q->where('user_id', $audio->id);
                 }])

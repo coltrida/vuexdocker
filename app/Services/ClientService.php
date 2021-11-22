@@ -316,9 +316,43 @@ class ClientService
         $clientInseritoDaCallCenter->save();
     }
 
-    private function segnaAppuntamentoIntervenuto(Client $clientInseritoDaCallCenter){
+    private function segnaAppuntamentoIntervenuto(Client $clientInseritoDaCallCenter)
+    {
         $clientInseritoDaCallCenter->appuntamenti[0]->intervenuto = true;
         $clientInseritoDaCallCenter->push();
+    }
+
+    private function decriptazioneStruttura($codice)
+    {
+        $idFiliale = $idRecapito = null;
+        if (isset($codice)){
+            $letteraIniziale = Str::substr($codice, 0, 1);
+            $id = Str::substr($codice, 1);
+            if ($letteraIniziale === 'F')
+            {
+                $idFiliale = Filiale::find($id)->id;
+                $idRecapito = null;
+            } else if($letteraIniziale === 'R') {
+                $recapito = Recapito::with('filiale')->find($id);
+                $idRecapito = $recapito->id;
+                $idFiliale = $recapito->filiale->id;
+            }
+        }
+
+        return [$idFiliale, $idRecapito];
+    }
+
+    private function decriptazioneCodiceMarketing($codice)
+    {
+        $codiceDaRicercare = $codice;
+        $idMedico = null;
+        $letteraIniziale = Str::substr($codice, 0, 1);
+        if ($letteraIniziale === 'M'){
+            $codiceDaRicercare = 'M';
+            $idMedico = Str::substr($codice, 1);
+        }
+        $marketing = Marketing::where('cod', $codiceDaRicercare)->first();
+        return $marketing ? [$marketing->id, $idMedico] : [null, null];
     }
 
     public function importClientsFromNoah($request)
@@ -331,6 +365,12 @@ class ClientService
 //dd($xml->Patient);
         foreach ($xml->Patient as $ele){
           //  dd((string)$ele->Patient->Province);
+            $risultatiDecriptazioneStruttura = $this->decriptazioneStruttura(trim(Str::upper($ele->Patient->Other2)));
+            $idFiliale = $risultatiDecriptazioneStruttura[0];
+            $idRecapito = $risultatiDecriptazioneStruttura[1];
+            $risultatiDecriptazioneCodMkt = $this->decriptazioneCodiceMarketing(trim(Str::upper($ele->Patient->Other1)));
+            $idCodMkt = $risultatiDecriptazioneCodMkt[0];
+            $idMedico = $risultatiDecriptazioneCodMkt[1];
             $client = Client::updateOrCreate(
                 [
                     'nome'          => trim(Str::upper($ele->Patient->FirstName)),
@@ -347,11 +387,12 @@ class ClientService
                     'provincia'     => $ele->Patient->Country ? trim(Str::upper($ele->Patient->Country)) : null,
                     'user_id'       => $request['idUser'],
                     'datanascita'   => $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null,
-                    'recapito_id'   => $ele->Patient->Other2 ? trim(Str::substr($ele->Patient->Other2, 1, 1)) : null,
+                    'recapito_id'   => $idRecapito,
+                    'medico_id'     => $idMedico,
                     'mail'          => $ele->Patient->EMail ? trim(Str::upper($ele->Patient->EMail)) : null,
                     'tipologia_id'  => (string)$ele->Patient->Province != '' ? Tipologia::where('nome', trim(Str::upper($ele->Patient->Province)))->first()->id : $idListaEsterna,
-                    'marketing_id'  => $ele->Patient->Other1 ? $ele->Patient->Other1 : null,
-                    'filiale_id'    => $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
+                    'marketing_id'  => $idCodMkt,
+                    'filiale_id'    => $idFiliale ? $idFiliale : $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
                         Str::of(Str::upper($ele->Patient->City))->trim()),
                     'updated_at'    => Carbon::make((string)$ele->Patient->CreateDate),
                     'mese'          => Carbon::make((string)$ele->Patient->CreateDate)->month,
@@ -635,7 +676,7 @@ class ClientService
         return Filiale::
             withCount(['clients as cli' => function($q){
                 $q->whereHas('tipologia', function ($z){
-                    $z->where('nome', 'CLIENTE');
+                    $z->where('nome', 'CL');
                 });
             }])
             ->withCount(['clients as pc' => function($q){

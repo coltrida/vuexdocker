@@ -23,6 +23,7 @@ class CreateRecapitosTable extends Migration
             $table->string('telefono')->nullable();
             $table->string('informazioni')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->bigInteger('filiale_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

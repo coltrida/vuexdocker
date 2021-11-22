@@ -27,20 +27,21 @@
                     </template>
                 </v-data-table>
             </v-col>
-            <v-col cols="4">
-                <!--<incorpora-torta
-                    :valoripassati="getCanaliFatturato[1]"
-                    :options="chartOptions"/>-->
-            </v-col>
         </v-row>
                 <div v-for="audio in getUserCanaliFatturato" :key="audio.id" class="mt-8">
                     <v-data-table
                         dense
-                        :headers="headers"
+                        :headers="headers2"
                         :items="audio.valori"
                         hide-default-footer
                         class="elevation-1 mt-3"
                     >
+
+                        <template v-slot:item.percentuale="{ item }">
+                            {{ item.prova_fattura_sum_tot ?
+                            Math.round((item.prova_fattura_sum_tot / audio.valori.reduce((a, b) => ({prova_fattura_sum_tot: a.prova_fattura_sum_tot + b.prova_fattura_sum_tot})).prova_fattura_sum_tot ) * 100) + ' %':
+                            0 }}
+                        </template>
 
                         <template v-slot:header.name="{ header }">
                             {{ audio.name }}
@@ -61,25 +62,24 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
-    import IncorporaTorta from "./IncorporaTorta";
     export default {
         name: "AssegnaBudget",
-        components: {IncorporaTorta},
         data(){
             return {
                 ricerca:{},
                 headers: [
-                    { text: 'Nome', width: 300, align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
+                    { text: 'Nome', align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
                     { text: 'Fatturato', sortable: false, value: 'prova_fattura_sum_tot', class: "indigo white--text" },
                     { text: 'Ingressi', sortable: false, value: 'clients_count', class: "indigo white--text" },
                     { text: '%', sortable: false, value: 'percentuale', class: "indigo white--text" },
                 ],
 
-                chartOptions:{
-
-                    responsive: true,
-                    maintainAspectRatio: false,
-                },
+                headers2: [
+                    { text: 'Nome', width: 300, align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
+                    { text: 'Fatturato', width: 300, sortable: false, value: 'prova_fattura_sum_tot', class: "indigo white--text" },
+                    { text: 'Ingressi', width: 300, sortable: false, value: 'clients_count', class: "indigo white--text" },
+                    { text: '%', sortable: false, value: 'percentuale', class: "indigo white--text" },
+                ],
             }
         },
 

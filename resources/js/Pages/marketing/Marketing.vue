@@ -3,18 +3,23 @@
         <v-col cols="5">
             <h2>Canali Marketing</h2>
             <v-row v-if="getRuolo=='admin'">
-                <v-col
-                    cols="12"
-                    sm="6"
-                >
+                <v-col>
                     <v-text-field
-                        v-model="newCanale"
+                        v-model="newCanale.nome"
                         label="Nuovo Canale"
                     ></v-text-field>
                 </v-col>
-                <v-btn @click="aggiungi" color="indigo" dark>
-                    Inserisci
-                </v-btn>
+                <v-col>
+                    <v-text-field
+                        v-model="newCanale.cod"
+                        label="Nuovo Canale"
+                    ></v-text-field>
+                </v-col>
+                <v-col>
+                    <v-btn @click="aggiungi" color="indigo" dark>
+                        Inserisci
+                    </v-btn>
+                </v-col>
             </v-row>
 
             <v-row>
@@ -166,7 +171,7 @@
 
         data() {
             return {
-                newCanale: '',
+                newCanale: {},
                 newOtorino: {},
                 carica: false,
                 header: [

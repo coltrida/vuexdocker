@@ -164,6 +164,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
@@ -447,6 +453,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     rottaIdFiliale: function rottaIdFiliale() {
       return this.$route.params.filialeId ? this.$route.params.filialeId : null;
+    },
+    verificaCampi: function verificaCampi() {
+      return this.productRichiesto.quantita && this.productRichiesto.listino_id && this.productRichiesto.fornitore_id ? false : true;
     }
   })
 });
@@ -635,8 +644,7 @@ var render = function() {
                     "v-btn",
                     {
                       attrs: {
-                        color: "success",
-                        dark: "",
+                        disabled: _vm.verificaCampi,
                         block: _vm.$vuetify.breakpoint.xs
                       },
                       on: { click: _vm.richiedi }
@@ -750,7 +758,40 @@ var render = function() {
                   headers: _vm.headers2,
                   items: _vm.getInProva,
                   "items-per-page": 10
-                }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.cliente",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "router-link",
+                          {
+                            staticStyle: { color: "black" },
+                            attrs: {
+                              to: {
+                                name: "clientsFiliale",
+                                params: {
+                                  filialeId: item.filiale_id,
+                                  nomRicerca: item.nomeCliente,
+                                  cogRicerca: item.fullname
+                                }
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(item.fullname) +
+                                "\n                    "
+                            )
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ])
               }),
               _vm._v(" "),
               _c("h3", { staticClass: "mt-5" }, [_vm._v("Richiesti")]),

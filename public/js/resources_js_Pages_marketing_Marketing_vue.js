@@ -178,12 +178,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Marketing",
   data: function data() {
     return {
-      newCanale: '',
+      newCanale: {},
       newOtorino: {},
       carica: false,
       header: [{
@@ -399,16 +404,15 @@ var render = function() {
                 [
                   _c(
                     "v-col",
-                    { attrs: { cols: "12", sm: "6" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Nuovo Canale" },
                         model: {
-                          value: _vm.newCanale,
+                          value: _vm.newCanale.nome,
                           callback: function($$v) {
-                            _vm.newCanale = $$v
+                            _vm.$set(_vm.newCanale, "nome", $$v)
                           },
-                          expression: "newCanale"
+                          expression: "newCanale.nome"
                         }
                       })
                     ],
@@ -416,12 +420,39 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "indigo", dark: "" },
-                      on: { click: _vm.aggiungi }
-                    },
-                    [_vm._v("\n                Inserisci\n            ")]
+                    "v-col",
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Nuovo Canale" },
+                        model: {
+                          value: _vm.newCanale.cod,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newCanale, "cod", $$v)
+                          },
+                          expression: "newCanale.cod"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "indigo", dark: "" },
+                          on: { click: _vm.aggiungi }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    Inserisci\n                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
                   )
                 ],
                 1

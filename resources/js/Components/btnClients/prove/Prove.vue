@@ -187,7 +187,7 @@
                                         ></v-progress-circular>
                                     </div>
                                     <div v-else>
-                                        <v-btn color="primary" dark @click="salvaProva">
+                                        <v-btn color="primary" dark @click="salvaProva" v-show="getElementiNuovaProva.length > 0">
                                             Salva
                                         </v-btn>
                                     </div>
@@ -220,7 +220,7 @@
                             <v-data-table
                                 :headers="headerProve"
                                 :items="getProvePassate"
-                                class="elevation-1 mt-5"
+                                class="elevation-1 mt-3"
                                 hide-default-footer
                             >
                                 <template v-slot:item.stato.nome="{ item }">
@@ -391,6 +391,7 @@
                     this.fetchCanali().then(() => {
                         this.fetchMedici(parseInt(this.getIdUser)).then(() => {
                             this.prova.marketing_id = this.proveClient.marketing_id ? this.proveClient.marketing_id : 0;
+                            this.prova.medico_id = this.proveClient.medico_id;
                             this.bloccaProva = this.proveClient.marketing_id ? false : true;
                             this.carica2 = false;
                             this.bloccaMedici = this.getCanali.find(u => u.name === 'MEDICO').id === this.proveClient.marketing_id ? false : true;

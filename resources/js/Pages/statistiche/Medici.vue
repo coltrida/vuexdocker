@@ -48,12 +48,23 @@
                 <v-data-table
                     :headers="header2"
                     :items="getStatisticheTotaliInvii"
+                    hide-default-footer
                     class="elevation-1"
                 >
                     <template v-slot:item.audioprotesisti="{ item }">
                         <div v-for="ele in item.user" :key="ele.id">
                             {{ele.name}}
                         </div>
+                    </template>
+
+                    <template slot="body.append">
+                        <tr class="pink--text">
+                            <th class="title">Totali</th>
+                            <th class="title"></th>
+                            <th class="title">{{ sumField('invii') }}</th>
+                            <th class="title">{{ sumField('vendite') }}</th>
+                            <th class="title">{{ sumField('prova_finalizzata_sum_tot') }}</th>
+                        </tr>
                     </template>
 
                 </v-data-table>
@@ -113,6 +124,10 @@
                 this.statisticheInviiMedici(this.ricerca);
                 this.statisticheTotaleInviiMedici(this.ricerca);
             },
+
+            sumField(key) {
+                return this.getStatisticheTotaliInvii.reduce((a, b) => a + (b[key] || 0), 0)
+            }
 
         },
 

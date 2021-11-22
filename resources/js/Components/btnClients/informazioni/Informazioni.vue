@@ -34,6 +34,8 @@
                     <v-date-picker
                         v-model="newInfo.giorno"
                         no-title
+                        first-day-of-week="1"
+                        locale="ITA"
                         scrollable
                     >
                         <v-spacer></v-spacer>
@@ -144,10 +146,12 @@
             }),
 
             inserisci(){
-                this.newInfo.client_id = this.informazioniClient.id;
-                this.addInformazione(this.newInfo).then(() => {
-                    this.newInfo = {}
-                })
+                if (this.newInfo.giorno && this.newInfo.tipo){
+                    this.newInfo.client_id = this.informazioniClient.id;
+                    this.addInformazione(this.newInfo).then(() => {
+                        this.newInfo = {}
+                    })
+                }
             },
 
             cancella(){

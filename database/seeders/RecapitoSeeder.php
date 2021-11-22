@@ -23,6 +23,7 @@ class RecapitoSeeder extends Seeder
                 'telefono' => '0583174896',
                 'informazioni' => 'STUDI MEDICI, SOPRA LA FARMACIA COMUNALE',
                 'user_id' => 2,
+                'filiale_id' => 3,
                 'codiceIdentificativo' => 'R1'
             ],
             [
@@ -33,6 +34,7 @@ class RecapitoSeeder extends Seeder
                 'telefono' => '0584760689',
                 'informazioni' => "E' IN UNA TRAVERSA DELLA STRADA STATALE",
                 'user_id' => 3,
+                'filiale_id' => 3,
                 'codiceIdentificativo' => 'R2'
             ],
             [
@@ -43,6 +45,7 @@ class RecapitoSeeder extends Seeder
                 'telefono' => '0733639051',
                 'informazioni' => "AL PRIMO PIANO DELLO STABILE NELLA PIAZZA",
                 'user_id' => 9,
+                'filiale_id' => 2,
                 'codiceIdentificativo' => 'R3'
             ],
         ]);

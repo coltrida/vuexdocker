@@ -120,11 +120,13 @@
             },
 
             carica(){
-                this.caricaFile.idClient = this.documentiClient.id;
-                this.addDocumento(this.caricaFile).then(() => {
-                    this.caricaFile.fileUp = {};
-                    this.caricaFile.tipo = '';
-                });
+                if (this.caricaFile.tipo && this.caricaFile.fileUp.size){
+                    this.caricaFile.idClient = this.documentiClient.id;
+                    this.addDocumento(this.caricaFile).then(() => {
+                        this.caricaFile.fileUp = {};
+                        this.caricaFile.tipo = '';
+                    });
+                }
             },
 
             elimina(idDocumento){

@@ -49,4 +49,9 @@ class Recapito extends Model
         return $this->hasMany(Client::class);
     }
 
+    public function filiale()
+    {
+        return $this->belongsTo(Filiale::class);
+    }
+
 }

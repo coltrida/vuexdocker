@@ -49,10 +49,8 @@ const actions = {
         commit('fetchUserCanaliFatturato', response.data);
     },
 
-    async addCanale({commit}, newCanale){
-        const response = await axios.post(`${help().linkaddcanale}`, {
-            'newCanale': newCanale
-        }, {
+    async addCanale({commit}, payload){
+        const response = await axios.post(`${help().linkaddcanale}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }

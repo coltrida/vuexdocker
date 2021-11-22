@@ -31,7 +31,7 @@
                 </v-col>
 
                 <v-col cols="12" md="12" lg="3" xs="12" sm="12">
-                    <v-btn @click="richiedi" color="success" dark :block="$vuetify.breakpoint.xs">
+                    <v-btn @click="richiedi" :disabled="verificaCampi" :block="$vuetify.breakpoint.xs">
                         Richiedi
                     </v-btn>
                 </v-col>
@@ -93,6 +93,12 @@
                     :items-per-page="10"
                     class="elevation-1 mt-3"
                 >
+                    <template v-slot:item.cliente="{ item }">
+                        <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nomeCliente, cogRicerca:item.fullname, }}">
+                            {{item.fullname}}
+                        </router-link>
+                    </template>
                 </v-data-table>
 
                 <h3 class="mt-5">Richiesti</h3>
@@ -343,6 +349,12 @@
             rottaIdFiliale(){
                 return this.$route.params.filialeId ? this.$route.params.filialeId : null;
             },
+
+            verificaCampi(){
+                return this.productRichiesto.quantita &&
+                    this.productRichiesto.listino_id &&
+                    this.productRichiesto.fornitore_id ? false : true;
+            }
 
         },
     }

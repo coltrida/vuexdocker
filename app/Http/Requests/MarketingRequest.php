@@ -24,7 +24,8 @@ class MarketingRequest extends FormRequest
     public function rules()
     {
         return [
-            'newCanale' => 'required',
+            'nome' => 'required',
+            'cod' => 'required',
         ];
     }
 }

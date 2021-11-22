@@ -90,6 +90,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "OrariMedici",
@@ -166,6 +177,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     selezionaAnno: function selezionaAnno() {
       this.statisticheInviiMedici(this.ricerca);
       this.statisticheTotaleInviiMedici(this.ricerca);
+    },
+    sumField: function sumField(key) {
+      return this.getStatisticheTotaliInvii.reduce(function (a, b) {
+        return a + (b[key] || 0);
+      }, 0);
     }
   }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('medici', {
@@ -393,30 +409,59 @@ var render = function() {
             [
               _c("h2", [_vm._v("Resoconto Anno")]),
               _vm._v(" "),
-              _c("v-data-table", {
-                staticClass: "elevation-1",
-                attrs: {
-                  headers: _vm.header2,
-                  items: _vm.getStatisticheTotaliInvii
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "item.audioprotesisti",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return _vm._l(item.user, function(ele) {
-                        return _c("div", { key: ele.id }, [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(ele.name) +
-                              "\n                    "
-                          )
-                        ])
-                      })
+              _c(
+                "v-data-table",
+                {
+                  staticClass: "elevation-1",
+                  attrs: {
+                    headers: _vm.header2,
+                    items: _vm.getStatisticheTotaliInvii,
+                    "hide-default-footer": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "item.audioprotesisti",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return _vm._l(item.user, function(ele) {
+                          return _c("div", { key: ele.id }, [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(ele.name) +
+                                "\n                    "
+                            )
+                          ])
+                        })
+                      }
                     }
-                  }
-                ])
-              })
+                  ])
+                },
+                [
+                  _vm._v(" "),
+                  _c("template", { slot: "body.append" }, [
+                    _c("tr", { staticClass: "pink--text" }, [
+                      _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "title" }),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "title" }, [
+                        _vm._v(_vm._s(_vm.sumField("invii")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "title" }, [
+                        _vm._v(_vm._s(_vm.sumField("vendite")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "title" }, [
+                        _vm._v(
+                          _vm._s(_vm.sumField("prova_finalizzata_sum_tot"))
+                        )
+                      ])
+                    ])
+                  ])
+                ],
+                2
+              )
             ],
             1
           )

@@ -16,6 +16,8 @@ use App\Models\ProductProva;
 use App\Models\Prova;
 use App\Models\Ratefattura;
 use App\Models\Ruolo;
+use App\Models\StatoApa;
+use App\Models\Tipologia;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -77,14 +79,6 @@ class ProvaService
             'prezzo_formattato' => '€ '.number_format( (float) $request->prezzo, '0', ',', '.'),
         ]);
 
-        /*$new = new ProductProva();
-        $new->prova_id = $request->prova_id;
-        $new->product_id = $request->product_id;
-        $new->orecchio = $request->orecchio;
-        $new->prezzo = $request->prezzo;
-
-        $new->save();
-        return $new;*/
     }
 
     public function eliminaProdotto($id)
@@ -190,7 +184,8 @@ class ProvaService
     public function salvaFattura($request)
     {
         $prova = Prova::with('product')->find($request->id);
-        $prova->stato_id = 4;
+        $idStatoFattura = StatoApa::where('nome', 'FATTURA')->first()->id;
+        $prova->stato_id = $idStatoFattura;
         $prova->tot = $request->totFatturaReale;
         $prova->fine_prova = Carbon::now()->format('Y-m-d');
         $prova->mese_fine = Carbon::now()->month;
@@ -199,7 +194,8 @@ class ProvaService
         $prova->save();
 
         $client = Client::find($prova->client_id);
-        $client->tipologia_id = 2;
+        $idCliente = Tipologia::where('nome', 'CL')->first()->id;
+        $client->tipologia_id = $idCliente;
         $client->save();
 
         $fattura = Fattura::create([
@@ -229,16 +225,6 @@ class ProvaService
                 'importo' => $request->acconto,
                 'note' => $request->acconto == $request->totFatturaReale ? 'Saldo' : 'Acconto'
             ]);
-
-            /*$newRata = new Ratefattura();
-            $newRata->fattura_id = $fattura->id;
-            $newRata->importo = $request->acconto;
-            if($request->acconto == $request->totFatturaReale){
-                $newRata->note = 'Saldo';
-            } else {
-                $newRata->note = 'Acconto';
-            }
-            $newRata->save();*/
 
             $fattura->ultima_rata = Carbon::now();
             $fattura->save();
@@ -297,12 +283,6 @@ class ProvaService
             'tipo' => 'fattura',
             'link' => '/'.$link,
         ]);
-
-        /*$documento = new Documento();
-        $documento->client_id = $fattura->prova->client_id;
-        $documento->tipo = 'fattura';
-        $documento->link = '/'.$link;
-        $documento->save();*/
     }
 
     public function provePassate($idClient)

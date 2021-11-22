@@ -325,6 +325,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.newClient = _this.getClient;
       });
     }
+
+    console.log(this.newClient.id);
     /*if(this.getRuolo === 'audio'){
         this.newClient.user_id = parseInt(this.getIdUser);
         this.fetchRecapitiByAudio(parseInt(this.getIdUser));
@@ -343,7 +345,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             this.newClient = this.getClient;
         });
     }*/
-
   },
   watch: {
     rottaIdClient: function rottaIdClient() {
@@ -385,7 +386,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs.form.validate();
       var idFiliale = this.newClient.filiale_id;
 
-      if (this.getClient.nome) {
+      if (this.nomeBtn === 'Modifica') {
         this.newClient.id = this.getClient.id;
         this.modificaClient(this.newClient).then(function () {
           _this3.newClient = {};

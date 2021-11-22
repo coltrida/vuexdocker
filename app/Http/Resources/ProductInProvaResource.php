@@ -25,7 +25,10 @@ class ProductInProvaResource extends JsonResource
             'prezzolistino' => '€ '.number_format($this->listino->prezzolistino, 0, ',', '.'),
             'iva' => $this->listino->iva.' %',
             'giorniTempoDiReso' => $this->listino->giorniTempoDiReso,
-            'cliente' => $this->client->nome.' '.$this->client->cognome
+            'cliente' => $this->client->nome.' '.$this->client->cognome,
+            'fullname' => $this->client->fullname,
+            'filiale_id' => $this->client->filiale_id,
+            'nomeCliente' => $this->client->nome,
         ];
     }
 }

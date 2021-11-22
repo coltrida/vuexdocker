@@ -285,6 +285,7 @@
                 });
             }
 
+            console.log(this.newClient.id);
             /*if(this.getRuolo === 'audio'){
                 this.newClient.user_id = parseInt(this.getIdUser);
                 this.fetchRecapitiByAudio(parseInt(this.getIdUser));
@@ -356,7 +357,7 @@
             aggiungiModifica(){
                 this.$refs.form.validate();
                 let idFiliale = this.newClient.filiale_id;
-                if (this.getClient.nome) {
+                if (this.nomeBtn === 'Modifica') {
                     this.newClient.id = this.getClient.id;
                     this.modificaClient(this.newClient).then(() => {
                         this.newClient = {};
