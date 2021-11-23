@@ -147,7 +147,7 @@
                     </v-col>
 
                     <v-col cols="12" md="12" lg="4" xs="12" sm="12">
-                        <v-btn color="primary" dark @click="inserisci" :block="$vuetify.breakpoint.xs">
+                        <v-btn color="primary" @click="inserisci" :block="$vuetify.breakpoint.xs" :disabled="verificaCampi">
                             Inserisci
                         </v-btn>
                     </v-col>
@@ -175,6 +175,7 @@
                                 <template v-slot:item.esito="{ item }">
                                     <div v-if="item.esito == null">
                                         <v-select
+                                            @change="aggiorna(item)"
                                             class="mt-4"
                                             v-model="telefonataDaAggiornare.esito"
                                             :items="tipologiaEsito"
@@ -201,7 +202,7 @@
                                 </template>
 
                                 <template v-slot:item.action="{ item }">
-                                    <v-tooltip bottom v-if="item.esito == null">
+                                    <!--<v-tooltip bottom v-if="item.esito == null">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-icon
                                                 @click="aggiorna(item)"
@@ -215,7 +216,7 @@
                                             </v-icon>
                                         </template>
                                         <span>Conferma Esito</span>
-                                    </v-tooltip>
+                                    </v-tooltip>-->
 
                                     <v-tooltip bottom v-if="item.esito == null">
                                         <template v-slot:activator="{ on, attrs }">
@@ -230,7 +231,7 @@
                                                 mdi-pencil
                                             </v-icon>
                                         </template>
-                                        <span>Conferma Esito</span>
+                                        <span>Modifica</span>
                                     </v-tooltip>
 
                                     <v-tooltip bottom v-if="item.esito == 'Preso Appuntamento'">
@@ -431,6 +432,11 @@
             spiegazione(){
                 return this.attivaData === false ? 'clicca qui se vuoi effettuare ora la telefonata' :
                     'clicca qui se vuoi programmare in un altro giorno la telefonata'
+            },
+
+            verificaCampi(){
+                return (this.nomeBtn == 'vuoi effettuare ora la tel' && this.telefonata.esito != null)
+                || (this.nomeBtn == 'vuoi programmare la tel') ? false : true;
             }
         }
     }

@@ -355,6 +355,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -550,6 +556,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     btnName: function btnName() {
       return this.modificaSwitch ? 'modifica' : 'inserisci';
+    },
+    validaStruttura: function validaStruttura() {
+      return this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id ? false : true;
+    },
+    verificaCampi: function verificaCampi() {
+      return this.newAppuntamento.giorno != '' && this.newAppuntamento.giorno != null && this.newAppuntamento.orario != '' && this.newAppuntamento.orario != null && this.newAppuntamento.tipo != '' && this.newAppuntamento.tipo != null && (this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id) ? false : true;
     }
   })
 });
@@ -2547,6 +2559,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2709,6 +2722,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     spiegazione: function spiegazione() {
       return this.attivaData === false ? 'clicca qui se vuoi effettuare ora la telefonata' : 'clicca qui se vuoi programmare in un altro giorno la telefonata';
+    },
+    verificaCampi: function verificaCampi() {
+      return this.nomeBtn == 'vuoi effettuare ora la tel' && this.telefonata.esito != null || this.nomeBtn == 'vuoi programmare la tel' ? false : true;
     }
   })
 });
@@ -43137,7 +43153,27 @@ var render = function() {
                               },
                               expression: "newAppuntamento.filiale_id"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.validaStruttura
+                            ? _c(
+                                "div",
+                                {
+                                  staticStyle: {
+                                    margin: "0",
+                                    padding: "0",
+                                    "font-size": "12px",
+                                    color: "red",
+                                    transform: "translateY(-20px)"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Inserire una filiale o un recapito\n                        "
+                                  )
+                                ]
+                              )
+                            : _vm._e()
                         ],
                         1
                       ),
@@ -43164,7 +43200,27 @@ var render = function() {
                               },
                               expression: "newAppuntamento.recapito_id"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.validaStruttura
+                            ? _c(
+                                "div",
+                                {
+                                  staticStyle: {
+                                    margin: "0",
+                                    padding: "0",
+                                    "font-size": "12px",
+                                    color: "red",
+                                    transform: "translateY(-20px)"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Inserire una filiale o un recapito\n                        "
+                                  )
+                                ]
+                              )
+                            : _vm._e()
                         ],
                         1
                       ),
@@ -43224,7 +43280,10 @@ var render = function() {
                             "v-btn",
                             {
                               staticClass: "my-2",
-                              attrs: { color: "primary" },
+                              attrs: {
+                                color: "primary",
+                                disabled: _vm.verificaCampi
+                              },
                               on: { click: _vm.inserisci }
                             },
                             [
@@ -46165,8 +46224,8 @@ var render = function() {
                         {
                           attrs: {
                             color: "primary",
-                            dark: "",
-                            block: _vm.$vuetify.breakpoint.xs
+                            block: _vm.$vuetify.breakpoint.xs,
+                            disabled: _vm.verificaCampi
                           },
                           on: { click: _vm.inserisci }
                         },
@@ -46230,6 +46289,11 @@ var render = function() {
                                                   outlined: "",
                                                   dense: "",
                                                   label: "esito"
+                                                },
+                                                on: {
+                                                  change: function($event) {
+                                                    return _vm.aggiorna(item)
+                                                  }
                                                 },
                                                 model: {
                                                   value:
@@ -46326,71 +46390,6 @@ var render = function() {
                                                                   padding: "0"
                                                                 },
                                                                 attrs: {
-                                                                  color: "blue",
-                                                                  small: ""
-                                                                },
-                                                                on: {
-                                                                  click: function(
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.aggiorna(
-                                                                      item
-                                                                    )
-                                                                  }
-                                                                }
-                                                              },
-                                                              "v-icon",
-                                                              attrs,
-                                                              false
-                                                            ),
-                                                            on
-                                                          ),
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                            mdi-check\n                                        "
-                                                            )
-                                                          ]
-                                                        )
-                                                      ]
-                                                    }
-                                                  }
-                                                ],
-                                                null,
-                                                true
-                                              )
-                                            },
-                                            [
-                                              _vm._v(" "),
-                                              _c("span", [
-                                                _vm._v("Conferma Esito")
-                                              ])
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      item.esito == null
-                                        ? _c(
-                                            "v-tooltip",
-                                            {
-                                              attrs: { bottom: "" },
-                                              scopedSlots: _vm._u(
-                                                [
-                                                  {
-                                                    key: "activator",
-                                                    fn: function(ref) {
-                                                      var on = ref.on
-                                                      var attrs = ref.attrs
-                                                      return [
-                                                        _c(
-                                                          "v-icon",
-                                                          _vm._g(
-                                                            _vm._b(
-                                                              {
-                                                                staticStyle: {
-                                                                  margin: "0",
-                                                                  padding: "0"
-                                                                },
-                                                                attrs: {
                                                                   color:
                                                                     "orange",
                                                                   small: ""
@@ -46427,9 +46426,7 @@ var render = function() {
                                             },
                                             [
                                               _vm._v(" "),
-                                              _c("span", [
-                                                _vm._v("Conferma Esito")
-                                              ])
+                                              _c("span", [_vm._v("Modifica")])
                                             ]
                                           )
                                         : _vm._e(),

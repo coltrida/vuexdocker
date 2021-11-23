@@ -4,7 +4,7 @@
         <v-form ref="form"
                 v-model="valid"
                 lazy-validation>
-        <v-container class="mb-10">
+        <div class="mb-10">
 
             <v-row>
                 <v-col cols="12" md="3" lg="3">
@@ -49,6 +49,7 @@
                     <v-text-field
                         v-model="newClient.cap"
                         label="cap*"
+                        type="number"
                         :rules="capRules"
                         required
                     ></v-text-field>
@@ -204,6 +205,7 @@
                         :items="getMedici"
                         label="Medico"
                     ></v-select>
+                    <div style="margin: 0;padding: 0; font-size: 12px; color: red; transform: translateY(-20px)" v-if="validaMedico">Seleziona Medico</div>
                 </v-col>
                 <v-col cols="12" md="4" lg="4">
                     <v-text-field
@@ -227,7 +229,7 @@
                 Annulla
             </v-btn>
 
-        </v-container>
+        </div>
         </v-form>
     </div>
 
@@ -450,6 +452,10 @@
                 return this.newClient.marketing_id == 5 ? 'fullname' : 'nome';
             },
 
+            validaMedico(){
+                return this.newClient.marketing_id != 5 || (this.newClient.marketing_id == 5 && this.newClient.medico_id) ? false : true;
+            },
+
             verificaCampi(){
                 return this.newClient.nome != '' && this.newClient.nome != null
                     && this.newClient.cognome != '' && this.newClient.cognome
@@ -459,7 +465,8 @@
                     && this.newClient.provincia != '' && this.newClient.provincia
                     && this.newClient.telefono != '' && this.newClient.telefono
                     && this.newClient.filiale_id != '' && this.newClient.filiale_id
-                    && this.newClient.marketing_id != '' && this.newClient.marketing_id ? false : true;
+                    && this.newClient.marketing_id != '' && this.newClient.marketing_id
+                    && (this.newClient.marketing_id != 5 || (this.newClient.marketing_id == 5 && this.newClient.medico_id)) ? false : true;
             }
         },
     }

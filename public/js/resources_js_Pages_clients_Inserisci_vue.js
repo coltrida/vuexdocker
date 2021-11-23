@@ -253,6 +253,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -470,8 +472,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     nomeDaVisualizzare: function nomeDaVisualizzare() {
       return this.newClient.marketing_id == 5 ? 'fullname' : 'nome';
     },
+    validaMedico: function validaMedico() {
+      return this.newClient.marketing_id != 5 || this.newClient.marketing_id == 5 && this.newClient.medico_id ? false : true;
+    },
     verificaCampi: function verificaCampi() {
-      return this.newClient.nome != '' && this.newClient.nome != null && this.newClient.cognome != '' && this.newClient.cognome && this.newClient.indirizzo != '' && this.newClient.indirizzo && this.newClient.citta != '' && this.newClient.citta && this.newClient.cap != '' && this.newClient.cap && this.newClient.provincia != '' && this.newClient.provincia && this.newClient.telefono != '' && this.newClient.telefono && this.newClient.filiale_id != '' && this.newClient.filiale_id && this.newClient.marketing_id != '' && this.newClient.marketing_id ? false : true;
+      return this.newClient.nome != '' && this.newClient.nome != null && this.newClient.cognome != '' && this.newClient.cognome && this.newClient.indirizzo != '' && this.newClient.indirizzo && this.newClient.citta != '' && this.newClient.citta && this.newClient.cap != '' && this.newClient.cap && this.newClient.provincia != '' && this.newClient.provincia && this.newClient.telefono != '' && this.newClient.telefono && this.newClient.filiale_id != '' && this.newClient.filiale_id && this.newClient.marketing_id != '' && this.newClient.marketing_id && (this.newClient.marketing_id != 5 || this.newClient.marketing_id == 5 && this.newClient.medico_id) ? false : true;
     }
   })
 });
@@ -586,7 +591,7 @@ var render = function() {
         },
         [
           _c(
-            "v-container",
+            "div",
             { staticClass: "mb-10" },
             [
               _c(
@@ -693,6 +698,7 @@ var render = function() {
                       _c("v-text-field", {
                         attrs: {
                           label: "cap*",
+                          type: "number",
                           rules: _vm.capRules,
                           required: ""
                         },
@@ -1102,7 +1108,23 @@ var render = function() {
                           },
                           expression: "newClient.medico_id"
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm.validaMedico
+                        ? _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                margin: "0",
+                                padding: "0",
+                                "font-size": "12px",
+                                color: "red",
+                                transform: "translateY(-20px)"
+                              }
+                            },
+                            [_vm._v("Seleziona Medico")]
+                          )
+                        : _vm._e()
                     ],
                     1
                   ),
@@ -1166,8 +1188,7 @@ var render = function() {
             ],
             1
           )
-        ],
-        1
+        ]
       )
     ],
     1

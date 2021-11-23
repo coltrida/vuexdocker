@@ -80,6 +80,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -269,6 +285,42 @@ var render = function() {
                   },
                   scopedSlots: _vm._u([
                     {
+                      key: "item.prova_fattura_sum_tot",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(
+                                item.prova_fattura_sum_tot
+                                  ? item.prova_fattura_sum_tot.toLocaleString(
+                                      "it"
+                                    )
+                                  : null
+                              ) +
+                              "\n                "
+                          )
+                        ]
+                      }
+                    },
+                    {
+                      key: "item.clients_count",
+                      fn: function(ref) {
+                        var item = ref.item
+                        return [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(
+                                item.clients_count
+                                  ? item.clients_count.toLocaleString("it")
+                                  : null
+                              ) +
+                              "\n                "
+                          )
+                        ]
+                      }
+                    },
+                    {
                       key: "item.percentuale",
                       fn: function(ref) {
                         var item = ref.item
@@ -302,16 +354,34 @@ var render = function() {
                 },
                 [
                   _vm._v(" "),
+                  _vm._v(" "),
+                  _vm._v(" "),
                   _c("template", { slot: "body.append" }, [
                     _c("tr", { staticClass: "pink--text" }, [
                       _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
                       _vm._v(" "),
                       _c("th", { staticClass: "title" }, [
-                        _vm._v(_vm._s(_vm.sumField("prova_fattura_sum_tot")))
+                        _vm._v(
+                          _vm._s(
+                            _vm.sumField("prova_fattura_sum_tot")
+                              ? _vm
+                                  .sumField("prova_fattura_sum_tot")
+                                  .toLocaleString("it")
+                              : null
+                          )
+                        )
                       ]),
                       _vm._v(" "),
                       _c("th", { staticClass: "title" }, [
-                        _vm._v(_vm._s(_vm.sumField("clients_count")))
+                        _vm._v(
+                          _vm._s(
+                            _vm.sumField("clients_count")
+                              ? _vm
+                                  .sumField("clients_count")
+                                  .toLocaleString("it")
+                              : null
+                          )
+                        )
                       ]),
                       _vm._v(" "),
                       _c("th", { staticClass: "title" })
@@ -342,6 +412,42 @@ var render = function() {
               },
               scopedSlots: _vm._u(
                 [
+                  {
+                    key: "item.prova_fattura_sum_tot",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(
+                              item.prova_fattura_sum_tot
+                                ? item.prova_fattura_sum_tot.toLocaleString(
+                                    "it"
+                                  )
+                                : null
+                            ) +
+                            "\n                    "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.clients_count",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(
+                              item.clients_count
+                                ? item.clients_count.toLocaleString("it")
+                                : null
+                            ) +
+                            "\n                    "
+                        )
+                      ]
+                    }
+                  },
                   {
                     key: "item.percentuale",
                     fn: function(ref) {

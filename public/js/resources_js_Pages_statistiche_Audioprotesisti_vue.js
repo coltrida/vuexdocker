@@ -374,6 +374,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       _this.riepilogo.push(_this.ele);
 
+      _this.ele = {
+        'nome': '',
+        'budgetAnno': 0,
+        'gennaio': 0,
+        'febbraio': 0,
+        'marzo': 0,
+        'aprile': 0,
+        'maggio': 0,
+        'giugno': 0,
+        'luglio': 0,
+        'agosto': 0,
+        'settembre': 0,
+        'ottobre': 0,
+        'novembre': 0,
+        'dicembre': 0
+      };
+      _this.ele.nome = 'Delta'; //console.log((((this.riepilogo[1].budgetAnno / this.riepilogo[0].budgetAnno)-1)*100).toFixed(1));
+
+      _this.ele.budgetAnno = _this.riepilogo[1].budgetAnno ? ((_this.riepilogo[1].budgetAnno / _this.riepilogo[0].budgetAnno - 1) * 100).toFixed(1) + '%' : null;
+      _this.ele.gennaio = 0;
+      _this.ele.febbraio = 0;
+      _this.ele.marzo = 0;
+      _this.ele.aprile = 0;
+      _this.ele.maggio = 0;
+      _this.ele.giugno = 0;
+      _this.ele.luglio = 0;
+      _this.ele.agosto = 0;
+      _this.ele.settembre = 0;
+      _this.ele.ottobre = 0;
+      _this.ele.novembre = _this.riepilogo[1].novembre ? ((_this.riepilogo[1].novembre / _this.riepilogo[0].novembre - 1) * 100).toFixed(1) + '%' : null;
+      _this.ele.dicembre = 0;
+
+      _this.riepilogo.push(_this.ele);
+
       _this.carica = false;
     });
   },

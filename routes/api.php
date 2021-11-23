@@ -34,6 +34,10 @@ Route::post('/register', [LoginController::class, 'register']);
 Route::get('/situazioneAnno', [ElaborazioneController::class, 'situazioneAnno']);
 Route::get('/download', [ElaborazioneController::class, 'download']);
 
+Route::get('/test', function (){
+    Artisan::call('test');
+});
+
 //Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::group([], function () {
         Route::get('/resetSpecial', function (){

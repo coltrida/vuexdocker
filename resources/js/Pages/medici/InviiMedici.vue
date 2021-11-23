@@ -16,14 +16,22 @@
 
         <v-row class="mb-6">
             <v-col cols="6">
+                <h2>Dettagli Pazienti</h2>
                 <v-data-table
                     :headers="header"
                     :items="getInvii"
                     class="elevation-1"
                 >
+                    <template v-slot:item.nome="{ item }">
+                        <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                            {{item.fullname}}
+                        </router-link>
+                    </template>
                 </v-data-table>
             </v-col>
             <v-col cols="6">
+                <h2>Resoconto Anno</h2>
                 <v-data-table
                     :headers="header2"
                     :items="getTotaliInvii"
@@ -56,13 +64,13 @@
                 anni:['2021'],
 
                 header: [
-                    { text: 'Medico',  align: 'start', sortable: false, value: 'medico.nome', class: "indigo white--text" },
+                    { text: 'Medico',  align: 'start', sortable: false, value: 'medico.fullname', class: "indigo white--text" },
                     { text: 'Nome',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
                     { text: 'Importo Fattura',  sortable: false, value: 'prova[0].tot', class: "indigo white--text" },
                 ],
 
                 header2: [
-                    { text: 'Medico',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
+                    { text: 'Medico',  align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
                     { text: 'Tot invii',  sortable: false, value: 'invii', class: "indigo white--text" },
                     { text: 'Vendite',  sortable: false, value: 'vendite', class: "indigo white--text" },
                     { text: 'Importo',  sortable: false, value: 'prova_sum_tot', class: "indigo white--text" },

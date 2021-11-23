@@ -11,6 +11,14 @@
                     class="elevation-1 mt-3"
                 >
 
+                    <template v-slot:item.prova_fattura_sum_tot="{ item }">
+                        {{item.prova_fattura_sum_tot ? item.prova_fattura_sum_tot.toLocaleString('it') : null}}
+                    </template>
+
+                    <template v-slot:item.clients_count="{ item }">
+                        {{item.clients_count ? item.clients_count.toLocaleString('it') : null}}
+                    </template>
+
                     <template v-slot:item.percentuale="{ item }">
                             {{ item.prova_fattura_sum_tot ?
                         Math.round((item.prova_fattura_sum_tot / getCanaliFatturato.reduce((a, b) => ({prova_fattura_sum_tot: a.prova_fattura_sum_tot + b.prova_fattura_sum_tot})).prova_fattura_sum_tot ) * 100) + ' %':
@@ -20,8 +28,8 @@
                     <template slot="body.append">
                         <tr class="pink--text">
                             <th class="title">Totali</th>
-                            <th class="title">{{ sumField('prova_fattura_sum_tot') }}</th>
-                            <th class="title">{{ sumField('clients_count') }}</th>
+                            <th class="title">{{ sumField('prova_fattura_sum_tot') ? sumField('prova_fattura_sum_tot').toLocaleString('it') : null }}</th>
+                            <th class="title">{{ sumField('clients_count') ? sumField('clients_count').toLocaleString('it') : null }}</th>
                             <th class="title"></th>
                         </tr>
                     </template>
@@ -36,6 +44,14 @@
                         hide-default-footer
                         class="elevation-1 mt-3"
                     >
+
+                        <template v-slot:item.prova_fattura_sum_tot="{ item }">
+                            {{item.prova_fattura_sum_tot ? item.prova_fattura_sum_tot.toLocaleString('it') : null}}
+                        </template>
+
+                        <template v-slot:item.clients_count="{ item }">
+                            {{item.clients_count ? item.clients_count.toLocaleString('it') : null}}
+                        </template>
 
                         <template v-slot:item.percentuale="{ item }">
                             {{ item.prova_fattura_sum_tot ?

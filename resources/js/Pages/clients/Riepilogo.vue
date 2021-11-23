@@ -5,15 +5,27 @@
             :items="getRiepilogo"
             class="elevation-1 mt-3"
         >
+            <template v-slot:item="{ item }">
+                <tr>
+                    <td>{{item.nome}}</td>
+                    <td>{{item.cli.toLocaleString('it')}}</td>
+                    <td>{{item.pc.toLocaleString('it')}}</td>
+                    <td>{{item.clc.toLocaleString('it')}}</td>
+                    <td>{{item.normo.toLocaleString('it')}}</td>
+                    <td>{{item.le.toLocaleString('it')}}</td>
+                    <td>{{item.tot.toLocaleString('it')}}</td>
+                </tr>
+            </template>
+
             <template slot="body.append">
                 <tr class="pink--text">
                     <th class="title">Totali</th>
-                    <th class="title">{{ sumField('cli') }}</th>
-                    <th class="title">{{ sumField('pc') }}</th>
-                    <th class="title">{{ sumField('clc') }}</th>
-                    <th class="title">{{ sumField('normo') }}</th>
-                    <th class="title">{{ sumField('le') }}</th>
-                    <th class="title">{{ sumField('tot') }}</th>
+                    <th class="title">{{ sumField('cli').toLocaleString('it') }}</th>
+                    <th class="title">{{ sumField('pc').toLocaleString('it') }}</th>
+                    <th class="title">{{ sumField('clc').toLocaleString('it') }}</th>
+                    <th class="title">{{ sumField('normo').toLocaleString('it') }}</th>
+                    <th class="title">{{ sumField('le').toLocaleString('it') }}</th>
+                    <th class="title">{{ sumField('tot').toLocaleString('it') }}</th>
                 </tr>
             </template>
         </v-data-table>

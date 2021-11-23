@@ -64,6 +64,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "OrariMedici",
@@ -75,7 +83,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Medico',
         align: 'start',
         sortable: false,
-        value: 'medico.nome',
+        value: 'medico.fullname',
         "class": "indigo white--text"
       }, {
         text: 'Nome',
@@ -93,7 +101,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'Medico',
         align: 'start',
         sortable: false,
-        value: 'nome',
+        value: 'fullname',
         "class": "indigo white--text"
       }, {
         text: 'Tot invii',
@@ -269,9 +277,44 @@ var render = function() {
             "v-col",
             { attrs: { cols: "6" } },
             [
+              _c("h2", [_vm._v("Dettagli Pazienti")]),
+              _vm._v(" "),
               _c("v-data-table", {
                 staticClass: "elevation-1",
-                attrs: { headers: _vm.header, items: _vm.getInvii }
+                attrs: { headers: _vm.header, items: _vm.getInvii },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.nome",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "router-link",
+                          {
+                            staticStyle: { color: "black" },
+                            attrs: {
+                              to: {
+                                name: "clientsFiliale",
+                                params: {
+                                  filialeId: item.filiale_id,
+                                  nomRicerca: item.nome,
+                                  cogRicerca: item.fullname
+                                }
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(item.fullname) +
+                                "\n                    "
+                            )
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ])
               })
             ],
             1
@@ -281,6 +324,8 @@ var render = function() {
             "v-col",
             { attrs: { cols: "6" } },
             [
+              _c("h2", [_vm._v("Resoconto Anno")]),
+              _vm._v(" "),
               _c("v-data-table", {
                 staticClass: "elevation-1",
                 attrs: { headers: _vm.header2, items: _vm.getTotaliInvii }

@@ -19,4 +19,12 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_ricevi_lista_audioprotesisti()
+    {
+        $response = $this->getJson('/api/audio');
+
+        $response
+            ->assertStatus(200);
+    }
+
 }

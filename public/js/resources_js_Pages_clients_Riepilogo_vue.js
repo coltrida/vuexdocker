@@ -40,6 +40,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Riepilogo",
@@ -190,35 +202,61 @@ var render = function() {
         "v-data-table",
         {
           staticClass: "elevation-1 mt-3",
-          attrs: { headers: _vm.headers, items: _vm.getRiepilogo }
+          attrs: { headers: _vm.headers, items: _vm.getRiepilogo },
+          scopedSlots: _vm._u([
+            {
+              key: "item",
+              fn: function(ref) {
+                var item = ref.item
+                return [
+                  _c("tr", [
+                    _c("td", [_vm._v(_vm._s(item.nome))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.cli.toLocaleString("it")))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.pc.toLocaleString("it")))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.clc.toLocaleString("it")))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.normo.toLocaleString("it")))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.le.toLocaleString("it")))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.tot.toLocaleString("it")))])
+                  ])
+                ]
+              }
+            }
+          ])
         },
         [
+          _vm._v(" "),
           _c("template", { slot: "body.append" }, [
             _c("tr", { staticClass: "pink--text" }, [
               _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
               _vm._v(" "),
               _c("th", { staticClass: "title" }, [
-                _vm._v(_vm._s(_vm.sumField("cli")))
+                _vm._v(_vm._s(_vm.sumField("cli").toLocaleString("it")))
               ]),
               _vm._v(" "),
               _c("th", { staticClass: "title" }, [
-                _vm._v(_vm._s(_vm.sumField("pc")))
+                _vm._v(_vm._s(_vm.sumField("pc").toLocaleString("it")))
               ]),
               _vm._v(" "),
               _c("th", { staticClass: "title" }, [
-                _vm._v(_vm._s(_vm.sumField("clc")))
+                _vm._v(_vm._s(_vm.sumField("clc").toLocaleString("it")))
               ]),
               _vm._v(" "),
               _c("th", { staticClass: "title" }, [
-                _vm._v(_vm._s(_vm.sumField("normo")))
+                _vm._v(_vm._s(_vm.sumField("normo").toLocaleString("it")))
               ]),
               _vm._v(" "),
               _c("th", { staticClass: "title" }, [
-                _vm._v(_vm._s(_vm.sumField("le")))
+                _vm._v(_vm._s(_vm.sumField("le").toLocaleString("it")))
               ]),
               _vm._v(" "),
               _c("th", { staticClass: "title" }, [
-                _vm._v(_vm._s(_vm.sumField("tot")))
+                _vm._v(_vm._s(_vm.sumField("tot").toLocaleString("it")))
               ])
             ])
           ])

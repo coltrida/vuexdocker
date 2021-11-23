@@ -166,6 +166,9 @@
                                 :items="getFiliali"
                                 label="Filiale"
                             ></v-select>
+                            <div style="margin: 0;padding: 0; font-size: 12px; color: red; transform: translateY(-20px)" v-if="validaStruttura">
+                                Inserire una filiale o un recapito
+                            </div>
                         </v-col>
                         <v-col cols="12" md="4" lg="4">
                             <v-select
@@ -175,6 +178,9 @@
                                 :items="getRecapiti"
                                 label="Recapito"
                             ></v-select>
+                            <div style="margin: 0;padding: 0; font-size: 12px; color: red; transform: translateY(-20px)" v-if="validaStruttura">
+                                Inserire una filiale o un recapito
+                            </div>
                         </v-col>
                         <v-col cols="12" md="4" lg="4">
                             <v-select
@@ -196,7 +202,7 @@
                             ></v-textarea>
                         </v-col>
                         <v-col cols="4">
-                            <v-btn @click="inserisci" color="primary" class="my-2">
+                            <v-btn @click="inserisci" color="primary" class="my-2" :disabled="verificaCampi">
                                 {{btnName}}
                             </v-btn>
                         </v-col>
@@ -464,6 +470,17 @@
 
             btnName() {
                 return this.modificaSwitch ? 'modifica' : 'inserisci'
+            },
+
+            validaStruttura(){
+                return this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id ? false : true;
+            },
+
+            verificaCampi(){
+                return this.newAppuntamento.giorno != '' && this.newAppuntamento.giorno != null
+                && this.newAppuntamento.orario != '' && this.newAppuntamento.orario != null
+                && this.newAppuntamento.tipo != '' && this.newAppuntamento.tipo != null
+                && (this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id) ? false : true;
             }
         }
 

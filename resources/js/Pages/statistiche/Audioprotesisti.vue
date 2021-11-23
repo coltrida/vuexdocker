@@ -300,6 +300,45 @@
                 });
 
                 this.riepilogo.push(this.ele);
+
+                this.ele = {
+                    'nome' : '',
+                    'budgetAnno': 0,
+                    'gennaio': 0,
+                    'febbraio': 0,
+                    'marzo': 0,
+                    'aprile': 0,
+                    'maggio': 0,
+                    'giugno': 0,
+                    'luglio': 0,
+                    'agosto': 0,
+                    'settembre': 0,
+                    'ottobre': 0,
+                    'novembre': 0,
+                    'dicembre': 0,
+                };
+
+                this.ele.nome = 'Delta';
+                //console.log((((this.riepilogo[1].budgetAnno / this.riepilogo[0].budgetAnno)-1)*100).toFixed(1));
+                this.ele.budgetAnno = this.riepilogo[1].budgetAnno ?
+                    (((this.riepilogo[1].budgetAnno / this.riepilogo[0].budgetAnno)-1)*100).toFixed(1) +'%' : null;
+                this.ele.gennaio = 0;
+                this.ele.febbraio = 0;
+                this.ele.marzo = 0;
+                this.ele.aprile = 0;
+                this.ele.maggio = 0;
+                this.ele.giugno = 0;
+                this.ele.luglio = 0;
+                this.ele.agosto = 0;
+                this.ele.settembre = 0;
+                this.ele.ottobre = 0;
+                this.ele.novembre = this.riepilogo[1].novembre ?
+                    (((this.riepilogo[1].novembre / this.riepilogo[0].novembre)-1)*100).toFixed(1) +'%' : null;
+
+
+                this.ele.dicembre = 0;
+
+                this.riepilogo.push(this.ele);
                 this.carica = false;
             });
         },
