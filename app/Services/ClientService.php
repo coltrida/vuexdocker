@@ -162,104 +162,116 @@ class ClientService
         return $client->delete();
     }
 
-    public function ingressiRecapiti()
+    public function ingressiRecapiti($request)
     {
         return Recapito::
-            withcount('clients')
-            ->withCount(['clients as clientsPc' => function($q){
-                $q->where('tipologia_id', 1);
+            withcount(['clients' => function($c) use($request){
+                $c->where('anno', $request->anno);
+        }])
+            ->withCount(['clients as clientsPc' => function($q) use($request){
+                $q->where('anno', $request->anno)->whereHas('tipologia', function ($r){
+                    $r->where('nome', 'PC');
+                });
             }])
-            ->withCount(['clients as clientsCl' => function($q){
-                $q->where('tipologia_id', 2);
+            ->withCount(['clients as clientsCl' => function($q) use($request){
+                $q->where('anno', $request->anno)->whereHas('tipologia', function ($r){
+                    $r->where('nome', 'CL');
+                });
             }])
-            ->withCount(['clients as clientsClc' => function($q){
-                $q->where('tipologia_id', 3);
+            ->withCount(['clients as clientsClc' => function($q) use($request){
+                $q->where('anno', $request->anno)->whereHas('tipologia', function ($r){
+                    $r->where('nome', 'CLC');
+                });
             }])
-            ->withCount(['clients as clientsNormo' => function($q){
-                $q->where('tipologia_id', 4);
+            ->withCount(['clients as clientsNormo' => function($q) use($request){
+                $q->where('anno', $request->anno)->whereHas('tipologia', function ($r){
+                    $r->where('nome', 'NORMO');
+                });
+            }])
+            ->withCount(['clients as clientsLe' => function($q) use($request){
+                $q->where('anno', $request->anno)->whereHas('tipologia', function ($r){
+                    $r->where('nome', 'LE');
+                });
             }])
             ->orderBy('nome')
             ->get();
     }
 
-    public function ingressiRecapitiMesi()
+    public function ingressiRecapitiMesi($request)
     {
-        $annoOggi = Carbon::now()->year;
         return Recapito::
-            withcount(['clients' => function($q) use($annoOggi){
-                $q->where([
-                    ['anno', $annoOggi],
-                ]);
+            withcount(['clients' => function($q) use($request){
+                $q->where('anno', $request->anno);
             }])
-            ->withCount(['clients as gen' => function($q) use($annoOggi){
+            ->withCount(['clients as gen' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 1],
                 ]);
             }])
-            ->withCount(['clients as feb' => function($q) use($annoOggi){
+            ->withCount(['clients as feb' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 2],
                 ]);
             }])
-            ->withCount(['clients as mar' => function($q) use($annoOggi){
+            ->withCount(['clients as mar' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 3],
                 ]);
             }])
-            ->withCount(['clients as apr' => function($q) use($annoOggi){
+            ->withCount(['clients as apr' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 4],
                 ]);
             }])
-            ->withCount(['clients as mag' => function($q) use($annoOggi){
+            ->withCount(['clients as mag' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 5],
                 ]);
             }])
-            ->withCount(['clients as giu' => function($q) use($annoOggi){
+            ->withCount(['clients as giu' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 6],
                 ]);
             }])
-            ->withCount(['clients as lug' => function($q) use($annoOggi){
+            ->withCount(['clients as lug' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 7],
                 ]);
             }])
-            ->withCount(['clients as ago' => function($q) use($annoOggi){
+            ->withCount(['clients as ago' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 8],
                 ]);
             }])
-            ->withCount(['clients as set' => function($q) use($annoOggi){
+            ->withCount(['clients as set' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 9],
                 ]);
             }])
-            ->withCount(['clients as ott' => function($q) use($annoOggi){
+            ->withCount(['clients as ott' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 10],
                 ]);
             }])
-            ->withCount(['clients as nov' => function($q) use($annoOggi){
+            ->withCount(['clients as nov' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 11],
                 ]);
             }])
-            ->withCount(['clients as dic' => function($q) use($annoOggi){
+            ->withCount(['clients as dic' => function($q) use($request){
                 $q->where([
-                    ['anno', $annoOggi],
+                    ['anno', $request->anno],
                     ['mese', 12],
                 ]);
             }])
@@ -608,6 +620,8 @@ class ClientService
                 return Filiale::where('nome', 'VIAREGGIO')->first()->id;
             } elseif (in_array($citta, config('enum.lucca'))) {
                 return Filiale::where('nome', 'LUCCA')->first()->id;
+            } elseif (in_array($citta, config('enum.ascoli'))) {
+                return Filiale::where('nome', 'ASCOLI')->first()->id;
             }
         }
     }

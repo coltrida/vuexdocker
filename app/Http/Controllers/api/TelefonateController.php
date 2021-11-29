@@ -66,9 +66,9 @@ class TelefonateController extends Controller
         return TelefonateResource::collection($telefonateService->recallsByIdClient($idClient));
     }
 
-    public function statistiche(TelefonateService $telefonateService)
+    public function statistiche(Request $request, TelefonateService $telefonateService)
     {
-        return $telefonateService->statistiche();
+        return $telefonateService->statistiche($request);
     }
 
     public function daRichiamare($idUser, TelefonateService $telefonateService)
@@ -81,9 +81,9 @@ class TelefonateController extends Controller
         return $telefonateService->recallAutomatico($idUser);
     }
 
-    public function telefonateAnnoMese($anno, $mese, TelefonateService $telefonateService)
+    public function telefonateAnnoMese(Request $request, TelefonateService $telefonateService)
     {
         //return TelefonateAnnoMeseResource::collection($telefonateService->telefonateAnnoMese($anno, $mese));
-        return $telefonateService->telefonateAnnoMese($anno, $mese);
+        return $telefonateService->telefonateAnnoMese($request);
     }
 }

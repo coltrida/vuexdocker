@@ -72,9 +72,54 @@ class Filiale extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class)->whereHas('listino.categoria', function ($q){
-            $q->where('nome', '!=', 'SERV');
+        return $this->hasMany(Product::class)
+            ->whereHas('listino.categoria', function ($q){
+                $q->where('nome', '!=', 'SERV');
         });
+    }
+
+    public function productsPresenti()
+    {
+        return $this->hasMany(Product::class)
+            ->whereHas('listino.categoria', function ($q){
+                $q->where('nome', '!=', 'SERV');
+            })
+            ->whereHas('stato', function ($q){
+                $q->where('nome', 'FILIALE');
+            });
+    }
+
+    public function productsInProva()
+    {
+        return $this->hasMany(Product::class)
+            ->whereHas('listino.categoria', function ($q){
+                $q->where('nome', '!=', 'SERV');
+            })
+            ->whereHas('stato', function ($q){
+                $q->where('nome', 'PROVA');
+            });
+    }
+
+    public function productsRichiesti()
+    {
+        return $this->hasMany(Product::class)
+            ->whereHas('listino.categoria', function ($q){
+                $q->where('nome', '!=', 'SERV');
+            })
+            ->whereHas('stato', function ($q){
+                $q->where('nome', 'RICHIESTO');
+            });
+    }
+
+    public function productsInArrivo()
+    {
+        return $this->hasMany(Product::class)
+            ->whereHas('listino.categoria', function ($q){
+                $q->where('nome', '!=', 'SERV');
+            })
+            ->whereHas('stato', function ($q){
+                $q->where('nome', 'DDT');
+            });
     }
 
     public function strumentazione()
@@ -82,10 +127,6 @@ class Filiale extends Model
         return $this->hasMany(Strumentazione::class);
     }
 
-    public function productsRichiesti()
-    {
-        return $this->hasMany(Product::class)->where('stato_id', 6);
-    }
 
     public function productsImmatricolati()
     {

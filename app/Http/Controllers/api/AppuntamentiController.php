@@ -100,14 +100,14 @@ class AppuntamentiController extends Controller
         return $appuntamentiService->dateSettimanaProssima();
     }
 
-    public function appuntamentiAnnoMese($anno, $mese, AppuntamentiService $appuntamentiService)
+    public function appuntamentiAnnoMese(Request $request, AppuntamentiService $appuntamentiService)
     {
-        return $appuntamentiService->appuntamentiAnnoMese($anno, $mese);
+        return $appuntamentiService->appuntamentiAnnoMese($request);
     }
 
-    public function intervenutiAnnoMese($anno, $mese, AppuntamentiService $appuntamentiService)
+    public function intervenutiAnnoMese(Request $request, AppuntamentiService $appuntamentiService)
     {
-        return $appuntamentiService->intervenutiAnnoMese($anno, $mese);
+        return $appuntamentiService->intervenutiAnnoMese($request);
     }
 
     public function inSospeso($idAudio, AppuntamentiService $appuntamentiService)

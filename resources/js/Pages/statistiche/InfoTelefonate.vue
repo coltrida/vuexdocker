@@ -19,21 +19,32 @@
             ></v-progress-circular>
         </div>
         <div v-else>
-            <v-row v-for="(item, index) in getTelefonateAnnoMese" :key="index">
+            <v-row>
                 <v-col cols="12">
-                    <h4>Telefonate eseguite per: {{item[0].nominativoUser}}</h4>
                     <v-data-table
                         dense
                         item-key="idTelefonata"
                         :headers="headers"
-                        :items="item"
+                        :items="getTelefonateAnnoMese"
                         class="elevation-1 mt-3"
                     >
                         <template v-slot:item.nominativo="{ item }">
                             <router-link style="color: black" :to="{ name: 'clientsFiliale',
-                                        params: { filialeId: item.filiale_id, nomRicerca:item.nomeCliente, cogRicerca:item.cognomeCliente + ' ' + item.nomeCliente, }}">
-                                {{item.cognomeCliente + ' ' + item.nomeCliente}}
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.cognome + ' ' + item.nome, }}">
+                                {{item.cognome + ' ' + item.nome}}
                             </router-link>
+                        </template>
+
+                        <template v-slot:item.recalls="{ item }">
+                            <div v-for="telefonata in item.recalls" :key="telefonata.id">
+                                {{telefonata.datarecall}}
+                            </div>
+                        </template>
+
+                        <template v-slot:item.esito="{ item }">
+                            <div v-for="telefonata in item.recalls" :key="telefonata.id">
+                                {{telefonata.esito}}
+                            </div>
                         </template>
                     </v-data-table>
                 </v-col>
@@ -55,10 +66,9 @@
             return {
                 carica: false,
                 headers: [
-                    { text: 'Data', width:150, value: 'datarecall', class: "indigo white--text" },
-                    { text: 'Eseguita da', width:200, value: 'nominativoEseguito', class: "indigo white--text" },
+                    { text: 'Data', width:150, value: 'recalls', class: "indigo white--text" },
                     { text: 'Nominativo', width:220, value: 'nominativo', class: "indigo white--text" },
-                    { text: 'Città', width:220, value: 'cittaCliente', class: "indigo white--text" },
+                    { text: 'Città', width:220, value: 'citta', class: "indigo white--text" },
                     { text: 'Esito', width:220, value: 'esito', class: "indigo white--text" },
                 ],
 
@@ -67,7 +77,11 @@
 
         mounted() {
             this.carica = true;
-            this.fetchTelefonateAnnoMese({'anno':this.infoRecalls.anno, 'mesenumero':this.infoRecalls.mesenumero })
+            this.fetchTelefonateAnnoMese({
+                    'anno':this.infoRecalls.anno,
+                    'mesenumero':this.infoRecalls.mesenumero,
+                    'idTelefonante':this.infoRecalls.idTelefonante
+            })
                 .then(() => this.carica = false);
         },
 

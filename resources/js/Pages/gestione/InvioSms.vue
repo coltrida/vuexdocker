@@ -65,15 +65,17 @@
                 :textMessaggio="textMessaggio"
                 @cancellaMessaggio = "cancellaMessaggio"
             ></messaggio>
-
             <v-row>
                 <v-col cols="12">
                     <v-row>
                         <v-col>
+                            <p>Gentile ___nome cliente___ ____cognome cliente_____</p>
                             <v-textarea
+                                outlined
                                 label="Testo del messaggio"
                                 v-model="testo"
                             ></v-textarea>
+                            <p>Un cordiale saluto</p>
                         </v-col>
                         <v-col class="text-center" v-if="carica">
                             <v-progress-circular

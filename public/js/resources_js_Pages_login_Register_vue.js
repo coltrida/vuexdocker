@@ -83,10 +83,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      show1: false,
+      show2: false,
+      show3: false,
       valid: true,
       emailRules: [function (v) {
         return !!v || 'la mail è obbligatoria';
@@ -114,7 +122,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getLogged: 'getLogged'
   })), {}, {
     verificaCampi: function verificaCampi() {
-      return this.userRegister.email != '' && this.userRegister.email != null && this.userRegister.oldPassword != '' && this.userRegister.oldPassword && this.userRegister.oldPassword.length > 5 && this.userRegister.password.length > 5 && this.userRegister.repeatpassword.length > 5 && this.userRegister.password != '' && this.userRegister.password && this.userRegister.repeatpassword != '' && this.userRegister.repeatpassword ? false : true;
+      return this.userRegister.email != '' && this.userRegister.email != null && this.userRegister.password.length > 5 && this.userRegister.repeatpassword.length > 5 && this.userRegister.password != '' && this.userRegister.password && this.userRegister.repeatpassword != '' && this.userRegister.repeatpassword ? false : true;
     }
   }),
   methods: {
@@ -293,7 +301,8 @@ var render = function() {
           _vm._v(" "),
           _c("v-text-field", {
             attrs: {
-              rules: _vm.passwordRules,
+              "append-icon": _vm.show1 ? "mdi-eye" : "mdi-eye-off",
+              type: _vm.show1 ? "text" : "password",
               label: "vecchia password",
               hint: "minimo 6 caratteri",
               counter: ""
@@ -314,14 +323,16 @@ var render = function() {
           _vm._v(" "),
           _c("v-text-field", {
             attrs: {
+              "append-icon": _vm.show2 ? "mdi-eye" : "mdi-eye-off",
+              type: _vm.show2 ? "text" : "password",
               rules: _vm.passwordRules,
-              label: "vecchia password",
+              label: "nuova password",
               hint: "minimo 6 caratteri",
               counter: ""
             },
             on: {
               "click:append": function($event) {
-                _vm.show1 = !_vm.show1
+                _vm.show2 = !_vm.show2
               }
             },
             model: {
@@ -335,14 +346,16 @@ var render = function() {
           _vm._v(" "),
           _c("v-text-field", {
             attrs: {
+              "append-icon": _vm.show3 ? "mdi-eye" : "mdi-eye-off",
+              type: _vm.show3 ? "text" : "password",
               rules: _vm.passwordRules,
-              label: "vecchia password",
+              label: "ripeti nuova password",
               hint: "minimo 6 caratteri",
               counter: ""
             },
             on: {
               "click:append": function($event) {
-                _vm.show1 = !_vm.show1
+                _vm.show3 = !_vm.show3
               }
             },
             model: {

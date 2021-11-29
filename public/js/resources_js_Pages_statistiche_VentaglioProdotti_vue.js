@@ -64,11 +64,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
   data: function data() {
     return {
+      ricerca: {},
       headers: [{
         text: 'Audioprotesista',
         align: 'start',
@@ -98,7 +111,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
-    this.fetchVentaglioAnno();
     this.fetchNomiApa().then(function () {
       _this.inizializzaTabella();
     });
@@ -124,16 +136,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.headers2.push(colonna);
       });
     },
+    selezionaAnno: function selezionaAnno() {
+      this.fetchVentaglioAnno(this.ricerca);
+    },
     sumField: function sumField(key) {
       return parseInt(this.getVentaglioAnno.reduce(function (a, b) {
         return a + parseInt(b[key] || 0);
       }, 0));
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getVentaglioAnno: 'getVentaglioAnno'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('listino', {
     getNomiApa: 'getNomiApa'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+    getAnni: 'getAnni'
   }))
 });
 
@@ -230,7 +247,36 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", { staticClass: "mt-4" }, [_vm._v("Ventaglio Prodotti")]),
+      _c(
+        "v-row",
+        { staticClass: "mt-4" },
+        [
+          _c("v-col", [_c("h2", [_vm._v("Ventaglio Prodotti")])]),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getAnni, label: "Anno" },
+                on: {
+                  change: function($event) {
+                    return _vm.selezionaAnno()
+                  }
+                },
+                model: {
+                  value: _vm.ricerca.anno,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "anno", $$v)
+                  },
+                  expression: "ricerca.anno"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-row",

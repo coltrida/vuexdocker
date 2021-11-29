@@ -17,6 +17,17 @@ use function dd;
 
 class ProductService
 {
+    public function riepilogoFiliali()
+    {
+        return Filiale::select(['id','nome'])
+            ->withCount('productsPresenti')
+            ->withCount('productsInProva')
+            ->withCount('productsRichiesti')
+            ->withCount('productsInArrivo')
+            ->orderBy('nome')
+            ->get();
+    }
+
     public function presenti($id)
     {
         $nomeFiliale = Filiale::find($id)->nome;

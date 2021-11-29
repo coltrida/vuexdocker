@@ -8,7 +8,7 @@
                 <v-select
                     @change="selezionaAnno()"
                     v-model="ricerca.anno"
-                    :items="anni"
+                    :items="getAnni"
                     label="Anno"
                 ></v-select>
             </v-col>
@@ -54,8 +54,6 @@
             return {
                 ricerca:{},
 
-                anni:['2021'],
-
                 header: [
                     { text: 'Cognome',  align: 'start', sortable: false, value: 'client.cognome', class: "indigo white--text" },
                     { text: 'Nome',  align: 'start', sortable: false, value: 'client.nome', class: "indigo white--text" },
@@ -87,6 +85,7 @@
             ...mapGetters('clients', {
                 getSituazioneAnnoClientiAudio: 'getSituazioneAnnoClientiAudio',
                 getSituazioneAnnoResiAudio: 'getSituazioneAnnoResiAudio',
+                getAnni: 'getAnni',
             }),
 
             ...mapGetters('login', {

@@ -28,13 +28,6 @@ class DocumentoService
                 'tipo' => $request->tipo,
                 'link' => '/storage/documenti/'.$request->idClient.'/'.$filename,
             ]);
-
-            /*$documento = new Documento();
-            $documento->client_id = $request->idClient;
-            $documento->tipo = $request->tipo;
-            $documento->link = '/storage/documenti/'.$request->idClient.'/'.$filename;
-            $documento->save();*/
-
         }
     }
 

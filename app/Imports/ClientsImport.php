@@ -60,6 +60,9 @@ class ClientsImport implements ToCollection, WithHeadingRow
                 } elseif (in_array(trim(Str::upper($value['comune'])), config('enum.firenze'))) {
                     $filiale = $idFirenze;
                     $user = $idAudioFirenze;
+                } elseif (in_array(trim(Str::upper($value['comune'])), config('enum.ascoli'))) {
+                    $filiale = $idAscoli;
+                    $user = $idAudioAscoli;
                 }
                 $client = Client::create([
                     'cognome'       => Str::upper($value['cognome']),

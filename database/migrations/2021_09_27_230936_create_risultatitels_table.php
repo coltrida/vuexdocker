@@ -15,6 +15,7 @@ class CreateRisultatitelsTable extends Migration
     {
         Schema::create('risultatitels', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->nullable();
             $table->string('mese');
             $table->integer('mesenumero');
             $table->integer('anno');

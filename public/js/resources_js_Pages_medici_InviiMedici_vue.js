@@ -78,7 +78,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       ricerca: {},
-      anni: ['2021'],
       header: [{
         text: 'Medico',
         align: 'start',
@@ -123,6 +122,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.ricerca.anno = '';
+    this.$store.commit('medici/resetInvii');
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('medici', {
     inviiMedici: 'inviiMedici',
@@ -134,11 +134,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.totaleInviiMedici(this.ricerca);
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('medici', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('medici', {
     getInvii: 'getInvii',
     getTotaliInvii: 'getTotaliInvii'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getIdUser: 'getIdUser'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+    getAnni: 'getAnni'
   }))
 });
 
@@ -248,7 +250,7 @@ var render = function() {
             { attrs: { cols: "6" } },
             [
               _c("v-select", {
-                attrs: { items: _vm.anni, label: "Anno" },
+                attrs: { items: _vm.getAnni, label: "Anno" },
                 on: {
                   change: function($event) {
                     return _vm.selezionaAnno()

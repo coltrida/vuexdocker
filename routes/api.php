@@ -55,6 +55,7 @@ Route::group([], function () {
         Route::get('/amm', [UserController::class, 'amm']);
         Route::get('/callCenter', [UserController::class, 'callCenter']);
         Route::delete('/user/{id}', [UserController::class, 'elimina']);
+        Route::get('/userTranfert/{id}/{idTrasferimento}', [UserController::class, 'userTranfert']);
         Route::get('/user/{id}', [UserController::class, 'user']);
         Route::post('/addUser', [UserController::class, 'aggiungi']);
         Route::get('/situazioneMese/{idAudio?}', [UserController::class, 'situazioneMese']);
@@ -115,6 +116,7 @@ Route::group([], function () {
         Route::post('/addRuolo', [RuoloController::class, 'aggiungi']);
 
         // ---------------- magazzino - prodotti -------------------------
+        Route::get('/riepilogoFiliali', [ProductController::class, 'riepilogoFiliali']);
         Route::get('/filiali/{id}/presenti', [ProductController::class, 'presenti']);
         Route::get('/controlloSoglie/{id}', [ProductController::class, 'controlloSoglie']);
         Route::get('/filialeFornitore/{idFiliale}/{idFornitore}', [ProductController::class, 'presentiFornitore']);
@@ -211,8 +213,8 @@ Route::group([], function () {
         Route::post('/modificaAppuntamento', [AppuntamentiController::class, 'modifica']);
         Route::get('/dateSettimana', [AppuntamentiController::class, 'dateSettimana']);
         Route::get('/dateSettimanaProssima', [AppuntamentiController::class, 'dateSettimanaProssima']);
-        Route::get('/appuntamentiAnnoMese/{anno}/{mese}', [AppuntamentiController::class, 'appuntamentiAnnoMese']);
-        Route::get('/intervenutiAnnoMese/{anno}/{mese}', [AppuntamentiController::class, 'intervenutiAnnoMese']);
+        Route::post('/appuntamentiAnnoMese', [AppuntamentiController::class, 'appuntamentiAnnoMese']);
+        Route::post('/intervenutiAnnoMese', [AppuntamentiController::class, 'intervenutiAnnoMese']);
         Route::get('/appuntamentiInSospeso/{idAudio}', [AppuntamentiController::class, 'inSospeso']);
         Route::get('/appuntamentoSaltato/{idAppuntamento}', [AppuntamentiController::class, 'appuntamentoSaltato']);
         Route::get('/appuntamentoIntervenuto/{idAppuntamento}', [AppuntamentiController::class, 'appuntamentoIntervenuto']);
@@ -226,15 +228,15 @@ Route::group([], function () {
         // ----------------- statistiche -----------------------
         Route::get('/dettaglioAudio', [UserController::class, 'dettaglioAudio']);
         Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSituazioneAnno']);
-        Route::get('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
-        Route::get('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiMesi']);
-        Route::get('/fatturatoCanali', [MarketingController::class, 'fatturatoCanali']);
-        Route::get('/userFatturatoCanali', [MarketingController::class, 'userFatturatoCanali']);
-        Route::get('/ventaglioAnno', [UserController::class, 'ventaglioAnno']);
+        Route::post('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
+        Route::post('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiMesi']);
+        Route::post('/fatturatoCanali', [MarketingController::class, 'fatturatoCanali']);
+        Route::post('/userFatturatoCanali', [MarketingController::class, 'userFatturatoCanali']);
+        Route::post('/ventaglioAnno', [UserController::class, 'ventaglioAnno']);
         Route::post('/statisticheInviiMedici', [DottoreController::class, 'statisticheInviiMedici']);
         Route::post('/statisticheTotaleInviiMedici', [DottoreController::class, 'statisticheTotaleInviiMedici']);
         Route::post('/statisticheMensiliMedici', [DottoreController::class, 'statisticheMensiliMedici']);
-        Route::get('/statisticheCallcenter', [TelefonateController::class, 'statistiche']);
+        Route::post('/statisticheCallcenter', [TelefonateController::class, 'statistiche']);
         Route::get('/statisticheVenditaApa', [UserController::class, 'statisticheVenditaApa']);
 
         // ----------------- rate -----------------------
@@ -269,7 +271,7 @@ Route::group([], function () {
         Route::get('/recallsByIdClient/{idClient}', [TelefonateController::class, 'recallsByIdClient']);
         Route::get('/daRichiamare/{idUser}', [TelefonateController::class, 'daRichiamare']);
         Route::get('/recallAutomatico/{idUser}', [TelefonateController::class, 'recallAutomatico']);
-        Route::get('/telefonateAnnoMese/{anno}/{mese}', [TelefonateController::class, 'telefonateAnnoMese']);
+        Route::post('/telefonateAnnoMese', [TelefonateController::class, 'telefonateAnnoMese']);
 
         // ----------------- informazioni -----------------------
         Route::get('/informazioni/{id}', [InformazioniController::class, 'lista']);

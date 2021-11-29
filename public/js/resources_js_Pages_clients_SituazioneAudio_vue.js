@@ -71,7 +71,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       ricerca: {},
-      anni: ['2021'],
       header: [{
         text: 'Cognome',
         align: 'start',
@@ -113,7 +112,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
     getSituazioneAnnoClientiAudio: 'getSituazioneAnnoClientiAudio',
-    getSituazioneAnnoResiAudio: 'getSituazioneAnnoResiAudio'
+    getSituazioneAnnoResiAudio: 'getSituazioneAnnoResiAudio',
+    getAnni: 'getAnni'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   }))
@@ -225,7 +225,7 @@ var render = function() {
             { attrs: { cols: "6" } },
             [
               _c("v-select", {
-                attrs: { items: _vm.anni, label: "Anno" },
+                attrs: { items: _vm.getAnni, label: "Anno" },
                 on: {
                   change: function($event) {
                     return _vm.selezionaAnno()

@@ -400,41 +400,48 @@ class ElaborazioneService
 
     private function eseguiStatisticheTelefonate($anno){
         setlocale(LC_TIME, 'it_IT');
-        $idCall = User::where('name', 'call center')->first()->id;
-        Carbon::setLocale('it');
-        for ($meseRecall = 1; $meseRecall <= 12; $meseRecall++){
-            $telefonateFatte = Telefonata::where([
-                ['anno', $anno],
-                ['effettuata', 1],
-                ['mese', $meseRecall],
-            ])->count();
-            $appuntamenti = Telefonata::where([
-                ['anno', $anno],
-                ['effettuata', 1],
-                ['mese', $meseRecall],
-                ['esito', 'Preso Appuntamento'],
-            ])->count();
-            $intervenuti = Appuntamento::where([
-                ['anno', $anno],
-                ['intervenuto', 1],
-                ['preso_id', $idCall],
-                ['mese', $meseRecall],
-            ])->count();
-            if ($telefonateFatte > 0){
-                Risultatitel::updateOrCreate(
-                    [
-                        'anno' => $anno,
-                        'mesenumero' => $meseRecall,
-                    ],
-                    [
-                        'mese' => Carbon::make('01-'.$meseRecall.'-'.$anno)->monthName,
-                        'telefonate' => $telefonateFatte,
-                        'appuntamenti' => $appuntamenti,
-                        'intervenuti' => $intervenuti,
-                    ]
-                );
+        $users = User::all();
+        foreach ($users as $user){
+            $idCall = $user->id;
+            Carbon::setLocale('it');
+            for ($meseRecall = 1; $meseRecall <= 12; $meseRecall++){
+                $telefonateFatte = Telefonata::where([
+                    ['anno', $anno],
+                    ['effettuata', 1],
+                    ['mese', $meseRecall],
+                    ['eseguita_id', $idCall],
+                ])->count();
+                $appuntamenti = Telefonata::where([
+                    ['anno', $anno],
+                    ['effettuata', 1],
+                    ['mese', $meseRecall],
+                    ['eseguita_id', $idCall],
+                    ['esito', 'Preso Appuntamento'],
+                ])->count();
+                $intervenuti = Appuntamento::where([
+                    ['anno', $anno],
+                    ['intervenuto', 1],
+                    ['preso_id', $idCall],
+                    ['mese', $meseRecall],
+                ])->count();
+                if ($telefonateFatte > 0){
+                    Risultatitel::updateOrCreate(
+                        [
+                            'user_id' => $idCall,
+                            'anno' => $anno,
+                            'mesenumero' => $meseRecall,
+                        ],
+                        [
+                            'mese' => Carbon::make('01-'.$meseRecall.'-'.$anno)->monthName,
+                            'telefonate' => $telefonateFatte,
+                            'appuntamenti' => $appuntamenti,
+                            'intervenuti' => $intervenuti,
+                        ]
+                    );
+                }
             }
         }
+
     }
 
     private function conteggioGiorniDiResoProdottiInMagazzino($oggi){

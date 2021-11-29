@@ -29,15 +29,19 @@ class MarketingService
         return Marketing::find($id)->delete();
     }
 
-    public function fatturatoCanali()
+    public function fatturatoCanali($request)
     {
         return Marketing::
-            withSum('provaFattura', 'tot')
-            ->withCount('clients')
+            withSum(['provaFattura' => function($p) use($request){
+                $p->where('anno_fine', $request->anno);
+        }], 'tot')
+            ->withCount(['clients' => function($c) use($request){
+                $c->where('anno', $request->anno);
+            }])
             ->get();
     }
 
-    public function userFatturatoCanali()
+    public function userFatturatoCanali($request)
     {
         $audios = User::audio()->get();
         foreach ($audios as $audio){
@@ -46,13 +50,13 @@ class MarketingService
                 $q->where('user_id', $audio->id);
             })
                 ->withSum(
-                    ['provaFattura' => function($query) use($audio) {
-                        $query->where('user_id', $audio->id);
+                    ['provaFattura' => function($query) use($audio, $request) {
+                        $query->where([['user_id', $audio->id], ['anno_fine', $request->anno]]);
                     }],
                     'tot'
                 )
-                ->withCount(['clients' => function($q) use($audio){
-                    $q->where('user_id', $audio->id);
+                ->withCount(['clients' => function($q) use($audio, $request){
+                    $q->where([['user_id', $audio->id], ['anno', $request->anno]]);
                 }])
                 ->get();
 

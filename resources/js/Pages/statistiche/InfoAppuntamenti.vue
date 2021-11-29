@@ -19,25 +19,38 @@
             ></v-progress-circular>
         </div>
         <div v-else>
-            <v-row v-for="(item, index) in getAppuntamentiAnnoMese" :key="index">
+            <v-row>
                 <v-col cols="12">
-                    <h4>Appuntamenti fissati per: {{item[0].nominativoUser}}</h4>
                     <v-data-table
                         dense
                         item-key="idTelefonata"
                         :headers="headers"
-                        :items="item"
+                        :items="getAppuntamentiAnnoMese"
                         class="elevation-1 mt-3"
                     >
                         <template v-slot:item.nominativo="{ item }">
                             <router-link style="color: black" :to="{ name: 'clientsFiliale',
-                                        params: { filialeId: item.filiale_id, nomRicerca:item.nomeCliente, cogRicerca:item.cognomeCliente + ' ' + item.nomeCliente, }}">
-                                {{item.cognomeCliente + ' ' + item.nomeCliente}}
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.cognome + ' ' + item.nome, }}">
+                                {{item.cognome + ' ' + item.nome}}
                             </router-link>
                         </template>
 
+                        <template v-slot:item.giorno="{ item }">
+                            <div v-for="appuntamento in item.appuntamenti" :key="appuntamento.id">
+                            {{appuntamento.giorno}}
+                        </div>
+                        </template>
+
                         <template v-slot:item.orario="{ item }">
-                            {{item.orario.substring(0, 5)}}
+                            <div v-for="appuntamento in item.appuntamenti" :key="appuntamento.id">
+                                {{appuntamento.orario.substring(0, 5)}}
+                            </div>
+                        </template>
+
+                        <template v-slot:item.tipo="{ item }">
+                            <div v-for="appuntamento in item.appuntamenti" :key="appuntamento.id">
+                                {{appuntamento.tipo}}
+                            </div>
                         </template>
                     </v-data-table>
                 </v-col>
@@ -61,9 +74,8 @@
                 headers: [
                     { text: 'Appuntamento per il', width:150, value: 'giorno', class: "indigo white--text" },
                     { text: 'Orario', width:200, value: 'orario', class: "indigo white--text" },
-                    { text: 'Preso Da', width:220, value: 'presoDa', class: "indigo white--text" },
                     { text: 'Nominativo', width:220, value: 'nominativo', class: "indigo white--text" },
-                    { text: 'Città', width:220, value: 'cittaCliente', class: "indigo white--text" },
+                    { text: 'Città', width:220, value: 'citta', class: "indigo white--text" },
                     { text: 'Tipo Visita', width:220, value: 'tipo', class: "indigo white--text" },
                 ],
 
@@ -72,7 +84,11 @@
 
         mounted() {
             this.carica = true;
-            this.fetchAppuntamentiAnnoMese({'anno':this.infoRecalls.anno, 'mesenumero':this.infoRecalls.mesenumero })
+            this.fetchAppuntamentiAnnoMese({
+                'anno':this.infoRecalls.anno,
+                'mesenumero':this.infoRecalls.mesenumero,
+                'idTelefonante':this.infoRecalls.idTelefonante
+            })
                 .then(() => this.carica = false);
         },
 

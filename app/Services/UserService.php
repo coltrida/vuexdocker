@@ -8,7 +8,7 @@ use App\Models\Budget;
 use App\Models\User;
 use App\Models\Ventaglio;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use function setlocale;
 use function trim;
@@ -118,11 +118,15 @@ class UserService
 
     public function aggiungi($request)
     {
-        return User::create([
-            'name' => trim(Str::upper($request->name)),
-            'email' => trim(Str::upper($request->email)),
+        $user = User::create([
+            'name' => trim(Str::ucfirst($request->name)),
+            'email' => trim(Str::lower($request->email)),
+            'cleanPassword' => '123456',
+            'password' => Hash::make('123456'),
             'ruolo_id' => $request->ruolo_id,
         ]);
+
+        return $user;
 
         /*$new = (new User())->on($this->nomeDB);
         $new->name = trim(Str::upper($request->name));
@@ -134,7 +138,7 @@ class UserService
 
     public function elimina($id)
     {
-        return User::find($id)->delete();
+        User::find($id)->delete();
     }
 
     public function assegnaBgt($request)
@@ -147,39 +151,19 @@ class UserService
             'nome' => 'Budget',
             'stipendio' => $request->stipendio,
             'provvigione' => $request->provvigione,
-            'gennaio' => $request->budgetAnno * $request->mese[1] / 100,
-            'febbraio' => $request->budgetAnno * $request->mese[2] / 100,
-            'marzo' => $request->budgetAnno * $request->mese[3] / 100,
-            'aprile' => $request->budgetAnno * $request->mese[4] / 100,
-            'maggio' => $request->budgetAnno * $request->mese[5] / 100,
-            'giugno' => $request->budgetAnno * $request->mese[6] / 100,
-            'luglio' => $request->budgetAnno * $request->mese[7] / 100,
-            'agosto' => $request->budgetAnno * $request->mese[8] / 100,
-            'settembre' => $request->budgetAnno * $request->mese[9] / 100,
-            'ottobre' => $request->budgetAnno * $request->mese[10] / 100,
-            'novembre' => $request->budgetAnno * $request->mese[11] / 100,
-            'dicembre' => $request->budgetAnno * $request->mese[12] / 100,
+            'gennaio' => $request->mese[0],
+            'febbraio' => $request->mese[1],
+            'marzo' => $request->mese[2],
+            'aprile' => $request->mese[3],
+            'maggio' => $request->mese[4],
+            'giugno' => $request->mese[5],
+            'luglio' => $request->mese[6],
+            'agosto' => $request->mese[7],
+            'settembre' => $request->mese[8],
+            'ottobre' => $request->mese[9],
+            'novembre' => $request->mese[10],
+            'dicembre' => $request->mese[11],
         ]);
-
-        /*$budget = new Budget();
-        $budget->budgetAnno = $request->budgetAnno;
-        $budget->user_id = $request->idAudio;
-        $budget->nome = 'Budget';
-        $budget->stipendio = $request->stipendio;
-        $budget->provvigione = $request->provvigione;
-        $budget->gennaio = $request->budgetAnno * $request->mese[1] / 100;
-        $budget->febbraio = $request->budgetAnno * $request->mese[2] / 100;
-        $budget->marzo = $request->budgetAnno * $request->mese[3] / 100;
-        $budget->aprile = $request->budgetAnno * $request->mese[4] / 100;
-        $budget->maggio = $request->budgetAnno * $request->mese[5] / 100;
-        $budget->giugno = $request->budgetAnno * $request->mese[6] / 100;
-        $budget->luglio = $request->budgetAnno * $request->mese[7] / 100;
-        $budget->agosto = $request->budgetAnno * $request->mese[8] / 100;
-        $budget->settembre = $request->budgetAnno * $request->mese[9] / 100;
-        $budget->ottobre = $request->budgetAnno * $request->mese[10] / 100;
-        $budget->novembre = $request->budgetAnno * $request->mese[11] / 100;
-        $budget->dicembre = $request->budgetAnno * $request->mese[12] / 100;
-        $budget->save();*/
 
         $user->budget_id = $budget->id;
         $user->save();
@@ -192,18 +176,18 @@ class UserService
         $budget->budgetAnno = $request->budgetAnno;
         $budget->stipendio = $request->stipendio;
         $budget->provvigione = $request->provvigione;
-        $budget->gennaio =$request->mese[1];
-        $budget->febbraio = $request->mese[2];
-        $budget->marzo = $request->mese[3];
-        $budget->aprile = $request->mese[4];
-        $budget->maggio = $request->mese[5];
-        $budget->giugno = $request->mese[6];
-        $budget->luglio = $request->mese[7];
-        $budget->agosto = $request->mese[8];
-        $budget->settembre = $request->mese[9];
-        $budget->ottobre = $request->mese[10];
-        $budget->novembre = $request->mese[11];
-        $budget->dicembre = $request->mese[12];
+        $budget->gennaio =$request->mese[0];
+        $budget->febbraio = $request->mese[1];
+        $budget->marzo = $request->mese[2];
+        $budget->aprile = $request->mese[3];
+        $budget->maggio = $request->mese[4];
+        $budget->giugno = $request->mese[5];
+        $budget->luglio = $request->mese[6];
+        $budget->agosto = $request->mese[7];
+        $budget->settembre = $request->mese[8];
+        $budget->ottobre = $request->mese[9];
+        $budget->novembre = $request->mese[10];
+        $budget->dicembre = $request->mese[11];
         $budget->save();
 
         return User::with('budget')->find($request->idAudio);
@@ -308,10 +292,9 @@ class UserService
         return User::with('client')->find($idAudio)->client;
     }
 
-    public function ventaglioAnno()
+    public function ventaglioAnno($request)
     {
-        $anno = Carbon::now()->year;
-        return Ventaglio::with('user')->where('anno', $anno)->get();
+        return Ventaglio::with('user')->where('anno', $request->anno)->get();
     }
 
     public function audioSeguitiDaAmministrativa($idAmministrativa)
@@ -329,6 +312,25 @@ class UserService
             }
         }
         return $audio;
+    }
+
+    public function userTranfert($id, $idTrasferimento)
+    {
+        $user = User::with('client', 'provaInCorso')->find($id);
+        foreach ($user->client as $cliente){
+            $cliente->user_id = $idTrasferimento;
+        }
+
+        if (count($user->provaInCorso) > 0){
+            foreach ($user->provaInCorso as $prova){
+                $prova->user_id = $idTrasferimento;
+                foreach ($prova->product as $prodotto){
+                    $prodotto->user_id = $idTrasferimento;
+                }
+            }
+        }
+
+        $user->push();
     }
 
 }

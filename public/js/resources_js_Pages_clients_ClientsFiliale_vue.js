@@ -3419,7 +3419,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Data di Nascita',
         width: 150,
-        value: 'datanascita',
+        value: 'datanascitaVisualizzazione',
         "class": "indigo white--text"
       }, {
         text: 'E-mail',
@@ -3450,6 +3450,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'user',
         width: 130,
         value: 'user',
+        "class": "indigo white--text"
+      }, {
+        text: 'Mese ing.',
+        width: 130,
+        value: 'meseIngresso',
+        "class": "indigo white--text"
+      }, {
+        text: 'Anno ing.',
+        width: 130,
+        value: 'annoIngresso',
         "class": "indigo white--text"
       }, {
         text: 'nominativo',

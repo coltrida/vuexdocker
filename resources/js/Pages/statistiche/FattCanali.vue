@@ -1,6 +1,19 @@
 <template>
     <div>
-        <h2>Fatturato Canali</h2>
+        <v-row>
+            <v-col>
+                <h2>Fatturato Canali</h2>
+            </v-col>
+            <v-col>
+                <v-select
+                    @change="selezionaAnno()"
+                    v-model="ricerca.anno"
+                    :items="getAnni"
+                    label="Anno"
+                ></v-select>
+            </v-col>
+        </v-row>
+
         <v-row>
             <v-col cols="8">
                 <v-data-table
@@ -84,9 +97,9 @@
             return {
                 ricerca:{},
                 headers: [
-                    { text: 'Nome', align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
-                    { text: 'Fatturato', sortable: false, value: 'prova_fattura_sum_tot', class: "indigo white--text" },
-                    { text: 'Ingressi', sortable: false, value: 'clients_count', class: "indigo white--text" },
+                    { text: 'Nome', width: 280, align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
+                    { text: 'Fatturato', width: 280, sortable: false, value: 'prova_fattura_sum_tot', class: "indigo white--text" },
+                    { text: 'Ingressi', width: 280, sortable: false, value: 'clients_count', class: "indigo white--text" },
                     { text: '%', sortable: false, value: 'percentuale', class: "indigo white--text" },
                 ],
 
@@ -100,8 +113,8 @@
         },
 
         mounted() {
-            this.fetchCanaliFatturato();
-            this.fetchUserCanaliFatturato();
+            this.ricerca.anno = '';
+            this.$store.commit('marketing/resetFattuartoCanali');
         },
 
         methods:{
@@ -109,6 +122,11 @@
                 fetchCanaliFatturato:'fetchCanaliFatturato',
                 fetchUserCanaliFatturato:'fetchUserCanaliFatturato',
             }),
+
+            selezionaAnno(){
+                this.fetchCanaliFatturato(this.ricerca);
+                this.fetchUserCanaliFatturato(this.ricerca);
+            },
 
             sumField(key) {
                 return this.getCanaliFatturato.reduce((a, b) => a + (b[key] || 0), 0)
@@ -120,6 +138,10 @@
             ...mapGetters('marketing', {
                 getCanaliFatturato:'getCanaliFatturato',
                 getUserCanaliFatturato:'getUserCanaliFatturato',
+            }),
+
+            ...mapGetters('clients', {
+                getAnni: 'getAnni',
             }),
         }
     }

@@ -50,8 +50,8 @@ const actions = {
         commit('fetchStruttureAudio', response.data);
     },
 
-    async fetchRecapitiIngresi({commit}){
-        const response = await axios.get(`${help().linkstatisticherecapitiingressi}`, {
+    async fetchRecapitiIngresi({commit}, payload){
+        const response = await axios.post(`${help().linkstatisticherecapitiingressi}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -59,8 +59,8 @@ const actions = {
         commit('fetchRecapitiIngresi', response.data);
     },
 
-    async fetchRecapitiIngresiMesi({commit}){
-        const response = await axios.get(`${help().linkstatisticherecapitiingressimese}`, {
+    async fetchRecapitiIngresiMesi({commit}, payload){
+        const response = await axios.post(`${help().linkstatisticherecapitiingressimese}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -178,6 +178,11 @@ const mutations = {
     eliminaRecapito(state, payload){
         state.recapiti.find(u => u.id === parseInt(payload.idUser)).recapito.splice(payload.indice, 1);
     },
+
+    resetRecapitiIngressi(state){
+        state.recapitiIngressi = [];
+        state.recapitiIngressiMesi = [];
+    }
 };
 
 export default{

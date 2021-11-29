@@ -1,5 +1,11 @@
 <template>
     <div>
+        <messaggio-trasferisci-dati
+            v-if="showTrasferisci"
+            :userTrasferisci="userTrasferisci"
+            @chiudiMessaggioTrascerisci = "chiudiMessaggioTrascerisci"
+        ></messaggio-trasferisci-dati>
+
         <h2>Personale</h2>
         <div>
             <v-row class="mb-9">
@@ -61,13 +67,36 @@
                         class="elevation-1 mt-3"
                     >
                         <template v-slot:item.actions="{ item }">
-                            <v-icon
-                                color="red"
-                                small
-                                @click="eliminaAudioprotesista(item.id)"
-                            >
-                                mdi-delete
-                            </v-icon>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="red"
+                                        small
+                                        @click="eliminaAudioprotesista(item.id)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-delete
+                                    </v-icon>
+                                </template>
+                                <span>Elimina</span>
+                            </v-tooltip>
+
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="blue"
+                                        small
+
+                                        @click="trasferisciDati(item)"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        mdi-swap-horizontal
+                                    </v-icon>
+                                </template>
+                                <span>Trasferisci Clienti e Prove in Corso</span>
+                            </v-tooltip>
                         </template>
 
                     </v-data-table>
@@ -122,12 +151,15 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import MessaggioTrasferisciDati from "./MessaggioTrasferisciDati";
 
     export default {
         name: "Listino",
-
+        components: {MessaggioTrasferisciDati},
         data(){
             return {
+                userTrasferisci: {},
+                showTrasferisci: false,
                 user:{},
                 headers1: [
                     { text: 'Id', align: 'start', sortable: false, value: 'id', class: "indigo white--text" },
@@ -195,6 +227,16 @@
             eliminaCallCenter(id){
                 this.eliminaCall(id)
             },
+
+            trasferisciDati(user){
+                this.userTrasferisci = user;
+                this.showTrasferisci = true;
+            },
+
+            chiudiMessaggioTrascerisci(){
+                this.userTrasferisci = {};
+                this.showTrasferisci = false;
+            }
         },
 
         computed:{

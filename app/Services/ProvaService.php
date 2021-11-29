@@ -34,10 +34,18 @@ class ProvaService
         return Ruolo::where('nome', '!=', 'admin')->orderBy('nome')->get();
     }
 
+    private function controlloAppuntamentiInSospesoEAggiornamento($appuntamenti){
+        foreach($appuntamenti as $appuntmento){
+            $appuntmento->intervenuto = true;
+            $appuntmento->save();
+        }
+    }
+
     public function nuova($request)
     {
         $idMktMedico = Marketing::where('name', 'MEDICO')->first()->id;
-        $client = Client::with('tipologia')->find($request->client_id);
+        $client = Client::with('tipologia', 'appuntamentisospesi')->find($request->client_id);
+        $this->controlloAppuntamentiInSospesoEAggiornamento($client->appuntamentisospesi);
 
         if ($request->marketing_id === $idMktMedico){
             $client->medico_id = $request->medico_id;
@@ -152,7 +160,12 @@ class ProvaService
 
     public function reso($idProva, $request)
     {
-        $prova = Prova::with('product', 'stato', 'user')->find($idProva);
+        $prova = Prova::with(['product', 'stato', 'user', 'client' => function($c){
+            $c->with('appuntamentisospesi');
+        }])->find($idProva);
+
+        $this->controlloAppuntamentiInSospesoEAggiornamento($prova->client->appuntamentisospesi);
+
         foreach ($prova->product as $item){
             $item->stato_id = 5;
             $item->save();
@@ -193,10 +206,12 @@ class ProvaService
         $prova->giorni_prova = Carbon::now()->DiffInDays($prova->created_at);
         $prova->save();
 
-        $client = Client::find($prova->client_id);
+        $client = Client::with('appuntamentisospesi')->find($prova->client_id);
         $idCliente = Tipologia::where('nome', 'CL')->first()->id;
         $client->tipologia_id = $idCliente;
         $client->save();
+
+        $this->controlloAppuntamentiInSospesoEAggiornamento($client->appuntamentisospesi);
 
         $fattura = Fattura::create([
             'prova_id' => $prova->id,

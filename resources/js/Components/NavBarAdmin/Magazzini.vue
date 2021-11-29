@@ -12,6 +12,13 @@
                 </v-btn>
             </template>
             <v-list>
+                <div>
+                    <router-link :to="{ name: 'riepilogoMagazzini'}">
+                        <v-list-item>
+                            <v-list-item-title>RIEPILOGO</v-list-item-title>
+                        </v-list-item>
+                    </router-link>
+                </div>
                 <div v-for="(item, index) in getFiliali"
                      :key="index">
                     <router-link :to="{ name: 'magazzino', params: { filialeId: item.id }}">

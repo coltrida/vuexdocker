@@ -1,6 +1,7 @@
 import help from "../../help";
 
 const state = () => ({
+    anni:['2021', '2020', '2019'],
     clients: [],
     ricercaNominativi: [],
     compleanni: [],
@@ -15,6 +16,10 @@ const state = () => ({
 });
 
 const getters = {
+    getAnni(state){
+        return state.anni;
+    },
+
     getClients(state){
         return state.clients;
     },

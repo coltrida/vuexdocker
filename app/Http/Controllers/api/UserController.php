@@ -60,7 +60,12 @@ class UserController extends Controller
 
     public function elimina($id, UserService $userService)
     {
-        return $userService->elimina($id);
+        $userService->elimina($id);
+    }
+
+    public function userTranfert($id, $idTrasferimento, UserService $userService)
+    {
+        $userService->userTranfert($id, $idTrasferimento);
     }
 
     public function user($id, UserService $userService)
@@ -91,9 +96,9 @@ class UserController extends Controller
         return $userService->appuntamenti($idAudio);
     }
 
-    public function ventaglioAnno(UserService $userService)
+    public function ventaglioAnno(Request $request, UserService $userService)
     {
-        return $userService->ventaglioAnno();
+        return $userService->ventaglioAnno($request);
     }
 
     public function switchSimulazione(Request $request)

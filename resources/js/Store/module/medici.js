@@ -216,6 +216,14 @@ const mutations = {
     statisticheTotaleInviiMedici(state, payload){
         state.statisticheTotInvii = payload;
     },
+
+    resetInvii(state){
+        state.invii = [];
+        state.totInvii = [];
+        state.statisticheInvii = [];
+        state.statisticheTotInvii = [];
+        state.mediciMesi = [];
+    }
 };
 
 export default{

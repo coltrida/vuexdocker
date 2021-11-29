@@ -195,6 +195,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -305,7 +315,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         stipendio: 0,
         provvigione: 0,
         mese: []
-      }
+      },
+      percentuale: {
+        mese: [8, 10, 6, 10, 10, 8, 8, 4, 8, 10, 10, 8]
+      },
+      nomeMese: ['gennaio', 'febbraio', 'marzo', 'apire', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
     };
   },
   mounted: function mounted() {
@@ -350,6 +364,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             provvigione: 0,
             mese: []
           };
+          _this2.percentuale = {
+            mese: []
+          };
         });
       } else {
         this.assegnaBgt(this.assegna).then(function () {
@@ -360,7 +377,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             provvigione: 0,
             mese: []
           };
+          _this2.percentuale = {
+            mese: []
+          };
         });
+      }
+    },
+    bgtMese: function bgtMese() {
+      for (var i = 0; i < 12; i++) {
+        this.assegna.mese[i] = (parseFloat(this.assegna.budgetAnno) * this.percentuale.mese[i] / 100).toFixed(0);
       }
     },
     modifica: function modifica(item, indice) {
@@ -373,18 +398,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.assegna.budgetAnno = item.budget.budgetAnno;
       this.assegna.stipendio = item.budget.stipendio;
       this.assegna.provvigione = item.budget.provvigione;
-      this.assegna.mese[1] = item.budget.gennaio;
-      this.assegna.mese[2] = item.budget.febbraio;
-      this.assegna.mese[3] = item.budget.marzo;
-      this.assegna.mese[4] = item.budget.aprile;
-      this.assegna.mese[5] = item.budget.maggio;
-      this.assegna.mese[6] = item.budget.giugno;
-      this.assegna.mese[7] = item.budget.luglio;
-      this.assegna.mese[8] = item.budget.agosto;
-      this.assegna.mese[9] = item.budget.settembre;
-      this.assegna.mese[10] = item.budget.ottobre;
-      this.assegna.mese[11] = item.budget.novembre;
-      this.assegna.mese[12] = item.budget.dicembre;
+      this.assegna.mese[0] = item.budget.gennaio;
+      this.assegna.mese[1] = item.budget.febbraio;
+      this.assegna.mese[2] = item.budget.marzo;
+      this.assegna.mese[3] = item.budget.aprile;
+      this.assegna.mese[4] = item.budget.maggio;
+      this.assegna.mese[5] = item.budget.giugno;
+      this.assegna.mese[6] = item.budget.luglio;
+      this.assegna.mese[7] = item.budget.agosto;
+      this.assegna.mese[8] = item.budget.settembre;
+      this.assegna.mese[9] = item.budget.ottobre;
+      this.assegna.mese[10] = item.budget.novembre;
+      this.assegna.mese[11] = item.budget.dicembre;
+      this.percentuale.mese[0] = (item.budget.gennaio / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[1] = (item.budget.febbraio / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[2] = (item.budget.marzo / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[3] = (item.budget.aprile / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[4] = (item.budget.maggio / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[5] = (item.budget.giugno / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[6] = (item.budget.luglio / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[7] = (item.budget.agosto / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[8] = (item.budget.settembre / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[9] = (item.budget.ottobre / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[10] = (item.budget.novembre / item.budget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[11] = (item.budget.dicembre / item.budget.budgetAnno * 100).toFixed(0);
+    },
+    modificaBgtMese: function modificaBgtMese(percent, mese) {
+      this.assegna.mese[mese - 1] = (parseFloat(this.assegna.budgetAnno) * percent / 100).toFixed(0);
     }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
@@ -392,16 +432,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAudioSenzaBgt: 'getAudioSenzaBgt'
   })), {}, {
     sommaProvvigioni: function sommaProvvigioni() {
-      return this.assegna.mese.reduce(function (a, b) {
+      return this.percentuale.mese.reduce(function (a, b) {
         return parseInt(a) + parseInt(b);
       }, 0) + '%';
     },
-    sommaBgt: function sommaBgt() {
-      return parseFloat(this.sommaProvvigioni) * parseFloat(this.assegna.budgetAnno) / 100;
-    },
-    utile: function utile() {
-      return parseFloat(this.assegna.budgetAnno) - parseFloat(this.assegna.stipendio) * 12 - parseFloat(this.assegna.budgetAnno) * parseFloat(this.assegna.provvigione) / 100;
-    },
+
+    /*sommaBgt(){
+       // return ( parseFloat(this.sommaProvvigioni) * parseFloat(this.assegna.budgetAnno) ) / 100 ;
+        console.log(this.assegna.mese);
+       // return this.assegna.mese.reduce((a, b) => parseInt(a) + parseInt(b), 0)
+        return parseInt(this.assegna.mese[0]) + parseInt(this.assegna.mese[1])
+    },*/
+
+    /*utile(){
+        return parseFloat(this.assegna.budgetAnno) -
+            ( parseFloat(this.assegna.stipendio) * 12 ) -
+            ( ( parseFloat(this.assegna.budgetAnno) * parseFloat(this.assegna.provvigione) ) / 100 );
+    },*/
     textBtn: function textBtn() {
       return this["switch"] ? 'modifica' : 'inserisci';
     }
@@ -498,521 +545,476 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", [_vm._v("Assegna Budget")]),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        {
-          attrs: { color: "success", dark: "" },
-          on: { click: _vm.assegnaBudget }
-        },
-        [_vm._v("\n        " + _vm._s(_vm.textBtn) + "\n    ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "py-6" },
-        [
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
-                [
-                  _c("h3", [_vm._v("Audioprotesisti senza Budget")]),
-                  _vm._v(" "),
-                  _c("v-data-table", {
-                    staticClass: "elevation-1 mt-3",
-                    attrs: {
-                      headers: _vm.headers,
-                      items: _vm.getAudioSenzaBgt,
-                      "single-select": _vm.singleSelect,
-                      "hide-default-footer": "",
-                      "show-select": ""
+  return _c("div", [
+    _c("h2", [_vm._v("Assegna Budget")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "py-6" },
+      [
+        _c(
+          "v-row",
+          [
+            _c(
+              "v-col",
+              { attrs: { cols: "4" } },
+              [
+                _c("h3", [_vm._v("Audioprotesisti senza Budget")]),
+                _vm._v(" "),
+                _c("v-data-table", {
+                  staticClass: "elevation-1 mt-3",
+                  attrs: {
+                    headers: _vm.headers,
+                    items: _vm.getAudioSenzaBgt,
+                    "single-select": _vm.singleSelect,
+                    "hide-default-footer": "",
+                    "show-select": ""
+                  },
+                  model: {
+                    value: _vm.AudioSelected,
+                    callback: function($$v) {
+                      _vm.AudioSelected = $$v
                     },
-                    model: {
-                      value: _vm.AudioSelected,
-                      callback: function($$v) {
-                        _vm.AudioSelected = $$v
-                      },
-                      expression: "AudioSelected"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
-                [
-                  _c("h3", [_vm._v("Budget Anno")]),
-                  _vm._v(" "),
-                  _c(
-                    "v-row",
-                    [
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "5" } },
-                        [
-                          _c("v-text-field", {
-                            attrs: { label: "budget" },
-                            model: {
-                              value: _vm.assegna.budgetAnno,
-                              callback: function($$v) {
-                                _vm.$set(_vm.assegna, "budgetAnno", $$v)
-                              },
-                              expression: "assegna.budgetAnno"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "4" } },
-                        [
-                          _c("v-text-field", {
-                            attrs: { label: "stipendio" },
-                            model: {
-                              value: _vm.assegna.stipendio,
-                              callback: function($$v) {
-                                _vm.$set(_vm.assegna, "stipendio", $$v)
-                              },
-                              expression: "assegna.stipendio"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "3" } },
-                        [
-                          _c("v-text-field", {
-                            attrs: { label: "prov" },
-                            model: {
-                              value: _vm.assegna.provvigione,
-                              callback: function($$v) {
-                                _vm.$set(_vm.assegna, "provvigione", $$v)
-                              },
-                              expression: "assegna.provvigione"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
-                [
-                  _c("h3", [_vm._v("Utile Annuo")]),
-                  _vm._v(" "),
-                  _c(
-                    "v-chip",
-                    { staticClass: "ma-2", attrs: { color: "orange" } },
-                    [
-                      _vm._v(
-                        "\n                    € " +
-                          _vm._s(_vm.utile) +
-                          "\n                "
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                [
-                  _c(
-                    "v-chip",
-                    { staticClass: "ma-2", attrs: { color: "orange" } },
-                    [
-                      _vm._v(
-                        "\n                    Verifica: " +
-                          _vm._s(_vm.sommaProvvigioni) +
-                          "\n                "
-                      )
-                    ]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-chip",
-                { staticClass: "ma-2", attrs: { color: "orange" } },
-                [
-                  _vm._v(
-                    "\n                    Verifica Bgt: " +
-                      _vm._s(_vm.sommaBgt) +
-                      "\n                "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("v-col")
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-row",
-            _vm._l(12, function(mese) {
-              return _c(
-                "v-col",
-                { key: mese },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Bgt " + mese },
-                    model: {
-                      value: _vm.assegna.mese[mese],
-                      callback: function($$v) {
-                        _vm.$set(_vm.assegna.mese, mese, $$v)
-                      },
-                      expression: "assegna.mese[mese]"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.assegna.mese[mese] && _vm.assegna.budget
-                    ? _c(
-                        "v-chip",
-                        {
-                          staticClass: "ma-2",
-                          attrs: { color: "primary", "text-color": "white" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(
-                                (parseFloat(_vm.assegna.budget) *
-                                  parseFloat(_vm.assegna.mese[mese])) /
-                                  100
-                              ) +
-                              "\n                "
-                          )
-                        ]
-                      )
-                    : _vm._e()
-                ],
-                1
-              )
-            }),
-            1
-          ),
-          _vm._v(" "),
-          _c("h3", [_vm._v("Audioprotesisti Con Budget")]),
-          _vm._v(" "),
-          _c(
-            "v-data-table",
-            {
-              staticClass: "elevation-1 mt-3",
-              attrs: {
-                headers: _vm.headers2,
-                items: _vm.getAudioConBgt,
-                "hide-default-footer": ""
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "item.actions",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _c(
-                        "v-icon",
-                        {
-                          attrs: { color: "blue", small: "" },
+                    expression: "AudioSelected"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "4" } },
+              [
+                _c("h3", [_vm._v("Budget Anno")]),
+                _vm._v(" "),
+                _c(
+                  "v-row",
+                  [
+                    _c(
+                      "v-col",
+                      { attrs: { cols: "5" } },
+                      [
+                        _c("v-text-field", {
+                          attrs: { label: "budget" },
                           on: {
-                            click: function($event) {
-                              _vm.modifica(
-                                item,
-                                _vm.getAudioConBgt
-                                  .map(function(x) {
-                                    return x.id
-                                  })
-                                  .indexOf(item.id)
-                              )
+                            input: function($event) {
+                              return _vm.bgtMese()
                             }
+                          },
+                          model: {
+                            value: _vm.assegna.budgetAnno,
+                            callback: function($$v) {
+                              _vm.$set(_vm.assegna, "budgetAnno", $$v)
+                            },
+                            expression: "assegna.budgetAnno"
                           }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    mdi-pencil\n                "
-                          )
-                        ]
-                      )
-                    ]
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("v-col", { attrs: { cols: "4" } })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "v-row",
+          [
+            _c(
+              "v-col",
+              { attrs: { cols: "4" } },
+              [
+                _c(
+                  "v-chip",
+                  { staticClass: "ma-2", attrs: { color: "orange" } },
+                  [
+                    _vm._v(
+                      "\n                    Verifica: " +
+                        _vm._s(_vm.sommaProvvigioni) +
+                        "\n                "
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("v-col", { attrs: { cols: "4" } }),
+            _vm._v(" "),
+            _c(
+              "v-col",
+              { attrs: { cols: "4" } },
+              [
+                _c(
+                  "v-btn",
+                  {
+                    attrs: { color: "success", dark: "" },
+                    on: { click: _vm.assegnaBudget }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.textBtn) +
+                        "\n                "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "v-row",
+          _vm._l(12, function(mese) {
+            return _c(
+              "v-col",
+              { key: mese },
+              [
+                _c("v-text-field", {
+                  attrs: {
+                    hint: _vm.nomeMese[mese - 1],
+                    readonly: "",
+                    "persistent-hint": ""
+                  },
+                  model: {
+                    value: _vm.assegna.mese[mese - 1],
+                    callback: function($$v) {
+                      _vm.$set(_vm.assegna.mese, mese - 1, $$v)
+                    },
+                    expression: "assegna.mese[mese-1]"
                   }
-                },
-                {
-                  key: "item.budget.budgetAnno",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.budgetAnno.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
+                }),
+                _vm._v(" "),
+                _c("v-text-field", {
+                  attrs: { "append-icon": "%", type: "number" },
+                  on: {
+                    input: function($event) {
+                      return _vm.modificaBgtMese($event, mese)
+                    },
+                    change: function($event) {
+                      return _vm.modificaBgtMese($event, mese)
+                    }
+                  },
+                  model: {
+                    value: _vm.percentuale.mese[mese - 1],
+                    callback: function($$v) {
+                      _vm.$set(_vm.percentuale.mese, mese - 1, $$v)
+                    },
+                    expression: "percentuale.mese[mese-1]"
                   }
-                },
-                {
-                  key: "item.budget.gennaio",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.gennaio.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.febbraio",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.febbraio.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.marzo",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.marzo.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.aprile",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.aprile.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.maggio",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.maggio.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.giugno",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.giugno.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.luglio",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.luglio.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.agosto",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.agosto.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.settembre",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.settembre.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.ottobre",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.ottobre.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.novembre",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.novembre.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                },
-                {
-                  key: "item.budget.dicembre",
-                  fn: function(ref) {
-                    var item = ref.item
-                    return [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(item.budget.dicembre.toLocaleString("it")) +
-                          "\n            "
-                      )
-                    ]
-                  }
-                }
-              ])
+                }),
+                _vm._v(" "),
+                _vm.assegna.mese[mese] && _vm.assegna.budget
+                  ? _c(
+                      "v-chip",
+                      {
+                        staticClass: "ma-2",
+                        attrs: { color: "primary", "text-color": "white" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(
+                              (parseFloat(_vm.assegna.budget) *
+                                parseFloat(_vm.assegna.mese[mese])) /
+                                100
+                            ) +
+                            "\n                "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ],
+              1
+            )
+          }),
+          1
+        ),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Audioprotesisti Con Budget")]),
+        _vm._v(" "),
+        _c(
+          "v-data-table",
+          {
+            staticClass: "elevation-1 mt-3",
+            attrs: {
+              headers: _vm.headers2,
+              items: _vm.getAudioConBgt,
+              "hide-default-footer": ""
             },
-            [
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _vm._v(" "),
-              _c("template", { slot: "body.append" }, [
-                _c("tr", { staticClass: "pink--text" }, [
-                  _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.totAnno.toLocaleString("it")))]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totGennaio.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totFebbraio.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.totMarzo.toLocaleString("it")))]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totAprile.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totMaggio.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totGiugno.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totLuglio.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totAgosto.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totSettembre.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totOttobre.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totNovembre.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totDicembre.toLocaleString("it")))
-                  ])
-                ])
+            scopedSlots: _vm._u([
+              {
+                key: "item.actions",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _c(
+                      "v-icon",
+                      {
+                        attrs: { color: "blue", small: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.modifica(
+                              item,
+                              _vm.getAudioConBgt
+                                .map(function(x) {
+                                  return x.id
+                                })
+                                .indexOf(item.id)
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    mdi-pencil\n                "
+                        )
+                      ]
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.budgetAnno",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.budgetAnno.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.gennaio",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.gennaio.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.febbraio",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.febbraio.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.marzo",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.marzo.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.aprile",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.aprile.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.maggio",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.maggio.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.giugno",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.giugno.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.luglio",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.luglio.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.agosto",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.agosto.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.settembre",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.settembre.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.ottobre",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.ottobre.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.novembre",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.novembre.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "item.budget.dicembre",
+                fn: function(ref) {
+                  var item = ref.item
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(item.budget.dicembre.toLocaleString("it")) +
+                        "\n            "
+                    )
+                  ]
+                }
+              }
+            ])
+          },
+          [
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _vm._v(" "),
+            _c("template", { slot: "body.append" }, [
+              _c("tr", { staticClass: "pink--text" }, [
+                _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totAnno.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totGennaio.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(_vm._s(_vm.totFebbraio.toLocaleString("it")))
+                ]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totMarzo.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totAprile.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totMaggio.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totGiugno.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totLuglio.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totAgosto.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(_vm._s(_vm.totSettembre.toLocaleString("it")))
+                ]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totOttobre.toLocaleString("it")))]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(_vm._s(_vm.totNovembre.toLocaleString("it")))
+                ]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.totDicembre.toLocaleString("it")))])
               ])
-            ],
-            2
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+            ])
+          ],
+          2
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

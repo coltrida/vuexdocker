@@ -86,6 +86,14 @@ const actions = {
         commit('fetchAudio', response.data);
     },
 
+    async trasferisciClient({commit}, payload){
+        await axios.get(`${help().linktrasferisciclienti}`+'/'+payload.id+'/'+payload.idTrasferimento, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+    },
+
     async fetchAudioSeguitiDaAmministrativa({commit}, idAmministrativa){
         const response = await axios.get(`${help().linkaudioseguitidaamministrativa}`+'/'+idAmministrativa, {
             headers: {
@@ -297,8 +305,8 @@ const actions = {
         commit('addAgenda', response.data);
     },
 
-    async fetchVentaglioAnno({commit}){
-        const response = await axios.get(`${help().linkventaglio}`, {
+    async fetchVentaglioAnno({commit}, payload){
+        const response = await axios.post(`${help().linkventaglio}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }

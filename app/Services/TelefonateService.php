@@ -209,9 +209,12 @@ class TelefonateService
         return $telefonata;
     }
 
-    public function statistiche()
+    public function statistiche($request)
     {
-        return Risultatitel::orderBy('anno')->orderBy('mesenumero')->get();
+        return User::with(['risultatiTelefonate' => function($t) use($request){
+            $t->where('anno', $request->anno)->orderBy('mesenumero');
+        }])
+            ->orderBy('name')->get();
     }
 
     public function daRichiamare($idUser)
@@ -250,24 +253,15 @@ class TelefonateService
             })->orderBy('user_id')->get();
     }
 
-    public function telefonateAnnoMese($anno, $mese)
+    public function telefonateAnnoMese($request)
     {
-        return DB::table('telefonatas as t')
-            ->where([
-                ['t.anno', $anno],
-                ['t.mese', $mese],
-                ['t.effettuata', 1]
-            ])
-            ->join('clients', 'clients.id', '=', 't.client_id')
-            ->join('users as u', 'u.id', '=', 't.user_id')
-            ->join('users as e', 'e.id', '=', 't.eseguita_id')
-            ->select('t.id as idTelefonata', 't.esito', 't.datarecall', 't.user_id',
-                'clients.nome as nomeCliente', 'clients.cognome as cognomeCliente', 'clients.citta as cittaCliente', 'clients.filiale_id as filiale_id',
-                'u.name as nominativoUser',
-                'e.name as nominativoEseguito')
-            ->orderBy('t.datarecall', 'DESC')
-            ->get()
-            ->groupBy('nominativoUser');
+        return Client::whereHas('recalls', function($t) use($request){
+            $t->where([
+                ['anno', $request->anno],
+                ['mese', $request->mesenumero],
+                ['eseguita_id', $request->idTelefonante],
+            ]);
+        })->with('recalls')->get();
     }
 
 }

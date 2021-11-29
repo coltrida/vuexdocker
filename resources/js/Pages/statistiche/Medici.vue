@@ -10,7 +10,7 @@
                         <v-select
                             @change="selezionaAnno()"
                             v-model="ricerca.anno"
-                            :items="anni"
+                            :items="getAnni"
                             label="Anno"
                         ></v-select>
                     </v-col>
@@ -90,8 +90,6 @@
             return {
                 ricerca:{},
 
-                anni:['2021'],
-
                 header: [
                     { text: 'Audio',  align: 'start', sortable: false, value: 'user.name', class: "indigo white--text" },
                     { text: 'Medico',  align: 'start', sortable: false, value: 'medico.fullname', class: "indigo white--text" },
@@ -112,6 +110,7 @@
 
         mounted() {
             this.ricerca.anno = '';
+            this.$store.commit('medici/resetInvii');
         },
 
         methods:{
@@ -121,6 +120,7 @@
             }),
 
             selezionaAnno(){
+                //console.log(this.ricerca)
                 this.statisticheInviiMedici(this.ricerca);
                 this.statisticheTotaleInviiMedici(this.ricerca);
             },
@@ -135,6 +135,10 @@
             ...mapGetters('medici', {
                 getStatisticheInvii: 'getStatisticheInvii',
                 getStatisticheTotaliInvii: 'getStatisticheTotaliInvii',
+            }),
+
+            ...mapGetters('clients', {
+                getAnni: 'getAnni',
             }),
 
         }

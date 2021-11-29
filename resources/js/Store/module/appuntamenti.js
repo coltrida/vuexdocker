@@ -1,4 +1,5 @@
 import help from "../../help";
+import {parseHex} from "vuetify/lib/util/colorUtils";
 
 const state = () => ({
     appuntamenti: [],
@@ -82,7 +83,7 @@ const actions = {
     },
 
     async fetchAppuntamentiAnnoMese({commit}, payload){
-        const response = await axios.get(`${help().linkappuntamentiannomese}`+'/'+payload.anno+'/'+payload.mesenumero, {
+        const response = await axios.post(`${help().linkappuntamentiannomese}`, payload,  {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -91,7 +92,7 @@ const actions = {
     },
 
     async fetchIntervenutiAnnoMese({commit}, payload){
-        const response = await axios.get(`${help().linkintervenutiannomese}`+'/'+payload.anno+'/'+payload.mesenumero, {
+        const response = await axios.post(`${help().linkintervenutiannomese}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }

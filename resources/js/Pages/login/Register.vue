@@ -24,8 +24,9 @@
         ></v-text-field>
 
         <v-text-field
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show1 ? 'text' : 'password'"
             v-model="userRegister.oldPassword"
-            :rules="passwordRules"
             label="vecchia password"
             hint="minimo 6 caratteri"
             counter
@@ -33,21 +34,25 @@
         ></v-text-field>
 
         <v-text-field
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show2 ? 'text' : 'password'"
             v-model="userRegister.password"
             :rules="passwordRules"
-            label="vecchia password"
+            label="nuova password"
             hint="minimo 6 caratteri"
             counter
-            @click:append="show1 = !show1"
+            @click:append="show2 = !show2"
         ></v-text-field>
 
         <v-text-field
+            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show3 ? 'text' : 'password'"
             v-model="userRegister.repeatpassword"
             :rules="passwordRules"
-            label="vecchia password"
+            label="ripeti nuova password"
             hint="minimo 6 caratteri"
             counter
-            @click:append="show1 = !show1"
+            @click:append="show3 = !show3"
         ></v-text-field>
 
         <v-btn
@@ -68,6 +73,9 @@
     export default {
         data() {
             return {
+                show1: false,
+                show2: false,
+                show3: false,
                 valid: true,
                 emailRules: [ v => !!v || 'la mail è obbligatoria'],
                 passwordRules: [ v => !!v || 'la password è obbligatoria'],
@@ -92,8 +100,6 @@
 
             verificaCampi(){
                 return this.userRegister.email != '' && this.userRegister.email != null
-                && this.userRegister.oldPassword != '' && this.userRegister.oldPassword
-                && this.userRegister.oldPassword.length > 5
                 && this.userRegister.password.length > 5
                 && this.userRegister.repeatpassword.length > 5
                 && this.userRegister.password != '' && this.userRegister.password

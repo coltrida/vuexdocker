@@ -57,8 +57,6 @@ use const LC_TIME;
  * @method static \Illuminate\Database\Eloquent\Builder|Product apparecchi()
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereDatacarico($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product wherePericoloRestituzione($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product filiale()
- * @method static \Illuminate\Database\Eloquent\Builder|Product prova()
  */
 class Product extends Model
 {

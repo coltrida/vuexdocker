@@ -62,14 +62,14 @@ class ClientController extends Controller
         return $clientService->elimina($request);
     }
 
-    public function ingressiRecapiti(ClientService $clientService)
+    public function ingressiRecapiti(Request $request, ClientService $clientService)
     {
-        return $clientService->ingressiRecapiti();
+        return $clientService->ingressiRecapiti($request);
     }
 
-    public function ingressiRecapitiMesi(ClientService $clientService)
+    public function ingressiRecapitiMesi(Request $request, ClientService $clientService)
     {
-        return $clientService->ingressiRecapitiMesi();
+        return $clientService->ingressiRecapitiMesi($request);
     }
 
     public function importClients()

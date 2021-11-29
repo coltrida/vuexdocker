@@ -51,11 +51,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
   data: function data() {
     return {
+      ricerca: {},
       AudioSelected: [],
       "switch": 0,
       singleSelect: true,
@@ -79,6 +92,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         text: 'CLC',
         sortable: false,
         value: 'clientsClc',
+        "class": "indigo white--text"
+      }, {
+        text: 'LE',
+        sortable: false,
+        value: 'clientsLe',
         "class": "indigo white--text"
       }, {
         text: 'NORMO',
@@ -168,16 +186,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchRecapitiIngresi();
-    this.fetchRecapitiIngresiMesi();
+    this.ricerca.anno = '';
+    this.$store.commit('recapiti/resetRecapitiIngressi');
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
     fetchRecapitiIngresi: 'fetchRecapitiIngresi',
     fetchRecapitiIngresiMesi: 'fetchRecapitiIngresiMesi'
-  })),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
+  })), {}, {
+    selezionaAnno: function selezionaAnno() {
+      this.fetchRecapitiIngresi(this.ricerca);
+      this.fetchRecapitiIngresiMesi(this.ricerca);
+    }
+  }),
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
     getRecapitiIngressi: 'getRecapitiIngressi',
     getRecapitiIngressiMesi: 'getRecapitiIngressiMesi'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+    getAnni: 'getAnni'
   }))
 });
 
@@ -274,7 +299,35 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", [_vm._v("Ingressi Recapiti")]),
+      _c(
+        "v-row",
+        [
+          _c("v-col", [_c("h2", [_vm._v("Ingressi Recapiti")])]),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getAnni, label: "Anno" },
+                on: {
+                  change: function($event) {
+                    return _vm.selezionaAnno()
+                  }
+                },
+                model: {
+                  value: _vm.ricerca.anno,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "anno", $$v)
+                  },
+                  expression: "ricerca.anno"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-row",

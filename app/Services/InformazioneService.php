@@ -20,6 +20,11 @@ class InformazioneService
 
     public function aggiungi($request)
     {
+        $client = Client::with('appuntamentisospesi')->find($request->client_id);
+        foreach($client->appuntamentisospesi as $appuntmento){
+            $appuntmento->intervenuto = true;
+            $appuntmento->save();
+        }
         return Informazione::create([
             'client_id' => $request->client_id,
             'giorno' => $request->giorno,

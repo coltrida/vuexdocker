@@ -226,6 +226,11 @@ class Client extends Model
         return $this->hasMany(Appuntamento::class);
     }
 
+    public function appuntamentisospesi()
+    {
+        return $this->hasMany(Appuntamento::class)->where('intervenuto', null);
+    }
+
     public function audiometria()
     {
         return $this->hasMany(Audiometria::class)->latest();

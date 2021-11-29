@@ -81,7 +81,7 @@ const actions = {
     },
 
     async fetchTelefonateAnnoMese({commit}, payload){
-        const response = await axios.get(`${help().linktelefonateannomese}`+'/'+payload.anno+'/'+payload.mesenumero, {
+        const response = await axios.post(`${help().linktelefonateannomese}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -107,8 +107,8 @@ const actions = {
         commit('fetchDaRichiamare', response.data);
     },
 
-    async fetchStatisticheTelefonate({commit}){
-        const response = await axios.get(`${help().linkstatistichetelefonate}`, {
+    async fetchStatisticheTelefonate({commit}, payload){
+        const response = await axios.post(`${help().linkstatistichetelefonate}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -273,6 +273,10 @@ const mutations = {
     fetchClientiUnAnnoUltimoAppuntamento(state, payload){
         state.clientiUnAnnoUltimoAppuntamento = payload;
     },
+
+    resetStatisticheTelefonate(state){
+        state.statisticheTelefonate = [];
+    }
 
 };
 

@@ -47,6 +47,7 @@ const routes = [
     { path: '/resetSpecial', component: () => import('../Pages/gestione/Reset'), name: 'resetSpecial' },
     { path: '/struttureAudio', component: () => import('../Pages/strutture/StruttureAudio'), name: 'struttureAudio' },
     { path: '/mediciMesi', component: () => import('../Pages/statistiche/MediciMesi'), name: 'mediciMesi' },
+    { path: '/riepilogoMagazzini', component: () => import('../Pages/magazzino/Riepilogo'), name: 'riepilogoMagazzini' },
 ];
 
 export default routes;

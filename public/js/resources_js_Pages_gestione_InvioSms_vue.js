@@ -174,6 +174,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -632,8 +634,14 @@ var render = function() {
                   _c(
                     "v-col",
                     [
+                      _c("p", [
+                        _vm._v(
+                          "Gentile ___nome cliente___ ____cognome cliente_____"
+                        )
+                      ]),
+                      _vm._v(" "),
                       _c("v-textarea", {
-                        attrs: { label: "Testo del messaggio" },
+                        attrs: { outlined: "", label: "Testo del messaggio" },
                         model: {
                           value: _vm.testo,
                           callback: function($$v) {
@@ -641,7 +649,9 @@ var render = function() {
                           },
                           expression: "testo"
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Un cordiale saluto")])
                     ],
                     1
                   ),

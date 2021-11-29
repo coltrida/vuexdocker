@@ -31,8 +31,8 @@ const actions = {
         commit('fetchCanali', response.data);
     },
 
-    async fetchCanaliFatturato({commit}){
-        const response = await axios.get(`${help().linkstatistichefatturatocanali}`, {
+    async fetchCanaliFatturato({commit}, payload){
+        const response = await axios.post(`${help().linkstatistichefatturatocanali}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -40,8 +40,8 @@ const actions = {
         commit('fetchCanaliFatturato', response.data);
     },
 
-    async fetchUserCanaliFatturato({commit}){
-        const response = await axios.get(`${help().linkstatisticheuserfatturatocanali}`, {
+    async fetchUserCanaliFatturato({commit}, payload){
+        const response = await axios.post(`${help().linkstatisticheuserfatturatocanali}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -88,6 +88,11 @@ const mutations = {
     eliminaCanale(state, id){
         state.canali = state.canali.filter(u => u.id !== id);
     },
+
+    resetFattuartoCanali(state){
+        state.canaliFatturato = [];
+        state.userCanaliFatturato = [];
+    }
 };
 
 export default{

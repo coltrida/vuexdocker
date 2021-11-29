@@ -6,12 +6,17 @@ const state = () => ({
     richiesti: [],
     inArrivo: [],
     immatricolati:[],
-    soglie:[]
+    soglie:[],
+    riepilogoMagazzini: []
 });
 
 const getters = {
     getInFiliale(state){
         return state.inFiliale;
+    },
+
+    getRiepilogoMagazzini(state){
+        return state.riepilogoMagazzini;
     },
 
     getSoglie(state){
@@ -44,6 +49,15 @@ const actions = {
             }
         });
         commit('fetchInFiliale', response.data.data);
+    },
+
+    async fetchRiepilogoMagazzini({commit}){
+        const response = await axios.get(`${help().linkriepilogoMagazzini}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchRiepilogoMagazzini', response.data);
     },
 
     async fetchSoglie({commit}, idFiliale){
@@ -182,6 +196,10 @@ const actions = {
 const mutations = {
     fetchInFiliale(state, payload){
         state.inFiliale = payload;
+    },
+
+    fetchRiepilogoMagazzini(state, payload){
+        state.riepilogoMagazzini = payload;
     },
 
     fetchSoglie(state, payload){

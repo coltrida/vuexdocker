@@ -40,7 +40,8 @@ class Marketing extends Model
 
     public function provaFattura()
     {
-        $anno = Carbon::now()->year;
-        return $this->hasMany(Prova::class)->where([ ['stato_id', 4], ['anno_fine', $anno] ]);
+        return $this->hasMany(Prova::class)->whereHas('stato', function ($p){
+            $p->where('nome', 'FATTURA');
+        });
     }
 }

@@ -135,6 +135,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -148,16 +161,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      ricerca: {},
       showInfo: false,
       showInfoAppuntamenti: false,
       showInfoIntervenuti: false,
       showRecalls: true,
       infoRecalls: {},
       headers: [{
-        text: 'Anno',
-        value: 'anno',
-        "class": "indigo white--text"
-      }, {
         text: 'Mese',
         value: 'mese',
         "class": "indigo white--text"
@@ -184,7 +194,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.showRecalls = true;
-    this.fetchStatisticheTelefonate();
+    this.ricerca.anno = '';
+    this.$store.commit('telefonate/resetStatisticheTelefonate');
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('telefonate', {
     fetchStatisticheTelefonate: 'fetchStatisticheTelefonate'
@@ -194,26 +205,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return a + (b[key] || 0);
       }, 0);
     },
-    info: function info(anno, mese, mesenumero) {
+    info: function info(anno, mese, mesenumero, idTelefonante) {
       this.showInfo = true;
       this.showRecalls = false;
       this.infoRecalls.anno = anno;
       this.infoRecalls.mese = mese;
       this.infoRecalls.mesenumero = mesenumero;
+      this.infoRecalls.idTelefonante = idTelefonante;
     },
-    infoAppuntamenti: function infoAppuntamenti(anno, mese, mesenumero) {
+    infoAppuntamenti: function infoAppuntamenti(anno, mese, mesenumero, idTelefonante) {
       this.showInfoAppuntamenti = true;
       this.showRecalls = false;
       this.infoRecalls.anno = anno;
       this.infoRecalls.mese = mese;
       this.infoRecalls.mesenumero = mesenumero;
+      this.infoRecalls.idTelefonante = idTelefonante;
     },
-    infoIntervenuti: function infoIntervenuti(anno, mese, mesenumero) {
+    infoIntervenuti: function infoIntervenuti(anno, mese, mesenumero, idTelefonante) {
       this.showInfoIntervenuti = true;
       this.showRecalls = false;
       this.infoRecalls.anno = anno;
       this.infoRecalls.mese = mese;
       this.infoRecalls.mesenumero = mesenumero;
+      this.infoRecalls.idTelefonante = idTelefonante;
     },
     chiudiInfo: function chiudiInfo() {
       this.showInfo = false;
@@ -229,10 +243,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showInfoIntervenuti = false;
       this.showRecalls = true;
       this.infoRecalls = {};
+    },
+    selezionaAnno: function selezionaAnno() {
+      this.fetchStatisticheTelefonate(this.ricerca);
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('telefonate', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('telefonate', {
     getStatisticheTelefonate: 'getStatisticheTelefonate'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('clients', {
+    getAnni: 'getAnni'
   }))
 });
 
@@ -306,6 +325,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "InfoAppuntamenti",
@@ -324,11 +356,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'orario',
         "class": "indigo white--text"
       }, {
-        text: 'Preso Da',
-        width: 220,
-        value: 'presoDa',
-        "class": "indigo white--text"
-      }, {
         text: 'Nominativo',
         width: 220,
         value: 'nominativo',
@@ -336,7 +363,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Città',
         width: 220,
-        value: 'cittaCliente',
+        value: 'citta',
         "class": "indigo white--text"
       }, {
         text: 'Tipo Visita',
@@ -352,7 +379,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.carica = true;
     this.fetchAppuntamentiAnnoMese({
       'anno': this.infoRecalls.anno,
-      'mesenumero': this.infoRecalls.mesenumero
+      'mesenumero': this.infoRecalls.mesenumero,
+      'idTelefonante': this.infoRecalls.idTelefonante
     }).then(function () {
       return _this.carica = false;
     });
@@ -439,6 +467,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "InfoIntervenuti",
@@ -457,11 +498,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'orario',
         "class": "indigo white--text"
       }, {
-        text: 'Preso Da',
-        width: 220,
-        value: 'presoDa',
-        "class": "indigo white--text"
-      }, {
         text: 'Nominativo',
         width: 220,
         value: 'nominativo',
@@ -469,7 +505,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Città',
         width: 220,
-        value: 'cittaCliente',
+        value: 'citta',
         "class": "indigo white--text"
       }, {
         text: 'Tipo Visita',
@@ -485,7 +521,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.carica = true;
     this.fetchIntervenutiAnnoMese({
       'anno': this.infoRecalls.anno,
-      'mesenumero': this.infoRecalls.mesenumero
+      'mesenumero': this.infoRecalls.mesenumero,
+      'idTelefonante': this.infoRecalls.idTelefonante
     }).then(function () {
       return _this.carica = false;
     });
@@ -568,6 +605,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "InfoTelefonate",
@@ -578,12 +626,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       headers: [{
         text: 'Data',
         width: 150,
-        value: 'datarecall',
-        "class": "indigo white--text"
-      }, {
-        text: 'Eseguita da',
-        width: 200,
-        value: 'nominativoEseguito',
+        value: 'recalls',
         "class": "indigo white--text"
       }, {
         text: 'Nominativo',
@@ -593,7 +636,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Città',
         width: 220,
-        value: 'cittaCliente',
+        value: 'citta',
         "class": "indigo white--text"
       }, {
         text: 'Esito',
@@ -609,7 +652,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.carica = true;
     this.fetchTelefonateAnnoMese({
       'anno': this.infoRecalls.anno,
-      'mesenumero': this.infoRecalls.mesenumero
+      'mesenumero': this.infoRecalls.mesenumero,
+      'idTelefonante': this.infoRecalls.idTelefonante
     }).then(function () {
       return _this.carica = false;
     });
@@ -976,15 +1020,45 @@ var render = function() {
       ? _c(
           "div",
           [
-            _c("h2", [_vm._v("Statistiche Call Center")]),
-            _vm._v(" "),
             _c(
               "v-row",
               [
+                _c("v-col", [_c("h2", [_vm._v("Statistiche Call Center")])]),
+                _vm._v(" "),
                 _c(
                   "v-col",
-                  { attrs: { cols: "12" } },
                   [
+                    _c("v-select", {
+                      attrs: { items: _vm.getAnni, label: "Anno" },
+                      on: {
+                        change: function($event) {
+                          return _vm.selezionaAnno()
+                        }
+                      },
+                      model: {
+                        value: _vm.ricerca.anno,
+                        callback: function($$v) {
+                          _vm.$set(_vm.ricerca, "anno", $$v)
+                        },
+                        expression: "ricerca.anno"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-row",
+              _vm._l(_vm.getStatisticheTelefonate, function(audio) {
+                return _c(
+                  "v-col",
+                  { key: audio.id, attrs: { cols: "12" } },
+                  [
+                    _c("h3", [_vm._v(_vm._s(audio.name))]),
+                    _vm._v(" "),
                     _c(
                       "v-data-table",
                       {
@@ -992,7 +1066,7 @@ var render = function() {
                         attrs: {
                           dense: "",
                           headers: _vm.headers,
-                          items: _vm.getStatisticheTelefonate,
+                          items: audio.risultati_telefonate,
                           "hide-default-footer": ""
                         },
                         scopedSlots: _vm._u(
@@ -1013,7 +1087,8 @@ var render = function() {
                                           return _vm.info(
                                             item.anno,
                                             item.mese,
-                                            item.mesenumero
+                                            item.mesenumero,
+                                            audio.id
                                           )
                                         }
                                       }
@@ -1070,7 +1145,8 @@ var render = function() {
                                           return _vm.infoAppuntamenti(
                                             item.anno,
                                             item.mese,
-                                            item.mesenumero
+                                            item.mesenumero,
+                                            audio.id
                                           )
                                         }
                                       }
@@ -1127,7 +1203,8 @@ var render = function() {
                                           return _vm.infoIntervenuti(
                                             item.anno,
                                             item.mese,
-                                            item.mesenumero
+                                            item.mesenumero,
+                                            audio.id
                                           )
                                         }
                                       }
@@ -1155,7 +1232,7 @@ var render = function() {
                                           _c("v-col", { staticClass: "pl-8" }, [
                                             _vm._v(
                                               "\n                                    " +
-                                                _vm._s(item.appuntamenti) +
+                                                _vm._s(item.intervenuti) +
                                                 "\n                                "
                                             )
                                           ])
@@ -1170,8 +1247,7 @@ var render = function() {
                             }
                           ],
                           null,
-                          false,
-                          1374882627
+                          true
                         )
                       },
                       [
@@ -1183,8 +1259,6 @@ var render = function() {
                             _c("th", { staticClass: "title" }, [
                               _vm._v("Totali")
                             ]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "title" }),
                             _vm._v(" "),
                             _c("th", { staticClass: "title text-center" }, [
                               _vm._v(_vm._s(_vm.sumField("telefonate")))
@@ -1205,7 +1279,7 @@ var render = function() {
                   ],
                   1
                 )
-              ],
+              }),
               1
             )
           ],
@@ -1287,87 +1361,109 @@ var render = function() {
           )
         : _c(
             "div",
-            _vm._l(_vm.getAppuntamentiAnnoMese, function(item, index) {
-              return _c(
+            [
+              _c(
                 "v-row",
-                { key: index },
                 [
                   _c(
                     "v-col",
                     { attrs: { cols: "12" } },
                     [
-                      _c("h4", [
-                        _vm._v(
-                          "Appuntamenti fissati per: " +
-                            _vm._s(item[0].nominativoUser)
-                        )
-                      ]),
-                      _vm._v(" "),
                       _c("v-data-table", {
                         staticClass: "elevation-1 mt-3",
                         attrs: {
                           dense: "",
                           "item-key": "idTelefonata",
                           headers: _vm.headers,
-                          items: item
+                          items: _vm.getAppuntamentiAnnoMese
                         },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "item.nominativo",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticStyle: { color: "black" },
-                                      attrs: {
-                                        to: {
-                                          name: "clientsFiliale",
-                                          params: {
-                                            filialeId: item.filiale_id,
-                                            nomRicerca: item.nomeCliente,
-                                            cogRicerca:
-                                              item.cognomeCliente +
-                                              " " +
-                                              item.nomeCliente
-                                          }
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.nominativo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticStyle: { color: "black" },
+                                    attrs: {
+                                      to: {
+                                        name: "clientsFiliale",
+                                        params: {
+                                          filialeId: item.filiale_id,
+                                          nomRicerca: item.nome,
+                                          cogRicerca:
+                                            item.cognome + " " + item.nome
                                         }
                                       }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(
-                                            item.cognomeCliente +
-                                              " " +
-                                              item.nomeCliente
-                                          ) +
-                                          "\n                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              }
-                            },
-                            {
-                              key: "item.orario",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(item.cognome + " " + item.nome) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.giorno",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return _vm._l(item.appuntamenti, function(
+                                appuntamento
+                              ) {
+                                return _c("div", { key: appuntamento.id }, [
                                   _vm._v(
                                     "\n                        " +
-                                      _vm._s(item.orario.substring(0, 5)) +
+                                      _vm._s(appuntamento.giorno) +
                                       "\n                    "
                                   )
-                                ]
-                              }
+                                ])
+                              })
                             }
-                          ],
-                          null,
-                          true
-                        )
+                          },
+                          {
+                            key: "item.orario",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return _vm._l(item.appuntamenti, function(
+                                appuntamento
+                              ) {
+                                return _c("div", { key: appuntamento.id }, [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(
+                                        appuntamento.orario.substring(0, 5)
+                                      ) +
+                                      "\n                        "
+                                  )
+                                ])
+                              })
+                            }
+                          },
+                          {
+                            key: "item.tipo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return _vm._l(item.appuntamenti, function(
+                                appuntamento
+                              ) {
+                                return _c("div", { key: appuntamento.id }, [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(appuntamento.tipo) +
+                                      "\n                        "
+                                  )
+                                ])
+                              })
+                            }
+                          }
+                        ])
                       })
                     ],
                     1
@@ -1375,7 +1471,7 @@ var render = function() {
                 ],
                 1
               )
-            }),
+            ],
             1
           )
     ],
@@ -1455,86 +1551,109 @@ var render = function() {
           )
         : _c(
             "div",
-            _vm._l(_vm.getIntervenutiAnnoMese, function(item, index) {
-              return _c(
+            [
+              _c(
                 "v-row",
-                { key: index },
                 [
                   _c(
                     "v-col",
                     { attrs: { cols: "12" } },
                     [
-                      _c("h4", [
-                        _vm._v(
-                          "Intervenuti per: " + _vm._s(item[0].nominativoUser)
-                        )
-                      ]),
-                      _vm._v(" "),
                       _c("v-data-table", {
                         staticClass: "elevation-1 mt-3",
                         attrs: {
                           dense: "",
                           "item-key": "idTelefonata",
                           headers: _vm.headers,
-                          items: item
+                          items: _vm.getIntervenutiAnnoMese
                         },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "item.nominativo",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticStyle: { color: "black" },
-                                      attrs: {
-                                        to: {
-                                          name: "clientsFiliale",
-                                          params: {
-                                            filialeId: item.filiale_id,
-                                            nomRicerca: item.nomeCliente,
-                                            cogRicerca:
-                                              item.cognomeCliente +
-                                              " " +
-                                              item.nomeCliente
-                                          }
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.nominativo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticStyle: { color: "black" },
+                                    attrs: {
+                                      to: {
+                                        name: "clientsFiliale",
+                                        params: {
+                                          filialeId: item.filiale_id,
+                                          nomRicerca: item.nome,
+                                          cogRicerca:
+                                            item.cognome + " " + item.nome
                                         }
                                       }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(
-                                            item.cognomeCliente +
-                                              " " +
-                                              item.nomeCliente
-                                          ) +
-                                          "\n                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              }
-                            },
-                            {
-                              key: "item.orario",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(item.orario.substring(0, 5)) +
-                                      "\n                    "
-                                  )
-                                ]
-                              }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(item.cognome + " " + item.nome) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                )
+                              ]
                             }
-                          ],
-                          null,
-                          true
-                        )
+                          },
+                          {
+                            key: "item.giorno",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return _vm._l(item.appuntamenti, function(
+                                appuntamento
+                              ) {
+                                return _c("div", { key: appuntamento.id }, [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(appuntamento.giorno) +
+                                      "\n                        "
+                                  )
+                                ])
+                              })
+                            }
+                          },
+                          {
+                            key: "item.orario",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return _vm._l(item.appuntamenti, function(
+                                appuntamento
+                              ) {
+                                return _c("div", { key: appuntamento.id }, [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(
+                                        appuntamento.orario.substring(0, 5)
+                                      ) +
+                                      "\n                        "
+                                  )
+                                ])
+                              })
+                            }
+                          },
+                          {
+                            key: "item.tipo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return _vm._l(item.appuntamenti, function(
+                                appuntamento
+                              ) {
+                                return _c("div", { key: appuntamento.id }, [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(appuntamento.tipo) +
+                                      "\n                        "
+                                  )
+                                ])
+                              })
+                            }
+                          }
+                        ])
                       })
                     ],
                     1
@@ -1542,7 +1661,7 @@ var render = function() {
                 ],
                 1
               )
-            }),
+            ],
             1
           )
     ],
@@ -1622,74 +1741,86 @@ var render = function() {
           )
         : _c(
             "div",
-            _vm._l(_vm.getTelefonateAnnoMese, function(item, index) {
-              return _c(
+            [
+              _c(
                 "v-row",
-                { key: index },
                 [
                   _c(
                     "v-col",
                     { attrs: { cols: "12" } },
                     [
-                      _c("h4", [
-                        _vm._v(
-                          "Telefonate eseguite per: " +
-                            _vm._s(item[0].nominativoUser)
-                        )
-                      ]),
-                      _vm._v(" "),
                       _c("v-data-table", {
                         staticClass: "elevation-1 mt-3",
                         attrs: {
                           dense: "",
                           "item-key": "idTelefonata",
                           headers: _vm.headers,
-                          items: item
+                          items: _vm.getTelefonateAnnoMese
                         },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "item.nominativo",
-                              fn: function(ref) {
-                                var item = ref.item
-                                return [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticStyle: { color: "black" },
-                                      attrs: {
-                                        to: {
-                                          name: "clientsFiliale",
-                                          params: {
-                                            filialeId: item.filiale_id,
-                                            nomRicerca: item.nomeCliente,
-                                            cogRicerca:
-                                              item.cognomeCliente +
-                                              " " +
-                                              item.nomeCliente
-                                          }
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.nominativo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticStyle: { color: "black" },
+                                    attrs: {
+                                      to: {
+                                        name: "clientsFiliale",
+                                        params: {
+                                          filialeId: item.filiale_id,
+                                          nomRicerca: item.nome,
+                                          cogRicerca:
+                                            item.cognome + " " + item.nome
                                         }
                                       }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(
-                                            item.cognomeCliente +
-                                              " " +
-                                              item.nomeCliente
-                                          ) +
-                                          "\n                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(item.cognome + " " + item.nome) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                )
+                              ]
                             }
-                          ],
-                          null,
-                          true
-                        )
+                          },
+                          {
+                            key: "item.recalls",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return _vm._l(item.recalls, function(telefonata) {
+                                return _c("div", { key: telefonata.id }, [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(telefonata.datarecall) +
+                                      "\n                        "
+                                  )
+                                ])
+                              })
+                            }
+                          },
+                          {
+                            key: "item.esito",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return _vm._l(item.recalls, function(telefonata) {
+                                return _c("div", { key: telefonata.id }, [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(telefonata.esito) +
+                                      "\n                        "
+                                  )
+                                ])
+                              })
+                            }
+                          }
+                        ])
                       })
                     ],
                     1
@@ -1697,7 +1828,7 @@ var render = function() {
                 ],
                 1
               )
-            }),
+            ],
             1
           )
     ],

@@ -107,7 +107,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       ricerca: {},
-      anni: ['2021'],
       header: [{
         text: 'Audio',
         align: 'start',
@@ -169,12 +168,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.ricerca.anno = '';
+    this.$store.commit('medici/resetInvii');
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('medici', {
     statisticheInviiMedici: 'statisticheInviiMedici',
     statisticheTotaleInviiMedici: 'statisticheTotaleInviiMedici'
   })), {}, {
     selezionaAnno: function selezionaAnno() {
+      //console.log(this.ricerca)
       this.statisticheInviiMedici(this.ricerca);
       this.statisticheTotaleInviiMedici(this.ricerca);
     },
@@ -184,9 +185,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 0);
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('medici', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('medici', {
     getStatisticheInvii: 'getStatisticheInvii',
     getStatisticheTotaliInvii: 'getStatisticheTotaliInvii'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+    getAnni: 'getAnni'
   }))
 });
 
@@ -302,7 +305,7 @@ var render = function() {
                     "v-col",
                     [
                       _c("v-select", {
-                        attrs: { items: _vm.anni, label: "Anno" },
+                        attrs: { items: _vm.getAnni, label: "Anno" },
                         on: {
                           change: function($event) {
                             return _vm.selezionaAnno()

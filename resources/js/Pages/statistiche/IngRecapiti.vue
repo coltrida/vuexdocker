@@ -1,6 +1,18 @@
 <template>
     <div>
-        <h2>Ingressi Recapiti</h2>
+        <v-row>
+            <v-col>
+                <h2>Ingressi Recapiti</h2>
+            </v-col>
+            <v-col>
+                <v-select
+                    @change="selezionaAnno()"
+                    v-model="ricerca.anno"
+                    :items="getAnni"
+                    label="Anno"
+                ></v-select>
+            </v-col>
+        </v-row>
         <v-row class="my-3">
             <v-col cols="5">
                 <h3>Tipologia</h3>
@@ -38,6 +50,7 @@
 
         data(){
             return {
+                ricerca:{},
                 AudioSelected: [],
                 switch: 0,
                 singleSelect: true,
@@ -46,6 +59,7 @@
                     { text: 'PC', sortable: false, value: 'clientsPc', class: "indigo white--text" },
                     { text: 'CL', sortable: false, value: 'clientsCl', class: "indigo white--text" },
                     { text: 'CLC', sortable: false, value: 'clientsClc', class: "indigo white--text" },
+                    { text: 'LE', sortable: false, value: 'clientsLe', class: "indigo white--text" },
                     { text: 'NORMO', sortable: false, value: 'clientsNormo', class: "indigo white--text" },
                     { text: 'Totale', align: 'start', sortable: false, value: 'clients_count', class: "indigo white--text" },
                 ],
@@ -70,8 +84,8 @@
         },
 
         mounted() {
-            this.fetchRecapitiIngresi();
-            this.fetchRecapitiIngresiMesi();
+            this.ricerca.anno = '';
+            this.$store.commit('recapiti/resetRecapitiIngressi');
         },
 
         methods:{
@@ -79,6 +93,11 @@
                 fetchRecapitiIngresi:'fetchRecapitiIngresi',
                 fetchRecapitiIngresiMesi:'fetchRecapitiIngresiMesi',
             }),
+
+            selezionaAnno(){
+                this.fetchRecapitiIngresi(this.ricerca);
+                this.fetchRecapitiIngresiMesi(this.ricerca);
+            },
 
         },
 
@@ -88,6 +107,9 @@
                 getRecapitiIngressiMesi:'getRecapitiIngressiMesi',
             }),
 
+            ...mapGetters('clients', {
+                getAnni: 'getAnni',
+            }),
         }
     }
 </script>

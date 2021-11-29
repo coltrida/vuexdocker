@@ -8,7 +8,7 @@
                 <v-select
                     @change="selezionaAnno()"
                     v-model="ricerca.anno"
-                    :items="anni"
+                    :items="getAnni"
                     label="Anno"
                 ></v-select>
             </v-col>
@@ -61,8 +61,6 @@
             return {
                 ricerca:{},
 
-                anni:['2021'],
-
                 header: [
                     { text: 'Medico',  align: 'start', sortable: false, value: 'medico.fullname', class: "indigo white--text" },
                     { text: 'Nome',  align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
@@ -80,6 +78,7 @@
 
         mounted() {
             this.ricerca.anno = '';
+            this.$store.commit('medici/resetInvii');
         },
 
         methods:{
@@ -106,6 +105,9 @@
                 getIdUser: 'getIdUser',
             }),
 
+            ...mapGetters('clients', {
+                getAnni: 'getAnni',
+            }),
         }
     }
 </script>

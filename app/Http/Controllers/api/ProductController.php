@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function riepilogoFiliali(ProductService $productService)
+    {
+        return $productService->riepilogoFiliali();
+    }
+
     public function presenti($id, ProductService $productService)
     {
         return ProductResource::collection($productService->presenti($id));

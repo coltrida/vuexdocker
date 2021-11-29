@@ -40,13 +40,16 @@ class ClientResource extends JsonResource
             'medico' => isset($this->medico->nome) ? $this->medico->fullname : null,
             'recapito_id' => $this->recapito_id,
             'medico_id' => $this->medico_id,
-            'datanascita' => $this->datanascita ? Carbon::make($this->datanascita)->format('d-m-Y') : null,
+            'datanascita' => $this->datanascita,
+            'datanascitaVisualizzazione' => $this->datanascita ? Carbon::make($this->datanascita)->format('d-m-Y') : null,
             'luogoNascita' => $this->luogoNascita,
             'audiometria' => $this->audiometria,
             'prove' => $this->prova,
             'fullname' => $this->fullname,
             'fullricerca' => $this->fullricerca,
             'telefonateOggi' => $this->recalls_count,
+            'meseIngresso' => $this->mese,
+            'annoIngresso' => $this->anno,
         ];
     }
 }

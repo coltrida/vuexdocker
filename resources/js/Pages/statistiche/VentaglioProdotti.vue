@@ -1,6 +1,18 @@
 <template>
     <div>
-        <h2 class="mt-4">Ventaglio Prodotti</h2>
+        <v-row class="mt-4">
+            <v-col>
+                <h2>Ventaglio Prodotti</h2>
+            </v-col>
+            <v-col>
+                <v-select
+                    @change="selezionaAnno()"
+                    v-model="ricerca.anno"
+                    :items="getAnni"
+                    label="Anno"
+                ></v-select>
+            </v-col>
+        </v-row>
         <v-row>
             <v-col cols="12">
                     <v-data-table
@@ -50,6 +62,7 @@
         name: "AssegnaBudget",
         data(){
             return {
+                ricerca:{},
                 headers: [
                     { text: 'Audioprotesista', align: 'start', sortable: false, value: 'user.name', class: "indigo white--text" },
                     { text: 'Totale', sortable: false, value: 'tot', class: "indigo white--text" },
@@ -63,7 +76,6 @@
         },
 
         mounted() {
-            this.fetchVentaglioAnno();
             this.fetchNomiApa().then(() =>{
                 this.inizializzaTabella();
             });
@@ -91,6 +103,10 @@
                 })
             },
 
+            selezionaAnno(){
+                this.fetchVentaglioAnno(this.ricerca);
+            },
+
             sumField(key) {
                 return parseInt(this.getVentaglioAnno.reduce((a, b) => a + parseInt(b[key] || 0), 0))
             }
@@ -106,6 +122,9 @@
                 getNomiApa:'getNomiApa',
             }),
 
+            ...mapGetters('clients', {
+                getAnni: 'getAnni',
+            }),
         }
     }
 </script>

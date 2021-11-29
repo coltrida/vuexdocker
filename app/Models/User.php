@@ -120,17 +120,6 @@ class User extends Authenticatable
     protected $guarded = [];
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -177,7 +166,7 @@ class User extends Authenticatable
         } else if ($bgt == 2){
             return $query->whereHas('ruolo', function ($ruolo){
                 $ruolo->where('nome', 'audio');
-            })->where('budget_id', null);;
+            })->where('budget_id', null);
         }
 
     }
@@ -248,8 +237,9 @@ class User extends Authenticatable
 
     public function provaInCorso()
     {
-        return $this->hasMany(Prova::class)->whereHas('stato', function($q){
-            $q->where('nome', 'PROVA');
+        return $this->hasMany(Prova::class)
+            ->whereHas('stato', function($q){
+                $q->where('nome', 'PROVA');
         })->with('client:id,nome,cognome', 'product');
     }
 
@@ -408,5 +398,10 @@ class User extends Authenticatable
     public function medici()
     {
         return $this->belongsToMany(Medico::class);
+    }
+
+    public function risultatiTelefonate()
+    {
+        return $this->hasMany(Risultatitel::class);
     }
 }

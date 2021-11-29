@@ -233,43 +233,27 @@ class AppuntamentiService
         return $giorni;
     }
 
-    public function appuntamentiAnnoMese($anno, $mese)
+    public function appuntamentiAnnoMese($request)
     {
-        return DB::table('appuntamentos as a')
-            ->where([
-                ['a.anno', $anno],
-                ['a.mese', $mese],
-            ])
-            ->join('clients', 'clients.id', '=', 'a.client_id')
-            ->join('users as u', 'u.id', '=', 'a.user_id')
-            ->join('users as p', 'p.id', '=', 'a.preso_id')
-            ->select('a.id as idAppuntamento', 'a.giorno', 'a.orario', 'a.tipo',
-                'clients.nome as nomeCliente', 'clients.cognome as cognomeCliente', 'clients.citta as cittaCliente', 'clients.filiale_id as filiale_id',
-                'u.name as nominativoUser',
-                'p.name as presoDa')
-            ->orderBy('a.giorno')
-            ->get()
-            ->groupBy('nominativoUser');
+        return Client::whereHas('appuntamenti', function($t) use($request){
+            $t->where([
+                ['anno', $request->anno],
+                ['mese', $request->mesenumero],
+                ['preso_id', $request->idTelefonante],
+            ]);
+        })->with('appuntamenti')->get();
     }
 
-    public function intervenutiAnnoMese($anno, $mese)
+    public function intervenutiAnnoMese($request)
     {
-        return DB::table('appuntamentos as a')
-            ->where([
-                ['a.anno', $anno],
-                ['a.mese', $mese],
-                ['a.intervenuto', true],
-            ])
-            ->join('clients', 'clients.id', '=', 'a.client_id')
-            ->join('users as u', 'u.id', '=', 'a.user_id')
-            ->join('users as p', 'p.id', '=', 'a.preso_id')
-            ->select('a.id as idAppuntamento', 'a.giorno', 'a.orario', 'a.tipo',
-                'clients.nome as nomeCliente', 'clients.cognome as cognomeCliente', 'clients.citta as cittaCliente', 'clients.filiale_id as filiale_id',
-                'u.name as nominativoUser',
-                'p.name as presoDa')
-            ->orderBy('a.giorno')
-            ->get()
-            ->groupBy('nominativoUser');
+        return Client::whereHas('appuntamenti', function($t) use($request){
+            $t->where([
+                ['anno', $request->anno],
+                ['mese', $request->mesenumero],
+                ['preso_id', $request->idTelefonante],
+                ['intervenuto', true]
+            ]);
+        })->with('appuntamenti')->get();
     }
 
     public function inSospeso($idAudio)

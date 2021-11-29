@@ -24,13 +24,13 @@ class MarketingController extends Controller
         return $marketingService->eliminaCanale($id);
     }
 
-    public function fatturatoCanali(MarketingService $marketingService)
+    public function fatturatoCanali(Request $request, MarketingService $marketingService)
     {
-        return $marketingService->fatturatoCanali();
+        return $marketingService->fatturatoCanali($request);
     }
 
-    public function userFatturatoCanali(MarketingService $marketingService)
+    public function userFatturatoCanali(Request $request, MarketingService $marketingService)
     {
-        return $marketingService->userFatturatoCanali();
+        return $marketingService->userFatturatoCanali($request);
     }
 }

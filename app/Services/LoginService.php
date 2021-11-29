@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class LoginService
@@ -49,6 +50,7 @@ class LoginService
 
         $user->cleanpassword = $request->password;
         $user->password = Hash::make($request->password);
+        $user->email_verified_at = Carbon::now();
         $user->save();
         $user = User::with('ruolo', 'recapito')->where('email', $request->email)->first();
 
