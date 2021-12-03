@@ -1,14 +1,26 @@
 <template>
     <div class="py-10">
-        <h2>Dettaglio Audioprotesisti</h2>
+        <v-row>
+            <v-col>
+                <h2>Dettaglio Audioprotesisti</h2>
+            </v-col>
+            <v-col>
+                <v-select
+                    @change="selezionaAnno()"
+                    v-model="ricerca.anno"
+                    :items="getAnni"
+                    label="Anno"
+                ></v-select>
+            </v-col>
+        </v-row>
 
             <v-card color="blue lighten-4" v-for="audio in getAudioConFatt" :key="audio.id" class="mb-7">
                 <v-row class="pa-5">
                     <!--<v-col><h2>{{audio.name}}</h2></v-col>-->
                     <v-col><h4>Conv. Prove: {{ (((audio.nuova + audio.riacquisto) / audio.prova_count) * 100).toFixed(0) }}%</h4></v-col>
-                    <v-col><h4>Nr. Pc: {{audio.delta.provvigione}}</h4></v-col>
-                    <v-col><h4>Nr. Cl: {{audio.delta.stipendio}}</h4></v-col>
-                    <v-col><h4>Media v.: {{audio.fatturati.provvigione}}</h4></v-col>
+                    <v-col><h4>Nr. Pc: {{audio.molti_delta[0] ? audio.molti_delta[0].provvigione : 0}}</h4></v-col>
+                    <v-col><h4>Nr. Cl: {{audio.molti_delta[0] ? audio.molti_delta[0].stipendio : 0}}</h4></v-col>
+                    <v-col><h4>Media v.: {{audio.molti_fatturati[0] ? audio.molti_fatturati[0].provvigione : 0}}</h4></v-col>
                     <v-col><h4>Prove aperte: {{audio.prova_count}}</h4></v-col>
                     <v-col><h4>New Vendite: {{audio.nuova}}</h4></v-col>
                     <v-col><h4>Riacquisti: {{audio.riacquisto}}</h4></v-col>
@@ -68,6 +80,7 @@
 
         data(){
             return {
+                ricerca:{},
                 AudioSelected: [],
                 switch: 0,
                 singleSelect: true,
@@ -82,13 +95,18 @@
         },
 
         mounted() {
-            this.fetchAudioConFatt();
+            this.ricerca.anno = '';
+            this.$store.commit('users/resetAudioConFatt');
         },
 
         methods:{
             ...mapActions('users', {
                 fetchAudioConFatt:'fetchAudioConFatt',
             }),
+
+            selezionaAnno(){
+                this.fetchAudioConFatt(this.ricerca);
+            },
 
             calcolaMediaGiorniProva(prove){
                 let tot = 0;
@@ -106,6 +124,10 @@
         computed:{
             ...mapGetters('users', {
                 getAudioConFatt:'getAudioConFatt',
+            }),
+
+            ...mapGetters('clients', {
+                getAnni: 'getAnni',
             }),
 
         }

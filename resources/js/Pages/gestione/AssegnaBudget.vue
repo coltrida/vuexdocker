@@ -1,6 +1,19 @@
 <template>
     <div>
-        <h2>Assegna Budget</h2>
+        <v-row>
+            <v-col>
+                <h2>Assegna Budget</h2>
+            </v-col>
+            <v-col>
+                <v-select
+                    @change="selezionaAnno()"
+                    v-model="ricerca.anno"
+                    :items="getAnni"
+                    label="Anno"
+                ></v-select>
+            </v-col>
+        </v-row>
+
         <div class="py-6">
             <v-row>
                 <v-col cols="4">
@@ -26,6 +39,13 @@
                                 label="budget"
                             ></v-text-field>
                         </v-col>
+                        <v-col cols="4">
+                            <v-select
+                                v-model="assegna.anno"
+                                :items="getAnni"
+                                label="Anno"
+                            ></v-select>
+                        </v-col>
                         <!--<v-col cols="4">
                             <v-text-field
                                 v-model="assegna.stipendio"
@@ -42,12 +62,7 @@
 
 
                 </v-col>
-                <v-col cols="4">
-                    <!--<h3>Utile Annuo</h3>
-                    <v-chip class="ma-2" color="orange" >
-                        € {{ utile }}
-                    </v-chip>-->
-                </v-col>
+
             </v-row>
 
             <v-row>
@@ -109,61 +124,62 @@
                     </v-icon>
                 </template>
 
-                <template v-slot:item.budget.budgetAnno="{ item }">
-                    {{item.budget.budgetAnno.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].budgetAnno="{ item }">
+                    {{item.molti_budget[0].budgetAnno.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.gennaio="{ item }">
-                    {{item.budget.gennaio.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].gennaio="{ item }">
+                    {{item.molti_budget[0].gennaio.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.febbraio="{ item }">
-                    {{item.budget.febbraio.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].febbraio="{ item }">
+                    {{item.molti_budget[0].febbraio.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.marzo="{ item }">
-                    {{item.budget.marzo.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].marzo="{ item }">
+                    {{item.molti_budget[0].marzo.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.aprile="{ item }">
-                    {{item.budget.aprile.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].aprile="{ item }">
+                    {{item.molti_budget[0].aprile.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.maggio="{ item }">
-                    {{item.budget.maggio.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].maggio="{ item }">
+                    {{item.molti_budget[0].maggio.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.giugno="{ item }">
-                    {{item.budget.giugno.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].giugno="{ item }">
+                    {{item.molti_budget[0].giugno.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.luglio="{ item }">
-                    {{item.budget.luglio.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].luglio="{ item }">
+                    {{item.molti_budget[0].luglio.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.agosto="{ item }">
-                    {{item.budget.agosto.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].agosto="{ item }">
+                    {{item.molti_budget[0].agosto.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.settembre="{ item }">
-                    {{item.budget.settembre.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].settembre="{ item }">
+                    {{item.molti_budget[0].settembre.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.ottobre="{ item }">
-                    {{item.budget.ottobre.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].ottobre="{ item }">
+                    {{item.molti_budget[0].ottobre.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.novembre="{ item }">
-                    {{item.budget.novembre.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].novembre="{ item }">
+                    {{item.molti_budget[0].novembre.toLocaleString('it')}}
                 </template>
 
-                <template v-slot:item.budget.dicembre="{ item }">
-                    {{item.budget.dicembre.toLocaleString('it')}}
+                <template v-slot:item.molti_budget[0].dicembre="{ item }">
+                    {{item.molti_budget[0].dicembre.toLocaleString('it')}}
                 </template>
 
                 <template slot="body.append">
                     <tr class="pink--text">
                         <th class="title">Totali</th>
+                        <th></th>
                         <th>{{ totAnno.toLocaleString('it') }}</th>
                         <th>{{ totGennaio.toLocaleString('it') }}</th>
                         <th>{{ totFebbraio.toLocaleString('it') }}</th>
@@ -192,6 +208,7 @@
 
         data(){
             return {
+                ricerca:{},
                 AudioSelected: [],
                 switch: 0,
                 singleSelect: true,
@@ -213,19 +230,20 @@
                 ],
                 headers2: [
                     { text: 'Nome', align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
-                    { text: 'Bgt Anno', sortable: false, value: 'budget.budgetAnno', class: "indigo white--text" },
-                    { text: 'Genn', sortable: false, value: 'budget.gennaio', class: "indigo white--text" },
-                    { text: 'Febb', sortable: false, value: 'budget.febbraio', class: "indigo white--text" },
-                    { text: 'Marzo', sortable: false, value: 'budget.marzo', class: "indigo white--text" },
-                    { text: 'April', sortable: false, value: 'budget.aprile', class: "indigo white--text" },
-                    { text: 'Magg', sortable: false, value: 'budget.maggio', class: "indigo white--text" },
-                    { text: 'Giug', sortable: false, value: 'budget.giugno', class: "indigo white--text" },
-                    { text: 'Lugl', sortable: false, value: 'budget.luglio', class: "indigo white--text" },
-                    { text: 'Agos', sortable: false, value: 'budget.agosto', class: "indigo white--text" },
-                    { text: 'Sett', sortable: false, value: 'budget.settembre', class: "indigo white--text" },
-                    { text: 'Otto', sortable: false, value: 'budget.ottobre', class: "indigo white--text" },
-                    { text: 'Nove', sortable: false, value: 'budget.novembre', class: "indigo white--text" },
-                    { text: 'Dice', sortable: false, value: 'budget.dicembre', class: "indigo white--text" },
+                    { text: 'Anno', sortable: false, value: 'molti_budget[0].anno', class: "indigo white--text" },
+                    { text: 'Bgt Anno', sortable: false, value: 'molti_budget[0].budgetAnno', class: "indigo white--text" },
+                    { text: 'Genn', sortable: false, value: 'molti_budget[0].gennaio', class: "indigo white--text" },
+                    { text: 'Febb', sortable: false, value: 'molti_budget[0].febbraio', class: "indigo white--text" },
+                    { text: 'Marzo', sortable: false, value: 'molti_budget[0].marzo', class: "indigo white--text" },
+                    { text: 'April', sortable: false, value: 'molti_budget[0].aprile', class: "indigo white--text" },
+                    { text: 'Magg', sortable: false, value: 'molti_budget[0].maggio', class: "indigo white--text" },
+                    { text: 'Giug', sortable: false, value: 'molti_budget[0].giugno', class: "indigo white--text" },
+                    { text: 'Lugl', sortable: false, value: 'molti_budget[0].luglio', class: "indigo white--text" },
+                    { text: 'Agos', sortable: false, value: 'molti_budget[0].agosto', class: "indigo white--text" },
+                    { text: 'Sett', sortable: false, value: 'molti_budget[0].settembre', class: "indigo white--text" },
+                    { text: 'Otto', sortable: false, value: 'molti_budget[0].ottobre', class: "indigo white--text" },
+                    { text: 'Nove', sortable: false, value: 'molti_budget[0].novembre', class: "indigo white--text" },
+                    { text: 'Dice', sortable: false, value: 'molti_budget[0].dicembre', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
                 assegna: {
@@ -242,24 +260,7 @@
         },
 
         mounted() {
-            this.fetchAudioConBgtAssegnato().then(() => {
-                this.getAudioConBgt.forEach(ele => {
-                    this.totAnno += parseInt(ele.budget.budgetAnno);
-                    this.totGennaio += parseInt(ele.budget.gennaio);
-                    this.totFebbraio += parseInt(ele.budget.febbraio);
-                    this.totMarzo += parseInt(ele.budget.marzo);
-                    this.totAprile += parseInt(ele.budget.aprile);
-                    this.totMaggio += parseInt(ele.budget.maggio);
-                    this.totGiugno += parseInt(ele.budget.giugno);
-                    this.totLuglio += parseInt(ele.budget.luglio);
-                    this.totAgosto += parseInt(ele.budget.agosto);
-                    this.totSettembre += parseInt(ele.budget.settembre);
-                    this.totOttobre += parseInt(ele.budget.ottobre);
-                    this.totNovembre += parseInt(ele.budget.novembre);
-                    this.totDicembre += parseInt(ele.budget.dicembre);
-                });
-            });
-            this.fetchAudioSenzaBgt();
+
         },
 
         methods:{
@@ -277,6 +278,7 @@
                         this.switch = 0;
                         this.assegna ={
                             budgetAnno:0,
+                            anno:'',
                             stipendio: 0,
                             provvigione: 0,
                             mese: []
@@ -290,6 +292,7 @@
                         this.switch = 0;
                         this.assegna ={
                             budgetAnno:0,
+                            anno:'',
                             stipendio: 0,
                             provvigione: 0,
                             mese: []
@@ -299,7 +302,6 @@
                         }
                     });
                 }
-
             },
 
             bgtMese(){
@@ -311,45 +313,80 @@
 
             modifica(item, indice){
                 this.switch = 1;
-                this.assegna.idBudget = item.budget.id;
+                this.assegna.idBudget = item.moltiBudget.id;
                 this.AudioSelected = [];
                 this.getAudioSenzaBgt.unshift(item);
                 this.getAudioConBgt.splice(indice, 1);
                 this.AudioSelected.unshift(item);
-                this.assegna.budgetAnno = item.budget.budgetAnno;
-                this.assegna.stipendio = item.budget.stipendio;
-                this.assegna.provvigione = item.budget.provvigione;
-                this.assegna.mese[0] = item.budget.gennaio;
-                this.assegna.mese[1] = item.budget.febbraio;
-                this.assegna.mese[2] = item.budget.marzo;
-                this.assegna.mese[3] = item.budget.aprile;
-                this.assegna.mese[4] = item.budget.maggio;
-                this.assegna.mese[5] = item.budget.giugno;
-                this.assegna.mese[6] = item.budget.luglio;
-                this.assegna.mese[7] = item.budget.agosto;
-                this.assegna.mese[8] = item.budget.settembre;
-                this.assegna.mese[9] = item.budget.ottobre;
-                this.assegna.mese[10] = item.budget.novembre;
-                this.assegna.mese[11] = item.budget.dicembre;
+                this.assegna.budgetAnno = item.moltiBudget.budgetAnno;
+                this.assegna.stipendio = item.moltiBudget.stipendio;
+                this.assegna.provvigione = item.moltiBudget.provvigione;
+                this.assegna.mese[0] = item.moltiBudget.gennaio;
+                this.assegna.mese[1] = item.moltiBudget.febbraio;
+                this.assegna.mese[2] = item.moltiBudget.marzo;
+                this.assegna.mese[3] = item.moltiBudget.aprile;
+                this.assegna.mese[4] = item.moltiBudget.maggio;
+                this.assegna.mese[5] = item.moltiBudget.giugno;
+                this.assegna.mese[6] = item.moltiBudget.luglio;
+                this.assegna.mese[7] = item.moltiBudget.agosto;
+                this.assegna.mese[8] = item.moltiBudget.settembre;
+                this.assegna.mese[9] = item.moltiBudget.ottobre;
+                this.assegna.mese[10] = item.moltiBudget.novembre;
+                this.assegna.mese[11] = item.moltiBudget.dicembre;
 
-                this.percentuale.mese[0] = ((item.budget.gennaio / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[1] = ((item.budget.febbraio / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[2] = ((item.budget.marzo / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[3] = ((item.budget.aprile / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[4] = ((item.budget.maggio / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[5] = ((item.budget.giugno / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[6] = ((item.budget.luglio / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[7] = ((item.budget.agosto / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[8] = ((item.budget.settembre / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[9] = ((item.budget.ottobre / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[10] = ((item.budget.novembre / item.budget.budgetAnno) * 100).toFixed(0);
-                this.percentuale.mese[11] = ((item.budget.dicembre / item.budget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[0] = ((item.moltiBudget.gennaio / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[1] = ((item.moltiBudget.febbraio / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[2] = ((item.moltiBudget.marzo / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[3] = ((item.moltiBudget.aprile / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[4] = ((item.moltiBudget.maggio / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[5] = ((item.moltiBudget.giugno / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[6] = ((item.moltiBudget.luglio / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[7] = ((item.moltiBudget.agosto / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[8] = ((item.moltiBudget.settembre / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[9] = ((item.moltiBudget.ottobre / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[10] = ((item.moltiBudget.novembre / item.moltiBudget.budgetAnno) * 100).toFixed(0);
+                this.percentuale.mese[11] = ((item.moltiBudget.dicembre / item.moltiBudget.budgetAnno) * 100).toFixed(0);
             },
 
             modificaBgtMese(percent, mese){
                 this.assegna.mese[mese-1] =
                     ((parseFloat(this.assegna.budgetAnno) * percent / 100).toFixed(0))
-            }
+            },
+
+            selezionaAnno(){
+                this.totAnno = 0;
+                this.totGennaio = 0;
+                this.totFebbraio = 0;
+                this.totMarzo = 0;
+                this.totAprile = 0;
+                this.totMaggio = 0;
+                this.totGiugno = 0;
+                this.totLuglio = 0;
+                this.totAgosto = 0;
+                this.totSettembre = 0;
+                this.totOttobre = 0;
+                this.totNovembre = 0;
+                this.totDicembre = 0;
+
+                this.fetchAudioConBgtAssegnato(this.ricerca).then(() => {
+                    this.getAudioConBgt.forEach(ele => {
+                        this.totAnno += parseInt(ele.molti_budget[0].budgetAnno);
+                        this.totGennaio += parseInt(ele.molti_budget[0].gennaio);
+                        this.totFebbraio += parseInt(ele.molti_budget[0].febbraio);
+                        this.totMarzo += parseInt(ele.molti_budget[0].marzo);
+                        this.totAprile += parseInt(ele.molti_budget[0].aprile);
+                        this.totMaggio += parseInt(ele.molti_budget[0].maggio);
+                        this.totGiugno += parseInt(ele.molti_budget[0].giugno);
+                        this.totLuglio += parseInt(ele.molti_budget[0].luglio);
+                        this.totAgosto += parseInt(ele.molti_budget[0].agosto);
+                        this.totSettembre += parseInt(ele.molti_budget[0].settembre);
+                        this.totOttobre += parseInt(ele.molti_budget[0].ottobre);
+                        this.totNovembre += parseInt(ele.molti_budget[0].novembre);
+                        this.totDicembre += parseInt(ele.molti_budget[0].dicembre);
+                    });
+                });
+                this.fetchAudioSenzaBgt(this.ricerca);
+            },
 
         },
 
@@ -357,6 +394,10 @@
             ...mapGetters('users', {
                 getAudioConBgt:'getAudioConBgt',
                 getAudioSenzaBgt:'getAudioSenzaBgt',
+            }),
+
+            ...mapGetters('clients', {
+                getAnni: 'getAnni',
             }),
 
             sommaProvvigioni(){

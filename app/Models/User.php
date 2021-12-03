@@ -155,14 +155,17 @@ class User extends Authenticatable
 
     public function scopeAudio($query, $bgt='')
     {
+        $annoAttuale = Carbon::now()->year;
         if($bgt == ''){
             return $query->whereHas('ruolo', function ($ruolo){
                 $ruolo->where('nome', 'audio');
             });
         } else if ($bgt == 1){
-            return $query->whereHas('ruolo', function ($ruolo){
+            return $query->whereHas('ruolo', function ($ruolo) use($annoAttuale){
                 $ruolo->where('nome', 'audio');
-            })->where('budget_id', '!=', '');
+            })->whereHas('moltiBudget', function ($m) use($annoAttuale){
+                $m->where('anno', $annoAttuale);
+            });
         } else if ($bgt == 2){
             return $query->whereHas('ruolo', function ($ruolo){
                 $ruolo->where('nome', 'audio');
@@ -245,9 +248,7 @@ class User extends Authenticatable
 
     public function provaFinalizzata()
     {
-        $anno = Carbon::now()->year;
         return $this->hasMany(Prova::class)
-            ->where('anno_fine', $anno)
             ->whereHas('stato', function($q){
                 $q->where('nome', 'FATTURA');
         })->with('client:id,nome,cognome', 'product');

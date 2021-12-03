@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\Agenda
@@ -41,4 +42,30 @@ class Agenda extends Model
 
     protected $table = 'agendas';
     protected $guarded = [];
+    protected $appends = ['luniniz', 'mariniz', 'meriniz', 'gioiniz', 'veniniz'];
+
+    public function getLuninizAttribute()
+    {
+        return Str::substr($this->lun, 0, 1);
+    }
+
+    public function getMarinizAttribute()
+    {
+        return Str::substr($this->mar, 0, 1);
+    }
+
+    public function getMerinizAttribute()
+    {
+        return Str::substr($this->mer, 0, 1);
+    }
+
+    public function getgioinizAttribute()
+    {
+        return Str::substr($this->gio, 0, 1);
+    }
+
+    public function getVeninizAttribute()
+    {
+        return Str::substr($this->ven, 0, 1);
+    }
 }

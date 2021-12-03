@@ -121,9 +121,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Listino",
+  name: "Agende",
   data: function data() {
     return {
       user: {},
@@ -197,9 +199,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.fetchUserAgenda();
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchUserAgenda: 'fetchUserAgenda',
     addAgenda: 'addAgenda'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('recapiti', {
+    fetchStruttureAudio: 'fetchStruttureAudio'
   })), {}, {
     aggiungi: function aggiungi() {
       var _this = this;
@@ -209,15 +213,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       /*this.user = {};*/
     },
+    caricaCose: function caricaCose() {
+      this.fetchStruttureAudio(this.user.user_id);
+    },
     itemRowBackground: function itemRowBackground(item) {
       return item.settimana === 1 ? 'style-1' : item.settimana === 2 ? 'style-2' : item.settimana === 3 ? 'style-3' : item.settimana === 4 ? 'style-4' : '';
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getUsers: 'getUsers'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getRuolo: 'getRuolo'
-  }))
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('recapiti', {
+    getStruttureAudio: 'getStruttureAudio'
+  })), {}, {
+    listaCose: function listaCose() {
+      var lista = ['DOMICILIO', 'SCREENING'];
+      this.getStruttureAudio.forEach(function (ele) {
+        lista.push(ele.tipologia.toUpperCase() + ' ' + ele.nome);
+      });
+      return lista;
+    }
+  })
 });
 
 /***/ }),
@@ -450,6 +467,7 @@ var render = function() {
                         items: _vm.getUsers,
                         label: "utente"
                       },
+                      on: { change: _vm.caricaCose },
                       model: {
                         value: _vm.user.user_id,
                         callback: function($$v) {
@@ -502,8 +520,8 @@ var render = function() {
                   "v-col",
                   { attrs: { cols: "3", sm: "3" } },
                   [
-                    _c("v-text-field", {
-                      attrs: { label: "Cosa" },
+                    _c("v-select", {
+                      attrs: { items: _vm.listaCose, label: "Cosa" },
                       model: {
                         value: _vm.user.testo,
                         callback: function($$v) {

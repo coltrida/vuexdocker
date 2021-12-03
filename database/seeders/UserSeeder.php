@@ -137,6 +137,7 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
                 'password' => Hash::make('123456'),
             ],
+
         ]);
     }
 }

@@ -148,8 +148,8 @@ const actions = {
         commit('fetchSituazioneMese', response.data);
     },
 
-    async fetchSituazioneAnno({commit}){
-        const response = await axios.get(`${help().linkvisualizzasituazioneanno}`, {
+    async fetchSituazioneAnno({commit}, payload){
+        const response = await axios.post(`${help().linkvisualizzasituazioneanno}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -166,8 +166,8 @@ const actions = {
         commit('fetchAudioConBgt', response.data);
     },
 
-    async fetchAudioConFatt({commit}){
-        const response = await axios.get(`${help().linkstatistichedettagliaudio}`, {
+    async fetchAudioConFatt({commit}, payload){
+        const response = await axios.post(`${help().linkstatistichedettagliaudio}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -175,8 +175,8 @@ const actions = {
         commit('fetchAudioConFatt', response.data);
     },
 
-    async fetchAudioConBgtAssegnato({commit}){
-        const response = await axios.get(`${help().linkaudioconbgt}`, {
+    async fetchAudioConBgtAssegnato({commit}, payload){
+        const response = await axios.post(`${help().linkaudioconbgt}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -184,8 +184,8 @@ const actions = {
         commit('fetchAudioConBgtAssegnato', response.data);
     },
 
-    async fetchAudioSenzaBgt({commit}){
-        const response = await axios.get(`${help().linkaudiosenzabgt}`, {
+    async fetchAudioSenzaBgt({commit}, payload){
+        const response = await axios.post(`${help().linkaudiosenzabgt}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -353,8 +353,8 @@ const mutations = {
         let totFatt = 0;
         let totBgtProg = 0;
         payload.forEach(elemento => {
-            totBgtProg = totBgtProg + elemento.valori[0].premio;
-            totFatt = totFatt + elemento.valori[1].budgetAnno;
+            totBgtProg = totBgtProg + elemento.valori[0] ? elemento.valori[0].premio : 0;
+            totFatt = totFatt + elemento.valori[1] ? elemento.valori[1].budgetAnno : 0;
         });
         state.totFatt = totFatt;
         state.totBgtProg = totBgtProg;
@@ -419,6 +419,16 @@ const mutations = {
     fetchVentaglioAnno(state, payload){
         state.ventaglioAnno = payload;
     },
+
+    resetSituazioneAnno(state){
+        state.totFatt = 0;
+        state.totBgtProg = 0;
+        state.audioConBgt = [];
+    },
+
+    resetAudioConFatt(state){
+        state.audioConFatt = [];
+    }
 };
 
 export default{

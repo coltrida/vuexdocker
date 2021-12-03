@@ -90,6 +90,10 @@ class FilialeUserSeeder extends Seeder
                 'user_id' => $idCervone,
             ],
             [
+                'filiale_id' => $idPisa,
+                'user_id' => $idCervone,
+            ],
+            [
                 'filiale_id' => $idCivitanova,
                 'user_id' => $idPapatheodoru,
             ],

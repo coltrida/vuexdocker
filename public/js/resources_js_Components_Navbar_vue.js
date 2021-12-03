@@ -453,6 +453,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   /*data: () => ({
       items: [
@@ -647,6 +653,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3630,6 +3641,19 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "router-link",
+                { attrs: { to: { name: "diari" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("Diari")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
                 { attrs: { to: { name: "saldati" } } },
                 [
                   _c(
@@ -3966,6 +3990,19 @@ var render = function() {
                   _c(
                     "v-list-item",
                     [_c("v-list-item-title", [_vm._v("SETTIMANA")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "diario" } } },
+                [
+                  _c(
+                    "v-list-item",
+                    [_c("v-list-item-title", [_vm._v("DIARIO")])],
                     1
                   )
                 ],

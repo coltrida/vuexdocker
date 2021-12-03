@@ -25,29 +25,29 @@ class AppuntamentiController extends Controller
         return AppuntamentiResource::collection($appuntamentiService->domani($idAudio));
     }
 
-    public function lunedi($idAudio, AppuntamentiService $appuntamentiService)
+    public function lunedi($idAudio, AppuntamentiService $appuntamentiService, $direzione = null)
     {
-        return AppuntamentiResource::collection($appuntamentiService->lunedi($idAudio));
+        return AppuntamentiResource::collection($appuntamentiService->lunedi($idAudio, $direzione));
     }
 
-    public function martedi($idAudio, AppuntamentiService $appuntamentiService)
+    public function martedi($idAudio, AppuntamentiService $appuntamentiService, $direzione = null)
     {
-        return AppuntamentiResource::collection($appuntamentiService->martedi($idAudio));
+        return AppuntamentiResource::collection($appuntamentiService->martedi($idAudio, $direzione));
     }
 
-    public function mercoledi($idAudio, AppuntamentiService $appuntamentiService)
+    public function mercoledi($idAudio, AppuntamentiService $appuntamentiService, $direzione = null)
     {
-        return AppuntamentiResource::collection($appuntamentiService->mercoledi($idAudio));
+        return AppuntamentiResource::collection($appuntamentiService->mercoledi($idAudio, $direzione));
     }
 
-    public function giovedi($idAudio, AppuntamentiService $appuntamentiService)
+    public function giovedi($idAudio, AppuntamentiService $appuntamentiService, $direzione = null)
     {
-        return AppuntamentiResource::collection($appuntamentiService->giovedi($idAudio));
+        return AppuntamentiResource::collection($appuntamentiService->giovedi($idAudio, $direzione));
     }
 
-    public function venerdi($idAudio, AppuntamentiService $appuntamentiService)
+    public function venerdi($idAudio, AppuntamentiService $appuntamentiService, $direzione = null)
     {
-        return AppuntamentiResource::collection($appuntamentiService->venerdi($idAudio));
+        return AppuntamentiResource::collection($appuntamentiService->venerdi($idAudio, $direzione));
     }
 
     public function lunediProssimo($idAudio, AppuntamentiService $appuntamentiService)
@@ -90,9 +90,9 @@ class AppuntamentiController extends Controller
         return $appuntamentiService->eliminaAppuntamento($id, $idUser);
     }
 
-    public function dateSettimana(AppuntamentiService $appuntamentiService)
+    public function dateSettimana(AppuntamentiService $appuntamentiService, $direzione=null)
     {
-        return $appuntamentiService->dateSettimana();
+        return $appuntamentiService->dateSettimana($direzione);
     }
 
     public function dateSettimanaProssima(AppuntamentiService $appuntamentiService)
@@ -123,5 +123,20 @@ class AppuntamentiController extends Controller
     public function appuntamentoIntervenuto($idAppuntamento, AppuntamentiService $appuntamentiService)
     {
         $appuntamentiService->appuntamentoIntervenuto($idAppuntamento);
+    }
+
+    public function appuntamentogiornoora(Request $request, AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->appuntamentogiornoora($request);
+    }
+
+    public function dataDiOggi(AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->dataDiOggi();
+    }
+
+    public function settimanaDelMese($idAudio, AppuntamentiService $appuntamentiService, $direzione = null)
+    {
+        return $appuntamentiService->settimanaDelMese($idAudio, $direzione);
     }
 }

@@ -136,6 +136,7 @@
                                 <v-time-picker
                                     v-if="modal2"
                                     v-model="newAppuntamento.orario"
+                                    :allowed-minutes="allowedMinutes"
                                     full-width
                                 >
                                     <v-spacer></v-spacer>
@@ -201,7 +202,13 @@
                                 v-model.lazy="newAppuntamento.nota"
                             ></v-textarea>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="4" class="text-center" v-if="carica2">
+                            <v-progress-circular
+                                indeterminate
+                                color="primary"
+                            ></v-progress-circular>
+                        </v-col>
+                        <v-col cols="4" v-else>
                             <v-btn @click="inserisci" color="primary" class="my-2" :disabled="verificaCampi">
                                 {{btnName}}
                             </v-btn>
@@ -292,9 +299,11 @@
         components: {Calendar},
         data() {
             return {
+                allowedMinutes:[0, 30],
                 dialog: false,
                 informazioneStruttura: '',
                 carica: false,
+                carica2: false,
                 modificaSwitch: false,
                 modal2: false,
                 valid: true,
@@ -377,6 +386,7 @@
 
             inserisci() {
                 this.$refs.form.validate();
+                this.carica2=true;
                 this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
                 this.newAppuntamento.telefonista_id = this.getIdUser;
                 this.newAppuntamento.client_id = this.appuntamentoClient.id;
@@ -385,6 +395,7 @@
                     this.modificaAppuntamento(this.newAppuntamento).then(() => {
                         this.$refs.form.resetValidation();
                         this.caricaAppuntamenti();
+                        this.carica2=false;
                         this.newAppuntamento = {
                             filiale_id: null,
                             recapito_id: null,
@@ -396,6 +407,7 @@
                     this.addAppuntamento(this.newAppuntamento).then(() => {
                         this.$refs.form.resetValidation();
                         this.caricaAppuntamenti();
+                        this.carica2=false;
                         this.newAppuntamento = {
                             filiale_id: null,
                             recapito_id: null,

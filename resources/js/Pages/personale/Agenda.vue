@@ -25,7 +25,7 @@
     import {mapActions, mapGetters} from "vuex";
 
     export default {
-        name: "Listino",
+        name: "Agenda",
 
         data(){
             return {

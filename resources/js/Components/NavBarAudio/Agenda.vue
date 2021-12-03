@@ -22,6 +22,11 @@
                         <v-list-item-title>SETTIMANA</v-list-item-title>
                     </v-list-item>
                 </router-link>
+                <router-link :to="{ name: 'diario'}">
+                    <v-list-item>
+                        <v-list-item-title>DIARIO</v-list-item-title>
+                    </v-list-item>
+                </router-link>
             </v-list>
         </v-menu>
     </div>

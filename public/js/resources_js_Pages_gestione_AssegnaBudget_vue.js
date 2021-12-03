@@ -205,11 +205,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
   data: function data() {
     return {
+      ricerca: {},
       AudioSelected: [],
       "switch": 0,
       singleSelect: true,
@@ -240,69 +257,74 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'name',
         "class": "indigo white--text"
       }, {
+        text: 'Anno',
+        sortable: false,
+        value: 'molti_budget[0].anno',
+        "class": "indigo white--text"
+      }, {
         text: 'Bgt Anno',
         sortable: false,
-        value: 'budget.budgetAnno',
+        value: 'molti_budget[0].budgetAnno',
         "class": "indigo white--text"
       }, {
         text: 'Genn',
         sortable: false,
-        value: 'budget.gennaio',
+        value: 'molti_budget[0].gennaio',
         "class": "indigo white--text"
       }, {
         text: 'Febb',
         sortable: false,
-        value: 'budget.febbraio',
+        value: 'molti_budget[0].febbraio',
         "class": "indigo white--text"
       }, {
         text: 'Marzo',
         sortable: false,
-        value: 'budget.marzo',
+        value: 'molti_budget[0].marzo',
         "class": "indigo white--text"
       }, {
         text: 'April',
         sortable: false,
-        value: 'budget.aprile',
+        value: 'molti_budget[0].aprile',
         "class": "indigo white--text"
       }, {
         text: 'Magg',
         sortable: false,
-        value: 'budget.maggio',
+        value: 'molti_budget[0].maggio',
         "class": "indigo white--text"
       }, {
         text: 'Giug',
         sortable: false,
-        value: 'budget.giugno',
+        value: 'molti_budget[0].giugno',
         "class": "indigo white--text"
       }, {
         text: 'Lugl',
         sortable: false,
-        value: 'budget.luglio',
+        value: 'molti_budget[0].luglio',
         "class": "indigo white--text"
       }, {
         text: 'Agos',
         sortable: false,
-        value: 'budget.agosto',
+        value: 'molti_budget[0].agosto',
         "class": "indigo white--text"
       }, {
         text: 'Sett',
         sortable: false,
-        value: 'budget.settembre',
+        value: 'molti_budget[0].settembre',
         "class": "indigo white--text"
       }, {
         text: 'Otto',
         sortable: false,
-        value: 'budget.ottobre',
+        value: 'molti_budget[0].ottobre',
         "class": "indigo white--text"
       }, {
         text: 'Nove',
         sortable: false,
-        value: 'budget.novembre',
+        value: 'molti_budget[0].novembre',
         "class": "indigo white--text"
       }, {
         text: 'Dice',
         sortable: false,
-        value: 'budget.dicembre',
+        value: 'molti_budget[0].dicembre',
         "class": "indigo white--text"
       }, {
         text: 'Actions',
@@ -322,28 +344,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       nomeMese: ['gennaio', 'febbraio', 'marzo', 'apire', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
     };
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.fetchAudioConBgtAssegnato().then(function () {
-      _this.getAudioConBgt.forEach(function (ele) {
-        _this.totAnno += parseInt(ele.budget.budgetAnno);
-        _this.totGennaio += parseInt(ele.budget.gennaio);
-        _this.totFebbraio += parseInt(ele.budget.febbraio);
-        _this.totMarzo += parseInt(ele.budget.marzo);
-        _this.totAprile += parseInt(ele.budget.aprile);
-        _this.totMaggio += parseInt(ele.budget.maggio);
-        _this.totGiugno += parseInt(ele.budget.giugno);
-        _this.totLuglio += parseInt(ele.budget.luglio);
-        _this.totAgosto += parseInt(ele.budget.agosto);
-        _this.totSettembre += parseInt(ele.budget.settembre);
-        _this.totOttobre += parseInt(ele.budget.ottobre);
-        _this.totNovembre += parseInt(ele.budget.novembre);
-        _this.totDicembre += parseInt(ele.budget.dicembre);
-      });
-    });
-    this.fetchAudioSenzaBgt();
-  },
+  mounted: function mounted() {},
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudioConBgtAssegnato: 'fetchAudioConBgtAssegnato',
     fetchAudioSenzaBgt: 'fetchAudioSenzaBgt',
@@ -351,33 +352,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     modificaBgt: 'modificaBgt'
   })), {}, {
     assegnaBudget: function assegnaBudget() {
-      var _this2 = this;
+      var _this = this;
 
       this.assegna.idAudio = this.AudioSelected[0].id;
 
       if (this["switch"]) {
         this.modificaBgt(this.assegna).then(function () {
-          _this2["switch"] = 0;
-          _this2.assegna = {
+          _this["switch"] = 0;
+          _this.assegna = {
             budgetAnno: 0,
+            anno: '',
             stipendio: 0,
             provvigione: 0,
             mese: []
           };
-          _this2.percentuale = {
+          _this.percentuale = {
             mese: []
           };
         });
       } else {
         this.assegnaBgt(this.assegna).then(function () {
-          _this2["switch"] = 0;
-          _this2.assegna = {
+          _this["switch"] = 0;
+          _this.assegna = {
             budgetAnno: 0,
+            anno: '',
             stipendio: 0,
             provvigione: 0,
             mese: []
           };
-          _this2.percentuale = {
+          _this.percentuale = {
             mese: []
           };
         });
@@ -390,46 +393,83 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     modifica: function modifica(item, indice) {
       this["switch"] = 1;
-      this.assegna.idBudget = item.budget.id;
+      this.assegna.idBudget = item.moltiBudget.id;
       this.AudioSelected = [];
       this.getAudioSenzaBgt.unshift(item);
       this.getAudioConBgt.splice(indice, 1);
       this.AudioSelected.unshift(item);
-      this.assegna.budgetAnno = item.budget.budgetAnno;
-      this.assegna.stipendio = item.budget.stipendio;
-      this.assegna.provvigione = item.budget.provvigione;
-      this.assegna.mese[0] = item.budget.gennaio;
-      this.assegna.mese[1] = item.budget.febbraio;
-      this.assegna.mese[2] = item.budget.marzo;
-      this.assegna.mese[3] = item.budget.aprile;
-      this.assegna.mese[4] = item.budget.maggio;
-      this.assegna.mese[5] = item.budget.giugno;
-      this.assegna.mese[6] = item.budget.luglio;
-      this.assegna.mese[7] = item.budget.agosto;
-      this.assegna.mese[8] = item.budget.settembre;
-      this.assegna.mese[9] = item.budget.ottobre;
-      this.assegna.mese[10] = item.budget.novembre;
-      this.assegna.mese[11] = item.budget.dicembre;
-      this.percentuale.mese[0] = (item.budget.gennaio / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[1] = (item.budget.febbraio / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[2] = (item.budget.marzo / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[3] = (item.budget.aprile / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[4] = (item.budget.maggio / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[5] = (item.budget.giugno / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[6] = (item.budget.luglio / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[7] = (item.budget.agosto / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[8] = (item.budget.settembre / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[9] = (item.budget.ottobre / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[10] = (item.budget.novembre / item.budget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[11] = (item.budget.dicembre / item.budget.budgetAnno * 100).toFixed(0);
+      this.assegna.budgetAnno = item.moltiBudget.budgetAnno;
+      this.assegna.stipendio = item.moltiBudget.stipendio;
+      this.assegna.provvigione = item.moltiBudget.provvigione;
+      this.assegna.mese[0] = item.moltiBudget.gennaio;
+      this.assegna.mese[1] = item.moltiBudget.febbraio;
+      this.assegna.mese[2] = item.moltiBudget.marzo;
+      this.assegna.mese[3] = item.moltiBudget.aprile;
+      this.assegna.mese[4] = item.moltiBudget.maggio;
+      this.assegna.mese[5] = item.moltiBudget.giugno;
+      this.assegna.mese[6] = item.moltiBudget.luglio;
+      this.assegna.mese[7] = item.moltiBudget.agosto;
+      this.assegna.mese[8] = item.moltiBudget.settembre;
+      this.assegna.mese[9] = item.moltiBudget.ottobre;
+      this.assegna.mese[10] = item.moltiBudget.novembre;
+      this.assegna.mese[11] = item.moltiBudget.dicembre;
+      this.percentuale.mese[0] = (item.moltiBudget.gennaio / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[1] = (item.moltiBudget.febbraio / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[2] = (item.moltiBudget.marzo / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[3] = (item.moltiBudget.aprile / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[4] = (item.moltiBudget.maggio / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[5] = (item.moltiBudget.giugno / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[6] = (item.moltiBudget.luglio / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[7] = (item.moltiBudget.agosto / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[8] = (item.moltiBudget.settembre / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[9] = (item.moltiBudget.ottobre / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[10] = (item.moltiBudget.novembre / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[11] = (item.moltiBudget.dicembre / item.moltiBudget.budgetAnno * 100).toFixed(0);
     },
     modificaBgtMese: function modificaBgtMese(percent, mese) {
       this.assegna.mese[mese - 1] = (parseFloat(this.assegna.budgetAnno) * percent / 100).toFixed(0);
+    },
+    selezionaAnno: function selezionaAnno() {
+      var _this2 = this;
+
+      this.totAnno = 0;
+      this.totGennaio = 0;
+      this.totFebbraio = 0;
+      this.totMarzo = 0;
+      this.totAprile = 0;
+      this.totMaggio = 0;
+      this.totGiugno = 0;
+      this.totLuglio = 0;
+      this.totAgosto = 0;
+      this.totSettembre = 0;
+      this.totOttobre = 0;
+      this.totNovembre = 0;
+      this.totDicembre = 0;
+      this.fetchAudioConBgtAssegnato(this.ricerca).then(function () {
+        _this2.getAudioConBgt.forEach(function (ele) {
+          _this2.totAnno += parseInt(ele.molti_budget[0].budgetAnno);
+          _this2.totGennaio += parseInt(ele.molti_budget[0].gennaio);
+          _this2.totFebbraio += parseInt(ele.molti_budget[0].febbraio);
+          _this2.totMarzo += parseInt(ele.molti_budget[0].marzo);
+          _this2.totAprile += parseInt(ele.molti_budget[0].aprile);
+          _this2.totMaggio += parseInt(ele.molti_budget[0].maggio);
+          _this2.totGiugno += parseInt(ele.molti_budget[0].giugno);
+          _this2.totLuglio += parseInt(ele.molti_budget[0].luglio);
+          _this2.totAgosto += parseInt(ele.molti_budget[0].agosto);
+          _this2.totSettembre += parseInt(ele.molti_budget[0].settembre);
+          _this2.totOttobre += parseInt(ele.molti_budget[0].ottobre);
+          _this2.totNovembre += parseInt(ele.molti_budget[0].novembre);
+          _this2.totDicembre += parseInt(ele.molti_budget[0].dicembre);
+        });
+      });
+      this.fetchAudioSenzaBgt(this.ricerca);
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getAudioConBgt: 'getAudioConBgt',
     getAudioSenzaBgt: 'getAudioSenzaBgt'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+    getAnni: 'getAnni'
   })), {}, {
     sommaProvvigioni: function sommaProvvigioni() {
       return this.percentuale.mese.reduce(function (a, b) {
@@ -545,476 +585,568 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", [_vm._v("Assegna Budget")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "py-6" },
-      [
-        _c(
-          "v-row",
-          [
-            _c(
-              "v-col",
-              { attrs: { cols: "4" } },
-              [
-                _c("h3", [_vm._v("Audioprotesisti senza Budget")]),
-                _vm._v(" "),
-                _c("v-data-table", {
-                  staticClass: "elevation-1 mt-3",
-                  attrs: {
-                    headers: _vm.headers,
-                    items: _vm.getAudioSenzaBgt,
-                    "single-select": _vm.singleSelect,
-                    "hide-default-footer": "",
-                    "show-select": ""
-                  },
-                  model: {
-                    value: _vm.AudioSelected,
-                    callback: function($$v) {
-                      _vm.AudioSelected = $$v
-                    },
-                    expression: "AudioSelected"
+  return _c(
+    "div",
+    [
+      _c(
+        "v-row",
+        [
+          _c("v-col", [_c("h2", [_vm._v("Assegna Budget")])]),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getAnni, label: "Anno" },
+                on: {
+                  change: function($event) {
+                    return _vm.selezionaAnno()
                   }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "v-col",
-              { attrs: { cols: "4" } },
-              [
-                _c("h3", [_vm._v("Budget Anno")]),
-                _vm._v(" "),
-                _c(
-                  "v-row",
-                  [
-                    _c(
-                      "v-col",
-                      { attrs: { cols: "5" } },
-                      [
-                        _c("v-text-field", {
-                          attrs: { label: "budget" },
-                          on: {
-                            input: function($event) {
-                              return _vm.bgtMese()
-                            }
-                          },
-                          model: {
-                            value: _vm.assegna.budgetAnno,
-                            callback: function($$v) {
-                              _vm.$set(_vm.assegna, "budgetAnno", $$v)
-                            },
-                            expression: "assegna.budgetAnno"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("v-col", { attrs: { cols: "4" } })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "v-row",
-          [
-            _c(
-              "v-col",
-              { attrs: { cols: "4" } },
-              [
-                _c(
-                  "v-chip",
-                  { staticClass: "ma-2", attrs: { color: "orange" } },
-                  [
-                    _vm._v(
-                      "\n                    Verifica: " +
-                        _vm._s(_vm.sommaProvvigioni) +
-                        "\n                "
-                    )
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("v-col", { attrs: { cols: "4" } }),
-            _vm._v(" "),
-            _c(
-              "v-col",
-              { attrs: { cols: "4" } },
-              [
-                _c(
-                  "v-btn",
-                  {
-                    attrs: { color: "success", dark: "" },
-                    on: { click: _vm.assegnaBudget }
+                },
+                model: {
+                  value: _vm.ricerca.anno,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "anno", $$v)
                   },
-                  [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm.textBtn) +
-                        "\n                "
-                    )
-                  ]
-                )
-              ],
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "v-row",
-          _vm._l(12, function(mese) {
-            return _c(
-              "v-col",
-              { key: mese },
-              [
-                _c("v-text-field", {
-                  attrs: {
-                    hint: _vm.nomeMese[mese - 1],
-                    readonly: "",
-                    "persistent-hint": ""
-                  },
-                  model: {
-                    value: _vm.assegna.mese[mese - 1],
-                    callback: function($$v) {
-                      _vm.$set(_vm.assegna.mese, mese - 1, $$v)
+                  expression: "ricerca.anno"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "py-6" },
+        [
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "4" } },
+                [
+                  _c("h3", [_vm._v("Audioprotesisti senza Budget")]),
+                  _vm._v(" "),
+                  _c("v-data-table", {
+                    staticClass: "elevation-1 mt-3",
+                    attrs: {
+                      headers: _vm.headers,
+                      items: _vm.getAudioSenzaBgt,
+                      "single-select": _vm.singleSelect,
+                      "hide-default-footer": "",
+                      "show-select": ""
                     },
-                    expression: "assegna.mese[mese-1]"
-                  }
-                }),
-                _vm._v(" "),
-                _c("v-text-field", {
-                  attrs: { "append-icon": "%", type: "number" },
-                  on: {
-                    input: function($event) {
-                      return _vm.modificaBgtMese($event, mese)
-                    },
-                    change: function($event) {
-                      return _vm.modificaBgtMese($event, mese)
+                    model: {
+                      value: _vm.AudioSelected,
+                      callback: function($$v) {
+                        _vm.AudioSelected = $$v
+                      },
+                      expression: "AudioSelected"
                     }
-                  },
-                  model: {
-                    value: _vm.percentuale.mese[mese - 1],
-                    callback: function($$v) {
-                      _vm.$set(_vm.percentuale.mese, mese - 1, $$v)
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "4" } },
+                [
+                  _c("h3", [_vm._v("Budget Anno")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "5" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: { label: "budget" },
+                            on: {
+                              input: function($event) {
+                                return _vm.bgtMese()
+                              }
+                            },
+                            model: {
+                              value: _vm.assegna.budgetAnno,
+                              callback: function($$v) {
+                                _vm.$set(_vm.assegna, "budgetAnno", $$v)
+                              },
+                              expression: "assegna.budgetAnno"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "4" } },
+                        [
+                          _c("v-select", {
+                            attrs: { items: _vm.getAnni, label: "Anno" },
+                            model: {
+                              value: _vm.assegna.anno,
+                              callback: function($$v) {
+                                _vm.$set(_vm.assegna, "anno", $$v)
+                              },
+                              expression: "assegna.anno"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "4" } },
+                [
+                  _c(
+                    "v-chip",
+                    { staticClass: "ma-2", attrs: { color: "orange" } },
+                    [
+                      _vm._v(
+                        "\n                    Verifica: " +
+                          _vm._s(_vm.sommaProvvigioni) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-col", { attrs: { cols: "4" } }),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { attrs: { cols: "4" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "success", dark: "" },
+                      on: { click: _vm.assegnaBudget }
                     },
-                    expression: "percentuale.mese[mese-1]"
-                  }
-                }),
-                _vm._v(" "),
-                _vm.assegna.mese[mese] && _vm.assegna.budget
-                  ? _c(
-                      "v-chip",
-                      {
-                        staticClass: "ma-2",
-                        attrs: { color: "primary", "text-color": "white" }
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.textBtn) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            _vm._l(12, function(mese) {
+              return _c(
+                "v-col",
+                { key: mese },
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      hint: _vm.nomeMese[mese - 1],
+                      readonly: "",
+                      "persistent-hint": ""
+                    },
+                    model: {
+                      value: _vm.assegna.mese[mese - 1],
+                      callback: function($$v) {
+                        _vm.$set(_vm.assegna.mese, mese - 1, $$v)
                       },
-                      [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(
-                              (parseFloat(_vm.assegna.budget) *
-                                parseFloat(_vm.assegna.mese[mese])) /
-                                100
-                            ) +
-                            "\n                "
-                        )
-                      ]
-                    )
-                  : _vm._e()
-              ],
-              1
-            )
-          }),
-          1
-        ),
-        _vm._v(" "),
-        _c("h3", [_vm._v("Audioprotesisti Con Budget")]),
-        _vm._v(" "),
-        _c(
-          "v-data-table",
-          {
-            staticClass: "elevation-1 mt-3",
-            attrs: {
-              headers: _vm.headers2,
-              items: _vm.getAudioConBgt,
-              "hide-default-footer": ""
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { color: "blue", small: "" },
-                        on: {
-                          click: function($event) {
-                            _vm.modifica(
-                              item,
-                              _vm.getAudioConBgt
-                                .map(function(x) {
-                                  return x.id
-                                })
-                                .indexOf(item.id)
-                            )
+                      expression: "assegna.mese[mese-1]"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { "append-icon": "%", type: "number" },
+                    on: {
+                      input: function($event) {
+                        return _vm.modificaBgtMese($event, mese)
+                      },
+                      change: function($event) {
+                        return _vm.modificaBgtMese($event, mese)
+                      }
+                    },
+                    model: {
+                      value: _vm.percentuale.mese[mese - 1],
+                      callback: function($$v) {
+                        _vm.$set(_vm.percentuale.mese, mese - 1, $$v)
+                      },
+                      expression: "percentuale.mese[mese-1]"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.assegna.mese[mese] && _vm.assegna.budget
+                    ? _c(
+                        "v-chip",
+                        {
+                          staticClass: "ma-2",
+                          attrs: { color: "primary", "text-color": "white" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(
+                                (parseFloat(_vm.assegna.budget) *
+                                  parseFloat(_vm.assegna.mese[mese])) /
+                                  100
+                              ) +
+                              "\n                "
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c("h3", [_vm._v("Audioprotesisti Con Budget")]),
+          _vm._v(" "),
+          _c(
+            "v-data-table",
+            {
+              staticClass: "elevation-1 mt-3",
+              attrs: {
+                headers: _vm.headers2,
+                items: _vm.getAudioConBgt,
+                "hide-default-footer": ""
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "item.actions",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { color: "blue", small: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.modifica(
+                                item,
+                                _vm.getAudioConBgt
+                                  .map(function(x) {
+                                    return x.id
+                                  })
+                                  .indexOf(item.id)
+                              )
+                            }
                           }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    mdi-pencil\n                "
-                        )
-                      ]
-                    )
-                  ]
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-pencil\n                "
+                          )
+                        ]
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].budgetAnno",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].budgetAnno.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].gennaio",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].gennaio.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].febbraio",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].febbraio.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].marzo",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].marzo.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].aprile",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].aprile.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].maggio",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].maggio.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].giugno",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].giugno.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].luglio",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].luglio.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].agosto",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].agosto.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].settembre",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].settembre.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].ottobre",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].ottobre.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].novembre",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].novembre.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "item.molti_budget[0].dicembre",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.molti_budget[0].dicembre.toLocaleString("it")
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  }
                 }
-              },
-              {
-                key: "item.budget.budgetAnno",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.budgetAnno.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.gennaio",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.gennaio.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.febbraio",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.febbraio.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.marzo",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.marzo.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.aprile",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.aprile.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.maggio",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.maggio.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.giugno",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.giugno.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.luglio",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.luglio.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.agosto",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.agosto.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.settembre",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.settembre.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.ottobre",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.ottobre.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.novembre",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.novembre.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.budget.dicembre",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(item.budget.dicembre.toLocaleString("it")) +
-                        "\n            "
-                    )
-                  ]
-                }
-              }
-            ])
-          },
-          [
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _vm._v(" "),
-            _c("template", { slot: "body.append" }, [
-              _c("tr", { staticClass: "pink--text" }, [
-                _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totAnno.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totGennaio.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(_vm._s(_vm.totFebbraio.toLocaleString("it")))
-                ]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totMarzo.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totAprile.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totMaggio.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totGiugno.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totLuglio.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totAgosto.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(_vm._s(_vm.totSettembre.toLocaleString("it")))
-                ]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totOttobre.toLocaleString("it")))]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(_vm._s(_vm.totNovembre.toLocaleString("it")))
-                ]),
-                _vm._v(" "),
-                _c("th", [_vm._v(_vm._s(_vm.totDicembre.toLocaleString("it")))])
               ])
-            ])
-          ],
-          2
-        )
-      ],
-      1
-    )
-  ])
+            },
+            [
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _vm._v(" "),
+              _c("template", { slot: "body.append" }, [
+                _c("tr", { staticClass: "pink--text" }, [
+                  _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
+                  _vm._v(" "),
+                  _c("th"),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.totAnno.toLocaleString("it")))]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totGennaio.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totFebbraio.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.totMarzo.toLocaleString("it")))]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totAprile.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totMaggio.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totGiugno.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totLuglio.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totAgosto.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totSettembre.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totOttobre.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totNovembre.toLocaleString("it")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(_vm._s(_vm.totDicembre.toLocaleString("it")))
+                  ])
+                ])
+              ])
+            ],
+            2
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

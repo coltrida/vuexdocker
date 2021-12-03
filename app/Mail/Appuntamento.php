@@ -33,6 +33,6 @@ class Appuntamento extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mails.appuntamento');
+        return $this->subject('Appuntamento Centro Udito')->markdown('mails.appuntamento');
     }
 }

@@ -8,6 +8,7 @@
                     sm="2"
                 >
                     <v-select
+                        @change="caricaCose"
                         v-model="user.user_id"
                         item-value="id"
                         item-text="name"
@@ -42,10 +43,11 @@
                     cols="3"
                     sm="3"
                 >
-                    <v-text-field
-                        v-model.lazy="user.testo"
+                    <v-select
+                        v-model="user.testo"
+                        :items="listaCose"
                         label="Cosa"
-                    ></v-text-field>
+                    ></v-select>
                 </v-col>
 
                 <v-col
@@ -105,7 +107,7 @@
     import {mapActions, mapGetters} from "vuex";
 
     export default {
-        name: "Listino",
+        name: "Agende",
 
         data(){
             return {
@@ -140,11 +142,19 @@
                 addAgenda:'addAgenda',
             }),
 
+            ...mapActions('recapiti', {
+                fetchStruttureAudio:'fetchStruttureAudio',
+            }),
+
             aggiungi(){
                 this.addAgenda(this.user).then(() => {
                     this.fetchUserAgenda();
                 });
                 /*this.user = {};*/
+            },
+
+            caricaCose(){
+                this.fetchStruttureAudio(this.user.user_id)
             },
 
             itemRowBackground: function (item) {
@@ -164,6 +174,18 @@
                 getRuolo:'getRuolo',
             }),
 
+            ...mapGetters('recapiti', {
+                getStruttureAudio: 'getStruttureAudio',
+            }),
+
+            listaCose(){
+                let lista = ['DOMICILIO', 'SCREENING'];
+                this.getStruttureAudio.forEach(ele => {
+                   lista.push(ele.tipologia.toUpperCase()+' '+ele.nome)
+                });
+                return lista
+            }
+
         },
     }
 </script>
@@ -175,11 +197,9 @@
     .style-2 {
         background-color: rgb(206, 116, 93)
     }
-
     .style-3 {
         background-color: rgb(87, 206, 89)
     }
-
     .style-4 {
         background-color: rgb(184, 185, 206)
     }

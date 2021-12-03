@@ -50,8 +50,8 @@ Route::group([], function () {
         Route::get('/userAgenda', [UserController::class, 'userAgenda']);
         Route::get('/userAgenda/{idAudio}', [UserController::class, 'specificoUserAgenda']);
         Route::post('/userAgenda', [UserController::class, 'addUserAgenda']);
-        Route::get('/audioConBgt', [UserController::class, 'audioConBgt']);
-        Route::get('/audioSenzaBgt', [UserController::class, 'audioSenzaBgt']);
+        Route::post('/audioConBgt', [UserController::class, 'audioConBgt']);
+        Route::post('/audioSenzaBgt', [UserController::class, 'audioSenzaBgt']);
         Route::get('/amm', [UserController::class, 'amm']);
         Route::get('/callCenter', [UserController::class, 'callCenter']);
         Route::delete('/user/{id}', [UserController::class, 'elimina']);
@@ -198,11 +198,11 @@ Route::group([], function () {
         Route::get('/appuntamentiCliente/{idClient}', [AppuntamentiController::class, 'index']);
         Route::get('/appuntamentiOggiAudio/{idAudio}', [AppuntamentiController::class, 'oggi']);
         Route::get('/appuntamentiDomaniAudio/{idAudio}', [AppuntamentiController::class, 'domani']);
-        Route::get('/appuntamentiLunediAudio/{idAudio}', [AppuntamentiController::class, 'lunedi']);
-        Route::get('/appuntamentiMartediAudio/{idAudio}', [AppuntamentiController::class, 'martedi']);
-        Route::get('/appuntamentiMercolediAudio/{idAudio}', [AppuntamentiController::class, 'mercoledi']);
-        Route::get('/appuntamentiGiovediAudio/{idAudio}', [AppuntamentiController::class, 'giovedi']);
-        Route::get('/appuntamentiVenerdiAudio/{idAudio}', [AppuntamentiController::class, 'venerdi']);
+        Route::get('/appuntamentiLunediAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'lunedi']);
+        Route::get('/appuntamentiMartediAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'martedi']);
+        Route::get('/appuntamentiMercolediAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'mercoledi']);
+        Route::get('/appuntamentiGiovediAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'giovedi']);
+        Route::get('/appuntamentiVenerdiAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'venerdi']);
         Route::get('/appuntamentiLunediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'lunediProssimo']);
         Route::get('/appuntamentiMartediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'martediProssimo']);
         Route::get('/appuntamentiMercolediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'mercolediProssimo']);
@@ -211,13 +211,16 @@ Route::group([], function () {
         Route::delete('/appuntamentiCliente/{id}/{idUser}', [AppuntamentiController::class, 'elimina']);
         Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
         Route::post('/modificaAppuntamento', [AppuntamentiController::class, 'modifica']);
-        Route::get('/dateSettimana', [AppuntamentiController::class, 'dateSettimana']);
+        Route::get('/dateSettimana/{direzione?}', [AppuntamentiController::class, 'dateSettimana']);
         Route::get('/dateSettimanaProssima', [AppuntamentiController::class, 'dateSettimanaProssima']);
         Route::post('/appuntamentiAnnoMese', [AppuntamentiController::class, 'appuntamentiAnnoMese']);
         Route::post('/intervenutiAnnoMese', [AppuntamentiController::class, 'intervenutiAnnoMese']);
         Route::get('/appuntamentiInSospeso/{idAudio}', [AppuntamentiController::class, 'inSospeso']);
         Route::get('/appuntamentoSaltato/{idAppuntamento}', [AppuntamentiController::class, 'appuntamentoSaltato']);
         Route::get('/appuntamentoIntervenuto/{idAppuntamento}', [AppuntamentiController::class, 'appuntamentoIntervenuto']);
+        Route::post('/appuntamentogiornoora', [AppuntamentiController::class, 'appuntamentogiornoora']);
+        Route::get('/dataDiOggi', [AppuntamentiController::class, 'dataDiOggi']);
+        Route::get('/settimanaDelMese/{idAudio}/{direzione?}', [AppuntamentiController::class, 'settimanaDelMese']);
 
         // ----------------- documenti -----------------------
         Route::post('/salvaDocumento', [DocumentoController::class, 'salvaDocumento']);
@@ -226,8 +229,8 @@ Route::group([], function () {
         Route::delete('/eliminaDocumento/{idDocumento}', [DocumentoController::class, 'eliminaDocumento']);
 
         // ----------------- statistiche -----------------------
-        Route::get('/dettaglioAudio', [UserController::class, 'dettaglioAudio']);
-        Route::get('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSituazioneAnno']);
+        Route::post('/dettaglioAudio', [UserController::class, 'dettaglioAudio']);
+        Route::post('/visualizzaSituazioneAnno', [UserController::class, 'visualizzaSituazioneAnno']);
         Route::post('/ingressiRecapiti', [ClientController::class, 'ingressiRecapiti']);
         Route::post('/ingressiRecapitiMesi', [ClientController::class, 'ingressiRecapitiMesi']);
         Route::post('/fatturatoCanali', [MarketingController::class, 'fatturatoCanali']);

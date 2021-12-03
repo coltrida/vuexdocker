@@ -8,21 +8,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class inviaMessaggio extends Mailable
+class RememberAppuntamento extends Mailable
 {
     use Queueable, SerializesModels;
-    public $testoMessaggio;
     public $client;
 
     /**
      * Create a new message instance.
      *
-     * @param $testoMessaggio
-     * @param array $client
+     * @param Client $client
      */
-    public function __construct($testoMessaggio, array $client)
+    public function __construct(Client $client)
     {
-        $this->testoMessaggio = $testoMessaggio;
         $this->client = $client;
     }
 
@@ -33,6 +30,6 @@ class inviaMessaggio extends Mailable
      */
     public function build()
     {
-        return $this->subject('Informazione Centro Udito')->markdown('mails.inviaMessaggio');
+        return $this->subject('Promemoria Appuntamento')->markdown('mails.rememberAppuntamento');
     }
 }

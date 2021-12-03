@@ -33,14 +33,14 @@ class UserController extends Controller
         return $userService->addUserAgenda($request);
     }
 
-    public function audioConBgt(UserService $userService)
+    public function audioConBgt(Request $request, UserService $userService)
     {
-        return $userService->audioConBgt();
+        return $userService->audioConBgt($request);
     }
 
-    public function audioSenzaBgt(UserService $userService)
+    public function audioSenzaBgt(Request $request, UserService $userService)
     {
-        return $userService->audioSenzaBgt();
+        return $userService->audioSenzaBgt($request);
     }
 
     public function amm(UserService $userService)
@@ -80,15 +80,15 @@ class UserController extends Controller
      //  return SituazioneMeseResource::collection($userService->situazioneMese($idAudio));
     }
 
-    public function dettaglioAudio(UserService $userService)
+    public function dettaglioAudio(Request $request, UserService $userService)
     {
        // return DettaglioAudioResource::collection($userService->dettaglioAudio());
-        return $userService->dettaglioAudio();
+        return $userService->dettaglioAudio($request);
     }
 
-    public function visualizzaSituazioneAnno(UserService $userService)
+    public function visualizzaSituazioneAnno(Request $request, UserService $userService)
     {
-        return VisualizzaSituazioneAnnoResource::collection($userService->visualizzaSituazioneAnno());
+        return VisualizzaSituazioneAnnoResource::collection($userService->visualizzaSituazioneAnno($request));
     }
 
     public function appuntamenti($idAudio, UserService $userService)

@@ -16,6 +16,7 @@ class CreateDeltasTable extends Migration
         Schema::create('deltas', function (Blueprint $table) {
             $table->id()->startingValue(2000);
             $table->string('nome')->nullable();
+            $table->integer('anno')->nullable();
             $table->bigInteger('user_id')->nullable();
             $table->string('budgetAnno')->nullable();
             $table->string('premio')->nullable();

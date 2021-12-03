@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Models\Agenda;
 use App\Models\Appuntamento;
 use App\Models\Client;
 use App\Models\Filiale;
@@ -37,39 +38,74 @@ class AppuntamentiService
         }])->find($idAudio)->appuntamentiDomani;
     }
 
-    public function lunedi($idAudio)
+    public function lunedi($idAudio, $direzione)
     {
-        return User::with(['appuntamentiLunedi' => function($q){
-            $q->with('client')->orderBy('orario');
-        }])->find($idAudio)->appuntamentiLunedi;
+        if ($direzione === null || $direzione == 'null'){
+            return User::with(['appuntamentiLunedi' => function($q){
+                $q->with('client')->orderBy('orario');
+            }])->find($idAudio)->appuntamentiLunedi;
+        }
+        $giornoCalcolato = Carbon::now()->startOfWeek()->addDays($direzione*7);
+
+        return User::with(['appuntamenti' => function($a) use($giornoCalcolato){
+            $a->with('client')->where('giorno', $giornoCalcolato);
+        }])->find($idAudio)->appuntamenti;
     }
 
-    public function martedi($idAudio)
+    public function martedi($idAudio, $direzione)
     {
-        return User::with(['appuntamentiMartedi' => function($q){
-            $q->with('client')->orderBy('orario');
-        }])->find($idAudio)->appuntamentiMartedi;
+        if ($direzione === null || $direzione == 'null'){
+            return User::with(['appuntamentiMartedi' => function($q){
+                $q->with('client')->orderBy('orario');
+            }])->find($idAudio)->appuntamentiMartedi;
+        }
+        $giornoCalcolato = Carbon::now()->startOfWeek()->addDays(($direzione*7)+1);
+
+        return User::with(['appuntamenti' => function($a) use($giornoCalcolato){
+            $a->with('client')->where('giorno', $giornoCalcolato);
+        }])->find($idAudio)->appuntamenti;
     }
 
-    public function mercoledi($idAudio)
+    public function mercoledi($idAudio, $direzione)
     {
-        return User::with(['appuntamentiMercoledi' => function($q){
-            $q->with('client')->orderBy('orario');
-        }])->find($idAudio)->appuntamentiMercoledi;
+        if ($direzione === null || $direzione == 'null'){
+            return User::with(['appuntamentiMercoledi' => function($q){
+                $q->with('client')->orderBy('orario');
+            }])->find($idAudio)->appuntamentiMercoledi;
+        }
+        $giornoCalcolato = Carbon::now()->startOfWeek()->addDays(($direzione*7)+2);
+
+        return User::with(['appuntamenti' => function($a) use($giornoCalcolato){
+            $a->with('client')->where('giorno', $giornoCalcolato);
+        }])->find($idAudio)->appuntamenti;
     }
 
-    public function giovedi($idAudio)
+    public function giovedi($idAudio, $direzione)
     {
-        return User::with(['appuntamentiGiovedi' => function($q){
-            $q->with('client')->orderBy('orario');
-        }])->find($idAudio)->appuntamentiGiovedi;
+        if ($direzione === null || $direzione == 'null'){
+            return User::with(['appuntamentiGiovedi' => function($q){
+                $q->with('client')->orderBy('orario');
+            }])->find($idAudio)->appuntamentiGiovedi;
+        }
+        $giornoCalcolato = Carbon::now()->startOfWeek()->addDays(($direzione*7)+3);
+
+        return User::with(['appuntamenti' => function($a) use($giornoCalcolato){
+            $a->with('client')->where('giorno', $giornoCalcolato);
+        }])->find($idAudio)->appuntamenti;
     }
 
-    public function venerdi($idAudio)
+    public function venerdi($idAudio, $direzione)
     {
-        return User::with(['appuntamentiVenerdi' => function($q){
-            $q->with('client')->orderBy('orario');
-        }])->find($idAudio)->appuntamentiVenerdi;
+        if ($direzione === null || $direzione == 'null'){
+            return User::with(['appuntamentiVenerdi' => function($q){
+                $q->with('client')->orderBy('orario');
+            }])->find($idAudio)->appuntamentiVenerdi;
+        }
+        $giornoCalcolato = Carbon::now()->startOfWeek()->addDays(($direzione*7)+4);
+
+        return User::with(['appuntamenti' => function($a) use($giornoCalcolato){
+            $a->with('client')->where('giorno', $giornoCalcolato);
+        }])->find($idAudio)->appuntamenti;
     }
 
     public function lunediProssimo($idAudio)
@@ -211,14 +247,28 @@ class AppuntamentiService
         return $appuntamento->delete();
     }
 
-    public function dateSettimana()
+    public function dateSettimana($direzione)
     {
         $giorni = [];
-        $giorni[0] = Carbon::now()->startOfWeek()->format('d-m-Y');
+        /*$giorni[0] = Carbon::now()->startOfWeek()->format('d-m-Y');
         $giorni[1] = Carbon::now()->startOfWeek()->addDay()->format('d-m-Y');
         $giorni[2] = Carbon::now()->startOfWeek()->addDays(2)->format('d-m-Y');
         $giorni[3] = Carbon::now()->startOfWeek()->addDays(3)->format('d-m-Y');
-        $giorni[4] = Carbon::now()->startOfWeek()->addDays(4)->format('d-m-Y');
+        $giorni[4] = Carbon::now()->startOfWeek()->addDays(4)->format('d-m-Y');*/
+
+        $direzioneCalcolato = $direzione === null ? 0 : (int)$direzione;
+
+        $giorni[0] = Carbon::now()->startOfWeek()->addDays($direzioneCalcolato*7)->format('d-m-Y');
+        $giorni[1] = Carbon::now()->startOfWeek()->addDays(($direzioneCalcolato*7)+1)->format('d-m-Y');
+        $giorni[2] = Carbon::now()->startOfWeek()->addDays(($direzioneCalcolato*7)+2)->format('d-m-Y');
+        $giorni[3] = Carbon::now()->startOfWeek()->addDays(($direzioneCalcolato*7)+3)->format('d-m-Y');
+        $giorni[4] = Carbon::now()->startOfWeek()->addDays(($direzioneCalcolato*7)+4)->format('d-m-Y');
+
+        $giorni[5] = Carbon::now()->startOfWeek()->addDays($direzioneCalcolato*7)->format('Y-m-d');
+        $giorni[6] = Carbon::now()->startOfWeek()->addDays(($direzioneCalcolato*7)+1)->format('Y-m-d');
+        $giorni[7] = Carbon::now()->startOfWeek()->addDays(($direzioneCalcolato*7)+2)->format('Y-m-d');
+        $giorni[8] = Carbon::now()->startOfWeek()->addDays(($direzioneCalcolato*7)+3)->format('Y-m-d');
+        $giorni[9] = Carbon::now()->startOfWeek()->addDays(($direzioneCalcolato*7)+4)->format('Y-m-d');
         return $giorni;
     }
 
@@ -275,5 +325,33 @@ class AppuntamentiService
     public function appuntamentoIntervenuto($idAppuntamento)
     {
         Appuntamento::find($idAppuntamento)->update(['intervenuto' => true]);
+    }
+
+    public function appuntamentogiornoora($request)
+    {
+        return Appuntamento::with('client')
+            ->where([
+                ['giorno', $request->giorno],
+                ['orario', $request->orario],
+                ['user_id', $request->user_id],
+            ])
+            ->first();
+    }
+
+    public function dataDiOggi()
+    {
+        return Carbon::now()->format('d-m-Y');
+    }
+
+    public function settimanaDelMese($idAudio, $direzione)
+    {
+        $doveSono = [];
+        $direzioneCalcolato = $direzione === null ? 0 : (int)$direzione;
+        $settimanaDelMese = Carbon::now()->addDays($direzioneCalcolato*7)->weekOfMonth;
+
+        $doveSono[0] = Agenda::where([['user_id', $idAudio], ['settimana', $settimanaDelMese], ['nome', 'mattina']])->first();
+        $doveSono[1] = Agenda::where([['user_id', $idAudio], ['settimana', $settimanaDelMese], ['nome', 'pomeriggio']])->first();
+
+        return $doveSono;
     }
 }

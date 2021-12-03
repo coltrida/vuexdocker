@@ -15,6 +15,7 @@ class CreateFatturatisTable extends Migration
     {
         Schema::create('fatturatis', function (Blueprint $table) {
             $table->id()->startingValue(1000);
+            $table->integer('anno')->nullable();
             $table->string('nome')->nullable();
             $table->bigInteger('user_id')->nullable();
             $table->integer('budgetAnno')->nullable();

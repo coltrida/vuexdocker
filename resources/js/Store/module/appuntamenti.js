@@ -15,11 +15,21 @@ const state = () => ({
     appuntamentiAnnoMese: [],
     intervenutiAnnoMese: [],
     appuntamentiInSospeso: [],
+    settimanaDelMese: [],
+    dataDiOggi: ''
 });
 
 const getters = {
     getAppuntamenti(state){
         return state.appuntamenti;
+    },
+
+    getSettimanaDelMese(state){
+        return state.settimanaDelMese;
+    },
+
+    getDataDiOggi(state){
+        return state.dataDiOggi;
     },
 
     getAppuntamentiInSospeso(state){
@@ -244,8 +254,10 @@ const actions = {
         commit('eliminaAppuntamento', payload.idAppuntamento);
     },
 
-    async fetchAppLun({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentilunedi}`+'/'+idAudio, {
+    async fetchAppLun({commit}, payload){
+        let direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
+        let idAudio = parseInt(payload.idAudio);
+        const response = await axios.get(`${help().linkappuntamentilunedi}`+'/'+idAudio+'/'+direzione, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -253,8 +265,10 @@ const actions = {
         commit('fetchAppLun', response.data.data);
     },
 
-    async fetchAppMar({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimartedi}`+'/'+idAudio, {
+    async fetchAppMar({commit}, payload){
+        let direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
+        let idAudio = parseInt(payload.idAudio);
+        const response = await axios.get(`${help().linkappuntamentimartedi}`+'/'+idAudio+'/'+direzione, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -262,8 +276,10 @@ const actions = {
         commit('fetchAppMar', response.data.data);
     },
 
-    async fetchAppMer({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentimercoledi}`+'/'+idAudio, {
+    async fetchAppMer({commit}, payload){
+        let direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
+        let idAudio = parseInt(payload.idAudio);
+        const response = await axios.get(`${help().linkappuntamentimercoledi}`+'/'+idAudio+'/'+direzione, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -271,8 +287,10 @@ const actions = {
         commit('fetchAppMer', response.data.data);
     },
 
-    async fetchAppGio({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentigiovedi}`+'/'+idAudio, {
+    async fetchAppGio({commit}, payload){
+        let direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
+        let idAudio = parseInt(payload.idAudio);
+        const response = await axios.get(`${help().linkappuntamentigiovedi}`+'/'+idAudio+'/'+direzione, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -280,8 +298,10 @@ const actions = {
         commit('fetchAppGio', response.data.data);
     },
 
-    async fetchAppVen({commit}, idAudio){
-        const response = await axios.get(`${help().linkappuntamentivenerdi}`+'/'+idAudio, {
+    async fetchAppVen({commit}, payload){
+        let direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
+        let idAudio = parseInt(payload.idAudio);
+        const response = await axios.get(`${help().linkappuntamentivenerdi}`+'/'+idAudio+'/'+direzione, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -289,8 +309,9 @@ const actions = {
         commit('fetchAppVen', response.data.data);
     },
 
-    async fetchDateSettimana({commit}){
-        const response = await axios.get(`${help().linkdatesettimana}`, {
+    async fetchDateSettimana({commit}, direzione){
+        direzione = direzione === undefined ? null : direzione;
+        const response = await axios.get(`${help().linkdatesettimana}`+'/'+direzione, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -332,6 +353,35 @@ const actions = {
             }
         });
         commit('eliminaAppuntamentoInSospeso', idAppuntamento);
+    },
+
+    async fetchAppuntamentoGiornoOra({commit}, payload){
+        await axios.post(`${help().linkappuntamentogiornoora}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchAppuntamentoGiornoOra', response.data);
+    },
+
+    async fetchDataDiOggi({commit}){
+        const response = await axios.get(`${help().linkdatadioggi}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchDataDiOggi', response.data);
+    },
+
+    async fetchSettimanaDelMese({commit}, payload){
+        let direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
+        let idAudio = parseInt(payload.idAudio);
+        const response = await axios.get(`${help().linksettimanadelmese}`+'/'+idAudio+'/'+direzione, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchSettimanaDelMese', response.data);
     },
 };
 
@@ -408,6 +458,18 @@ const mutations = {
         state.appMar = payload;
     },
 
+    fetchAppMer(state, payload){
+        state.appMer = payload;
+    },
+
+    fetchAppGio(state, payload){
+        state.appGio = payload;
+    },
+
+    fetchAppVen(state, payload){
+        state.appVen = payload;
+    },
+
     fetchDateSettimana(state, payload){
         state.dateSettimana = payload;
     },
@@ -422,7 +484,19 @@ const mutations = {
 
     setSettimanaDaVisualizzare(state, payload){
         state.settimanaVisualizzata = payload;
-    }
+    },
+
+    fetchAppuntamentoGiornoOra(state, payload){
+        state.appuntamenti = payload;
+    },
+
+    fetchDataDiOggi(state, payload){
+        state.dataDiOggi = payload;
+    },
+
+    fetchSettimanaDelMese(state, payload){
+        state.settimanaDelMese = payload;
+    },
 };
 
 export default{

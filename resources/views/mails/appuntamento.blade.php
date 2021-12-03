@@ -5,7 +5,7 @@
 
 Gentile {{$client->nome}} {{$client->cognome}}, <br><br>
 le ricordiamo che ha un appuntamento per <br>
-il giorno: <b>{{$appuntamento->giorno}}</b> <br>
+il giorno: <b>{{\Carbon\Carbon::make($appuntamento->giorno)->format('d-m-Y')}}</b> <br>
 alle ore: <b>{{$appuntamento->orario}}</b> <br>
 tipo di visita: <b>{{$appuntamento->tipo}}</b>
 {{--@component('mail::button', ['url' => ''])

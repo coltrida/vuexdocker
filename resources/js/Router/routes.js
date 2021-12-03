@@ -48,6 +48,8 @@ const routes = [
     { path: '/struttureAudio', component: () => import('../Pages/strutture/StruttureAudio'), name: 'struttureAudio' },
     { path: '/mediciMesi', component: () => import('../Pages/statistiche/MediciMesi'), name: 'mediciMesi' },
     { path: '/riepilogoMagazzini', component: () => import('../Pages/magazzino/Riepilogo'), name: 'riepilogoMagazzini' },
+    { path: '/diario', component: () => import('../Pages/personale/Diario'), name: 'diario' },
+    { path: '/diari', component: () => import('../Pages/personale/Diari'), name: 'diari' },
 ];
 
 export default routes;

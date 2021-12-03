@@ -1,16 +1,20 @@
 <template>
     <div>
-        <div class="text-center" v-if="carica">
-            <v-progress-circular
-                indeterminate
-                color="primary"
-            ></v-progress-circular>
+        <div>
+            <v-select
+                style="width: 200px"
+                @change="selezionaAnno()"
+                v-model="ricerca.anno"
+                :items="getAnni"
+                label="Anno"
+            ></v-select>
         </div>
-        <div v-else>
+        <div>
             <v-row  class="mb-5">
-                <v-col cols="8" class="pt-10">
+                <v-col cols="12" class="pt-10">
                     <div >
                         <div style="display: flex; align-items: center; justify-content: space-between">
+
                             <h1 class="my-5">Riepilogo -
                                 <v-chip
                                     color="primary"
@@ -71,12 +75,12 @@
                     </div>
                 </v-col>
 
-                <v-col cols="4">
+               <!-- <v-col cols="4">
                     <incorpora-grafico
                         :valoripassati="riepilogo[1] || {}"
                         :budget="riepilogo[0] || {}"
                         :options="chartOptions"/>
-                </v-col>
+                </v-col>-->
 
             </v-row>
 
@@ -91,7 +95,7 @@
                                     label
                                     outlined
                                 >
-                                    Fatt. tot. {{audio.valori[1].budgetAnno.toLocaleString('it')}}
+                                    Fatt. tot. {{audio.valori[1] ? audio.valori[1].budgetAnno.toLocaleString('it') : 0}}
                                 </v-chip>
                                 -
                                 <v-chip
@@ -99,7 +103,7 @@
                                     label
                                     outlined
                                 >
-                                    Bgt Anno {{audio.valori[0].budgetAnno.toLocaleString('it')}}
+                                    Bgt Anno {{audio.valori[0] ? audio.valori[0].budgetAnno.toLocaleString('it') : 0}}
                                 </v-chip>
                                 -
                                 <v-chip
@@ -107,7 +111,7 @@
                                     label
                                     outlined
                                 >
-                                    Bgt Prog. {{audio.valori[0].premio.toLocaleString('it')}}
+                                    Bgt Prog. {{audio.valori[0] ? audio.valori[0].premio.toLocaleString('it') : 0}}
                                 </v-chip>
                                 -
                                 <v-chip
@@ -115,7 +119,7 @@
                                     label
                                     outlined
                                 >
-                                    Fatt. vs Bgt Prog: {{ (((audio.valori[1].budgetAnno - audio.valori[0].premio) / audio.valori[0].premio) * 100).toFixed(0) }} %
+                                    Fatt. vs Bgt Prog: {{ (audio.valori[0] && audio.valori[1]) ? (((audio.valori[1].budgetAnno - audio.valori[0].premio) / audio.valori[0].premio) * 100).toFixed(0) : 0 }} %
                                 </v-chip>
                             </h3>
 
@@ -172,6 +176,7 @@
         components: {IncorporaGrafico, Grafico},
         data(){
             return {
+                ricerca:{},
                 carica: false,
                 riepilogo: [],
                 ele: {
@@ -241,87 +246,23 @@
         },
 
         mounted() {
-            this.carica = true;
-            this.fetchSituazioneAnno().then(() => {
-                this.getAudioConBgt.forEach(ele =>  {
-                    this.totBgt += ele.valori[0].budgetAnno;
-                    this.totFatturatoAnno += ele.valori[1].budgetAnno;
+            this.ricerca.anno = '';
+            this.$store.commit('users/resetSituazioneAnno');
+        },
 
-                    this.ele.nome = 'Budget';
-                    this.ele.budgetAnno += parseInt(ele.valori[0].budgetAnno);
-                    this.ele.gennaio += parseInt(ele.valori[0].gennaio);
-                    this.ele.febbraio += parseInt(ele.valori[0].febbraio);
-                    this.ele.marzo += parseInt(ele.valori[0].marzo);
-                    this.ele.aprile += parseInt(ele.valori[0].aprile);
-                    this.ele.maggio += parseInt(ele.valori[0].maggio);
-                    this.ele.giugno += parseInt(ele.valori[0].giugno);
-                    this.ele.luglio += parseInt(ele.valori[0].luglio);
-                    this.ele.agosto += parseInt(ele.valori[0].agosto);
-                    this.ele.settembre += parseInt(ele.valori[0].settembre);
-                    this.ele.ottobre += parseInt(ele.valori[0].ottobre);
-                    this.ele.novembre += parseInt(ele.valori[0].novembre);
-                    this.ele.dicembre += parseInt(ele.valori[0].dicembre);
-                });
+        methods:{
+            ...mapActions('users', {
+                fetchSituazioneAnno:'fetchSituazioneAnno',
+            }),
 
-                this.riepilogo.push(this.ele);
+            selezionaAnno(){
+                this.$store.commit('users/resetSituazioneAnno');
+                this.caricaDati();
+            },
 
-                this.ele = {
-                    'nome' : '',
-                    'budgetAnno': 0,
-                    'gennaio': 0,
-                    'febbraio': 0,
-                    'marzo': 0,
-                    'aprile': 0,
-                    'maggio': 0,
-                    'giugno': 0,
-                    'luglio': 0,
-                    'agosto': 0,
-                    'settembre': 0,
-                    'ottobre': 0,
-                    'novembre': 0,
-                    'dicembre': 0,
-                };
-
-                this.getAudioConBgt.forEach(ele =>  {
-                    this.ele.nome = 'Fatturati';
-                    this.ele.budgetAnno += parseInt(ele.valori[1].budgetAnno);
-                    this.ele.gennaio += parseInt(ele.valori[1].gennaio);
-                    this.ele.febbraio += parseInt(ele.valori[1].febbraio);
-                    this.ele.marzo += parseInt(ele.valori[1].marzo);
-                    this.ele.aprile += parseInt(ele.valori[1].aprile);
-                    this.ele.maggio += parseInt(ele.valori[1].maggio);
-                    this.ele.giugno += parseInt(ele.valori[1].giugno);
-                    this.ele.luglio += parseInt(ele.valori[1].luglio);
-                    this.ele.agosto += parseInt(ele.valori[1].agosto);
-                    this.ele.settembre += parseInt(ele.valori[1].settembre);
-                    this.ele.ottobre += parseInt(ele.valori[1].ottobre);
-                    this.ele.novembre += parseInt(ele.valori[1].novembre);
-                    this.ele.dicembre += parseInt(ele.valori[1].dicembre);
-                });
-
-                this.riepilogo.push(this.ele);
-
-                this.ele = {
-                    'nome' : '',
-                    'budgetAnno': 0,
-                    'gennaio': 0,
-                    'febbraio': 0,
-                    'marzo': 0,
-                    'aprile': 0,
-                    'maggio': 0,
-                    'giugno': 0,
-                    'luglio': 0,
-                    'agosto': 0,
-                    'settembre': 0,
-                    'ottobre': 0,
-                    'novembre': 0,
-                    'dicembre': 0,
-                };
-
-                this.ele.nome = 'Delta';
-                //console.log((((this.riepilogo[1].budgetAnno / this.riepilogo[0].budgetAnno)-1)*100).toFixed(1));
-                this.ele.budgetAnno = this.riepilogo[1].budgetAnno ?
-                    (((this.riepilogo[1].budgetAnno / this.riepilogo[0].budgetAnno)-1)*100).toFixed(1) +'%' : null;
+            caricaDati(){
+                this.riepilogo = [];
+                this.ele.budgetAnno = 0;
                 this.ele.gennaio = 0;
                 this.ele.febbraio = 0;
                 this.ele.marzo = 0;
@@ -332,29 +273,134 @@
                 this.ele.agosto = 0;
                 this.ele.settembre = 0;
                 this.ele.ottobre = 0;
-                this.ele.novembre = this.riepilogo[1].novembre ?
-                    (((this.riepilogo[1].novembre / this.riepilogo[0].novembre)-1)*100).toFixed(1) +'%' : null;
-
-
+                this.ele.novembre = 0;
                 this.ele.dicembre = 0;
 
-                this.riepilogo.push(this.ele);
-                this.carica = false;
-            });
+                this.carica = true;
+                this.fetchSituazioneAnno(this.ricerca).then(() => {
+                    this.getAudioConBgt.forEach(ele =>  {
+                        this.totBgt += ele.valori[0] ? ele.valori[0].budgetAnno : 0;
+                        this.totFatturatoAnno += ele.valori[1] ? ele.valori[1].budgetAnno : 0;
+
+                        this.ele.nome = 'Budget';
+                        this.ele.budgetAnno += ele.valori[0] ? parseInt(ele.valori[0].budgetAnno) : 0;
+                        this.ele.gennaio += ele.valori[0] ? parseInt(ele.valori[0].gennaio) : 0;
+                        this.ele.febbraio += ele.valori[0] ? parseInt(ele.valori[0].febbraio) : 0;
+                        this.ele.marzo += ele.valori[0] ? parseInt(ele.valori[0].marzo) : 0;
+                        this.ele.aprile += ele.valori[0] ? parseInt(ele.valori[0].aprile) : 0;
+                        this.ele.maggio += ele.valori[0] ? parseInt(ele.valori[0].maggio) : 0;
+                        this.ele.giugno += ele.valori[0] ? parseInt(ele.valori[0].giugno) : 0;
+                        this.ele.luglio += ele.valori[0] ? parseInt(ele.valori[0].luglio) : 0;
+                        this.ele.agosto += ele.valori[0] ? parseInt(ele.valori[0].agosto) : 0;
+                        this.ele.settembre += ele.valori[0] ? parseInt(ele.valori[0].settembre) : 0;
+                        this.ele.ottobre += ele.valori[0] ? parseInt(ele.valori[0].ottobre) : 0;
+                        this.ele.novembre += ele.valori[0] ? parseInt(ele.valori[0].novembre) : 0;
+                        this.ele.dicembre += ele.valori[0] ? parseInt(ele.valori[0].dicembre) : 0;
+                    });
+
+                    this.riepilogo.push(this.ele);
+
+                    this.ele = {
+                        'nome' : '',
+                        'budgetAnno': 0,
+                        'gennaio': 0,
+                        'febbraio': 0,
+                        'marzo': 0,
+                        'aprile': 0,
+                        'maggio': 0,
+                        'giugno': 0,
+                        'luglio': 0,
+                        'agosto': 0,
+                        'settembre': 0,
+                        'ottobre': 0,
+                        'novembre': 0,
+                        'dicembre': 0,
+                    };
+
+                    this.getAudioConBgt.forEach(ele =>  {
+                        this.ele.nome = 'Fatturati';
+                        this.ele.budgetAnno += ele.valori[1] ? parseInt(ele.valori[1].budgetAnno) : 0;
+                        this.ele.gennaio += ele.valori[1] ? parseInt(ele.valori[1].gennaio) : 0;
+                        this.ele.febbraio += ele.valori[1] ? parseInt(ele.valori[1].febbraio) : 0;
+                        this.ele.marzo += ele.valori[1] ? parseInt(ele.valori[1].marzo) : 0;
+                        this.ele.aprile += ele.valori[1] ? parseInt(ele.valori[1].aprile) : 0;
+                        this.ele.maggio += ele.valori[1] ? parseInt(ele.valori[1].maggio) : 0;
+                        this.ele.giugno += ele.valori[1] ? parseInt(ele.valori[1].giugno) : 0;
+                        this.ele.luglio += ele.valori[1] ? parseInt(ele.valori[1].luglio) : 0;
+                        this.ele.agosto += ele.valori[1] ? parseInt(ele.valori[1].agosto) : 0;
+                        this.ele.settembre += ele.valori[1] ? parseInt(ele.valori[1].settembre) : 0;
+                        this.ele.ottobre += ele.valori[1] ? parseInt(ele.valori[1].ottobre) : 0;
+                        this.ele.novembre += ele.valori[1] ? parseInt(ele.valori[1].novembre) : 0;
+                        this.ele.dicembre += ele.valori[1] ? parseInt(ele.valori[1].dicembre) : 0;
+                    });
+
+                    this.riepilogo.push(this.ele);
+
+                    this.ele = {
+                        'nome' : '',
+                        'budgetAnno': 0,
+                        'gennaio': 0,
+                        'febbraio': 0,
+                        'marzo': 0,
+                        'aprile': 0,
+                        'maggio': 0,
+                        'giugno': 0,
+                        'luglio': 0,
+                        'agosto': 0,
+                        'settembre': 0,
+                        'ottobre': 0,
+                        'novembre': 0,
+                        'dicembre': 0,
+                    };
+
+                    this.ele.nome = 'Delta';
+                    //console.log((((this.riepilogo[1].budgetAnno / this.riepilogo[0].budgetAnno)-1)*100).toFixed(1));
+                    this.ele.budgetAnno = this.riepilogo[1].budgetAnno ?
+                        (((this.riepilogo[1].budgetAnno / this.riepilogo[0].budgetAnno)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.gennaio = this.riepilogo[1].gennaio ?
+                        (((this.riepilogo[1].gennaio / this.riepilogo[0].gennaio)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.febbraio = this.riepilogo[1].febbraio ?
+                        (((this.riepilogo[1].febbraio / this.riepilogo[0].febbraio)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.marzo = this.riepilogo[1].marzo ?
+                        (((this.riepilogo[1].marzo / this.riepilogo[0].marzo)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.aprile = this.riepilogo[1].aprile ?
+                        (((this.riepilogo[1].aprile / this.riepilogo[0].aprile)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.maggio = this.riepilogo[1].maggio ?
+                        (((this.riepilogo[1].maggio / this.riepilogo[0].maggio)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.giugno = this.riepilogo[1].giugno ?
+                        (((this.riepilogo[1].giugno / this.riepilogo[0].giugno)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.luglio = this.riepilogo[1].luglio ?
+                        (((this.riepilogo[1].luglio / this.riepilogo[0].luglio)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.agosto = this.riepilogo[1].agosto ?
+                        (((this.riepilogo[1].agosto / this.riepilogo[0].agosto)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.settembre = this.riepilogo[1].settembre ?
+                        (((this.riepilogo[1].settembre / this.riepilogo[0].settembre)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.ottobre = this.riepilogo[1].ottobre ?
+                        (((this.riepilogo[1].ottobre / this.riepilogo[0].ottobre)-1)*100).toFixed(1) +'%' : 0;
+                    this.ele.novembre = this.riepilogo[1].novembre ?
+                        (((this.riepilogo[1].novembre / this.riepilogo[0].novembre)-1)*100).toFixed(1) +'%' : 0;
+
+
+                    this.ele.dicembre = 0;
+
+                    this.riepilogo.push(this.ele);
+                    this.carica = false;
+                });
+            },
         },
 
-        methods:{
-            ...mapActions('users', {
-                fetchSituazioneAnno:'fetchSituazioneAnno',
-            }),
 
-        },
+
 
         computed:{
             ...mapGetters('users', {
                 getAudioConBgt:'getAudioConBgt',
                 getTotFatt:'getTotFatt',
                 getTotBgtProg:'getTotBgtProg',
+            }),
+
+            ...mapGetters('clients', {
+                getAnni: 'getAnni',
             }),
 
         }

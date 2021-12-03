@@ -507,6 +507,7 @@
                 }).then(() => {
                     this.carica = false;
                     this.fetchSoglie(this.proveClient.filiale_id);
+                    this.switchInserisci = true;
                 });
 
             },

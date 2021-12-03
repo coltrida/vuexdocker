@@ -81,11 +81,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
   data: function data() {
     return {
+      ricerca: {},
       AudioSelected: [],
       "switch": 0,
       singleSelect: true,
@@ -118,11 +131,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    this.fetchAudioConFatt();
+    this.ricerca.anno = '';
+    this.$store.commit('users/resetAudioConFatt');
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('users', {
     fetchAudioConFatt: 'fetchAudioConFatt'
   })), {}, {
+    selezionaAnno: function selezionaAnno() {
+      this.fetchAudioConFatt(this.ricerca);
+    },
     calcolaMediaGiorniProva: function calcolaMediaGiorniProva(prove) {
       var tot = 0;
 
@@ -136,8 +153,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return tot;
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
     getAudioConFatt: 'getAudioConFatt'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+    getAnni: 'getAnni'
   }))
 });
 
@@ -235,7 +254,35 @@ var render = function() {
     "div",
     { staticClass: "py-10" },
     [
-      _c("h2", [_vm._v("Dettaglio Audioprotesisti")]),
+      _c(
+        "v-row",
+        [
+          _c("v-col", [_c("h2", [_vm._v("Dettaglio Audioprotesisti")])]),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getAnni, label: "Anno" },
+                on: {
+                  change: function($event) {
+                    return _vm.selezionaAnno()
+                  }
+                },
+                model: {
+                  value: _vm.ricerca.anno,
+                  callback: function($$v) {
+                    _vm.$set(_vm.ricerca, "anno", $$v)
+                  },
+                  expression: "ricerca.anno"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm._l(_vm.getAudioConFatt, function(audio) {
         return _c(
@@ -268,17 +315,40 @@ var render = function() {
                 _vm._v(" "),
                 _c("v-col", [
                   _c("h4", [
-                    _vm._v("Nr. Pc: " + _vm._s(audio.delta.provvigione))
+                    _vm._v(
+                      "Nr. Pc: " +
+                        _vm._s(
+                          audio.molti_delta[0]
+                            ? audio.molti_delta[0].provvigione
+                            : 0
+                        )
+                    )
                   ])
                 ]),
                 _vm._v(" "),
                 _c("v-col", [
-                  _c("h4", [_vm._v("Nr. Cl: " + _vm._s(audio.delta.stipendio))])
+                  _c("h4", [
+                    _vm._v(
+                      "Nr. Cl: " +
+                        _vm._s(
+                          audio.molti_delta[0]
+                            ? audio.molti_delta[0].stipendio
+                            : 0
+                        )
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("v-col", [
                   _c("h4", [
-                    _vm._v("Media v.: " + _vm._s(audio.fatturati.provvigione))
+                    _vm._v(
+                      "Media v.: " +
+                        _vm._s(
+                          audio.molti_fatturati[0]
+                            ? audio.molti_fatturati[0].provvigione
+                            : 0
+                        )
+                    )
                   ])
                 ]),
                 _vm._v(" "),

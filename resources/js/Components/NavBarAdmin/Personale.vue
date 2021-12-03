@@ -30,6 +30,12 @@
                     </v-list-item>
                 </router-link>
 
+                <router-link :to="{ name: 'diari'}">
+                    <v-list-item>
+                        <v-list-item-title>Diari</v-list-item-title>
+                    </v-list-item>
+                </router-link>
+
                 <router-link :to="{ name: 'saldati'}">
                     <v-list-item>
                         <v-list-item-title>Saldati</v-list-item-title>

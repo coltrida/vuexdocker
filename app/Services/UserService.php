@@ -96,14 +96,20 @@ class UserService
         return $agenda;
     }
 
-    public function audioConBgt()
+    public function audioConBgt($request)
     {
-        return User::audio(1)->with('budget')->orderBy('name')->get();
+        return User::audio()->whereHas('moltiBudget', function ($m) use($request){
+            $m->where('anno', $request->anno);
+        })->with(['moltiBudget' => function($b) use($request){
+            $b->where('anno', $request->anno);
+        }])->orderBy('name')->get();
     }
 
-    public function audioSenzaBgt()
+    public function audioSenzaBgt($request)
     {
-        return User::audio(2)->orderBy('name')->get();
+        return User::audio()->whereDoesntHave('moltiBudget', function ($m) use($request){
+            $m->where('anno', $request->anno);
+        })->orderBy('name')->get();
     }
 
     public function amm()
@@ -144,10 +150,10 @@ class UserService
     public function assegnaBgt($request)
     {
         $user = User::find($request->idAudio);
-
         $budget = Budget::create([
             'budgetAnno' => $request->budgetAnno,
             'user_id' => $request->idAudio,
+            'anno' => $request->anno,
             'nome' => 'Budget',
             'stipendio' => $request->stipendio,
             'provvigione' => $request->provvigione,
@@ -164,10 +170,11 @@ class UserService
             'novembre' => $request->mese[10],
             'dicembre' => $request->mese[11],
         ]);
-
         $user->budget_id = $budget->id;
         $user->save();
-        return User::with('budget')->find($user->id);
+        return User::with(['moltiBudget' => function($m) use($request){
+            $m->where('anno', $request->anno)->first();
+        }])->find($request->idAudio);
     }
 
     public function modificaBgt($request)
@@ -250,36 +257,46 @@ class UserService
         return $utenti;
     }
 
-    public function dettaglioAudio()
+    public function dettaglioAudio($request)
     {
-        $anno = Carbon::now()->year;
         return User::
-            audio(1)->with(['pezzi','fatturati','delta:id,premio,stipendio,provvigione','provaFinalizzata' => function ($q){
-                $q->orderBy('mese_fine');
+            audio(1)
+            ->with(['pezzi','moltiFatturati' => function($f) use($request){
+                $f->where('anno', $request->anno);
+            },'moltiDelta' => function($d) use($request){
+                $d->where('anno', $request->anno);
+            },'provaFinalizzata' => function ($q) use($request){
+                $q->where('anno_fine', $request->anno)->orderBy('mese_fine');
             }])
-            ->withCount(['prova' => function($q) use($anno){
-                $q->where('anno_inizio', $anno)->whereHas('stato', function ($s){
+            ->withCount(['prova' => function($q) use($request){
+                $q->where('anno_inizio', $request->anno)->whereHas('stato', function ($s){
                     $s->where('nome', 'RESO')->orWhere('nome', 'FATTURA')->orWhere('nome', 'PROVA');
                 });
             }])
-            ->withCount(['provaFinalizzata as nuova' => function($q){
-                $q->where('tipologia', 'Nuovo');
+            ->withCount(['provaFinalizzata as nuova' => function($q) use($request){
+                $q->where('anno_fine', $request->anno)->where('tipologia', 'Nuovo');
             }])
-            ->withCount(['provaFinalizzata as riacquisto' => function($q){
-                $q->where('tipologia', 'Riacquisto');
+            ->withCount(['provaFinalizzata as riacquisto' => function($q) use($request){
+                $q->where('anno_fine', $request->anno)->where('tipologia', 'Riacquisto');
             }])
             ->orderBy('name')
             ->get();
     }
 
-    public function visualizzaSituazioneAnno()
+    public function visualizzaSituazioneAnno($request)
     {
         $audios = User::audio(1)->get();
 
         foreach ($audios as $audio){
-            $valori = User::audio(1)->with('moltiBudget')->find($audio->id)->moltiBudget
-                ->concat(User::audio(1)->with('moltiFatturati')->find($audio->id)->moltiFatturati)
-                ->concat(User::audio(1)->with('moltiDelta')->find($audio->id)->moltiDelta);
+            $valori = User::audio(1)->with(['moltiBudget' => function($b) use($request){
+                $b->where('anno', $request->anno);
+            }])->find($audio->id)->moltiBudget
+                ->concat(User::audio(1)->with(['moltiFatturati'=> function($f) use($request){
+                $f->where('anno', $request->anno);
+            }])->find($audio->id)->moltiFatturati)
+                ->concat(User::audio(1)->with(['moltiDelta'=> function($d) use($request){
+                $d->where('anno', $request->anno);
+            }])->find($audio->id)->moltiDelta);
        //         ->concat(User::audio(1)->with('moltiPezzi')->find($audio->id)->moltiPezzi);
             $audio->valori = $valori;
         }

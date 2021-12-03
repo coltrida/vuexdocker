@@ -361,6 +361,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -370,9 +377,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      allowedMinutes: [0, 30],
       dialog: false,
       informazioneStruttura: '',
       carica: false,
+      carica2: false,
       modificaSwitch: false,
       modal2: false,
       valid: true,
@@ -475,6 +484,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       this.$refs.form.validate();
+      this.carica2 = true;
       this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
       this.newAppuntamento.telefonista_id = this.getIdUser;
       this.newAppuntamento.client_id = this.appuntamentoClient.id;
@@ -485,6 +495,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this2.caricaAppuntamenti();
 
+          _this2.carica2 = false;
           _this2.newAppuntamento = {
             filiale_id: null,
             recapito_id: null,
@@ -498,6 +509,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this2.caricaAppuntamenti();
 
+          _this2.carica2 = false;
           _this2.newAppuntamento = {
             filiale_id: null,
             recapito_id: null,
@@ -2376,6 +2388,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.carica = false;
 
         _this3.fetchSoglie(_this3.proveClient.filiale_id);
+
+        _this3.switchInserisci = true;
       });
     },
     reso: function reso(id) {
@@ -43396,7 +43410,10 @@ var render = function() {
                                 ? _c(
                                     "v-time-picker",
                                     {
-                                      attrs: { "full-width": "" },
+                                      attrs: {
+                                        "allowed-minutes": _vm.allowedMinutes,
+                                        "full-width": ""
+                                      },
                                       model: {
                                         value: _vm.newAppuntamento.orario,
                                         callback: function($$v) {
@@ -43601,31 +43618,45 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "4" } },
-                        [
-                          _c(
-                            "v-btn",
+                      _vm.carica2
+                        ? _c(
+                            "v-col",
                             {
-                              staticClass: "my-2",
-                              attrs: {
-                                color: "primary",
-                                disabled: _vm.verificaCampi
-                              },
-                              on: { click: _vm.inserisci }
+                              staticClass: "text-center",
+                              attrs: { cols: "4" }
                             },
                             [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(_vm.btnName) +
-                                  "\n                        "
-                              )
-                            ]
+                              _c("v-progress-circular", {
+                                attrs: { indeterminate: "", color: "primary" }
+                              })
+                            ],
+                            1
                           )
-                        ],
-                        1
-                      )
+                        : _c(
+                            "v-col",
+                            { attrs: { cols: "4" } },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "my-2",
+                                  attrs: {
+                                    color: "primary",
+                                    disabled: _vm.verificaCampi
+                                  },
+                                  on: { click: _vm.inserisci }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(_vm.btnName) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
                     ],
                     1
                   )
