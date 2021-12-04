@@ -212,6 +212,23 @@
         },
 
         mounted(){
+
+            window.Echo.channel("appuntamentoChannel").listen(".task-created", e => {
+                if (this.text === 'left'){
+                    this.fetchAppuntamentiLunedi(this.getIdUser);
+                    this.fetchAppuntamentiMartedi(this.getIdUser);
+                    this.fetchAppuntamentiMercoledi(this.getIdUser);
+                    this.fetchAppuntamentiGiovedi(this.getIdUser);
+                    this.fetchAppuntamentiVenerdi(this.getIdUser);
+                } else {
+                    this.prossimoLunedi(this.getIdUser);
+                    this.prossimoMartedi(this.getIdUser);
+                    this.prossimoMarcoledi(this.getIdUser);
+                    this.prossimoGiovedi(this.getIdUser);
+                    this.prossimoVenerdi(this.getIdUser);
+                }
+            });
+
             this.fetchAppuntamentiLunedi(this.getIdUser);
             this.fetchAppuntamentiMartedi(this.getIdUser);
             this.fetchAppuntamentiMercoledi(this.getIdUser);

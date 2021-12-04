@@ -190,6 +190,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
+    window.Echo.channel("appuntamentoChannel").listen(".task-created", function (e) {
+      //console.log(e.appuntamento.user_id + ' - ' +  this.getIdUser)
+      if (e.appuntamento.user_id === _this.getIdUser) {
+        _this.caricaDati(_this.nrSettimana);
+      }
+    });
     this.fetchDateSettimana();
     this.caricaDati(null);
   },
@@ -213,18 +221,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     caricaDati: function caricaDati(direzione) {
-      var _this = this;
+      var _this2 = this;
 
       this.carica = true;
       this.ricerca.idAudio = this.getIdUser;
       this.ricerca.direzione = direzione;
       this.fetchSettimanaDelMese(this.ricerca).then(function () {
-        _this.fetchAppLun(_this.ricerca).then(function () {
-          _this.fetchAppMar(_this.ricerca).then(function () {
-            _this.fetchAppMer(_this.ricerca).then(function () {
-              _this.fetchAppGio(_this.ricerca).then(function () {
-                _this.fetchAppVen(_this.ricerca).then(function () {
-                  _this.carica = false;
+        _this2.fetchAppLun(_this2.ricerca).then(function () {
+          _this2.fetchAppMar(_this2.ricerca).then(function () {
+            _this2.fetchAppMer(_this2.ricerca).then(function () {
+              _this2.fetchAppGio(_this2.ricerca).then(function () {
+                _this2.fetchAppVen(_this2.ricerca).then(function () {
+                  _this2.carica = false;
                 });
               });
             });

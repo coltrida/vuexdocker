@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Events\CallcenterEvent;
 use App\Models\Agenda;
 use App\Models\Appuntamento;
 use App\Models\Client;
@@ -182,7 +183,11 @@ class AppuntamentiService
             Mail::to($cliente->mail)->send(new \App\Mail\Appuntamento($cliente, $newAppuntamento));
         }
 
-        return Appuntamento::with('filiale', 'recapito', 'client')->find($newAppuntamento->id);
+        $appuntamento = Appuntamento::with('filiale', 'recapito', 'client')->find($newAppuntamento->id);
+
+        broadcast(new CallcenterEvent($appuntamento))->toOthers();
+
+        return $appuntamento;
     }
 
     public function modificaAppuntamento($request)

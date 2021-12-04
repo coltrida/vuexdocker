@@ -170,6 +170,13 @@
         },
 
         mounted(){
+            window.Echo.channel("appuntamentoChannel").listen(".task-created", e => {
+                //console.log(e.appuntamento.user_id + ' - ' +  this.getIdUser)
+                if(e.appuntamento.user_id === this.getIdUser){
+                    this.caricaDati(this.nrSettimana);
+                }
+            });
+
             this.fetchDateSettimana();
             this.caricaDati(null);
         },

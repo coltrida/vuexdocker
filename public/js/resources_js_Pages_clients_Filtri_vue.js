@@ -439,6 +439,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
+    window.Echo.channel("appuntamentoChannel").listen(".task-created", function (e) {
+      _this.caricaAppuntamenti();
+    });
     this.carica = true;
     this.fetchAppuntamenti(this.appuntamentoClient.id).then(function () {
       _this.carica = false;
@@ -1445,7 +1448,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       carica: false,
       menu: false,
       newInfo: {},
-      tipiInfo: ['Pulizia', 'Assistenza', 'Nuovo Esame', 'informazioni'],
       header: [{
         text: 'Data',
         align: 'start',
@@ -1495,7 +1497,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('informazioni', {
-    getInformazioni: 'getInformazioni'
+    getInformazioni: 'getInformazioni',
+    getMotivoIntervento: 'getMotivoIntervento'
   }))
 });
 
@@ -3781,6 +3784,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
+    window.Echo.channel("appuntamentoChannel").listen(".task-created", function (e) {
+      _this.fetchAppuntamentiLunedi(_this.userId);
+
+      _this.fetchAppuntamentiMartedi(_this.userId);
+
+      _this.fetchAppuntamentiMercoledi(_this.userId);
+
+      _this.fetchAppuntamentiGiovedi(_this.userId);
+
+      _this.fetchAppuntamentiVenerdi(_this.userId);
+
+      _this.prossimoLunedi(_this.userId);
+
+      _this.prossimoMartedi(_this.userId);
+
+      _this.prossimoMarcoledi(_this.userId);
+
+      _this.prossimoGiovedi(_this.userId);
+
+      _this.prossimoVenerdi(_this.userId);
+    });
     this.fetchAudio();
     this.fetchDateSettimana();
     this.$store.commit('appuntamenti/resetAppuntamenti');
@@ -44880,7 +44906,7 @@ var render = function() {
             { attrs: { cols: "12", md: "12", lg: "3", xs: "12", sm: "12" } },
             [
               _c("v-select", {
-                attrs: { items: _vm.tipiInfo, label: "Tipo" },
+                attrs: { items: _vm.getMotivoIntervento, label: "Tipo" },
                 model: {
                   value: _vm.newInfo.tipo,
                   callback: function($$v) {

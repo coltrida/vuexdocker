@@ -20,3 +20,7 @@ Broadcast::channel('provaChannel', function () {
 Broadcast::channel('logisticaChannel', function () {
     return true;
 });
+
+Broadcast::channel('appuntamentoChannel', function () {
+    return true;
+});

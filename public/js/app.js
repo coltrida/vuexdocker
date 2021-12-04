@@ -5191,13 +5191,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = function state() {
   return {
-    informazioni: []
+    informazioni: [],
+    motivoIntervento: ['Pulizia', 'Assistenza', 'Nuovo Esame', 'informazioni']
   };
 };
 
 var getters = {
   getInformazioni: function getInformazioni(state) {
     return state.informazioni;
+  },
+  getMotivoIntervento: function getMotivoIntervento(state) {
+    return state.motivoIntervento;
   }
 };
 var actions = {

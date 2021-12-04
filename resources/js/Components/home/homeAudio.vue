@@ -1,6 +1,12 @@
 <template>
     <div class="flex justify-start align-center my-2">
 
+        <intervenuto-modal
+            v-if="showIntervenuto"
+            :appuntamentoModal="appuntamentoModal"
+            @chiudiIntervenutoModal = "chiudiIntervenutoModal"
+        />
+
             <v-row style="font-size: 10px">
                 <prodotti
                     :prodotti="prodottiSelezione"
@@ -247,6 +253,21 @@
                                     </template>
                                     <span>Non Interviene</span>
                                 </v-tooltip>
+                                <v-tooltip bottom v-if="item.intervenuto === null">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            @click="intervenutoOggi(item)"
+                                            color="green"
+                                            small
+                                            v-bind="attrs"
+                                            v-on="on"
+
+                                        >
+                                            mdi-check
+                                        </v-icon>
+                                    </template>
+                                    <span>Interviene</span>
+                                </v-tooltip>
                                 <v-tooltip bottom v-if="item.intervenuto === 1">
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-icon
@@ -319,12 +340,15 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     import Prodotti from "./Prodotti";
+    import IntervenutoModal from "./IntervenutoModal";
     export default {
         name: "homeAudio",
-        components: {Prodotti},
+        components: {IntervenutoModal, Prodotti},
         data(){
             return {
                 dialogProdotti: false,
+                showIntervenuto: false,
+                appuntamentoModal:{},
                 prodottiSelezione: [],
                 expanded: [],
                 headers1: [
@@ -419,12 +443,25 @@
                 this.oggiNonViene(idAppuntamento);
             },
 
+            intervenutoOggi(appuntamento){
+                this.appuntamentoModal = appuntamento;
+                this.showIntervenuto = true;
+            },
+
             nonIntervenuto(idAppuntamento){
                 this.appuntamentoSaltato(idAppuntamento);
             },
 
             intervenuto(idAppuntamento){
                 this.appuntamentoIntervenuto(idAppuntamento);
+            },
+
+            chiudiIntervenutoModal(valore){
+                if (valore === 1){
+                    this.getAppuntamentiOggi.find(ele => ele.id === this.appuntamentoModal.id).intervenuto = 1;
+                }
+                this.showIntervenuto = false;
+                this.appuntamentoModal = {}
             }
         },
 

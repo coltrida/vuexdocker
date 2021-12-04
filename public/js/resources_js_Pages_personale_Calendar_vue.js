@@ -311,6 +311,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
+    window.Echo.channel("appuntamentoChannel").listen(".task-created", function (e) {
+      _this.fetchAppuntamentiLunedi(_this.userId);
+
+      _this.fetchAppuntamentiMartedi(_this.userId);
+
+      _this.fetchAppuntamentiMercoledi(_this.userId);
+
+      _this.fetchAppuntamentiGiovedi(_this.userId);
+
+      _this.fetchAppuntamentiVenerdi(_this.userId);
+
+      _this.prossimoLunedi(_this.userId);
+
+      _this.prossimoMartedi(_this.userId);
+
+      _this.prossimoMarcoledi(_this.userId);
+
+      _this.prossimoGiovedi(_this.userId);
+
+      _this.prossimoVenerdi(_this.userId);
+    });
     this.fetchAudio();
     this.fetchDateSettimana();
     this.$store.commit('appuntamenti/resetAppuntamenti');

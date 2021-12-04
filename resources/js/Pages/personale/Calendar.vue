@@ -268,6 +268,20 @@
         },
 
         mounted(){
+            window.Echo.channel("appuntamentoChannel").listen(".task-created", e => {
+                this.fetchAppuntamentiLunedi(this.userId);
+                this.fetchAppuntamentiMartedi(this.userId);
+                this.fetchAppuntamentiMercoledi(this.userId);
+                this.fetchAppuntamentiGiovedi(this.userId);
+                this.fetchAppuntamentiVenerdi(this.userId);
+
+                this.prossimoLunedi(this.userId);
+                this.prossimoMartedi(this.userId);
+                this.prossimoMarcoledi(this.userId);
+                this.prossimoGiovedi(this.userId);
+                this.prossimoVenerdi(this.userId);
+            });
+
             this.fetchAudio();
             this.fetchDateSettimana();
             this.$store.commit('appuntamenti/resetAppuntamenti');

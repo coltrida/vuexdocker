@@ -244,6 +244,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
+    window.Echo.channel("appuntamentoChannel").listen(".task-created", function (e) {
+      if (_this.text === 'left') {
+        _this.fetchAppuntamentiLunedi(_this.getIdUser);
+
+        _this.fetchAppuntamentiMartedi(_this.getIdUser);
+
+        _this.fetchAppuntamentiMercoledi(_this.getIdUser);
+
+        _this.fetchAppuntamentiGiovedi(_this.getIdUser);
+
+        _this.fetchAppuntamentiVenerdi(_this.getIdUser);
+      } else {
+        _this.prossimoLunedi(_this.getIdUser);
+
+        _this.prossimoMartedi(_this.getIdUser);
+
+        _this.prossimoMarcoledi(_this.getIdUser);
+
+        _this.prossimoGiovedi(_this.getIdUser);
+
+        _this.prossimoVenerdi(_this.getIdUser);
+      }
+    });
     this.fetchAppuntamentiLunedi(this.getIdUser);
     this.fetchAppuntamentiMartedi(this.getIdUser);
     this.fetchAppuntamentiMercoledi(this.getIdUser);

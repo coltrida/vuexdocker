@@ -59,7 +59,7 @@
             <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                 <v-select
                     v-model="newInfo.tipo"
-                    :items="tipiInfo"
+                    :items="getMotivoIntervento"
                     label="Tipo"
                 ></v-select>
             </v-col>
@@ -122,8 +122,6 @@
                 menu:false,
                 newInfo:{},
 
-                tipiInfo: ['Pulizia', 'Assistenza', 'Nuovo Esame', 'informazioni'],
-
                 header: [
                     { text: 'Data',  align: 'start', sortable: false, value: 'giorno', class: "indigo white--text" },
                     { text: 'Tipo',  sortable: false, value: 'tipo', class: "indigo white--text" },
@@ -167,6 +165,7 @@
         computed:{
             ...mapGetters('informazioni', {
                 getInformazioni: 'getInformazioni',
+                getMotivoIntervento: 'getMotivoIntervento'
             }),
         }
     }

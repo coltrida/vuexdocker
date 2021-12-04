@@ -332,6 +332,10 @@
         props: ['appuntamentoClient'],
 
         mounted() {
+            window.Echo.channel("appuntamentoChannel").listen(".task-created", e => {
+                this.caricaAppuntamenti();
+            });
+
             this.carica = true;
             this.fetchAppuntamenti(this.appuntamentoClient.id).then(() => {
                 this.carica = false;

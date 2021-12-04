@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\LogisticaEvent' => [
             'App\Listeners\LogisticaEventListener',
         ],
+        'App\Events\CallcenterEvent' => [
+            'App\Listeners\CallcenterEventListener',
+        ],
     ];
 
     /**
