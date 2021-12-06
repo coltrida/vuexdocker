@@ -331,6 +331,12 @@ class User extends Authenticatable
         return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
     }
 
+    public function appuntamentiSabato()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(5)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
+    }
+
     public function appuntamentiLunediProssimo()
     {
         $giorno = Carbon::now()->startOfWeek()->addDays(7)->format('Y-m-d');
@@ -358,6 +364,12 @@ class User extends Authenticatable
     public function appuntamentiVenerdiProssimo()
     {
         $giorno = Carbon::now()->startOfWeek()->addDays(11)->format('Y-m-d');
+        return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
+    }
+
+    public function appuntamentiSabatoProssimo()
+    {
+        $giorno = Carbon::now()->startOfWeek()->addDays(12)->format('Y-m-d');
         return $this->hasMany(Appuntamento::class)->where('giorno', $giorno)->orderBy('orario');
     }
 

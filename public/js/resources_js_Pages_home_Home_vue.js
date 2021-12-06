@@ -2872,7 +2872,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "IntervenutoModal",
-  props: ['appuntamentoModal'],
+  props: ['appuntamentoModal', 'appuntamentoEraDiOggi'],
   data: function data() {
     return {
       newInfo: {}
@@ -2885,6 +2885,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       if (this.newInfo.tipo) {
+        //console.log(this.appuntamentoModal)
         this.newInfo.client_id = this.appuntamentoModal.client_id;
         this.newInfo.giorno = this.appuntamentoModal.giornoOriginale;
         this.addInformazione(this.newInfo).then(function () {
@@ -2895,7 +2896,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.cancella(1);
     },
     cancella: function cancella(valore) {
-      this.$emit('chiudiIntervenutoModal', valore);
+      var payload = {
+        valorePassato: valore,
+        appuntamentoEraDiOggiPassato: this.appuntamentoEraDiOggi
+      };
+      this.$emit('chiudiIntervenutoModal', payload);
     }
   }),
   computed: _objectSpread(_objectSpread({
@@ -3923,6 +3928,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -3934,6 +3940,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      appuntamentoEraDiOggi: false,
       dialogProdotti: false,
       showIntervenuto: false,
       appuntamentoModal: {},
@@ -4169,7 +4176,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     nonIntervenutoOggi: function nonIntervenutoOggi(idAppuntamento) {
       this.oggiNonViene(idAppuntamento);
     },
-    intervenutoOggi: function intervenutoOggi(appuntamento) {
+    intervenutoOggi: function intervenutoOggi(appuntamento, eraOggi) {
+      this.appuntamentoEraDiOggi = eraOggi;
       this.appuntamentoModal = appuntamento;
       this.showIntervenuto = true;
     },
@@ -4179,13 +4187,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     intervenuto: function intervenuto(idAppuntamento) {
       this.appuntamentoIntervenuto(idAppuntamento);
     },
-    chiudiIntervenutoModal: function chiudiIntervenutoModal(valore) {
+    chiudiIntervenutoModal: function chiudiIntervenutoModal(payload) {
       var _this = this;
 
-      if (valore === 1) {
-        this.getAppuntamentiOggi.find(function (ele) {
-          return ele.id === _this.appuntamentoModal.id;
-        }).intervenuto = 1;
+      if (payload.valorePassato === 1) {
+        if (payload.appuntamentoEraDiOggiPassato) {
+          this.getAppuntamentiOggi.find(function (ele) {
+            return ele.id === _this.appuntamentoModal.id;
+          }).intervenuto = 1;
+        } else {
+          this.$store.commit('appuntamenti/eliminaAppuntamentoInSospeso', this.appuntamentoModal.id);
+        }
       }
 
       this.showIntervenuto = false;
@@ -5636,68 +5648,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Calendar",
@@ -5748,25 +5698,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     window.Echo.channel("appuntamentoChannel").listen(".task-created", function (e) {
-      _this.fetchAppuntamentiLunedi(_this.userId);
+      if (_this.userId) {
+        _this.fetchAppuntamentiLunedi(_this.userId);
 
-      _this.fetchAppuntamentiMartedi(_this.userId);
+        _this.fetchAppuntamentiMartedi(_this.userId);
 
-      _this.fetchAppuntamentiMercoledi(_this.userId);
+        _this.fetchAppuntamentiMercoledi(_this.userId);
 
-      _this.fetchAppuntamentiGiovedi(_this.userId);
+        _this.fetchAppuntamentiGiovedi(_this.userId);
 
-      _this.fetchAppuntamentiVenerdi(_this.userId);
+        _this.fetchAppuntamentiVenerdi(_this.userId);
 
-      _this.prossimoLunedi(_this.userId);
+        _this.fetchAppuntamentiSabato(_this.userId);
 
-      _this.prossimoMartedi(_this.userId);
+        _this.prossimoLunedi(_this.userId);
 
-      _this.prossimoMarcoledi(_this.userId);
+        _this.prossimoMartedi(_this.userId);
 
-      _this.prossimoGiovedi(_this.userId);
+        _this.prossimoMarcoledi(_this.userId);
 
-      _this.prossimoVenerdi(_this.userId);
+        _this.prossimoGiovedi(_this.userId);
+
+        _this.prossimoVenerdi(_this.userId);
+
+        _this.prossimoSabato(_this.userId);
+      }
     });
     this.fetchAudio();
     this.fetchDateSettimana();
@@ -5785,11 +5741,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchAppuntamentiMercoledi: 'fetchAppuntamentiMercoledi',
     fetchAppuntamentiGiovedi: 'fetchAppuntamentiGiovedi',
     fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi',
+    fetchAppuntamentiSabato: 'fetchAppuntamentiSabato',
     prossimoLunedi: 'prossimoLunedi',
     prossimoMartedi: 'prossimoMartedi',
     prossimoMarcoledi: 'prossimoMarcoledi',
     prossimoGiovedi: 'prossimoGiovedi',
     prossimoVenerdi: 'prossimoVenerdi',
+    prossimoSabato: 'prossimoSabato',
     fetchDateSettimana: 'fetchDateSettimana',
     fetchDateSettimanaProssima: 'fetchDateSettimanaProssima'
   })), {}, {
@@ -5801,6 +5759,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchAppuntamentiMercoledi(this.userId);
       this.fetchAppuntamentiGiovedi(this.userId);
       this.fetchAppuntamentiVenerdi(this.userId);
+      this.fetchAppuntamentiSabato(this.userId);
       this.fetchDateSettimana();
     },
     prossima: function prossima() {
@@ -5810,6 +5769,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.prossimoMarcoledi(this.userId);
       this.prossimoGiovedi(this.userId);
       this.prossimoVenerdi(this.userId);
+      this.prossimoSabato(this.userId);
       this.fetchDateSettimanaProssima();
     }
   }),
@@ -5821,6 +5781,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAppMer: 'getAppMer',
     getAppGio: 'getAppGio',
     getAppVen: 'getAppVen',
+    getAppSab: 'getAppSab',
     getDateSettimana: 'getDateSettimana'
   })), {}, {
     fissaAudio: function fissaAudio() {
@@ -50532,7 +50493,10 @@ var render = function() {
     [
       _vm.showIntervenuto
         ? _c("intervenuto-modal", {
-            attrs: { appuntamentoModal: _vm.appuntamentoModal },
+            attrs: {
+              appuntamentoModal: _vm.appuntamentoModal,
+              appuntamentoEraDiOggi: _vm.appuntamentoEraDiOggi
+            },
             on: { chiudiIntervenutoModal: _vm.chiudiIntervenutoModal }
           })
         : _vm._e(),
@@ -50993,8 +50957,8 @@ var render = function() {
                     staticClass: "elevation-1 mt-3",
                     attrs: {
                       headers: _vm.headers6,
-                      items: _vm.getAppuntamentiInSospeso,
-                      "hide-default-footer": ""
+                      "items-per-page": 5,
+                      items: _vm.getAppuntamentiInSospeso
                     },
                     scopedSlots: _vm._u([
                       {
@@ -51111,8 +51075,9 @@ var render = function() {
                                                   },
                                                   on: {
                                                     click: function($event) {
-                                                      return _vm.intervenuto(
-                                                        item.id
+                                                      return _vm.intervenutoOggi(
+                                                        item,
+                                                        false
                                                       )
                                                     }
                                                   }
@@ -51289,7 +51254,8 @@ var render = function() {
                                                           $event
                                                         ) {
                                                           return _vm.intervenutoOggi(
-                                                            item
+                                                            item,
+                                                            true
                                                           )
                                                         }
                                                       }
@@ -54041,6 +54007,26 @@ var render = function() {
                         dense: "",
                         headers: _vm.headers1,
                         items: _vm.getAppVen,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("h3", [
+                      _vm._v("Sabato - " + _vm._s(_vm.getDateSettimana[10]))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        dense: "",
+                        headers: _vm.headers1,
+                        items: _vm.getAppSab,
                         "hide-default-footer": ""
                       }
                     })

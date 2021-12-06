@@ -184,6 +184,37 @@
                         </v-data-table>
                     </v-col>
 
+                    <v-col>
+                        <h3>Sabato - {{getDateSettimana[10]}}</h3>
+                        <v-data-table
+                            dense
+                            :headers="headers1"
+                            :items="getAppSab"
+                            hide-default-footer
+                            class="elevation-1 mt-3"
+                        >
+
+                            <template v-slot:item.fullname="{ item }">
+                                <div style="font-size: 10px">
+                                    {{ item.fullname }}
+                                </div>
+                            </template>
+
+                            <template v-slot:item.orario="{ item }">
+                                <div style="font-size: 10px">
+                                    {{ item.orario }}
+                                </div>
+                            </template>
+
+                            <template v-slot:item.luogo="{ item }">
+                                <div style="font-size: 10px">
+                                    {{ item.luogo }}
+                                </div>
+                            </template>
+
+                        </v-data-table>
+                    </v-col>
+
                 </v-col>
             </v-row>
 
@@ -203,9 +234,9 @@
             return {
                 text: 'left',
                 headers1: [
-                    { text: 'Orario', width: 60, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
-                    { text: 'Nome', width: 100, align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
-                    { text: 'Luogo', width:80, align: 'start', sortable: false, value: 'luogo', class: "indigo white--text" },
+                    { text: 'Orario', width: 50, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
+                    { text: 'Nome', width: 80, align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
+                    { text: 'Luogo', width:70, align: 'start', sortable: false, value: 'luogo', class: "indigo white--text" },
                 ],
 
             }
@@ -220,12 +251,14 @@
                     this.fetchAppuntamentiMercoledi(this.getIdUser);
                     this.fetchAppuntamentiGiovedi(this.getIdUser);
                     this.fetchAppuntamentiVenerdi(this.getIdUser);
+                    this.fetchAppuntamentiSabato(this.getIdUser);
                 } else {
                     this.prossimoLunedi(this.getIdUser);
                     this.prossimoMartedi(this.getIdUser);
                     this.prossimoMarcoledi(this.getIdUser);
                     this.prossimoGiovedi(this.getIdUser);
                     this.prossimoVenerdi(this.getIdUser);
+                    this.prossimoSabato(this.getIdUser);
                 }
             });
 
@@ -234,6 +267,7 @@
             this.fetchAppuntamentiMercoledi(this.getIdUser);
             this.fetchAppuntamentiGiovedi(this.getIdUser);
             this.fetchAppuntamentiVenerdi(this.getIdUser);
+            this.fetchAppuntamentiSabato(this.getIdUser);
             this.fetchDateSettimana();
         },
 
@@ -244,11 +278,13 @@
                 fetchAppuntamentiMercoledi:'fetchAppuntamentiMercoledi',
                 fetchAppuntamentiGiovedi:'fetchAppuntamentiGiovedi',
                 fetchAppuntamentiVenerdi:'fetchAppuntamentiVenerdi',
+                fetchAppuntamentiSabato:'fetchAppuntamentiSabato',
                 prossimoLunedi:'prossimoLunedi',
                 prossimoMartedi:'prossimoMartedi',
                 prossimoMarcoledi:'prossimoMarcoledi',
                 prossimoGiovedi:'prossimoGiovedi',
                 prossimoVenerdi:'prossimoVenerdi',
+                prossimoSabato:'prossimoSabato',
                 fetchDateSettimana:'fetchDateSettimana',
                 fetchDateSettimanaProssima:'fetchDateSettimanaProssima',
             }),
@@ -259,6 +295,7 @@
                 this.fetchAppuntamentiMercoledi(this.getIdUser);
                 this.fetchAppuntamentiGiovedi(this.getIdUser);
                 this.fetchAppuntamentiVenerdi(this.getIdUser);
+                this.fetchAppuntamentiSabato(this.getIdUser);
                 this.fetchDateSettimana();
             },
 
@@ -268,6 +305,7 @@
                 this.prossimoMarcoledi(this.getIdUser);
                 this.prossimoGiovedi(this.getIdUser);
                 this.prossimoVenerdi(this.getIdUser);
+                this.prossimoSabato(this.getIdUser);
 
                 this.fetchDateSettimanaProssima();
             }
@@ -281,6 +319,7 @@
                 getAppMer:'getAppMer',
                 getAppGio:'getAppGio',
                 getAppVen:'getAppVen',
+                getAppSab:'getAppSab',
                 getDateSettimana:'getDateSettimana',
             }),
 

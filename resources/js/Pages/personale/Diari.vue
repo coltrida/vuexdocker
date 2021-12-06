@@ -159,6 +159,18 @@
                     :strutturaPomeriggio="getSettimanaDelMese[1] ? getSettimanaDelMese[1].ven : null"
                 />
             </v-col>
+            <v-col>
+                <giorno
+                    titolo="Sabato"
+                    :giorno="getDateSettimana[10]"
+                    :giornoPerRicerca="getDateSettimana[11]"
+                    :appuntamenti="getAppSab"
+                    :doveMattina="getSettimanaDelMese[0] ? getSettimanaDelMese[0].sabiniz : null"
+                    :dovePomeriggio="getSettimanaDelMese[1] ? getSettimanaDelMese[1].sabiniz : null"
+                    :strutturaMattina="getSettimanaDelMese[0] ? getSettimanaDelMese[0].sab : null"
+                    :strutturaPomeriggio="getSettimanaDelMese[1] ? getSettimanaDelMese[1].sab : null"
+                />
+            </v-col>
         </v-row>
     </div>
 
@@ -194,6 +206,7 @@
                 fetchAppMer:'fetchAppMer',
                 fetchAppGio:'fetchAppGio',
                 fetchAppVen:'fetchAppVen',
+                fetchAppSab:'fetchAppSab',
             }),
 
             ...mapActions('users', {
@@ -226,7 +239,9 @@
                             this.fetchAppMer(this.ricerca).then(() => {
                                 this.fetchAppGio(this.ricerca).then(() => {
                                     this.fetchAppVen(this.ricerca).then(() => {
-                                        this.carica = false;
+                                        this.fetchAppSab(this.ricerca).then(() => {
+                                            this.carica = false;
+                                        });
                                     });
                                 });
                             });
@@ -248,6 +263,7 @@
                 getAppMer:'getAppMer',
                 getAppGio:'getAppGio',
                 getAppVen:'getAppVen',
+                getAppSab:'getAppSab',
             }),
 
             ...mapGetters('users', {

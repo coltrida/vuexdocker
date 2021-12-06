@@ -72,41 +72,9 @@ class ClientService
     {
         $sonoInModificaUtente = isset($request->id) ? true : false;
         $client = $sonoInModificaUtente ? Client::find($request->id) : new Client();
-
-        $idListaEsterna = Tipologia::where('nome', 'LE')->first()->id;
-
-        $client->nome = trim(Str::upper($request->nome));
-        $client->cognome = trim(Str::upper($request->cognome));
-        $client->codfisc = trim(Str::upper($request->codfisc)) == '' ? null : trim(Str::upper($request->codfisc));
-        $client->indirizzo = trim(Str::upper($request->indirizzo));
-        $client->citta = trim(Str::upper($request->citta));
-        $client->cap = $request->cap;
-        $client->provincia = trim(Str::upper($request->provincia));
-        $client->telefono = $request->telefono;
-        $client->telefono2 = $request->telefono2;
-        $client->telefono3 = $request->telefono3;
-        $client->tipologia_id = $request->tipologia_id ? $request->tipologia_id : $idListaEsterna;
-        $client->marketing_id = $request->marketing_id;
-        $client->filiale_id = $request->filiale_id;
-        $client->medico_id = $request->medico_id;
-        $client->recapito_id = $request->recapito_id;
-        /*if($request->marketing_id == Marketing::where('name', 'MEDICO')->first()->id) {
-            $client->medico_id = $request->recapito_id;
-        } else {
-            $client->recapito_id = $request->recapito_id;
-        }*/
-        $client->user_id = $request->user_id;
-        $client->mail = trim(Str::upper($request->mail));
-        $client->datanascita = $request->datanascita;
-        $client->luogoNascita = trim(Str::upper($request->luogoNascita)) == '' ? null : trim(Str::upper($request->luogoNascita));
-        $client->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
-        $client->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
-        $client->save();
-
+        $this->inserisciOModificaClienteConDatiPassati($request, $client);
         if(!$sonoInModificaUtente){
-            $client->mese = Carbon::now()->month;
-            $client->anno = Carbon::now()->year;
-            $client->save();
+            $this->inserisciMeseEdAnnoDiIngresso($client);
         }
 
         if($client->tipologia_id && !$sonoInModificaUtente){
@@ -114,51 +82,24 @@ class ClientService
         }
 
         $utente = User::find($request->user_id);
-        $propieta = 'client';
-        $log = new LoggingService();
+        $propieta = 'CLIENT';
         $testo = $sonoInModificaUtente ? $utente->name.' ha modificato il nominativo '.$client->cognome.' '.$client->nome :
             $utente->name.' ha inserito il nominativo '.$client->cognome.' '.$client->nome;
 
-        $log->scriviLog($client->cognome.' '.$client->nome, $utente, $utente->name, $propieta, $testo);
-
-        Informazione::create([
-            'client_id' => $client->id,
-            'giorno' => Carbon::now()->format('Y-m-d'),
-            'tipo' => 'CLIENTE',
-            'note' => $testo
-        ]);
+        $this->scriviSuLog($utente, $propieta, $client, $testo);
+        $this->creaInformazione($client, $propieta, $testo);
 
         return $client;
-    }
-
-    private function inserisciRecallAutomatico($client, $idCliente){
-        if ($this->calcolaRecall($client->tipologia_id)){
-            $telefonata = new Telefonata();
-            $telefonata->user_id = $client->user_id;
-            $telefonata->client_id = $idCliente;
-            $telefonata->note = "recall automatico dell'inserimento paziente";
-            $telefonata->datarecall = $this->calcolaRecall($client->tipologia_id);
-            $telefonata->effettuata = false;
-            $telefonata->save();
-        }
-
-    }
-
-    public function calcolaRecall($tipologia_id)
-    {
-        $oggi = Carbon::now();
-        $tipo = Tipologia::find($tipologia_id);
-        return $tipo->recall ? $oggi->addDays($tipo->recall)->format('Y-m-d') : null;
     }
 
     public function elimina($request)
     {
         $client = Client::find($request->clientId);
-        $user = User::find($request->userId);
-        $propieta = 'client';
-        $log = new LoggingService();
-        $testo = $user->name.' ha eliminato il nominativo '.$client->cognome.' '.$client->nome;
-        $log->scriviLog($client->cognome.' '.$client->nome, $user, $user->name, $propieta, $testo);
+        $utente = User::find($request->userId);
+        $propieta = 'CLIENT';
+        $testo = $utente->name.' ha eliminato il nominativo '.$client->cognome.' '.$client->nome;
+
+        $this->scriviSuLog($utente, $propieta, $client, $testo);
         return $client->delete();
     }
 
@@ -288,85 +229,7 @@ class ClientService
             ->pluck('provincia');
     }
 
-    public function cittaByProvincia($provincia)
-    {
-        return Client::where('provincia', $provincia)->orderBy('citta')->pluck('citta');
-    }
 
-    private function appuntamentoPresoRecentementeDaCallCenter($client){
-        return Client::with(['appuntamenti' => function($r){
-            $r->where('intervenuto', null);
-        }])->where([
-            ['nome', $client->nome],
-            ['cognome', $client->cognome],
-            ['citta', $client->citta],
-        ])->whereHas('appuntamenti', function ($q){
-            $q->where('intervenuto', null);
-        })
-            ->first();
-    }
-
-    private function copiaAnagrafica($clientInseritoDaCallCenter, $client){
-        $clientInseritoDaCallCenter->nome = $client->nome;
-        $clientInseritoDaCallCenter->cognome = $client->cognome;
-        $clientInseritoDaCallCenter->created_at = $client->created_at;
-        $clientInseritoDaCallCenter->updated_at = $client->updated_at;
-        $clientInseritoDaCallCenter->citta = $client->citta;
-        $clientInseritoDaCallCenter->indirizzo = $client->indirizzo;
-        $clientInseritoDaCallCenter->provincia = $client->provincia;
-        $clientInseritoDaCallCenter->telefono = $client->telefono;
-        $clientInseritoDaCallCenter->telefono2 = $client->telefono2;
-        $clientInseritoDaCallCenter->telefono3 = $client->telefono3;
-        $clientInseritoDaCallCenter->cap = $client->cap;
-        $clientInseritoDaCallCenter->datanascita = $client->datanascita;
-        $clientInseritoDaCallCenter->recapito_id = $client->recapito_id;
-        $clientInseritoDaCallCenter->mail = $client->mail;
-        $clientInseritoDaCallCenter->tipologia_id = $client->tipologia_id;
-        $clientInseritoDaCallCenter->marketing_id = $client->marketing_id;
-        $clientInseritoDaCallCenter->filiale_id = $client->filiale_id;
-        $clientInseritoDaCallCenter->mese = $client->mese;
-        $clientInseritoDaCallCenter->anno = $client->anno;
-        $clientInseritoDaCallCenter->save();
-    }
-
-    private function segnaAppuntamentoIntervenuto(Client $clientInseritoDaCallCenter)
-    {
-        $clientInseritoDaCallCenter->appuntamenti[0]->intervenuto = true;
-        $clientInseritoDaCallCenter->push();
-    }
-
-    private function decriptazioneStruttura($codice)
-    {
-        $idFiliale = $idRecapito = null;
-        if (isset($codice)){
-            $letteraIniziale = Str::substr($codice, 0, 1);
-            $id = Str::substr($codice, 1);
-            if ($letteraIniziale === 'F')
-            {
-                $idFiliale = Filiale::find($id)->id;
-                $idRecapito = null;
-            } else if($letteraIniziale === 'R') {
-                $recapito = Recapito::with('filiale')->find($id);
-                $idRecapito = $recapito->id;
-                $idFiliale = $recapito->filiale->id;
-            }
-        }
-
-        return [$idFiliale, $idRecapito];
-    }
-
-    private function decriptazioneCodiceMarketing($codice)
-    {
-        $codiceDaRicercare = $codice;
-        $idMedico = null;
-        $letteraIniziale = Str::substr($codice, 0, 1);
-        if ($letteraIniziale === 'M'){
-            $codiceDaRicercare = 'M';
-            $idMedico = Str::substr($codice, 1);
-        }
-        $marketing = Marketing::where('cod', $codiceDaRicercare)->first();
-        return $marketing ? [$marketing->id, $idMedico] : [null, null];
-    }
 
     public function importClientsFromNoah($request)
     {
@@ -384,34 +247,8 @@ class ClientService
             $risultatiDecriptazioneCodMkt = $this->decriptazioneCodiceMarketing(trim(Str::upper($ele->Patient->Other1)));
             $idCodMkt = $risultatiDecriptazioneCodMkt[0];
             $idMedico = $risultatiDecriptazioneCodMkt[1];
-            $client = Client::updateOrCreate(
-                [
-                    'nome'          => trim(Str::upper($ele->Patient->FirstName)),
-                    'cognome'       => trim(Str::upper($ele->Patient->LastName)),
-                    'created_at'    => Carbon::make((string)$ele->Patient->CreateDate),
-                ],
-                [
-                    'citta'         => $ele->Patient->City ? trim(Str::upper($ele->Patient->City)) : null,
-                    'indirizzo'     => $ele->Patient->Address1 ? trim(Str::upper($ele->Patient->Address1)) : null,
-                    'cap'           => $ele->Patient->Zip ? trim(Str::upper($ele->Patient->Zip)) : null,
-                    'telefono'      => $ele->Patient->MobilePhone ? trim(Str::upper($ele->Patient->MobilePhone)) : null,
-                    'telefono2'     => $ele->Patient->WorkPhone ? trim(Str::upper($ele->Patient->WorkPhone)) : null,
-                    'telefono3'     => $ele->Patient->HomePhone ? trim(Str::upper($ele->Patient->HomePhone)) : null,
-                    'provincia'     => $ele->Patient->Country ? trim(Str::upper($ele->Patient->Country)) : null,
-                    'user_id'       => $request['idUser'],
-                    'datanascita'   => $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null,
-                    'recapito_id'   => $idRecapito,
-                    'medico_id'     => $idMedico,
-                    'mail'          => $ele->Patient->EMail ? trim(Str::upper($ele->Patient->EMail)) : null,
-                    'tipologia_id'  => (string)$ele->Patient->Province != '' ? Tipologia::where('nome', trim(Str::upper($ele->Patient->Province)))->first()->id : $idListaEsterna,
-                    'marketing_id'  => $idCodMkt,
-                    'filiale_id'    => $idFiliale ? $idFiliale : $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
-                        Str::of(Str::upper($ele->Patient->City))->trim()),
-                    'updated_at'    => Carbon::make((string)$ele->Patient->CreateDate),
-                    'mese'          => Carbon::make((string)$ele->Patient->CreateDate)->month,
-                    'anno'          => Carbon::make((string)$ele->Patient->CreateDate)->year,
-                ]
-            );
+
+            $client = $this->inserimentoDatiDaFileXml($ele, $request, $idRecapito, $idMedico, $idCodMkt, $idFiliale, $idListaEsterna);
 
             $idCliente = $client->id;
 
@@ -602,30 +439,6 @@ class ClientService
         return $res;
     }
 
-
-    private function getFilialeFromPlace($provincia, $citta)
-    {
-        $filiale = Filiale::where('provincia', $provincia)->get();
-
-        if (count($filiale) == 1){
-            return $filiale[0]->id;
-        } else {
-            if (in_array($citta, config('enum.civitanova'))) {
-                return Filiale::where('nome', 'CIVITANOVA')->first()->id;
-            } elseif (in_array($citta, config('enum.macerata'))) {
-                return Filiale::where('nome', 'MACERATA')->first()->id;
-            } elseif (in_array($citta, config('enum.pisa'))) {
-                return Filiale::where('nome', 'PISA')->first()->id;
-            } elseif (in_array($citta, config('enum.viareggio'))) {
-                return Filiale::where('nome', 'VIAREGGIO')->first()->id;
-            } elseif (in_array($citta, config('enum.lucca'))) {
-                return Filiale::where('nome', 'LUCCA')->first()->id;
-            } elseif (in_array($citta, config('enum.ascoli'))) {
-                return Filiale::where('nome', 'ASCOLI')->first()->id;
-            }
-        }
-    }
-
     public function ricercaNominativi($request)
     {
         $condizioni = [];
@@ -760,6 +573,213 @@ class ClientService
                 \Mail::to($utente['mail'])->send(new inviaMessaggio($messaggio, $utente));
             }
         }
+    }
+
+    private function getFilialeFromPlace($provincia, $citta)
+    {
+        $filiale = Filiale::where('provincia', $provincia)->get();
+
+        if (count($filiale) == 1){
+            return $filiale[0]->id;
+        } else {
+            if (in_array($citta, config('enum.civitanova'))) {
+                return Filiale::where('nome', 'CIVITANOVA')->first()->id;
+            } elseif (in_array($citta, config('enum.macerata'))) {
+                return Filiale::where('nome', 'MACERATA')->first()->id;
+            } elseif (in_array($citta, config('enum.pisa'))) {
+                return Filiale::where('nome', 'PISA')->first()->id;
+            } elseif (in_array($citta, config('enum.viareggio'))) {
+                return Filiale::where('nome', 'VIAREGGIO')->first()->id;
+            } elseif (in_array($citta, config('enum.lucca'))) {
+                return Filiale::where('nome', 'LUCCA')->first()->id;
+            } elseif (in_array($citta, config('enum.ascoli'))) {
+                return Filiale::where('nome', 'ASCOLI')->first()->id;
+            }
+        }
+    }
+
+    public function cittaByProvincia($provincia)
+    {
+        return Client::where('provincia', $provincia)->orderBy('citta')->pluck('citta');
+    }
+
+    private function appuntamentoPresoRecentementeDaCallCenter($client){
+        return Client::with(['appuntamenti' => function($r){
+            $r->where('intervenuto', null);
+        }])->where([
+            ['nome', $client->nome],
+            ['cognome', $client->cognome],
+            ['citta', $client->citta],
+        ])->whereHas('appuntamenti', function ($q){
+            $q->where('intervenuto', null);
+        })
+            ->first();
+    }
+
+    private function copiaAnagrafica($clientInseritoDaCallCenter, $client){
+        $clientInseritoDaCallCenter->nome = $client->nome;
+        $clientInseritoDaCallCenter->cognome = $client->cognome;
+        $clientInseritoDaCallCenter->created_at = $client->created_at;
+        $clientInseritoDaCallCenter->updated_at = $client->updated_at;
+        $clientInseritoDaCallCenter->citta = $client->citta;
+        $clientInseritoDaCallCenter->indirizzo = $client->indirizzo;
+        $clientInseritoDaCallCenter->provincia = $client->provincia;
+        $clientInseritoDaCallCenter->telefono = $client->telefono;
+        $clientInseritoDaCallCenter->telefono2 = $client->telefono2;
+        $clientInseritoDaCallCenter->telefono3 = $client->telefono3;
+        $clientInseritoDaCallCenter->cap = $client->cap;
+        $clientInseritoDaCallCenter->datanascita = $client->datanascita;
+        $clientInseritoDaCallCenter->recapito_id = $client->recapito_id;
+        $clientInseritoDaCallCenter->mail = $client->mail;
+        $clientInseritoDaCallCenter->tipologia_id = $client->tipologia_id;
+        $clientInseritoDaCallCenter->marketing_id = $client->marketing_id;
+        $clientInseritoDaCallCenter->filiale_id = $client->filiale_id;
+        $clientInseritoDaCallCenter->mese = $client->mese;
+        $clientInseritoDaCallCenter->anno = $client->anno;
+        $clientInseritoDaCallCenter->save();
+    }
+
+    private function segnaAppuntamentoIntervenuto(Client $clientInseritoDaCallCenter)
+    {
+        $clientInseritoDaCallCenter->appuntamenti[0]->intervenuto = true;
+        $clientInseritoDaCallCenter->push();
+    }
+
+    private function decriptazioneStruttura($codice)
+    {
+        $idFiliale = $idRecapito = null;
+        if (isset($codice)){
+            $letteraIniziale = Str::substr($codice, 0, 1);
+            $id = Str::substr($codice, 1);
+            if ($letteraIniziale === 'F')
+            {
+                $idFiliale = Filiale::find($id)->id;
+                $idRecapito = null;
+            } else if($letteraIniziale === 'R') {
+                $recapito = Recapito::with('filiale')->find($id);
+                $idRecapito = $recapito->id;
+                $idFiliale = $recapito->filiale->id;
+            }
+        }
+
+        return [$idFiliale, $idRecapito];
+    }
+
+    private function decriptazioneCodiceMarketing($codice)
+    {
+        $codiceDaRicercare = $codice;
+        $idMedico = null;
+        $letteraIniziale = Str::substr($codice, 0, 1);
+        if ($letteraIniziale === 'M'){
+            $codiceDaRicercare = 'M';
+            $idMedico = Str::substr($codice, 1);
+        }
+        $marketing = Marketing::where('cod', $codiceDaRicercare)->first();
+        return $marketing ? [$marketing->id, $idMedico] : [null, null];
+    }
+
+    private function inserisciRecallAutomatico($client, $idCliente)
+    {
+        if ($this->calcolaRecall($client->tipologia_id)){
+            $telefonata = new Telefonata();
+            $telefonata->user_id = $client->user_id;
+            $telefonata->client_id = $idCliente;
+            $telefonata->note = "recall automatico dell'inserimento paziente";
+            $telefonata->datarecall = $this->calcolaRecall($client->tipologia_id);
+            $telefonata->effettuata = false;
+            $telefonata->save();
+        }
+
+    }
+
+    private function inserisciOModificaClienteConDatiPassati($request, $client)
+    {
+        $idListaEsterna = Tipologia::where('nome', 'LE')->first()->id;
+
+        $client->nome = trim(Str::upper($request->nome));
+        $client->cognome = trim(Str::upper($request->cognome));
+        $client->codfisc = trim(Str::upper($request->codfisc)) == '' ? null : trim(Str::upper($request->codfisc));
+        $client->indirizzo = trim(Str::upper($request->indirizzo));
+        $client->citta = trim(Str::upper($request->citta));
+        $client->cap = $request->cap;
+        $client->provincia = trim(Str::upper($request->provincia));
+        $client->telefono = $request->telefono;
+        $client->telefono2 = $request->telefono2;
+        $client->telefono3 = $request->telefono3;
+        $client->tipologia_id = $request->tipologia_id ? $request->tipologia_id : $idListaEsterna;
+        $client->marketing_id = $request->marketing_id;
+        $client->filiale_id = $request->filiale_id;
+        $client->medico_id = $request->medico_id;
+        $client->recapito_id = $request->recapito_id;
+        $client->user_id = $request->user_id;
+        $client->mail = trim(Str::upper($request->mail));
+        $client->datanascita = $request->datanascita;
+        $client->luogoNascita = trim(Str::upper($request->luogoNascita)) == '' ? null : trim(Str::upper($request->luogoNascita));
+        $client->mesenascita = $request->datanascita ? Carbon::make($request->datanascita)->month : null;
+        $client->giornonascita = $request->datanascita ? Carbon::make($request->datanascita)->day : null;
+        $client->save();
+    }
+
+    private function inserisciMeseEdAnnoDiIngresso($client)
+    {
+        $client->mese = Carbon::now()->month;
+        $client->anno = Carbon::now()->year;
+        $client->save();
+    }
+
+    private function scriviSuLog($utente, $propieta, $client, $testo)
+    {
+        $log = new LoggingService();
+        $log->scriviLog($client->cognome.' '.$client->nome, $utente, $utente->name, $propieta, $testo);
+    }
+
+    private function creaInformazione($client, $propieta, $testo)
+    {
+        Informazione::create([
+            'client_id' => $client->id,
+            'giorno' => Carbon::now()->format('Y-m-d'),
+            'tipo' => $propieta,
+            'note' => $testo
+        ]);
+    }
+
+    private function calcolaRecall($tipologia_id)
+    {
+        $oggi = Carbon::now();
+        $tipo = Tipologia::find($tipologia_id);
+        return $tipo->recall ? $oggi->addDays($tipo->recall)->format('Y-m-d') : null;
+    }
+
+    private function inserimentoDatiDaFileXml($ele, $request, $idRecapito, $idMedico, $idCodMkt, $idFiliale, $idListaEsterna)
+    {
+        return Client::updateOrCreate(
+            [
+                'nome'          => trim(Str::upper($ele->Patient->FirstName)),
+                'cognome'       => trim(Str::upper($ele->Patient->LastName)),
+                'created_at'    => Carbon::make((string)$ele->Patient->CreateDate),
+            ],
+            [
+                'citta'         => $ele->Patient->City ? trim(Str::upper($ele->Patient->City)) : null,
+                'indirizzo'     => $ele->Patient->Address1 ? trim(Str::upper($ele->Patient->Address1)) : null,
+                'cap'           => $ele->Patient->Zip ? trim(Str::upper($ele->Patient->Zip)) : null,
+                'telefono'      => $ele->Patient->MobilePhone ? trim(Str::upper($ele->Patient->MobilePhone)) : null,
+                'telefono2'     => $ele->Patient->WorkPhone ? trim(Str::upper($ele->Patient->WorkPhone)) : null,
+                'telefono3'     => $ele->Patient->HomePhone ? trim(Str::upper($ele->Patient->HomePhone)) : null,
+                'provincia'     => $ele->Patient->Country ? trim(Str::upper($ele->Patient->Country)) : null,
+                'user_id'       => $request['idUser'],
+                'datanascita'   => $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null,
+                'recapito_id'   => $idRecapito,
+                'medico_id'     => $idMedico,
+                'mail'          => $ele->Patient->EMail ? trim(Str::upper($ele->Patient->EMail)) : null,
+                'tipologia_id'  => (string)$ele->Patient->Province != '' ? Tipologia::where('nome', trim(Str::upper($ele->Patient->Province)))->first()->id : $idListaEsterna,
+                'marketing_id'  => $idCodMkt,
+                'filiale_id'    => $idFiliale ? $idFiliale : $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
+                    Str::of(Str::upper($ele->Patient->City))->trim()),
+                'updated_at'    => Carbon::make((string)$ele->Patient->CreateDate),
+                'mese'          => Carbon::make((string)$ele->Patient->CreateDate)->month,
+                'anno'          => Carbon::make((string)$ele->Patient->CreateDate)->year,
+            ]
+        );
     }
 
 }

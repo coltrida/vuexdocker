@@ -42,7 +42,7 @@ class Agenda extends Model
 
     protected $table = 'agendas';
     protected $guarded = [];
-    protected $appends = ['luniniz', 'mariniz', 'meriniz', 'gioiniz', 'veniniz'];
+    protected $appends = ['luniniz', 'mariniz', 'meriniz', 'gioiniz', 'veniniz', 'sabiniz'];
 
     public function getLuninizAttribute()
     {
@@ -67,5 +67,10 @@ class Agenda extends Model
     public function getVeninizAttribute()
     {
         return Str::substr($this->ven, 0, 1);
+    }
+
+    public function getSabinizAttribute()
+    {
+        return Str::substr($this->sab, 0, 1);
     }
 }

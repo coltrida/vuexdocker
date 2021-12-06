@@ -4,6 +4,7 @@
         <intervenuto-modal
             v-if="showIntervenuto"
             :appuntamentoModal="appuntamentoModal"
+            :appuntamentoEraDiOggi="appuntamentoEraDiOggi"
             @chiudiIntervenutoModal = "chiudiIntervenutoModal"
         />
 
@@ -171,9 +172,9 @@
                     <div>
                         <v-data-table
                             :headers="headers6"
+                            :items-per-page=5
                             :items="getAppuntamentiInSospeso"
                             class="elevation-1 mt-3"
-                            hide-default-footer
                         >
 
                             <template v-slot:item.fullname="{ item }">
@@ -203,7 +204,7 @@
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-icon
-                                            @click="intervenuto(item.id)"
+                                            @click="intervenutoOggi(item, false)"
                                             color="green"
                                             small
                                             v-bind="attrs"
@@ -256,7 +257,7 @@
                                 <v-tooltip bottom v-if="item.intervenuto === null">
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-icon
-                                            @click="intervenutoOggi(item)"
+                                            @click="intervenutoOggi(item, true)"
                                             color="green"
                                             small
                                             v-bind="attrs"
@@ -346,6 +347,7 @@
         components: {IntervenutoModal, Prodotti},
         data(){
             return {
+                appuntamentoEraDiOggi: false,
                 dialogProdotti: false,
                 showIntervenuto: false,
                 appuntamentoModal:{},
@@ -443,7 +445,8 @@
                 this.oggiNonViene(idAppuntamento);
             },
 
-            intervenutoOggi(appuntamento){
+            intervenutoOggi(appuntamento, eraOggi){
+                this.appuntamentoEraDiOggi = eraOggi;
                 this.appuntamentoModal = appuntamento;
                 this.showIntervenuto = true;
             },
@@ -456,9 +459,14 @@
                 this.appuntamentoIntervenuto(idAppuntamento);
             },
 
-            chiudiIntervenutoModal(valore){
-                if (valore === 1){
-                    this.getAppuntamentiOggi.find(ele => ele.id === this.appuntamentoModal.id).intervenuto = 1;
+            chiudiIntervenutoModal(payload){
+                if (payload.valorePassato === 1){
+                    if (payload.appuntamentoEraDiOggiPassato) {
+                        this.getAppuntamentiOggi.find(ele => ele.id === this.appuntamentoModal.id).intervenuto = 1;
+                    }else {
+                        this.$store.commit('appuntamenti/eliminaAppuntamentoInSospeso', this.appuntamentoModal.id);
+                    }
+
                 }
                 this.showIntervenuto = false;
                 this.appuntamentoModal = {}

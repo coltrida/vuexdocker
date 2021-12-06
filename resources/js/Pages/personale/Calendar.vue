@@ -134,30 +134,6 @@
                             class="elevation-1 mt-3"
                         >
 
-                            <!--<template v-slot:item.fullname="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.fullname }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.orario="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.orario }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.luogo="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.luogo }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.note="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.note }}
-                                </div>
-                            </template>-->
-
                         </v-data-table>
                     </v-col>
 
@@ -170,31 +146,6 @@
                             hide-default-footer
                             class="elevation-1 mt-3"
                         >
-
-                            <!--<template v-slot:item.fullname="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.fullname }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.orario="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.orario }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.luogo="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.luogo }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.note="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.note }}
-                                </div>
-                            </template>-->
-
                         </v-data-table>
                     </v-col>
 
@@ -207,31 +158,18 @@
                             hide-default-footer
                             class="elevation-1 mt-3"
                         >
+                        </v-data-table>
+                    </v-col>
 
-                            <!--<template v-slot:item.fullname="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.fullname }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.orario="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.orario }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.luogo="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.luogo }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.nota="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.nota }}
-                                </div>
-                            </template>-->
-
+                    <v-col>
+                        <h3>Sabato - {{getDateSettimana[10]}}</h3>
+                        <v-data-table
+                            dense
+                            :headers="headers1"
+                            :items="getAppSab"
+                            hide-default-footer
+                            class="elevation-1 mt-3"
+                        >
                         </v-data-table>
                     </v-col>
 
@@ -269,17 +207,21 @@
 
         mounted(){
             window.Echo.channel("appuntamentoChannel").listen(".task-created", e => {
-                this.fetchAppuntamentiLunedi(this.userId);
-                this.fetchAppuntamentiMartedi(this.userId);
-                this.fetchAppuntamentiMercoledi(this.userId);
-                this.fetchAppuntamentiGiovedi(this.userId);
-                this.fetchAppuntamentiVenerdi(this.userId);
+                if (this.userId){
+                    this.fetchAppuntamentiLunedi(this.userId);
+                    this.fetchAppuntamentiMartedi(this.userId);
+                    this.fetchAppuntamentiMercoledi(this.userId);
+                    this.fetchAppuntamentiGiovedi(this.userId);
+                    this.fetchAppuntamentiVenerdi(this.userId);
+                    this.fetchAppuntamentiSabato(this.userId);
 
-                this.prossimoLunedi(this.userId);
-                this.prossimoMartedi(this.userId);
-                this.prossimoMarcoledi(this.userId);
-                this.prossimoGiovedi(this.userId);
-                this.prossimoVenerdi(this.userId);
+                    this.prossimoLunedi(this.userId);
+                    this.prossimoMartedi(this.userId);
+                    this.prossimoMarcoledi(this.userId);
+                    this.prossimoGiovedi(this.userId);
+                    this.prossimoVenerdi(this.userId);
+                    this.prossimoSabato(this.userId);
+                }
             });
 
             this.fetchAudio();
@@ -302,12 +244,14 @@
                 fetchAppuntamentiMercoledi:'fetchAppuntamentiMercoledi',
                 fetchAppuntamentiGiovedi:'fetchAppuntamentiGiovedi',
                 fetchAppuntamentiVenerdi:'fetchAppuntamentiVenerdi',
+                fetchAppuntamentiSabato:'fetchAppuntamentiSabato',
 
                 prossimoLunedi:'prossimoLunedi',
                 prossimoMartedi:'prossimoMartedi',
                 prossimoMarcoledi:'prossimoMarcoledi',
                 prossimoGiovedi:'prossimoGiovedi',
                 prossimoVenerdi:'prossimoVenerdi',
+                prossimoSabato:'prossimoSabato',
 
                 fetchDateSettimana:'fetchDateSettimana',
                 fetchDateSettimanaProssima:'fetchDateSettimanaProssima',
@@ -321,6 +265,7 @@
                 this.fetchAppuntamentiMercoledi(this.userId);
                 this.fetchAppuntamentiGiovedi(this.userId);
                 this.fetchAppuntamentiVenerdi(this.userId);
+                this.fetchAppuntamentiSabato(this.userId);
 
                 this.fetchDateSettimana();
             },
@@ -332,6 +277,7 @@
                 this.prossimoMarcoledi(this.userId);
                 this.prossimoGiovedi(this.userId);
                 this.prossimoVenerdi(this.userId);
+                this.prossimoSabato(this.userId);
 
                 this.fetchDateSettimanaProssima();
             }
@@ -349,6 +295,7 @@
                 getAppMer:'getAppMer',
                 getAppGio:'getAppGio',
                 getAppVen:'getAppVen',
+                getAppSab:'getAppSab',
 
                 getDateSettimana:'getDateSettimana',
             }),

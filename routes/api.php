@@ -203,11 +203,13 @@ Route::group([], function () {
         Route::get('/appuntamentiMercolediAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'mercoledi']);
         Route::get('/appuntamentiGiovediAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'giovedi']);
         Route::get('/appuntamentiVenerdiAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'venerdi']);
+        Route::get('/appuntamentiSabatoAudio/{idAudio}/{direzione?}', [AppuntamentiController::class, 'sabato']);
         Route::get('/appuntamentiLunediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'lunediProssimo']);
         Route::get('/appuntamentiMartediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'martediProssimo']);
         Route::get('/appuntamentiMercolediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'mercolediProssimo']);
         Route::get('/appuntamentiGiovediProssimoAudio/{idAudio}', [AppuntamentiController::class, 'giovediProssimo']);
         Route::get('/appuntamentiVenerdiProssimoAudio/{idAudio}', [AppuntamentiController::class, 'venerdiProssimo']);
+        Route::get('/appuntamentiSabatoProssimoAudio/{idAudio}', [AppuntamentiController::class, 'sabatoProssimo']);
         Route::delete('/appuntamentiCliente/{id}/{idUser}', [AppuntamentiController::class, 'elimina']);
         Route::post('/addAppuntamento', [AppuntamentiController::class, 'aggiungi']);
         Route::post('/modificaAppuntamento', [AppuntamentiController::class, 'modifica']);

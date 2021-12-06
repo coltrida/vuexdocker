@@ -23,6 +23,7 @@ class CreateAgendasTable extends Migration
             $table->string('mer')->nullable();
             $table->string('gio')->nullable();
             $table->string('ven')->nullable();
+            $table->string('sab')->nullable();
             $table->timestamps();
         });
     }

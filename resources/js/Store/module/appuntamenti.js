@@ -11,6 +11,7 @@ const state = () => ({
     appMer: [],
     appGio: [],
     appVen: [],
+    appSab: [],
     settimanaVisualizzata: '',
     appuntamentiAnnoMese: [],
     intervenutiAnnoMese: [],
@@ -70,6 +71,10 @@ const getters = {
 
     getAppVen(state){
         return state.appVen;
+    },
+
+    getAppSab(state){
+        return state.appSab;
     },
 
     getDateSettimana(state){
@@ -173,6 +178,15 @@ const actions = {
         commit('fetchAppuntamentiVenerdi', response.data.data);
     },
 
+    async prossimoSabato({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentisabatoprossimo}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchAppuntamentiSabato', response.data.data);
+    },
+
     async fetchAppuntamentiLunedi({commit}, idAudio){
         const response = await axios.get(`${help().linkappuntamentilunedi}`+'/'+idAudio, {
             headers: {
@@ -216,6 +230,15 @@ const actions = {
             }
         });
         commit('fetchAppuntamentiVenerdi', response.data.data);
+    },
+
+    async fetchAppuntamentiSabato({commit}, idAudio){
+        const response = await axios.get(`${help().linkappuntamentisabato}`+'/'+idAudio, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchAppuntamentiSabato', response.data.data);
     },
 
     async fetchAppuntamentiDomani({commit}, idAudio){
@@ -307,6 +330,17 @@ const actions = {
             }
         });
         commit('fetchAppVen', response.data.data);
+    },
+
+    async fetchAppSab({commit}, payload){
+        let direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
+        let idAudio = parseInt(payload.idAudio);
+        const response = await axios.get(`${help().linkappuntamentisabato}`+'/'+idAudio+'/'+direzione, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchAppSab', response.data.data);
     },
 
     async fetchDateSettimana({commit}, direzione){
@@ -430,6 +464,10 @@ const mutations = {
         state.appVen = payload;
     },
 
+    fetchAppuntamentiSabato(state, payload){
+        state.appSab = payload;
+    },
+
     fetchAppuntamentiOggi(state, payload){
         state.appuntamentiOggi = payload;
     },
@@ -468,6 +506,10 @@ const mutations = {
 
     fetchAppVen(state, payload){
         state.appVen = payload;
+    },
+
+    fetchAppSab(state, payload){
+        state.appSab = payload;
     },
 
     fetchDateSettimana(state, payload){

@@ -3675,68 +3675,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Calendar",
@@ -3787,25 +3725,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     window.Echo.channel("appuntamentoChannel").listen(".task-created", function (e) {
-      _this.fetchAppuntamentiLunedi(_this.userId);
+      if (_this.userId) {
+        _this.fetchAppuntamentiLunedi(_this.userId);
 
-      _this.fetchAppuntamentiMartedi(_this.userId);
+        _this.fetchAppuntamentiMartedi(_this.userId);
 
-      _this.fetchAppuntamentiMercoledi(_this.userId);
+        _this.fetchAppuntamentiMercoledi(_this.userId);
 
-      _this.fetchAppuntamentiGiovedi(_this.userId);
+        _this.fetchAppuntamentiGiovedi(_this.userId);
 
-      _this.fetchAppuntamentiVenerdi(_this.userId);
+        _this.fetchAppuntamentiVenerdi(_this.userId);
 
-      _this.prossimoLunedi(_this.userId);
+        _this.fetchAppuntamentiSabato(_this.userId);
 
-      _this.prossimoMartedi(_this.userId);
+        _this.prossimoLunedi(_this.userId);
 
-      _this.prossimoMarcoledi(_this.userId);
+        _this.prossimoMartedi(_this.userId);
 
-      _this.prossimoGiovedi(_this.userId);
+        _this.prossimoMarcoledi(_this.userId);
 
-      _this.prossimoVenerdi(_this.userId);
+        _this.prossimoGiovedi(_this.userId);
+
+        _this.prossimoVenerdi(_this.userId);
+
+        _this.prossimoSabato(_this.userId);
+      }
     });
     this.fetchAudio();
     this.fetchDateSettimana();
@@ -3824,11 +3768,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchAppuntamentiMercoledi: 'fetchAppuntamentiMercoledi',
     fetchAppuntamentiGiovedi: 'fetchAppuntamentiGiovedi',
     fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi',
+    fetchAppuntamentiSabato: 'fetchAppuntamentiSabato',
     prossimoLunedi: 'prossimoLunedi',
     prossimoMartedi: 'prossimoMartedi',
     prossimoMarcoledi: 'prossimoMarcoledi',
     prossimoGiovedi: 'prossimoGiovedi',
     prossimoVenerdi: 'prossimoVenerdi',
+    prossimoSabato: 'prossimoSabato',
     fetchDateSettimana: 'fetchDateSettimana',
     fetchDateSettimanaProssima: 'fetchDateSettimanaProssima'
   })), {}, {
@@ -3840,6 +3786,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchAppuntamentiMercoledi(this.userId);
       this.fetchAppuntamentiGiovedi(this.userId);
       this.fetchAppuntamentiVenerdi(this.userId);
+      this.fetchAppuntamentiSabato(this.userId);
       this.fetchDateSettimana();
     },
     prossima: function prossima() {
@@ -3849,6 +3796,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.prossimoMarcoledi(this.userId);
       this.prossimoGiovedi(this.userId);
       this.prossimoVenerdi(this.userId);
+      this.prossimoSabato(this.userId);
       this.fetchDateSettimanaProssima();
     }
   }),
@@ -3860,6 +3808,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAppMer: 'getAppMer',
     getAppGio: 'getAppGio',
     getAppVen: 'getAppVen',
+    getAppSab: 'getAppSab',
     getDateSettimana: 'getDateSettimana'
   })), {}, {
     fissaAudio: function fissaAudio() {
@@ -48235,6 +48184,26 @@ var render = function() {
                         dense: "",
                         headers: _vm.headers1,
                         items: _vm.getAppVen,
+                        "hide-default-footer": ""
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("h3", [
+                      _vm._v("Sabato - " + _vm._s(_vm.getDateSettimana[10]))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-data-table", {
+                      staticClass: "elevation-1 mt-3",
+                      attrs: {
+                        dense: "",
+                        headers: _vm.headers1,
+                        items: _vm.getAppSab,
                         "hide-default-footer": ""
                       }
                     })

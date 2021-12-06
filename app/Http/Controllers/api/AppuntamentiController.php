@@ -50,6 +50,11 @@ class AppuntamentiController extends Controller
         return AppuntamentiResource::collection($appuntamentiService->venerdi($idAudio, $direzione));
     }
 
+    public function sabato($idAudio, AppuntamentiService $appuntamentiService, $direzione = null)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->sabato($idAudio, $direzione));
+    }
+
     public function lunediProssimo($idAudio, AppuntamentiService $appuntamentiService)
     {
         return AppuntamentiResource::collection($appuntamentiService->lunediProssimo($idAudio));
@@ -73,6 +78,11 @@ class AppuntamentiController extends Controller
     public function venerdiProssimo($idAudio, AppuntamentiService $appuntamentiService)
     {
         return AppuntamentiResource::collection($appuntamentiService->venerdiProssimo($idAudio));
+    }
+
+    public function sabatoProssimo($idAudio, AppuntamentiService $appuntamentiService)
+    {
+        return AppuntamentiResource::collection($appuntamentiService->sabatoProssimo($idAudio));
     }
 
     public function aggiungi(Request $request, AppuntamentiService $appuntamentiService)

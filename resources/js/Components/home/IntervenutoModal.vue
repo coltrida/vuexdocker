@@ -56,7 +56,7 @@
     export default {
         name: "IntervenutoModal",
 
-        props: [ 'appuntamentoModal' ],
+        props: [ 'appuntamentoModal', 'appuntamentoEraDiOggi' ],
 
         data(){
             return{
@@ -71,6 +71,7 @@
 
             inserisci(){
                 if (this.newInfo.tipo){
+                    //console.log(this.appuntamentoModal)
                     this.newInfo.client_id = this.appuntamentoModal.client_id;
                     this.newInfo.giorno = this.appuntamentoModal.giornoOriginale;
                     this.addInformazione(this.newInfo).then(() => {
@@ -81,7 +82,11 @@
             },
 
             cancella(valore){
-                this.$emit('chiudiIntervenutoModal', valore)
+                let payload = {
+                    valorePassato: valore,
+                    appuntamentoEraDiOggiPassato: this.appuntamentoEraDiOggi
+                };
+                this.$emit('chiudiIntervenutoModal', payload)
             }
         },
 

@@ -213,6 +213,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Settimana",
@@ -221,21 +252,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       text: 'left',
       headers1: [{
         text: 'Orario',
-        width: 60,
+        width: 50,
         align: 'start',
         sortable: false,
         value: 'orario',
         "class": "indigo white--text"
       }, {
         text: 'Nome',
-        width: 100,
+        width: 80,
         align: 'start',
         sortable: false,
         value: 'fullname',
         "class": "indigo white--text"
       }, {
         text: 'Luogo',
-        width: 80,
+        width: 70,
         align: 'start',
         sortable: false,
         value: 'luogo',
@@ -257,6 +288,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.fetchAppuntamentiGiovedi(_this.getIdUser);
 
         _this.fetchAppuntamentiVenerdi(_this.getIdUser);
+
+        _this.fetchAppuntamentiSabato(_this.getIdUser);
       } else {
         _this.prossimoLunedi(_this.getIdUser);
 
@@ -267,6 +300,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.prossimoGiovedi(_this.getIdUser);
 
         _this.prossimoVenerdi(_this.getIdUser);
+
+        _this.prossimoSabato(_this.getIdUser);
       }
     });
     this.fetchAppuntamentiLunedi(this.getIdUser);
@@ -274,6 +309,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchAppuntamentiMercoledi(this.getIdUser);
     this.fetchAppuntamentiGiovedi(this.getIdUser);
     this.fetchAppuntamentiVenerdi(this.getIdUser);
+    this.fetchAppuntamentiSabato(this.getIdUser);
     this.fetchDateSettimana();
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('appuntamenti', {
@@ -282,11 +318,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchAppuntamentiMercoledi: 'fetchAppuntamentiMercoledi',
     fetchAppuntamentiGiovedi: 'fetchAppuntamentiGiovedi',
     fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi',
+    fetchAppuntamentiSabato: 'fetchAppuntamentiSabato',
     prossimoLunedi: 'prossimoLunedi',
     prossimoMartedi: 'prossimoMartedi',
     prossimoMarcoledi: 'prossimoMarcoledi',
     prossimoGiovedi: 'prossimoGiovedi',
     prossimoVenerdi: 'prossimoVenerdi',
+    prossimoSabato: 'prossimoSabato',
     fetchDateSettimana: 'fetchDateSettimana',
     fetchDateSettimanaProssima: 'fetchDateSettimanaProssima'
   })), {}, {
@@ -296,6 +334,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchAppuntamentiMercoledi(this.getIdUser);
       this.fetchAppuntamentiGiovedi(this.getIdUser);
       this.fetchAppuntamentiVenerdi(this.getIdUser);
+      this.fetchAppuntamentiSabato(this.getIdUser);
       this.fetchDateSettimana();
     },
     prossima: function prossima() {
@@ -304,6 +343,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.prossimoMarcoledi(this.getIdUser);
       this.prossimoGiovedi(this.getIdUser);
       this.prossimoVenerdi(this.getIdUser);
+      this.prossimoSabato(this.getIdUser);
       this.fetchDateSettimanaProssima();
     }
   }),
@@ -313,6 +353,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAppMer: 'getAppMer',
     getAppGio: 'getAppGio',
     getAppVen: 'getAppVen',
+    getAppSab: 'getAppSab',
     getDateSettimana: 'getDateSettimana'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getIdUser: 'getIdUser'
@@ -797,6 +838,85 @@ var render = function() {
                           dense: "",
                           headers: _vm.headers1,
                           items: _vm.getAppVen,
+                          "hide-default-footer": ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "item.fullname",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.fullname) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.orario",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.orario) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item.luogo",
+                            fn: function(ref) {
+                              var item = ref.item
+                              return [
+                                _c(
+                                  "div",
+                                  { staticStyle: { "font-size": "10px" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(item.luogo) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    [
+                      _c("h3", [
+                        _vm._v("Sabato - " + _vm._s(_vm.getDateSettimana[10]))
+                      ]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          dense: "",
+                          headers: _vm.headers1,
+                          items: _vm.getAppSab,
                           "hide-default-footer": ""
                         },
                         scopedSlots: _vm._u([

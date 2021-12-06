@@ -175,6 +175,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -208,7 +220,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchAppMar: 'fetchAppMar',
     fetchAppMer: 'fetchAppMer',
     fetchAppGio: 'fetchAppGio',
-    fetchAppVen: 'fetchAppVen'
+    fetchAppVen: 'fetchAppVen',
+    fetchAppSab: 'fetchAppSab'
   })), {}, {
     spostati: function spostati(settimana) {
       if (settimana === 0) {
@@ -232,7 +245,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this2.fetchAppMer(_this2.ricerca).then(function () {
               _this2.fetchAppGio(_this2.ricerca).then(function () {
                 _this2.fetchAppVen(_this2.ricerca).then(function () {
-                  _this2.carica = false;
+                  _this2.fetchAppSab(_this2.ricerca).then(function () {
+                    _this2.carica = false;
+                  });
                 });
               });
             });
@@ -248,7 +263,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAppMar: 'getAppMar',
     getAppMer: 'getAppMer',
     getAppGio: 'getAppGio',
-    getAppVen: 'getAppVen'
+    getAppVen: 'getAppVen',
+    getAppSab: 'getAppSab'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   }))
@@ -973,6 +989,33 @@ var render = function() {
                         : null,
                       strutturaPomeriggio: _vm.getSettimanaDelMese[1]
                         ? _vm.getSettimanaDelMese[1].ven
+                        : null
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                [
+                  _c("giorno", {
+                    attrs: {
+                      titolo: "Sabato",
+                      giorno: _vm.getDateSettimana[10],
+                      giornoPerRicerca: _vm.getDateSettimana[11],
+                      appuntamenti: _vm.getAppSab,
+                      doveMattina: _vm.getSettimanaDelMese[0]
+                        ? _vm.getSettimanaDelMese[0].sabiniz
+                        : null,
+                      dovePomeriggio: _vm.getSettimanaDelMese[1]
+                        ? _vm.getSettimanaDelMese[1].sabiniz
+                        : null,
+                      strutturaMattina: _vm.getSettimanaDelMese[0]
+                        ? _vm.getSettimanaDelMese[0].sab
+                        : null,
+                      strutturaPomeriggio: _vm.getSettimanaDelMese[1]
+                        ? _vm.getSettimanaDelMese[1].sab
                         : null
                     }
                   })
