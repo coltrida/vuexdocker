@@ -43,6 +43,7 @@
                 { title: 'Strumentazione', link: 'strumentazione' },
                 { title: 'Reset', link: 'resetSpecial' },
                 { title: 'Logging', link: 'logging' },
+                { title: 'Log', link: 'log' },
             ],
         }),
     }

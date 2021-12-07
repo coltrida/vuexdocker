@@ -215,6 +215,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Logging',
         link: 'logging'
+      }, {
+        title: 'Log',
+        link: 'log'
       }]
     };
   }

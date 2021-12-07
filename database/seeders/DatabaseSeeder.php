@@ -42,6 +42,8 @@ class DatabaseSeeder extends Seeder
    //         FatturaSeeder::class
         ]);
 
+        //dd(Storage::disk('public')->exists('/documenti/59/'));
+
         Storage::disk('public')->deleteDirectory('/documenti/');
         Storage::disk('public')->deleteDirectory('/fatture/');
         Storage::disk('public')->deleteDirectory('/recapiti/');

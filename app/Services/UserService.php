@@ -197,7 +197,9 @@ class UserService
         $budget->dicembre = $request->mese[11];
         $budget->save();
 
-        return User::with('budget')->find($request->idAudio);
+        return User::with(['moltiBudget' => function($m) use($request){
+            $m->where('anno', $request->anno)->first();
+        }])->find($request->idAudio);
     }
 
     public function user($id)

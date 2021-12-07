@@ -20,7 +20,7 @@
     import {mapActions, mapGetters} from "vuex";
 
     export default {
-        name: "TempiRecall",
+        name: "Logging",
 
         data(){
             return {

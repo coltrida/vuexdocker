@@ -354,6 +354,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     assegnaBudget: function assegnaBudget() {
       var _this = this;
 
+      this.assegna.anno = this.ricerca.anno;
       this.assegna.idAudio = this.AudioSelected[0].id;
 
       if (this["switch"]) {
@@ -393,38 +394,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     modifica: function modifica(item, indice) {
       this["switch"] = 1;
-      this.assegna.idBudget = item.moltiBudget.id;
+      this.assegna.idBudget = item.molti_budget[0].id;
       this.AudioSelected = [];
       this.getAudioSenzaBgt.unshift(item);
       this.getAudioConBgt.splice(indice, 1);
       this.AudioSelected.unshift(item);
-      this.assegna.budgetAnno = item.moltiBudget.budgetAnno;
-      this.assegna.stipendio = item.moltiBudget.stipendio;
-      this.assegna.provvigione = item.moltiBudget.provvigione;
-      this.assegna.mese[0] = item.moltiBudget.gennaio;
-      this.assegna.mese[1] = item.moltiBudget.febbraio;
-      this.assegna.mese[2] = item.moltiBudget.marzo;
-      this.assegna.mese[3] = item.moltiBudget.aprile;
-      this.assegna.mese[4] = item.moltiBudget.maggio;
-      this.assegna.mese[5] = item.moltiBudget.giugno;
-      this.assegna.mese[6] = item.moltiBudget.luglio;
-      this.assegna.mese[7] = item.moltiBudget.agosto;
-      this.assegna.mese[8] = item.moltiBudget.settembre;
-      this.assegna.mese[9] = item.moltiBudget.ottobre;
-      this.assegna.mese[10] = item.moltiBudget.novembre;
-      this.assegna.mese[11] = item.moltiBudget.dicembre;
-      this.percentuale.mese[0] = (item.moltiBudget.gennaio / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[1] = (item.moltiBudget.febbraio / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[2] = (item.moltiBudget.marzo / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[3] = (item.moltiBudget.aprile / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[4] = (item.moltiBudget.maggio / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[5] = (item.moltiBudget.giugno / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[6] = (item.moltiBudget.luglio / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[7] = (item.moltiBudget.agosto / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[8] = (item.moltiBudget.settembre / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[9] = (item.moltiBudget.ottobre / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[10] = (item.moltiBudget.novembre / item.moltiBudget.budgetAnno * 100).toFixed(0);
-      this.percentuale.mese[11] = (item.moltiBudget.dicembre / item.moltiBudget.budgetAnno * 100).toFixed(0);
+      this.assegna.budgetAnno = item.molti_budget[0].budgetAnno;
+      this.assegna.stipendio = item.molti_budget[0].stipendio;
+      this.assegna.provvigione = item.molti_budget[0].provvigione;
+      this.assegna.mese[0] = item.molti_budget[0].gennaio;
+      this.assegna.mese[1] = item.molti_budget[0].febbraio;
+      this.assegna.mese[2] = item.molti_budget[0].marzo;
+      this.assegna.mese[3] = item.molti_budget[0].aprile;
+      this.assegna.mese[4] = item.molti_budget[0].maggio;
+      this.assegna.mese[5] = item.molti_budget[0].giugno;
+      this.assegna.mese[6] = item.molti_budget[0].luglio;
+      this.assegna.mese[7] = item.molti_budget[0].agosto;
+      this.assegna.mese[8] = item.molti_budget[0].settembre;
+      this.assegna.mese[9] = item.molti_budget[0].ottobre;
+      this.assegna.mese[10] = item.molti_budget[0].novembre;
+      this.assegna.mese[11] = item.molti_budget[0].dicembre;
+      this.percentuale.mese[0] = (item.molti_budget[0].gennaio / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[1] = (item.molti_budget[0].febbraio / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[2] = (item.molti_budget[0].marzo / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[3] = (item.molti_budget[0].aprile / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[4] = (item.molti_budget[0].maggio / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[5] = (item.molti_budget[0].giugno / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[6] = (item.molti_budget[0].luglio / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[7] = (item.molti_budget[0].agosto / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[8] = (item.molti_budget[0].settembre / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[9] = (item.molti_budget[0].ottobre / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[10] = (item.molti_budget[0].novembre / item.molti_budget[0].budgetAnno * 100).toFixed(0);
+      this.percentuale.mese[11] = (item.molti_budget[0].dicembre / item.molti_budget[0].budgetAnno * 100).toFixed(0);
     },
     modificaBgtMese: function modificaBgtMese(percent, mese) {
       this.assegna.mese[mese - 1] = (parseFloat(this.assegna.budgetAnno) * percent / 100).toFixed(0);

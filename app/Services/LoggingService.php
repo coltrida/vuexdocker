@@ -22,21 +22,6 @@ class LoggingService
             'subject_type' => $nomeSoggetto,
         ]);
 
-        /*$log = (new Activitylog())->on($this->nomeDB);
-        $log->description = $testo;
-        $log->log_name = $propieta;
-        $log->event = $oggetto;
-        $log->subject_type = $nomeSoggetto;
-        $log->save();*/
-
-        /*activity()
-            ->performedOn($oggetto)
-            ->causedBy($soggetto)
-            ->withProperties([
-                ['customProperty' => $propieta],
-                ['nomeSoggetto' => $nomeSoggetto]
-            ])
-            ->log($testo);*/
     }
 
     public function lista()
@@ -92,5 +77,28 @@ class LoggingService
                 return 'Si è verificato un errore durante la importazione. Controllare se il file si trova nella stessa cartella dello script. Controllare nuovamente anche i seguenti dati:<br/><br/><table><tr><td>MySQL Database Name:</td><td><b>' .$mysqlDatabaseName .'</b></td></tr><tr><td>MySQL User Name:</td><td><b>' .$mysqlUserName .'</b></td></tr><tr><td>MySQL Password:</td><td><b>NOTSHOWN</b></td></tr><tr><td>MySQL Host Name:</td><td><b>' .$mysqlHostName .'</b></td></tr><tr><td>MySQL Import Dateiname:</td><td><b>' .$mysqlImportFilename .'</b></td></tr></table>';
                 break;
         }
+    }
+
+    public function logFile()
+    {
+        $file = Storage::disk('log')->get('/logs/laravel.log');
+        $byte = Storage::disk('log')->size('/logs/laravel.log');
+
+        if ($byte < 999999) {
+            $simbolo = 'KB';
+            $byte = round($byte / 1024);
+        } else {
+            $simbolo = 'MB';
+            $byte = round($byte / 1048576);
+        }
+        $dimensioni = $byte.' '.$simbolo;
+
+        return [$dimensioni, $file];
+    }
+
+    public function pulisciLogFile()
+    {
+        Storage::disk('log')->delete('/logs/laravel.log');
+        Storage::disk('log')->put('/logs/laravel.log', '');
     }
 }

@@ -43,6 +43,16 @@ class GestioneController extends Controller
         return LoggingResource::collection($loggingService->lista());
     }
 
+    public function logFile(LoggingService $loggingService)
+    {
+        return $loggingService->logFile();
+    }
+
+    public function pulisciLogFile(LoggingService $loggingService)
+    {
+        $loggingService->pulisciLogFile();
+    }
+
     public function backup(LoggingService $loggingService)
     {
         return $loggingService->backup();

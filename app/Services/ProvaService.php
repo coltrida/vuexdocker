@@ -88,7 +88,7 @@ class ProvaService
 
         $provaSalvata = Prova::with('stato', 'user', 'product', 'client', 'copiaComm', 'marketing')->find($request->id);
 
-        $this->aggiornaCodiceMarketingClient($provaSalvata);
+        $this->aggiornaCodiceMarketingClientEdAudioprotesista($provaSalvata);
         $this->produciPdfCopiaCommEdInformativa($provaSalvata, $filename, $filenameInformativa);
         $this->comunicaProvaSalvataAdAdmin($provaSalvata);
         $testoLog = $provaSalvata->user->name.' ha aperto una prova per il paziente '.$provaSalvata->client->cognome.' '.$provaSalvata->client->nome;
@@ -232,9 +232,10 @@ class ProvaService
         return $prova;
     }
 
-    private function aggiornaCodiceMarketingClient($provaSalvata)
+    private function aggiornaCodiceMarketingClientEdAudioprotesista($provaSalvata)
     {
         $provaSalvata->client->marketing_id = $provaSalvata->marketing_id;
+        $provaSalvata->client->user_id = $provaSalvata->user_id;
         $provaSalvata->push();
     }
 

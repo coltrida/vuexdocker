@@ -18,6 +18,7 @@ use App\Models\Telefonata;
 use App\Models\User;
 use App\Models\Ventaglio;
 use Carbon\Carbon;
+use Storage;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use MySQLDump;
@@ -379,6 +380,9 @@ class ElaborazioneService
             // -------------- Eliminazione dei servizi rimasti nei prodotti senza essere in una prova ---------- //
             $this->eliminaProveSenzaProdotti();
 
+            // -------------- Controllo e pulizia file di log ---------- //
+            $this->controlloDimensioneFileLog();
+
             if ((float) $this->controlloDimensioneDataBase() > 800) {
                 \Mail::to('coltrida@gmail.com')->send(new AlarmDatabaseSpace($this->controlloDimensioneDataBase()));
             }
@@ -506,5 +510,15 @@ class ElaborazioneService
         GROUP BY
             table_schema";
         return collect(\DB::select($sql2))->sum('size');
+    }
+
+    private function controlloDimensioneFileLog()
+    {
+        $byte = Storage::disk('log')->size('/logs/laravel.log');
+        if ($byte > 50000000){
+            Storage::disk('log')->delete('/logs/laravel.log');
+            Storage::disk('log')->put('/logs/laravel.log', '');
+        }
+
     }
 }

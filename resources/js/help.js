@@ -1,6 +1,6 @@
 const help = () => {
-    let base = 'http://vuexdocker.test/api/';
-    //let base = 'https://www.centrouditogroup.it/api/';
+    //let base = 'http://vuexdocker.test/api/';
+    let base = 'https://www.centrouditogroup.it/api/';
     return {
 
 /*        linklogin: 'http://localhost/api/login',
@@ -184,6 +184,8 @@ const help = () => {
         linkappuntamentogiornoora: base+'appuntamentogiornoora',
         linkdatadioggi: base+'dataDiOggi',
         linksettimanadelmese: base+'settimanaDelMese',
+        linklogfile: base+'logFile',
+        linkpuliscilogfile: base+'pulisciLogFile',
     };
 };
 export default help;

@@ -1,5 +1,10 @@
 <template>
     <v-row class="mt-3 flex-column">
+        <conferma-cambio-utente-prova
+            v-if="showCambioUtente"
+            :UserOriginario="proveClient.user"
+            @chiudiConfermaCambioUtente = "chiudiConfermaCambioUtente"
+        />
         <v-dialog
             v-model="dialog"
             width="500"
@@ -333,13 +338,15 @@
     import {mapActions, mapGetters} from "vuex";
     import Fattura from "./Fattura";
     import ListaProdotti from "./ListaProdotti";
+    import ConfermaCambioUtenteProva from "./ConfermaCambioUtenteProva";
     export default {
         name: "Prove",
-        components: {ListaProdotti, Fattura},
+        components: {ConfermaCambioUtenteProva, ListaProdotti, Fattura},
         props: ['proveClient'],
 
         data(){
             return {
+                showCambioUtente:false,
                 bloccaProva:true,
                 bloccaMedici: true,
                 listaPro:[],
@@ -352,6 +359,7 @@
                 idFattura: '',
                 sconto: 0,
                 dialogFattura: false,
+                UserOriginario: {},
                 prova:{},
                 itemFattura:{},
                 switchInserisci: true,
@@ -433,9 +441,20 @@
                 fetchMedici:'fetchMedici',
             }),
 
-            nuovaProvaInCorso(){
+            nuovaProvaInCorso()
+            {
+                console.log(this.getIdUser + ' ' + this.proveClient.user_id)
+                if (this.getIdUser != this.proveClient.user_id){
+                    this.showCambioUtente = true;
+                } else {
+                    this.prova.user_id = this.getIdUser;
+                    this.creaProva();
+                }
+            },
+
+            creaProva()
+            {
                 this.switchInserisci = false;
-                this.prova.user_id = this.proveClient.user_id;
                 this.prova.client_id = this.proveClient.id;
                 this.prova.filiale_id = this.proveClient.filiale_id;
                 this.creaNuovaProva(this.prova).then(() => {
@@ -443,11 +462,13 @@
                 });
             },
 
-            cancella(){
+            cancella()
+            {
                 this.$emit('chiudiProve')
             },
 
-            caricaProdotti(){
+            caricaProdotti()
+            {
                 if (this.nuovaProva.fornitore_id){
                     this.fetchInFilialeFornitore({
                         'idFiliale': this.proveClient.filiale_id,
@@ -456,7 +477,8 @@
                 }
             },
 
-            caricaPrezzoProdotto(){
+            caricaPrezzoProdotto()
+            {
                // console.log(this.nuovaProva.prodotto);
                 this.sconto = 0;
                 if (this.tipologiaSelezionata === 'Prodotti'){
@@ -467,7 +489,8 @@
                 }
             },
 
-            inserisciInProva(){
+            inserisciInProva()
+            {
                 this.nuovaProva.prova_id = this.prova.id;
                 this.nuovaProva.tipologia = this.tipologiaSelezionata;
                 this.AddEleInNuovaProva(this.nuovaProva);
@@ -482,20 +505,23 @@
 
             },
 
-            eliminaElementoDallaListaPresenti(){
+            eliminaElementoDallaListaPresenti()
+            {
                 let posizione = this.getInFiliale.map(function(ele) { return ele.id; }).indexOf(this.nuovaProva.prodotto.id);
                 this.getInFiliale.splice(posizione, 1);
                 this.nuovaProva.orecchio = '';
                 this.nuovaProva.prezzolistino = '';
             },
 
-            eliminaElementoDallaProva(id, idProduct){
+            eliminaElementoDallaProva(id, idProduct)
+            {
                 this.eliminaEle(id);
                 this.switchRimuoviDallaProva(idProduct);
                 this.nuovaProva = {};
             },
 
-            salvaProva(){
+            salvaProva()
+            {
                 //console.log(this.getElementiNuovaProva[0]);
                 //console.log(this.getElementiNuovaProva.length);
                 this.carica = true;
@@ -512,38 +538,45 @@
 
             },
 
-            reso(id){
+            reso(id)
+            {
                 this.resoProva(id).then(() =>{
                     this.fetchSoglie(this.proveClient.filiale_id);
                     this.nuovaProva = {};
                 });
             },
 
-            apriFattura(item){
+            apriFattura(item)
+            {
               this.dialogFattura = true;
               this.itemFattura = item;
             },
 
-            chiudiFattura(){
+            chiudiFattura()
+            {
                 this.dialogFattura = false;
             },
 
-            visualizzaFattura(idProva){
+            visualizzaFattura(idProva)
+            {
                 this.idFattura = idProva;
            //     console.log(this.fatturaPdf)
             },
 
-            apriLista(prodotti){
+            apriLista(prodotti)
+            {
                 this.dialog = true;
                 this.listaPro = prodotti;
             },
 
-            chiudiLista(){
+            chiudiLista()
+            {
                 this.dialog = false;
                 this.listaPro = []
             },
 
-            calcolaPrezzoScontato(){
+            calcolaPrezzoScontato()
+            {
                 if (this.tipologiaSelezionata === 'Prodotti'){
                     this.nuovaProva.prezzolistino = (this.sconto === 0 || this.sconto == null || this.sconto === '') ? this.nuovaProva.prodotto.prezzolistino :
                         ( parseInt(this.nuovaProva.prodotto.prezzolistino) * (100 - parseInt(this.sconto) ) ) / 100
@@ -554,7 +587,8 @@
 
             },
 
-            selezionaTipologia(){
+            selezionaTipologia()
+            {
                 this.nuovaProva.prodotto = null;
                 this.nuovaProva.prezzolistino = null;
                 this.sconto = 0;
@@ -566,9 +600,25 @@
                 }
             },
 
-            selezionaMkt(event){
+            selezionaMkt(event)
+            {
                 this.bloccaProva = false;
                 this.bloccaMedici = event == 5 ? false : true;
+            },
+
+            chiudiConfermaCambioUtente(scelta)
+            {
+                if (scelta === true)
+                {
+                    this.prova.user_id = this.getIdUser;
+
+                } else
+                {
+                    this.prova.user_id = this.proveClient.user_id;
+                }
+
+                this.showCambioUtente = false;
+                this.creaProva();
             }
 
         },

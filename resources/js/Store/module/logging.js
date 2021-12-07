@@ -1,12 +1,17 @@
 import help from "../../help";
 
 const state = () => ({
-    loggings: []
+    loggings: [],
+    logFile: []
 });
 
 const getters = {
     getLogging(state){
         return state.loggings;
+    },
+
+    getLogFile(state){
+        return state.logFile;
     },
 };
 
@@ -19,6 +24,24 @@ const actions = {
             }
         });
         commit('fetchLoggings', response.data.data);
+    },
+
+    async fetchLogFile({commit}){
+        const response = await axios.get(`${help().linklogfile}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchLogFile', response.data);
+    },
+
+    async pulisciLogFile({commit}){
+        await axios.get(`${help().linkpuliscilogfile}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('pulisciLogFile');
     },
 
     async resetDati(){
@@ -34,6 +57,14 @@ const mutations = {
     fetchLoggings(state, payload){
         state.loggings = payload;
     },
+
+    fetchLogFile(state, payload){
+        state.logFile = payload;
+    },
+
+    pulisciLogFile(state){
+        state.logFile = [0, '']
+    }
 };
 
 export default{

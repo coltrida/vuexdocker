@@ -50,6 +50,7 @@ const routes = [
     { path: '/riepilogoMagazzini', component: () => import('../Pages/magazzino/Riepilogo'), name: 'riepilogoMagazzini' },
     { path: '/diario', component: () => import('../Pages/personale/Diario'), name: 'diario' },
     { path: '/diari', component: () => import('../Pages/personale/Diari'), name: 'diari' },
+    { path: '/log', component: () => import('../Pages/gestione/Log'), name: 'log' },
 ];
 
 export default routes;
