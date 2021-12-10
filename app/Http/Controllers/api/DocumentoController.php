@@ -28,4 +28,9 @@ class DocumentoController extends Controller
     {
         $documentoService->salvaFileXmlFromFiliale($request);
     }
+
+    public function salvaFileAdmin(Request $request, DocumentoService $documentoService)
+    {
+        $documentoService->salvaFileAdmin($request);
+    }
 }

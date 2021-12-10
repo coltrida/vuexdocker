@@ -47,7 +47,7 @@
             </v-row>
 
             <v-row v-if="showClients">
-            <v-col cols="6">
+            <v-col cols="12" md="6" lg="6">
                 <h2>Recall di oggi</h2>
                 <v-data-table
                     :headers="headers1"
@@ -106,7 +106,7 @@
                 </v-data-table>
             </v-col>
 
-            <v-col cols="6">
+            <v-col cols="12" md="6" lg="6">
                 <h2>Telefonate Effettuate oggi</h2>
                 <v-data-table
                     :headers="headers2"

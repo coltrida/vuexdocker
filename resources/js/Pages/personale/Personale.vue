@@ -10,8 +10,7 @@
         <div>
             <v-row class="mb-9">
                 <v-col
-                    cols="4"
-                    sm="4"
+                    cols="12" md="4" lg="4"
                 >
                     <v-text-field
                         v-model="user.name"
@@ -22,8 +21,7 @@
                 </v-col>
 
                 <v-col
-                    cols="3"
-                    sm="3"
+                    cols="12" md="3" lg="3"
                 >
                     <v-text-field
                         v-model="user.email"
@@ -34,8 +32,7 @@
                 </v-col>
 
                 <v-col
-                    cols="3"
-                    sm="3"
+                    cols="12" md="3" lg="3"
                 >
                     <v-select
                         v-model="user.ruolo_id"
@@ -47,10 +44,9 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
-                    <v-btn @click="aggiungi" dark color="indigo">
+                    <v-btn @click="aggiungi" dark color="indigo" :block="$vuetify.breakpoint.xs">
                         Inserisci
                     </v-btn>
                 </v-col>
@@ -58,7 +54,7 @@
             </v-row>
 
             <v-row>
-                <v-col cols="6">
+                <v-col cols="12" md="6" lg="6">
                     <h2>Audioprotesisti</h2>
                     <v-data-table
                         :headers="headers1"
@@ -102,7 +98,7 @@
                     </v-data-table>
                 </v-col>
 
-                <v-col cols="6">
+                <v-col cols="12" md="6" lg="6">
                     <h2>Amministrativi</h2>
                     <v-data-table
                         :headers="headers2"

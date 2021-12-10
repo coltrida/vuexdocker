@@ -54,9 +54,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.pulisciLogFile();
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('logging', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('logging', {
     getLogFile: 'getLogFile'
-  }))
+  })), {}, {
+    colonne: function colonne() {
+      return this.$vuetify.breakpoint.xs ? 40 : 130;
+    }
+  })
 });
 
 /***/ }),
@@ -187,7 +191,7 @@ var render = function() {
               }
             ],
             staticStyle: { border: "1px solid black", padding: "5px" },
-            attrs: { rows: "15", cols: "130", readonly: "" },
+            attrs: { rows: "15", cols: _vm.colonne, readonly: "" },
             domProps: { value: _vm.getLogFile[1] },
             on: {
               input: function($event) {

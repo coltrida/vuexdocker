@@ -626,7 +626,7 @@ __webpack_require__.r(__webpack_exports__);
       return {
         labels: ['125', '250', '500', '1000', '1500', '2000', '3000', '4000', '6000', '8000'],
         datasets: [{
-          label: 'Destro',
+          label: 'DX',
           backgroundColor: '#f87979',
           borderColor: 'rgb(192,8,0)',
           radius: 5,
@@ -645,7 +645,7 @@ __webpack_require__.r(__webpack_exports__);
           fill: false,
           data: [-parseInt(this.audiogrammaClient.audiometria[this.indice]._125ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._250ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._500ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1500ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._2000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._3000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._4000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._6000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._8000ossd)]
         }, {
-          label: 'Normoudente',
+          label: 'Normo',
           backgroundColor: 'rgba(115,250,10,0.2)',
           borderColor: 'rgba(126,192,88,0.11)',
           radius: 1,
@@ -675,7 +675,7 @@ __webpack_require__.r(__webpack_exports__);
       return {
         labels: ['125', '250', '500', '1000', '1500', '2000', '3000', '4000', '6000', '8000'],
         datasets: [{
-          label: 'Sinistro',
+          label: 'SX',
           backgroundColor: '#a8c3f8',
           borderColor: 'rgb(0,1,192)',
           pointStyle: 'cross',
@@ -732,6 +732,14 @@ __webpack_require__.r(__webpack_exports__);
               beginAtZero: true,
               stepSize: 10,
               min: -120
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              stepSize: 6,
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 90
             }
           }]
         }
@@ -46431,15 +46439,7 @@ var render = function() {
                   _vm.audiogrammaClient.audiometria.length > 0
                     ? _c(
                         "v-col",
-                        {
-                          attrs: {
-                            cols: "12",
-                            md: "12",
-                            lg: "5",
-                            xs: "12",
-                            sm: "12"
-                          }
-                        },
+                        { attrs: { cols: "11", md: "12", lg: "5", sm: "11" } },
                         [
                           _c("Visualizza", {
                             attrs: {
@@ -46455,15 +46455,7 @@ var render = function() {
                   _vm.audiogrammaClient.audiometria.length > 0
                     ? _c(
                         "v-col",
-                        {
-                          attrs: {
-                            cols: "12",
-                            md: "12",
-                            lg: "5",
-                            xs: "12",
-                            sm: "12"
-                          }
-                        },
+                        { attrs: { cols: "11", md: "12", lg: "5", sm: "11" } },
                         [
                           _c("Visualizza", {
                             attrs: {
@@ -49998,10 +49990,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-tabs",
-    { staticClass: "mt-3" },
+    { staticClass: "mt-3", attrs: { centered: "" } },
     [
       _c("v-tab", { on: { click: _vm.resetCommerciale } }, [
-        _vm._v("\n            Commerciale\n    ")
+        _vm._v("\n            Comm\n    ")
       ]),
       _vm._v(" "),
       _c(
@@ -50020,7 +50012,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-tab", [_vm._v("\n        CallCenter\n    ")]),
+      _c("v-tab", [_vm._v("\n        Call\n    ")]),
       _vm._v(" "),
       _c(
         "v-tab-item",
@@ -50074,7 +50066,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "4" } },
+            { attrs: { cols: "12", md: "4", lg: "4" } },
             [
               _c("h2", [_vm._v("Prove in Corso:")]),
               _vm._v(" "),
@@ -50215,7 +50207,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "5" } },
+            { attrs: { cols: "12", md: "5", lg: "5" } },
             [
               _c("h2", [_vm._v("Finalizzati:")]),
               _vm._v(" "),
@@ -50386,7 +50378,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3" } },
+            { attrs: { cols: "12", md: "3", lg: "3" } },
             [
               _c("h2", [_vm._v("Resi:")]),
               _vm._v(" "),
@@ -53613,7 +53605,7 @@ var render = function() {
                     [
                       _c(
                         "v-col",
-                        { attrs: { cols: "6" } },
+                        { attrs: { cols: "12", md: "6", lg: "6" } },
                         [
                           _c("h2", [_vm._v("Recall di oggi")]),
                           _vm._v(" "),
@@ -53818,7 +53810,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-col",
-                        { attrs: { cols: "6" } },
+                        { attrs: { cols: "12", md: "6", lg: "6" } },
                         [
                           _c("h2", [_vm._v("Telefonate Effettuate oggi")]),
                           _vm._v(" "),

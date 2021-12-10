@@ -467,7 +467,7 @@ var render = function() {
             [
               _c(
                 "v-col",
-                { attrs: { cols: "6" } },
+                { attrs: { cols: "12", md: "6", lg: "6" } },
                 [
                   _c("v-data-table", {
                     staticClass: "elevation-1 mt-3",
@@ -526,13 +526,14 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "6" } },
+                { attrs: { cols: "12", md: "6", lg: "6" } },
                 [
                   _c(
                     "v-row",
                     [
                       _c(
                         "v-col",
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
                         [
                           _c("v-text-field", {
                             attrs: { label: "tipo" },
@@ -550,6 +551,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-col",
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
                         [
                           _c("v-text-field", {
                             attrs: { label: "tempo recall" },
@@ -567,11 +569,16 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-col",
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
                         [
                           _c(
                             "v-btn",
                             {
-                              attrs: { color: "success", dark: "" },
+                              attrs: {
+                                color: "success",
+                                dark: "",
+                                block: _vm.$vuetify.breakpoint.xs
+                              },
                               on: { click: _vm.invia }
                             },
                             [

@@ -568,7 +568,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "9" } },
+            { attrs: { cols: "12", md: "9", lg: "9" } },
             [
               _c("v-text-field", {
                 attrs: {
@@ -762,7 +762,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3" } },
+            { attrs: { cols: "12", md: "3", lg: "3" } },
             [
               _c("v-text-field", {
                 attrs: { label: "Nome Prodotto" },

@@ -9,6 +9,7 @@ use App\Imports\ClientsImport;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Storage;
 
 class ClientController extends Controller
 {
@@ -74,13 +75,19 @@ class ClientController extends Controller
 
     public function importClients()
     {
-        ini_set('max_execution_time', 300);
+        ini_set('max_execution_time', 400);
         ini_set('memory_limit', '-1');
-        Excel::import(new ClientsImport, storage_path('app/public/file.xlsx'));
+        config(['enum.totImportati' => 0]);
+        Excel::import(new ClientsImport, storage_path('/carica.xlsx'));
+        Storage::disk('log')->delete('/carica.xlsx');
+
+        return config('enum.totImportati');
     }
 
     public function importClientsFromNoah(Request $request, ClientService $clientService)
     {
+        ini_set('max_execution_time', 400);
+        ini_set('memory_limit', '-1');
         return $clientService->importClientsFromNoah($request);
     }
 

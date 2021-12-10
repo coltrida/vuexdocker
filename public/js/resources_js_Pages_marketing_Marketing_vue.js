@@ -394,7 +394,7 @@ var render = function() {
     [
       _c(
         "v-col",
-        { attrs: { cols: "5" } },
+        { attrs: { cols: "12", md: "5", lg: "5" } },
         [
           _c("h2", [_vm._v("Canali Marketing")]),
           _vm._v(" "),
@@ -404,6 +404,7 @@ var render = function() {
                 [
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Nuovo Canale" },
@@ -421,6 +422,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Nuovo Canale" },
@@ -438,11 +440,16 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "indigo", dark: "" },
+                          attrs: {
+                            color: "indigo",
+                            dark: "",
+                            block: _vm.$vuetify.breakpoint.xs
+                          },
                           on: { click: _vm.aggiungi }
                         },
                         [
@@ -562,7 +569,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-col",
-        { attrs: { cols: "7" } },
+        { attrs: { cols: "12", md: "7", lg: "7" } },
         [
           _c("h2", [_vm._v("Otorini")]),
           _vm._v(" "),
@@ -572,6 +579,7 @@ var render = function() {
                 [
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Nome" },
@@ -589,6 +597,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Cognome" },
@@ -606,6 +615,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c("v-select", {
                         attrs: {
@@ -628,11 +638,16 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "3", lg: "3" } },
                     [
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "indigo", dark: "" },
+                          attrs: {
+                            color: "indigo",
+                            dark: "",
+                            block: _vm.$vuetify.breakpoint.xs
+                          },
                           on: { click: _vm.aggiungiOtorino }
                         },
                         [

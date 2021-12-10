@@ -110,6 +110,7 @@ const help = () => {
         linklistadocumenti: base+'caricaDocumenti',
         linkeliminadocumento: base+'eliminaDocumento',
         linksalvafilexmlfromfiliale: base+'salvaFileXmlFromFiliale',
+        linksalvafileadmin: base+'salvaFileAdmin',
         linkdatesettimana: base+'dateSettimana',
         linkdatesettimanaprossima: base+'dateSettimanaProssima',
         linkclientidasaldare: base+'clientiDaSaldare',

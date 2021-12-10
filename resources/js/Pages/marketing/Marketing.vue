@@ -1,22 +1,22 @@
 <template>
     <v-row>
-        <v-col cols="5">
+        <v-col cols="12" md="5" lg="5">
             <h2>Canali Marketing</h2>
             <v-row v-if="getRuolo=='admin'">
-                <v-col>
+                <v-col cols="12" md="4" lg="4">
                     <v-text-field
                         v-model="newCanale.nome"
                         label="Nuovo Canale"
                     ></v-text-field>
                 </v-col>
-                <v-col>
+                <v-col cols="12" md="4" lg="4">
                     <v-text-field
                         v-model="newCanale.cod"
                         label="Nuovo Canale"
                     ></v-text-field>
                 </v-col>
-                <v-col>
-                    <v-btn @click="aggiungi" color="indigo" dark>
+                <v-col cols="12" md="4" lg="4">
+                    <v-btn @click="aggiungi" color="indigo" dark :block="$vuetify.breakpoint.xs">
                         Inserisci
                     </v-btn>
                 </v-col>
@@ -62,22 +62,22 @@
             </v-row>
         </v-col>
 
-        <v-col cols="7">
+        <v-col cols="12" md="7" lg="7">
             <h2>Otorini</h2>
             <v-row v-if="getRuolo=='admin'">
-                <v-col>
+                <v-col cols="12" md="3" lg="3">
                     <v-text-field
                         v-model="newOtorino.nome"
                         label="Nome"
                     ></v-text-field>
                 </v-col>
-                <v-col>
+                <v-col cols="12" md="3" lg="3">
                     <v-text-field
                         v-model="newOtorino.cognome"
                         label="Cognome"
                     ></v-text-field>
                 </v-col>
-                <v-col>
+                <v-col cols="12" md="3" lg="3">
                     <v-select
                         v-model="newOtorino.userId"
                         item-value="id"
@@ -86,8 +86,8 @@
                         label="Audio"
                     ></v-select>
                 </v-col>
-                <v-col>
-                    <v-btn @click="aggiungiOtorino" color="indigo" dark>
+                <v-col cols="12" md="3" lg="3">
+                    <v-btn @click="aggiungiOtorino" color="indigo" dark :block="$vuetify.breakpoint.xs">
                         Inserisci
                     </v-btn>
                 </v-col>

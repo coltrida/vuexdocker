@@ -20,10 +20,10 @@
         </div>
         <div v-else>
             <v-row class="flex-row">
-                <v-col cols="12" md="12" lg="5" xs="12" sm="12" v-if="audiogrammaClient.audiometria.length > 0">
+                <v-col cols="11" md="12" lg="5" sm="11" v-if="audiogrammaClient.audiometria.length > 0">
                     <Visualizza :chartdata="chartDataS" :options="chartOptions" />
                 </v-col>
-                <v-col cols="12" md="12" lg="5" xs="12" sm="12" v-if="audiogrammaClient.audiometria.length > 0">
+                <v-col cols="11" md="12" lg="5" sm="11" v-if="audiogrammaClient.audiometria.length > 0">
                     <Visualizza :chartdata="chartDataD" :options="chartOptions" />
                 </v-col>
                 <v-col cols="12" md="12" lg="2" xs="12" sm="12">
@@ -91,7 +91,7 @@
                     labels: ['125', '250', '500', '1000', '1500', '2000', '3000', '4000', '6000', '8000'],
                     datasets: [
                         {
-                            label: 'Destro',
+                            label: 'DX',
                             backgroundColor: '#f87979',
                             borderColor: 'rgb(192,8,0)',
                             radius: 5,
@@ -134,7 +134,7 @@
                             ]
                         },
                         {
-                            label: 'Normoudente',
+                            label: 'Normo',
                             backgroundColor: 'rgba(115,250,10,0.2)',
                             borderColor: 'rgba(126,192,88,0.11)',
                             radius: 1,
@@ -169,7 +169,7 @@
                     labels: ['125', '250', '500', '1000', '1500', '2000', '3000', '4000', '6000', '8000'],
                     datasets: [
                         {
-                            label: 'Sinistro',
+                            label: 'SX',
                             backgroundColor: '#a8c3f8',
                             borderColor: 'rgb(0,1,192)',
                             pointStyle: 'cross',
@@ -254,6 +254,14 @@
                                 beginAtZero: true,
                                 stepSize: 10,
                                 min: -120
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                stepSize: 6,
+                                autoSkip: false,
+                                maxRotation: 90,
+                                minRotation: 90
                             }
                         }]
                     }

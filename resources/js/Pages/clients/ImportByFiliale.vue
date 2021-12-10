@@ -1,6 +1,7 @@
 <template>
     <div>
         <h2>Importa Cliente</h2>
+        <h3>Anagrafiche importate: {{getImportati}}</h3>
         <v-container>
 
             <v-alert type="info" v-if="getClientMessaggio">
@@ -95,6 +96,7 @@
 
             ...mapGetters('clients', {
                 getClientMessaggio: 'getClientMessaggio',
+                getImportati: 'getImportati',
             }),
         }
     }

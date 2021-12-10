@@ -187,6 +187,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -693,10 +723,13 @@ var render = function() {
         "v-row",
         { staticClass: "my-4" },
         [
-          _c("v-col", { attrs: { cols: "6" } }, [_c("h2", [_vm._v("Agenda")])]),
+          _c("v-col", { attrs: { cols: "12", md: "6", lg: "6" } }, [
+            _c("h2", [_vm._v("Agenda")])
+          ]),
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "3", md: "1", lg: "1" } },
             [
               _c(
                 "v-chip",
@@ -712,6 +745,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "3", md: "1", lg: "1" } },
             [
               _c(
                 "v-chip",
@@ -727,6 +761,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "3", md: "1", lg: "1" } },
             [
               _c(
                 "v-chip",
@@ -742,6 +777,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "3", md: "1", lg: "1" } },
             [
               _c(
                 "v-chip",
@@ -757,6 +793,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "12", md: "1", lg: "1" } },
             [
               _c(
                 "v-row",
@@ -764,6 +801,7 @@ var render = function() {
                 [
                   _c(
                     "v-col",
+                    { staticClass: "d-flex justify-center" },
                     [
                       _c(
                         "v-icon",
@@ -787,6 +825,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { staticClass: "d-flex justify-center" },
                     [
                       _c(
                         "v-icon",
@@ -810,6 +849,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { staticClass: "d-flex justify-center" },
                     [
                       _c(
                         "v-icon",
@@ -856,13 +896,14 @@ var render = function() {
             [
               _c(
                 "v-col",
-                { attrs: { cols: "1" } },
+                { attrs: { cols: "4", md: "1", lg: "1" } },
                 [_c("giorno", { attrs: { titolo: "Orario", giorno: "" } })],
                 1
               ),
               _vm._v(" "),
               _c(
                 "v-col",
+                { attrs: { xs: "8", md: "", lg: "" } },
                 [
                   _c("giorno", {
                     attrs: {
@@ -888,8 +929,18 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _vm.$vuetify.breakpoint.xs
+                ? _c(
+                    "v-col",
+                    { attrs: { cols: "4", md: "1", lg: "1" } },
+                    [_c("giorno", { attrs: { titolo: "Orario", giorno: "" } })],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "v-col",
+                { attrs: { xs: "8", md: "", lg: "" } },
                 [
                   _c("giorno", {
                     attrs: {
@@ -915,8 +966,18 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _vm.$vuetify.breakpoint.xs
+                ? _c(
+                    "v-col",
+                    { attrs: { cols: "4", md: "1", lg: "1" } },
+                    [_c("giorno", { attrs: { titolo: "Orario", giorno: "" } })],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "v-col",
+                { attrs: { xs: "8", md: "", lg: "" } },
                 [
                   _c("giorno", {
                     attrs: {
@@ -942,8 +1003,18 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _vm.$vuetify.breakpoint.xs
+                ? _c(
+                    "v-col",
+                    { attrs: { cols: "4", md: "1", lg: "1" } },
+                    [_c("giorno", { attrs: { titolo: "Orario", giorno: "" } })],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "v-col",
+                { attrs: { xs: "8", md: "", lg: "" } },
                 [
                   _c("giorno", {
                     attrs: {
@@ -969,8 +1040,18 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _vm.$vuetify.breakpoint.xs
+                ? _c(
+                    "v-col",
+                    { attrs: { cols: "4", md: "1", lg: "1" } },
+                    [_c("giorno", { attrs: { titolo: "Orario", giorno: "" } })],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "v-col",
+                { attrs: { xs: "8", md: "", lg: "" } },
                 [
                   _c("giorno", {
                     attrs: {
@@ -996,8 +1077,18 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _vm.$vuetify.breakpoint.xs
+                ? _c(
+                    "v-col",
+                    { attrs: { cols: "4", md: "1", lg: "1" } },
+                    [_c("giorno", { attrs: { titolo: "Orario", giorno: "" } })],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "v-col",
+                { attrs: { xs: "8", md: "", lg: "" } },
                 [
                   _c("giorno", {
                     attrs: {

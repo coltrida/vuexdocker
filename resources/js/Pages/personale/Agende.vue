@@ -4,8 +4,7 @@
         <div>
             <v-row v-if="getRuolo == 'admin'">
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-select
                         @change="caricaCose"
@@ -18,8 +17,7 @@
                 </v-col>
 
                 <v-col
-                    cols="1"
-                    sm="1"
+                    cols="12" md="1" lg="1"
                 >
                     <v-select
                         v-model="user.giorno"
@@ -29,8 +27,7 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-select
                         v-model="user.tempo"
@@ -40,8 +37,7 @@
                 </v-col>
 
                 <v-col
-                    cols="3"
-                    sm="3"
+                    cols="12" md="3" lg="3"
                 >
                     <v-select
                         v-model="user.testo"
@@ -51,8 +47,7 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-select
                         v-model="user.settimana"
@@ -64,10 +59,9 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
-                    <v-btn @click="aggiungi" dark color="indigo">
+                    <v-btn @click="aggiungi" dark color="indigo" :block="$vuetify.breakpoint.xs">
                         Inserisci
                     </v-btn>
                 </v-col>

@@ -172,10 +172,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -504,7 +500,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "12", md: "2", lg: "2" } },
             [
               _c("v-select", {
                 attrs: {
@@ -527,7 +523,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "12", md: "2", lg: "2" } },
             [
               _c("v-select", {
                 attrs: { items: _vm.getProvince, label: "Prov." },
@@ -550,7 +546,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "12", md: "2", lg: "2" } },
             [
               _c("v-select", {
                 attrs: { items: _vm.getCittaByProvincia, label: "Città" },
@@ -568,7 +564,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "12", md: "2", lg: "2" } },
             [
               _c("v-select", {
                 attrs: {
@@ -591,11 +587,16 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
+            { attrs: { cols: "12", md: "4", lg: "4" } },
             [
               _c(
                 "v-btn",
                 {
-                  attrs: { color: "success", dark: "" },
+                  attrs: {
+                    color: "success",
+                    dark: "",
+                    block: _vm.$vuetify.breakpoint.xs
+                  },
                   on: { click: _vm.seleziona }
                 },
                 [_vm._v("\n                Seleziona\n            ")]
@@ -604,7 +605,11 @@ var render = function() {
               _c(
                 "v-btn",
                 {
-                  attrs: { color: "warning", dark: "" },
+                  attrs: {
+                    color: "warning",
+                    dark: "",
+                    block: _vm.$vuetify.breakpoint.xs
+                  },
                   on: { click: _vm.resetRicerca }
                 },
                 [_vm._v("\n                Reset\n            ")]

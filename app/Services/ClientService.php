@@ -234,6 +234,7 @@ class ClientService
     public function importClientsFromNoah($request)
     {
         //dd($request);
+        $tot = 0;
         $idListaEsterna = Tipologia::where('nome', 'LE')->first()->id;
         $xmlDataString = file_get_contents(asset('/storage/'.$request['nomeFile']));
         $res = 0;
@@ -253,6 +254,7 @@ class ClientService
             $idCliente = $client->id;
 
             if ($client->wasRecentlyCreated){
+                $tot++;
                 if($clientInseritoDaCallCenter = $this->appuntamentoPresoRecentementeDaCallCenter($client)){
                     $this->copiaAnagrafica($clientInseritoDaCallCenter, $client);
                     $idCliente = $clientInseritoDaCallCenter->id;
@@ -436,7 +438,7 @@ class ClientService
         $log = new LoggingService();
         $log->scriviLog('import from Noah', '', User::find($request['idUser'])->name, 'import from Noah', 'import from Noah');
 
-        return $res;
+        return [$res, $tot];
     }
 
     public function ricercaNominativi($request)

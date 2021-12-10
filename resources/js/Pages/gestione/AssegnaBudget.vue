@@ -15,7 +15,7 @@
         </v-row>
 
         <div class="py-6">
-            <v-row>
+            <v-row v-if="!$vuetify.breakpoint.xs">
                 <v-col cols="4">
                     <h3>Audioprotesisti senza Budget</h3>
                     <v-data-table
@@ -65,7 +65,7 @@
 
             </v-row>
 
-            <v-row>
+            <v-row v-if="!$vuetify.breakpoint.xs">
                 <v-col cols="4">
                     <v-chip class="ma-2" color="orange" >
                         Verifica: {{ sommaProvvigioni }}
@@ -84,7 +84,7 @@
             </v-row>
 
             <v-row>
-                <v-col v-for="mese in 12" :key="mese">
+                <v-col v-for="mese in 12" :key="mese" cols="3" md="" lg="">
                     <v-text-field
                         :hint="nomeMese[mese-1]"
                         readonly
@@ -176,7 +176,7 @@
                     {{item.molti_budget[0].dicembre.toLocaleString('it')}}
                 </template>
 
-                <template slot="body.append">
+                <template slot="body.append" v-if="!$vuetify.breakpoint.xs">
                     <tr class="pink--text">
                         <th class="title">Totali</th>
                         <th></th>

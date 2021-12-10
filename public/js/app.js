@@ -3866,6 +3866,7 @@ var state = function state() {
     situazioneAnnoClientiAudio: [],
     situazioneAnnoResiAudio: [],
     messaggioBackup: '',
+    totImportati: 0,
     riepilogo: []
   };
 };
@@ -3873,6 +3874,9 @@ var state = function state() {
 var getters = {
   getAnni: function getAnni(state) {
     return state.anni;
+  },
+  getImportati: function getImportati(state) {
+    return state.totImportati;
   },
   getClients: function getClients(state) {
     return state.clients;
@@ -4255,20 +4259,26 @@ var actions = {
       }, _callee13);
     }))();
   },
-  importClients: function importClients() {
+  importClients: function importClients(_ref14, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee14() {
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee14$(_context14) {
         while (1) {
           switch (_context14.prev = _context14.next) {
             case 0:
-              _context14.next = 2;
+              commit = _ref14.commit;
+              _context14.next = 3;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimportclients), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
-            case 2:
+            case 3:
+              response = _context14.sent;
+              commit('importClients', response.data);
+
+            case 5:
             case "end":
               return _context14.stop();
           }
@@ -4276,14 +4286,14 @@ var actions = {
       }, _callee14);
     }))();
   },
-  importClientsXml: function importClientsXml(_ref14, payload) {
+  importClientsXml: function importClientsXml(_ref15, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee15() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee15$(_context15) {
         while (1) {
           switch (_context15.prev = _context15.next) {
             case 0:
-              commit = _ref14.commit;
+              commit = _ref15.commit;
               _context15.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimportclientsxml), {
                 nomeFile: payload.nomeFile,
@@ -4296,9 +4306,10 @@ var actions = {
 
             case 3:
               response = _context15.sent;
-              commit('importClientsXml', response.data);
+              commit('importClientsByFiliale', response.data[1]);
+              commit('importClientsXml', response.data[0]);
 
-            case 5:
+            case 6:
             case "end":
               return _context15.stop();
           }
@@ -4306,14 +4317,14 @@ var actions = {
       }, _callee15);
     }))();
   },
-  importClientsByFiliale: function importClientsByFiliale(_ref15, payload) {
+  importClientsByFiliale: function importClientsByFiliale(_ref16, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee16() {
       var commit, config, formData;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee16$(_context16) {
         while (1) {
           switch (_context16.prev = _context16.next) {
             case 0:
-              commit = _ref15.commit;
+              commit = _ref16.commit;
               config = {
                 headers: {
                   'content-type': 'multipart/form-data',
@@ -4335,26 +4346,28 @@ var actions = {
       }, _callee16);
     }))();
   },
-  fetchSituazioneAnnoClientiAudio: function fetchSituazioneAnnoClientiAudio(_ref16, payload) {
+  salvaFileAdmin: function salvaFileAdmin(_ref17, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee17() {
-      var commit, response;
+      var commit, config, formData;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee17$(_context17) {
         while (1) {
           switch (_context17.prev = _context17.next) {
             case 0:
-              commit = _ref16.commit;
-              _context17.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkSituazioneAnnoClientiAudio), payload, {
+              commit = _ref17.commit;
+              config = {
                 headers: {
+                  'content-type': 'multipart/form-data',
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
-              });
+              };
+              formData = new FormData();
+              formData.append('file', payload.fileUp);
+              formData.append('path', payload.path);
+              formData.append('nomeFile', payload.nomeFile);
+              _context17.next = 8;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksalvafileadmin), formData, config);
 
-            case 3:
-              response = _context17.sent;
-              commit('fetchSituazioneAnnoClientiAudio', response.data);
-
-            case 5:
+            case 8:
             case "end":
               return _context17.stop();
           }
@@ -4362,16 +4375,16 @@ var actions = {
       }, _callee17);
     }))();
   },
-  fetchSituazioneAnnoResiAudio: function fetchSituazioneAnnoResiAudio(_ref17, payload) {
+  fetchSituazioneAnnoClientiAudio: function fetchSituazioneAnnoClientiAudio(_ref18, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee18() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee18$(_context18) {
         while (1) {
           switch (_context18.prev = _context18.next) {
             case 0:
-              commit = _ref17.commit;
+              commit = _ref18.commit;
               _context18.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkSituazioneAnnoResiAudio), payload, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkSituazioneAnnoClientiAudio), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -4379,7 +4392,7 @@ var actions = {
 
             case 3:
               response = _context18.sent;
-              commit('fetchSituazioneAnnoResiAudio', response.data);
+              commit('fetchSituazioneAnnoClientiAudio', response.data);
 
             case 5:
             case "end":
@@ -4389,13 +4402,40 @@ var actions = {
       }, _callee18);
     }))();
   },
-  eseguiBackup: function eseguiBackup() {
+  fetchSituazioneAnnoResiAudio: function fetchSituazioneAnnoResiAudio(_ref19, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee19() {
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee19$(_context19) {
         while (1) {
           switch (_context19.prev = _context19.next) {
             case 0:
-              _context19.next = 2;
+              commit = _ref19.commit;
+              _context19.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkSituazioneAnnoResiAudio), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context19.sent;
+              commit('fetchSituazioneAnnoResiAudio', response.data);
+
+            case 5:
+            case "end":
+              return _context19.stop();
+          }
+        }
+      }, _callee19);
+    }))();
+  },
+  eseguiBackup: function eseguiBackup() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee20() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee20$(_context20) {
+        while (1) {
+          switch (_context20.prev = _context20.next) {
+            case 0:
+              _context20.next = 2;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkbackup), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -4404,10 +4444,10 @@ var actions = {
 
             case 2:
             case "end":
-              return _context19.stop();
+              return _context20.stop();
           }
         }
-      }, _callee19);
+      }, _callee20);
     }))();
   }
 };
@@ -4468,6 +4508,12 @@ var mutations = {
   },
   fetchSituazioneAnnoResiAudio: function fetchSituazioneAnnoResiAudio(state, payload) {
     state.situazioneAnnoResiAudio = payload;
+  },
+  importClients: function importClients(state, payload) {
+    state.totImportati = payload;
+  },
+  importClientsByFiliale: function importClientsByFiliale(state, payload) {
+    state.totImportati = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -10558,6 +10604,7 @@ var help = function help() {
     linklistadocumenti: base + 'caricaDocumenti',
     linkeliminadocumento: base + 'eliminaDocumento',
     linksalvafilexmlfromfiliale: base + 'salvaFileXmlFromFiliale',
+    linksalvafileadmin: base + 'salvaFileAdmin',
     linkdatesettimana: base + 'dateSettimana',
     linkdatesettimanaprossima: base + 'dateSettimanaProssima',
     linkclientidasaldare: base + 'clientiDaSaldare',

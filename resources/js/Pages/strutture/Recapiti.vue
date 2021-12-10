@@ -3,8 +3,7 @@
         <h2>Recapiti</h2>
             <v-row>
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-text-field
                         v-model="recapito.nome"
@@ -13,8 +12,7 @@
                 </v-col>
 
                 <v-col
-                    cols="3"
-                    sm="3"
+                    cols="12" md="3" lg="3"
                 >
                     <v-text-field
                         v-model="recapito.indirizzo"
@@ -23,8 +21,7 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-text-field
                         v-model="recapito.citta"
@@ -33,8 +30,7 @@
                 </v-col>
 
                 <v-col
-                    cols="1"
-                    sm="1"
+                    cols="3" md="1" lg="1"
                 >
                     <v-text-field
                         v-model="recapito.provincia"
@@ -43,8 +39,7 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="9" md="2" lg="2"
                 >
                     <v-text-field
                         v-model="recapito.telefono"
@@ -53,8 +48,7 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-select
                         v-model="recapito.user_id"
@@ -69,22 +63,22 @@
 
             <v-row>
                 <v-col
-                    cols="7"
+                    cols="12" md="7" lg="7"
                 >
                     <v-text-field
                         v-model="recapito.informazioni"
                         label="Informazioni"
                     ></v-text-field>
                 </v-col>
-                <v-col cols="3">
+                <v-col cols="12" md="3" lg="3">
                     <v-file-input
                         v-model="recapito.fileUp"
                         truncate-length="15"
                         label="Carica Foto"
                     ></v-file-input>
                 </v-col>
-                <v-col cols="2">
-                    <v-btn @click="aggiungi" dark color="indigo" class="mb-5">
+                <v-col cols="12" md="2" lg="2">
+                    <v-btn @click="aggiungi" dark color="indigo" class="mb-5" :block="$vuetify.breakpoint.xs">
                         {{btnName}}
                     </v-btn>
                 </v-col>

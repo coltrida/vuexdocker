@@ -82,37 +82,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
   data: function data() {
     return {
-      nomeFile: 'app/public/file.xml',
+      //   nomeFile: 'app/public/file.xml',
+      caricaFile: {
+        path: 'app/public/',
+        fileUp: {},
+        nomeFile: ''
+      },
       carica: false
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
     importClients: 'importClients',
-    importClientsXml: 'importClientsXml'
+    importClientsXml: 'importClientsXml',
+    salvaFileAdmin: 'salvaFileAdmin'
   })), {}, {
     importa: function importa() {
       var _this = this;
 
       this.carica = true;
-      this.importClients().then(function () {
-        _this.carica = false;
+      this.caricaFile.nomeFile = 'carica';
+      this.salvaFileAdmin(this.caricaFile).then(function () {
+        //  let pathnomefile = this.caricaFile.nomeFile;
+        _this.importClients().then(function () {
+          _this.caricaFile = {};
+          _this.carica = false;
+        });
       });
-    },
-    importaXml: function importaXml() {
-      var _this2 = this;
-
-      this.carica = true;
-      this.importClientsXml(this.nomeFile).then(function () {
-        _this2.carica = false;
-      });
+      /*this.importClients().then(() => {
+          this.carica = false;
+      });*/
     }
-  })
+    /*importaXml(){
+        this.carica = true;
+        this.importClientsXml(this.nomeFile).then(() => {
+            this.carica = false;
+        });
+    },*/
+
+  }),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
+    getImportati: 'getImportati'
+  }))
 });
 
 /***/ }),
@@ -210,6 +225,8 @@ var render = function() {
     [
       _c("h2", [_vm._v("Importa Cliente")]),
       _vm._v(" "),
+      _c("h3", [_vm._v("Anagrafiche importate: " + _vm._s(_vm.getImportati))]),
+      _vm._v(" "),
       _c(
         "v-container",
         [
@@ -227,21 +244,26 @@ var render = function() {
             : _c(
                 "v-row",
                 [
-                  _c("v-col", { attrs: { cols: "4", sm: "4" } }, [
-                    _c("p", [
-                      _vm._v(
-                        "Inserire il file nella posizione /store/app/public/file.xlsx"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "cognome nome indirizzo cap comune provincia numtel"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("poi eliminare il file file.xlsx")])
-                  ]),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "4", sm: "4" } },
+                    [
+                      _c("v-file-input", {
+                        attrs: {
+                          "truncate-length": "15",
+                          accept: ".xlsx, .xls"
+                        },
+                        model: {
+                          value: _vm.caricaFile.fileUp,
+                          callback: function($$v) {
+                            _vm.$set(_vm.caricaFile, "fileUp", $$v)
+                          },
+                          expression: "caricaFile.fileUp"
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-col",
@@ -252,34 +274,6 @@ var render = function() {
                         {
                           attrs: { color: "success", dark: "" },
                           on: { click: _vm.importa }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    Importa\n                "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-col", { attrs: { cols: "4", sm: "4" } }, [
-                    _c("p", [
-                      _vm._v(
-                        "Inserire il file nella posizione /storage/app/public/file.xml"
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-col",
-                    { attrs: { cols: "2", sm: "2" } },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "success", dark: "" },
-                          on: { click: _vm.importaXml }
                         },
                         [
                           _vm._v(

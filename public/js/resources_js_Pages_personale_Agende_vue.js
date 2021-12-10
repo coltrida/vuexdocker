@@ -117,12 +117,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Agende",
@@ -458,7 +452,7 @@ var render = function() {
               [
                 _c(
                   "v-col",
-                  { attrs: { cols: "2", sm: "2" } },
+                  { attrs: { cols: "12", md: "2", lg: "2" } },
                   [
                     _c("v-select", {
                       attrs: {
@@ -482,7 +476,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "v-col",
-                  { attrs: { cols: "1", sm: "1" } },
+                  { attrs: { cols: "12", md: "1", lg: "1" } },
                   [
                     _c("v-select", {
                       attrs: { items: _vm.giorni, label: "giorno" },
@@ -500,7 +494,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "v-col",
-                  { attrs: { cols: "2", sm: "2" } },
+                  { attrs: { cols: "12", md: "2", lg: "2" } },
                   [
                     _c("v-select", {
                       attrs: { items: _vm.quando, label: "quando" },
@@ -518,7 +512,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "v-col",
-                  { attrs: { cols: "3", sm: "3" } },
+                  { attrs: { cols: "12", md: "3", lg: "3" } },
                   [
                     _c("v-select", {
                       attrs: { items: _vm.listaCose, label: "Cosa" },
@@ -536,7 +530,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "v-col",
-                  { attrs: { cols: "2", sm: "2" } },
+                  { attrs: { cols: "12", md: "2", lg: "2" } },
                   [
                     _c("v-select", {
                       attrs: {
@@ -559,12 +553,16 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "v-col",
-                  { attrs: { cols: "2", sm: "2" } },
+                  { attrs: { cols: "12", md: "2", lg: "2" } },
                   [
                     _c(
                       "v-btn",
                       {
-                        attrs: { dark: "", color: "indigo" },
+                        attrs: {
+                          dark: "",
+                          color: "indigo",
+                          block: _vm.$vuetify.breakpoint.xs
+                        },
                         on: { click: _vm.aggiungi }
                       },
                       [

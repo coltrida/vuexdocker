@@ -3,8 +3,7 @@
         <h2>Filiali</h2>
             <v-row>
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-text-field
                         v-model="filiale.nome"
@@ -13,8 +12,7 @@
                 </v-col>
 
                 <v-col
-                    cols="4"
-                    sm="4"
+                    cols="12" md="4" lg="4"
                 >
                     <v-text-field
                         v-model="filiale.indirizzo"
@@ -23,8 +21,7 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-text-field
                         v-model="filiale.citta"
@@ -33,8 +30,7 @@
                 </v-col>
 
                 <v-col
-                    cols="1"
-                    sm="1"
+                    cols="6" md="1" lg="1"
                 >
                     <v-text-field
                         v-model="filiale.provincia"
@@ -43,8 +39,7 @@
                 </v-col>
 
                 <v-col
-                    cols="1"
-                    sm="1"
+                    cols="6" md="1" lg="1"
                 >
                     <v-text-field
                         v-model="filiale.cap"
@@ -53,8 +48,7 @@
                 </v-col>
 
                 <v-col
-                    cols="2"
-                    sm="2"
+                    cols="12" md="2" lg="2"
                 >
                     <v-text-field
                         v-model="filiale.telefono"
@@ -65,22 +59,22 @@
             </v-row>
 
             <v-row>
-                <v-col cols="7">
+                <v-col cols="12" md="7" lg="7">
                     <v-textarea
                         rows="1"
                         label="Informazioni"
                         v-model.lazy="filiale.informazioni"
                     ></v-textarea>
                 </v-col>
-                <v-col cols="3">
+                <v-col cols="12" md="3" lg="3">
                     <v-file-input
                         v-model="filiale.fileUp"
                         truncate-length="15"
                         label="Carica Foto"
                     ></v-file-input>
                 </v-col>
-                <v-col cols="2">
-                    <v-btn @click="aggiungi" dark color="indigo">
+                <v-col cols="12" md="2" lg="2">
+                    <v-btn @click="aggiungi" dark color="indigo" :block="$vuetify.breakpoint.xs">
                         {{btnName}}
                     </v-btn>
                 </v-col>

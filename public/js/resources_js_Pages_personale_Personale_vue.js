@@ -269,10 +269,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -685,7 +681,7 @@ var render = function() {
             [
               _c(
                 "v-col",
-                { attrs: { cols: "4", sm: "4" } },
+                { attrs: { cols: "12", md: "4", lg: "4" } },
                 [
                   _c("v-text-field", {
                     attrs: {
@@ -707,7 +703,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "3", sm: "3" } },
+                { attrs: { cols: "12", md: "3", lg: "3" } },
                 [
                   _c("v-text-field", {
                     attrs: {
@@ -729,7 +725,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "3", sm: "3" } },
+                { attrs: { cols: "12", md: "3", lg: "3" } },
                 [
                   _c("v-select", {
                     attrs: {
@@ -752,12 +748,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "2", sm: "2" } },
+                { attrs: { cols: "12", md: "2", lg: "2" } },
                 [
                   _c(
                     "v-btn",
                     {
-                      attrs: { dark: "", color: "indigo" },
+                      attrs: {
+                        dark: "",
+                        color: "indigo",
+                        block: _vm.$vuetify.breakpoint.xs
+                      },
                       on: { click: _vm.aggiungi }
                     },
                     [
@@ -778,7 +778,7 @@ var render = function() {
             [
               _c(
                 "v-col",
-                { attrs: { cols: "6" } },
+                { attrs: { cols: "12", md: "6", lg: "6" } },
                 [
                   _c("h2", [_vm._v("Audioprotesisti")]),
                   _vm._v(" "),
@@ -914,7 +914,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-col",
-                { attrs: { cols: "6" } },
+                { attrs: { cols: "12", md: "6", lg: "6" } },
                 [
                   _c("h2", [_vm._v("Amministrativi")]),
                   _vm._v(" "),

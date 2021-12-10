@@ -4,8 +4,7 @@
         <h3>Destinatari</h3>
         <v-row class="mt-6">
             <v-col
-                cols="2"
-                sm="2"
+                cols="12" md="2" lg="2"
             >
                 <v-select
                     v-model="ricerca.tipo"
@@ -17,8 +16,7 @@
             </v-col>
 
             <v-col
-                cols="2"
-                sm="2"
+                cols="12" md="2" lg="2"
             >
                 <v-select
                     @change="caricaCitta()"
@@ -29,8 +27,7 @@
             </v-col>
 
             <v-col
-                cols="2"
-                sm="2"
+                cols="12" md="2" lg="2"
             >
                 <v-select
                     v-model="ricerca.citta"
@@ -40,8 +37,7 @@
             </v-col>
 
             <v-col
-                cols="2"
-                sm="2"
+                cols="12" md="2" lg="2"
             >
                 <v-select
                     v-model="ricerca.filiale"
@@ -52,11 +48,11 @@
                 ></v-select>
             </v-col>
 
-            <v-col>
-                <v-btn @click="seleziona" color="success" dark>
+            <v-col cols="12" md="4" lg="4">
+                <v-btn @click="seleziona" color="success" dark :block="$vuetify.breakpoint.xs">
                     Seleziona
                 </v-btn>
-                <v-btn @click="resetRicerca" color="warning" dark>
+                <v-btn @click="resetRicerca" color="warning" dark :block="$vuetify.breakpoint.xs">
                     Reset
                 </v-btn>
             </v-col>

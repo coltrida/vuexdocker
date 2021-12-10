@@ -12,12 +12,17 @@ const state = () => ({
     situazioneAnnoClientiAudio:[],
     situazioneAnnoResiAudio:[],
     messaggioBackup:'',
+    totImportati: 0,
     riepilogo: []
 });
 
 const getters = {
     getAnni(state){
         return state.anni;
+    },
+
+    getImportati(state){
+        return state.totImportati;
     },
 
     getClients(state){
@@ -183,12 +188,13 @@ const actions = {
         commit('eliminaClient', payload.clientId);
     },
 
-    async importClients(){
-        await axios.get(`${help().linkimportclients}`, {
+    async importClients({commit}, payload){
+        const response = await axios.get(`${help().linkimportclients}`, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
+        commit('importClients', response.data);
     },
 
     async importClientsXml({commit}, payload){
@@ -200,7 +206,8 @@ const actions = {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('importClientsXml', response.data);
+        commit('importClientsByFiliale', response.data[1]);
+        commit('importClientsXml', response.data[0]);
     },
 
     async importClientsByFiliale({commit}, payload){
@@ -216,6 +223,21 @@ const actions = {
         formData.append('nomeFile', payload.nomeFile);
 
         await axios.post(`${help().linksalvafilexmlfromfiliale}`, formData, config);
+    },
+
+    async salvaFileAdmin({commit}, payload){
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data' ,
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        };
+        let formData = new FormData();
+        formData.append('file', payload.fileUp);
+        formData.append('path', payload.path);
+        formData.append('nomeFile', payload.nomeFile);
+
+        await axios.post(`${help().linksalvafileadmin}`, formData, config);
     },
 
     async fetchSituazioneAnnoClientiAudio({commit}, payload){
@@ -313,6 +335,17 @@ const mutations = {
     fetchSituazioneAnnoResiAudio(state, payload){
         state.situazioneAnnoResiAudio = payload;
     },
+
+    importClients(state, payload)
+    {
+        state.totImportati = payload;
+    },
+
+    importClientsByFiliale(state, payload)
+    {
+        state.totImportati = payload;
+    }
+
 
 };
 

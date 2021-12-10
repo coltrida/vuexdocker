@@ -3,20 +3,20 @@
         <v-col cols="12">
             <h2>Materiale Marketing</h2>
             <v-row v-if="getRuolo=='admin'">
-                <v-col>
+                <v-col cols="12" md="4" lg="4">
                     <v-text-field
                         v-model="newMateriale.nome"
                         label="Nuovo Materiale"
                     ></v-text-field>
                 </v-col>
-                <v-col>
+                <v-col cols="12" md="4" lg="4">
                     <v-text-field
                         v-model="newMateriale.codice"
                         label="codice"
                     ></v-text-field>
                 </v-col>
-                <v-col>
-                    <v-btn @click="aggiungi" color="indigo" dark>
+                <v-col cols="12" md="4" lg="4">
+                    <v-btn @click="aggiungi" color="indigo" dark :block="$vuetify.breakpoint.xs">
                         Inserisci
                     </v-btn>
                 </v-col>

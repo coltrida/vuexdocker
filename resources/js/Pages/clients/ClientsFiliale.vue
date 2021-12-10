@@ -400,7 +400,7 @@
                 cognomeElimina: '',
                 listino: {},
                 headers: [
-                    {text: 'Actions', width: 200, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: '', width: 200, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'COD', width: 80, value: 'tipologia', class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},

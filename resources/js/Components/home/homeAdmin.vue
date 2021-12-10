@@ -9,7 +9,7 @@
                     @chiudiProdotti="chiudiProdotti"
                 />
 
-                <v-col cols="4">
+                <v-col cols="12" md="4" lg="4">
                     <h2>Prove in Corso:</h2>
                     <div v-for="audio in getCommerciale" :key="audio.id">
                         <v-data-table
@@ -51,7 +51,7 @@
                     </div>
                 </v-col>
 
-                <v-col cols="5">
+                <v-col cols="12" md="5" lg="5">
                     <h2>Finalizzati:</h2>
                     <div v-for="audio in getCommerciale" :key="audio.id">
                         <v-data-table
@@ -105,7 +105,7 @@
                     </div>
                 </v-col>
 
-                <v-col cols="3">
+                <v-col cols="12" md="3" lg="3">
                     <h2>Resi:</h2>
                     <div v-for="audio in getCommerciale" :key="audio.id">
                         <v-data-table

@@ -1,7 +1,7 @@
 <template>
-    <v-tabs class="mt-3">
+    <v-tabs class="mt-3" centered>
         <v-tab @click="resetCommerciale">
-                Commerciale
+                Comm
         </v-tab>
         <v-tab-item>
             <v-card flat>
@@ -19,7 +19,7 @@
         </v-tab-item>
 
         <v-tab>
-            CallCenter
+            Call
         </v-tab>
         <v-tab-item>
             <v-card flat>

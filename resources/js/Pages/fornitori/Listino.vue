@@ -9,7 +9,7 @@
            />
 
         <v-row>
-            <v-col cols="9">
+            <v-col cols="12" md="9" lg="9">
                 <v-text-field
                     v-model="search"
                     append-icon="mdi-magnify"
@@ -73,7 +73,7 @@
                     </template>
                 </v-data-table>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="12" md="3" lg="3">
                 <v-text-field
                     v-model="listino.nome"
                     label="Nome Prodotto"

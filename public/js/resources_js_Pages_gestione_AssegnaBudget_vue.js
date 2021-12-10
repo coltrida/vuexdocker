@@ -623,82 +623,86 @@ var render = function() {
         "div",
         { staticClass: "py-6" },
         [
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
+          !_vm.$vuetify.breakpoint.xs
+            ? _c(
+                "v-row",
                 [
-                  _c("h3", [_vm._v("Audioprotesisti senza Budget")]),
-                  _vm._v(" "),
-                  _c("v-data-table", {
-                    staticClass: "elevation-1 mt-3",
-                    attrs: {
-                      headers: _vm.headers,
-                      items: _vm.getAudioSenzaBgt,
-                      "single-select": _vm.singleSelect,
-                      "hide-default-footer": "",
-                      "show-select": ""
-                    },
-                    model: {
-                      value: _vm.AudioSelected,
-                      callback: function($$v) {
-                        _vm.AudioSelected = $$v
-                      },
-                      expression: "AudioSelected"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
-                [
-                  _c("h3", [_vm._v("Budget Anno")]),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "4" } },
+                    [
+                      _c("h3", [_vm._v("Audioprotesisti senza Budget")]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          headers: _vm.headers,
+                          items: _vm.getAudioSenzaBgt,
+                          "single-select": _vm.singleSelect,
+                          "hide-default-footer": "",
+                          "show-select": ""
+                        },
+                        model: {
+                          value: _vm.AudioSelected,
+                          callback: function($$v) {
+                            _vm.AudioSelected = $$v
+                          },
+                          expression: "AudioSelected"
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
-                    "v-row",
+                    "v-col",
+                    { attrs: { cols: "4" } },
                     [
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "5" } },
-                        [
-                          _c("v-text-field", {
-                            attrs: { label: "budget" },
-                            on: {
-                              input: function($event) {
-                                return _vm.bgtMese()
-                              }
-                            },
-                            model: {
-                              value: _vm.assegna.budgetAnno,
-                              callback: function($$v) {
-                                _vm.$set(_vm.assegna, "budgetAnno", $$v)
-                              },
-                              expression: "assegna.budgetAnno"
-                            }
-                          })
-                        ],
-                        1
-                      ),
+                      _c("h3", [_vm._v("Budget Anno")]),
                       _vm._v(" "),
                       _c(
-                        "v-col",
-                        { attrs: { cols: "4" } },
+                        "v-row",
                         [
-                          _c("v-select", {
-                            attrs: { items: _vm.getAnni, label: "Anno" },
-                            model: {
-                              value: _vm.assegna.anno,
-                              callback: function($$v) {
-                                _vm.$set(_vm.assegna, "anno", $$v)
-                              },
-                              expression: "assegna.anno"
-                            }
-                          })
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "5" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { label: "budget" },
+                                on: {
+                                  input: function($event) {
+                                    return _vm.bgtMese()
+                                  }
+                                },
+                                model: {
+                                  value: _vm.assegna.budgetAnno,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.assegna, "budgetAnno", $$v)
+                                  },
+                                  expression: "assegna.budgetAnno"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "4" } },
+                            [
+                              _c("v-select", {
+                                attrs: { items: _vm.getAnni, label: "Anno" },
+                                model: {
+                                  value: _vm.assegna.anno,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.assegna, "anno", $$v)
+                                  },
+                                  expression: "assegna.anno"
+                                }
+                              })
+                            ],
+                            1
+                          )
                         ],
                         1
                       )
@@ -708,65 +712,65 @@ var render = function() {
                 ],
                 1
               )
-            ],
-            1
-          ),
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "v-row",
-            [
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
+          !_vm.$vuetify.breakpoint.xs
+            ? _c(
+                "v-row",
                 [
                   _c(
-                    "v-chip",
-                    { staticClass: "ma-2", attrs: { color: "orange" } },
+                    "v-col",
+                    { attrs: { cols: "4" } },
                     [
-                      _vm._v(
-                        "\n                    Verifica: " +
-                          _vm._s(_vm.sommaProvvigioni) +
-                          "\n                "
+                      _c(
+                        "v-chip",
+                        { staticClass: "ma-2", attrs: { color: "orange" } },
+                        [
+                          _vm._v(
+                            "\n                    Verifica: " +
+                              _vm._s(_vm.sommaProvvigioni) +
+                              "\n                "
+                          )
+                        ]
                       )
-                    ]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-col", { attrs: { cols: "4" } }),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                { attrs: { cols: "4" } },
-                [
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-col", { attrs: { cols: "4" } }),
+                  _vm._v(" "),
                   _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "success", dark: "" },
-                      on: { click: _vm.assegnaBudget }
-                    },
+                    "v-col",
+                    { attrs: { cols: "4" } },
                     [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(_vm.textBtn) +
-                          "\n                "
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "success", dark: "" },
+                          on: { click: _vm.assegnaBudget }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.textBtn) +
+                              "\n                "
+                          )
+                        ]
                       )
-                    ]
+                    ],
+                    1
                   )
                 ],
                 1
               )
-            ],
-            1
-          ),
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "v-row",
             _vm._l(12, function(mese) {
               return _c(
                 "v-col",
-                { key: mese },
+                { key: mese, attrs: { cols: "3", md: "", lg: "" } },
                 [
                   _c("v-text-field", {
                     attrs: {
@@ -1084,61 +1088,67 @@ var render = function() {
               _vm._v(" "),
               _vm._v(" "),
               _vm._v(" "),
-              _c("template", { slot: "body.append" }, [
-                _c("tr", { staticClass: "pink--text" }, [
-                  _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
-                  _vm._v(" "),
-                  _c("th"),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.totAnno.toLocaleString("it")))]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totGennaio.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totFebbraio.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.totMarzo.toLocaleString("it")))]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totAprile.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totMaggio.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totGiugno.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totLuglio.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totAgosto.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totSettembre.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totOttobre.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totNovembre.toLocaleString("it")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.totDicembre.toLocaleString("it")))
+              !_vm.$vuetify.breakpoint.xs
+                ? _c("template", { slot: "body.append" }, [
+                    _c("tr", { staticClass: "pink--text" }, [
+                      _c("th", { staticClass: "title" }, [_vm._v("Totali")]),
+                      _vm._v(" "),
+                      _c("th"),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totAnno.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totGennaio.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totFebbraio.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totMarzo.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totAprile.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totMaggio.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totGiugno.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totLuglio.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totAgosto.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totSettembre.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totOttobre.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totNovembre.toLocaleString("it")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm._v(_vm._s(_vm.totDicembre.toLocaleString("it")))
+                      ])
+                    ])
                   ])
-                ])
-              ])
+                : _vm._e()
             ],
             2
           )

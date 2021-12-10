@@ -145,12 +145,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Recapiti",
@@ -364,7 +358,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "12", md: "2", lg: "2" } },
             [
               _c("v-text-field", {
                 attrs: { label: "Nome Recapito" },
@@ -382,7 +376,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3", sm: "3" } },
+            { attrs: { cols: "12", md: "3", lg: "3" } },
             [
               _c("v-text-field", {
                 attrs: { label: "Indirizzo" },
@@ -400,7 +394,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "12", md: "2", lg: "2" } },
             [
               _c("v-text-field", {
                 attrs: { label: "Citta'" },
@@ -418,7 +412,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "1", sm: "1" } },
+            { attrs: { cols: "3", md: "1", lg: "1" } },
             [
               _c("v-text-field", {
                 attrs: { label: "PR" },
@@ -436,7 +430,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "9", md: "2", lg: "2" } },
             [
               _c("v-text-field", {
                 attrs: { label: "telefono" },
@@ -454,7 +448,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "2", sm: "2" } },
+            { attrs: { cols: "12", md: "2", lg: "2" } },
             [
               _c("v-select", {
                 attrs: {
@@ -483,7 +477,7 @@ var render = function() {
         [
           _c(
             "v-col",
-            { attrs: { cols: "7" } },
+            { attrs: { cols: "12", md: "7", lg: "7" } },
             [
               _c("v-text-field", {
                 attrs: { label: "Informazioni" },
@@ -501,7 +495,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3" } },
+            { attrs: { cols: "12", md: "3", lg: "3" } },
             [
               _c("v-file-input", {
                 attrs: { "truncate-length": "15", label: "Carica Foto" },
@@ -519,13 +513,17 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "2" } },
+            { attrs: { cols: "12", md: "2", lg: "2" } },
             [
               _c(
                 "v-btn",
                 {
                   staticClass: "mb-5",
-                  attrs: { dark: "", color: "indigo" },
+                  attrs: {
+                    dark: "",
+                    color: "indigo",
+                    block: _vm.$vuetify.breakpoint.xs
+                  },
                   on: { click: _vm.aggiungi }
                 },
                 [

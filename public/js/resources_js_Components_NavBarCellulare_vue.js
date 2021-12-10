@@ -92,12 +92,252 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "NavBarCellulareAudio"
+  name: "NavBarCellulareAdmin",
+  mounted: function mounted() {
+    this.fetchFiliali();
+  },
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('filiali', {
+    fetchFiliali: 'fetchFiliali'
+  })),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('filiali', {
+    getFiliali: 'getFiliali'
+  }))
 });
 
 /***/ }),
@@ -120,6 +360,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -664,7 +909,666 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    [
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-list-item",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        _vm._g(
+                          _vm._b({}, "v-list-item-title", attrs, false),
+                          on
+                        ),
+                        [_vm._v("CLIENTS")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c("v-list", [
+            _c(
+              "div",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "riepilogoClienti" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("RIEPILOGO")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.getFiliali, function(item, index) {
+                  return _c(
+                    "div",
+                    { key: index },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          attrs: {
+                            to: {
+                              name: "clientsFiliale",
+                              params: { filialeId: item.id }
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-item",
+                            [
+                              _c("v-list-item-title", [
+                                _vm._v(_vm._s(item.nome))
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "filtri" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("FILTRI")])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              2
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-list-item",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        _vm._g(
+                          _vm._b({}, "v-list-item-title", attrs, false),
+                          on
+                        ),
+                        [_vm._v("PERSONALE")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c("v-list", [
+            _c(
+              "div",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "personale" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("LISTA")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "agende" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("AGENDE")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "calendar" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("CALENDAR")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "diari" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("DIARI")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "saldati" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("SALDATI")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "rateali" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("RATEALI")])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-list-item",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        _vm._g(
+                          _vm._b({}, "v-list-item-title", attrs, false),
+                          on
+                        ),
+                        [_vm._v("MAGAZZINO")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-list",
+            [
+              _c(
+                "div",
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "riepilogoMagazzini" } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v("RIEPILOGO")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.getFiliali, function(item, index) {
+                return _c(
+                  "div",
+                  { key: index },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "magazzino",
+                            params: { filialeId: item.id }
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "v-list-item",
+                          [
+                            _c("v-list-item-title", [_vm._v(_vm._s(item.nome))])
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              })
+            ],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-list-item",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        _vm._g(
+                          _vm._b({}, "v-list-item-title", attrs, false),
+                          on
+                        ),
+                        [_vm._v("LISTINO")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c("v-list", [
+            _c(
+              "div",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "fornitori" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("LISTA")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "listino" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("LISTINO")])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-list-item",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        _vm._g(
+                          _vm._b({}, "v-list-item-title", attrs, false),
+                          on
+                        ),
+                        [_vm._v("STRUTTURE")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c("v-list", [
+            _c(
+              "div",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "filiali" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("FILIALI")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "recapiti" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("RECAPITI")])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-list-item",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        _vm._g(
+                          _vm._b({}, "v-list-item-title", attrs, false),
+                          on
+                        ),
+                        [_vm._v("MARKETING")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c("v-list", [
+            _c(
+              "div",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "marketing" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("CODICI")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "materiale" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("MATERIALE")])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-menu",
+        {
+          attrs: { "offset-y": "" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-list-item",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        _vm._g(
+                          _vm._b({}, "v-list-item-title", attrs, false),
+                          on
+                        ),
+                        [_vm._v("GESTIONE")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c("v-list", [
+            _c(
+              "div",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "assegnaBudget" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("ASSEGNA BGT")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "tempiRecall" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("TEMPI RECALL")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "inviaSms" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("INVIA MESS")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "strumentazione" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("STRUMENTAZIONE")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "resetSpecial" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("RESET")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "logging" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("LOGGING")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "log" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("LOG")])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -1015,6 +1919,19 @@ var render = function() {
                     _c(
                       "v-list-item",
                       [_c("v-list-item-title", [_vm._v("SETTIMANA")])],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "diario" } } },
+                  [
+                    _c(
+                      "v-list-item",
+                      [_c("v-list-item-title", [_vm._v("DIARIO")])],
                       1
                     )
                   ],

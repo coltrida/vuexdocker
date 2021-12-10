@@ -683,7 +683,7 @@ __webpack_require__.r(__webpack_exports__);
       return {
         labels: ['125', '250', '500', '1000', '1500', '2000', '3000', '4000', '6000', '8000'],
         datasets: [{
-          label: 'Destro',
+          label: 'DX',
           backgroundColor: '#f87979',
           borderColor: 'rgb(192,8,0)',
           radius: 5,
@@ -702,7 +702,7 @@ __webpack_require__.r(__webpack_exports__);
           fill: false,
           data: [-parseInt(this.audiogrammaClient.audiometria[this.indice]._125ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._250ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._500ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._1500ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._2000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._3000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._4000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._6000ossd), -parseInt(this.audiogrammaClient.audiometria[this.indice]._8000ossd)]
         }, {
-          label: 'Normoudente',
+          label: 'Normo',
           backgroundColor: 'rgba(115,250,10,0.2)',
           borderColor: 'rgba(126,192,88,0.11)',
           radius: 1,
@@ -732,7 +732,7 @@ __webpack_require__.r(__webpack_exports__);
       return {
         labels: ['125', '250', '500', '1000', '1500', '2000', '3000', '4000', '6000', '8000'],
         datasets: [{
-          label: 'Sinistro',
+          label: 'SX',
           backgroundColor: '#a8c3f8',
           borderColor: 'rgb(0,1,192)',
           pointStyle: 'cross',
@@ -789,6 +789,14 @@ __webpack_require__.r(__webpack_exports__);
               beginAtZero: true,
               stepSize: 10,
               min: -120
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              stepSize: 6,
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 90
             }
           }]
         }
@@ -3472,7 +3480,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cognomeElimina: '',
       listino: {},
       headers: [{
-        text: 'Actions',
+        text: '',
         width: 200,
         value: 'actions',
         sortable: false,
@@ -44359,15 +44367,7 @@ var render = function() {
                   _vm.audiogrammaClient.audiometria.length > 0
                     ? _c(
                         "v-col",
-                        {
-                          attrs: {
-                            cols: "12",
-                            md: "12",
-                            lg: "5",
-                            xs: "12",
-                            sm: "12"
-                          }
-                        },
+                        { attrs: { cols: "11", md: "12", lg: "5", sm: "11" } },
                         [
                           _c("Visualizza", {
                             attrs: {
@@ -44383,15 +44383,7 @@ var render = function() {
                   _vm.audiogrammaClient.audiometria.length > 0
                     ? _c(
                         "v-col",
-                        {
-                          attrs: {
-                            cols: "12",
-                            md: "12",
-                            lg: "5",
-                            xs: "12",
-                            sm: "12"
-                          }
-                        },
+                        { attrs: { cols: "11", md: "12", lg: "5", sm: "11" } },
                         [
                           _c("Visualizza", {
                             attrs: {

@@ -247,6 +247,7 @@ var render = function() {
                 [
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "Nuovo Materiale" },
@@ -264,6 +265,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c("v-text-field", {
                         attrs: { label: "codice" },
@@ -281,11 +283,16 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
+                    { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "indigo", dark: "" },
+                          attrs: {
+                            color: "indigo",
+                            dark: "",
+                            block: _vm.$vuetify.breakpoint.xs
+                          },
                           on: { click: _vm.aggiungi }
                         },
                         [

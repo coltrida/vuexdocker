@@ -10,7 +10,7 @@
             <textarea
                 style="border: 1px solid black; padding: 5px"
                 rows="15"
-                cols="130"
+                :cols=colonne
                 readonly
                 v-model="getLogFile[1]"
             />
@@ -46,6 +46,11 @@
             ...mapGetters('logging', {
                 getLogFile:'getLogFile',
             }),
+
+            colonne()
+            {
+                return this.$vuetify.breakpoint.xs ? 40 : 130
+            }
 
         },
     }

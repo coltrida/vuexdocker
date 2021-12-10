@@ -229,6 +229,7 @@ Route::group([], function () {
         // ----------------- documenti -----------------------
         Route::post('/salvaDocumento', [DocumentoController::class, 'salvaDocumento']);
         Route::post('/salvaFileXmlFromFiliale', [DocumentoController::class, 'salvaFileXmlFromFiliale']);
+        Route::post('/salvaFileAdmin', [DocumentoController::class, 'salvaFileAdmin']);
         Route::get('/caricaDocumenti/{idClient}', [DocumentoController::class, 'caricaDocumenti']);
         Route::delete('/eliminaDocumento/{idDocumento}', [DocumentoController::class, 'eliminaDocumento']);
 

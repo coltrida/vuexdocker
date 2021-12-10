@@ -67,6 +67,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
@@ -106,7 +107,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
-    getClientMessaggio: 'getClientMessaggio'
+    getClientMessaggio: 'getClientMessaggio',
+    getImportati: 'getImportati'
   }))
 });
 
@@ -204,6 +206,8 @@ var render = function() {
     "div",
     [
       _c("h2", [_vm._v("Importa Cliente")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Anagrafiche importate: " + _vm._s(_vm.getImportati))]),
       _vm._v(" "),
       _c(
         "v-container",

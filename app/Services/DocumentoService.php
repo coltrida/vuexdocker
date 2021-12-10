@@ -41,6 +41,18 @@ class DocumentoService
         }
     }
 
+    public function salvaFileAdmin($request)
+    {
+
+        if($request->hasfile('file')) {
+            $file = $request->file('file');
+            $filename = $request->nomeFile.'.'.$file->extension();
+            $path = $request->fileName;
+           // Storage::disk('log')->put('/', $filename);
+            Storage::disk('log')->putFileAs('/', $file, $filename);
+        }
+    }
+
     public function caricaDocumenti($idClient)
     {
         return Client::with('documenti')->find($idClient)->documenti;

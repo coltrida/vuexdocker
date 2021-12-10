@@ -9,7 +9,7 @@
             ></messaggio>
 
             <v-row>
-                <v-col cols="6">
+                <v-col cols="12" md="6" lg="6">
                     <v-data-table
                         :headers="headers1"
                         :items="getTipologie"
@@ -37,22 +37,22 @@
                     </v-data-table>
                 </v-col>
 
-                <v-col cols="6">
+                <v-col cols="12" md="6" lg="6">
                     <v-row>
-                        <v-col>
+                        <v-col cols="12" md="4" lg="4">
                             <v-text-field
                                 v-model.lazy="tipologia.nome"
                                 label="tipo"
                             ></v-text-field>
                         </v-col>
-                        <v-col>
+                        <v-col cols="12" md="4" lg="4">
                             <v-text-field
                                 v-model.lazy="tipologia.recall"
                                 label="tempo recall"
                             ></v-text-field>
                         </v-col>
-                        <v-col>
-                            <v-btn @click="invia" color="success" dark>
+                        <v-col cols="12" md="4" lg="4">
+                            <v-btn @click="invia" color="success" dark :block="$vuetify.breakpoint.xs">
                                 {{nomeBtn}}
                             </v-btn>
                         </v-col>
