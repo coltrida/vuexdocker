@@ -150,12 +150,27 @@ const actions = {
     },
 
     async modificaFiliale({commit}, payload){
-        const response = await axios.post(`${help().linkmodificafiliale}`, payload, {
+        const config = {
             headers: {
+                'content-type': 'multipart/form-data' ,
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
-        });
+        };
+
+        let formData = new FormData();
+        formData.append('file', payload.fileUp);
+        formData.append('nome', payload.nome);
+        formData.append('id', payload.id);
+        formData.append('indirizzo', payload.indirizzo);
+        formData.append('citta', payload.citta);
+        formData.append('telefono', payload.telefono);
+        formData.append('cap', payload.cap);
+        formData.append('provincia', payload.provincia);
+        formData.append('informazioni', payload.informazioni);
+
+        const response = await axios.post(`${help().linkmodificafiliale}`, formData, config);
         commit('modificaFiliale', response.data);
+
     },
 
     async fetchRichiestaApparecchi({commit}){

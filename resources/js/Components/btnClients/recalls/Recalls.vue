@@ -9,7 +9,7 @@
                     class="black--text align-end"
                     height="400px"
                     width="600px"
-                    :src="'https://www.centrouditogroup.it/storage/recapiti/'+informazioneStruttura.codiceIdentificativo+'.jpg'"
+                    :src="linkFoto+informazioneStruttura.codiceIdentificativo+'.jpg'"
                 >
                 </v-img>
                 <v-card-title class="text-h5">
@@ -437,6 +437,16 @@
             verificaCampi(){
                 return (this.nomeBtn == 'vuoi effettuare ora la tel' && this.telefonata.esito != null)
                 || (this.nomeBtn == 'vuoi programmare la tel') ? false : true;
+            },
+
+            linkFoto(){
+                let base = '';
+                if(window.location.host === 'vuexdocker.test'){
+                    base = 'http://vuexdocker.test/storage/recapiti/';
+                } else {
+                    base = 'https://www.centrouditogroup.it/storage/recapiti/';
+                }
+                return base;
             }
         }
     }

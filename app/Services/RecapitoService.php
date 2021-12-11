@@ -56,10 +56,7 @@ class RecapitoService
         ]);
 
         if($request->hasfile('file')) {
-            $file = $request->file('file');
-            $filename = 'R'.$recapito->id.'.jpg';
-            $path = 'recapiti/'.$request->fileName;
-            \Storage::disk('public')->putFileAs($path, $file, $filename);
+            $this->salvaFoto($request, $recapito);
         }
 
         $recapito->codiceIdentificativo = 'R'.$recapito->id;
@@ -81,10 +78,7 @@ class RecapitoService
         $recapito->save();
 
         if($request->hasfile('file')) {
-            $file = $request->file('file');
-            $filename = $recapito->id.'.jpg';
-            $path = 'recapiti/'.$request->fileName;
-            \Storage::disk('public')->putFileAs($path, $file, $filename);
+            $this->salvaFoto($request, $recapito);
         }
 
         return $recapito;
@@ -107,5 +101,13 @@ class RecapitoService
         }
 
         return $recapiti->concat($filiali);
+    }
+
+    private function salvaFoto($request, $recapito)
+    {
+        $file = $request->file('file');
+        $filename = 'R'.$recapito->id.'.jpg';
+        $path = 'recapiti/'.$request->fileName;
+        \Storage::disk('public')->putFileAs($path, $file, $filename);
     }
 }

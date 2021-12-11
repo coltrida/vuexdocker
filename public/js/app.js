@@ -5034,24 +5034,36 @@ var actions = {
   },
   modificaFiliale: function modificaFiliale(_ref11, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
-      var commit, response;
+      var commit, config, formData, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
               commit = _ref11.commit;
-              _context11.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificafiliale), payload, {
+              config = {
                 headers: {
+                  'content-type': 'multipart/form-data',
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
-              });
+              };
+              formData = new FormData();
+              formData.append('file', payload.fileUp);
+              formData.append('nome', payload.nome);
+              formData.append('id', payload.id);
+              formData.append('indirizzo', payload.indirizzo);
+              formData.append('citta', payload.citta);
+              formData.append('telefono', payload.telefono);
+              formData.append('cap', payload.cap);
+              formData.append('provincia', payload.provincia);
+              formData.append('informazioni', payload.informazioni);
+              _context11.next = 14;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkmodificafiliale), formData, config);
 
-            case 3:
+            case 14:
               response = _context11.sent;
               commit('modificaFiliale', response.data);
 
-            case 5:
+            case 16:
             case "end":
               return _context11.stop();
           }
@@ -10495,14 +10507,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var help = function help() {
-  //let base = 'http://vuexdocker.test/api/';
-  var base = 'https://www.centrouditogroup.it/api/';
+  var base = '';
+
+  if (window.location.host === 'vuexdocker.test') {
+    //console.log('locale');
+    base = 'http://vuexdocker.test/api/';
+  } else {
+    //console.log('web');
+    base = 'https://www.centrouditogroup.it/api/';
+  }
+
   return {
-    /*        linklogin: 'http://localhost/api/login',
-            linklogout: 'http://localhost/api/logout',
-            linkfiliali: 'http://localhost/api/filiali',
-            linkcanali: 'http://localhost/api/canali',
-            linkaddcanale: 'http://localhost/api/addCanale',*/
     linklogin: base + 'login',
     linkregister: base + 'register',
     linklogout: base + 'logout',

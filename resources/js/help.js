@@ -1,14 +1,13 @@
 const help = () => {
-    //let base = 'http://vuexdocker.test/api/';
-    let base = 'https://www.centrouditogroup.it/api/';
+    let base = '';
+    if(window.location.host === 'vuexdocker.test'){
+        //console.log('locale');
+        base = 'http://vuexdocker.test/api/';
+    } else {
+        //console.log('web');
+        base = 'https://www.centrouditogroup.it/api/';
+    }
     return {
-
-/*        linklogin: 'http://localhost/api/login',
-        linklogout: 'http://localhost/api/logout',
-        linkfiliali: 'http://localhost/api/filiali',
-        linkcanali: 'http://localhost/api/canali',
-        linkaddcanale: 'http://localhost/api/addCanale',*/
-
         linklogin: base+'login',
         linkregister: base+'register',
         linklogout: base+'logout',

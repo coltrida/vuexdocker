@@ -520,6 +520,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     verificaCampi: function verificaCampi() {
       return this.newAppuntamento.giorno != '' && this.newAppuntamento.giorno != null && this.newAppuntamento.orario != '' && this.newAppuntamento.orario != null && this.newAppuntamento.tipo != '' && this.newAppuntamento.tipo != null && (this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id) ? false : true;
+    },
+    linkFoto: function linkFoto() {
+      var base = '';
+
+      if (window.location.host === 'vuexdocker.test') {
+        base = 'http://vuexdocker.test/storage/recapiti/';
+      } else {
+        base = 'https://www.centrouditogroup.it/storage/recapiti/';
+      }
+
+      return base;
     }
   })
 });
@@ -2895,6 +2906,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     verificaCampi: function verificaCampi() {
       return this.nomeBtn == 'vuoi effettuare ora la tel' && this.telefonata.esito != null || this.nomeBtn == 'vuoi programmare la tel' ? false : true;
+    },
+    linkFoto: function linkFoto() {
+      var base = '';
+
+      if (window.location.host === 'vuexdocker.test') {
+        base = 'http://vuexdocker.test/storage/recapiti/';
+      } else {
+        base = 'https://www.centrouditogroup.it/storage/recapiti/';
+      }
+
+      return base;
     }
   })
 });
@@ -45499,7 +45521,7 @@ var render = function() {
                   height: "400px",
                   width: "600px",
                   src:
-                    "https://www.centrouditogroup.it/storage/recapiti/" +
+                    _vm.linkFoto +
                     _vm.informazioneStruttura.codiceIdentificativo +
                     ".jpg"
                 }
@@ -48981,7 +49003,7 @@ var render = function() {
                   height: "400px",
                   width: "600px",
                   src:
-                    "https://www.centrouditogroup.it/storage/recapiti/" +
+                    _vm.linkFoto +
                     _vm.informazioneStruttura.codiceIdentificativo +
                     ".jpg"
                 }

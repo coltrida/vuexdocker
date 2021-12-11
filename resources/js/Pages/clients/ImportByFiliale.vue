@@ -34,8 +34,13 @@
 
                 <v-col cols="12" md="12" lg="2" xs="12" sm="12">
 
-                    <v-btn @click="importaXml" color="success" dark :block="$vuetify.breakpoint.xs">
-                        Importa
+                    <v-btn
+                        @click="importaXml"
+                        color="success"
+                        dark
+                        :block="$vuetify.breakpoint.xs"
+                    >
+                            Importa
                     </v-btn>
 
                 </v-col>

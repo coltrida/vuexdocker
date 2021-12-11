@@ -254,6 +254,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     btnName: function btnName() {
       return this.modificaSwitch ? 'modifica' : 'inserisci';
+    },
+    linkFoto: function linkFoto() {
+      var base = '';
+
+      if (window.location.host === 'vuexdocker.test') {
+        base = 'http://vuexdocker.test/storage/recapiti/R';
+      } else {
+        base = 'https://www.centrouditogroup.it/storage/recapiti/R';
+      }
+
+      return base;
     }
   })
 });
@@ -567,10 +578,7 @@ var render = function() {
                           attrs: {
                             "max-height": "150",
                             "max-width": "150",
-                            src:
-                              "https://www.centrouditogroup.it/storage/recapiti/R" +
-                              item.id +
-                              ".jpg"
+                            src: _vm.linkFoto + item.id + ".jpg"
                           }
                         })
                       ]

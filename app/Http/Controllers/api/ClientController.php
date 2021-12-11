@@ -88,7 +88,9 @@ class ClientController extends Controller
     {
         ini_set('max_execution_time', 400);
         ini_set('memory_limit', '-1');
-        return $clientService->importClientsFromNoah($request);
+        $res = $clientService->importClientsFromNoah($request);
+        Storage::disk('public')->delete('/'.$request->nomeFile);
+        return $res;
     }
 
     public function situazioneAnnoClientiAudio(Request $request, ClientService $clientService)

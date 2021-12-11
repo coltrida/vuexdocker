@@ -34,14 +34,30 @@ class FilialeService
         ]);
 
         if($request->hasfile('file')) {
-            $file = $request->file('file');
-            $filename = 'F'.$filiale->id.'.jpg';
-            $path = 'recapiti/'.$request->fileName;
-            \Storage::disk('public')->putFileAs($path, $file, $filename);
+            $this->salvaFoto($request, $filiale);
         }
 
         $filiale->codiceIdentificativo = 'F'.$filiale->id;
         $filiale->save();
+
+        return $filiale;
+    }
+
+    public function modifica($request)
+    {
+        $filiale = Filiale::find($request->id);
+        $filiale->nome = trim(Str::upper($request->nome));
+        $filiale->indirizzo = trim(Str::upper($request->indirizzo));
+        $filiale->citta = trim(Str::upper($request->citta));
+        $filiale->telefono = $request->telefono;
+        $filiale->cap = $request->cap;
+        $filiale->provincia = trim(Str::upper($request->provincia));
+        $filiale->informazioni = trim(Str::upper($request->informazioni));
+        $filiale->save();
+
+        if($request->hasfile('file')) {
+            $this->salvaFoto($request, $filiale);
+        }
 
         return $filiale;
     }
@@ -99,17 +115,12 @@ class FilialeService
         return Filiale::find($idFiliale);
     }
 
-    public function modifica($request)
+    private function salvaFoto($request, $filiale)
     {
-        $filiale = Filiale::find($request->id);
-        $filiale->nome = trim(Str::upper($request->nome));
-        $filiale->indirizzo = trim(Str::upper($request->indirizzo));
-        $filiale->citta = trim(Str::upper($request->citta));
-        $filiale->telefono = $request->telefono;
-        $filiale->cap = $request->cap;
-        $filiale->provincia = trim(Str::upper($request->provincia));
-        $filiale->informazioni = trim(Str::upper($request->informazioni));
-        $filiale->save();
-        return $filiale;
+        $file = $request->file('file');
+        $filename = 'F'.$filiale->id.'.jpg';
+        $path = 'recapiti/'.$request->fileName;
+        \Storage::disk('public')->putFileAs($path, $file, $filename);
     }
+
 }
