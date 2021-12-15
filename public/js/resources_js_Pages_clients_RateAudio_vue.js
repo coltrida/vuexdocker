@@ -27,6 +27,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -36,8 +54,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     RateUser: _RateUser__WEBPACK_IMPORTED_MODULE_0__.default,
     SaldatiUser: _SaldatiUser__WEBPACK_IMPORTED_MODULE_1__.default
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('login', {
+  data: function data() {
+    return {
+      mese: '',
+      anno: ''
+    };
+  },
+  mounted: function mounted() {
+    this.caricaData();
+  },
+  methods: {
+    caricaData: function caricaData() {
+      var oggi = new Date();
+      this.mese = oggi.getMonth() + 1;
+      this.anno = oggi.getFullYear();
+    }
+  },
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('login', {
     getIdUser: 'getIdUser'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('clients', {
+    getAnni: 'getAnni',
+    getMesi: 'getMesi'
   }))
 });
 
@@ -334,7 +371,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     RateLista: _RateLista__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  props: ['idAudio'],
+  props: ['idAudio', 'mese', 'anno'],
   data: function data() {
     return {
       dialogRate: false,
@@ -365,21 +402,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         width: 150,
         value: 'tot_fattura',
         "class": "indigo white--text"
+      }, {
+        text: 'Totale Fattura senza iva',
+        width: 150,
+        value: 'tot_fattura_senza_iva',
+        "class": "indigo white--text"
       }]
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    this.fetchClientsSaldati(this.idAudio).then(function () {
-      if (_this.getClientsSaldati.length > 0) {
-        _this.lista = _this.getClientsSaldati;
-      }
-    });
+    this.caricadati();
+  },
+  watch: {
+    mese: function mese() {
+      this.caricadati();
+    },
+    anno: function anno() {
+      this.caricadati();
+    }
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('rate', {
     fetchClientsSaldati: 'fetchClientsSaldati'
   })), {}, {
+    caricadati: function caricadati() {
+      var _this = this;
+
+      this.lista = [];
+      this.fetchClientsSaldati({
+        idAudio: this.idAudio,
+        mese: this.mese,
+        anno: this.anno
+      }).then(function () {
+        if (_this.getClientsSaldati.length > 0) {
+          _this.lista = _this.getClientsSaldati;
+        }
+      });
+    },
     seleziona: function seleziona(items) {
       this.dialogRate = true;
       this.rateSelezione = items;
@@ -703,7 +761,51 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("saldati-user", { attrs: { idAudio: _vm.getIdUser } }),
+      _c(
+        "v-row",
+        [
+          _c(
+            "v-col",
+            { attrs: { cols: "1" } },
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getMesi, label: "Mese" },
+                model: {
+                  value: _vm.mese,
+                  callback: function($$v) {
+                    _vm.mese = $$v
+                  },
+                  expression: "mese"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "1" } },
+            [
+              _c("v-select", {
+                attrs: { items: _vm.getAnni, label: "Anno" },
+                model: {
+                  value: _vm.anno,
+                  callback: function($$v) {
+                    _vm.anno = $$v
+                  },
+                  expression: "anno"
+                }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("saldati-user", {
+        attrs: { idAudio: _vm.getIdUser, mese: _vm.mese, anno: _vm.anno }
+      }),
       _vm._v(" "),
       _c("rate-user", {
         staticClass: "mt-12",

@@ -192,9 +192,8 @@
                 headers1: [
                     {text: 'Actions', width: 120, value: 'actions', sortable: false, class: "indigo white--text"},
                     {text: 'Audio', width:180, value: 'user.name', sortable: false, class: "indigo white--text"},
+                    {text: 'Eseguita', width:180, value: 'recalls[0].user.name', sortable: false, class: "indigo white--text"},
                     {text: 'Nome', width:240, value: 'fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Telefono', width:120, value: 'telefono', sortable: false, class: "indigo white--text" },
-                    {text: 'Indirizzo', width:220,  value: 'indirizzo', sortable: false, class: "indigo white--text"},
                     {text: 'Città', width:180,  value: 'citta', sortable: false, class: "indigo white--text"},
                     {text: 'PR', width:80, value: 'provincia', sortable: false, class: "indigo white--text" },
                 ],

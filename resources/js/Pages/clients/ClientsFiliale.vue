@@ -102,7 +102,6 @@
                 :items-per-page="10"
                 class="elevation-1 mt-3"
             >
-
                 <template v-slot:item.actions="{ item }">
                     <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">

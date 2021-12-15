@@ -95,6 +95,7 @@ class ClientService
     public function elimina($request)
     {
         $client = Client::find($request->clientId);
+        $client->audiometria->each->delete();
         $utente = User::find($request->userId);
         $propieta = 'CLIENT';
         $testo = $utente->name.' ha eliminato il nominativo '.$client->cognome.' '.$client->nome;
@@ -238,6 +239,9 @@ class ClientService
         $idListaEsterna = Tipologia::where('nome', 'LE')->first()->id;
         $xmlDataString = file_get_contents(asset('/storage/'.$request['nomeFile']));
         $res = 0;
+        $possibiliDoppioni = collect([]);
+        $originaliDaInserire = collect([]);
+        $listaSenzaFilialeAssegnata = collect([]);
         $xml = simplexml_load_string($xmlDataString, NULL, NULL, "http://www.himsa.com/Measurement/PatientExport.xsd");
 //dd($xml->Patient);
         foreach ($xml->Patient as $ele){
@@ -249,196 +253,209 @@ class ClientService
             $idCodMkt = $risultatiDecriptazioneCodMkt[0];
             $idMedico = $risultatiDecriptazioneCodMkt[1];
 
-            $client = $this->inserimentoDatiDaFileXml($ele, $request, $idRecapito, $idMedico, $idCodMkt, $idFiliale, $idListaEsterna);
-
-            $idCliente = $client->id;
-
-            if ($client->wasRecentlyCreated){
-                $tot++;
-                if($clientInseritoDaCallCenter = $this->appuntamentoPresoRecentementeDaCallCenter($client)){
-                    $this->copiaAnagrafica($clientInseritoDaCallCenter, $client);
-                    $idCliente = $clientInseritoDaCallCenter->id;
-                    $this->segnaAppuntamentoIntervenuto($clientInseritoDaCallCenter);
-                    $client->delete();
-                }
-
-                Informazione::create([
-                    'client_id' => $idCliente,
-                    'tipo' => 'INGRESSO',
-                    'note' => 'Ingresso presso.....tramite il canale mkt....',
-                    'giorno' => $clientInseritoDaCallCenter ? $clientInseritoDaCallCenter->created_at->format('Y-m-d') : $client->created_at->format('Y-m-d'),
-                ]);
-                if (!$clientInseritoDaCallCenter && $client->tipologia_id != $idListaEsterna){
-                    $this->inserisciRecallAutomatico($client, $idCliente);
-                } elseif ($clientInseritoDaCallCenter && $clientInseritoDaCallCenter->tipologia_id != $idListaEsterna){
-                    $this->inserisciRecallAutomatico($clientInseritoDaCallCenter, $idCliente);
-                }
+            if ($doppione = $this->verificaNonSiaDoppione($ele))
+            {
+                $possibiliDoppioni->push($doppione);
+                $originaliDaInserire->push($this->inserisciElementoInListaOriginaliDaInserire($doppione->id, $ele, $request, $idRecapito, $idMedico, $idCodMkt, $idFiliale, $idListaEsterna));
             }
+            else {
+                $idFiliale = $idFiliale ? $idFiliale : $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
+                    Str::of(Str::upper($ele->Patient->City))->trim());
+                if ($idFiliale){
+                    $client = $this->inserimentoDatiDaFileXml($ele, $request, $idRecapito, $idMedico, $idCodMkt, $idFiliale, $idListaEsterna);
 
-            $audiometriad = null;
-            $audiometrias = null;
-//dd($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]);
-            if (isset($ele->Patient->Actions)){
-                if (isset($ele->Patient->Actions->Action)){
-                    if (isset($ele->Patient->Actions->Action->PublicData)){
-                        if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard)){
-                            if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0])){
-                                $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
-                            }
-                            if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[2])){
-                                $ossead = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[2];
+                    $idCliente = $client->id;
+
+                    if ($client->wasRecentlyCreated){
+                        $tot++;
+                        if($clientInseritoDaCallCenter = $this->appuntamentoPresoRecentementeDaCallCenter($client)){
+                            $this->copiaAnagrafica($clientInseritoDaCallCenter, $client);
+                            $idCliente = $clientInseritoDaCallCenter->id;
+                            $this->segnaAppuntamentoIntervenuto($clientInseritoDaCallCenter);
+                            $client->delete();
+                        }
+
+                        Informazione::create([
+                            'client_id' => $idCliente,
+                            'tipo' => 'INGRESSO',
+                            'note' => 'Ingresso presso.....tramite il canale mkt....',
+                            'giorno' => $clientInseritoDaCallCenter ? $clientInseritoDaCallCenter->created_at->format('Y-m-d') : $client->created_at->format('Y-m-d'),
+                        ]);
+                        if (!$clientInseritoDaCallCenter && $client->tipologia_id != $idListaEsterna){
+                            $this->inserisciRecallAutomatico($client, $idCliente);
+                        } elseif ($clientInseritoDaCallCenter && $clientInseritoDaCallCenter->tipologia_id != $idListaEsterna){
+                            $this->inserisciRecallAutomatico($clientInseritoDaCallCenter, $idCliente);
+                        }
+                    }
+
+                    $audiometriad = null;
+                    $audiometrias = null;
+        //dd($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]);
+                    if (isset($ele->Patient->Actions)){
+                        if (isset($ele->Patient->Actions->Action)){
+                            if (isset($ele->Patient->Actions->Action->PublicData)){
+                                if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard)){
+                                    if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0])){
+                                        $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
+                                    }
+                                    if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[2])){
+                                        $ossead = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[2];
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
 
-            if (isset($ele->Patient->Actions)){
-                if (isset($ele->Patient->Actions->Action)){
-                    if (isset($ele->Patient->Actions->Action->PublicData)){
-                        if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard)){
-                            if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1])){
-                                $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
-                            }
-                            if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[3])){
-                                $osseas = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[3];
+                    if (isset($ele->Patient->Actions)){
+                        if (isset($ele->Patient->Actions->Action)){
+                            if (isset($ele->Patient->Actions->Action->PublicData)){
+                                if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard)){
+                                    if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1])){
+                                        $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
+                                    }
+                                    if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[3])){
+                                        $osseas = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[3];
+                                    }
+                                }
                             }
                         }
                     }
+
+                    /*$audiometriad = isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]) ?
+                        $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0] : null;
+                    $audiometrias = isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1]) ?
+                        $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1] : null;*/
+
+                    $d125 = null;
+                    $d250 = null;
+                    $d500 = null;
+                    $d1000 = null;
+                    $d1500 = null;
+                    $d2000 = null;
+                    $d3000 = null;
+                    $d4000 = null;
+                    $d6000 = null;
+                    $d8000 = null;
+
+                    $s125 = null;
+                    $s250 = null;
+                    $s500 = null;
+                    $s1000 = null;
+                    $s1500 = null;
+                    $s2000 = null;
+                    $s3000 = null;
+                    $s4000 = null;
+                    $s6000 = null;
+                    $s8000 = null;
+
+                    $ossd125 = null;
+                    $ossd250 = null;
+                    $ossd500 = null;
+                    $ossd1000 = null;
+                    $ossd1500 = null;
+                    $ossd2000 = null;
+                    $ossd3000 = null;
+                    $ossd4000 = null;
+                    $ossd6000 = null;
+                    $ossd8000 = null;
+
+                    $osss125 = null;
+                    $osss250 = null;
+                    $osss500 = null;
+                    $osss1000 = null;
+                    $osss1500 = null;
+                    $osss2000 = null;
+                    $osss3000 = null;
+                    $osss4000 = null;
+                    $osss6000 = null;
+                    $osss8000 = null;
+
+                    if (isset($audiometriad->TonePoints)) {
+                        foreach ($audiometriad->TonePoints as $tono){
+                            ${'d'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+                        }
+                    }
+
+                    if (isset($audiometrias->TonePoints)) {
+                        foreach ($audiometrias->TonePoints as $tono){
+                            ${'s'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+                        }
+                    }
+
+                    if (isset($ossead->TonePoints)) {
+                        foreach ($ossead->TonePoints as $tono){
+                            ${'ossd'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+                        }
+                    }
+
+                    if (isset($osseas->TonePoints)) {
+                        foreach ($osseas->TonePoints as $tono){
+                            ${'osss'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
+                        }
+                    }
+
+
+                    $audiom = Audiometria::where('client_id', $idCliente)->firstOrNew();
+
+                    if(!isset($audiom->client_id)){
+                        $audiom->client_id = $client->id;
+                        $audiom->_125d = (int)$d125 ? (int)$d125 : (int)$d250;
+                        $audiom->_250d = (int)$d250 ? (int)$d250 : ( (int)$d125 + (int)$d500 ) / 2;
+                        $audiom->_500d = (int)$d500 ? (int)$d500 : ( (int)$d250 + (int)$d1000 ) / 2;
+                        $audiom->_1000d = (int)$d1000? (int)$d1000 : ( (int)$d500 + (int)$d1500 ) / 2;
+                        $audiom->_1500d = (int)$d1500? (int)$d1500 : ( (int)$d1000 + (int)$d2000 ) / 2;
+                        $audiom->_2000d = (int)$d2000? (int)$d2000 : ( (int)$d1500 + (int)$d3000 ) / 2;
+                        $audiom->_3000d = (int)$d3000? (int)$d3000 : ( (int)$d2000 + (int)$d4000 ) / 2;
+                        $audiom->_4000d = (int)$d4000? (int)$d4000 : ( (int)$d3000 + (int)$d6000 ) / 2;
+                        $audiom->_6000d = (int)$d6000? (int)$d6000 : ( (int)$d4000 + (int)$d8000 ) / 2;
+                        $audiom->_8000d = (int)$d8000? (int)$d8000 :  (int)$d6000;
+
+                        $audiom->_125s = (int)$s125 ? (int)$s125 : (int)$s250;
+                        $audiom->_250s = (int)$s250 ? (int)$s250 : ( (int)$s125 + (int)$s500 ) / 2;
+                        $audiom->_500s = (int)$s500 ? (int)$s500 : ( (int)$s250 + (int)$s1000 ) / 2;
+                        $audiom->_1000s = (int)$s1000? (int)$s1000 : ( (int)$s500 + (int)$s1500 ) / 2;
+                        $audiom->_1500s = (int)$s1500? (int)$s1500 : ( (int)$s1000 + (int)$s2000 ) / 2;
+                        $audiom->_2000s = (int)$s2000? (int)$s2000 : ( (int)$s1500 + (int)$s3000 ) / 2;
+                        $audiom->_3000s = (int)$s3000? (int)$s3000 : ( (int)$s2000 + (int)$s4000 ) / 2;
+                        $audiom->_4000s = (int)$s4000? (int)$s4000 : ( (int)$s3000 + (int)$s6000 ) / 2;
+                        $audiom->_6000s = (int)$s6000? (int)$s6000 : ( (int)$s4000 + (int)$s8000 ) / 2;
+                        $audiom->_8000s = (int)$s8000? (int)$s8000 :  (int)$s6000;
+
+                        $audiom->_125ossd = (int)$ossd125 ? (int)$ossd125 : null;
+                        $audiom->_250ossd = (int)$ossd250 ? (int)$ossd250 : null;
+                        $audiom->_500ossd = (int)$ossd500 ? (int)$ossd500 : null;
+                        $audiom->_1000ossd = (int)$ossd1000? (int)$ossd1000 : null;
+                        $audiom->_1500ossd = (int)$ossd1500? (int)$ossd1500 : null;
+                        $audiom->_2000ossd = (int)$ossd2000? (int)$ossd2000 : null;
+                        $audiom->_3000ossd = (int)$ossd3000? (int)$ossd3000 : null;
+                        $audiom->_4000ossd = (int)$ossd4000? (int)$ossd4000 : null;
+                        $audiom->_6000ossd = (int)$ossd6000? (int)$ossd6000 : null;
+                        $audiom->_8000ossd = (int)$ossd8000? (int)$ossd8000 :  null;
+
+                        $audiom->_125osss = (int)$osss125 ? (int)$osss125 : null;
+                        $audiom->_250osss = (int)$osss250 ? (int)$osss250 : null;
+                        $audiom->_500osss = (int)$osss500 ? (int)$osss500 : null;
+                        $audiom->_1000osss = (int)$osss1000? (int)$osss1000 : null;
+                        $audiom->_1500osss = (int)$osss1500? (int)$osss1500 : null;
+                        $audiom->_2000osss = (int)$osss2000? (int)$osss2000 : null;
+                        $audiom->_3000osss = (int)$osss3000? (int)$osss3000 : null;
+                        $audiom->_4000osss = (int)$osss4000? (int)$osss4000 : null;
+                        $audiom->_6000osss = (int)$osss6000? (int)$osss6000 : null;
+                        $audiom->_8000osss = (int)$osss8000? (int)$osss8000 :  null;
+
+                        $res = $audiom->save();
+
+                    }
+                } else {
+                    $listaSenzaFilialeAssegnata->push($this->inserisciElementoInListaOriginaliDaInserire(null, $ele, $request, $idRecapito, $idMedico, $idCodMkt, $idFiliale, $idListaEsterna));
                 }
-            }
-
-            /*$audiometriad = isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]) ?
-                $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0] : null;
-            $audiometrias = isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1]) ?
-                $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1] : null;*/
-
-            $d125 = null;
-            $d250 = null;
-            $d500 = null;
-            $d1000 = null;
-            $d1500 = null;
-            $d2000 = null;
-            $d3000 = null;
-            $d4000 = null;
-            $d6000 = null;
-            $d8000 = null;
-
-            $s125 = null;
-            $s250 = null;
-            $s500 = null;
-            $s1000 = null;
-            $s1500 = null;
-            $s2000 = null;
-            $s3000 = null;
-            $s4000 = null;
-            $s6000 = null;
-            $s8000 = null;
-
-            $ossd125 = null;
-            $ossd250 = null;
-            $ossd500 = null;
-            $ossd1000 = null;
-            $ossd1500 = null;
-            $ossd2000 = null;
-            $ossd3000 = null;
-            $ossd4000 = null;
-            $ossd6000 = null;
-            $ossd8000 = null;
-
-            $osss125 = null;
-            $osss250 = null;
-            $osss500 = null;
-            $osss1000 = null;
-            $osss1500 = null;
-            $osss2000 = null;
-            $osss3000 = null;
-            $osss4000 = null;
-            $osss6000 = null;
-            $osss8000 = null;
-
-            if (isset($audiometriad->TonePoints)) {
-                foreach ($audiometriad->TonePoints as $tono){
-                    ${'d'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
-                }
-            }
-
-            if (isset($audiometrias->TonePoints)) {
-                foreach ($audiometrias->TonePoints as $tono){
-                    ${'s'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
-                }
-            }
-
-            if (isset($ossead->TonePoints)) {
-                foreach ($ossead->TonePoints as $tono){
-                    ${'ossd'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
-                }
-            }
-
-            if (isset($osseas->TonePoints)) {
-                foreach ($osseas->TonePoints as $tono){
-                    ${'osss'.(string)$tono->StimulusFrequency} = $tono->StimulusLevel;
-                }
-            }
-
-
-            $audiom = Audiometria::where('client_id', $idCliente)->firstOrNew();
-
-            if(!isset($audiom->client_id)){
-                $audiom->client_id = $client->id;
-                $audiom->_125d = (int)$d125 ? (int)$d125 : (int)$d250;
-                $audiom->_250d = (int)$d250 ? (int)$d250 : ( (int)$d125 + (int)$d500 ) / 2;
-                $audiom->_500d = (int)$d500 ? (int)$d500 : ( (int)$d250 + (int)$d1000 ) / 2;
-                $audiom->_1000d = (int)$d1000? (int)$d1000 : ( (int)$d500 + (int)$d1500 ) / 2;
-                $audiom->_1500d = (int)$d1500? (int)$d1500 : ( (int)$d1000 + (int)$d2000 ) / 2;
-                $audiom->_2000d = (int)$d2000? (int)$d2000 : ( (int)$d1500 + (int)$d3000 ) / 2;
-                $audiom->_3000d = (int)$d3000? (int)$d3000 : ( (int)$d2000 + (int)$d4000 ) / 2;
-                $audiom->_4000d = (int)$d4000? (int)$d4000 : ( (int)$d3000 + (int)$d6000 ) / 2;
-                $audiom->_6000d = (int)$d6000? (int)$d6000 : ( (int)$d4000 + (int)$d8000 ) / 2;
-                $audiom->_8000d = (int)$d8000? (int)$d8000 :  (int)$d6000;
-
-                $audiom->_125s = (int)$s125 ? (int)$s125 : (int)$s250;
-                $audiom->_250s = (int)$s250 ? (int)$s250 : ( (int)$s125 + (int)$s500 ) / 2;
-                $audiom->_500s = (int)$s500 ? (int)$s500 : ( (int)$s250 + (int)$s1000 ) / 2;
-                $audiom->_1000s = (int)$s1000? (int)$s1000 : ( (int)$s500 + (int)$s1500 ) / 2;
-                $audiom->_1500s = (int)$s1500? (int)$s1500 : ( (int)$s1000 + (int)$s2000 ) / 2;
-                $audiom->_2000s = (int)$s2000? (int)$s2000 : ( (int)$s1500 + (int)$s3000 ) / 2;
-                $audiom->_3000s = (int)$s3000? (int)$s3000 : ( (int)$s2000 + (int)$s4000 ) / 2;
-                $audiom->_4000s = (int)$s4000? (int)$s4000 : ( (int)$s3000 + (int)$s6000 ) / 2;
-                $audiom->_6000s = (int)$s6000? (int)$s6000 : ( (int)$s4000 + (int)$s8000 ) / 2;
-                $audiom->_8000s = (int)$s8000? (int)$s8000 :  (int)$s6000;
-
-                $audiom->_125ossd = (int)$ossd125 ? (int)$ossd125 : null;
-                $audiom->_250ossd = (int)$ossd250 ? (int)$ossd250 : null;
-                $audiom->_500ossd = (int)$ossd500 ? (int)$ossd500 : null;
-                $audiom->_1000ossd = (int)$ossd1000? (int)$ossd1000 : null;
-                $audiom->_1500ossd = (int)$ossd1500? (int)$ossd1500 : null;
-                $audiom->_2000ossd = (int)$ossd2000? (int)$ossd2000 : null;
-                $audiom->_3000ossd = (int)$ossd3000? (int)$ossd3000 : null;
-                $audiom->_4000ossd = (int)$ossd4000? (int)$ossd4000 : null;
-                $audiom->_6000ossd = (int)$ossd6000? (int)$ossd6000 : null;
-                $audiom->_8000ossd = (int)$ossd8000? (int)$ossd8000 :  null;
-
-                $audiom->_125osss = (int)$osss125 ? (int)$osss125 : null;
-                $audiom->_250osss = (int)$osss250 ? (int)$osss250 : null;
-                $audiom->_500osss = (int)$osss500 ? (int)$osss500 : null;
-                $audiom->_1000osss = (int)$osss1000? (int)$osss1000 : null;
-                $audiom->_1500osss = (int)$osss1500? (int)$osss1500 : null;
-                $audiom->_2000osss = (int)$osss2000? (int)$osss2000 : null;
-                $audiom->_3000osss = (int)$osss3000? (int)$osss3000 : null;
-                $audiom->_4000osss = (int)$osss4000? (int)$osss4000 : null;
-                $audiom->_6000osss = (int)$osss6000? (int)$osss6000 : null;
-                $audiom->_8000osss = (int)$osss8000? (int)$osss8000 :  null;
-
-                $res = $audiom->save();
-
             }
         }
 
         $log = new LoggingService();
         $log->scriviLog('import from Noah', '', User::find($request['idUser'])->name, 'import from Noah', 'import from Noah');
 
-        return [$res, $tot];
+        return [$res, $tot, $possibiliDoppioni, $originaliDaInserire, $listaSenzaFilialeAssegnata];
     }
 
     public function ricercaNominativi($request)
@@ -575,6 +592,15 @@ class ClientService
                 \Mail::to($utente['mail'])->send(new inviaMessaggio($messaggio, $utente));
             }
         }
+    }
+
+    public function esisteDoppione($request)
+    {
+        return Client::where([
+            ['nome', trim(Str::upper($request->nome))],
+            ['cognome', trim(Str::upper($request->cognome))],
+            ['citta', trim(Str::upper($request->citta))],
+        ])->get();
     }
 
     private function getFilialeFromPlace($provincia, $citta)
@@ -782,6 +808,45 @@ class ClientService
                 'anno'          => Carbon::make((string)$ele->Patient->CreateDate)->year,
             ]
         );
+    }
+
+    private function verificaNonSiaDoppione($ele)
+    {
+        return Client::where([
+            ['nome', trim(Str::upper($ele->Patient->FirstName))],
+            ['cognome', trim(Str::upper($ele->Patient->LastName))],
+            ['citta', trim(Str::upper($ele->Patient->City))],
+            ['indirizzo', 'like', Str::substr(trim(Str::upper($ele->Patient->Address1)), 0, 8).'%'],
+        ])->first();
+    }
+
+    private function inserisciElementoInListaOriginaliDaInserire($idDoppione, $ele, $request, $idRecapito, $idMedico, $idCodMkt, $idFiliale, $idListaEsterna)
+    {
+        $elemento = new \stdClass();
+        $elemento->id = $idDoppione;
+        $elemento->nome = trim(Str::upper($ele->Patient->FirstName));
+        $elemento->cognome = trim(Str::upper($ele->Patient->LastName));
+        $elemento->created_at = Carbon::make((string)$ele->Patient->CreateDate);
+        $elemento->citta = trim(Str::upper($ele->Patient->City));
+        $elemento->indirizzo = $ele->Patient->Address1 ? trim(Str::upper($ele->Patient->Address1)) : null;
+        $elemento->cap = $ele->Patient->Zip ? trim(Str::upper($ele->Patient->Zip)) : null;
+        $elemento->telefono = $ele->Patient->MobilePhone ? trim(Str::upper($ele->Patient->MobilePhone)) : null;
+        $elemento->telefono2 = $ele->Patient->WorkPhone ? trim(Str::upper($ele->Patient->WorkPhone)) : null;
+        $elemento->telefono3 = $ele->Patient->HomePhone ? trim(Str::upper($ele->Patient->HomePhone)) : null;
+        $elemento->provincia = $ele->Patient->Country ? trim(Str::upper($ele->Patient->Country)) : null;
+        $elemento->user_id = $request['idUser'];
+        $elemento->datanascita = $ele->Patient->DateofBirth ? trim(Str::upper($ele->Patient->DateofBirth)) : null;
+        $elemento->recapito_id = $idRecapito;
+        $elemento->medico_id = $idMedico;
+        $elemento->mail = $ele->Patient->EMail ? trim(Str::upper($ele->Patient->EMail)) : null;
+        $elemento->tipologia_id = (string)$ele->Patient->Province != '' ? Tipologia::where('nome', trim(Str::upper($ele->Patient->Province)))->first()->id : $idListaEsterna;
+        $elemento->marketing_id = $idCodMkt;
+        $elemento->filiale_id = $idFiliale ? $idFiliale : $this->getFilialeFromPlace(Str::of(Str::upper($ele->Patient->Other1))->trim(),
+            Str::of(Str::upper($ele->Patient->City))->trim());
+        $elemento->updated_at = Carbon::make((string)$ele->Patient->CreateDate);
+        $elemento->mese = Carbon::make((string)$ele->Patient->CreateDate)->month;
+        $elemento->anno = Carbon::make((string)$ele->Patient->CreateDate)->year;
+        return $elemento;
     }
 
 }

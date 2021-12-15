@@ -330,6 +330,27 @@
 
                         </v-data-table>
                     </div>
+
+                    <h2 class="mt-6">Recall di oggi</h2>
+                    <div>
+                        <v-data-table
+                            :headers="headers7"
+                            :items-per-page=5
+                            :items="getRecallOggi"
+                            class="elevation-1 mt-3"
+                        >
+
+                            <template v-slot:item.nome="{ item }">
+                                <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.nome, cogRicerca:item.fullname, }}">
+                                    {{item.fullname}}
+                                </router-link>
+                            </template>
+
+
+                        </v-data-table>
+                    </div>
+
                 </v-col>
 
             </v-row>
@@ -402,10 +423,19 @@
                     {text: 'Data App.', width:120, value: 'giorno', sortable: false, class: "indigo white--text"},
                     {text: 'Actions', width:80, value: 'actions', sortable: false, class: "indigo white--text"},
                 ],
+
+                headers7: [
+                    {text: 'Nome', width:240, value: 'nome', class: "indigo white--text"},
+                    {text: 'Telefono', width:120, value: 'telefono', sortable: false, class: "indigo white--text" },
+                    {text: 'Telefono2', width:120, value: 'telefono2', sortable: false, class: "indigo white--text" },
+                    {text: 'Telefono3', width:120, value: 'telefono3', sortable: false, class: "indigo white--text" },
+                    {text: 'Città', width:180,  value: 'citta', class: "indigo white--text"},
+                ],
             }
         },
 
         mounted() {
+            this.fetchRecallOggi(this.getIdUser);
             this.fetchSituazioneMese(this.getIdUser);
             this.fetchCompleanni(this.getIdUser);
             this.fetchAppuntamentiOggi(this.getIdUser);
@@ -429,6 +459,10 @@
                 appuntamentoSaltato: 'appuntamentoSaltato',
                 appuntamentoIntervenuto: 'appuntamentoIntervenuto',
                 oggiNonViene: 'oggiNonViene',
+            }),
+
+            ...mapActions('telefonate', {
+                fetchRecallOggi: 'fetchRecallOggi',
             }),
 
             seleziona(items){
@@ -470,7 +504,7 @@
                 }
                 this.showIntervenuto = false;
                 this.appuntamentoModal = {}
-            }
+            },
         },
 
         computed: {
@@ -490,6 +524,10 @@
                 getAppuntamentiOggi: 'getAppuntamentiOggi',
                 getAppuntamentiDomani: 'getAppuntamentiDomani',
                 getAppuntamentiInSospeso: 'getAppuntamentiInSospeso',
+            }),
+
+            ...mapGetters('telefonate', {
+                getRecallOggi: 'getRecallOggi',
             }),
 
             bgtAnno(){

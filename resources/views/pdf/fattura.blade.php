@@ -7,7 +7,7 @@
         <div>p.iva: 65465464564</div>
     </div>
     <div style="float: right; font-size: 14px">
-        <div>Fattura nr.{{$fattura->id}} del {{$fattura->data_fattura}}</div>
+        <div>Fattura nr.{{$fattura->progressivo}} del {{$fattura->data_fattura}}</div>
         <br>
         <div>{{$fattura->prova->client->nome}} {{$fattura->prova->client->cognome}}</div>
         <div>{{$fattura->prova->client->indirizzo}}</div>
@@ -24,15 +24,15 @@
 <div style="border: 1px solid black; height: 650px; width: 100%">
     <table style="width: 100%;">
         <tr>
-            <td style="width: 33%">Matricola</td>
-            <td style="width: 34%">Prodotto</td>
-            <td style="width: 33%">Prezzo</td>
+            <td style="border-bottom: 1px solid black;width: 30%; background-color: #98ccf7">MATRICOLA</td>
+            <td style="border-bottom: 1px solid black;width: 50%; background-color: #98ccf7">PRODOTTO</td>
+            <td style="border-bottom: 1px solid black;width: 20%; background-color: #98ccf7">PREZZO</td>
         </tr>
         @foreach($fattura->prova->product as $product)
             <tr>
-                <td style="border: 1px solid black;width: 33%; padding: 5px">{{$product->matricola}}</td>
-                <td style="border: 1px solid black;width: 34%; padding: 5px">{{$product->listino->nome}}</td>
-                <td style="border: 1px solid black;width: 33%; padding: 5px">{{$product->pivot->prezzo_formattato}}</td>
+                <td style="border-bottom: 1px solid black;width: 30%; padding: 5px">{{$product->matricola}}</td>
+                <td style="border-bottom: 1px solid black;width: 50%; padding: 5px">{{$product->listino->nome}}</td>
+                <td style="border-bottom: 1px solid black;width: 20%; padding: 5px">{{$product->pivot->prezzo_formattato}}</td>
             </tr>
         @endforeach
     </table>

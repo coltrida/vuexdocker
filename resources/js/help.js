@@ -186,6 +186,7 @@ const help = () => {
         linksettimanadelmese: base+'settimanaDelMese',
         linklogfile: base+'logFile',
         linkpuliscilogfile: base+'pulisciLogFile',
+        linkesistedoppione: base+'esisteDoppione',
     };
 };
 export default help;

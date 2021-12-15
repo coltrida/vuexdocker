@@ -108,4 +108,8 @@ class ClientController extends Controller
         return $clientService->riepilogo();
     }
 
+    public function esisteDoppione(Request $request, ClientService $clientService)
+    {
+        return $clientService->esisteDoppione($request);
+    }
 }

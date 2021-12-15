@@ -2,8 +2,12 @@
     <div style="font-size: 14px">
         <img src="{{asset('img/logo-centroudito.jpg')}}" style="width: 200px">
     </div>
+    <div style="float: left">
+        <br><br>
+        <div>Audioprotesista: {{$provaSalvata->user->name}}</div>
+    </div>
     <div style="float: right; font-size: 14px">
-        <div>Copia Commissione nr.{{$provaSalvata->id}} del {{$provaSalvata->created_at->format('d-m-Y')}}</div>
+        <div>Copia Commissione nr.{{$provaSalvata->progressivo}} del {{$provaSalvata->created_at->format('d-m-Y')}}</div>
         <br>
         <div>CENTRO UDITO GROUP</div>
         <div>VIA MARIO LALLI N.10</div>
@@ -13,41 +17,57 @@
 
 </div>
 
-<br><br>
+<br>
 
-<div style="border: 1px solid black; height: 180px; width: 100%; padding: 5px 2px; margin-bottom: 10px">
-    Il/la sottoscritto/a{{str_pad($provaSalvata->client->nome.' '.$provaSalvata->client->cognome, 32, "_", STR_PAD_BOTH)}}
-    nato/a{{str_pad($provaSalvata->client->luogoNascita, 30, "_", STR_PAD_BOTH)}}<br><br>
-    il{{str_pad($provaSalvata->client->datanascita, 18, "_", STR_PAD_BOTH)}}
-    indirizzo{{str_pad($provaSalvata->client->indirizzo, 40, "_", STR_PAD_BOTH)}}
-    CAP{{str_pad($provaSalvata->client->cap, 12, "_", STR_PAD_BOTH)}}<br><br>
-    Città{{str_pad($provaSalvata->client->citta, 30, "_", STR_PAD_BOTH)}}
-    Prov{{str_pad($provaSalvata->client->provincia, 4, "_", STR_PAD_BOTH)}}
-    Tel{{str_pad($provaSalvata->client->telefono, 14, "_", STR_PAD_BOTH)}}
-    Cellulare{{str_pad($provaSalvata->client->telefono2, 14, "_", STR_PAD_BOTH)}}<br><br>
-    Cod. Fiscale{{str_pad($provaSalvata->client->codfisc, 34, "_", STR_PAD_BOTH)}}
-    Mail{{str_pad($provaSalvata->client->mail, 36, "_", STR_PAD_BOTH)}}<br>
+<div style="border: 1px solid black; height: 170px; width: 100%; padding: 5px 2px; margin-bottom: 10px; background-color: #eeeeee">
+    <div style="float: left; width: 50%; padding: 10px">
+        <div style="margin-bottom: 5px"> <b>{{$provaSalvata->client->nome.' '.$provaSalvata->client->cognome}}</b> </div>
+        <div>Nato a: {{$provaSalvata->client->luogoNascita}}</div>
+        <div>Il: {{Carbon\Carbon::make($provaSalvata->client->datanascita)->format('d-m-Y')}}</div>
+        <div>Indirizzo: {{$provaSalvata->client->indirizzo}}</div>
+        <div>Città: {{$provaSalvata->client->citta}}</div>
+        <div>CAP: {{$provaSalvata->client->cap}}</div>
+    </div>
+    <div style="float: right; width: 50%; padding: 10px">
+        <div style="margin-bottom: 5px">&nbsp;</div>
+        <div>Prov: {{$provaSalvata->client->provincia}}</div>
+        <div>Tel: {{$provaSalvata->client->telefono}}</div>
+        <div>Cellulare: {{$provaSalvata->client->telefono2}}</div>
+        <div>Cod. Fiscale: {{$provaSalvata->client->codfisc}}</div>
+        <div>Mail: {{$provaSalvata->client->mail}}</div>
+    </div>
+    {{--Il/la sottoscritto/a{{str_pad($provaSalvata->client->nome.' '.$provaSalvata->client->cognome, 32, " ", STR_PAD_BOTH)}}
+    nato/a{{str_pad($provaSalvata->client->luogoNascita, 30, " ", STR_PAD_BOTH)}}<br><br>
+    il{{str_pad($provaSalvata->client->datanascita, 18, " ", STR_PAD_BOTH)}}
+    indirizzo{{str_pad($provaSalvata->client->indirizzo, 40, " ", STR_PAD_BOTH)}}
+    CAP{{str_pad($provaSalvata->client->cap, 12, " ", STR_PAD_BOTH)}}<br><br>
+    Città{{str_pad($provaSalvata->client->citta, 30, " ", STR_PAD_BOTH)}}
+    Prov{{str_pad($provaSalvata->client->provincia, 4, " ", STR_PAD_BOTH)}}
+    Tel{{str_pad($provaSalvata->client->telefono, 14, " ", STR_PAD_BOTH)}}
+    Cellulare{{str_pad($provaSalvata->client->telefono2, 14, " ", STR_PAD_BOTH)}}<br><br>
+    Cod. Fiscale{{str_pad($provaSalvata->client->codfisc, 34, " ", STR_PAD_BOTH)}}
+    Mail{{str_pad($provaSalvata->client->mail, 36, " ", STR_PAD_BOTH)}}<br>--}}
 </div>
 
-<div style="border: 1px solid black; height: 200px; width: 100%">
+<div style="border: 1px solid black; height: 190px; width: 100%; background-color: #eeeeee; padding: 10px">
     <table style="width: 100%; margin-bottom: 40px">
-        <tr>
-            <td style="width: 33%">Matricola</td>
-            <td style="width: 34%">Prodotto</td>
-            <td style="width: 33%">Prezzo</td>
+        <tr style="border-bottom: 1px solid">
+            <td style="width: 33%; border-bottom: 1px dashed gray;"> <b>Matricola</b> </td>
+            <td style="width: 34%; border-bottom: 1px dashed gray;"> <b>Prodotto</b> </td>
+            <td style="width: 33%; border-bottom: 1px dashed gray;"> <b>Prezzo</b> </td>
         </tr>
         @foreach($provaSalvata->product as $product)
-            <tr>
-                <td style="border: 1px solid black;width: 33%; padding: 5px">{{$product->matricola}}</td>
-                <td style="border: 1px solid black;width: 34%; padding: 5px">{{$product->listino->nome}}</td>
-                <td style="border: 1px solid black;width: 33%; padding: 5px">{{$product->pivot->prezzo_formattato}}</td>
+            <tr style="border-bottom: 1px solid">
+                <td style="width: 33%; padding: 5px; border-bottom: 1px dashed gray;">{{$product->matricola}}</td>
+                <td style="width: 34%; padding: 5px; border-bottom: 1px dashed gray;">{{$product->listino->nome}}</td>
+                <td style="width: 33%; padding: 5px; border-bottom: 1px dashed gray;">{{$product->pivot->prezzo_formattato}}</td>
             </tr>
         @endforeach
     </table>
 
     <div style="display:flex;">
         <div style="margin-left: 5px"><b>Totale:</b> </div>
-        <div style="float: right; margin-right: 180px">
+        <div style="float: right; margin-right: 170px">
             <b>{{$provaSalvata->tot_formattato}}</b>
         </div>
     </div>

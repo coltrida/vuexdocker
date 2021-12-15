@@ -40,7 +40,8 @@ class ProvaService
         $client = Client::with('tipologia', 'appuntamentisospesi')->find($request->client_id);
         $this->controlloAppuntamentiInSospesoEAggiornamentoIntervenuto($client->appuntamentisospesi);
         $this->seCodiceMktMedicoAggiornaDatiClient($request, $idMktMedico, $client);
-        return $this->creaProvaConValoriPassati($request, $client);
+        $progressivo = $this->calcolaProgressivoProva();
+        return $this->creaProvaConValoriPassati($request, $client, $progressivo);
     }
 
     public function addEle($request)
@@ -126,7 +127,8 @@ class ProvaService
         $client = $this->aggiornaStatoPazienteInCliente($prova);
 
         $this->controlloAppuntamentiInSospesoEAggiornamentoIntervenuto($client->appuntamentisospesi);
-        $fattura = $this->salvaFatturaConDatiPassati($prova, $request);
+        $progressivo = $this->calcolaProgressivoFattura();
+        $fattura = $this->salvaFatturaConDatiPassati($prova, $request, $progressivo);
 
         $tipoInformazione = 'FATTURA';
         $testoInformazione = 'Fatturata prova di € '.number_format( (float) $fattura->tot_fattura, '0', ',', '.');
@@ -294,12 +296,14 @@ class ProvaService
         }
     }
 
-    private function creaProvaConValoriPassati($request, $client)
+    private function creaProvaConValoriPassati($request, $client, $progressivo)
     {
         return Prova::create([
             'user_id' => $request->user_id,
+            'progressivo' => $progressivo,
             'client_id' => $request->client_id,
             'marketing_id' => $request->marketing_id,
+            'mercato' => $request->mercato,
             'filiale_id' => $request->filiale_id,
             'stato_id' => StatoApa::where('nome', 'NUOVO')->first()->id,
             'inizio_prova' => Carbon::now()->format('Y-m-d'),
@@ -347,10 +351,11 @@ class ProvaService
         return $client;
     }
 
-    private function salvaFatturaConDatiPassati($prova, $request)
+    private function salvaFatturaConDatiPassati($prova, $request, $progressivo)
     {
         return Fattura::create([
             'prova_id' => $prova->id,
+            'progressivo' => $progressivo,
             'user_id' => $prova->user_id,
             'data_fattura' => $prova->fine_prova,
             'mese_fattura' => Carbon::now()->month,
@@ -402,6 +407,20 @@ class ProvaService
                 '€ '.number_format( (float) $prodotti[$item]['pivot']['prezzo'], '0', ',', '.');
             $tabellaPivot->save();
         }
+    }
+
+    private function calcolaProgressivoProva()
+    {
+        $anno = Carbon::now()->year;
+        $proveAnno = Prova::where('anno_inizio', $anno)->count();
+        return ($proveAnno + 1);
+    }
+
+    private function calcolaProgressivoFattura()
+    {
+        $anno = Carbon::now()->year;
+        $fattureAnno = Fattura::where('anno_fattura', $anno)->count();
+        return ($fattureAnno + 1);
     }
 }
 

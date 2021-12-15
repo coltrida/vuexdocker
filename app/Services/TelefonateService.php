@@ -25,7 +25,9 @@ class TelefonateService
         $user = User::with('ruolo')->find($idUser);
 
         if ($user->ruolo->nome === 'admin'){
-            return Client::with(['tipologia:id,nome',
+            return Client::with(['tipologia:id,nome', 'recalls' => function($a){
+                $a->with('user');
+            },
                 'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova' => function($q){
                     $q->with('copiaComm')->first();
                 }])
@@ -147,7 +149,7 @@ class TelefonateService
 
         $prossimaTelefonata = Telefonata::create([
             'user_id' => $client->user->id,
-            'eseguita_id' => $request->esito ? $request->userId : 0,
+            'eseguita_id' => $request->userId,
             'client_id' => $request->clientId,
             'datarecall' => $request->giorno,
             'mese' => $request->esito ? Carbon::now()->month : null,

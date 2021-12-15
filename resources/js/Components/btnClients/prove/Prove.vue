@@ -1,10 +1,12 @@
 <template>
     <v-row class="mt-3 flex-column">
+        <!---------- Cambio User per il cliente in oggetto --------->
         <conferma-cambio-utente-prova
             v-if="showCambioUtente"
             :UserOriginario="proveClient.user"
             @chiudiConfermaCambioUtente = "chiudiConfermaCambioUtente"
         />
+        <!---------- End Cambio User --------->
         <v-dialog
             v-model="dialog"
             width="500"
@@ -19,10 +21,21 @@
 
         <!---------- Header --------->
         <v-row>
-            <v-col cols="6">
+            <v-col cols="4">
                 <h2>{{proveClient.nome}} {{proveClient.cognome}}</h2>
             </v-col>
-            <v-col cols="6" class="flex justify-end">
+            <v-col cols="4">
+                <v-alert color="red" elevation="8" dark v-if="datiMancantiPerCopiaCommissione">
+                    Attenzione, per la Copia Commissione mancano:
+                    <div v-if="!proveClient.datanascita"><b>- Data di Nascita</b></div>
+                    <div v-if="!proveClient.luogoNascita"><b>- Luogo di Nascita</b></div>
+                    <div v-if="!proveClient.indirizzo"><b>- Indirizzo</b></div>
+                    <div v-if="!proveClient.citta"><b>- Città</b></div>
+                    <div v-if="!proveClient.cap"><b>- Cap</b></div>
+                    <div v-if="!proveClient.provincia"><b>- Provincia</b></div>
+                </v-alert>
+            </v-col>
+            <v-col cols="4" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">
                     Chiudi
                 </v-btn>
@@ -71,6 +84,13 @@
                                 item-text="fullname"
                                 :items="getMedici"
                                 label="Medici"
+                            ></v-select>
+                        </v-col>
+                        <v-col>
+                            <v-select
+                                v-model="prova.mercato"
+                                :items="mercati"
+                                label="Mercato"
                             ></v-select>
                         </v-col>
                         <v-col>
@@ -276,7 +296,7 @@
 
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on, attrs }">
-                                            <a :href="'https://www.centrouditogroup.it/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
+                                            <a :href="linkBase+'/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
                                                 <v-icon v-if="item.stato.nome === 'FATTURA'"
                                                         color="black"
                                                         small
@@ -308,7 +328,7 @@
 
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on, attrs }">
-                                            <a :href="'https://www.centrouditogroup.it'+item.copia_comm[0].link" target="_blank">
+                                            <a :href="linkBase+item.copia_comm[0].link" target="_blank">
                                                 <v-icon
                                                     style="font-size: 25px"
                                                     color="orange"
@@ -346,8 +366,8 @@
 
         data(){
             return {
+                mercati:['libero', 'riconducibile', 'sociale'],
                 showCambioUtente:false,
-                bloccaProva:true,
                 bloccaMedici: true,
                 listaPro:[],
                 tipologia:['Prodotti','Servizi'],
@@ -400,7 +420,6 @@
                         this.fetchMedici(parseInt(this.getIdUser)).then(() => {
                             this.prova.marketing_id = this.proveClient.marketing_id ? this.proveClient.marketing_id : 0;
                             this.prova.medico_id = this.proveClient.medico_id;
-                            this.bloccaProva = this.proveClient.marketing_id ? false : true;
                             this.carica2 = false;
                             this.bloccaMedici = this.getCanali.find(u => u.name === 'MEDICO').id === this.proveClient.marketing_id ? false : true;
                         });
@@ -443,7 +462,6 @@
 
             nuovaProvaInCorso()
             {
-                console.log(this.getIdUser + ' ' + this.proveClient.user_id)
                 if (this.getIdUser != this.proveClient.user_id){
                     this.showCambioUtente = true;
                 } else {
@@ -479,7 +497,6 @@
 
             caricaPrezzoProdotto()
             {
-               // console.log(this.nuovaProva.prodotto);
                 this.sconto = 0;
                 if (this.tipologiaSelezionata === 'Prodotti'){
                     this.nuovaProva.prezzolistino = this.nuovaProva.prodotto.prezzolistino;
@@ -522,20 +539,15 @@
 
             salvaProva()
             {
-                //console.log(this.getElementiNuovaProva[0]);
-                //console.log(this.getElementiNuovaProva.length);
                 this.carica = true;
                 this.salvaProvaInCorso({
                     'id': this.getNuovaProvaCreata.id,
-                    'tot': this.getElementiNuovaProva.length > 1 ?
-                        this.getElementiNuovaProva.reduce(function(a, b){return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo)}) :
-                        this.getElementiNuovaProva[0].originalPrezzo
+                    'tot': this.getTotProva
                 }).then(() => {
                     this.carica = false;
                     this.fetchSoglie(this.proveClient.filiale_id);
                     this.switchInserisci = true;
                 });
-
             },
 
             reso(id)
@@ -602,7 +614,6 @@
 
             selezionaMkt(event)
             {
-                this.bloccaProva = false;
                 this.bloccaMedici = event == 5 ? false : true;
             },
 
@@ -640,6 +651,7 @@
                 getElementiNuovaProva: 'getElementiNuovaProva',
                 getNuovaProvaCreata: 'getNuovaProvaCreata',
                 getProvePassate: 'getProvePassate',
+                getTotProva: 'getTotProva',
             }),
 
             ...mapGetters('medici', {
@@ -657,6 +669,38 @@
             abilitaInProva(){
                 return this.nuovaProva.prezzolistino ? true : false;
             },
+
+            bloccaProva(){
+                let blocca = true;
+                if (this.prova.marketing_id){
+                    if (this.prova.marketing_id !== 5 && this.prova.mercato){
+                        blocca = false;
+                    } else if(this.prova.marketing_id === 5 && this.prova.medico_id && this.prova.mercato){
+                        blocca = false;
+                    }
+                }
+                return (blocca || this.datiMancantiPerCopiaCommissione);
+            },
+
+            linkBase(){
+                let base = '';
+                if(window.location.host === 'vuexdocker.test'){
+                    base = 'http://vuexdocker.test';
+                } else {
+                    base = 'https://www.centrouditogroup.it';
+                }
+                return base;
+            },
+
+            datiMancantiPerCopiaCommissione()
+            {
+                return !(this.proveClient.datanascita &&
+                    this.proveClient.luogoNascita &&
+                    this.proveClient.indirizzo &&
+                    this.proveClient.citta &&
+                    this.proveClient.cap &&
+                    this.proveClient.provincia);
+            }
 
         },
     }

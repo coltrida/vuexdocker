@@ -73,11 +73,209 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Inserisci",
   data: function data() {
     return {
+      headersDuplicati: [{
+        text: 'Cognome',
+        width: 160,
+        align: 'start',
+        value: 'cognome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Nome',
+        width: 160,
+        value: 'nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Indirizzo',
+        width: 250,
+        value: 'indirizzo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Città',
+        width: 200,
+        value: 'citta',
+        "class": "indigo white--text"
+      }, {
+        text: 'cap',
+        width: 70,
+        value: 'cap',
+        "class": "indigo white--text"
+      }, {
+        text: 'PR',
+        width: 70,
+        value: 'provincia',
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono',
+        width: 130,
+        value: 'telefono',
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono 2',
+        width: 130,
+        value: 'telefono2',
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono 3',
+        width: 130,
+        value: 'telefono3',
+        "class": "indigo white--text"
+      }, {
+        text: 'Data di Nascita',
+        width: 150,
+        value: 'datanascitaVisualizzazione',
+        "class": "indigo white--text"
+      }, {
+        text: 'E-mail',
+        width: 180,
+        value: 'mail',
+        "class": "indigo white--text"
+      }, {
+        text: 'Cod. Fisc.',
+        width: 200,
+        value: 'codfisc',
+        "class": "indigo white--text"
+      }, {
+        text: 'Mese ing.',
+        width: 130,
+        value: 'mese',
+        "class": "indigo white--text"
+      }, {
+        text: 'Anno ing.',
+        width: 130,
+        value: 'anno',
+        "class": "indigo white--text"
+      }],
+      headersOriginali: [{
+        text: 'Actions',
+        width: 100,
+        value: 'actions',
+        "class": "indigo white--text"
+      }, {
+        text: 'Cognome',
+        width: 160,
+        align: 'start',
+        value: 'cognome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Nome',
+        width: 160,
+        value: 'nome',
+        "class": "indigo white--text"
+      }, {
+        text: 'Indirizzo',
+        width: 250,
+        value: 'indirizzo',
+        "class": "indigo white--text"
+      }, {
+        text: 'Città',
+        width: 200,
+        value: 'citta',
+        "class": "indigo white--text"
+      }, {
+        text: 'cap',
+        width: 70,
+        value: 'cap',
+        "class": "indigo white--text"
+      }, {
+        text: 'PR',
+        width: 70,
+        value: 'provincia',
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono',
+        width: 130,
+        value: 'telefono',
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono 2',
+        width: 130,
+        value: 'telefono2',
+        "class": "indigo white--text"
+      }, {
+        text: 'telefono 3',
+        width: 130,
+        value: 'telefono3',
+        "class": "indigo white--text"
+      }, {
+        text: 'Data di Nascita',
+        width: 150,
+        value: 'datanascitaVisualizzazione',
+        "class": "indigo white--text"
+      }, {
+        text: 'E-mail',
+        width: 180,
+        value: 'mail',
+        "class": "indigo white--text"
+      }, {
+        text: 'Cod. Fisc.',
+        width: 200,
+        value: 'codfisc',
+        "class": "indigo white--text"
+      }, {
+        text: 'Mese ing.',
+        width: 130,
+        value: 'mese',
+        "class": "indigo white--text"
+      }, {
+        text: 'Anno ing.',
+        width: 130,
+        value: 'anno',
+        "class": "indigo white--text"
+      }],
       caricaFile: {
         path: 'app/public/',
         fileUp: {},
@@ -89,7 +287,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('clients', {
     importClientsByFiliale: 'importClientsByFiliale',
-    importClientsXml: 'importClientsXml'
+    importClientsXml: 'importClientsXml',
+    modificaClientEaggiornaDoppioni: 'modificaClientEaggiornaDoppioni'
   })), {}, {
     importaXml: function importaXml() {
       var _this = this;
@@ -107,13 +306,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     reset: function reset() {
       this.$store.commit('clients/resetClientMessaggio');
+    },
+    sovrascrivi: function sovrascrivi(item) {
+      this.modificaClientEaggiornaDoppioni(item);
     }
   }),
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('clients', {
     getClientMessaggio: 'getClientMessaggio',
-    getImportati: 'getImportati'
+    getImportati: 'getImportati',
+    getListaDoppioni: 'getListaDoppioni',
+    getOriginaliDaInserire: 'getOriginaliDaInserire',
+    getListaSenzaFiliale: 'getListaSenzaFiliale'
   }))
 });
 
@@ -214,78 +419,173 @@ var render = function() {
       _vm._v(" "),
       _c("h3", [_vm._v("Anagrafiche importate: " + _vm._s(_vm.getImportati))]),
       _vm._v(" "),
-      _c(
-        "v-container",
-        [
-          _vm.getClientMessaggio
-            ? _c(
-                "v-alert",
-                { attrs: { type: "info" } },
+      _vm.getClientMessaggio
+        ? _c(
+            "v-alert",
+            { attrs: { type: "info" } },
+            [
+              _c(
+                "v-row",
+                { attrs: { align: "center" } },
                 [
+                  _c("v-col", { staticClass: "grow" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.getClientMessaggio) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c(
-                    "v-row",
-                    { attrs: { align: "center" } },
+                    "v-col",
+                    { staticClass: "shrink" },
                     [
-                      _c("v-col", { staticClass: "grow" }, [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(_vm.getClientMessaggio) +
-                            "\n                "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { staticClass: "shrink" },
-                        [
-                          _c("v-btn", { on: { click: _vm.reset } }, [
-                            _vm._v("Chiudi")
-                          ])
-                        ],
-                        1
-                      )
+                      _c("v-btn", { on: { click: _vm.reset } }, [
+                        _vm._v("Chiudi")
+                      ])
                     ],
                     1
                   )
                 ],
                 1
               )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.carica
-            ? _c(
-                "div",
-                { staticClass: "text-center" },
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.carica
+        ? _c(
+            "div",
+            { staticClass: "text-center" },
+            [
+              _c("v-progress-circular", {
+                attrs: { indeterminate: "", color: "primary" }
+              })
+            ],
+            1
+          )
+        : _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                {
+                  attrs: { cols: "12", md: "12", lg: "4", xs: "12", sm: "12" }
+                },
                 [
-                  _c("v-progress-circular", {
-                    attrs: { indeterminate: "", color: "primary" }
+                  _c("v-file-input", {
+                    attrs: { "truncate-length": "15", accept: ".xml" },
+                    model: {
+                      value: _vm.caricaFile.fileUp,
+                      callback: function($$v) {
+                        _vm.$set(_vm.caricaFile, "fileUp", $$v)
+                      },
+                      expression: "caricaFile.fileUp"
+                    }
                   })
                 ],
                 1
-              )
-            : _c(
-                "v-row",
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                {
+                  attrs: { cols: "12", md: "12", lg: "2", xs: "12", sm: "12" }
+                },
                 [
                   _c(
+                    "v-btn",
+                    {
+                      attrs: {
+                        color: "success",
+                        dark: "",
+                        block: _vm.$vuetify.breakpoint.xs
+                      },
+                      on: { click: _vm.importaXml }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Importa\n                "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.getListaSenzaFiliale.length > 0
+                ? _c(
                     "v-col",
                     {
                       attrs: {
                         cols: "12",
                         md: "12",
-                        lg: "4",
+                        lg: "6",
                         xs: "12",
                         sm: "12"
                       }
                     },
                     [
-                      _c("v-file-input", {
-                        attrs: { "truncate-length": "15", accept: ".xml" },
-                        model: {
-                          value: _vm.caricaFile.fileUp,
-                          callback: function($$v) {
-                            _vm.$set(_vm.caricaFile, "fileUp", $$v)
-                          },
-                          expression: "caricaFile.fileUp"
+                      _c("h4", [
+                        _vm._v(
+                          "Anagrafiche senza Filiale assegnata (non salvati quindi nel Database)"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          headers: _vm.headersDuplicati,
+                          items: _vm.getListaSenzaFiliale
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ],
+            1
+          ),
+      _vm._v(" "),
+      _vm.getListaDoppioni.length > 0
+        ? _c(
+            "div",
+            [
+              _c(
+                "v-row",
+                { staticClass: "mt-6" },
+                [
+                  _c(
+                    "v-col",
+                    { staticClass: "text-center d-flex justify-center" },
+                    [
+                      _c(
+                        "v-alert",
+                        { attrs: { color: "red", dark: "", elevation: "5" } },
+                        [_vm._v("Possibili Doppioni già presenti nel Database")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6" } },
+                    [
+                      _c("h4", [_vm._v("Anagrafiche nel DB")]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          headers: _vm.headersDuplicati,
+                          items: _vm.getListaDoppioni
                         }
                       })
                     ],
@@ -294,41 +594,99 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    {
-                      attrs: {
-                        cols: "12",
-                        md: "12",
-                        lg: "2",
-                        xs: "12",
-                        sm: "12"
-                      }
-                    },
+                    { attrs: { cols: "6" } },
                     [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: {
-                            color: "success",
-                            dark: "",
-                            block: _vm.$vuetify.breakpoint.xs
-                          },
-                          on: { click: _vm.importaXml }
+                      _c("h4", [_vm._v("Anagrafiche da Noah")]),
+                      _vm._v(" "),
+                      _c("v-data-table", {
+                        staticClass: "elevation-1 mt-3",
+                        attrs: {
+                          headers: _vm.headersOriginali,
+                          items: _vm.getOriginaliDaInserire
                         },
-                        [
-                          _vm._v(
-                            "\n                        Importa\n                "
-                          )
-                        ]
-                      )
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "item.actions",
+                              fn: function(ref) {
+                                var item = ref.item
+                                return [
+                                  _c(
+                                    "v-tooltip",
+                                    {
+                                      attrs: { bottom: "" },
+                                      scopedSlots: _vm._u(
+                                        [
+                                          {
+                                            key: "activator",
+                                            fn: function(ref) {
+                                              var on = ref.on
+                                              var attrs = ref.attrs
+                                              return [
+                                                _c(
+                                                  "v-icon",
+                                                  _vm._g(
+                                                    _vm._b(
+                                                      {
+                                                        attrs: {
+                                                          color: "green"
+                                                        },
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.sovrascrivi(
+                                                              item
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      "v-icon",
+                                                      attrs,
+                                                      false
+                                                    ),
+                                                    on
+                                                  ),
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                        mdi-arrow-left-box\n                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            }
+                                          }
+                                        ],
+                                        null,
+                                        true
+                                      )
+                                    },
+                                    [
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v("Sovrascrivi Anagrafica")
+                                      ])
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ],
+                          null,
+                          false,
+                          3105730367
+                        )
+                      })
                     ],
                     1
                   )
                 ],
                 1
               )
-        ],
-        1
-      )
+            ],
+            1
+          )
+        : _vm._e()
     ],
     1
   )

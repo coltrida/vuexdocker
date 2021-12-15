@@ -34,12 +34,36 @@ class RateService
             ->find($idAudio)->clientDaSaldare;
     }
 
-    public function clientiSaldati($idAudio)
+    public function clientiSaldati($request)
     {
-        return User::with(['clientSaldati' => function($q){
-            $q->with('prova', 'rate')->orderBy('data_saldo');
+        $idAudio = $request->idAudio;
+        $anno = $request->anno;
+        $mese = $request->mese;
+        $user = User::with(['clientSaldati' => function($q) use($anno, $mese){
+            $q->with(['prova' => function($p){
+                $p->with(['product' => function($q){
+                    $q->with('listino');
+                }]);
+            }, 'rate'])
+                ->whereHas('prova', function($p) use($anno, $mese){
+                    $p->where([['anno_fine', $anno], ['mese_fine', $mese]]);
+                })->orderBy('data_saldo');
         }])
-            ->find($idAudio)->clientSaldati;
+            ->find($idAudio);
+
+        foreach ($user->clientSaldati as $cliente){
+            $totSenzaIva = 0;
+            foreach($cliente->prova->product as $prodotto) {
+                if ($prodotto->pivot->prezzo !== 0) {
+                    $importoSenzaIva = $prodotto->listino->iva == 4 ? ($prodotto->pivot->prezzo / 1.04) : ($prodotto->pivot->prezzo / 1.22);
+                    $totSenzaIva += $importoSenzaIva;
+                    $prodotto->senzaIva = $importoSenzaIva;
+                }
+            }
+            $cliente->totale_senza_iva =  $totSenzaIva;
+        }
+//dd($user->clientSaldati);
+        return $user->clientSaldati;
     }
 
     public function addRata($request)

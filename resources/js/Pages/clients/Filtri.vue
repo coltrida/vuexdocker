@@ -440,6 +440,7 @@
 
             caricaCitta(){
                 this.fetchCittaByProvincia(this.ricerca.provincia);
+
             },
 
             trova(){

@@ -3,7 +3,8 @@ import help from "../../help";
 const state = () => ({
     elementiNuovaProva: [],
     nuovaProvaCreata: {},
-    provePassate: []
+    provePassate: [],
+    totProva: 0
 });
 
 const getters = {
@@ -18,6 +19,10 @@ const getters = {
     getProvePassate(state){
         return state.provePassate;
     },
+
+    getTotProva(state){
+        return state.totProva;
+    }
 };
 
 const actions = {
@@ -113,10 +118,12 @@ const mutations = {
     },
 
     AddEleInNuovaProva(state, payload){
-        state.elementiNuovaProva.unshift(payload);
+        state.elementiNuovaProva.push(payload);
+        state.totProva += parseInt(payload.originalPrezzo);
     },
 
     eliminaEle(state, id){
+        state.totProva -= parseInt(state.elementiNuovaProva.find(u => u.id === id).originalPrezzo);
         state.elementiNuovaProva = state.elementiNuovaProva.filter(u => u.id !== id);
     },
 

@@ -17,6 +17,7 @@
                         <v-text-field
                             v-model="itemFattura.client.nome"
                             outlined
+                            dense
                             readonly
                             label="nome"
                             :rules="campoRules"
@@ -28,6 +29,7 @@
                         <v-text-field
                             v-model="itemFattura.client.cognome"
                             outlined
+                            dense
                             readonly
                             label="cognome"
                             :rules="campoRules"
@@ -39,6 +41,7 @@
                         <v-text-field
                             v-model="itemFattura.client.codfisc"
                             outlined
+                            dense
                             readonly
                             label="cod. fis."
                             :rules="campoRules"
@@ -50,6 +53,7 @@
                         <v-text-field
                             v-model="itemFattura.client.telefono"
                             outlined
+                            dense
                             readonly
                             label="telefono"
                         ></v-text-field>
@@ -61,6 +65,7 @@
                         <v-text-field
                             v-model="itemFattura.client.indirizzo"
                             outlined
+                            dense
                             readonly
                             label="indirizzo"
                             :rules="campoRules"
@@ -72,6 +77,7 @@
                         <v-text-field
                             v-model="itemFattura.client.citta"
                             outlined
+                            dense
                             readonly
                             label="citta"
                             :rules="campoRules"
@@ -83,6 +89,7 @@
                         <v-text-field
                             v-model="itemFattura.client.cap"
                             outlined
+                            dense
                             readonly
                             label="cap"
                             :rules="campoRules"
@@ -94,6 +101,7 @@
                         <v-text-field
                             v-model="itemFattura.client.provincia"
                             outlined
+                            dense
                             readonly
                             label="provincia"
                             :rules="campoRules"
@@ -128,11 +136,12 @@
                             >
                                 <td>{{ prodotto.matricola }}</td>
                                 <td>{{ prodotto.listino.nome }}</td>
-                                <td style="padding-top: 15px">
+                                <td style="padding-top: 18px">
                                     <v-text-field
+                                        dense
+                                        type="number"
                                         v-model="prodotto.pivot.prezzo"
                                         outlined
-                                        label="prezzo"
                                     ></v-text-field>
                                 </td>
                             </tr>
@@ -147,6 +156,7 @@
                             <v-text-field
                                 v-model="totFatturaReale"
                                 outlined
+                                dense
                                 readonly
                                 label="Totale"
                             ></v-text-field>
@@ -156,6 +166,8 @@
                             <v-text-field
                                 v-model="itemFattura.acconto"
                                 outlined
+                                type="number"
+                                dense
                                 label="Acconto"
                             ></v-text-field>
                         </v-col>
@@ -164,6 +176,8 @@
                             <v-text-field
                                 v-model="itemFattura.rate"
                                 outlined
+                                type="number"
+                                dense
                                 label="Rate"
                             ></v-text-field>
                         </v-col>
@@ -228,11 +242,11 @@
 
         computed: {
             totFatturaReale() {
-                return this.itemFattura.product.length > 1 ?
-                    this.itemFattura.product.reduce(function (a, b) {
-                        return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo)
-                    }) :
-                    this.itemFattura.product[0].pivot.prezzo
+                let tot = 0;
+                this.itemFattura.product.forEach(ele => {
+                    tot += parseInt(ele.pivot.prezzo);
+                });
+                return tot;
             },
 
             verificaCampi(){

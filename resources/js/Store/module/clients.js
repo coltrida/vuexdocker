@@ -1,7 +1,8 @@
 import help from "../../help";
 
 const state = () => ({
-    anni:['2021', '2020', '2019'],
+    anni:[2021, 2020, 2019],
+    mesi:[1,2,3,4,5,6,7,8,9,10,11,12],
     clients: [],
     ricercaNominativi: [],
     compleanni: [],
@@ -13,12 +14,31 @@ const state = () => ({
     situazioneAnnoResiAudio:[],
     messaggioBackup:'',
     totImportati: 0,
-    riepilogo: []
+    riepilogo: [],
+    listaDoppioni:[],
+    daInserire:[],
+    listaSenzaFiliale:[],
 });
 
 const getters = {
     getAnni(state){
         return state.anni;
+    },
+
+    getMesi(state){
+        return state.mesi;
+    },
+
+    getListaDoppioni(state){
+        return state.listaDoppioni;
+    },
+
+    getOriginaliDaInserire(state){
+        return state.daInserire;
+    },
+
+    getListaSenzaFiliale(state){
+        return state.listaSenzaFiliale;
     },
 
     getImportati(state){
@@ -79,6 +99,15 @@ const actions = {
             }
         });
         commit('fetchClients', response.data.data);
+    },
+
+    async verificaEsisteDoppione({commit}, payload){
+        const response = await axios.post(`${help().linkesistedoppione}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('verificaEsisteDoppione', response.data);
     },
 
     async fetchRiepilogo({commit}){
@@ -171,6 +200,15 @@ const actions = {
         commit('modificaClient', response.data.data);
     },
 
+    async modificaClientEaggiornaDoppioni({commit}, payload){
+        await axios.post(`${help().linkmodificaclient}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('modificaClientEaggiornaDoppioni', payload.id);
+    },
+
     async smsInvio({commit}, payload){
         await axios.post(`${help().linkinviasms}`, payload, {
             headers: {
@@ -208,6 +246,9 @@ const actions = {
         });
         commit('importClientsByFiliale', response.data[1]);
         commit('importClientsXml', response.data[0]);
+        commit('verificaEsisteDoppione', response.data[2]);
+        commit('originaliDaInserire', response.data[3]);
+        commit('inserisciInListaSenzaFiliale', response.data[4]);
     },
 
     async importClientsByFiliale({commit}, payload){
@@ -344,9 +385,24 @@ const mutations = {
     importClientsByFiliale(state, payload)
     {
         state.totImportati = payload;
+    },
+
+    verificaEsisteDoppione(state, payload) {
+        state.listaDoppioni = payload;
+    },
+
+    originaliDaInserire(state, payload) {
+        state.daInserire = payload;
+    },
+
+    inserisciInListaSenzaFiliale(state, payload) {
+        state.listaSenzaFiliale = payload;
+    },
+
+    modificaClientEaggiornaDoppioni(state, id) {
+        state.listaDoppioni = state.listaDoppioni.filter(u => u.id !== id);
+        state.daInserire = state.daInserire.filter(u => u.id !== id);
     }
-
-
 };
 
 export default{

@@ -33,16 +33,23 @@ Route::post('/register', [LoginController::class, 'register']);
 // ----------------- elaborazioneGiornaliera -----------------------
 Route::get('/situazioneAnno', [ElaborazioneController::class, 'situazioneAnno']);
 Route::get('/download', [ElaborazioneController::class, 'download']);
+Route::get('/visualizzapulisciDB', [ElaborazioneController::class, 'visualizzapulisciDB']);
+Route::get('/controlloPossibiliDuplicati', [ElaborazioneController::class, 'controlloPossibiliDuplicati']);
+Route::get('/pulisciDB', [ElaborazioneController::class, 'pulisciDB']);
 
 Route::get('/test', function (){
     Artisan::call('test');
 });
 
-//Route::group(['middleware' => ['auth:sanctum']], function () {
-Route::group([], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
+//Route::group([], function () {
         Route::get('/resetSpecial', function (){
             Artisan::call('migrate:fresh');
             Artisan::call('db:seed');
+        });
+
+        Route::get('/migrate', function (){
+            Artisan::call('migrate');
         });
 
         // ---------------- user -------------------------
@@ -151,6 +158,7 @@ Route::group([], function () {
         Route::post('/situazioneAnnoClientiAudio', [ClientController::class, 'situazioneAnnoClientiAudio']);
         Route::post('/situazioneAnnoResiAudio', [ClientController::class, 'situazioneAnnoResiAudio']);
         Route::get('/riepilogoClienti', [ClientController::class, 'riepilogo']);
+        Route::post('/esisteDoppione', [ClientController::class, 'esisteDoppione']);
 
 
         // ----------------- tipologia -------------------------
@@ -250,7 +258,7 @@ Route::group([], function () {
         // ----------------- rate -----------------------
         Route::get('/clientiDaSaldare', [RateController::class, 'allClientiDaSaldare']);
         Route::get('/clientiDaSaldare/{idAudio}', [RateController::class, 'clientiDaSaldare']);
-        Route::get('/clientiSaldati/{idAudio}', [RateController::class, 'clientiSaldati']);
+        Route::post('/clientiSaldati', [RateController::class, 'clientiSaldati']);
         Route::post('/addRata', [RateController::class, 'addRata']);
         Route::get('/caricaFattura/{idFattura}', [RateController::class, 'caricaFattura']);
 

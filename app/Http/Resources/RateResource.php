@@ -22,6 +22,7 @@ class RateResource extends JsonResource
             'data_fattura' => Carbon::make($this->data_fattura)->format('d-m-Y'),
             'ultima_rata' => $this->ultima_rata ? Carbon::make($this->ultima_rata)->format('d-m-Y') : null,
             'tot_fattura' => '€ '.number_format( (float) $this->tot_fattura, '2', ',', '.') ,
+            'tot_fattura_senza_iva' => '€ '.number_format( (float) $this->totale_senza_iva, '2', ',', '.') ,
             'al_saldo' => '€ '.number_format( (float) $this->al_saldo, '2', ',', '.') ,
             'rate' => RataResource::collection($this->rate)
         ];

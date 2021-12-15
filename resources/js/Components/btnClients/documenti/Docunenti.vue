@@ -41,7 +41,7 @@
                     hide-default-footer
                     class="elevation-1"
                 >
-                    <template v-slot:item.actions="{ item }">
+                    <!--<template v-slot:item.actions="{ item }">
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-icon
@@ -56,7 +56,7 @@
                             </template>
                             <span>Elimina</span>
                         </v-tooltip>
-                    </template>
+                    </template>-->
 
                     <template v-slot:item.link="{ item }">
                         <a :href="item.link" target="_blank">
@@ -129,9 +129,9 @@
                 }
             },
 
-            elimina(idDocumento){
+            /*elimina(idDocumento){
                 this.eliminaDocumento(idDocumento);
-            }
+            }*/
         },
 
         computed:{

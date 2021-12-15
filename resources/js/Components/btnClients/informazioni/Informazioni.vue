@@ -132,6 +132,7 @@
 
         mounted() {
             this.carica = true;
+            this.inserimentoDataDiOggi();
             this.fetchInformazioni(this.informazioniClient.id).then(() => {
                 this.carica = false;
             });
@@ -142,6 +143,14 @@
                 fetchInformazioni:'fetchInformazioni',
                 addInformazione:'addInformazione',
             }),
+
+            inserimentoDataDiOggi(){
+                let giornoDiOggi = new Date();
+                let giorno = parseInt(giornoDiOggi.getDate()) < 10 ? '0'+parseInt(giornoDiOggi.getDate()) : parseInt(giornoDiOggi.getDate()) ;
+                let mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0'+parseInt(giornoDiOggi.getMonth()) + 1 : parseInt(giornoDiOggi.getMonth()) + 1;
+                let anno = giornoDiOggi.getFullYear();
+                this.newInfo.giorno = anno+'-'+mese+'-'+giorno;
+            },
 
             inserisci(){
                 if (this.newInfo.giorno && this.newInfo.tipo){

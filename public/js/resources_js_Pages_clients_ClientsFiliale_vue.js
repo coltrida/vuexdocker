@@ -1230,10 +1230,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.caricaFile.tipo = '';
         });
       }
-    },
-    elimina: function elimina(idDocumento) {
-      this.eliminaDocumento(idDocumento);
     }
+    /*elimina(idDocumento){
+        this.eliminaDocumento(idDocumento);
+    }*/
+
   }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('documenti', {
     getDocumenti: 'getDocumenti'
@@ -1490,6 +1491,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.carica = true;
+    this.inserimentoDataDiOggi();
     this.fetchInformazioni(this.informazioniClient.id).then(function () {
       _this.carica = false;
     });
@@ -1498,6 +1500,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchInformazioni: 'fetchInformazioni',
     addInformazione: 'addInformazione'
   })), {}, {
+    inserimentoDataDiOggi: function inserimentoDataDiOggi() {
+      var giornoDiOggi = new Date();
+      var giorno = parseInt(giornoDiOggi.getDate()) < 10 ? '0' + parseInt(giornoDiOggi.getDate()) : parseInt(giornoDiOggi.getDate());
+      var mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0' + parseInt(giornoDiOggi.getMonth()) + 1 : parseInt(giornoDiOggi.getMonth()) + 1;
+      var anno = giornoDiOggi.getFullYear();
+      this.newInfo.giorno = anno + '-' + mese + '-' + giorno;
+    },
     inserisci: function inserisci() {
       var _this2 = this;
 
@@ -1802,6 +1811,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1833,9 +1856,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   computed: {
     totFatturaReale: function totFatturaReale() {
-      return this.itemFattura.product.length > 1 ? this.itemFattura.product.reduce(function (a, b) {
-        return parseInt(a.pivot.prezzo) + parseInt(b.pivot.prezzo);
-      }) : this.itemFattura.product[0].pivot.prezzo;
+      var tot = 0;
+      this.itemFattura.product.forEach(function (ele) {
+        tot += parseInt(ele.pivot.prezzo);
+      });
+      return tot;
     },
     verificaCampi: function verificaCampi() {
       return this.itemFattura.client.codfisc !== null ? false : true;
@@ -2261,6 +2286,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2275,8 +2320,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['proveClient'],
   data: function data() {
     return {
+      mercati: ['libero', 'riconducibile', 'sociale'],
       showCambioUtente: false,
-      bloccaProva: true,
       bloccaMedici: true,
       listaPro: [],
       tipologia: ['Prodotti', 'Servizi'],
@@ -2379,7 +2424,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.fetchMedici(parseInt(_this.getIdUser)).then(function () {
             _this.prova.marketing_id = _this.proveClient.marketing_id ? _this.proveClient.marketing_id : 0;
             _this.prova.medico_id = _this.proveClient.medico_id;
-            _this.bloccaProva = _this.proveClient.marketing_id ? false : true;
             _this.carica2 = false;
             _this.bloccaMedici = _this.getCanali.find(function (u) {
               return u.name === 'MEDICO';
@@ -2412,8 +2456,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchMedici: 'fetchMedici'
   })), {}, {
     nuovaProvaInCorso: function nuovaProvaInCorso() {
-      console.log(this.getIdUser + ' ' + this.proveClient.user_id);
-
       if (this.getIdUser != this.proveClient.user_id) {
         this.showCambioUtente = true;
       } else {
@@ -2443,7 +2485,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     caricaPrezzoProdotto: function caricaPrezzoProdotto() {
-      // console.log(this.nuovaProva.prodotto);
       this.sconto = 0;
 
       if (this.tipologiaSelezionata === 'Prodotti') {
@@ -2483,14 +2524,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     salvaProva: function salvaProva() {
       var _this3 = this;
 
-      //console.log(this.getElementiNuovaProva[0]);
-      //console.log(this.getElementiNuovaProva.length);
       this.carica = true;
       this.salvaProvaInCorso({
         'id': this.getNuovaProvaCreata.id,
-        'tot': this.getElementiNuovaProva.length > 1 ? this.getElementiNuovaProva.reduce(function (a, b) {
-          return parseInt(a.originalPrezzo) + parseInt(b.originalPrezzo);
-        }) : this.getElementiNuovaProva[0].originalPrezzo
+        'tot': this.getTotProva
       }).then(function () {
         _this3.carica = false;
 
@@ -2546,7 +2583,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     selezionaMkt: function selezionaMkt(event) {
-      this.bloccaProva = false;
       this.bloccaMedici = event == 5 ? false : true;
     },
     chiudiConfermaCambioUtente: function chiudiConfermaCambioUtente(scelta) {
@@ -2569,7 +2605,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('prove', {
     getElementiNuovaProva: 'getElementiNuovaProva',
     getNuovaProvaCreata: 'getNuovaProvaCreata',
-    getProvePassate: 'getProvePassate'
+    getProvePassate: 'getProvePassate',
+    getTotProva: 'getTotProva'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('medici', {
     getMedici: 'getMedici'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('login', {
@@ -2580,6 +2617,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     abilitaInProva: function abilitaInProva() {
       return this.nuovaProva.prezzolistino ? true : false;
+    },
+    bloccaProva: function bloccaProva() {
+      var blocca = true;
+
+      if (this.prova.marketing_id) {
+        if (this.prova.marketing_id !== 5 && this.prova.mercato) {
+          blocca = false;
+        } else if (this.prova.marketing_id === 5 && this.prova.medico_id && this.prova.mercato) {
+          blocca = false;
+        }
+      }
+
+      return blocca || this.datiMancantiPerCopiaCommissione;
+    },
+    linkBase: function linkBase() {
+      var base = '';
+
+      if (window.location.host === 'vuexdocker.test') {
+        base = 'http://vuexdocker.test';
+      } else {
+        base = 'https://www.centrouditogroup.it';
+      }
+
+      return base;
+    },
+    datiMancantiPerCopiaCommissione: function datiMancantiPerCopiaCommissione() {
+      return !(this.proveClient.datanascita && this.proveClient.luogoNascita && this.proveClient.indirizzo && this.proveClient.citta && this.proveClient.cap && this.proveClient.provincia);
     }
   })
 });
@@ -3093,7 +3157,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -44917,63 +44980,6 @@ var render = function() {
                 },
                 scopedSlots: _vm._u([
                   {
-                    key: "item.actions",
-                    fn: function(ref) {
-                      var item = ref.item
-                      return [
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { bottom: "" },
-                            scopedSlots: _vm._u(
-                              [
-                                {
-                                  key: "activator",
-                                  fn: function(ref) {
-                                    var on = ref.on
-                                    var attrs = ref.attrs
-                                    return [
-                                      _c(
-                                        "v-icon",
-                                        _vm._g(
-                                          _vm._b(
-                                            {
-                                              attrs: {
-                                                color: "red",
-                                                small: ""
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.elimina(item.id)
-                                                }
-                                              }
-                                            },
-                                            "v-icon",
-                                            attrs,
-                                            false
-                                          ),
-                                          on
-                                        ),
-                                        [
-                                          _vm._v(
-                                            "\n                                mdi-delete\n                            "
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          },
-                          [_vm._v(" "), _c("span", [_vm._v("Elimina")])]
-                        )
-                      ]
-                    }
-                  },
-                  {
                     key: "item.link",
                     fn: function(ref) {
                       var item = ref.item
@@ -45616,6 +45622,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              dense: "",
                               readonly: "",
                               label: "nome",
                               rules: _vm.campoRules,
@@ -45640,6 +45647,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              dense: "",
                               readonly: "",
                               label: "cognome",
                               rules: _vm.campoRules,
@@ -45664,6 +45672,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              dense: "",
                               readonly: "",
                               label: "cod. fis.",
                               rules: _vm.campoRules,
@@ -45688,6 +45697,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              dense: "",
                               readonly: "",
                               label: "telefono"
                             },
@@ -45721,6 +45731,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              dense: "",
                               readonly: "",
                               label: "indirizzo",
                               rules: _vm.campoRules,
@@ -45749,6 +45760,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              dense: "",
                               readonly: "",
                               label: "citta",
                               rules: _vm.campoRules,
@@ -45773,6 +45785,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              dense: "",
                               readonly: "",
                               label: "cap",
                               rules: _vm.campoRules,
@@ -45797,6 +45810,7 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               outlined: "",
+                              dense: "",
                               readonly: "",
                               label: "provincia",
                               rules: _vm.campoRules,
@@ -45882,13 +45896,14 @@ var render = function() {
                                       _c(
                                         "td",
                                         {
-                                          staticStyle: { "padding-top": "15px" }
+                                          staticStyle: { "padding-top": "18px" }
                                         },
                                         [
                                           _c("v-text-field", {
                                             attrs: {
-                                              outlined: "",
-                                              label: "prezzo"
+                                              dense: "",
+                                              type: "number",
+                                              outlined: ""
                                             },
                                             model: {
                                               value: prodotto.pivot.prezzo,
@@ -45933,6 +45948,7 @@ var render = function() {
                               _c("v-text-field", {
                                 attrs: {
                                   outlined: "",
+                                  dense: "",
                                   readonly: "",
                                   label: "Totale"
                                 },
@@ -45953,7 +45969,12 @@ var render = function() {
                             { attrs: { cols: "4" } },
                             [
                               _c("v-text-field", {
-                                attrs: { outlined: "", label: "Acconto" },
+                                attrs: {
+                                  outlined: "",
+                                  type: "number",
+                                  dense: "",
+                                  label: "Acconto"
+                                },
                                 model: {
                                   value: _vm.itemFattura.acconto,
                                   callback: function($$v) {
@@ -45971,7 +45992,12 @@ var render = function() {
                             { attrs: { cols: "4" } },
                             [
                               _c("v-text-field", {
-                                attrs: { outlined: "", label: "Rate" },
+                                attrs: {
+                                  outlined: "",
+                                  type: "number",
+                                  dense: "",
+                                  label: "Rate"
+                                },
                                 model: {
                                   value: _vm.itemFattura.rate,
                                   callback: function($$v) {
@@ -46174,7 +46200,7 @@ var render = function() {
       _c(
         "v-row",
         [
-          _c("v-col", { attrs: { cols: "6" } }, [
+          _c("v-col", { attrs: { cols: "4" } }, [
             _c("h2", [
               _vm._v(
                 _vm._s(_vm.proveClient.nome) +
@@ -46186,7 +46212,49 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { staticClass: "flex justify-end", attrs: { cols: "6" } },
+            { attrs: { cols: "4" } },
+            [
+              _vm.datiMancantiPerCopiaCommissione
+                ? _c(
+                    "v-alert",
+                    { attrs: { color: "red", elevation: "8", dark: "" } },
+                    [
+                      _vm._v(
+                        "\n                Attenzione, per la Copia Commissione mancano:\n                "
+                      ),
+                      !_vm.proveClient.datanascita
+                        ? _c("div", [_c("b", [_vm._v("- Data di Nascita")])])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.proveClient.luogoNascita
+                        ? _c("div", [_c("b", [_vm._v("- Luogo di Nascita")])])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.proveClient.indirizzo
+                        ? _c("div", [_c("b", [_vm._v("- Indirizzo")])])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.proveClient.citta
+                        ? _c("div", [_c("b", [_vm._v("- Città")])])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.proveClient.cap
+                        ? _c("div", [_c("b", [_vm._v("- Cap")])])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.proveClient.provincia
+                        ? _c("div", [_c("b", [_vm._v("- Provincia")])])
+                        : _vm._e()
+                    ]
+                  )
+                : _vm._e()
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { staticClass: "flex justify-end", attrs: { cols: "4" } },
             [
               _c(
                 "v-btn",
@@ -46290,6 +46358,23 @@ var render = function() {
                               1
                             )
                           : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "v-col",
+                          [
+                            _c("v-select", {
+                              attrs: { items: _vm.mercati, label: "Mercato" },
+                              model: {
+                                value: _vm.prova.mercato,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.prova, "mercato", $$v)
+                                },
+                                expression: "prova.mercato"
+                              }
+                            })
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
                         _c(
                           "v-col",
@@ -46788,7 +46873,8 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     href:
-                                                      "https://www.centrouditogroup.it/storage/fatture/2021/" +
+                                                      _vm.linkBase +
+                                                      "/storage/fatture/2021/" +
                                                       item.id +
                                                       ".pdf",
                                                     target: "_blank"
@@ -46909,7 +46995,7 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     href:
-                                                      "https://www.centrouditogroup.it" +
+                                                      _vm.linkBase +
                                                       item.copia_comm[0].link,
                                                     target: "_blank"
                                                   }

@@ -46,7 +46,7 @@
 
         components: { RateLista },
 
-        props: ['idAudio'],
+        props: ['idAudio', 'mese', 'anno'],
 
         data() {
             return {
@@ -60,22 +60,41 @@
                     {text: 'Nome', width: 230, value: 'prova.client.fullname', class: "indigo white--text"},
                     {text: 'Rate', width: 150, value: 'rate', class: "indigo white--text"},
                     {text: 'Totale Fattura', width: 150, value: 'tot_fattura', class: "indigo white--text"},
+                    {text: 'Totale Fattura senza iva', width: 150, value: 'tot_fattura_senza_iva', class: "indigo white--text"},
                 ],
             }
         },
 
         mounted() {
-            this.fetchClientsSaldati(this.idAudio).then(() => {
-                if(this.getClientsSaldati.length > 0){
-                    this.lista = this.getClientsSaldati
-                }
-            });
+            this.caricadati();
+        },
+
+        watch:{
+            mese(){
+                this.caricadati();
+            },
+            anno(){
+                this.caricadati();
+            }
         },
 
         methods: {
             ...mapActions('rate', {
                 fetchClientsSaldati: 'fetchClientsSaldati',
             }),
+
+            caricadati(){
+                this.lista = [];
+                this.fetchClientsSaldati({
+                    idAudio: this.idAudio,
+                    mese: this.mese,
+                    anno: this.anno,
+                }).then(() => {
+                    if(this.getClientsSaldati.length > 0){
+                        this.lista = this.getClientsSaldati
+                    }
+                });
+            },
 
             seleziona(items){
                 this.dialogRate = true;

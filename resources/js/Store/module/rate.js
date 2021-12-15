@@ -45,8 +45,8 @@ const actions = {
         commit('fetchClientsDaSaldare', response.data.data);
     },
 
-    async fetchClientsSaldati({commit}, idAudio){
-        const response = await axios.get(`${help().linkclientisaldati}`+'/'+idAudio, {
+    async fetchClientsSaldati({commit}, payload){
+        const response = await axios.post(`${help().linkclientisaldati}`,payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }

@@ -14,6 +14,7 @@ use App\Models\Listino;
 use App\Models\Product;
 use App\Models\Prova;
 use App\Models\Risultatitel;
+use App\Models\StatoApa;
 use App\Models\Telefonata;
 use App\Models\User;
 use App\Models\Ventaglio;
@@ -29,6 +30,7 @@ class ElaborazioneService
     {
         $oggi = Carbon::now();
         $ora = $oggi->hour;
+        $idStatoFattura = StatoApa::where('nome', 'FATTURA')->first()->id;
 
         if ($ora > 14 || $ora < 11) {
 
@@ -74,7 +76,7 @@ class ElaborazioneService
                         $f->where('anno_fattura', $anno);
                     })
                         ->where([
-                            ['stato_id', 4],
+                            ['stato_id', $idStatoFattura],
                             ['user_id', $user->id]
                         ])
                         ->count();
@@ -89,7 +91,7 @@ class ElaborazioneService
                             $f->where('anno_fattura', $anno);
                         })
                             ->where([
-                                ['stato_id', 4],
+                                ['stato_id', $idStatoFattura],
                                 ['listino_id', $idListino],
                                 ['user_id', $user->id]
                             ])
@@ -383,6 +385,9 @@ class ElaborazioneService
             // -------------- Controllo e pulizia file di log ---------- //
             $this->controlloDimensioneFileLog();
 
+            // -------------- Controllo possibili duplicati ---------- //
+            $this->controlloPossibiliDuplicati();
+
             if ((float) $this->controlloDimensioneDataBase() > 800) {
                 \Mail::to('coltrida@gmail.com')->send(new AlarmDatabaseSpace($this->controlloDimensioneDataBase()));
             }
@@ -394,6 +399,35 @@ class ElaborazioneService
             }
 
         }
+    }
+
+    public function controlloPossibiliDuplicati()
+    {
+        $possibiliDoppioni = collect([]);
+        Client::orderBy('nome')
+            ->orderBy('cognome')
+            ->orderBy('citta')
+            ->chunk(20, function ($clients) use($possibiliDoppioni){
+            for ($i=0; $i<count($clients)-1; $i++) {
+                if (
+                    ($clients[$i]->nome === $clients[$i+1]->nome) &&
+                    ($clients[$i]->cognome === $clients[$i+1]->cognome) &&
+                    ($clients[$i]->citta === $clients[$i+1]->citta) &&
+                    (Str::contains($clients[$i]->indirizzo, Str::substr($clients[$i+1]->indirizzo, 0, 8)))
+                ) {
+                   // dd($clients[$i]);
+                    $possibiliDoppioni->push($clients[$i]);
+                    $possibiliDoppioni->push($clients[$i+1]);
+                }
+            }
+        });
+        foreach ($possibiliDoppioni as $key => $item){
+            echo $item->nome.' '.$item->cognome.' --- '.$item->citta.'----'.$item->indirizzo."<br>";
+            if ($key % 2 !== 0){
+                echo "<hr>";
+            }
+        }
+       // return $possibiliDoppioni;
     }
 
     private function selezionaClientiConAppuntamentiDomaniConEmail($domani)

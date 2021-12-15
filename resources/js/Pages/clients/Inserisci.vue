@@ -1,5 +1,11 @@
 <template>
     <div>
+        <conferma-doppione
+            v-if="doppioneShow"
+            :userOriginario="newClient"
+            :listaDoppioni="getListaDoppioni"
+            @chiudiConfermaDoppioni = "chiudiConfermaDoppioni"
+        />
         <h2>Inserisci Cliente</h2>
         <v-form ref="form"
                 v-model="valid"
@@ -237,16 +243,18 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import ConfermaDoppione from "./ConfermaDoppione";
 
     export default {
         name: "Inserisci",
-
+        components: {ConfermaDoppione},
         data(){
             return {
                 valid: true,
                 newClient:{},
                 lettura: false,
                 menu:false,
+                doppioneShow: false,
                 nomeRules: [ v => !!v || 'il nome è obbligatorio'],
                 cognomeRules: [ v => !!v || 'il cognome è obbligatorio'],
                 indirizzoRules: [ v => !!v || "l'indirizzo è obbligatorio"],
@@ -321,6 +329,7 @@
                 addClient:'addClient',
                 modificaClient:'modificaClient',
                 fetchClient:'fetchClient',
+                verificaEsisteDoppione:'verificaEsisteDoppione',
             }),
 
             ...mapActions('tipologie', {
@@ -357,28 +366,38 @@
             aggiungiModifica(){
                 this.$refs.form.validate();
                 let idFiliale = this.newClient.filiale_id;
-                if (this.nomeBtn === 'Modifica') {
-                    this.newClient.id = this.getClient.id;
-                    this.modificaClient(this.newClient).then(() => {
-                        this.newClient = {};
-                        this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
-                        /*if(this.getRuolo === 'audio') {
-                            this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
+                this.verificaEsisteDoppione(this.newClient).then(() => {
+                    if (
+                        (this.nomeBtn === 'Inserisci' && this.getListaDoppioni.length > 0) ||
+                        (this.nomeBtn === 'Modifica' && this.getListaDoppioni.length > 1)
+                    )
+                    {
+                        this.doppioneShow = true;
+                    }else {
+                        if (this.nomeBtn === 'Modifica') {
+                            this.newClient.id = this.getClient.id;
+                            this.eseguiModifica(idFiliale);
+
                         } else {
-                            this.$router.push({ name: 'clients' });
-                        }*/
-                    });
-                } else {
-                    this.addClient(this.newClient).then(() => {
-                        this.newClient = {};
-                        this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
-                        /*if(this.getRuolo === 'audio') {
-                            this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
-                        } else {
-                            this.$router.push({ name: 'clients' });
-                        }*/
-                    });
-                }
+                            this.eseguiInserimento(idFiliale);
+                        }
+                    }
+                });
+
+            },
+
+            eseguiModifica(idFiliale){
+                this.modificaClient(this.newClient).then(() => {
+                    this.newClient = {};
+                    this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
+                });
+            },
+
+            eseguiInserimento(idFiliale){
+                this.addClient(this.newClient).then(() => {
+                    this.newClient = {};
+                    this.$router.push({name: 'clientsFiliale', params: {filialeId: idFiliale}});
+                });
             },
 
             scegliAudio(idAudio){
@@ -386,6 +405,16 @@
                 this.fetchRecapitiByAudio(idAudio);
                 this.fetchFilialiPerInserimento(idAudio);
                 this.fetchMedici(idAudio);
+            },
+
+            chiudiConfermaDoppioni(scelta)
+            {
+                this.doppioneShow = false;
+                if (scelta > 0){
+                    this.newClient.id = scelta;
+                    let idFiliale = this.newClient.filiale_id;
+                    this.eseguiModifica(idFiliale);
+                }
             }
 
             /*scegliFonte(){
@@ -406,6 +435,7 @@
 
             ...mapGetters('clients', {
                 getClient:'getClient',
+                getListaDoppioni:'getListaDoppioni'
             }),
 
             ...mapGetters('tipologie', {

@@ -19,9 +19,9 @@ class RateController extends Controller
         return RateResource::collection($rateService->clientiDaSaldare($idAudio));
     }
 
-    public function clientiSaldati($idAudio, RateService $rateService)
+    public function clientiSaldati(Request $request, RateService $rateService)
     {
-        return RateResource::collection($rateService->clientiSaldati($idAudio));
+        return RateResource::collection($rateService->clientiSaldati($request));
     }
 
     public function addRata(Request $request, RateService $rateService)
