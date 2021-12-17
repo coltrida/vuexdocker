@@ -4613,7 +4613,7 @@ var render = function() {
     [
       _c(
         "router-link",
-        { attrs: { to: { name: "calendar" } } },
+        { attrs: { to: { name: "diari" } } },
         [
           _c("v-btn", { attrs: { text: "" } }, [
             _vm._v("\n            Calendar\n        ")

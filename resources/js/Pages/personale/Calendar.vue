@@ -14,18 +14,9 @@
                         item-text="name"
                         :items="getAudio"
                         label="Seleziona"
-                        :readonly="fissaAudio"
+                        :readonly="blocca"
                     ></v-select>
                 </v-col>
-
-                <!--<v-col
-                    cols="3"
-                    sm="3"
-                >
-                    <v-btn @click="visualizza" dark color="indigo">
-                        Visualizza
-                    </v-btn>
-                </v-col>-->
 
                 <v-col
                     cols="4"
@@ -60,29 +51,6 @@
                             hide-default-footer
                             class="elevation-1 mt-3"
                         >
-                            <!--<template v-slot:item.fullname="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.fullname }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.orario="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.orario }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.luogo="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.luogo }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.note="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.note }}
-                                </div>
-                            </template>-->
 
                         </v-data-table>
                     </v-col>
@@ -96,30 +64,6 @@
                             hide-default-footer
                             class="elevation-1 mt-3"
                         >
-
-                            <!--<template v-slot:item.fullname="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.fullname }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.orario="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.orario }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.luogo="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.luogo }}
-                                </div>
-                            </template>
-
-                            <template v-slot:item.note="{ item }">
-                                <div style="font-size: 10px">
-                                    {{ item.note }}
-                                </div>
-                            </template>-->
 
                         </v-data-table>
                     </v-col>
@@ -193,7 +137,8 @@
         data(){
             return {
                 text: 'left',
-                userId:this.audioprot,
+                blocca: false,
+                //userId: 0,
                 headers1: [
                     { text: 'Orario', width: 30, align: 'start', sortable: false, value: 'orario', class: "indigo white--text" },
                     { text: 'Nome', width: 100, align: 'start', sortable: false, value: 'fullname', class: "indigo white--text" },
@@ -224,11 +169,21 @@
                 }
             });
 
+            this.blocca = this.getRuolo === 'audio' ? true : false;
             this.fetchAudio();
+            /*this.fetchAudio().then(() => {
+                this.userId = this.getRuolo === 'audio' ? parseInt(this.getIdUser) : parseInt(this.audioprot);
+            });*/
             this.fetchDateSettimana();
             this.$store.commit('appuntamenti/resetAppuntamenti');
             this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'attuale');
-            if(this.audioprot){
+            if(this.userId){
+                this.visualizza();
+            }
+        },
+
+        watch:{
+            userId(){
                 this.visualizza();
             }
         },
@@ -286,7 +241,13 @@
 
         computed:{
             ...mapGetters('users', {
-                getAudio:'getAudio'
+                getAudio:'getAudio',
+                getUserCallAppuntamentoCalendar:'getUserCallAppuntamentoCalendar',
+            }),
+
+            ...mapGetters('login', {
+                getIdUser: 'getIdUser',
+                getRuolo: 'getRuolo',
             }),
 
             ...mapGetters('appuntamenti', {
@@ -302,6 +263,10 @@
 
             fissaAudio(){
                 return this.fissaNome ? true : false;
+            },
+
+            userId(){
+               return this.getUserCallAppuntamentoCalendar > 0 ? this.getUserCallAppuntamentoCalendar : parseInt(this.getIdUser)
             }
 
         },

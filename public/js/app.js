@@ -9680,13 +9680,17 @@ var state = function state() {
     agenda: [],
     totFatt: 0,
     totBgtProg: 0,
-    userInformazioni: ''
+    userInformazioni: '',
+    userCallAppuntamentoCalendar: ''
   };
 };
 
 var getters = {
   getAudio: function getAudio(state) {
     return state.audio;
+  },
+  getUserCallAppuntamentoCalendar: function getUserCallAppuntamentoCalendar(state) {
+    return state.userCallAppuntamentoCalendar;
   },
   getUserInformazioni: function getUserInformazioni(state) {
     return state.userInformazioni;
@@ -10508,6 +10512,9 @@ var mutations = {
   },
   resetAudioConFatt: function resetAudioConFatt(state) {
     state.audioConFatt = [];
+  },
+  impostaUserCallAppuntamentoCalendar: function impostaUserCallAppuntamentoCalendar(state, payload) {
+    state.userCallAppuntamentoCalendar = payload;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({

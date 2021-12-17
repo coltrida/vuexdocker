@@ -38,11 +38,19 @@
             </v-card>
         </v-dialog>
         <v-row>
-            <v-col cols="4">
+            <v-col cols="3">
                 <h2>{{appuntamentoClient.nome}} {{appuntamentoClient.cognome}}</h2>
                 <h4>Dottore di riferimento: {{appuntamentoClient.user}}</h4>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="5">
+                <v-alert color="warning" dark elevation="4" v-if="!this.appuntamentoClient.mail">
+                    Ricorda di inserire la <u>mail</u>  del paziente, in questo modo gli arriverà un messaggio di remind un giorno prima dell'appuntamento preso
+                </v-alert>
+                <v-alert color="success" dark elevation="4" v-else>
+                    Il paziente riceverà un messaggio di remind tramite e-mail un giorno prima dell'appuntamento fissato
+                </v-alert>
+            </v-col>
+            <v-col cols="3">
                 <v-row justify="center">
                     <v-select
                         @change="infoStruttura($event)"
@@ -53,7 +61,7 @@
                     ></v-select>
                 </v-row>
             </v-col>
-            <v-col cols="4" class="flex justify-end">
+            <v-col cols="1" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">
                     Chiudi
                 </v-btn>
@@ -66,7 +74,7 @@
                         v-model="valid"
                         lazy-validation>
                     <v-row>
-                        <v-col cols="12" md="6" lg="6">
+                        <v-col cols="12" md="4" lg="4">
                             <v-menu
                                 ref="menu"
                                 v-model="menu"
@@ -113,7 +121,7 @@
                                 </v-date-picker>
                             </v-menu>
                         </v-col>
-                        <v-col cols="12" md="6" lg="6">
+                        <v-col cols="12" md="4" lg="4">
                             <v-dialog
                                 ref="dialog"
                                 v-model="modal2"
@@ -156,6 +164,17 @@
                                     </v-btn>
                                 </v-time-picker>
                             </v-dialog>
+                        </v-col>
+                        <v-col cols="12" md="4" lg="4">
+                            <v-select
+                                @change="ricaricaStrutture"
+                                v-model="newAppuntamento.user_id"
+                                item-value="id"
+                                item-text="name"
+                                :items="getAudio"
+                                label="Audio"
+                                :readonly="blocca"
+                            ></v-select>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -284,7 +303,7 @@
 
             </v-col>
             <v-col cols="12" md="12" lg="6" xs="12" sm="12">
-                <calendar :audioprot="appuntamentoClient.user_id" :fissaNome="true"/>
+                <calendar :audioprot="userId" :fissaNome="false"/>
             </v-col>
         </v-row>
     </v-row>
@@ -299,6 +318,7 @@
         components: {Calendar},
         data() {
             return {
+                blocca: false,
                 allowedMinutes:[0, 30],
                 dialog: false,
                 informazioneStruttura: '',
@@ -311,6 +331,7 @@
                 tipoRules: [v => !!v || 'il tipo è obbligatorio'],
                 orarioRules: [v => !!v || 'orario obbligatorio'],
                 newAppuntamento: {
+                    user_id:'',
                     filiale_id: null,
                     recapito_id: null,
                     nota: null
@@ -334,6 +355,20 @@
         mounted() {
             window.Echo.channel("appuntamentoChannel").listen(".task-created", e => {
                 this.caricaAppuntamenti();
+            });
+
+            this.fetchAudio().then(() => {
+                if (this.getUserCallAppuntamentoCalendar > 0) {
+                    this.newAppuntamento.user_id = this.getUserCallAppuntamentoCalendar;
+                } else {
+                    this.newAppuntamento.user_id = this.getRuolo === 'audio' ? parseInt(this.getIdUser) : parseInt(this.appuntamentoClient.user_id);
+                    this.$store.commit('users/impostaUserCallAppuntamentoCalendar',
+                        this.getRuolo === 'audio' ? parseInt(this.getIdUser) : parseInt(this.appuntamentoClient.user_id));
+                }
+
+
+                this.blocca = this.getRuolo === 'audio' ? true : false;
+                this.fetchStruttureByAudio(this.newAppuntamento.user_id);
             });
 
             this.carica = true;
@@ -384,6 +419,10 @@
                 fetchFiliali: 'fetchFiliali',
             }),
 
+            ...mapActions('users', {
+                fetchAudio:'fetchAudio',
+            }),
+
             cancella() {
                 this.$emit('chiudiAppuntamento')
             },
@@ -391,7 +430,6 @@
             inserisci() {
                 this.$refs.form.validate();
                 this.carica2=true;
-                this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
                 this.newAppuntamento.telefonista_id = this.getIdUser;
                 this.newAppuntamento.client_id = this.appuntamentoClient.id;
 
@@ -427,17 +465,17 @@
 
             caricaAppuntamenti() {
                 if (this.getSettimanaVisualizzata === 'attuale') {
-                    this.fetchAppuntamentiLunedi(this.appuntamentoClient.user_id);
-                    this.fetchAppuntamentiMartedi(this.appuntamentoClient.user_id);
-                    this.fetchAppuntamentiMercoledi(this.appuntamentoClient.user_id);
-                    this.fetchAppuntamentiGiovedi(this.appuntamentoClient.user_id);
+                    this.fetchAppuntamentiLunedi(this.userId);
+                    this.fetchAppuntamentiMartedi(this.userId);
+                    this.fetchAppuntamentiMercoledi(this.userId);
+                    this.fetchAppuntamentiGiovedi(this.userId);
                     this.fetchAppuntamentiVenerdi(this.appuntamentoClient.user_id);
                 } else {
-                    this.prossimoLunedi(this.appuntamentoClient.user_id);
-                    this.prossimoMartedi(this.appuntamentoClient.user_id);
-                    this.prossimoMarcoledi(this.appuntamentoClient.user_id);
-                    this.prossimoGiovedi(this.appuntamentoClient.user_id);
-                    this.prossimoVenerdi(this.appuntamentoClient.user_id);
+                    this.prossimoLunedi(this.userId);
+                    this.prossimoMartedi(this.userId);
+                    this.prossimoMarcoledi(this.userId);
+                    this.prossimoGiovedi(this.userId);
+                    this.prossimoVenerdi(this.userId);
                 }
 
             },
@@ -460,6 +498,12 @@
             infoStruttura(struttura) {
                 this.informazioneStruttura = struttura;
                 this.dialog = true;
+            },
+
+            ricaricaStrutture()
+            {
+                this.$store.commit('users/impostaUserCallAppuntamentoCalendar', parseInt(this.newAppuntamento.user_id));
+                this.fetchStruttureByAudio(this.getUserCallAppuntamentoCalendar);
             }
 
         },
@@ -473,6 +517,11 @@
             ...mapGetters('login', {
                 getIdUser: 'getIdUser',
                 getRuolo: 'getRuolo',
+            }),
+
+            ...mapGetters('users', {
+                getAudio:'getAudio',
+                getUserCallAppuntamentoCalendar:'getUserCallAppuntamentoCalendar',
             }),
 
             ...mapGetters('recapiti', {
@@ -507,6 +556,15 @@
                     base = 'https://www.centrouditogroup.it/storage/recapiti/';
                 }
                 return base;
+            },
+
+            userId(){
+                if (this.getUserCallAppuntamentoCalendar > 0) {
+                    return this.getUserCallAppuntamentoCalendar;
+                } else if(this.getRuolo === 'audio'){
+                    return parseInt(this.getIdUser);
+                }
+                return this.appuntamentoClient.user_id
             }
         }
 

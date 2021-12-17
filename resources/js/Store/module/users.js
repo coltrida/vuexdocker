@@ -14,13 +14,18 @@ const state = () => ({
     agenda:[],
     totFatt: 0,
     totBgtProg: 0,
-    userInformazioni: ''
+    userInformazioni: '',
+    userCallAppuntamentoCalendar: ''
 });
 
 const getters = {
 
     getAudio(state){
         return state.audio;
+    },
+
+    getUserCallAppuntamentoCalendar(state){
+        return state.userCallAppuntamentoCalendar;
     },
 
     getUserInformazioni(state){
@@ -428,6 +433,10 @@ const mutations = {
 
     resetAudioConFatt(state){
         state.audioConFatt = [];
+    },
+
+    impostaUserCallAppuntamentoCalendar(state, payload){
+        state.userCallAppuntamentoCalendar = payload;
     }
 };
 

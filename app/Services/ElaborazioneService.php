@@ -32,11 +32,11 @@ class ElaborazioneService
         $ora = $oggi->hour;
         $idStatoFattura = StatoApa::where('nome', 'FATTURA')->first()->id;
 
-        if ($ora > 14 || $ora < 11) {
-
+        // attività svolte a mezzanotte
+        if ($ora > 14 || $ora < 11)
+        {
             $anno = $oggi->year;
             $mese = $oggi->month;
-
             $users = User::with('budget')->audio(1)->get();
 
             foreach ($users as $user){
@@ -392,7 +392,10 @@ class ElaborazioneService
                 \Mail::to('coltrida@gmail.com')->send(new AlarmDatabaseSpace($this->controlloDimensioneDataBase()));
             }
 
-        } else {
+        }
+        else
+            // attività svolte a mezzogiorno
+        {
             $utentiAppuntamentoDomani = $this->selezionaClientiConAppuntamentiDomaniConEmail($oggi->addDay()->format('Y-m-d'));
             foreach ($utentiAppuntamentoDomani as $utente){
                 \Mail::to($utente->mail)->send(new RememberAppuntamento($utente));

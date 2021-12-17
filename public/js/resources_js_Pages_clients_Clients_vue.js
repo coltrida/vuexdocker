@@ -368,6 +368,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -377,6 +396,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      blocca: false,
       allowedMinutes: [0, 30],
       dialog: false,
       informazioneStruttura: '',
@@ -395,6 +415,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return !!v || 'orario obbligatorio';
       }],
       newAppuntamento: {
+        user_id: '',
         filiale_id: null,
         recapito_id: null,
         nota: null
@@ -442,6 +463,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     window.Echo.channel("appuntamentoChannel").listen(".task-created", function (e) {
       _this.caricaAppuntamenti();
     });
+    this.fetchAudio().then(function () {
+      if (_this.getUserCallAppuntamentoCalendar > 0) {
+        _this.newAppuntamento.user_id = _this.getUserCallAppuntamentoCalendar;
+      } else {
+        _this.newAppuntamento.user_id = _this.getRuolo === 'audio' ? parseInt(_this.getIdUser) : parseInt(_this.appuntamentoClient.user_id);
+
+        _this.$store.commit('users/impostaUserCallAppuntamentoCalendar', _this.getRuolo === 'audio' ? parseInt(_this.getIdUser) : parseInt(_this.appuntamentoClient.user_id));
+      }
+
+      _this.blocca = _this.getRuolo === 'audio' ? true : false;
+
+      _this.fetchStruttureByAudio(_this.newAppuntamento.user_id);
+    });
     this.carica = true;
     this.fetchAppuntamenti(this.appuntamentoClient.id).then(function () {
       _this.carica = false;
@@ -457,7 +491,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchRecapitiByAudio(this.getIdUser);
     }
   },
-  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
     fetchAppuntamenti: 'fetchAppuntamenti',
     addAppuntamento: 'addAppuntamento',
     modificaAppuntamento: 'modificaAppuntamento',
@@ -479,6 +513,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('filiali', {
     fetchFilialiByUser: 'fetchFilialiByUser',
     fetchFiliali: 'fetchFiliali'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
+    fetchAudio: 'fetchAudio'
   })), {}, {
     cancella: function cancella() {
       this.$emit('chiudiAppuntamento');
@@ -488,7 +524,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$refs.form.validate();
       this.carica2 = true;
-      this.newAppuntamento.user_id = this.appuntamentoClient.user_id;
       this.newAppuntamento.telefonista_id = this.getIdUser;
       this.newAppuntamento.client_id = this.appuntamentoClient.id;
 
@@ -526,17 +561,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     caricaAppuntamenti: function caricaAppuntamenti() {
       if (this.getSettimanaVisualizzata === 'attuale') {
-        this.fetchAppuntamentiLunedi(this.appuntamentoClient.user_id);
-        this.fetchAppuntamentiMartedi(this.appuntamentoClient.user_id);
-        this.fetchAppuntamentiMercoledi(this.appuntamentoClient.user_id);
-        this.fetchAppuntamentiGiovedi(this.appuntamentoClient.user_id);
+        this.fetchAppuntamentiLunedi(this.userId);
+        this.fetchAppuntamentiMartedi(this.userId);
+        this.fetchAppuntamentiMercoledi(this.userId);
+        this.fetchAppuntamentiGiovedi(this.userId);
         this.fetchAppuntamentiVenerdi(this.appuntamentoClient.user_id);
       } else {
-        this.prossimoLunedi(this.appuntamentoClient.user_id);
-        this.prossimoMartedi(this.appuntamentoClient.user_id);
-        this.prossimoMarcoledi(this.appuntamentoClient.user_id);
-        this.prossimoGiovedi(this.appuntamentoClient.user_id);
-        this.prossimoVenerdi(this.appuntamentoClient.user_id);
+        this.prossimoLunedi(this.userId);
+        this.prossimoMartedi(this.userId);
+        this.prossimoMarcoledi(this.userId);
+        this.prossimoGiovedi(this.userId);
+        this.prossimoVenerdi(this.userId);
       }
     },
     elimina: function elimina(id) {
@@ -555,14 +590,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     infoStruttura: function infoStruttura(struttura) {
       this.informazioneStruttura = struttura;
       this.dialog = true;
+    },
+    ricaricaStrutture: function ricaricaStrutture() {
+      this.$store.commit('users/impostaUserCallAppuntamentoCalendar', parseInt(this.newAppuntamento.user_id));
+      this.fetchStruttureByAudio(this.getUserCallAppuntamentoCalendar);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
     getAppuntamenti: 'getAppuntamenti',
     getSettimanaVisualizzata: 'getSettimanaVisualizzata'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getIdUser: 'getIdUser',
     getRuolo: 'getRuolo'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
+    getAudio: 'getAudio',
+    getUserCallAppuntamentoCalendar: 'getUserCallAppuntamentoCalendar'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('recapiti', {
     getRecapiti: 'getRecapiti',
     getfilialiRecapiti: 'getfilialiRecapiti'
@@ -588,6 +630,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return base;
+    },
+    userId: function userId() {
+      if (this.getUserCallAppuntamentoCalendar > 0) {
+        return this.getUserCallAppuntamentoCalendar;
+      } else if (this.getRuolo === 'audio') {
+        return parseInt(this.getIdUser);
+      }
+
+      return this.appuntamentoClient.user_id;
     }
   })
 });
@@ -2104,6 +2155,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2392,6 +2444,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.showCambioUtente = false;
       this.creaProva();
+    },
+    aggiorna: function aggiorna() {
+      this.$router.push({
+        name: 'clientsInserisci',
+        params: {
+          clientId: this.proveClient.id
+        }
+      });
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('fornitori', {
@@ -2731,22 +2791,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2757,11 +2801,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['recallsClient'],
   data: function data() {
     return {
+      blocca: false,
       dialog: false,
       attivaData: true,
       informazioneStruttura: '',
       carica: false,
-      telefonata: {},
+      telefonata: {
+        userId: ''
+      },
       telefonataDaAggiornare: {},
       menu: false,
       tipologiaEsito: ['Preso Appuntamento', 'Non Interessato', 'Richiamare', 'Non vuole essere richiamato'],
@@ -2802,18 +2849,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.carica = true;
+    this.fetchAudio().then(function () {
+      _this.telefonata.userId = _this.getRuolo === 'audio' ? parseInt(_this.getIdUser) : parseInt(_this.recallsClient.user_id);
+
+      _this.$store.commit('users/impostaUserCallAppuntamentoCalendar', _this.getRuolo === 'audio' ? parseInt(_this.getIdUser) : parseInt(_this.recallsClient.user_id));
+
+      _this.blocca = _this.getRuolo === 'audio' ? true : false;
+
+      _this.fetchStruttureByAudio(_this.telefonata.userId);
+    });
     this.inserimentoDataDiOggi();
-    this.fetchStruttureByAudio(this.recallsClient.user_id);
     this.fetchRecallsByIdClient(this.recallsClient.id).then(function () {
       _this.carica = false;
     });
   },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('telefonate', {
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('telefonate', {
     fetchRecallsByIdClient: 'fetchRecallsByIdClient',
     addTelefonata: 'addTelefonata',
     aggiornaTelefonata: 'aggiornaTelefonata'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('recapiti', {
     fetchStruttureByAudio: 'fetchStruttureByAudio'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('users', {
+    fetchAudio: 'fetchAudio'
   })), {}, {
     inserimentoDataDiOggi: function inserimentoDataDiOggi() {
       var giornoDiOggi = new Date();
@@ -2826,11 +2883,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       this.telefonata.clientId = this.recallsClient.id;
-      this.telefonata.userId = this.getIdUser;
+      this.telefonata.eseguitaId = this.getIdUser;
       this.recallsClient.fattaTelefonata = this.telefonata.esito ? true : false;
       this.addTelefonata(this.telefonata).then(function () {
         if (_this2.telefonata.esito == 'Preso Appuntamento') {
-          _this2.telefonata = {};
+          _this2.telefonata = {
+            esito: '',
+            note: ''
+          };
 
           _this2.inserimentoDataDiOggi();
 
@@ -2839,7 +2899,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this2.$emit('chiudiRecalls', _this2.recallsClient);
         }
 
-        _this2.telefonata = {};
+        _this2.telefonata = {
+          esito: '',
+          note: ''
+        };
 
         _this2.inserimentoDataDiOggi();
       });
@@ -2895,14 +2958,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.telefonata.esito = null;
       this.telefonata.note = null;
       this.telefonata.giorno = telefonata.dataoriginale;
+    },
+    ricaricaStrutture: function ricaricaStrutture() {
+      this.$store.commit('users/impostaUserCallAppuntamentoCalendar', parseInt(this.telefonata.userId));
+      this.fetchStruttureByAudio(this.getUserCallAppuntamentoCalendar);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('telefonate', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('telefonate', {
     getRecalls: 'getRecalls'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('recapiti', {
     getfilialiRecapiti: 'getfilialiRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
-    getIdUser: 'getIdUser'
+    getIdUser: 'getIdUser',
+    getRuolo: 'getRuolo'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('users', {
+    getAudio: 'getAudio',
+    getUserCallAppuntamentoCalendar: 'getUserCallAppuntamentoCalendar'
   })), {}, {
     nomeBtn: function nomeBtn() {
       return this.attivaData === false ? 'vuoi programmare la tel' : 'vuoi effettuare ora la tel';
@@ -3543,62 +3614,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Calendar",
@@ -3606,7 +3621,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       text: 'left',
-      userId: this.audioprot,
+      blocca: false,
+      //userId: 0,
       headers1: [{
         text: 'Orario',
         width: 30,
@@ -3675,12 +3691,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.prossimoSabato(_this.userId);
       }
     });
+    this.blocca = this.getRuolo === 'audio' ? true : false;
     this.fetchAudio();
+    /*this.fetchAudio().then(() => {
+        this.userId = this.getRuolo === 'audio' ? parseInt(this.getIdUser) : parseInt(this.audioprot);
+    });*/
+
     this.fetchDateSettimana();
     this.$store.commit('appuntamenti/resetAppuntamenti');
     this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'attuale');
 
-    if (this.audioprot) {
+    if (this.userId) {
+      this.visualizza();
+    }
+  },
+  watch: {
+    userId: function userId() {
       this.visualizza();
     }
   },
@@ -3724,8 +3750,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchDateSettimanaProssima();
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
-    getAudio: 'getAudio'
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+    getAudio: 'getAudio',
+    getUserCallAppuntamentoCalendar: 'getUserCallAppuntamentoCalendar'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getIdUser: 'getIdUser',
+    getRuolo: 'getRuolo'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
     getAppLun: 'getAppLun',
     getAppMar: 'getAppMar',
@@ -3737,6 +3767,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     fissaAudio: function fissaAudio() {
       return this.fissaNome ? true : false;
+    },
+    userId: function userId() {
+      return this.getUserCallAppuntamentoCalendar > 0 ? this.getUserCallAppuntamentoCalendar : parseInt(this.getIdUser);
     }
   })
 });
@@ -42980,7 +43013,7 @@ var render = function() {
       _c(
         "v-row",
         [
-          _c("v-col", { attrs: { cols: "4" } }, [
+          _c("v-col", { attrs: { cols: "3" } }, [
             _c("h2", [
               _vm._v(
                 _vm._s(_vm.appuntamentoClient.nome) +
@@ -42998,7 +43031,36 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "4" } },
+            { attrs: { cols: "5" } },
+            [
+              !this.appuntamentoClient.mail
+                ? _c(
+                    "v-alert",
+                    { attrs: { color: "warning", dark: "", elevation: "4" } },
+                    [
+                      _vm._v("\n                Ricorda di inserire la "),
+                      _c("u", [_vm._v("mail")]),
+                      _vm._v(
+                        "  del paziente, in questo modo gli arriverà un messaggio di remind un giorno prima dell'appuntamento preso\n            "
+                      )
+                    ]
+                  )
+                : _c(
+                    "v-alert",
+                    { attrs: { color: "success", dark: "", elevation: "4" } },
+                    [
+                      _vm._v(
+                        "\n                Il paziente riceverà un messaggio di remind tramite e-mail un giorno prima dell'appuntamento fissato\n            "
+                      )
+                    ]
+                  )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            { attrs: { cols: "3" } },
             [
               _c(
                 "v-row",
@@ -43026,7 +43088,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { staticClass: "flex justify-end", attrs: { cols: "4" } },
+            { staticClass: "flex justify-end", attrs: { cols: "1" } },
             [
               _c(
                 "v-btn",
@@ -43069,7 +43131,7 @@ var render = function() {
                     [
                       _c(
                         "v-col",
-                        { attrs: { cols: "12", md: "6", lg: "6" } },
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
                         [
                           _c(
                             "v-menu",
@@ -43223,7 +43285,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-col",
-                        { attrs: { cols: "12", md: "6", lg: "6" } },
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
                         [
                           _c(
                             "v-dialog",
@@ -43370,6 +43432,31 @@ var render = function() {
                             ],
                             1
                           )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", md: "4", lg: "4" } },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              "item-value": "id",
+                              "item-text": "name",
+                              items: _vm.getAudio,
+                              label: "Audio",
+                              readonly: _vm.blocca
+                            },
+                            on: { change: _vm.ricaricaStrutture },
+                            model: {
+                              value: _vm.newAppuntamento.user_id,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newAppuntamento, "user_id", $$v)
+                              },
+                              expression: "newAppuntamento.user_id"
+                            }
+                          })
                         ],
                         1
                       )
@@ -43760,10 +43847,7 @@ var render = function() {
             { attrs: { cols: "12", md: "12", lg: "6", xs: "12", sm: "12" } },
             [
               _c("calendar", {
-                attrs: {
-                  audioprot: _vm.appuntamentoClient.user_id,
-                  fissaNome: true
-                }
+                attrs: { audioprot: _vm.userId, fissaNome: false }
               })
             ],
             1
@@ -45307,7 +45391,23 @@ var render = function() {
                       _vm._v(" "),
                       !_vm.proveClient.provincia
                         ? _c("div", [_c("b", [_vm._v("- Provincia")])])
-                        : _vm._e()
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "d-flex justify-end" },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "primary", small: "" },
+                              on: { click: _vm.aggiorna }
+                            },
+                            [_vm._v("Aggiorna")]
+                          )
+                        ],
+                        1
+                      )
                     ]
                   )
                 : _vm._e()
@@ -46388,7 +46488,7 @@ var render = function() {
                       attrs: {
                         cols: "12",
                         md: "12",
-                        lg: "6",
+                        lg: "4",
                         xs: "12",
                         sm: "12"
                       }
@@ -46535,7 +46635,7 @@ var render = function() {
                       attrs: {
                         cols: "12",
                         md: "12",
-                        lg: "6",
+                        lg: "4",
                         xs: "12",
                         sm: "12"
                       }
@@ -46553,6 +46653,39 @@ var render = function() {
                             _vm.$set(_vm.telefonata, "esito", $$v)
                           },
                           expression: "telefonata.esito"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    {
+                      attrs: {
+                        cols: "12",
+                        md: "12",
+                        lg: "4",
+                        xs: "12",
+                        sm: "12"
+                      }
+                    },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          "item-value": "id",
+                          "item-text": "name",
+                          items: _vm.getAudio,
+                          label: "Audio",
+                          readonly: _vm.blocca
+                        },
+                        on: { change: _vm.ricaricaStrutture },
+                        model: {
+                          value: _vm.telefonata.userId,
+                          callback: function($$v) {
+                            _vm.$set(_vm.telefonata, "userId", $$v)
+                          },
+                          expression: "telefonata.userId"
                         }
                       })
                     ],
@@ -46889,7 +47022,7 @@ var render = function() {
             { attrs: { cols: "12", md: "12", lg: "6", xs: "12", sm: "12" } },
             [
               _c("calendar", {
-                attrs: { audioprot: _vm.recallsClient.user_id, fissaNome: true }
+                attrs: { audioprot: _vm.telefonata.userId, fissaNome: false }
               })
             ],
             1
@@ -47461,7 +47594,7 @@ var render = function() {
                     "item-text": "name",
                     items: _vm.getAudio,
                     label: "Seleziona",
-                    readonly: _vm.fissaAudio
+                    readonly: _vm.blocca
                   },
                   on: {
                     change: function($event) {

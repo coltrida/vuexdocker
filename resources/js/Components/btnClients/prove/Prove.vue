@@ -33,6 +33,7 @@
                     <div v-if="!proveClient.citta"><b>- Città</b></div>
                     <div v-if="!proveClient.cap"><b>- Cap</b></div>
                     <div v-if="!proveClient.provincia"><b>- Provincia</b></div>
+                    <div class="d-flex justify-end"><v-btn color="primary" small @click="aggiorna">Aggiorna</v-btn></div>
                 </v-alert>
             </v-col>
             <v-col cols="4" class="flex justify-end">
@@ -630,6 +631,10 @@
 
                 this.showCambioUtente = false;
                 this.creaProva();
+            },
+
+            aggiorna(){
+                this.$router.push({ name: 'clientsInserisci', params: { clientId: this.proveClient.id } });
             }
 
         },

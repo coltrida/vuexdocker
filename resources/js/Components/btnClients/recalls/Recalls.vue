@@ -82,7 +82,7 @@
                 </v-tooltip>
 
                 <v-row>
-                    <v-col cols="12" md="12" lg="6" xs="12" sm="12">
+                    <v-col cols="12" md="12" lg="4" xs="12" sm="12">
                         <v-menu
                             ref="menu"
                             v-model="menu"
@@ -129,12 +129,24 @@
                         </v-menu>
                     </v-col>
 
-                    <v-col cols="12" md="12" lg="6" xs="12" sm="12">
+                    <v-col cols="12" md="12" lg="4" xs="12" sm="12">
                         <v-select
                             v-model="telefonata.esito"
                             :items="tipologiaEsito"
                             :disabled="!attivaData"
                             label="esito"
+                        ></v-select>
+                    </v-col>
+
+                    <v-col cols="12" md="12" lg="4" xs="12" sm="12">
+                        <v-select
+                            @change="ricaricaStrutture"
+                            v-model="telefonata.userId"
+                            item-value="id"
+                            item-text="name"
+                            :items="getAudio"
+                            label="Audio"
+                            :readonly="blocca"
                         ></v-select>
                     </v-col>
 
@@ -202,22 +214,6 @@
                                 </template>
 
                                 <template v-slot:item.action="{ item }">
-                                    <!--<v-tooltip bottom v-if="item.esito == null">
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <v-icon
-                                                @click="aggiorna(item)"
-                                                color="blue"
-                                                small
-                                                v-bind="attrs"
-                                                v-on="on"
-                                                style="margin: 0; padding: 0"
-                                            >
-                                                mdi-check
-                                            </v-icon>
-                                        </template>
-                                        <span>Conferma Esito</span>
-                                    </v-tooltip>-->
-
                                     <v-tooltip bottom v-if="item.esito == null">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-icon
@@ -249,18 +245,6 @@
                                         </template>
                                         <span>Vedi Appuntamento</span>
                                     </v-tooltip>
-
-
-                                    <!--<div v-if="item.esito == null">
-                                        <v-btn small color="success" dark @click="aggiorna(item)">
-                                            Aggiorna
-                                        </v-btn>
-                                    </div>
-                                    <div v-if="item.esito == 'Preso Appuntamento'">
-                                        <v-btn small color="success" dark @click="appuntamento()">
-                                            Vedi App.
-                                        </v-btn>
-                                    </div>-->
                                 </template>
                             </v-data-table>
                         </div>
@@ -269,7 +253,7 @@
                 </v-row>
             </v-col>
             <v-col cols="12" md="12" lg="6" xs="12" sm="12">
-                <calendar :audioprot="recallsClient.user_id" :fissaNome="true"/>
+                <calendar :audioprot="telefonata.userId" :fissaNome="false"/>
             </v-col>
         </v-row>
 
@@ -288,11 +272,14 @@
 
         data(){
             return {
+                blocca: false,
                 dialog: false,
                 attivaData: true,
                 informazioneStruttura: '',
                 carica: false,
-                telefonata:{},
+                telefonata:{
+                    userId:''
+                },
                 telefonataDaAggiornare:{},
                 menu:false,
                 tipologiaEsito:
@@ -315,8 +302,14 @@
 
         mounted() {
             this.carica = true;
+            this.fetchAudio().then(() => {
+                this.telefonata.userId = this.getRuolo === 'audio' ? parseInt(this.getIdUser) : parseInt(this.recallsClient.user_id);
+                this.$store.commit('users/impostaUserCallAppuntamentoCalendar',
+                    this.getRuolo === 'audio' ? parseInt(this.getIdUser) : parseInt(this.recallsClient.user_id));
+                this.blocca = this.getRuolo === 'audio' ? true : false;
+                this.fetchStruttureByAudio(this.telefonata.userId);
+            });
             this.inserimentoDataDiOggi();
-            this.fetchStruttureByAudio(this.recallsClient.user_id);
             this.fetchRecallsByIdClient(this.recallsClient.id).then(() => {
                 this.carica = false;
             });
@@ -333,6 +326,10 @@
                 fetchStruttureByAudio:'fetchStruttureByAudio',
             }),
 
+            ...mapActions('users', {
+                fetchAudio:'fetchAudio',
+            }),
+
             inserimentoDataDiOggi(){
                 let giornoDiOggi = new Date();
                 let giorno = parseInt(giornoDiOggi.getDate()) < 10 ? '0'+parseInt(giornoDiOggi.getDate()) : parseInt(giornoDiOggi.getDate()) ;
@@ -343,16 +340,22 @@
 
             inserisci(){
                 this.telefonata.clientId = this.recallsClient.id;
-                this.telefonata.userId = this.getIdUser;
+                this.telefonata.eseguitaId = this.getIdUser;
                 this.recallsClient.fattaTelefonata = this.telefonata.esito ? true : false;
                 this.addTelefonata(this.telefonata).then(() =>{
                 if(this.telefonata.esito == 'Preso Appuntamento'){
-                    this.telefonata = {};
+                    this.telefonata = {
+                        esito:'',
+                        note:''
+                    };
                     this.inserimentoDataDiOggi();
                     this.recallsClient.presoAppuntamento = true;
                     this.$emit('chiudiRecalls', this.recallsClient)
                 }
-                this.telefonata = {};
+                    this.telefonata = {
+                        esito:'',
+                        note:''
+                    };
                 this.inserimentoDataDiOggi();
                 });
             },
@@ -408,6 +411,12 @@
                 this.telefonata.esito = null;
                 this.telefonata.note = null;
                 this.telefonata.giorno = telefonata.dataoriginale;
+            },
+
+            ricaricaStrutture()
+            {
+                this.$store.commit('users/impostaUserCallAppuntamentoCalendar', parseInt(this.telefonata.userId));
+                this.fetchStruttureByAudio(this.getUserCallAppuntamentoCalendar);
             }
 
         },
@@ -423,6 +432,12 @@
 
             ...mapGetters('login', {
                 getIdUser: 'getIdUser',
+                getRuolo: 'getRuolo',
+            }),
+
+            ...mapGetters('users', {
+                getAudio:'getAudio',
+                getUserCallAppuntamentoCalendar:'getUserCallAppuntamentoCalendar'
             }),
 
             nomeBtn(){

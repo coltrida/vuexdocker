@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <router-link :to="{ name: 'calendar'}">
+        <router-link :to="{ name: 'diari'}">
             <v-btn text>
                 Calendar
             </v-btn>

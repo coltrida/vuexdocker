@@ -146,62 +146,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Calendar",
@@ -209,7 +153,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       text: 'left',
-      userId: this.audioprot,
+      blocca: false,
+      //userId: 0,
       headers1: [{
         text: 'Orario',
         width: 30,
@@ -278,12 +223,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.prossimoSabato(_this.userId);
       }
     });
+    this.blocca = this.getRuolo === 'audio' ? true : false;
     this.fetchAudio();
+    /*this.fetchAudio().then(() => {
+        this.userId = this.getRuolo === 'audio' ? parseInt(this.getIdUser) : parseInt(this.audioprot);
+    });*/
+
     this.fetchDateSettimana();
     this.$store.commit('appuntamenti/resetAppuntamenti');
     this.$store.commit('appuntamenti/setSettimanaDaVisualizzare', 'attuale');
 
-    if (this.audioprot) {
+    if (this.userId) {
+      this.visualizza();
+    }
+  },
+  watch: {
+    userId: function userId() {
       this.visualizza();
     }
   },
@@ -327,8 +282,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchDateSettimanaProssima();
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
-    getAudio: 'getAudio'
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('users', {
+    getAudio: 'getAudio',
+    getUserCallAppuntamentoCalendar: 'getUserCallAppuntamentoCalendar'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+    getIdUser: 'getIdUser',
+    getRuolo: 'getRuolo'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('appuntamenti', {
     getAppLun: 'getAppLun',
     getAppMar: 'getAppMar',
@@ -340,6 +299,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     fissaAudio: function fissaAudio() {
       return this.fissaNome ? true : false;
+    },
+    userId: function userId() {
+      return this.getUserCallAppuntamentoCalendar > 0 ? this.getUserCallAppuntamentoCalendar : parseInt(this.getIdUser);
     }
   })
 });
@@ -453,7 +415,7 @@ var render = function() {
                     "item-text": "name",
                     items: _vm.getAudio,
                     label: "Seleziona",
-                    readonly: _vm.fissaAudio
+                    readonly: _vm.blocca
                   },
                   on: {
                     change: function($event) {

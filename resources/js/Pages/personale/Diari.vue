@@ -192,6 +192,7 @@
         },
 
         mounted(){
+            this.$store.commit('appuntamenti/resetAppuntamenti');
             this.fetchAudio();
             this.fetchDateSettimana();
         },
