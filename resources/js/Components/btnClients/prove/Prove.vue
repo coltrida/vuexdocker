@@ -36,7 +36,14 @@
                     <div class="d-flex justify-end"><v-btn color="primary" small @click="aggiorna">Aggiorna</v-btn></div>
                 </v-alert>
             </v-col>
-            <v-col cols="4" class="flex justify-end">
+            <v-col cols="3">
+                <v-alert color="orange" elevation="8" dark v-if="!proveClient.codfisc && getProvePassate.length > 0">
+                    Attenzione, per la Fattura mancano:
+                    <div v-if="!proveClient.codfisc"><b>- Codice Fiscale</b></div>
+                    <div class="d-flex justify-end"><v-btn color="primary" small @click="aggiorna">Aggiorna</v-btn></div>
+                </v-alert>
+            </v-col>
+            <v-col cols="1" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">
                     Chiudi
                 </v-btn>
@@ -243,111 +250,120 @@
 
                         <v-col cols="12" md="6" lg="6">
                             <h3>Prove</h3>
-                            <v-data-table
-                                :headers="headerProve"
-                                :items="getProvePassate"
-                                class="elevation-1 mt-3"
-                                hide-default-footer
-                            >
-                                <template v-slot:item.stato.nome="{ item }">
-                                    <v-chip
-                                        v-if="item.stato.nome == 'RESO'"
-                                        color="red"
-                                        label
-                                        text-color="white"
-                                    >
-                                        {{item.stato.nome}}
-                                    </v-chip>
-                                    <v-chip
-                                        v-if="item.stato.nome == 'FATTURA'"
-                                        color="green"
-                                        label
-                                        text-color="white"
-                                    >
-                                        {{item.stato.nome}}
-                                    </v-chip>
-                                    <div v-if="item.stato.nome == 'PROVA'">
-                                        {{item.stato.nome}}
-                                    </div>
-                                </template>
+                            <div class="text-center" v-if="carica3">
+                                <v-progress-circular
+                                    indeterminate
+                                    color="primary"
+                                ></v-progress-circular>
+                            </div>
+                            <div v-else>
+                                <v-data-table
+                                    :headers="headerProve"
+                                    :items="getProvePassate"
+                                    class="elevation-1 mt-3"
+                                    hide-default-footer
+                                >
+                                    <template v-slot:item.stato.nome="{ item }">
+                                        <v-chip
+                                            v-if="item.stato.nome == 'RESO'"
+                                            color="red"
+                                            label
+                                            text-color="white"
+                                        >
+                                            {{item.stato.nome}}
+                                        </v-chip>
+                                        <v-chip
+                                            v-if="item.stato.nome == 'FATTURA'"
+                                            color="green"
+                                            label
+                                            text-color="white"
+                                        >
+                                            {{item.stato.nome}}
+                                        </v-chip>
+                                        <div v-if="item.stato.nome == 'PROVA'">
+                                            {{item.stato.nome}}
+                                        </div>
+                                    </template>
 
-                                <template v-slot:item.actions="{ item }">
-                                    <v-icon
-                                        color="blue"
-                                        small
-                                        @click.stop="apriLista(item.product)"
-                                    >
-                                        mdi-format-list-bulleted-square
-                                    </v-icon>
+                                    <template v-slot:item.actions="{ item }">
+                                        <v-icon
+                                            color="blue"
+                                            small
+                                            @click.stop="apriLista(item.product)"
+                                        >
+                                            mdi-format-list-bulleted-square
+                                        </v-icon>
 
-                                    <v-tooltip bottom>
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <v-icon v-if="item.stato.nome === 'PROVA'"
-                                                    color="red"
-                                                    small
-                                                    v-bind="attrs"
-                                                    v-on="on"
-                                                    @click="reso(item.id)"
-                                            >
-                                                mdi-delete
-                                            </v-icon>
-                                        </template>
-                                        <span>Reso</span>
-                                    </v-tooltip>
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-icon v-if="item.stato.nome === 'PROVA'"
+                                                        color="red"
+                                                        small
+                                                        v-bind="attrs"
+                                                        v-on="on"
+                                                        @click="reso(item.id)"
+                                                >
+                                                    mdi-delete
+                                                </v-icon>
+                                            </template>
+                                            <span>Reso</span>
+                                        </v-tooltip>
 
-                                    <v-tooltip bottom>
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <a :href="linkBase+'/storage/fatture/2021/'+item.id+'.pdf'" target="_blank">
-                                                <v-icon v-if="item.stato.nome === 'FATTURA'"
+                                        <v-tooltip bottom v-if="item.stato.nome === 'FATTURA'">
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <a :href="linkBase+'/storage/fatture/2021/'+item.fattura.id+'.pdf'" target="_blank">
+                                                    <v-icon
                                                         color="black"
                                                         small
                                                         v-bind="attrs"
                                                         v-on="on"
+                                                    >
+                                                        mdi-check
+                                                    </v-icon>
+                                                </a>
+
+                                            </template>
+                                            <span>Fattura</span>
+                                        </v-tooltip>
+
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-icon v-if="item.stato.nome === 'PROVA'"
+                                                        color="green"
+                                                        small
+                                                        v-bind="attrs"
+                                                        v-on="on"
+                                                        @click="apriFattura(item)"
                                                 >
-                                                    mdi-check
+                                                    mdi-currency-usd
                                                 </v-icon>
-                                            </a>
+                                            </template>
+                                            <span>Produci Fattura</span>
+                                        </v-tooltip>
 
-                                        </template>
-                                        <span>Fattura</span>
-                                    </v-tooltip>
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <a :href="linkBase+item.copia_comm[0].link" target="_blank">
+                                                    <v-icon
+                                                        style="font-size: 25px"
+                                                        color="orange"
+                                                        small
+                                                        v-bind="attrs"
+                                                        v-on="on"
+                                                    >
+                                                        mdi-closed-caption
+                                                    </v-icon>
+                                                </a>
 
-                                    <v-tooltip bottom>
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <v-icon v-if="item.stato.nome === 'PROVA'"
-                                                    color="green"
-                                                    small
-                                                    v-bind="attrs"
-                                                    v-on="on"
-                                                    @click="apriFattura(item)"
-                                            >
-                                                mdi-currency-usd
-                                            </v-icon>
-                                        </template>
-                                        <span>Produci Fattura</span>
-                                    </v-tooltip>
+                                            </template>
+                                            <span>Copia Commissione</span>
+                                        </v-tooltip>
 
-                                    <v-tooltip bottom>
-                                        <template v-slot:activator="{ on, attrs }">
-                                            <a :href="linkBase+item.copia_comm[0].link" target="_blank">
-                                                <v-icon
-                                                    style="font-size: 25px"
-                                                    color="orange"
-                                                    small
-                                                    v-bind="attrs"
-                                                    v-on="on"
-                                                >
-                                                    mdi-closed-caption
-                                                </v-icon>
-                                            </a>
+                                    </template>
 
-                                        </template>
-                                        <span>Copia Commissione</span>
-                                    </v-tooltip>
+                                </v-data-table>
+                            </div>
 
-                                </template>
-
-                            </v-data-table>
                         </v-col>
                     </v-row>
                 </div>
@@ -376,6 +392,7 @@
                 abilitaFornitore: false,
                 carica: false,
                 carica2: false,
+                carica3: false,
                 dialog: false,
                 idFattura: '',
                 sconto: 0,
@@ -415,6 +432,7 @@
         mounted() {
             this.$store.commit('prove/svuotaElementiNuovaProva');
             this.carica2 = true;
+            this.carica3 = true;
             this.deleteProveSenzaProdotti(this.proveClient.id).then(() => {
                 this.fetchProvePassate(this.proveClient.id).then(() => {
                     this.fetchCanali().then(() => {
@@ -422,6 +440,7 @@
                             this.prova.marketing_id = this.proveClient.marketing_id ? this.proveClient.marketing_id : 0;
                             this.prova.medico_id = this.proveClient.medico_id;
                             this.carica2 = false;
+                            this.carica3 = false;
                             this.bloccaMedici = this.getCanali.find(u => u.name === 'MEDICO').id === this.proveClient.marketing_id ? false : true;
                         });
                     });
@@ -561,13 +580,17 @@
 
             apriFattura(item)
             {
-              this.dialogFattura = true;
-              this.itemFattura = item;
+                this.carica3 = true;
+                this.dialogFattura = true;
+                this.itemFattura = item;
             },
 
             chiudiFattura()
             {
                 this.dialogFattura = false;
+                this.fetchProvePassate(this.proveClient.id).then(() => {
+                    this.carica3 = false;
+                });
             },
 
             visualizzaFattura(idProva)

@@ -14,12 +14,24 @@
                     <div v-for="audio in getCommerciale" :key="audio.id">
                         <v-data-table
                             :headers="headers1"
+                            height="240"
                             :items="audio.prova_in_corso"
                             class="elevation-1 mt-3"
-                            hide-default-footer
+                            :items-per-page=4
                         >
                             <template v-slot:header.client.fullname="{ header }">
                                 {{ audio.name }}
+                            </template>
+
+                            <template v-slot:header.actions="{ header }">
+                                <v-chip
+                                    style="font-size: 12px"
+                                    color="orange"
+                                    label
+                                    text-color="white"
+                                >
+                                    Tot: € {{audio.prova_in_corso_sum_tot}}
+                                </v-chip>
                             </template>
 
                             <template v-slot:item.actions="{ item }">
@@ -56,9 +68,10 @@
                     <div v-for="audio in getCommerciale" :key="audio.id">
                         <v-data-table
                             :headers="headers2"
+                            height="240"
                             :items="audio.prova_finalizzata"
                             class="elevation-1 mt-3"
-                            hide-default-footer
+                            :items-per-page=4
                         >
 
                             <template v-slot:header.client.fullname="{ header }">
@@ -178,7 +191,7 @@
                 headers1: [
                     {text: 'Nome', width:180, value: 'client.fullname', sortable: false, class: "indigo white--text"},
                     {text: 'Tot', width:80,  value: 'tot_formattato', sortable: false, class: "indigo white--text"},
-                    {text: 'GG in prova', width:100, align: 'center',  value: 'giorni_prova', sortable: false, class: "indigo white--text"},
+                    {text: 'GG p.', width:70, align: 'center',  value: 'giorni_prova', sortable: false, class: "indigo white--text"},
                     { text: 'Prodotti', align: 'center', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
 

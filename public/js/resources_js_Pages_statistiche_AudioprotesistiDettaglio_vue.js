@@ -93,6 +93,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AssegnaBudget",
@@ -295,87 +330,134 @@ var render = function() {
           [
             _c(
               "v-row",
-              { staticClass: "pa-5" },
+              { staticClass: "pa-5 text-sm" },
               [
-                _c("v-col", [
-                  _c("h4", [
-                    _vm._v(
-                      "Conv. Prove: " +
-                        _vm._s(
-                          (
-                            ((audio.nuova + audio.riacquisto) /
-                              audio.prova_count) *
-                            100
-                          ).toFixed(0)
-                        ) +
-                        "%"
-                    )
-                  ])
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("Conv. Prove")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(
+                        (
+                          ((audio.nuova + audio.riacquisto) /
+                            (audio.nuova + audio.riacquisto + audio.reso)) *
+                          100
+                        ).toFixed(0)
+                      ) +
+                      "%\n                "
+                  )
                 ]),
                 _vm._v(" "),
-                _c("v-col", [
-                  _c("h4", [
-                    _vm._v(
-                      "Nr. Pc: " +
-                        _vm._s(
-                          audio.molti_delta[0]
-                            ? audio.molti_delta[0].provvigione
-                            : 0
-                        )
-                    )
-                  ])
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("Nr. Pc")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(
+                        audio.molti_delta[0]
+                          ? audio.molti_delta[0].provvigione
+                          : 0
+                      ) +
+                      "\n                "
+                  )
                 ]),
                 _vm._v(" "),
-                _c("v-col", [
-                  _c("h4", [
-                    _vm._v(
-                      "Nr. Cl: " +
-                        _vm._s(
-                          audio.molti_delta[0]
-                            ? audio.molti_delta[0].stipendio
-                            : 0
-                        )
-                    )
-                  ])
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("Nr. Cl")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(
+                        audio.molti_delta[0]
+                          ? audio.molti_delta[0].stipendio
+                          : 0
+                      ) +
+                      "\n                "
+                  )
                 ]),
                 _vm._v(" "),
-                _c("v-col", [
-                  _c("h4", [
-                    _vm._v(
-                      "Media v.: " +
-                        _vm._s(
-                          audio.molti_fatturati[0]
-                            ? audio.molti_fatturati[0].provvigione
-                            : 0
-                        )
-                    )
-                  ])
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("Media v.")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(
+                        audio.molti_fatturati[0]
+                          ? audio.molti_fatturati[0].provvigione
+                          : 0
+                      ) +
+                      "\n                "
+                  )
                 ]),
                 _vm._v(" "),
-                _c("v-col", [
-                  _c("h4", [
-                    _vm._v("Prove aperte: " + _vm._s(audio.prova_count))
-                  ])
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("Prove aperte")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(audio.prova_count) +
+                      "\n                "
+                  )
                 ]),
                 _vm._v(" "),
-                _c("v-col", [
-                  _c("h4", [_vm._v("New Vendite: " + _vm._s(audio.nuova))])
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("New Vendite")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(audio.nuova) +
+                      "\n                "
+                  )
                 ]),
                 _vm._v(" "),
-                _c("v-col", [
-                  _c("h4", [_vm._v("Riacquisti: " + _vm._s(audio.riacquisto))])
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("Riacquisti")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(audio.riacquisto) +
+                      "\n                "
+                  )
                 ]),
                 _vm._v(" "),
-                _c("v-col", [
-                  _c("h4", [
-                    _vm._v(
-                      "\n                        T.M.Chiusura: " +
-                        _vm._s(
-                          _vm.calcolaMediaGiorniProva(audio.prova_finalizzata)
-                        ) +
-                        " gg.\n                    "
-                    )
-                  ])
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("M. Libero")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(audio.libero) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("M. Ricond.")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(audio.riconducibile) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("M. Sociale")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(audio.sociale) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("Resi")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(audio.reso) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("v-col", { staticClass: "text-center" }, [
+                  _c("h4", [_vm._v("T.M.Chiusura")]),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(
+                        _vm.calcolaMediaGiorniProva(audio.prova_finalizzata)
+                      ) +
+                      " gg.\n                "
+                  )
                 ])
               ],
               1

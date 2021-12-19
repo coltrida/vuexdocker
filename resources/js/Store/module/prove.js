@@ -144,6 +144,10 @@ const mutations = {
 
     svuotaElementiNuovaProva(state){
         state.elementiNuovaProva = [];
+    },
+
+    svuotaProvePassate(state){
+        state.provePassate = [];
     }
 
 };

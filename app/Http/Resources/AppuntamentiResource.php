@@ -19,6 +19,7 @@ class AppuntamentiResource extends JsonResource
         return [
             'id' => $this->id,
             'filiale_id' => $this->client->filiale_id,
+            'user_id' => $this->user_id,
             'client_id' => $this->client_id,
             'nome' => $this->client->nome,
             'cognome' => $this->client->cognome,

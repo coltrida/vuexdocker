@@ -295,8 +295,13 @@ class ClientService
                         if (isset($ele->Patient->Actions->Action)){
                             if (isset($ele->Patient->Actions->Action->PublicData)){
                                 if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard)){
+                                    //dd((string)$ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]->AudMeasurementConditions->StimulusSignalOutput);
                                     if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0])){
-                                        $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
+                                        if ((string)$ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]->AudMeasurementConditions->StimulusSignalOutput == 'AirConductorLeft'){
+                                            $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
+                                        } elseif ((string)$ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0]->AudMeasurementConditions->StimulusSignalOutput == 'AirConductorRight'){
+                                            $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[0];
+                                        }
                                     }
                                     if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[2])){
                                         $ossead = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[2];
@@ -311,7 +316,13 @@ class ClientService
                             if (isset($ele->Patient->Actions->Action->PublicData)){
                                 if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard)){
                                     if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1])){
-                                        $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
+                                        if ((string)$ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1]->AudMeasurementConditions->StimulusSignalOutput == 'AirConductorLeft'){
+                                            $audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
+                                        } elseif ((string)$ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1]->AudMeasurementConditions->StimulusSignalOutput == 'AirConductorRight'){
+                                            $audiometriad = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
+                                        }
+
+                                        //$audiometrias = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[1];
                                     }
                                     if (isset($ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[3])){
                                         $osseas = $ele->Patient->Actions->Action->PublicData->children()->HIMSAAudiometricStandard->ToneThresholdAudiogram[3];
@@ -524,7 +535,7 @@ class ClientService
 
     public function situazioneAnnoClientiAudio($request)
     {
-        return Prova::
+        /*return Prova::
                 with('client')
                 ->where([
                     ['user_id', $request->userId],
@@ -533,7 +544,32 @@ class ClientService
                     $t->where('nome', 'FATTURA');
                 })
             ->latest()
-            ->get();
+            ->get();*/
+
+        return User::with(['prova' => function($p) use($request){
+            $p->where('anno_fine', $request->anno)->whereHas('stato', function ($t){
+                $t->where('nome', 'FATTURA');
+            })->with('client');
+        }])
+            ->withCount(['prova as libero' => function ($prova) use($request){
+                $prova->where([['anno_fine', $request->anno], ['mercato', 'libero']])->whereHas('stato', function ($t){
+                    $t->where('nome', 'FATTURA');
+                });
+            }])
+            ->withCount(['prova as riconducibile' => function ($prova) use($request){
+                $prova->where([['anno_fine', $request->anno], ['mercato', 'riconducibile']])->whereHas('stato', function ($t){
+                    $t->where('nome', 'FATTURA');
+                });
+            }])
+            ->withCount(['prova as sociale' => function ($prova) use($request){
+                $prova->where([['anno_fine', $request->anno], ['mercato', 'sociale']])->whereHas('stato', function ($t){
+                    $t->where('nome', 'FATTURA');
+                });
+            }])
+            ->find($request->userId);
+
+        /*return User::
+            find($request->userId);*/
     }
 
     public function situazioneAnnoResiAudio($request)

@@ -20,10 +20,20 @@
                     <div>
                         <v-data-table
                             :headers="headers1"
+                            :items-per-page=5
                             :items="getSituazioneMese.prova_in_corso"
                             class="elevation-1 mt-3"
-                            hide-default-footer
                         >
+                            <template v-slot:header.actions="{ header }">
+                                <v-chip
+                                    style="font-size: 12px"
+                                    color="orange"
+                                    label
+                                    text-color="white"
+                                >
+                                    Tot. Prove: € {{ getSituazioneMese.prova_in_corso_sum_tot }}
+                                </v-chip>
+                            </template>
 
                             <template v-slot:item.actions="{ item }">
                                 <v-tooltip bottom>
@@ -74,7 +84,7 @@
                             :headers="headers2"
                             :items="getSituazioneMese.prova_finalizzata"
                             class="elevation-1 mt-3"
-                            hide-default-footer
+                            :items-per-page=5
                         >
 
                             <template v-slot:header.actions="{ header }">
@@ -229,7 +239,7 @@
                             :headers="headers4"
                             :items="getAppuntamentiOggi"
                             class="elevation-1 mt-3"
-                            hide-default-footer
+                            :items-per-page=5
                         >
                             <template v-slot:item.fullname="{ item }">
                                 <router-link style="color: black" :to="{ name: 'clientsFiliale',
@@ -306,7 +316,7 @@
                             :headers="headers5"
                             :items="getAppuntamentiDomani"
                             class="elevation-1 mt-3"
-                            hide-default-footer
+                            :items-per-page=5
                         >
 
                             <template v-slot:item.fullname="{ item }">

@@ -3864,7 +3864,7 @@ var state = function state() {
     cittaByProvincia: [],
     clientMessaggio: '',
     client: {},
-    situazioneAnnoClientiAudio: [],
+    situazioneAnnoClientiAudio: {},
     situazioneAnnoResiAudio: [],
     messaggioBackup: '',
     totImportati: 0,
@@ -7905,6 +7905,9 @@ var mutations = {
   },
   svuotaElementiNuovaProva: function svuotaElementiNuovaProva(state) {
     state.elementiNuovaProva = [];
+  },
+  svuotaProvePassate: function svuotaProvePassate(state) {
+    state.provePassate = [];
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({

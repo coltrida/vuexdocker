@@ -41,8 +41,8 @@ Route::get('/test', function (){
     Artisan::call('test');
 });
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-//Route::group([], function () {
+//Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group([], function () {
         Route::get('/resetSpecial', function (){
             Artisan::call('migrate:fresh');
             Artisan::call('db:seed');

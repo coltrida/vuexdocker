@@ -3,7 +3,7 @@
         {{valoreOra+':'+valoreMinuti}}
     </div>
     <div v-else>
-        <v-tooltip right v-if="appuntamento.cliente">
+        <v-tooltip bottom v-if="appuntamento.cliente">
             <template v-slot:activator="{ on, attrs }">
         <span v-bind="attrs" v-on="on">
             <router-link

@@ -154,7 +154,7 @@ class ProvaService
     public function provePassate($idClient)
     {
         return Client::with(['prova' => function($q){
-            $q->with('copiaComm', 'marketing');
+            $q->with('copiaComm', 'marketing', 'fattura');
         }])
             ->find($idClient)
             ->prova;

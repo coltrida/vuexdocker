@@ -278,9 +278,13 @@ class User extends Authenticatable
         $oggi = Carbon::now();
         $giorno = $oggi->day;
         $mese = $oggi->month;
-        return $this->hasMany(Client::class)->where([
-            ['giornoNascita', $giorno],
-            ['meseNascita', $mese]
+        return $this->hasMany(Client::class)
+            ->whereHas('tipologia', function ($t){
+                $t->where('nome', 'CL');
+            })
+            ->where([
+                ['giornoNascita', $giorno],
+                ['meseNascita', $mese]
         ]);
     }
 

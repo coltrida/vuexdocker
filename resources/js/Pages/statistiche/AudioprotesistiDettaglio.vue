@@ -15,20 +15,55 @@
         </v-row>
 
             <v-card color="blue lighten-4" v-for="audio in getAudioConFatt" :key="audio.id" class="mb-7">
-                <v-row class="pa-5">
+                <v-row class="pa-5 text-sm">
                     <!--<v-col><h2>{{audio.name}}</h2></v-col>-->
-                    <v-col><h4>Conv. Prove: {{ (((audio.nuova + audio.riacquisto) / audio.prova_count) * 100).toFixed(0) }}%</h4></v-col>
-                    <v-col><h4>Nr. Pc: {{audio.molti_delta[0] ? audio.molti_delta[0].provvigione : 0}}</h4></v-col>
-                    <v-col><h4>Nr. Cl: {{audio.molti_delta[0] ? audio.molti_delta[0].stipendio : 0}}</h4></v-col>
-                    <v-col><h4>Media v.: {{audio.molti_fatturati[0] ? audio.molti_fatturati[0].provvigione : 0}}</h4></v-col>
-                    <v-col><h4>Prove aperte: {{audio.prova_count}}</h4></v-col>
-                    <v-col><h4>New Vendite: {{audio.nuova}}</h4></v-col>
-                    <v-col><h4>Riacquisti: {{audio.riacquisto}}</h4></v-col>
-
-                    <v-col>
-                        <h4>
-                            T.M.Chiusura: {{calcolaMediaGiorniProva(audio.prova_finalizzata)}} gg.
-                        </h4>
+                    <v-col class="text-center">
+                        <h4>Conv. Prove</h4>
+                        {{ (((audio.nuova + audio.riacquisto) / (audio.nuova + audio.riacquisto + audio.reso) ) * 100).toFixed(0) }}%
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>Nr. Pc</h4>
+                        {{audio.molti_delta[0] ? audio.molti_delta[0].provvigione : 0}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>Nr. Cl</h4>
+                        {{audio.molti_delta[0] ? audio.molti_delta[0].stipendio : 0}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>Media v.</h4>
+                        {{audio.molti_fatturati[0] ? audio.molti_fatturati[0].provvigione : 0}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>Prove aperte</h4>
+                        {{audio.prova_count}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>New Vendite</h4>
+                        {{audio.nuova}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>Riacquisti</h4>
+                        {{audio.riacquisto}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>M. Libero</h4>
+                        {{audio.libero}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>M. Ricond.</h4>
+                        {{audio.riconducibile}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>M. Sociale</h4>
+                        {{audio.sociale}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>Resi</h4>
+                        {{audio.reso}}
+                    </v-col>
+                    <v-col class="text-center">
+                        <h4>T.M.Chiusura</h4>
+                        {{calcolaMediaGiorniProva(audio.prova_finalizzata)}} gg.
                     </v-col>
                     <!--<v-col><h4>% conv.: {{audio.pezzi.budgetAnno ? audio.pezzi.budgetAnno / (audio.pezzi.budgetAnno + audio.pezzi.premio) * 100 : 0 }}%</h4></v-col>-->
                 </v-row>

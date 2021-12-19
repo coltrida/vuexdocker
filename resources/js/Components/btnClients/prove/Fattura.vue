@@ -227,14 +227,18 @@
         methods: {
             ...mapActions('prove', {
                 salvaFattura: 'salvaFattura',
+                fetchProvePassate:'fetchProvePassate',
             }),
 
             salva() {
                 this.$refs.form.validate();
                 this.itemFattura.totFatturaReale = this.totFatturaReale;
-                this.salvaFattura(this.itemFattura);
-                this.chiudiFattura();
+                this.salvaFattura(this.itemFattura).then(() => {
+                    this.$store.commit('prove/svuotaProvePassate');
+                    this.chiudiFattura();
+                });
             },
+
             chiudiFattura() {
                 this.$emit('chiudiFattura');
             }

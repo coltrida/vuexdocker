@@ -225,6 +225,7 @@ class UserService
                 ->withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                     $g->where([['mese_fine', $mese], ['anno_fine', $anno]]);
                 }], 'tot')
+                ->withSum('provaInCorso', 'tot')
                 ->withCount('provaInCorso')
                 ->find($idAudio);
 
@@ -233,6 +234,9 @@ class UserService
                 : null;
             $utente->prova_finalizzata_sum_tot = $utente->prova_finalizzata_sum_tot ?
                 number_format( (float) $utente->prova_finalizzata_sum_tot, '0', ',', '.')
+                : null;
+            $utente->prova_in_corso_sum_tot = $utente->prova_in_corso_sum_tot ?
+                number_format( (float) $utente->prova_in_corso_sum_tot, '0', ',', '.')
                 : null;
             return $utente;
         }
@@ -245,6 +249,7 @@ class UserService
             ->withSum(['provaFinalizzata' => function($g) use($mese, $anno){
                 $g->where([['mese_fine', $mese], ['anno_fine', $anno]]);
             }], 'tot')
+            ->withSum('provaInCorso', 'tot')
             ->withCount('provaInCorso')
             ->get();
 
@@ -254,6 +259,9 @@ class UserService
                 : null;
             $utente->prova_finalizzata_sum_tot = $utente->prova_finalizzata_sum_tot ?
                 number_format( (float) $utente->prova_finalizzata_sum_tot, '0', ',', '.')
+                : null;
+            $utente->prova_in_corso_sum_tot = $utente->prova_in_corso_sum_tot ?
+                number_format( (float) $utente->prova_in_corso_sum_tot, '0', ',', '.')
                 : null;
         }
         return $utenti;
@@ -280,6 +288,20 @@ class UserService
             }])
             ->withCount(['provaFinalizzata as riacquisto' => function($q) use($request){
                 $q->where('anno_fine', $request->anno)->where('tipologia', 'Riacquisto');
+            }])
+            ->withCount(['provaFinalizzata as libero' => function($q) use($request){
+                $q->where('anno_fine', $request->anno)->where('mercato', 'libero');
+            }])
+            ->withCount(['provaFinalizzata as riconducibile' => function($q) use($request){
+                $q->where('anno_fine', $request->anno)->where('mercato', 'riconducibile');
+            }])
+            ->withCount(['provaFinalizzata as sociale' => function($q) use($request){
+                $q->where('anno_fine', $request->anno)->where('mercato', 'sociale');
+            }])
+            ->withCount(['prova as reso' => function($q) use($request){
+                $q->where('anno_fine', $request->anno)->whereHas('stato', function ($s){
+                    $s->where('nome', 'RESO');
+                });
             }])
             ->orderBy('name')
             ->get();

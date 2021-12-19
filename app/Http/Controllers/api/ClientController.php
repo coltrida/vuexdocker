@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\CompleanniResource;
+use App\Http\Resources\SituazioneAnnoAudioResource;
+use App\Http\Resources\SituazioneAudioResource;
 use App\Imports\ClientsImport;
 use App\Services\ClientService;
 use Illuminate\Http\Request;

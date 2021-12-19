@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Mail\AlarmDatabaseSpace;
+use App\Mail\messaggioCompleanno;
 use App\Mail\RememberAppuntamento;
 use App\Models\Appuntamento;
 use App\Models\Client;
@@ -30,13 +31,15 @@ class ElaborazioneService
     {
         $oggi = Carbon::now();
         $ora = $oggi->hour;
+        $anno = $oggi->year;
+        $mese = $oggi->month;
+        $giorno = $oggi->day;
         $idStatoFattura = StatoApa::where('nome', 'FATTURA')->first()->id;
 
         // attività svolte a mezzanotte
         if ($ora > 14 || $ora < 11)
+     //   if ($ora > 14)
         {
-            $anno = $oggi->year;
-            $mese = $oggi->month;
             $users = User::with('budget')->audio(1)->get();
 
             foreach ($users as $user){
@@ -75,6 +78,9 @@ class ElaborazioneService
                     whereHas('fattura', function ($f) use($anno){
                         $f->where('anno_fattura', $anno);
                     })
+                        ->whereHas('listino', function ($q){
+                            $q->where('categoria_id', 1);
+                        })
                         ->where([
                             ['stato_id', $idStatoFattura],
                             ['user_id', $user->id]
@@ -400,7 +406,16 @@ class ElaborazioneService
             foreach ($utentiAppuntamentoDomani as $utente){
                 \Mail::to($utente->mail)->send(new RememberAppuntamento($utente));
             }
-
+            $compleanni = Client::whereHas('tipologia', function ($t){
+                $t->where('nome', 'CL');
+            })
+                ->where([
+                    ['giornoNascita', $giorno],
+                    ['meseNascita', $mese]
+                ])->get();
+            /*foreach ($compleanni as $compleanno){
+                \Mail::to($compleanno->mail)->send(new messaggioCompleanno($compleanno));
+            }*/
         }
     }
 

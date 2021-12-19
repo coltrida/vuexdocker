@@ -65,6 +65,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "OrariMedici",
@@ -92,7 +98,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, {
         text: 'Importo',
         sortable: false,
-        value: 'tot',
+        value: 'tot_formattato',
+        "class": "indigo white--text"
+      }, {
+        text: 'Mercato',
+        sortable: false,
+        value: 'mercato',
         "class": "indigo white--text"
       }]
     };
@@ -254,13 +265,40 @@ var render = function() {
             "v-col",
             { attrs: { cols: "6" } },
             [
-              _c("h3", [_vm._v("Clienti")]),
+              _c(
+                "v-row",
+                [
+                  _c("v-col", [_c("h3", [_vm._v("Clienti")])]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _vm._v(
+                      "A mercato libero: " +
+                        _vm._s(_vm.getSituazioneAnnoClientiAudio.libero)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _vm._v(
+                      "A mercato ricond.: " +
+                        _vm._s(_vm.getSituazioneAnnoClientiAudio.riconducibile)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", [
+                    _vm._v(
+                      "A mercato sociale: " +
+                        _vm._s(_vm.getSituazioneAnnoClientiAudio.sociale)
+                    )
+                  ])
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("v-data-table", {
                 staticClass: "elevation-1",
                 attrs: {
                   headers: _vm.header,
-                  items: _vm.getSituazioneAnnoClientiAudio
+                  items: _vm.getSituazioneAnnoClientiAudio.prova
                 }
               })
             ],

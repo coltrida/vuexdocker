@@ -1243,7 +1243,7 @@ var render = function() {
             ? _c(
                 "v-tooltip",
                 {
-                  attrs: { right: "" },
+                  attrs: { bottom: "" },
                   scopedSlots: _vm._u(
                     [
                       {

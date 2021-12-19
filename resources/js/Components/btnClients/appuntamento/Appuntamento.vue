@@ -400,12 +400,14 @@
                 fetchAppuntamentiMercoledi: 'fetchAppuntamentiMercoledi',
                 fetchAppuntamentiGiovedi: 'fetchAppuntamentiGiovedi',
                 fetchAppuntamentiVenerdi: 'fetchAppuntamentiVenerdi',
+                fetchAppuntamentiSabato: 'fetchAppuntamentiSabato',
 
                 prossimoLunedi: 'prossimoLunedi',
                 prossimoMartedi: 'prossimoMartedi',
                 prossimoMarcoledi: 'prossimoMarcoledi',
                 prossimoGiovedi: 'prossimoGiovedi',
                 prossimoVenerdi: 'prossimoVenerdi',
+                prossimoSabato: 'prossimoSabato',
             }),
 
             ...mapActions('recapiti', {
@@ -438,24 +440,24 @@
                         this.$refs.form.resetValidation();
                         this.caricaAppuntamenti();
                         this.carica2=false;
-                        this.newAppuntamento = {
-                            filiale_id: null,
-                            recapito_id: null,
-                            tipo: null,
-                            nota: null
-                        }
+                        this.newAppuntamento.giorno = null;
+                        this.newAppuntamento.orario = null;
+                        this.newAppuntamento.filiale_id = null;
+                        this.newAppuntamento.recapito_id = null;
+                        this.newAppuntamento.tipo = null;
+                        this.newAppuntamento.nota = null;
                     });
                 } else {
                     this.addAppuntamento(this.newAppuntamento).then(() => {
                         this.$refs.form.resetValidation();
                         this.caricaAppuntamenti();
                         this.carica2=false;
-                        this.newAppuntamento = {
-                            filiale_id: null,
-                            recapito_id: null,
-                            tipo: null,
-                            nota: null
-                        }
+                        this.newAppuntamento.giorno = null;
+                        this.newAppuntamento.orario = null;
+                        this.newAppuntamento.filiale_id = null;
+                        this.newAppuntamento.recapito_id = null;
+                        this.newAppuntamento.tipo = null;
+                        this.newAppuntamento.nota = null;
                     });
                 }
 
@@ -469,13 +471,15 @@
                     this.fetchAppuntamentiMartedi(this.userId);
                     this.fetchAppuntamentiMercoledi(this.userId);
                     this.fetchAppuntamentiGiovedi(this.userId);
-                    this.fetchAppuntamentiVenerdi(this.appuntamentoClient.user_id);
+                    this.fetchAppuntamentiVenerdi(this.userId);
+                    this.fetchAppuntamentiSabato(this.userId);
                 } else {
                     this.prossimoLunedi(this.userId);
                     this.prossimoMartedi(this.userId);
                     this.prossimoMarcoledi(this.userId);
                     this.prossimoGiovedi(this.userId);
                     this.prossimoVenerdi(this.userId);
+                    this.prossimoSabato(this.userId);
                 }
 
             },
@@ -485,7 +489,9 @@
                     idAppuntamento: id,
                     idUser: this.getIdUser
                 };
-                this.eliminaAppuntamento(payload);
+                this.eliminaAppuntamento(payload).then(() => {
+                    this.caricaAppuntamenti();
+                });
             },
 
             modifica(eleSelezionato) {

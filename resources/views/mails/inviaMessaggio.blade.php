@@ -1,6 +1,6 @@
 @component('mail::message')
 
-Gentile <h3>{{$client['nome']}} {{$client['cognome']}},</h3><br>
+Gentile <b>{{$client['nome']}} {{$client['cognome']}},</b><br>
 
 {{$testoMessaggio}}
 

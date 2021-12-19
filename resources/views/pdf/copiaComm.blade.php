@@ -19,8 +19,8 @@
 
 <br>
 
-<div style="border: 1px solid black; height: 170px; width: 100%; padding: 5px 2px; margin-bottom: 10px; background-color: #eeeeee">
-    <div style="float: left; width: 50%; padding: 10px">
+<div style="border: 1px solid black; height: 130px; width: 100%; padding: 5px 2px; margin-bottom: 10px; background-color: #eeeeee">
+    <div style="float: left; width: 60%; padding: 10px; font-size: 14px">
         <div style="margin-bottom: 5px"> <b>{{$provaSalvata->client->nome.' '.$provaSalvata->client->cognome}}</b> </div>
         <div>Nato a: {{$provaSalvata->client->luogoNascita}}</div>
         <div>Il: {{Carbon\Carbon::make($provaSalvata->client->datanascita)->format('d-m-Y')}}</div>
@@ -28,7 +28,7 @@
         <div>Città: {{$provaSalvata->client->citta}}</div>
         <div>CAP: {{$provaSalvata->client->cap}}</div>
     </div>
-    <div style="float: right; width: 50%; padding: 10px">
+    <div style="float: right; width: 40%; padding: 10px; font-size: 14px">
         <div style="margin-bottom: 5px">&nbsp;</div>
         <div>Prov: {{$provaSalvata->client->provincia}}</div>
         <div>Tel: {{$provaSalvata->client->telefono}}</div>
@@ -49,12 +49,12 @@
     Mail{{str_pad($provaSalvata->client->mail, 36, " ", STR_PAD_BOTH)}}<br>--}}
 </div>
 
-<div style="border: 1px solid black; height: 190px; width: 100%; background-color: #eeeeee; padding: 10px">
+<div style="border: 1px solid black;  width: 100%; background-color: #eeeeee; padding: 10px">
     <table style="width: 100%; margin-bottom: 40px">
-        <tr style="border-bottom: 1px solid">
-            <td style="width: 33%; border-bottom: 1px dashed gray;"> <b>Matricola</b> </td>
-            <td style="width: 34%; border-bottom: 1px dashed gray;"> <b>Prodotto</b> </td>
-            <td style="width: 33%; border-bottom: 1px dashed gray;"> <b>Prezzo</b> </td>
+        <tr style="border-bottom: 1px solid;">
+            <td style="width: 33%; height: 60px; border-bottom: 1px dashed gray;"> <b>Matricola</b></td>
+            <td style="width: 34%; height: 60px; border-bottom: 1px dashed gray;"> <b>Prodotto</b></td>
+            <td style="width: 33%; height: 60px; border-bottom: 1px dashed gray;"> <b>Prezzo</b></td>
         </tr>
         @foreach($provaSalvata->product as $product)
             <tr style="border-bottom: 1px solid">

@@ -16,10 +16,16 @@
 
         <v-row class="mb-6">
             <v-col cols="6">
-                <h3>Clienti</h3>
+                <v-row>
+                    <v-col><h3>Clienti</h3></v-col>
+                    <v-col>A mercato libero: {{getSituazioneAnnoClientiAudio.libero}}</v-col>
+                    <v-col>A mercato ricond.: {{getSituazioneAnnoClientiAudio.riconducibile}}</v-col>
+                    <v-col>A mercato sociale: {{getSituazioneAnnoClientiAudio.sociale}}</v-col>
+                </v-row>
+
                 <v-data-table
                     :headers="header"
-                    :items="getSituazioneAnnoClientiAudio"
+                    :items="getSituazioneAnnoClientiAudio.prova"
                     class="elevation-1"
                 >
                 </v-data-table>
@@ -58,7 +64,8 @@
                     { text: 'Cognome',  align: 'start', sortable: false, value: 'client.cognome', class: "indigo white--text" },
                     { text: 'Nome',  align: 'start', sortable: false, value: 'client.nome', class: "indigo white--text" },
                     { text: 'Città',  align: 'start', sortable: false, value: 'client.citta', class: "indigo white--text" },
-                    { text: 'Importo',  sortable: false, value: 'tot', class: "indigo white--text" },
+                    { text: 'Importo',  sortable: false, value: 'tot_formattato', class: "indigo white--text" },
+                    { text: 'Mercato',  sortable: false, value: 'mercato', class: "indigo white--text" },
                 ],
             }
         },

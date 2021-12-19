@@ -10,7 +10,7 @@ const state = () => ({
     cittaByProvincia: [],
     clientMessaggio: '',
     client: {},
-    situazioneAnnoClientiAudio:[],
+    situazioneAnnoClientiAudio:{},
     situazioneAnnoResiAudio:[],
     messaggioBackup:'',
     totImportati: 0,
