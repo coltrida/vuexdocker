@@ -256,6 +256,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     spostati: function spostati(settimana) {
       if (settimana === 0) {
         this.fetchDateSettimana();
+        this.nrSettimana = 0;
         this.caricaDati(null);
       } else {
         this.nrSettimana += settimana;

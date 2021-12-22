@@ -205,7 +205,7 @@
                         <v-col cols="12" md="4" lg="4">
                             <v-select
                                 v-model.lazy="newAppuntamento.tipo"
-                                :items="tipoAppuntamento"
+                                :items="getMotivoIntervento"
                                 label="Tipo Visita*"
                                 :rules="tipoRules"
                                 required
@@ -337,7 +337,6 @@
                     nota: null
                 },
                 menu: false,
-                tipoAppuntamento: ['Prima Visita', 'Esame Audio', 'Controllo Prova', 'fine prova', 'Assistenza'],
 
                 headers: [
                     {text: 'Giorno', align: 'start', sortable: false, value: 'giorno', class: "indigo white--text"},
@@ -537,6 +536,10 @@
 
             ...mapGetters('filiali', {
                 getFiliali: 'getFiliali',
+            }),
+
+            ...mapGetters('informazioni', {
+                getMotivoIntervento: 'getMotivoIntervento',
             }),
 
             btnName() {

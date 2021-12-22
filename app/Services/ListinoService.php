@@ -15,7 +15,11 @@ class ListinoService
     {
         return Listino::with(['categoria', 'filiale' => function($f){
             $f->orderBy('nome');
-        }, 'fornitore:id,nome'])->orderBy('fornitore_id')->orderBy('categoria_id')->get();
+        }, 'fornitore:id,nome'])
+            ->orderBy('fornitore_id')
+            ->orderBy('categoria_id')
+            ->orderBy('nome')
+            ->get();
     }
 
     public function listinoFromFornitore($idFornitore)

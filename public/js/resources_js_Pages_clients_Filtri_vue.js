@@ -421,7 +421,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         nota: null
       },
       menu: false,
-      tipoAppuntamento: ['Prima Visita', 'Esame Audio', 'Controllo Prova', 'fine prova', 'Assistenza'],
       headers: [{
         text: 'Giorno',
         align: 'start',
@@ -604,7 +603,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchStruttureByAudio(this.getUserCallAppuntamentoCalendar);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
     getAppuntamenti: 'getAppuntamenti',
     getSettimanaVisualizzata: 'getSettimanaVisualizzata'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
@@ -618,6 +617,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getfilialiRecapiti: 'getfilialiRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('filiali', {
     getFiliali: 'getFiliali'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('informazioni', {
+    getMotivoIntervento: 'getMotivoIntervento'
   })), {}, {
     btnName: function btnName() {
       return this.modificaSwitch ? 'modifica' : 'inserisci';
@@ -43939,7 +43940,7 @@ var render = function() {
                         [
                           _c("v-select", {
                             attrs: {
-                              items: _vm.tipoAppuntamento,
+                              items: _vm.getMotivoIntervento,
                               label: "Tipo Visita*",
                               rules: _vm.tipoRules,
                               required: ""

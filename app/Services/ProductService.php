@@ -9,6 +9,7 @@ use App\Models\Ddt;
 use App\Models\Filiale;
 use App\Models\Listino;
 use App\Models\Product;
+use App\Models\Richiesta;
 use App\Models\User;
 use Carbon\Carbon;
 use function array_push;
@@ -26,6 +27,56 @@ class ProductService
             ->withCount('productsInArrivo')
             ->orderBy('nome')
             ->get();
+    }
+
+    public function inCentrale()
+    {
+        return Product::where([
+            ['stato_id', 8],
+            ['filiale_id', 0],
+        ])
+            ->orderBy('fornitore_id')->orderBy('listino_id')
+            ->get();
+    }
+
+    public function riepilogoInCentrale()
+    {
+        $elementiDistinti = Product::select('listino_id')->with('listino')->where([
+            ['filiale_id', 0],
+            ['stato_id', 8],
+        ])->distinct()->get();
+
+
+
+        foreach ($elementiDistinti as $item){
+            $item->nome = $item->listino->nome;
+            $item->totPresenti = Product::where([
+                ['filiale_id', 0],
+                ['stato_id', 8],
+                ['listino_id', $item->listino_id],
+            ])->count();
+        }
+       // dd($elementiDistinti);
+        return $elementiDistinti;
+    }
+
+    public function aggiungiProductInCentrale($request)
+    {
+        $propieta = 'product';
+        $prodotto = Listino::find($request->listino_id);
+        $utente = User::find($request->user_id);
+        $testo = $utente->name.' ha inserito '.$prodotto->nome .' con matricola '.$request->matricola.' nel magazzino centrale ';
+        $log = new LoggingService();
+        $log->scriviLog('CENTRALE', $utente, $utente->name, $propieta, $testo);
+
+        return Product::create([
+            'matricola' => $request->matricola,
+            'stato_id' => $request->stato_id,
+            'listino_id' => $request->listino_id,
+            'fornitore_id' => $request->fornitore_id,
+            'filiale_id' => $request->filiale_id,
+            'datacarico' => Carbon::now()->format('Y-m-d'),
+        ]);
     }
 
     public function presenti($id)
@@ -90,11 +141,17 @@ class ProductService
 
     public function richiesti($id)
     {
-        return Filiale::with(['products' => function($q){
+        /*return Filiale::with(['products' => function($q){
             $q->with(['listino' => function($l){
                 $l->with('fornitore', 'categoria');
             }])->richiesto()->orderBy('listino_id');
-        }])->find($id)->products;
+        }])->find($id)->products;*/
+
+        return Filiale::with(['richieste' => function($r){
+            $r->with(['listino' => function($l){
+                $l->with('fornitore');
+            }]);
+        }])->find($id)->richieste;
     }
 
     public function inArrivo($id)
@@ -108,33 +165,26 @@ class ProductService
 
     public function richiestaProdotti($request)
     {
-        $prodotti = [];
-        for($i=1; $i <= $request->quantita; $i++){
-            $prodotto = Product::create([
-                'stato_id' => $request->stato_id,
-                'filiale_id' => $request->filiale_id,
-                'listino_id' => $request->listino_id,
-                'fornitore_id' => $request->fornitore_id,
-            ]);
-            /*$prodotto = new Product();
-            $prodotto->stato_id = $request->stato_id;
-            $prodotto->filiale_id = $request->filiale_id;
-            $prodotto->listino_id = $request->listino_id;
-            $prodotto->fornitore_id = $request->fornitore_id;
-            $prodotto->save();*/
-            array_push($prodotti, $prodotto);
-        }
+        $richiestaSalvata = Richiesta::create([
+            'filiale_id' => $request->filiale_id,
+            'listino_id' => $request->listino_id,
+            'quantita' => $request->quantita,
+        ]);
+
+        $richiesta = Richiesta::with(['listino' => function($l){
+            $l->with('fornitore');
+        }, 'filiale'])->find($richiestaSalvata->id);
 
         $propieta = 'product';
-        $filiale = Filiale::find($request->filiale_id);
-        $prodotto = Listino::find($request->listino_id);
+        $filiale = $richiesta->filiale;
+        $prodotto = $richiesta->listino;
         $utente = User::find($request->user_id);
         $testo = $utente->name.' ha richiesto '.$request->quantita. ' '. $prodotto->nome .' per la filiale '.$filiale->nome;
         $log = new LoggingService();
         $log->scriviLog($filiale->nome, $utente, $utente->name, $propieta, $testo);
 
-        broadcast(new LogisticaEvent($prodotti))->toOthers();
-        return $prodotti;
+        broadcast(new LogisticaEvent($richiesta))->toOthers();
+        return $richiesta;
     }
 
     public function assegnaProdottiMagazzino($request)
@@ -152,7 +202,6 @@ class ProductService
 
     public function creaDDT($request)
     {
-      //  $nuovoDDT = new Ddt();
         $filiale = Filiale::find($request['filiale_id']);
 
         $nuovoDDT = Ddt::create([
@@ -163,13 +212,6 @@ class ProductService
             'cap_destinazione' => $filiale->cap,
             'provincia_destinazione' => $filiale->provincia,
         ]);
-        /*$nuovoDDT->filiale_id = $request['filiale_id'];
-        $nuovoDDT->nome_destinazione = 'Centro Udito '.$filiale->citta;
-        $nuovoDDT->indirizzo_destinazione = $filiale->indirizzo;
-        $nuovoDDT->citta_destinazione = $filiale->citta;
-        $nuovoDDT->cap_destinazione = $filiale->cap;
-        $nuovoDDT->provincia_destinazione = $filiale->provincia;
-        $nuovoDDT->save();*/
 
         return $nuovoDDT->id;
     }
@@ -202,7 +244,9 @@ class ProductService
 
     public function productRimuoviRichiesta($id)
     {
-        Product::find($id)->delete();
+        $richiesta = Richiesta::find($id);
+        broadcast(new LogisticaEvent($richiesta))->toOthers();
+        $richiesta->delete();
     }
 
     public function listaProdottiRichiesti()
@@ -242,5 +286,52 @@ class ProductService
         return Listino::with('fornitore', 'categoria')->whereHas('categoria', function ($q){
             $q->where('nome', 'SERV');
         })->orderBy('nome')->get();
+    }
+
+    public function assegnaProdottiToFiliale($request)
+    {
+        foreach ($request['prodotti'] as $item) {
+            $prodotto = Product::find($item['id']);
+            $this->aggiornaRichiestaFiliale($prodotto->listino_id, $request['filiale_id']);
+            $prodotto->stato_id = 8;
+            $prodotto->filiale_id = $request['filiale_id'];
+            $prodotto->save();
+        };
+    }
+
+    public function confermaProdottiToFiliale($request)
+    {
+        $idDDT = $this->creaDDT($request);
+        foreach ($request['prodotti'] as $item) {
+            $prodotto = Product::find($item['id']);
+            $prodotto->stato_id = 1;
+            $prodotto->ddt_id = $idDDT;
+            $prodotto->save();
+        };
+        broadcast(new LogisticaEvent($request->prodotti))->toOthers();
+    }
+
+    public function richiesteFiliali()
+    {
+        return Filiale::whereHas('richieste')->with(['richieste' => function($r){
+            $r->with(['listino' => function($l){
+                $l->with('fornitore');
+            }])->orderBy('listino_id');
+        }])->get();
+    }
+
+    private function aggiornaRichiestaFiliale($idListino, $idFiliale)
+    {
+        $richiesta = Richiesta::where([
+            ['filiale_id', $idFiliale],
+            ['listino_id', $idListino],
+        ])->first();
+        if ($richiesta){
+            $richiesta->quantita -= 1;
+            $richiesta->save();
+            if ($richiesta->quantita === 0) {
+                $richiesta->delete();
+            }
+        }
     }
 }

@@ -2,7 +2,16 @@ import help from "../../help";
 
 const state = () => ({
     informazioni: [],
-    motivoIntervento: ['Pulizia', 'Assistenza', 'Nuovo Esame', 'informazioni'],
+    motivoIntervento: [
+        'Assistenza',
+        'Consegna',
+        'Controllo Prova',
+        'Esame Audio',
+        'Fine prova',
+        'Informazioni',
+        'Prima Visita',
+        'Pulizia',
+    ],
 });
 
 const getters = {

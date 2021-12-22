@@ -17,6 +17,21 @@ class ProductController extends Controller
         return $productService->riepilogoFiliali();
     }
 
+    public function inCentrale(ProductService $productService)
+    {
+        return ProductResource::collection($productService->inCentrale());
+    }
+
+    public function riepilogoInCentrale(ProductService $productService)
+    {
+        return $productService->riepilogoInCentrale();
+    }
+
+    public function aggiungiProductInCentrale(Request $request, ProductService $productService)
+    {
+        return new ProductResource($productService->aggiungiProductInCentrale($request));
+    }
+
     public function presenti($id, ProductService $productService)
     {
         return ProductResource::collection($productService->presenti($id));
@@ -39,7 +54,7 @@ class ProductController extends Controller
 
     public function richiesti($id, ProductService $productService)
     {
-        return ProductResource::collection($productService->richiesti($id));
+        return $productService->richiesti($id);
     }
 
     public function inArrivo($id, ProductService $productService)
@@ -49,7 +64,7 @@ class ProductController extends Controller
 
     public function richiestaProdotti(Request $request, ProductService $productService)
     {
-        return ProductResource::collection($productService->richiestaProdotti($request));
+        return $productService->richiestaProdotti($request);
     }
 
     public function assegnaProdottiMagazzino(Request $request, ProductService $productService)
@@ -95,5 +110,20 @@ class ProductController extends Controller
     public function servizi(ProductService $productService)
     {
         return ListinoResource::collection($productService->servizi());
+    }
+
+    public function assegnaProdottiToFiliale(Request $request, ProductService $productService)
+    {
+        $productService->assegnaProdottiToFiliale($request);
+    }
+
+    public function confermaProdottiToFiliale(Request $request, ProductService $productService)
+    {
+        $productService->confermaProdottiToFiliale($request);
+    }
+
+    public function richiesteFiliali(ProductService $productService)
+    {
+        return $productService->richiesteFiliali();
     }
 }

@@ -364,7 +364,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         nota: null
       },
       menu: false,
-      tipoAppuntamento: ['Prima Visita', 'Esame Audio', 'Controllo Prova', 'fine prova', 'Assistenza'],
       headers: [{
         text: 'Giorno',
         align: 'start',
@@ -547,7 +546,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchStruttureByAudio(this.getUserCallAppuntamentoCalendar);
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
     getAppuntamenti: 'getAppuntamenti',
     getSettimanaVisualizzata: 'getSettimanaVisualizzata'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
@@ -561,6 +560,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getfilialiRecapiti: 'getfilialiRecapiti'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('filiali', {
     getFiliali: 'getFiliali'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('informazioni', {
+    getMotivoIntervento: 'getMotivoIntervento'
   })), {}, {
     btnName: function btnName() {
       return this.modificaSwitch ? 'modifica' : 'inserisci';
@@ -3755,26 +3756,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "homeAmm",
@@ -3785,27 +3766,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       elemento: {},
       valori: {},
       headers1: [{
-        text: 'Nome',
-        width: 180,
-        value: 'listino.nome',
-        sortable: false,
-        "class": "indigo white--text"
-      }, {
         text: 'Fornitore',
         width: 180,
         value: 'listino.fornitore.nome',
         sortable: false,
         "class": "indigo white--text"
       }, {
-        text: 'Matricola',
+        text: 'Nome',
         width: 180,
-        value: 'matricola',
+        value: 'listino.nome',
         sortable: false,
         "class": "indigo white--text"
       }, {
-        text: 'Invia',
-        width: 120,
-        value: 'actions',
+        text: 'Quantita',
+        width: 180,
+        value: 'quantita',
         sortable: false,
         "class": "indigo white--text"
       }],
@@ -46341,7 +46316,7 @@ var render = function() {
                         [
                           _c("v-select", {
                             attrs: {
-                              items: _vm.tipoAppuntamento,
+                              items: _vm.getMotivoIntervento,
                               label: "Tipo Visita*",
                               rules: _vm.tipoRules,
                               required: ""
@@ -51041,78 +51016,18 @@ var render = function() {
                   "div",
                   { key: filiale.id },
                   [
+                    _c("h3", { staticClass: "mt-4" }, [
+                      _vm._v(_vm._s(filiale.nome))
+                    ]),
+                    _vm._v(" "),
                     _c("v-data-table", {
-                      staticClass: "elevation-1 mt-3",
+                      staticClass: "elevation-1",
                       attrs: {
                         headers: _vm.headers1,
                         dense: "",
-                        items: filiale.products_richiesti,
+                        items: filiale.richieste,
                         "hide-default-footer": ""
-                      },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "header.listino.nome",
-                            fn: function(ref) {
-                              var header = ref.header
-                              return [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(filiale.nome) +
-                                    "\n                        "
-                                )
-                              ]
-                            }
-                          },
-                          {
-                            key: "item.matricola",
-                            fn: function(ref) {
-                              var item = ref.item
-                              return [
-                                _c("v-text-field", {
-                                  staticStyle: {
-                                    transform: "translate(0, 12px)"
-                                  },
-                                  attrs: { outlined: "", dense: "" },
-                                  model: {
-                                    value: _vm.matricole[item.id],
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.matricole, item.id, $$v)
-                                    },
-                                    expression: "matricole[item.id]"
-                                  }
-                                })
-                              ]
-                            }
-                          },
-                          {
-                            key: "item.actions",
-                            fn: function(ref) {
-                              var item = ref.item
-                              return [
-                                _c(
-                                  "v-btn",
-                                  {
-                                    attrs: { color: "green", dark: "" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.assegna(item, filiale)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                    ASSEGNA\n                            "
-                                    )
-                                  ]
-                                )
-                              ]
-                            }
-                          }
-                        ],
-                        null,
-                        true
-                      )
+                      }
                     })
                   ],
                   1

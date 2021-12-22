@@ -145,4 +145,9 @@ class Filiale extends Model
     {
         return $this->belongsToMany(Listino::class)->withPivot('soglia');
     }
+
+    public function richieste()
+    {
+        return $this->hasMany(Richiesta::class);
+    }
 }

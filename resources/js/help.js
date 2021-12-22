@@ -187,6 +187,12 @@ const help = () => {
         linklogfile: base+'logFile',
         linkpuliscilogfile: base+'pulisciLogFile',
         linkesistedoppione: base+'esisteDoppione',
+        linkprodottiincentrale: base+'inCentrale',
+        linkriepilogoprodottiincentrale: base+'riepilogoInCentrale',
+        linkaddprodottoincentrale: base+'aggiungiProductInCentrale',
+        linkassegnaprodottitofiliale: base+'assegnaProdottiToFiliale',
+        linkconfermaprodottitofiliale: base+'confermaProdottiToFiliale',
+        linkrichiestefiliali: base+'richiesteFiliali',
     };
 };
 export default help;

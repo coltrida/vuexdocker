@@ -14,16 +14,16 @@ class LogisticaEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $prodotti = array();
+    public $richiesta;
 
     /**
      * Create a new event instance.
      *
-     * @param $prodotti
+     * @param $richiesta
      */
-    public function __construct($prodotti)
+    public function __construct($richiesta)
     {
-        $this->prodotti = $prodotti;
+        $this->richiesta = $richiesta;
     }
 
     /**

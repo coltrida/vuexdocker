@@ -6,12 +6,17 @@ const state = () => ({
     associazioni: [],
     situazioneMese: [],
     richiestaApparecchi: [],
+    daSpedire: [],
     filiale:{}
 });
 
 const getters = {
     getFiliali(state){
         return state.filiali;
+    },
+
+    getDaSpedire(state){
+        return state.daSpedire;
     },
 
     getFilialiPerInserimento(state){
@@ -174,7 +179,7 @@ const actions = {
     },
 
     async fetchRichiestaApparecchi({commit}){
-        const response = await axios.get(`${help().linklistarichiestaapparecchi}`, {
+        const response = await axios.get(`${help().linkrichiestefiliali}`, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
@@ -227,6 +232,31 @@ const mutations = {
     fetchRichiestaApparecchi(state, payload){
         state.richiestaApparecchi = payload;
     },
+
+    aggiornaRichiesteFiliali(state, payload) {
+        if (state.richiestaApparecchi.length > 0) {
+            let richiesteFiliale = state.richiestaApparecchi.find(u => u.id === payload['filiale_id']).richieste;
+            let elementi = payload['prodotti'];
+
+            elementi.forEach(ele => {
+                state.daSpedire.push(ele);
+                if (richiesteFiliale.find(u => u.listino_id === ele.listinoId) ){
+                    let richiesta = richiesteFiliale.find(u => u.listino_id === ele.listinoId);
+                    richiesta.quantita --;
+                    if (richiesta.quantita === 0) {
+                        state.richiestaApparecchi.find(u => u.id === payload['filiale_id']).richieste = richiesteFiliale.filter(u => u.listino_id !== ele.listinoId)
+                    }
+                }
+            });
+        } else {
+            state.daSpedire = payload['prodotti'];
+        }
+
+    },
+
+    confermaProdottiToFiliale(state, payload) {
+        state.daSpedire = [];
+    }
 };
 
 export default{

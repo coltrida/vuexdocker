@@ -1,16 +1,26 @@
 import help from "../../help";
 
 const state = () => ({
+    inCentrale: [],
     inFiliale: [],
     inProva: [],
     richiesti: [],
     inArrivo: [],
     immatricolati:[],
     soglie:[],
-    riepilogoMagazzini: []
+    riepilogoMagazzini: [],
+    riepilogoInCentrale: []
 });
 
 const getters = {
+    getInCentrale(state){
+        return state.inCentrale;
+    },
+
+    getRiepilogoInCentrale(state){
+        return state.riepilogoInCentrale;
+    },
+
     getInFiliale(state){
         return state.inFiliale;
     },
@@ -42,6 +52,24 @@ const getters = {
 
 const actions = {
 
+    async fetchInCentrale({commit}){
+        const response = await axios.get(`${help().linkprodottiincentrale}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchInCentrale', response.data.data);
+    },
+
+    async fetchRiepilogoInCentrale({commit}){
+        const response = await axios.get(`${help().linkriepilogoprodottiincentrale}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchRiepilogoInCentrale', response.data);
+    },
+
     async fetchInFiliale({commit}, idFiliale){
         const response = await axios.get(`${help().linkfiliali}`+'/'+idFiliale+'/presenti', {
             headers: {
@@ -49,6 +77,15 @@ const actions = {
             }
         });
         commit('fetchInFiliale', response.data.data);
+    },
+
+    async addProdottoInCentrale({commit}, payload){
+        const response = await axios.post(`${help().linkaddprodottoincentrale}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('addProdottoInCentrale', response.data.data);
     },
 
     async fetchRiepilogoMagazzini({commit}){
@@ -93,7 +130,7 @@ const actions = {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('fetchRichiesti', response.data.data);
+        commit('fetchRichiesti', response.data);
     },
 
     async fetchInArrivo({commit}, idFiliale){
@@ -120,7 +157,7 @@ const actions = {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('richiediProduct', response.data.data);
+        commit('richiediProduct', response.data);
     },
 
     async switchInProva({commit}, payload){
@@ -191,9 +228,50 @@ const actions = {
         });
         commit('fetchInFiliale', response.data.data);
     },
+
+    async assegnaProdottiToFiliale({commit}, payload){
+        await axios.post(`${help().linkassegnaprodottitofiliale}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('assegnaProdottiToFiliale', payload);
+        commit('filiali/aggiornaRichiesteFiliali', payload, {root: true});
+    },
+
+    async assegnaProdottiFilialeInAnticipo({commit}, payload){
+        await axios.post(`${help().linkassegnaprodottitofiliale}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('assegnaProdottiToFiliale', payload);
+        commit('filiali/aggiornaRichiesteFiliali', payload, {root: true});
+    },
+
+    async confermaProdottiToFiliale({commit}, payload){
+        await axios.post(`${help().linkconfermaprodottitofiliale}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('filiali/confermaProdottiToFiliale', null, {root: true});
+    },
 };
 
 const mutations = {
+    fetchInCentrale(state, payload){
+        state.inCentrale= payload;
+    },
+
+    fetchRiepilogoInCentrale(state, payload){
+        state.riepilogoInCentrale= payload;
+    },
+
+    addProdottoInCentrale(state, payload){
+        state.inCentrale.unshift(payload);
+    },
+
     fetchInFiliale(state, payload){
         state.inFiliale = payload;
     },
@@ -223,9 +301,7 @@ const mutations = {
     },
 
     richiediProduct(state, payload){
-        payload.forEach(ele => {
-            state.richiesti.push(ele);
-        })
+        state.richiesti.push(payload);
     },
 
     eliminaRichiesta(state, id) {
@@ -239,6 +315,18 @@ const mutations = {
     switchArrivato(state, payload) {
         state.inArrivo = state.inArrivo.filter(u => u.id !== payload.id);
         state.inFiliale.unshift(payload);
+    },
+
+    resetRiepilogoCentrale(state) {
+        state.riepilogoInCentrale = [];
+    },
+
+    assegnaProdottiToFiliale(state, payload) {
+        let elementi = payload['prodotti'];
+
+        elementi.forEach(ele => {
+            state.inCentrale = state.inCentrale.filter(u => u.id !== ele.id);
+        })
     },
 
 };

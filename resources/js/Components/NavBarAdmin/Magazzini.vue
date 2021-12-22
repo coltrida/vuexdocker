@@ -19,6 +19,13 @@
                         </v-list-item>
                     </router-link>
                 </div>
+                <div>
+                    <router-link :to="{ name: 'magazzinoCentrale'}">
+                        <v-list-item>
+                            <v-list-item-title>CENTRALE</v-list-item-title>
+                        </v-list-item>
+                    </router-link>
+                </div>
                 <div v-for="(item, index) in getFiliali"
                      :key="index">
                     <router-link :to="{ name: 'magazzino', params: { filialeId: item.id }}">

@@ -322,6 +322,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
@@ -793,6 +800,13 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3412,6 +3426,25 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "magazzinoCentrale" } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [_c("v-list-item-title", [_vm._v("CENTRALE")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               _vm._l(_vm.getFiliali, function(item, index) {
                 return _c(
                   "div",
@@ -4247,25 +4280,48 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-list",
-            _vm._l(_vm.getFiliali, function(item, index) {
-              return _c(
+            [
+              _vm._l(_vm.getFiliali, function(item, index) {
+                return _c(
+                  "div",
+                  { key: index },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "magazzino",
+                            params: { filialeId: item.id }
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "v-list-item",
+                          [
+                            _c("v-list-item-title", [_vm._v(_vm._s(item.nome))])
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c(
                 "div",
-                { key: index },
                 [
                   _c(
                     "router-link",
-                    {
-                      attrs: {
-                        to: {
-                          name: "magazzino",
-                          params: { filialeId: item.id }
-                        }
-                      }
-                    },
+                    { attrs: { to: { name: "magazzinoCentrale" } } },
                     [
                       _c(
                         "v-list-item",
-                        [_c("v-list-item-title", [_vm._v(_vm._s(item.nome))])],
+                        [_c("v-list-item-title", [_vm._v("CENTRALE")])],
                         1
                       )
                     ],
@@ -4274,8 +4330,8 @@ var render = function() {
                 ],
                 1
               )
-            }),
-            0
+            ],
+            2
           )
         ],
         1

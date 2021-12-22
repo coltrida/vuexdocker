@@ -124,6 +124,9 @@ Route::group([], function () {
 
         // ---------------- magazzino - prodotti -------------------------
         Route::get('/riepilogoFiliali', [ProductController::class, 'riepilogoFiliali']);
+        Route::get('/inCentrale', [ProductController::class, 'inCentrale']);
+        Route::get('/riepilogoInCentrale', [ProductController::class, 'riepilogoInCentrale']);
+        Route::post('/aggiungiProductInCentrale', [ProductController::class, 'aggiungiProductInCentrale']);
         Route::get('/filiali/{id}/presenti', [ProductController::class, 'presenti']);
         Route::get('/controlloSoglie/{id}', [ProductController::class, 'controlloSoglie']);
         Route::get('/filialeFornitore/{idFiliale}/{idFornitore}', [ProductController::class, 'presentiFornitore']);
@@ -140,6 +143,9 @@ Route::group([], function () {
         Route::get('/prodottiImmatricolati/{idFiliale}', [ProductController::class, 'prodottiImmatricolati']);
         Route::get('/productSwitchArrivato/{id}', [ProductController::class, 'switchArrivato']);
         Route::get('/servizi', [ProductController::class, 'servizi']);
+        Route::post('/assegnaProdottiToFiliale', [ProductController::class, 'assegnaProdottiToFiliale']);
+        Route::post('/confermaProdottiToFiliale', [ProductController::class, 'confermaProdottiToFiliale']);
+        Route::get('/richiesteFiliali', [ProductController::class, 'richiesteFiliali']);
 
         // ---------------- client -------------------------
         Route::get('/clients', [ClientController::class, 'index']);

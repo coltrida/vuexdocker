@@ -413,9 +413,9 @@ class ElaborazioneService
                     ['giornoNascita', $giorno],
                     ['meseNascita', $mese]
                 ])->get();
-            /*foreach ($compleanni as $compleanno){
+            foreach ($compleanni as $compleanno){
                 \Mail::to($compleanno->mail)->send(new messaggioCompleanno($compleanno));
-            }*/
+            }
         }
     }
 
@@ -532,7 +532,8 @@ class ElaborazioneService
             $q->where('nome', 'DDT')
                 ->orWhere('nome', 'RESO')
                 ->orWhere('nome', 'PROVA')
-                ->orWhere('nome', 'FILIALE');
+                ->orWhere('nome', 'FILIALE')
+                ->orWhere('nome', 'IMMATRICOLATO');
         })->get();
         foreach ($prodotti as $prodotto){
             if($oggi->diffInDays($prodotto->datacarico) > (int)$prodotto->listino->giorniTempoDiReso - 10){

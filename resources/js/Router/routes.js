@@ -17,6 +17,7 @@ const routes = [
     { path: '/clientsFiliale/:filialeId/:nomRicerca?/:cogRicerca?', component: () => import('../Pages/clients/ClientsFiliale'), name: 'clientsFiliale' },
     { path: '/clients/inserisci/:clientId?', component: () => import('../Pages/clients/Inserisci'), name: 'clientsInserisci' },
     { path: '/magazzino/:filialeId', component: () => import('../Pages/magazzino/MagazzinoFiliale'), name: 'magazzino' },
+    { path: '/magazzinoCentrale', component: () => import('../Pages/magazzino/Centrale'), name: 'magazzinoCentrale' },
     { path: '/associaPersonale', component: () => import('../Pages/gestione/AssociaPersonale'), name: 'associaPersonale' },
     { path: '/tempiRecall', component: () => import('../Pages/gestione/TempiRecall'), name: 'tempiRecall' },
     { path: '/inviaSms', component: () => import('../Pages/gestione/InvioSms'), name: 'inviaSms' },

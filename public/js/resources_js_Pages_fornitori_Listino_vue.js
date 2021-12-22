@@ -160,6 +160,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -592,7 +593,8 @@ var render = function() {
                   headers: _vm.headers,
                   items: _vm.getListino,
                   search: _vm.search,
-                  "items-per-page": 15
+                  "items-per-page": 9,
+                  height: "500"
                 },
                 scopedSlots: _vm._u([
                   {

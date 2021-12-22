@@ -22,7 +22,8 @@
                     :headers="headers"
                     :items="getListino"
                     :search="search"
-                    :items-per-page="15"
+                    :items-per-page="9"
+                    height="500"
                     class="elevation-1 mt-3"
                 >
                     <template v-slot:item.actions="{ item }">

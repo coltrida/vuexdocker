@@ -407,7 +407,7 @@ var render = function() {
                     { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c("v-text-field", {
-                        attrs: { label: "Nuovo Canale" },
+                        attrs: { label: "Nome Canale" },
                         model: {
                           value: _vm.newCanale.nome,
                           callback: function($$v) {
@@ -425,7 +425,7 @@ var render = function() {
                     { attrs: { cols: "12", md: "4", lg: "4" } },
                     [
                       _c("v-text-field", {
-                        attrs: { label: "Nuovo Canale" },
+                        attrs: { label: "Codice Canale" },
                         model: {
                           value: _vm.newCanale.cod,
                           callback: function($$v) {

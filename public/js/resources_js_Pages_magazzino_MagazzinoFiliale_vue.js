@@ -170,6 +170,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
@@ -303,34 +308,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       headers4: [{
         text: 'Fornitore',
-        align: 'start',
-        value: 'fornitore',
+        value: 'listino.fornitore.nome',
         "class": "indigo white--text"
       }, {
         text: 'Nome',
-        value: 'nome',
+        value: 'listino.nome',
         "class": "indigo white--text"
       }, {
-        text: 'Categoria',
-        value: 'categoria',
-        "class": "indigo white--text"
-      },
-      /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
-      {
-        text: 'Prezzo',
-        value: 'prezzolistino',
-        "class": "indigo white--text"
-      }, {
-        text: 'Iva',
-        value: 'iva',
-        "class": "indigo white--text"
-      }, {
-        text: 'GG reso',
-        value: 'giorniTempoDiReso',
-        "class": "indigo white--text"
-      }, {
-        text: 'Matricola',
-        value: 'matricola',
+        text: 'Quantità',
+        value: 'quantita',
         "class": "indigo white--text"
       }, {
         text: 'Actions',
@@ -677,7 +663,11 @@ var render = function() {
               _vm._v(" "),
               _c("v-data-table", {
                 staticClass: "elevation-1 mt-3",
-                attrs: { headers: _vm.headersRiepilogo, items: _vm.getSoglie }
+                attrs: {
+                  headers: _vm.headersRiepilogo,
+                  dense: "",
+                  items: _vm.getSoglie
+                }
               }),
               _vm._v(" "),
               _c("h3", { staticClass: "mt-5" }, [_vm._v("Presenti")]),
@@ -686,6 +676,7 @@ var render = function() {
                 staticClass: "elevation-1 mt-3",
                 attrs: {
                   headers: _vm.headers1,
+                  dense: "",
                   items: _vm.getInFiliale,
                   "items-per-page": 10
                 },
@@ -756,6 +747,7 @@ var render = function() {
                 staticClass: "elevation-1 mt-3",
                 attrs: {
                   headers: _vm.headers2,
+                  dense: "",
                   items: _vm.getInProva,
                   "items-per-page": 10
                 },
@@ -800,6 +792,7 @@ var render = function() {
                 staticClass: "elevation-1 mt-3",
                 attrs: {
                   headers: _vm.headers4,
+                  dense: "",
                   items: _vm.getRichiesti,
                   "items-per-page": 10
                 },
@@ -837,6 +830,7 @@ var render = function() {
                 staticClass: "elevation-1 mt-3",
                 attrs: {
                   headers: _vm.headers3,
+                  dense: "",
                   items: _vm.getInArrivo,
                   "items-per-page": 10
                 },

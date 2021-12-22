@@ -28,6 +28,13 @@
                         </v-list-item>
                     </router-link>
                 </div>
+                <div>
+                    <router-link :to="{ name: 'magazzinoCentrale'}">
+                        <v-list-item>
+                            <v-list-item-title>CENTRALE</v-list-item-title>
+                        </v-list-item>
+                    </router-link>
+                </div>
             </v-list>
         </v-menu>
     </div>
