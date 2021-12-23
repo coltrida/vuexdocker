@@ -202,12 +202,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
   data: function data() {
     return {
       carica: false,
+      carica2: false,
       selected: [],
       idFilialeSelezionata: '',
       destinazione: '',
@@ -253,7 +264,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 'matricola',
         "class": "indigo white--text"
       }, {
-        text: 'Actions',
+        text: '',
         value: 'actions',
         sortable: false,
         "class": "indigo white--text"
@@ -368,6 +379,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     confermaProdotti: function confermaProdotti() {
       var _this5 = this;
 
+      this.carica2 = true;
       var filiale = this.filialeId ? this.filialeId : this.idFilialeSelezionata;
       this.confermaProdottiToFiliale({
         'filiale_id': filiale,
@@ -378,6 +390,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.destinazione = '';
         _this5.filialeId = '';
         _this5.selected = [];
+        _this5.carica2 = false;
       });
     },
     elimina: function elimina(id) {
@@ -406,6 +419,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     bloccaAssegna: function bloccaAssegna() {
       return this.selected.length === 0 ? true : false;
+    },
+    bloccaAssegnaInAnticipo: function bloccaAssegnaInAnticipo() {
+      return this.selected.length === 0 || !this.idFilialeSelezionata ? true : false;
     }
   })
 });
@@ -703,7 +719,7 @@ var render = function() {
                                     "v-btn",
                                     {
                                       attrs: {
-                                        disabled: _vm.bloccaAssegna,
+                                        disabled: _vm.bloccaAssegnaInAnticipo,
                                         small: "",
                                         color: "primary"
                                       },
@@ -731,7 +747,9 @@ var render = function() {
                         attrs: {
                           headers: _vm.headers1,
                           dense: "",
-                          "show-select": "",
+                          "show-select":
+                            _vm.getRuolo === "admin" ||
+                            _vm.getRuolo === "amministrazione",
                           items: _vm.getInCentrale,
                           "items-per-page": 10
                         },
@@ -741,22 +759,31 @@ var render = function() {
                             fn: function(ref) {
                               var item = ref.item
                               return [
-                                _c(
-                                  "v-icon",
-                                  {
-                                    attrs: { color: "red", small: "" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.elimina(item.id)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                mdi-delete\n                            "
+                                _vm.getRuolo === "admin" ||
+                                _vm.getRuolo === "amministrazione"
+                                  ? _c(
+                                      "div",
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            attrs: { color: "red", small: "" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.elimina(item.id)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                    mdi-delete\n                                "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
                                     )
-                                  ]
-                                )
+                                  : _vm._e()
                               ]
                             }
                           },
@@ -896,34 +923,50 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _c(
-                                        "v-col",
-                                        {
-                                          staticClass:
-                                            "d-flex align-end justify-end"
-                                        },
-                                        [
-                                          _c(
-                                            "v-btn",
+                                      _vm.carica2
+                                        ? _c("v-col", [
+                                            _c(
+                                              "div",
+                                              { staticClass: "text-center" },
+                                              [
+                                                _c("v-progress-circular", {
+                                                  attrs: {
+                                                    indeterminate: "",
+                                                    color: "primary"
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          ])
+                                        : _c(
+                                            "v-col",
                                             {
-                                              attrs: {
-                                                disabled: _vm.bloccaAssegna,
-                                                small: "",
-                                                color: "success"
-                                              },
-                                              on: {
-                                                click: _vm.confermaProdotti
-                                              }
+                                              staticClass:
+                                                "d-flex align-end justify-end"
                                             },
                                             [
-                                              _vm._v(
-                                                "\n                                    Conferma\n                                "
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    disabled: _vm.bloccaAssegna,
+                                                    small: "",
+                                                    color: "success"
+                                                  },
+                                                  on: {
+                                                    click: _vm.confermaProdotti
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                    Conferma\n                                "
+                                                  )
+                                                ]
                                               )
-                                            ]
+                                            ],
+                                            1
                                           )
-                                        ],
-                                        1
-                                      )
                                     ],
                                     1
                                   ),

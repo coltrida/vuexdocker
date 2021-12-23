@@ -15,7 +15,7 @@
                 ></v-progress-circular>
             </div>
             <div v-else>
-                <v-row>
+                <v-row v-if="locale">
                     <v-col cols="12">
                         <v-row>
                             <v-col>
@@ -71,6 +71,12 @@
                 this.textMessaggio = '';
             }
         },
+
+        computed: {
+            locale(){
+                return window.location.host === 'vuexdocker.test' ? true : false
+            }
+        }
 
     }
 </script>

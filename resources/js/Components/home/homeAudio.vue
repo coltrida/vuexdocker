@@ -1,13 +1,6 @@
 <template>
     <div class="flex justify-start align-center my-2">
 
-        <intervenuto-modal
-            v-if="showIntervenuto"
-            :appuntamentoModal="appuntamentoModal"
-            :appuntamentoEraDiOggi="appuntamentoEraDiOggi"
-            @chiudiIntervenutoModal = "chiudiIntervenutoModal"
-        />
-
             <v-row style="font-size: 10px">
                 <prodotti
                     :prodotti="prodottiSelezione"
@@ -214,7 +207,7 @@
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-icon
-                                            @click="intervenutoOggi(item, false)"
+                                            @click="intervenuto(item.id)"
                                             color="green"
                                             small
                                             v-bind="attrs"
@@ -267,7 +260,7 @@
                                 <v-tooltip bottom v-if="item.intervenuto === null">
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-icon
-                                            @click="intervenutoOggi(item, true)"
+                                            @click="intervenutoOggi(item.id)"
                                             color="green"
                                             small
                                             v-bind="attrs"
@@ -372,10 +365,9 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     import Prodotti from "./Prodotti";
-    import IntervenutoModal from "./IntervenutoModal";
     export default {
         name: "homeAudio",
-        components: {IntervenutoModal, Prodotti},
+        components: {Prodotti},
         data(){
             return {
                 appuntamentoEraDiOggi: false,
@@ -468,6 +460,7 @@
                 fetchAppuntamentiInSospeso: 'fetchAppuntamentiInSospeso',
                 appuntamentoSaltato: 'appuntamentoSaltato',
                 appuntamentoIntervenuto: 'appuntamentoIntervenuto',
+                appuntamentoIntervenutoOggi: 'appuntamentoIntervenutoOggi',
                 oggiNonViene: 'oggiNonViene',
             }),
 
@@ -489,10 +482,8 @@
                 this.oggiNonViene(idAppuntamento);
             },
 
-            intervenutoOggi(appuntamento, eraOggi){
-                this.appuntamentoEraDiOggi = eraOggi;
-                this.appuntamentoModal = appuntamento;
-                this.showIntervenuto = true;
+            intervenutoOggi(idAppuntamento){
+                this.appuntamentoIntervenutoOggi(idAppuntamento)
             },
 
             nonIntervenuto(idAppuntamento){

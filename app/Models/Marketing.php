@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $provaFattura
  * @property-read int|null $prova_fattura_count
+ * @property string|null $cod
+ * @method static \Illuminate\Database\Eloquent\Builder|Marketing whereCod($value)
  */
 class Marketing extends Model
 {

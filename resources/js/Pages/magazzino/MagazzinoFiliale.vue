@@ -166,8 +166,8 @@
                 productRichiesto:{},
                 headersRiepilogo: [
                     { text: 'Nome', align: 'start', value: 'nome', class: "indigo white--text" },
-                    { text: 'Soglia', value: 'soglia', class: "indigo white--text"},
                     { text: 'Conteggio', value: 'conteggio', class: "indigo white--text" },
+                    { text: 'Soglia', value: 'soglia', class: "indigo white--text"},
                 ],
 
                 headers1: [

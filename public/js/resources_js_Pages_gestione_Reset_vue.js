@@ -146,7 +146,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     cancellaMessaggio: function cancellaMessaggio() {
       this.textMessaggio = '';
     }
-  })
+  }),
+  computed: {
+    locale: function locale() {
+      return window.location.host === 'vuexdocker.test' ? true : false;
+    }
+  }
 });
 
 /***/ }),
@@ -413,30 +418,34 @@ var render = function() {
             : _c(
                 "div",
                 [
-                  _c(
-                    "v-row",
-                    [
-                      _c(
-                        "v-col",
-                        { attrs: { cols: "12" } },
+                  _vm.locale
+                    ? _c(
+                        "v-row",
                         [
                           _c(
-                            "v-row",
+                            "v-col",
+                            { attrs: { cols: "12" } },
                             [
                               _c(
-                                "v-col",
+                                "v-row",
                                 [
                                   _c(
-                                    "v-btn",
-                                    {
-                                      attrs: { color: "success", dark: "" },
-                                      on: { click: _vm.invia }
-                                    },
+                                    "v-col",
                                     [
-                                      _vm._v(
-                                        "\n                                RESET\n                            "
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: { color: "success", dark: "" },
+                                          on: { click: _vm.invia }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                RESET\n                            "
+                                          )
+                                        ]
                                       )
-                                    ]
+                                    ],
+                                    1
                                   )
                                 ],
                                 1
@@ -447,9 +456,7 @@ var render = function() {
                         ],
                         1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               )

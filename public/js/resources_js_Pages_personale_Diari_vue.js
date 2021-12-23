@@ -330,6 +330,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -337,26 +341,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     Orario: _Orario__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  props: ['titolo', 'giorno', 'giornoPerRicerca', 'appuntamenti', 'doveMattina', 'dovePomeriggio', 'strutturaMattina', 'strutturaPomeriggio'],
-
-  /*data(){
-      return {
-          oggi:false,
-      }
-  },*/
-  mounted: function mounted() {
-    this.fetchDataDiOggi();
+  props: ['titolo', 'giorno', 'giornoPerRicerca', 'appuntamenti', 'eventi', 'doveMattina', 'dovePomeriggio', 'strutturaMattina', 'strutturaPomeriggio'],
+  data: function data() {
+    return {
+      selezionato: 'primary'
+    };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
-    fetchDataDiOggi: 'fetchDataDiOggi'
-  })), {}, {
+
+  /*mounted() {
+      if(this.eventi) {console.log(this.eventi)}
+  },*/
+  methods: {
     oreCalcolate: function oreCalcolate(ore) {
       return ore === 1 ? '09' : ore + 8;
     },
     minutiCalcolati: function minutiCalcolati(minuti) {
       return minuti === 1 ? '00' : '30';
     }
-  }),
+  },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
     getDataDiOggi: 'getDataDiOggi'
   })), {}, {
@@ -365,6 +367,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     calcoloColoreMattina: function calcoloColoreMattina() {
       var colore = '';
+
+      if (this.eventi) {
+        if (this.eventi[0]) {
+          if (this.eventi[0].cosa === 'screening') {
+            return 'orange lighten-3';
+          } else if (this.eventi[0].cosa === 'recapito') {
+            return 'lime lighten-3';
+          } else if (this.eventi[0].cosa === 'domicilio') {
+            return 'brown lighten-3';
+          } else if (this.eventi[0].cosa === 'filiale') {
+            return 'teal lighten-4';
+          }
+        }
+      }
 
       if (this.doveMattina === 'F') {
         colore = 'teal lighten-4';
@@ -381,6 +397,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     calcoloColorePomeriggio: function calcoloColorePomeriggio() {
       var colore = '';
 
+      if (this.eventi) {
+        if (this.eventi[1]) {
+          if (this.eventi[1].cosa === 'screening') {
+            return 'orange lighten-3';
+          } else if (this.eventi[1].cosa === 'recapito') {
+            return 'lime lighten-3';
+          } else if (this.eventi[1].cosa === 'domicilio') {
+            return 'brown lighten-3';
+          } else if (this.eventi[1].cosa === 'filiale') {
+            return 'teal lighten-4';
+          }
+        }
+      }
+
       if (this.dovePomeriggio === 'F') {
         colore = 'teal lighten-4';
       } else if (this.dovePomeriggio === 'R') {
@@ -392,6 +422,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return colore;
+    },
+    cacoloStrutturaMattina: function cacoloStrutturaMattina() {
+      var res = this.strutturaMattina;
+
+      if (this.eventi) {
+        if (this.eventi[0]) {
+          res = this.eventi[0].evento ? this.eventi[0].cosa + ' ' + this.eventi[0].evento : this.eventi[0].cosa;
+        }
+      }
+
+      return res;
+    },
+    cacoloStrutturaPomeriggio: function cacoloStrutturaPomeriggio() {
+      var res = this.strutturaPomeriggio;
+
+      if (this.eventi) {
+        if (this.eventi[1]) {
+          res = this.eventi[1].evento ? this.eventi[1].cosa + ' ' + this.eventi[1].evento : this.eventi[1].cosa;
+        }
+      }
+
+      return res;
     }
   })
 });
@@ -1189,9 +1241,9 @@ var render = function() {
                       _vm._v(
                         _vm._s(
                           ore < 5
-                            ? _vm.strutturaMattina
+                            ? _vm.cacoloStrutturaMattina
                             : ore > 6
-                            ? _vm.strutturaPomeriggio
+                            ? _vm.cacoloStrutturaPomeriggio
                             : ""
                         )
                       )

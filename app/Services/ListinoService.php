@@ -89,6 +89,8 @@ class ListinoService
             }
         }
 
+        $nuovoNome = Str::replace(' ', '', $nuovoNome);
+
         if ($vecchioNome != $nuovoNome){
             Schema::table('ventaglios', function (Blueprint $table) use ($vecchioNome, $nuovoNome) {
                 $table->renameColumn($vecchioNome, $nuovoNome);

@@ -35,4 +35,31 @@ class ElaborazioneController extends Controller
     {
         return $elaborazioneService->controlloPossibiliDuplicati();
     }
+
+    public function testPorte()
+    {
+        $host = 'https://www.centrouditogroup.it';
+        $ports = [];
+        for ($i = 1; $i < 3000; $i++){
+            array_push($ports, $i);
+        }
+      //  $ports = array(21, 25, 80, 81, 110, 443, 3306);
+
+        foreach ($ports as $port)
+        {
+            $connection = @fsockopen($host, $port);
+
+            if (is_resource($connection))
+            {
+                echo '<h2>' . $host . ':' . $port . ' ' . '(' . getservbyport($port, 'tcp') . ') is open.</h2>' . "\n";
+
+                fclose($connection);
+            }
+
+            else
+            {
+                echo '<h2>' . $host . ':' . $port . '</h2>' . "\n";
+            }
+        }
+    }
 }

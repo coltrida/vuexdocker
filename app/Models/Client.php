@@ -111,6 +111,8 @@ use function substr;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $proveSenzaProdotti
  * @property-read int|null $prove_senza_prodotti_count
  * @method static \Illuminate\Database\Eloquent\Builder|Client clientidapiudianni($anni)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentisospesi
+ * @property-read int|null $appuntamentisospesi_count
  */
 class Client extends Model
 {

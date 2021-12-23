@@ -30,6 +30,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Medico whereUserId($value)
  * @mixin \Eloquent
  * @property-read int|null $user_count
+ * @property string $cognome
+ * @property string|null $cod
+ * @property-read mixed $fullname
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prova[] $provaFinalizzata
+ * @property-read int|null $prova_finalizzata_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Medico whereCod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Medico whereCognome($value)
  */
 class Medico extends Model
 {

@@ -74,7 +74,7 @@
                                    class="d-flex align-end justify-center m-0 p-0">
                                     <v-btn
                                         @click="assegnaProdottiToFilialeInAnticipo"
-                                        :disabled="bloccaAssegna"
+                                        :disabled="bloccaAssegnaInAnticipo"
                                         small
                                         color="primary"
                                     >
@@ -87,19 +87,21 @@
                             :headers="headers1"
                             dense
                             v-model="selected"
-                            show-select
+                            :show-select="getRuolo === 'admin' || getRuolo === 'amministrazione'"
                             :items="getInCentrale"
                             :items-per-page="10"
                             class="elevation-1 mt-3"
                         >
                             <template v-slot:item.actions="{ item }">
-                                <v-icon
-                                    color="red"
-                                    small
-                                    @click="elimina(item.id)"
-                                >
-                                    mdi-delete
-                                </v-icon>
+                                <div v-if="getRuolo === 'admin' || getRuolo === 'amministrazione'">
+                                    <v-icon
+                                        color="red"
+                                        small
+                                        @click="elimina(item.id)"
+                                    >
+                                        mdi-delete
+                                    </v-icon>
+                                </div>
                             </template>
 
                             <template v-slot:item.giorniRimasti="{ item }">
@@ -154,7 +156,15 @@
                                 <v-col>
                                     <h3 class="mt-5">Immatricolati:</h3>
                                 </v-col>
-                                <v-col class="d-flex align-end justify-end">
+                                <v-col v-if="carica2">
+                                    <div class="text-center">
+                                        <v-progress-circular
+                                            indeterminate
+                                            color="primary"
+                                        ></v-progress-circular>
+                                    </div>
+                                </v-col>
+                                <v-col class="d-flex align-end justify-end" v-else>
                                     <v-btn
                                         @click="confermaProdotti"
                                         :disabled="bloccaAssegna"
@@ -190,6 +200,7 @@
         data(){
             return {
                 carica: false,
+                carica2: false,
                 selected:[],
                 idFilialeSelezionata: '',
                 destinazione: '',
@@ -208,7 +219,7 @@
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
                     { text: 'gg. x Reso', value: 'giorniRimasti', class: "indigo white--text" },
                     { text: 'Matricola', value: 'matricola', class: "indigo white--text" },
-                    { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },
+                    { text: '', value: 'actions', sortable: false, class: "indigo white--text" },
                 ],
 
                 headers2: [
@@ -298,6 +309,7 @@
             },
 
             confermaProdotti(){
+                this.carica2 = true;
                 let filiale = this.filialeId ? this.filialeId : this.idFilialeSelezionata;
                 this.confermaProdottiToFiliale({
                     'filiale_id' : filiale,
@@ -307,6 +319,7 @@
                     this.destinazione = '';
                     this.filialeId = '';
                     this.selected = [];
+                    this.carica2 = false;
                 });
 
 
@@ -353,6 +366,10 @@
 
             bloccaAssegna(){
                 return this.selected.length === 0 ? true : false;
+            },
+
+            bloccaAssegnaInAnticipo(){
+                return (this.selected.length === 0 || !this.idFilialeSelezionata) ? true : false;
             }
 
         },

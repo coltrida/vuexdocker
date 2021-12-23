@@ -217,6 +217,86 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -226,6 +306,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      menu: false,
+      getQuando: ['mattina', 'pomeriggio'],
+      getCosa: ['filiale', 'recapito', 'screening', 'domicilio'],
+      newEvent: {},
       carica: false,
       nrSettimana: 0,
       ricerca: {}
@@ -240,18 +324,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.caricaDati(_this.nrSettimana);
       }
     });
+    this.fetchDataDiOggi();
     this.fetchDateSettimana();
     this.caricaDati(null);
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
     fetchDateSettimana: 'fetchDateSettimana',
     fetchSettimanaDelMese: 'fetchSettimanaDelMese',
+    fetchDataDiOggi: 'fetchDataDiOggi',
     fetchAppLun: 'fetchAppLun',
     fetchAppMar: 'fetchAppMar',
     fetchAppMer: 'fetchAppMer',
     fetchAppGio: 'fetchAppGio',
     fetchAppVen: 'fetchAppVen',
     fetchAppSab: 'fetchAppSab'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('eventi', {
+    addEvento: 'addEvento',
+    fetchEventiSettimana: 'fetchEventiSettimana'
   })), {}, {
     spostati: function spostati(settimana) {
       if (settimana === 0) {
@@ -277,7 +366,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               _this2.fetchAppGio(_this2.ricerca).then(function () {
                 _this2.fetchAppVen(_this2.ricerca).then(function () {
                   _this2.fetchAppSab(_this2.ricerca).then(function () {
-                    _this2.carica = false;
+                    _this2.fetchEventiSettimana(_this2.ricerca).then(function () {
+                      _this2.carica = false;
+                    });
                   });
                 });
               });
@@ -285,9 +376,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         });
       });
+    },
+    inserisciEvento: function inserisciEvento() {
+      var _this3 = this;
+
+      this.newEvent.user_id = this.getIdUser;
+      this.addEvento(this.newEvent).then(function () {
+        _this3.newEvent = {};
+        /*this.nrSettimana = 0;
+        this.fetchDateSettimana();*/
+
+        _this3.caricaDati(_this3.nrSettimana);
+      });
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
     getDateSettimana: 'getDateSettimana',
     getSettimanaDelMese: 'getSettimanaDelMese',
     getAppLun: 'getAppLun',
@@ -296,6 +399,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAppGio: 'getAppGio',
     getAppVen: 'getAppVen',
     getAppSab: 'getAppSab'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('eventi', {
+    getMostraInserimentoEvento: 'getMostraInserimentoEvento',
+    getEventiSettimana: 'getEventiSettimana'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
     getIdUser: 'getIdUser'
   }))
@@ -352,6 +458,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -359,26 +469,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     Orario: _Orario__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  props: ['titolo', 'giorno', 'giornoPerRicerca', 'appuntamenti', 'doveMattina', 'dovePomeriggio', 'strutturaMattina', 'strutturaPomeriggio'],
-
-  /*data(){
-      return {
-          oggi:false,
-      }
-  },*/
-  mounted: function mounted() {
-    this.fetchDataDiOggi();
+  props: ['titolo', 'giorno', 'giornoPerRicerca', 'appuntamenti', 'eventi', 'doveMattina', 'dovePomeriggio', 'strutturaMattina', 'strutturaPomeriggio'],
+  data: function data() {
+    return {
+      selezionato: 'primary'
+    };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
-    fetchDataDiOggi: 'fetchDataDiOggi'
-  })), {}, {
+
+  /*mounted() {
+      if(this.eventi) {console.log(this.eventi)}
+  },*/
+  methods: {
     oreCalcolate: function oreCalcolate(ore) {
       return ore === 1 ? '09' : ore + 8;
     },
     minutiCalcolati: function minutiCalcolati(minuti) {
       return minuti === 1 ? '00' : '30';
     }
-  }),
+  },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
     getDataDiOggi: 'getDataDiOggi'
   })), {}, {
@@ -387,6 +495,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     calcoloColoreMattina: function calcoloColoreMattina() {
       var colore = '';
+
+      if (this.eventi) {
+        if (this.eventi[0]) {
+          if (this.eventi[0].cosa === 'screening') {
+            return 'orange lighten-3';
+          } else if (this.eventi[0].cosa === 'recapito') {
+            return 'lime lighten-3';
+          } else if (this.eventi[0].cosa === 'domicilio') {
+            return 'brown lighten-3';
+          } else if (this.eventi[0].cosa === 'filiale') {
+            return 'teal lighten-4';
+          }
+        }
+      }
 
       if (this.doveMattina === 'F') {
         colore = 'teal lighten-4';
@@ -403,6 +525,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     calcoloColorePomeriggio: function calcoloColorePomeriggio() {
       var colore = '';
 
+      if (this.eventi) {
+        if (this.eventi[1]) {
+          if (this.eventi[1].cosa === 'screening') {
+            return 'orange lighten-3';
+          } else if (this.eventi[1].cosa === 'recapito') {
+            return 'lime lighten-3';
+          } else if (this.eventi[1].cosa === 'domicilio') {
+            return 'brown lighten-3';
+          } else if (this.eventi[1].cosa === 'filiale') {
+            return 'teal lighten-4';
+          }
+        }
+      }
+
       if (this.dovePomeriggio === 'F') {
         colore = 'teal lighten-4';
       } else if (this.dovePomeriggio === 'R') {
@@ -414,6 +550,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return colore;
+    },
+    cacoloStrutturaMattina: function cacoloStrutturaMattina() {
+      var res = this.strutturaMattina;
+
+      if (this.eventi) {
+        if (this.eventi[0]) {
+          res = this.eventi[0].evento ? this.eventi[0].cosa + ' ' + this.eventi[0].evento : this.eventi[0].cosa;
+        }
+      }
+
+      return res;
+    },
+    cacoloStrutturaPomeriggio: function cacoloStrutturaPomeriggio() {
+      var res = this.strutturaPomeriggio;
+
+      if (this.eventi) {
+        if (this.eventi[1]) {
+          res = this.eventi[1].evento ? this.eventi[1].cosa + ' ' + this.eventi[1].evento : this.eventi[1].cosa;
+        }
+      }
+
+      return res;
     }
   })
 });
@@ -724,13 +882,247 @@ var render = function() {
         "v-row",
         { staticClass: "my-4" },
         [
-          _c("v-col", { attrs: { cols: "12", md: "6", lg: "6" } }, [
-            _c("h2", [_vm._v("Agenda")])
-          ]),
+          _c(
+            "v-col",
+            { attrs: { cols: "12", md: "6", lg: "6" } },
+            [
+              _c(
+                "v-row",
+                { staticClass: "flex", staticStyle: { "font-size": "10px" } },
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6", md: "3", lg: "3" } },
+                    [
+                      _c(
+                        "v-menu",
+                        {
+                          ref: "menu",
+                          attrs: {
+                            "close-on-content-click": false,
+                            "return-value": _vm.newEvent.giorno,
+                            transition: "scale-transition",
+                            "offset-y": "",
+                            "min-width": "auto"
+                          },
+                          on: {
+                            "update:returnValue": function($event) {
+                              return _vm.$set(_vm.newEvent, "giorno", $event)
+                            },
+                            "update:return-value": function($event) {
+                              return _vm.$set(_vm.newEvent, "giorno", $event)
+                            }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "activator",
+                              fn: function(ref) {
+                                var on = ref.on
+                                var attrs = ref.attrs
+                                return [
+                                  _c(
+                                    "v-text-field",
+                                    _vm._g(
+                                      _vm._b(
+                                        {
+                                          attrs: {
+                                            label: "Data",
+                                            "prepend-icon": "mdi-calendar",
+                                            readonly: ""
+                                          },
+                                          model: {
+                                            value: _vm.newEvent.giorno,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.newEvent,
+                                                "giorno",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "newEvent.giorno"
+                                          }
+                                        },
+                                        "v-text-field",
+                                        attrs,
+                                        false
+                                      ),
+                                      on
+                                    )
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.menu,
+                            callback: function($$v) {
+                              _vm.menu = $$v
+                            },
+                            expression: "menu"
+                          }
+                        },
+                        [
+                          _vm._v(" "),
+                          _c(
+                            "v-date-picker",
+                            {
+                              attrs: {
+                                "no-title": "",
+                                "first-day-of-week": "1",
+                                locale: "ITA",
+                                scrollable: ""
+                              },
+                              model: {
+                                value: _vm.newEvent.giorno,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.newEvent, "giorno", $$v)
+                                },
+                                expression: "newEvent.giorno"
+                              }
+                            },
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "", color: "primary" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.menu = false
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Cancel\n                            "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { text: "", color: "primary" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$refs.menu.save(
+                                        _vm.newEvent.giorno
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                OK\n                            "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6", md: "2", lg: "2" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.getQuando,
+                          label: "Quando",
+                          "hide-details": ""
+                        },
+                        model: {
+                          value: _vm.newEvent.quando,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newEvent, "quando", $$v)
+                          },
+                          expression: "newEvent.quando"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6", md: "2", lg: "2" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.getCosa,
+                          label: "Cosa",
+                          "hide-details": ""
+                        },
+                        model: {
+                          value: _vm.newEvent.cosa,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newEvent, "cosa", $$v)
+                          },
+                          expression: "newEvent.cosa"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6", md: "3", lg: "3" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Dettaglio", "hide-details": "" },
+                        model: {
+                          value: _vm.newEvent.evento,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newEvent, "evento", $$v)
+                          },
+                          expression: "newEvent.evento"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6", md: "2", lg: "2" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            small: "",
+                            color: "primary",
+                            block: _vm.$vuetify.breakpoint.xs
+                          },
+                          on: { click: _vm.inserisciEvento }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Inserisci\n                    "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3", md: "1", lg: "1" } },
+            { attrs: { cols: "6", md: "1", lg: "1" } },
             [
               _c(
                 "v-chip",
@@ -746,7 +1138,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3", md: "1", lg: "1" } },
+            { attrs: { cols: "6", md: "1", lg: "1" } },
             [
               _c(
                 "v-chip",
@@ -762,7 +1154,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3", md: "1", lg: "1" } },
+            { attrs: { cols: "6", md: "1", lg: "1" } },
             [
               _c(
                 "v-chip",
@@ -778,7 +1170,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3", md: "1", lg: "1" } },
+            { attrs: { cols: "6", md: "1", lg: "1" } },
             [
               _c(
                 "v-chip",
@@ -912,6 +1304,7 @@ var render = function() {
                       giorno: _vm.getDateSettimana[0],
                       giornoPerRicerca: _vm.getDateSettimana[5],
                       appuntamenti: _vm.getAppLun,
+                      eventi: _vm.getEventiSettimana[0],
                       doveMattina: _vm.getSettimanaDelMese[0]
                         ? _vm.getSettimanaDelMese[0].luniniz
                         : null,
@@ -949,6 +1342,7 @@ var render = function() {
                       giorno: _vm.getDateSettimana[1],
                       giornoPerRicerca: _vm.getDateSettimana[6],
                       appuntamenti: _vm.getAppMar,
+                      eventi: _vm.getEventiSettimana[1],
                       doveMattina: _vm.getSettimanaDelMese[0]
                         ? _vm.getSettimanaDelMese[0].mariniz
                         : null,
@@ -986,6 +1380,7 @@ var render = function() {
                       giorno: _vm.getDateSettimana[2],
                       giornoPerRicerca: _vm.getDateSettimana[7],
                       appuntamenti: _vm.getAppMer,
+                      eventi: _vm.getEventiSettimana[2],
                       doveMattina: _vm.getSettimanaDelMese[0]
                         ? _vm.getSettimanaDelMese[0].meriniz
                         : null,
@@ -1023,6 +1418,7 @@ var render = function() {
                       giorno: _vm.getDateSettimana[3],
                       giornoPerRicerca: _vm.getDateSettimana[8],
                       appuntamenti: _vm.getAppGio,
+                      eventi: _vm.getEventiSettimana[3],
                       doveMattina: _vm.getSettimanaDelMese[0]
                         ? _vm.getSettimanaDelMese[0].gioiniz
                         : null,
@@ -1060,6 +1456,7 @@ var render = function() {
                       giorno: _vm.getDateSettimana[4],
                       giornoPerRicerca: _vm.getDateSettimana[9],
                       appuntamenti: _vm.getAppVen,
+                      eventi: _vm.getEventiSettimana[4],
                       doveMattina: _vm.getSettimanaDelMese[0]
                         ? _vm.getSettimanaDelMese[0].veniniz
                         : null,
@@ -1097,6 +1494,7 @@ var render = function() {
                       giorno: _vm.getDateSettimana[10],
                       giornoPerRicerca: _vm.getDateSettimana[11],
                       appuntamenti: _vm.getAppSab,
+                      eventi: _vm.getEventiSettimana[5],
                       doveMattina: _vm.getSettimanaDelMese[0]
                         ? _vm.getSettimanaDelMese[0].sabiniz
                         : null,
@@ -1248,9 +1646,9 @@ var render = function() {
                       _vm._v(
                         _vm._s(
                           ore < 5
-                            ? _vm.strutturaMattina
+                            ? _vm.cacoloStrutturaMattina
                             : ore > 6
-                            ? _vm.strutturaPomeriggio
+                            ? _vm.cacoloStrutturaPomeriggio
                             : ""
                         )
                       )

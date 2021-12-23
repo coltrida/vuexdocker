@@ -51,6 +51,14 @@ use function config;
  * @property string|null $informazioni
  * @method static \Illuminate\Database\Eloquent\Builder|Filiale whereCodiceIdentificativo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Filiale whereInformazioni($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $productsInArrivo
+ * @property-read int|null $products_in_arrivo_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $productsInProva
+ * @property-read int|null $products_in_prova_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $productsPresenti
+ * @property-read int|null $products_presenti_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Richiesta[] $richieste
+ * @property-read int|null $richieste_count
  */
 class Filiale extends Model
 {

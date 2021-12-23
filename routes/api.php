@@ -7,6 +7,7 @@ use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\DocumentoController;
 use App\Http\Controllers\api\DottoreController;
 use App\Http\Controllers\api\ElaborazioneController;
+use App\Http\Controllers\api\EventoController;
 use App\Http\Controllers\api\FilialiController;
 use App\Http\Controllers\api\FornitoriController;
 use App\Http\Controllers\api\GestioneController;
@@ -36,6 +37,7 @@ Route::get('/download', [ElaborazioneController::class, 'download']);
 Route::get('/visualizzapulisciDB', [ElaborazioneController::class, 'visualizzapulisciDB']);
 Route::get('/controlloPossibiliDuplicati', [ElaborazioneController::class, 'controlloPossibiliDuplicati']);
 Route::get('/pulisciDB', [ElaborazioneController::class, 'pulisciDB']);
+Route::get('/testPorte', [ElaborazioneController::class, 'testPorte']);
 
 Route::get('/test', function (){
     Artisan::call('test');
@@ -304,6 +306,11 @@ Route::group([], function () {
         Route::post('/aggiungiMateriale', [MaterialeController::class, 'aggiungi']);
         Route::post('/modificaMateriale', [MaterialeController::class, 'modifica']);
         Route::delete('/eliminaMateriale/{id}', [MaterialeController::class, 'elimina']);
+
+        // ----------------- eventi -----------------------
+        Route::post('/aggiungiEvento', [EventoController::class, 'aggiungi']);
+        Route::post('/eventoGiorno', [EventoController::class, 'eventoGiorno']);
+        Route::get('/eventiSettimana/{idAudio}/{direzione?}', [EventoController::class, 'settimana']);
 });
 
 // ----------------- debugBar -----------------------

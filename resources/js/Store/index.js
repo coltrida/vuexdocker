@@ -24,6 +24,7 @@ import TelefonateModule from './module/telefonate';
 import StrumentazioneModule from './module/strumentazione';
 import InformazioniModule from './module/informazioni';
 import MaterialeModule from './module/materiale';
+import EventiModule from './module/eventi';
 
 Vue.use(Vuex);
 
@@ -52,6 +53,7 @@ const store = new Vuex.Store({
         strumentazione:StrumentazioneModule,
         informazioni:InformazioniModule,
         materiale:MaterialeModule,
+        eventi:EventiModule,
     }
 });
 

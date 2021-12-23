@@ -45,6 +45,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\User $preso
  * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereAnno($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereMese($value)
+ * @property int $preso_id
+ * @property int|null $intervenuto
+ * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento whereIntervenuto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appuntamento wherePresoId($value)
  */
 class Appuntamento extends Model
 {

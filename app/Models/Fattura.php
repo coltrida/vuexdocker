@@ -57,6 +57,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $anno_fattura
  * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereAnnoFattura($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereMeseFattura($value)
+ * @property int|null $progressivo
+ * @method static \Illuminate\Database\Eloquent\Builder|Fattura whereProgressivo($value)
  */
 class Fattura extends Model
 {

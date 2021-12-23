@@ -35,6 +35,14 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Agenda whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Agenda whereVen($value)
  * @mixin \Eloquent
+ * @property string|null $sab
+ * @property-read mixed $luniniz
+ * @property-read mixed $mariniz
+ * @property-read mixed $meriniz
+ * @property-read mixed $sabiniz
+ * @property-read mixed $veniniz
+ * @property-read mixed $gioiniz
+ * @method static \Illuminate\Database\Eloquent\Builder|Agenda whereSab($value)
  */
 class Agenda extends Model
 {

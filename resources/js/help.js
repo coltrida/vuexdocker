@@ -193,6 +193,9 @@ const help = () => {
         linkassegnaprodottitofiliale: base+'assegnaProdottiToFiliale',
         linkconfermaprodottitofiliale: base+'confermaProdottiToFiliale',
         linkrichiestefiliali: base+'richiesteFiliali',
+        linkaddevento: base+'aggiungiEvento',
+        linkeventogiorno: base+'eventoGiorno',
+        linkeventisettimana: base+'eventiSettimana',
     };
 };
 export default help;

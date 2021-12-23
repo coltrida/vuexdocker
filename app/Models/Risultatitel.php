@@ -28,6 +28,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereMesenumero($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereTelefonate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereUpdatedAt($value)
+ * @property int|null $user_id
+ * @property int|null $intervenuti
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereIntervenuti($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Risultatitel whereUserId($value)
  */
 class Risultatitel extends Model
 {

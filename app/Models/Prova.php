@@ -65,6 +65,10 @@ use const LC_TIME;
  * @property-read int|null $documento_count
  * @property-read \App\Models\Marketing|null $marketing
  * @method static \Illuminate\Database\Eloquent\Builder|Prova whereTipologia($value)
+ * @property int|null $progressivo
+ * @property string|null $mercato
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereMercato($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prova whereProgressivo($value)
  */
 class Prova extends Model
 {

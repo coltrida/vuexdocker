@@ -59,6 +59,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $binaurale
  * @method static \Illuminate\Database\Eloquent\Builder|Fatturati whereAsl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Fatturati whereBinaurale($value)
+ * @property int|null $anno
+ * @method static \Illuminate\Database\Eloquent\Builder|Fatturati whereAnno($value)
  */
 class Fatturati extends Model
 {

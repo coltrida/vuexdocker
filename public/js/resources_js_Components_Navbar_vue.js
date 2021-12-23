@@ -3435,6 +3435,7 @@ var render = function() {
                     [
                       _c(
                         "v-list-item",
+                        { staticClass: "blue-grey lighten-4" },
                         [_c("v-list-item-title", [_vm._v("CENTRALE")])],
                         1
                       )
@@ -4321,6 +4322,7 @@ var render = function() {
                     [
                       _c(
                         "v-list-item",
+                        { staticClass: "blue-grey lighten-4" },
                         [_c("v-list-item-title", [_vm._v("CENTRALE")])],
                         1
                       )

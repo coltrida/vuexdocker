@@ -36,6 +36,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $informazioni
  * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereCodiceIdentificativo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereInformazioni($value)
+ * @property int|null $filiale_id
+ * @property-read \App\Models\Filiale|null $filiale
+ * @method static \Illuminate\Database\Eloquent\Builder|Recapito whereFilialeId($value)
  */
 class Recapito extends Model
 {

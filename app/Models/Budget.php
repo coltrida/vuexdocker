@@ -55,6 +55,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Budget whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Budget whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $anno
+ * @method static \Illuminate\Database\Eloquent\Builder|Budget whereAnno($value)
  */
 class Budget extends Model
 {

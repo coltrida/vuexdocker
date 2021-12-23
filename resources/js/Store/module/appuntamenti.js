@@ -389,6 +389,15 @@ const actions = {
         commit('eliminaAppuntamentoInSospeso', idAppuntamento);
     },
 
+    async appuntamentoIntervenutoOggi({commit}, idAppuntamento){
+        await axios.get(`${help().linkappuntamentointervenuto}`+'/'+idAppuntamento, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('appuntamentoIntervenutoOggi', idAppuntamento);
+    },
+
     async fetchAppuntamentoGiornoOra({commit}, payload){
         await axios.post(`${help().linkappuntamentogiornoora}`, payload, {
             headers: {
@@ -539,6 +548,10 @@ const mutations = {
     fetchSettimanaDelMese(state, payload){
         state.settimanaDelMese = payload;
     },
+
+    appuntamentoIntervenutoOggi(state, idAppuntamento) {
+        state.appuntamentiOggi.filter(u => u.id === idAppuntamento)[0].intervenuto = 1;
+    }
 };
 
 export default{

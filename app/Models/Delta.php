@@ -54,6 +54,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Delta whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Delta whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $anno
+ * @method static \Illuminate\Database\Eloquent\Builder|Delta whereAnno($value)
  */
 class Delta extends Model
 {

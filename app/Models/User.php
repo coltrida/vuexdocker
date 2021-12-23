@@ -113,6 +113,12 @@ use function config;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Ventaglio[] $ventaglio
  * @property-read int|null $ventaglio_count
  * @method static \Illuminate\Database\Eloquent\Builder|User callcenter()
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiSabato
+ * @property-read int|null $appuntamenti_sabato_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Appuntamento[] $appuntamentiSabatoProssimo
+ * @property-read int|null $appuntamenti_sabato_prossimo_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Risultatitel[] $risultatiTelefonate
+ * @property-read int|null $risultati_telefonate_count
  */
 class User extends Authenticatable
 {

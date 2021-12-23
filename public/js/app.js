@@ -2312,8 +2312,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _module_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/users */ "./resources/js/Store/module/users.js");
 /* harmony import */ var _module_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/login */ "./resources/js/Store/module/login.js");
 /* harmony import */ var _module_filiali__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/filiali */ "./resources/js/Store/module/filiali.js");
@@ -2337,6 +2337,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_strumentazione__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./module/strumentazione */ "./resources/js/Store/module/strumentazione.js");
 /* harmony import */ var _module_informazioni__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./module/informazioni */ "./resources/js/Store/module/informazioni.js");
 /* harmony import */ var _module_materiale__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./module/materiale */ "./resources/js/Store/module/materiale.js");
+/* harmony import */ var _module_eventi__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./module/eventi */ "./resources/js/Store/module/eventi.js");
 
 
 
@@ -2362,8 +2363,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_23__.default.use(vuex__WEBPACK_IMPORTED_MODULE_24__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_24__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_24__.default.use(vuex__WEBPACK_IMPORTED_MODULE_25__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_25__.default.Store({
   modules: {
     users: _module_users__WEBPACK_IMPORTED_MODULE_0__.default,
     login: _module_login__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -2387,7 +2389,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_24__.default.Store({
     telefonate: _module_telefonate__WEBPACK_IMPORTED_MODULE_19__.default,
     strumentazione: _module_strumentazione__WEBPACK_IMPORTED_MODULE_20__.default,
     informazioni: _module_informazioni__WEBPACK_IMPORTED_MODULE_21__.default,
-    materiale: _module_materiale__WEBPACK_IMPORTED_MODULE_22__.default
+    materiale: _module_materiale__WEBPACK_IMPORTED_MODULE_22__.default,
+    eventi: _module_eventi__WEBPACK_IMPORTED_MODULE_23__.default
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
@@ -3362,7 +3365,7 @@ var actions = {
       }, _callee32);
     }))();
   },
-  fetchAppuntamentoGiornoOra: function fetchAppuntamentoGiornoOra(_ref33, payload) {
+  appuntamentoIntervenutoOggi: function appuntamentoIntervenutoOggi(_ref33, idAppuntamento) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee33() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee33$(_context33) {
@@ -3371,6 +3374,32 @@ var actions = {
             case 0:
               commit = _ref33.commit;
               _context33.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentointervenuto) + '/' + idAppuntamento, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              commit('appuntamentoIntervenutoOggi', idAppuntamento);
+
+            case 4:
+            case "end":
+              return _context33.stop();
+          }
+        }
+      }, _callee33);
+    }))();
+  },
+  fetchAppuntamentoGiornoOra: function fetchAppuntamentoGiornoOra(_ref34, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee34() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee34$(_context34) {
+        while (1) {
+          switch (_context34.prev = _context34.next) {
+            case 0:
+              commit = _ref34.commit;
+              _context34.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentogiornoora), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -3382,21 +3411,21 @@ var actions = {
 
             case 4:
             case "end":
-              return _context33.stop();
+              return _context34.stop();
           }
         }
-      }, _callee33);
+      }, _callee34);
     }))();
   },
-  fetchDataDiOggi: function fetchDataDiOggi(_ref34) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee34() {
+  fetchDataDiOggi: function fetchDataDiOggi(_ref35) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee35() {
       var commit, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee34$(_context34) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee35$(_context35) {
         while (1) {
-          switch (_context34.prev = _context34.next) {
+          switch (_context35.prev = _context35.next) {
             case 0:
-              commit = _ref34.commit;
-              _context34.next = 3;
+              commit = _ref35.commit;
+              _context35.next = 3;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkdatadioggi), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -3404,28 +3433,28 @@ var actions = {
               });
 
             case 3:
-              response = _context34.sent;
+              response = _context35.sent;
               commit('fetchDataDiOggi', response.data);
 
             case 5:
             case "end":
-              return _context34.stop();
+              return _context35.stop();
           }
         }
-      }, _callee34);
+      }, _callee35);
     }))();
   },
-  fetchSettimanaDelMese: function fetchSettimanaDelMese(_ref35, payload) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee35() {
+  fetchSettimanaDelMese: function fetchSettimanaDelMese(_ref36, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee36() {
       var commit, direzione, idAudio, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee35$(_context35) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee36$(_context36) {
         while (1) {
-          switch (_context35.prev = _context35.next) {
+          switch (_context36.prev = _context36.next) {
             case 0:
-              commit = _ref35.commit;
+              commit = _ref36.commit;
               direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
               idAudio = parseInt(payload.idAudio);
-              _context35.next = 5;
+              _context36.next = 5;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksettimanadelmese) + '/' + idAudio + '/' + direzione, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -3433,15 +3462,15 @@ var actions = {
               });
 
             case 5:
-              response = _context35.sent;
+              response = _context36.sent;
               commit('fetchSettimanaDelMese', response.data);
 
             case 7:
             case "end":
-              return _context35.stop();
+              return _context36.stop();
           }
         }
-      }, _callee35);
+      }, _callee36);
     }))();
   }
 };
@@ -3542,6 +3571,11 @@ var mutations = {
   },
   fetchSettimanaDelMese: function fetchSettimanaDelMese(state, payload) {
     state.settimanaDelMese = payload;
+  },
+  appuntamentoIntervenutoOggi: function appuntamentoIntervenutoOggi(state, idAppuntamento) {
+    state.appuntamentiOggi.filter(function (u) {
+      return u.id === idAppuntamento;
+    })[0].intervenuto = 1;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4760,6 +4794,147 @@ var mutations = {
       return u.id !== id;
     });
   }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/Store/module/eventi.js":
+/*!*********************************************!*\
+  !*** ./resources/js/Store/module/eventi.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../help */ "./resources/js/help.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var state = function state() {
+  return {
+    evento: {},
+    eventiSettimana: []
+  };
+};
+
+var getters = {
+  getEventoGiorno: function getEventoGiorno(state) {
+    return state.evento;
+  },
+  getEventiSettimana: function getEventiSettimana(state) {
+    return state.eventiSettimana;
+  }
+};
+var actions = {
+  fetchEventoGiorno: function fetchEventoGiorno(_ref, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkeventogiorno), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context.sent;
+              commit('fetchEventoGiorno', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  addEvento: function addEvento(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddevento), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context2.sent;
+              commit('addEvento', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  fetchEventiSettimana: function fetchEventiSettimana(_ref3, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit, direzione, idAudio, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              direzione = payload.direzione === undefined || payload.direzione == null || payload.direzione == 'null' ? null : payload.direzione;
+              idAudio = parseInt(payload.idAudio);
+              _context3.next = 5;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkeventisettimana) + '/' + idAudio + '/' + direzione, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 5:
+              response = _context3.sent;
+              commit('fetchEventiSettimana', response.data);
+
+            case 7:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  }
+};
+var mutations = {
+  fetchEventoGiorno: function fetchEventoGiorno(state, payload) {
+    state.evento = payload;
+  },
+  fetchEventiSettimana: function fetchEventiSettimana(state, payload) {
+    state.eventiSettimana = payload;
+  },
+  addEvento: function addEvento(state, payload) {}
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
@@ -11045,7 +11220,10 @@ var help = function help() {
     linkaddprodottoincentrale: base + 'aggiungiProductInCentrale',
     linkassegnaprodottitofiliale: base + 'assegnaProdottiToFiliale',
     linkconfermaprodottitofiliale: base + 'confermaProdottiToFiliale',
-    linkrichiestefiliali: base + 'richiesteFiliali'
+    linkrichiestefiliali: base + 'richiesteFiliali',
+    linkaddevento: base + 'aggiungiEvento',
+    linkeventogiorno: base + 'eventoGiorno',
+    linkeventisettimana: base + 'eventiSettimana'
   };
 };
 
