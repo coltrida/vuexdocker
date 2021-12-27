@@ -149,4 +149,9 @@ class AppuntamentiController extends Controller
     {
         return $appuntamentiService->settimanaDelMese($idAudio, $direzione);
     }
+
+    public function appuntamentiDiTuttiAudio(AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->appuntamentiDiTuttiAudio();
+    }
 }

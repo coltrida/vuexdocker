@@ -20,13 +20,25 @@ class ProductService
 {
     public function riepilogoFiliali()
     {
-        return Filiale::select(['id','nome'])
+        $filiali = Filiale::select(['id','nome'])
             ->withCount('productsPresenti')
             ->withCount('productsInProva')
             ->withCount('productsRichiesti')
             ->withCount('productsInArrivo')
             ->orderBy('nome')
             ->get();
+
+        $filiali->push([
+            'id' => count($filiali)+1,
+            'nome' => 'CENTRALE',
+            'products_presenti_count' => Product::where([['stato_id', 8], ['filiale_id', 0]])->count(),
+            'products_in_prova_count' => 0,
+            'products_richiesti_count' => 0,
+            'products_in_arrivo_count' => 0,
+
+        ]);
+
+        return $filiali;
     }
 
     public function inCentrale()

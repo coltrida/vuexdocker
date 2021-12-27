@@ -194,8 +194,10 @@ const help = () => {
         linkconfermaprodottitofiliale: base+'confermaProdottiToFiliale',
         linkrichiestefiliali: base+'richiesteFiliali',
         linkaddevento: base+'aggiungiEvento',
+        linkdelevento: base+'eliminaEvento',
         linkeventogiorno: base+'eventoGiorno',
         linkeventisettimana: base+'eventiSettimana',
+        linkappuntamentidituttiaudio: base+'appuntamentiDiTuttiAudio',
     };
 };
 export default help;

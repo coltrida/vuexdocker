@@ -1,10 +1,24 @@
 <template>
     <div>
-        <h3 v-if="isOggi">
-            <v-chip style="width: 100%; margin-bottom: 5px" label dark color="blue">{{titolo}} {{giorno}}</v-chip>
-        </h3>
-        <h3 v-else>
-            <v-chip style="width: 100%; margin-bottom: 5px" label outlined>{{titolo}} {{giorno}}</v-chip>
+        <h3>
+            <v-badge
+                bordered
+                :color="esisteEvento ? 'blue' : 'white'"
+                :title="esisteEvento ? 'In questo giorno è presente un evento' : ''"
+                :content="esisteEvento ? 'E' : ''"
+            >
+                <v-badge
+                    bordered
+                    bottom
+                    @click.native="eliminaEvento"
+                    offset-x="-2"
+                    offset-y="20"
+                    :color="esisteEvento && getRuolo === 'admin' ? 'red' : 'white'"
+                    :content="esisteEvento && getRuolo === 'admin' ? 'D' : ''"
+                >
+                    <v-chip style="width: 100%; margin-bottom: 5px" label dark :color="isOggi ? 'blue' : ''">{{titolo}} {{giorno}}</v-chip>
+                </v-badge>
+            </v-badge>
         </h3>
         <div v-for="ore in 11">
             <div v-for="minuti in 2">
@@ -61,6 +75,10 @@
         },*/
 
         methods:{
+            ...mapActions('eventi', {
+                delEvento:'delEvento',
+            }),
+
             oreCalcolate(ore){
                 return ore === 1 ? '09' : ore+8
             },
@@ -69,11 +87,22 @@
                 return minuti === 1 ? '00' : '30'
             },
 
+            eliminaEvento(){
+                if (this.getRuolo === 'admin'){
+                    this.delEvento(this.eventi)
+                }
+            }
+
         },
 
         computed:{
             ...mapGetters('appuntamenti', {
                 getDataDiOggi:'getDataDiOggi',
+            }),
+
+            ...mapGetters('login', {
+                getRuolo:'getRuolo',
+                getIdUser:'getIdUser',
             }),
 
             isOggi(){
@@ -91,13 +120,17 @@
                             return 'lime lighten-3'
                         } else if (this.eventi[0].cosa === 'domicilio'){
                             return 'brown lighten-3'
-                        } else if (this.eventi[0].cosa === 'filiale'){
+                        } else if (this.eventi[0].cosa === 'negozio'){
                             return 'teal lighten-4'
+                        } else if (this.eventi[0].cosa === 'permesso'){
+                            return 'red lighten-3'
+                        } else if (this.eventi[0].cosa === 'festivo'){
+                            return 'red lighten-5'
                         }
                     }
                 }
 
-                if (this.doveMattina === 'F'){
+                if (this.doveMattina === 'N'){
                     colore = 'teal lighten-4'
                 } else if (this.doveMattina === 'R'){
                     colore = 'lime lighten-3'
@@ -120,13 +153,17 @@
                             return 'lime lighten-3'
                         } else if (this.eventi[1].cosa === 'domicilio'){
                             return 'brown lighten-3'
-                        } else if (this.eventi[1].cosa === 'filiale'){
+                        } else if (this.eventi[1].cosa === 'negozio'){
                             return 'teal lighten-4'
+                        } else if (this.eventi[1].cosa === 'permesso'){
+                            return 'red lighten-3'
+                        } else if (this.eventi[1].cosa === 'festivo'){
+                            return 'red lighten-5'
                         }
                     }
                 }
 
-                if (this.dovePomeriggio === 'F'){
+                if (this.dovePomeriggio === 'N'){
                     colore = 'teal lighten-4'
                 } else if (this.dovePomeriggio === 'R'){
                     colore = 'lime lighten-3'
@@ -153,6 +190,16 @@
                 if (this.eventi) {
                     if (this.eventi[1]){
                         res = this.eventi[1].evento ? this.eventi[1].cosa+' '+this.eventi[1].evento : this.eventi[1].cosa;
+                    }
+                }
+                return res;
+            },
+
+            esisteEvento(){
+                let res = false;
+                if (this.eventi) {
+                    if (this.eventi[0] || this.eventi[1]) {
+                        res = true
                     }
                 }
                 return res;

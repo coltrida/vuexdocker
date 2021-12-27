@@ -13,7 +13,8 @@
                     <div>
                         <v-data-table
                             :headers="headers1"
-                            :items-per-page=5
+                            :items-per-page=4
+                            height="240"
                             :items="getSituazioneMese.prova_in_corso"
                             class="elevation-1 mt-3"
                         >
@@ -77,7 +78,8 @@
                             :headers="headers2"
                             :items="getSituazioneMese.prova_finalizzata"
                             class="elevation-1 mt-3"
-                            :items-per-page=5
+                            :items-per-page=4
+                            height="240"
                         >
 
                             <template v-slot:header.actions="{ header }">
@@ -127,7 +129,8 @@
                             :headers="headers2"
                             :items="getSituazioneMese.prova_reso"
                             class="elevation-1 mt-3"
-                            hide-default-footer
+                            :items-per-page=4
+                            height="240"
                         >
 
                             <template v-slot:header.actions="{ header }">
@@ -175,7 +178,8 @@
                     <div>
                         <v-data-table
                             :headers="headers6"
-                            :items-per-page=5
+                            :items-per-page=4
+                            height="240"
                             :items="getAppuntamentiInSospeso"
                             class="elevation-1 mt-3"
                         >
@@ -232,7 +236,8 @@
                             :headers="headers4"
                             :items="getAppuntamentiOggi"
                             class="elevation-1 mt-3"
-                            :items-per-page=5
+                            :items-per-page=4
+                            height="240"
                         >
                             <template v-slot:item.fullname="{ item }">
                                 <router-link style="color: black" :to="{ name: 'clientsFiliale',
@@ -309,7 +314,8 @@
                             :headers="headers5"
                             :items="getAppuntamentiDomani"
                             class="elevation-1 mt-3"
-                            :items-per-page=5
+                            :items-per-page=4
+                            height="240"
                         >
 
                             <template v-slot:item.fullname="{ item }">
@@ -328,7 +334,8 @@
                             :headers="headers3"
                             :items="getCompleanni"
                             class="elevation-1 mt-3"
-                            hide-default-footer
+                            :items-per-page=4
+                            height="240"
                         >
 
                         </v-data-table>
@@ -338,7 +345,8 @@
                     <div>
                         <v-data-table
                             :headers="headers7"
-                            :items-per-page=5
+                            :items-per-page=4
+                            height="240"
                             :items="getRecallOggi"
                             class="elevation-1 mt-3"
                         >
@@ -420,10 +428,10 @@
                 ],
 
                 headers6: [
-                    {text: 'Nome', width:170, value: 'fullname', sortable: false, class: "indigo white--text"},
-                    {text: 'Città', width:70, value: 'citta', sortable: false, class: "indigo white--text"},
-                    {text: 'Data App.', width:120, value: 'giorno', sortable: false, class: "indigo white--text"},
-                    {text: 'Actions', width:80, value: 'actions', sortable: false, class: "indigo white--text"},
+                    {text: 'Nome', width:170, value: 'fullname', sortable: false, class: "red white--text"},
+                    {text: 'Città', width:70, value: 'citta', sortable: false, class: "red white--text"},
+                    {text: 'Data App.', width:120, value: 'giorno', sortable: false, class: "red white--text"},
+                    {text: 'Actions', width:80, value: 'actions', sortable: false, class: "red white--text"},
                 ],
 
                 headers7: [

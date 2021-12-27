@@ -241,6 +241,7 @@ Route::group([], function () {
         Route::post('/appuntamentogiornoora', [AppuntamentiController::class, 'appuntamentogiornoora']);
         Route::get('/dataDiOggi', [AppuntamentiController::class, 'dataDiOggi']);
         Route::get('/settimanaDelMese/{idAudio}/{direzione?}', [AppuntamentiController::class, 'settimanaDelMese']);
+        Route::get('/appuntamentiDiTuttiAudio', [AppuntamentiController::class, 'appuntamentiDiTuttiAudio']);
 
         // ----------------- documenti -----------------------
         Route::post('/salvaDocumento', [DocumentoController::class, 'salvaDocumento']);
@@ -309,6 +310,7 @@ Route::group([], function () {
 
         // ----------------- eventi -----------------------
         Route::post('/aggiungiEvento', [EventoController::class, 'aggiungi']);
+        Route::post('/eliminaEvento', [EventoController::class, 'elimina']);
         Route::post('/eventoGiorno', [EventoController::class, 'eventoGiorno']);
         Route::get('/eventiSettimana/{idAudio}/{direzione?}', [EventoController::class, 'settimana']);
 });

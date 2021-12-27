@@ -648,7 +648,6 @@ var render = function() {
                 [
                   _c(
                     "v-col",
-                    { attrs: { cols: "8" } },
                     [
                       _c("h3", { staticClass: "mt-5" }, [
                         _vm._v("Riepilogo In Centrale")

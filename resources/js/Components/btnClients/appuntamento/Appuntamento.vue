@@ -76,10 +76,9 @@
                     <v-row>
                         <v-col cols="12" md="4" lg="4">
                             <v-menu
-                                ref="menu"
                                 v-model="menu"
                                 :close-on-content-click="false"
-                                :return-value.sync="newAppuntamento.giorno"
+                                :nudge-right="40"
                                 transition="scale-transition"
                                 offset-y
                                 min-width="auto"
@@ -97,27 +96,11 @@
                                     ></v-text-field>
                                 </template>
                                 <v-date-picker
-                                    v-model="newAppuntamento.giorno"
-                                    no-title
                                     first-day-of-week="1"
                                     locale="ITA"
-                                    scrollable
+                                    v-model="newAppuntamento.giorno"
+                                    @input="menu = false"
                                 >
-                                    <v-spacer></v-spacer>
-                                    <v-btn
-                                        text
-                                        color="primary"
-                                        @click="menu = false"
-                                    >
-                                        Cancel
-                                    </v-btn>
-                                    <v-btn
-                                        text
-                                        color="primary"
-                                        @click="$refs.menu.save(newAppuntamento.giorno)"
-                                    >
-                                        OK
-                                    </v-btn>
                                 </v-date-picker>
                             </v-menu>
                         </v-col>

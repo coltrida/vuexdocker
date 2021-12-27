@@ -84,10 +84,9 @@
                 <v-row>
                     <v-col cols="12" md="12" lg="4" xs="12" sm="12">
                         <v-menu
-                            ref="menu"
                             v-model="menu"
                             :close-on-content-click="false"
-                            :return-value.sync="telefonata.giorno"
+                            :nudge-right="40"
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
@@ -104,27 +103,11 @@
                                 ></v-text-field>
                             </template>
                             <v-date-picker
-                                v-model="telefonata.giorno"
-                                no-title
                                 first-day-of-week="1"
                                 locale="ITA"
-                                scrollable
+                                v-model="telefonata.giorno"
+                                @input="menu = false"
                             >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                    text
-                                    color="primary"
-                                    @click="menu = false"
-                                >
-                                    Cancel
-                                </v-btn>
-                                <v-btn
-                                    text
-                                    color="primary"
-                                    @click="$refs.menu.save(telefonata.giorno)"
-                                >
-                                    OK
-                                </v-btn>
                             </v-date-picker>
                         </v-menu>
                     </v-col>

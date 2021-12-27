@@ -26,6 +26,15 @@
                 <home-call-admin />
             </v-card>
         </v-tab-item>
+
+        <v-tab>
+            Appuntamenti
+        </v-tab>
+        <v-tab-item>
+            <v-card flat>
+                <home-app-admin />
+            </v-card>
+        </v-tab-item>
     </v-tabs>
 </template>
 
@@ -34,9 +43,10 @@
     import HomeAmm from "./homeAmm";
     import HomeAdmin from "./homeAdmin";
     import HomeCallAdmin from "./homeCallAdmin";
+    import HomeAppAdmin from "./homeAppAdmin";
     export default {
         name: "SuperHome",
-        components: {HomeCallAdmin, HomeAdmin, HomeAmm},
+        components: {HomeAppAdmin, HomeCallAdmin, HomeAdmin, HomeAmm},
         /*data(){
             return{
                 novitaLogistica : 0,

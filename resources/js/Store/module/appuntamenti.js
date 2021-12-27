@@ -1,7 +1,7 @@
 import help from "../../help";
-import {parseHex} from "vuetify/lib/util/colorUtils";
 
 const state = () => ({
+    appuntamentiDiTuttiAudio: [],
     appuntamenti: [],
     appuntamentiOggi: [],
     appuntamentiDomani: [],
@@ -21,6 +21,10 @@ const state = () => ({
 });
 
 const getters = {
+    getAppuntamentiDiTuttiAudio(state){
+        return state.appuntamentiDiTuttiAudio;
+    },
+
     getAppuntamenti(state){
         return state.appuntamenti;
     },
@@ -88,13 +92,22 @@ const getters = {
 
 const actions = {
 
+    async fetchAppuntamentiDiTuttiAudio({commit}){
+        const response = await axios.get(`${help().linkappuntamentidituttiaudio}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+         commit('fetchAppuntamentiDiTuttiAudio', response.data);
+    },
+
     async fetchAppuntamenti({commit}, idClient){
         const response = await axios.get(`${help().linkappuntamenti}`+'/'+idClient, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-         commit('fetchAppuntamenti', response.data.data);
+        commit('fetchAppuntamenti', response.data.data);
     },
 
     async fetchAppuntamentiAnnoMese({commit}, payload){
@@ -429,6 +442,10 @@ const actions = {
 };
 
 const mutations = {
+    fetchAppuntamentiDiTuttiAudio(state, payload){
+        state.appuntamentiDiTuttiAudio = payload;
+    },
+
     fetchAppuntamenti(state, payload){
         state.appuntamenti = payload;
     },
@@ -438,7 +455,7 @@ const mutations = {
     },
 
     oggiNonViene(state, id){
-        state.appuntamentiOggi = state.appuntamentiOggi.filter(u => u.id !== id);
+        state.appuntamentiOggi.filter(u => u.id === id)[0].intervenuto = 0;
     },
 
     fetchAppuntamentiInSospeso(state, payload){

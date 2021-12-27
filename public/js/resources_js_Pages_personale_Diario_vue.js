@@ -11,8 +11,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _Giorno__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Giorno */ "./resources/js/Pages/personale/Giorno.vue");
+/* harmony import */ var _MessaggioEventoPresente__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MessaggioEventoPresente */ "./resources/js/Pages/personale/MessaggioEventoPresente.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -288,27 +289,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Diario",
   components: {
+    MessaggioEventoPresente: _MessaggioEventoPresente__WEBPACK_IMPORTED_MODULE_1__.default,
     Giorno: _Giorno__WEBPACK_IMPORTED_MODULE_0__.default
   },
   data: function data() {
     return {
       menu: false,
-      getQuando: ['mattina', 'pomeriggio'],
-      getCosa: ['filiale', 'recapito', 'screening', 'domicilio'],
+      getQuando: ['mattina', 'pomeriggio', 'giorno'],
+      getCosa: ['negozio', 'recapito', 'screening', 'domicilio', 'permesso'],
       newEvent: {},
       carica: false,
       nrSettimana: 0,
@@ -328,7 +322,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchDateSettimana();
     this.caricaDati(null);
   },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('appuntamenti', {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('appuntamenti', {
     fetchDateSettimana: 'fetchDateSettimana',
     fetchSettimanaDelMese: 'fetchSettimanaDelMese',
     fetchDataDiOggi: 'fetchDataDiOggi',
@@ -338,7 +332,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchAppGio: 'fetchAppGio',
     fetchAppVen: 'fetchAppVen',
     fetchAppSab: 'fetchAppSab'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('eventi', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('eventi', {
     addEvento: 'addEvento',
     fetchEventiSettimana: 'fetchEventiSettimana'
   })), {}, {
@@ -383,14 +377,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.newEvent.user_id = this.getIdUser;
       this.addEvento(this.newEvent).then(function () {
         _this3.newEvent = {};
-        /*this.nrSettimana = 0;
-        this.fetchDateSettimana();*/
 
         _this3.caricaDati(_this3.nrSettimana);
       });
+    },
+    cancellaMessaggio: function cancellaMessaggio() {
+      this.$store.commit('eventi/resetMessaggioEventoGiaPresente');
     }
   }),
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('appuntamenti', {
     getDateSettimana: 'getDateSettimana',
     getSettimanaDelMese: 'getSettimanaDelMese',
     getAppLun: 'getAppLun',
@@ -399,12 +394,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getAppGio: 'getAppGio',
     getAppVen: 'getAppVen',
     getAppSab: 'getAppSab'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('eventi', {
-    getMostraInserimentoEvento: 'getMostraInserimentoEvento',
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('eventi', {
+    getEventoPresente: 'getEventoPresente',
     getEventiSettimana: 'getEventiSettimana'
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('login', {
     getIdUser: 'getIdUser'
-  }))
+  })), {}, {
+    bloccaInserimento: function bloccaInserimento() {
+      return this.newEvent.giorno && this.newEvent.quando && this.newEvent.cosa ? false : true;
+    }
+  })
 });
 
 /***/ }),
@@ -462,6 +461,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -479,16 +492,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   /*mounted() {
       if(this.eventi) {console.log(this.eventi)}
   },*/
-  methods: {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('eventi', {
+    delEvento: 'delEvento'
+  })), {}, {
     oreCalcolate: function oreCalcolate(ore) {
       return ore === 1 ? '09' : ore + 8;
     },
     minutiCalcolati: function minutiCalcolati(minuti) {
       return minuti === 1 ? '00' : '30';
+    },
+    eliminaEvento: function eliminaEvento() {
+      if (this.getRuolo === 'admin') {
+        this.delEvento(this.eventi);
+      }
     }
-  },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
+  }),
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('appuntamenti', {
     getDataDiOggi: 'getDataDiOggi'
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('login', {
+    getRuolo: 'getRuolo',
+    getIdUser: 'getIdUser'
   })), {}, {
     isOggi: function isOggi() {
       return this.giorno == this.getDataDiOggi ? true : false;
@@ -504,13 +527,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return 'lime lighten-3';
           } else if (this.eventi[0].cosa === 'domicilio') {
             return 'brown lighten-3';
-          } else if (this.eventi[0].cosa === 'filiale') {
+          } else if (this.eventi[0].cosa === 'negozio') {
             return 'teal lighten-4';
+          } else if (this.eventi[0].cosa === 'permesso') {
+            return 'red lighten-3';
+          } else if (this.eventi[0].cosa === 'festivo') {
+            return 'red lighten-5';
           }
         }
       }
 
-      if (this.doveMattina === 'F') {
+      if (this.doveMattina === 'N') {
         colore = 'teal lighten-4';
       } else if (this.doveMattina === 'R') {
         colore = 'lime lighten-3';
@@ -533,13 +560,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return 'lime lighten-3';
           } else if (this.eventi[1].cosa === 'domicilio') {
             return 'brown lighten-3';
-          } else if (this.eventi[1].cosa === 'filiale') {
+          } else if (this.eventi[1].cosa === 'negozio') {
             return 'teal lighten-4';
+          } else if (this.eventi[1].cosa === 'permesso') {
+            return 'red lighten-3';
+          } else if (this.eventi[1].cosa === 'festivo') {
+            return 'red lighten-5';
           }
         }
       }
 
-      if (this.dovePomeriggio === 'F') {
+      if (this.dovePomeriggio === 'N') {
         colore = 'teal lighten-4';
       } else if (this.dovePomeriggio === 'R') {
         colore = 'lime lighten-3';
@@ -572,8 +603,77 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return res;
+    },
+    esisteEvento: function esisteEvento() {
+      var res = false;
+
+      if (this.eventi) {
+        if (this.eventi[0] || this.eventi[1]) {
+          res = true;
+        }
+      }
+
+      return res;
     }
   })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "MessaggioEventoPresente",
+  props: ['textMessaggio'],
+  methods: {
+    cancella: function cancella() {
+      this.$emit('cancellaMessaggio');
+    }
+  },
+  computed: {
+    dialog: function dialog() {
+      return true;
+    }
+  }
 });
 
 /***/ }),
@@ -721,6 +821,45 @@ component.options.__file = "resources/js/Pages/personale/Giorno.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Pages/personale/MessaggioEventoPresente.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/Pages/personale/MessaggioEventoPresente.vue ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _MessaggioEventoPresente_vue_vue_type_template_id_cecc186a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MessaggioEventoPresente.vue?vue&type=template&id=cecc186a&scoped=true& */ "./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=template&id=cecc186a&scoped=true&");
+/* harmony import */ var _MessaggioEventoPresente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MessaggioEventoPresente.vue?vue&type=script&lang=js& */ "./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _MessaggioEventoPresente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _MessaggioEventoPresente_vue_vue_type_template_id_cecc186a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _MessaggioEventoPresente_vue_vue_type_template_id_cecc186a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "cecc186a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/personale/MessaggioEventoPresente.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/personale/Orario.vue":
 /*!*************************************************!*\
   !*** ./resources/js/Pages/personale/Orario.vue ***!
@@ -792,6 +931,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MessaggioEventoPresente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MessaggioEventoPresente.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MessaggioEventoPresente_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/Pages/personale/Orario.vue?vue&type=script&lang=js&":
 /*!**************************************************************************!*\
   !*** ./resources/js/Pages/personale/Orario.vue?vue&type=script&lang=js& ***!
@@ -842,6 +997,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=template&id=cecc186a&scoped=true&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=template&id=cecc186a&scoped=true& ***!
+  \*************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MessaggioEventoPresente_vue_vue_type_template_id_cecc186a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MessaggioEventoPresente_vue_vue_type_template_id_cecc186a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MessaggioEventoPresente_vue_vue_type_template_id_cecc186a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MessaggioEventoPresente.vue?vue&type=template&id=cecc186a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=template&id=cecc186a&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/Pages/personale/Orario.vue?vue&type=template&id=fc26e766&scoped=true&":
 /*!********************************************************************************************!*\
   !*** ./resources/js/Pages/personale/Orario.vue?vue&type=template&id=fc26e766&scoped=true& ***!
@@ -882,9 +1054,15 @@ var render = function() {
         "v-row",
         { staticClass: "my-4" },
         [
+          _vm.getEventoPresente === 0
+            ? _c("messaggio-evento-presente", {
+                on: { cancellaMessaggio: _vm.cancellaMessaggio }
+              })
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "12", md: "6", lg: "6" } },
+            { attrs: { cols: "12", md: "7", lg: "7" } },
             [
               _c(
                 "v-row",
@@ -897,21 +1075,12 @@ var render = function() {
                       _c(
                         "v-menu",
                         {
-                          ref: "menu",
                           attrs: {
                             "close-on-content-click": false,
-                            "return-value": _vm.newEvent.giorno,
+                            "nudge-right": 40,
                             transition: "scale-transition",
                             "offset-y": "",
                             "min-width": "auto"
-                          },
-                          on: {
-                            "update:returnValue": function($event) {
-                              return _vm.$set(_vm.newEvent, "giorno", $event)
-                            },
-                            "update:return-value": function($event) {
-                              return _vm.$set(_vm.newEvent, "giorno", $event)
-                            }
                           },
                           scopedSlots: _vm._u([
                             {
@@ -963,64 +1132,21 @@ var render = function() {
                         },
                         [
                           _vm._v(" "),
-                          _c(
-                            "v-date-picker",
-                            {
-                              attrs: {
-                                "no-title": "",
-                                "first-day-of-week": "1",
-                                locale: "ITA",
-                                scrollable: ""
-                              },
-                              model: {
-                                value: _vm.newEvent.giorno,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.newEvent, "giorno", $$v)
-                                },
-                                expression: "newEvent.giorno"
+                          _c("v-date-picker", {
+                            attrs: { "first-day-of-week": "1", locale: "ITA" },
+                            on: {
+                              input: function($event) {
+                                _vm.menu = false
                               }
                             },
-                            [
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { text: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.menu = false
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Cancel\n                            "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { text: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$refs.menu.save(
-                                        _vm.newEvent.giorno
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                OK\n                            "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
+                            model: {
+                              value: _vm.newEvent.giorno,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newEvent, "giorno", $$v)
+                              },
+                              expression: "newEvent.giorno"
+                            }
+                          })
                         ],
                         1
                       )
@@ -1099,6 +1225,7 @@ var render = function() {
                         {
                           attrs: {
                             small: "",
+                            disabled: _vm.bloccaInserimento,
                             color: "primary",
                             block: _vm.$vuetify.breakpoint.xs
                           },
@@ -1120,148 +1247,128 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "6", md: "1", lg: "1" } },
-            [
-              _c(
-                "v-chip",
-                {
-                  staticStyle: { width: "100px" },
-                  attrs: { color: "teal lighten-4", label: "" }
-                },
-                [_vm._v("\n                filiale\n            ")]
-              )
-            ],
-            1
-          ),
+          _c("v-col", [
+            _c(
+              "div",
+              { staticClass: "flex" },
+              [
+                _c(
+                  "v-chip",
+                  {
+                    staticStyle: { width: "80px" },
+                    attrs: { color: "teal lighten-4", label: "" }
+                  },
+                  [_vm._v("\n                    Negozio\n                ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-chip",
+                  {
+                    staticStyle: { width: "80px" },
+                    attrs: { color: "lime lighten-3", label: "" }
+                  },
+                  [_vm._v("\n                    recapito\n                ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-chip",
+                  {
+                    staticStyle: { width: "80px" },
+                    attrs: { color: "orange lighten-3", label: "" }
+                  },
+                  [_vm._v("\n                    screening\n                ")]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "flex" },
+              [
+                _c(
+                  "v-chip",
+                  {
+                    staticStyle: { width: "80px" },
+                    attrs: { color: "brown lighten-3", label: "" }
+                  },
+                  [_vm._v("\n                    domicili\n                ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-chip",
+                  {
+                    staticStyle: { width: "80px" },
+                    attrs: { color: "red lighten-3", label: "" }
+                  },
+                  [_vm._v("\n                    permesso\n                ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-chip",
+                  {
+                    staticStyle: { width: "80px" },
+                    attrs: { color: "red lighten-5", label: "" }
+                  },
+                  [_vm._v("\n                    festivo\n                ")]
+                )
+              ],
+              1
+            )
+          ]),
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "6", md: "1", lg: "1" } },
+            { staticClass: "flex" },
             [
               _c(
-                "v-chip",
-                {
-                  staticStyle: { width: "100px" },
-                  attrs: { color: "lime lighten-3", label: "" }
-                },
-                [_vm._v("\n                recapito\n            ")]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "6", md: "1", lg: "1" } },
-            [
-              _c(
-                "v-chip",
-                {
-                  staticStyle: { width: "100px" },
-                  attrs: { color: "orange lighten-3", label: "" }
-                },
-                [_vm._v("\n                screening\n            ")]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "6", md: "1", lg: "1" } },
-            [
-              _c(
-                "v-chip",
-                {
-                  staticStyle: { width: "100px" },
-                  attrs: { color: "brown lighten-3", label: "" }
-                },
-                [_vm._v("\n                domicili\n            ")]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-col",
-            { attrs: { cols: "12", md: "1", lg: "1" } },
-            [
-              _c(
-                "v-row",
-                { staticClass: "flex-nowrap" },
+                "v-col",
                 [
                   _c(
-                    "v-col",
-                    { staticClass: "d-flex justify-center" },
+                    "v-icon",
+                    {
+                      attrs: { large: "", color: "green darken-2" },
+                      on: {
+                        click: function($event) {
+                          return _vm.spostati(-1)
+                        }
+                      }
+                    },
                     [
-                      _c(
-                        "v-icon",
-                        {
-                          attrs: { large: "", color: "green darken-2" },
-                          on: {
-                            click: function($event) {
-                              return _vm.spostati(-1)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            mdi-arrow-left-bold-circle\n                        "
-                          )
-                        ]
+                      _vm._v(
+                        "\n                    mdi-arrow-left-bold-circle\n                "
                       )
-                    ],
-                    1
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-col",
-                    { staticClass: "d-flex justify-center" },
-                    [
-                      _c(
-                        "v-icon",
-                        {
-                          attrs: { large: "", color: "green darken-2" },
-                          on: {
-                            click: function($event) {
-                              return _vm.spostati(0)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        mdi-home\n                    "
-                          )
-                        ]
-                      )
-                    ],
-                    1
+                    "v-icon",
+                    {
+                      attrs: { large: "", color: "green darken-2" },
+                      on: {
+                        click: function($event) {
+                          return _vm.spostati(0)
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    mdi-home\n                ")]
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-col",
-                    { staticClass: "d-flex justify-center" },
+                    "v-icon",
+                    {
+                      attrs: { large: "", color: "green darken-2" },
+                      on: {
+                        click: function($event) {
+                          return _vm.spostati(1)
+                        }
+                      }
+                    },
                     [
-                      _c(
-                        "v-icon",
-                        {
-                          attrs: { large: "", color: "green darken-2" },
-                          on: {
-                            click: function($event) {
-                              return _vm.spostati(1)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            mdi-arrow-right-bold-circle\n                        "
-                          )
-                        ]
+                      _vm._v(
+                        "\n                    mdi-arrow-right-bold-circle\n                "
                       )
-                    ],
-                    1
+                    ]
                   )
                 ],
                 1
@@ -1545,35 +1652,65 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.isOggi
-        ? _c(
-            "h3",
+      _c(
+        "h3",
+        [
+          _c(
+            "v-badge",
+            {
+              attrs: {
+                bordered: "",
+                color: _vm.esisteEvento ? "blue" : "white",
+                title: _vm.esisteEvento
+                  ? "In questo giorno è presente un evento"
+                  : "",
+                content: _vm.esisteEvento ? "E" : ""
+              }
+            },
             [
               _c(
-                "v-chip",
+                "v-badge",
                 {
-                  staticStyle: { width: "100%", "margin-bottom": "5px" },
-                  attrs: { label: "", dark: "", color: "blue" }
+                  attrs: {
+                    bordered: "",
+                    bottom: "",
+                    "offset-x": "-2",
+                    "offset-y": "20",
+                    color:
+                      _vm.esisteEvento && _vm.getRuolo === "admin"
+                        ? "red"
+                        : "white",
+                    content:
+                      _vm.esisteEvento && _vm.getRuolo === "admin" ? "D" : ""
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.eliminaEvento($event)
+                    }
+                  }
                 },
-                [_vm._v(_vm._s(_vm.titolo) + " " + _vm._s(_vm.giorno))]
+                [
+                  _c(
+                    "v-chip",
+                    {
+                      staticStyle: { width: "100%", "margin-bottom": "5px" },
+                      attrs: {
+                        label: "",
+                        dark: "",
+                        color: _vm.isOggi ? "blue" : ""
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.titolo) + " " + _vm._s(_vm.giorno))]
+                  )
+                ],
+                1
               )
             ],
             1
           )
-        : _c(
-            "h3",
-            [
-              _c(
-                "v-chip",
-                {
-                  staticStyle: { width: "100%", "margin-bottom": "5px" },
-                  attrs: { label: "", outlined: "" }
-                },
-                [_vm._v(_vm._s(_vm.titolo) + " " + _vm._s(_vm.giorno))]
-              )
-            ],
-            1
-          ),
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm._l(11, function(ore) {
         return _c(
@@ -1664,6 +1801,87 @@ var render = function() {
       })
     ],
     2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=template&id=cecc186a&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/personale/MessaggioEventoPresente.vue?vue&type=template&id=cecc186a&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "text-center" },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { width: "500" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-text", { staticClass: "pt-4" }, [
+                _c("h2", { staticClass: "text-center" }, [
+                  _vm._v("Evento non inserito!")
+                ]),
+                _vm._v(" "),
+                _c("h3", { staticClass: "text-center" }, [
+                  _vm._v("Già occupato da un altro evento")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", text: "" },
+                      on: { click: _vm.cancella }
+                    },
+                    [_vm._v("\n                    Chiudi\n                ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
   )
 }
 var staticRenderFns = []

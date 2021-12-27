@@ -46,7 +46,7 @@
             </div>
             <div v-else>
                 <v-row>
-                    <v-col cols="8">
+                    <v-col>
                         <h3 class="mt-5">Riepilogo In Centrale</h3>
                         <v-data-table
                             :headers="headersRiepilogo"

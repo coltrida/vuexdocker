@@ -1,14 +1,19 @@
 <template>
     <div>
         <v-row class="my-4">
-            <v-col cols="12" md="6" lg="6">
+
+            <messaggio-evento-presente
+                v-if="getEventoPresente === 0"
+                @cancellaMessaggio = "cancellaMessaggio"
+            />
+
+            <v-col cols="12" md="7" lg="7">
                 <v-row style="font-size: 10px" class="flex">
                     <v-col cols="6" md="3" lg="3">
                         <v-menu
-                            ref="menu"
                             v-model="menu"
                             :close-on-content-click="false"
-                            :return-value.sync="newEvent.giorno"
+                            :nudge-right="40"
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
@@ -24,27 +29,11 @@
                                 ></v-text-field>
                             </template>
                             <v-date-picker
-                                v-model="newEvent.giorno"
-                                no-title
                                 first-day-of-week="1"
                                 locale="ITA"
-                                scrollable
+                                v-model="newEvent.giorno"
+                                @input="menu = false"
                             >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                    text
-                                    color="primary"
-                                    @click="menu = false"
-                                >
-                                    Cancel
-                                </v-btn>
-                                <v-btn
-                                    text
-                                    color="primary"
-                                    @click="$refs.menu.save(newEvent.giorno)"
-                                >
-                                    OK
-                                </v-btn>
                             </v-date-picker>
                         </v-menu>
                     </v-col>
@@ -72,82 +61,84 @@
                         ></v-text-field>
                     </v-col>
                     <v-col cols="6" md="2" lg="2">
-                        <v-btn small color="primary" @click="inserisciEvento" :block="$vuetify.breakpoint.xs">
+                        <v-btn small :disabled="bloccaInserimento" color="primary" @click="inserisciEvento" :block="$vuetify.breakpoint.xs">
                             Inserisci
                         </v-btn>
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="6" md="1" lg="1">
-                <v-chip
-                    style="width: 100px"
-                    color="teal lighten-4"
-                    label
-                >
-                    filiale
-                </v-chip>
+            <v-col>
+                <div class="flex">
+                    <v-chip
+                        style="width: 80px"
+                        color="teal lighten-4"
+                        label
+                    >
+                        Negozio
+                    </v-chip>
+                    <v-chip
+                        style="width: 80px"
+                        color="lime lighten-3"
+                        label
+                    >
+                        recapito
+                    </v-chip>
+                    <v-chip
+                        style="width: 80px"
+                        color="orange lighten-3"
+                        label
+                    >
+                        screening
+                    </v-chip>
+                </div>
+                <div class="flex">
+                    <v-chip
+                        style="width: 80px"
+                        color="brown lighten-3"
+                        label
+                    >
+                        domicili
+                    </v-chip>
+                    <v-chip
+                        style="width: 80px"
+                        color="red lighten-3"
+                        label
+                    >
+                        permesso
+                    </v-chip>
+                    <v-chip
+                        style="width: 80px"
+                        color="red lighten-5"
+                        label
+                    >
+                        festivo
+                    </v-chip>
+                </div>
             </v-col>
-            <v-col cols="6" md="1" lg="1">
-                <v-chip
-                    style="width: 100px"
-                    color="lime lighten-3"
-                    label
-                >
-                    recapito
-                </v-chip>
-            </v-col>
-            <v-col cols="6" md="1" lg="1">
-                <v-chip
-                    style="width: 100px"
-                    color="orange lighten-3"
-                    label
-                >
-                    screening
-                </v-chip>
-            </v-col>
-            <v-col cols="6" md="1" lg="1">
-                <v-chip
-                    style="width: 100px"
-                    color="brown lighten-3"
-                    label
-                >
-                    domicili
-                </v-chip>
-            </v-col>
-            <v-col cols="12" md="1" lg="1">
-                <v-row class="flex-nowrap">
-                    <v-col class="d-flex justify-center">
-
-                            <v-icon
-                                large
-                                color="green darken-2"
-                                @click="spostati(-1)"
-                            >
-                                mdi-arrow-left-bold-circle
-                            </v-icon>
-
-                    </v-col>
-                    <v-col class="d-flex justify-center">
-                        <v-icon
-                            large
-                            color="green darken-2"
-                            @click="spostati(0)"
-                        >
-                            mdi-home
-                        </v-icon>
-                    </v-col>
-                    <v-col class="d-flex justify-center">
-
-                            <v-icon
-                                large
-                                color="green darken-2"
-                                @click="spostati(1)"
-                            >
-                                mdi-arrow-right-bold-circle
-                            </v-icon>
-
-                    </v-col>
-                </v-row>
+            <v-col class="flex">
+                <v-col>
+                    <v-icon
+                        large
+                        color="green darken-2"
+                        @click="spostati(-1)"
+                    >
+                        mdi-arrow-left-bold-circle
+                    </v-icon>
+                    <v-icon
+                        large
+                        color="green darken-2"
+                        @click="spostati(0)"
+                    >
+                        mdi-home
+                    </v-icon>
+                    <v-icon
+                        large
+                        color="green darken-2"
+                        @click="spostati(1)"
+                    >
+                        mdi-arrow-right-bold-circle
+                    </v-icon>
+                </v-col>
             </v-col>
         </v-row>
         <v-row class="text-center" v-if="carica">
@@ -279,15 +270,16 @@
 <script>
     import {mapActions, mapGetters} from "vuex";
     import Giorno from "./Giorno";
+    import MessaggioEventoPresente from "./MessaggioEventoPresente";
 
     export default {
         name: "Diario",
-        components: {Giorno},
+        components: {MessaggioEventoPresente, Giorno},
         data(){
             return {
                 menu:false,
-                getQuando: ['mattina', 'pomeriggio'],
-                getCosa: ['filiale', 'recapito', 'screening', 'domicilio'],
+                getQuando: ['mattina', 'pomeriggio', 'giorno'],
+                getCosa: ['negozio', 'recapito', 'screening', 'domicilio', 'permesso'],
                 newEvent: {},
                 carica: false,
                 nrSettimana:0,
@@ -367,10 +359,12 @@
                 this.newEvent.user_id = this.getIdUser;
                 this.addEvento(this.newEvent).then(() => {
                     this.newEvent = {};
-                    /*this.nrSettimana = 0;
-                    this.fetchDateSettimana();*/
                     this.caricaDati(this.nrSettimana);
                 });
+            },
+
+            cancellaMessaggio(){
+                this.$store.commit('eventi/resetMessaggioEventoGiaPresente');
             }
 
         },
@@ -389,13 +383,17 @@
             }),
 
             ...mapGetters('eventi', {
-                getMostraInserimentoEvento:'getMostraInserimentoEvento',
+                getEventoPresente:'getEventoPresente',
                 getEventiSettimana:'getEventiSettimana',
             }),
 
             ...mapGetters('login', {
                 getIdUser:'getIdUser',
             }),
+
+            bloccaInserimento(){
+                return this.newEvent.giorno && this.newEvent.quando && this.newEvent.cosa ? false : true;
+            }
 
         },
     }

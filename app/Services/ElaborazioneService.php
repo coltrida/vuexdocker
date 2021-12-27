@@ -37,7 +37,7 @@ class ElaborazioneService
         $idStatoFattura = StatoApa::where('nome', 'FATTURA')->first()->id;
 
         // attività svolte a mezzanotte
-        if ($ora > 14 || $ora < 11)
+        if ($ora < 11 && $ora > 14)
      //   if ($ora > 14)
         {
             $users = User::with('budget')->audio(1)->get();
@@ -419,7 +419,7 @@ class ElaborazioneService
         }
     }
 
-    public function controlloPossibiliDuplicati()
+        public function controlloPossibiliDuplicati()
     {
         $possibiliDoppioni = collect([]);
         Client::orderBy('nome')
@@ -451,7 +451,7 @@ class ElaborazioneService
     private function selezionaClientiConAppuntamentiDomaniConEmail($domani)
     {
         return Client::with('appuntamenti')
-            ->whereNotNull('mail')
+            ->where([['mail', '!=', null], ['mail', '!=', '']])
             ->whereHas('appuntamenti', function ($a) use($domani){
                 $a->with('filiale', 'recapito')->where('giorno', $domani);
             })

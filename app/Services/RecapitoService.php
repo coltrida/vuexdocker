@@ -25,7 +25,7 @@ class RecapitoService
 
         $filiali = User::with('filiale:id,nome,citta,codiceIdentificativo')->find($idAudio)->filiale;
         $filiali->each(function ($item){
-            $item->tipologia = 'filiale';
+            $item->tipologia = 'negozio';
         });
 
         return $filiali->concat($recapiti);

@@ -370,23 +370,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2567,23 +2550,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -43176,29 +43142,12 @@ var render = function() {
                           _c(
                             "v-menu",
                             {
-                              ref: "menu",
                               attrs: {
                                 "close-on-content-click": false,
-                                "return-value": _vm.newAppuntamento.giorno,
+                                "nudge-right": 40,
                                 transition: "scale-transition",
                                 "offset-y": "",
                                 "min-width": "auto"
-                              },
-                              on: {
-                                "update:returnValue": function($event) {
-                                  return _vm.$set(
-                                    _vm.newAppuntamento,
-                                    "giorno",
-                                    $event
-                                  )
-                                },
-                                "update:return-value": function($event) {
-                                  return _vm.$set(
-                                    _vm.newAppuntamento,
-                                    "giorno",
-                                    $event
-                                  )
-                                }
                               },
                               scopedSlots: _vm._u([
                                 {
@@ -43254,68 +43203,24 @@ var render = function() {
                             },
                             [
                               _vm._v(" "),
-                              _c(
-                                "v-date-picker",
-                                {
-                                  attrs: {
-                                    "no-title": "",
-                                    "first-day-of-week": "1",
-                                    locale: "ITA",
-                                    scrollable: ""
-                                  },
-                                  model: {
-                                    value: _vm.newAppuntamento.giorno,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.newAppuntamento,
-                                        "giorno",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "newAppuntamento.giorno"
+                              _c("v-date-picker", {
+                                attrs: {
+                                  "first-day-of-week": "1",
+                                  locale: "ITA"
+                                },
+                                on: {
+                                  input: function($event) {
+                                    _vm.menu = false
                                   }
                                 },
-                                [
-                                  _c("v-spacer"),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      attrs: { text: "", color: "primary" },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.menu = false
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                    Cancel\n                                "
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      attrs: { text: "", color: "primary" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$refs.menu.save(
-                                            _vm.newAppuntamento.giorno
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                    OK\n                                "
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
+                                model: {
+                                  value: _vm.newAppuntamento.giorno,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.newAppuntamento, "giorno", $$v)
+                                  },
+                                  expression: "newAppuntamento.giorno"
+                                }
+                              })
                             ],
                             1
                           )
@@ -46603,21 +46508,12 @@ var render = function() {
                       _c(
                         "v-menu",
                         {
-                          ref: "menu",
                           attrs: {
                             "close-on-content-click": false,
-                            "return-value": _vm.telefonata.giorno,
+                            "nudge-right": 40,
                             transition: "scale-transition",
                             "offset-y": "",
                             "min-width": "auto"
-                          },
-                          on: {
-                            "update:returnValue": function($event) {
-                              return _vm.$set(_vm.telefonata, "giorno", $event)
-                            },
-                            "update:return-value": function($event) {
-                              return _vm.$set(_vm.telefonata, "giorno", $event)
-                            }
                           },
                           scopedSlots: _vm._u([
                             {
@@ -46670,64 +46566,21 @@ var render = function() {
                         },
                         [
                           _vm._v(" "),
-                          _c(
-                            "v-date-picker",
-                            {
-                              attrs: {
-                                "no-title": "",
-                                "first-day-of-week": "1",
-                                locale: "ITA",
-                                scrollable: ""
-                              },
-                              model: {
-                                value: _vm.telefonata.giorno,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.telefonata, "giorno", $$v)
-                                },
-                                expression: "telefonata.giorno"
+                          _c("v-date-picker", {
+                            attrs: { "first-day-of-week": "1", locale: "ITA" },
+                            on: {
+                              input: function($event) {
+                                _vm.menu = false
                               }
                             },
-                            [
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { text: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.menu = false
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Cancel\n                            "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { text: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$refs.menu.save(
-                                        _vm.telefonata.giorno
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                OK\n                            "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
+                            model: {
+                              value: _vm.telefonata.giorno,
+                              callback: function($$v) {
+                                _vm.$set(_vm.telefonata, "giorno", $$v)
+                              },
+                              expression: "telefonata.giorno"
+                            }
+                          })
                         ],
                         1
                       )

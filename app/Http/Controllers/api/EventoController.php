@@ -13,6 +13,11 @@ class EventoController extends Controller
         return $eventoService->aggiungi($request);
     }
 
+    public function elimina(Request $request, EventoService $eventoService)
+    {
+        return $eventoService->elimina($request);
+    }
+
     public function eventoGiorno(Request $request, EventoService $eventoService)
     {
         return $eventoService->eventoGiorno($request);

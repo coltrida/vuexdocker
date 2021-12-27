@@ -1,13 +1,13 @@
 import help from "../../help";
 
 const state = () => ({
-    evento: {},
+    eventoPresente: false,
     eventiSettimana:[]
 });
 
 const getters = {
-    getEventoGiorno(state){
-        return state.evento;
+    getEventoPresente(state){
+        return state.eventoPresente;
     },
 
     getEventiSettimana(state){
@@ -16,7 +16,6 @@ const getters = {
 };
 
 const actions = {
-
     async fetchEventoGiorno({commit}, payload){
         const response = await axios.post(`${help().linkeventogiorno}`, payload, {
             headers: {
@@ -33,6 +32,15 @@ const actions = {
             }
         });
         commit('addEvento', response.data);
+    },
+
+    async delEvento({commit}, payload){
+        await axios.post(`${help().linkdelevento}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+/*        commit('addEvento', response.data);*/
     },
 
     async fetchEventiSettimana({commit}, payload){
@@ -58,7 +66,11 @@ const mutations = {
     },
 
     addEvento(state, payload){
+        state.eventoPresente = payload;
+    },
 
+    resetMessaggioEventoGiaPresente(state, payload){
+        state.eventoPresente = false;
     }
 
 };

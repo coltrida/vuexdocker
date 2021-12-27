@@ -125,7 +125,8 @@
                             :headers="headers3"
                             :items="audio.prova_reso"
                             class="elevation-1 mt-3"
-                            hide-default-footer
+                            :items-per-page=4
+                            height="240"
                         >
 
                             <template v-slot:header.client.fullname="{ header }">
