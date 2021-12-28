@@ -375,40 +375,40 @@ const actions = {
         commit('fetchDateSettimana', response.data);
     },
 
-    async appuntamentoSaltato({commit}, idAppuntamento){
-        await axios.get(`${help().linkappuntamentosaltato}`+'/'+idAppuntamento, {
+    async appuntamentoSaltato({commit}, payload){
+        await axios.post(`${help().linkappuntamentosaltato}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('eliminaAppuntamentoInSospeso', idAppuntamento);
+        commit('eliminaAppuntamentoInSospeso', payload.idAppuntamento);
     },
 
-    async oggiNonViene({commit}, idAppuntamento){
-        await axios.get(`${help().linkappuntamentosaltato}`+'/'+idAppuntamento, {
+    async oggiNonViene({commit}, payload){
+        await axios.post(`${help().linkappuntamentosaltato}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('oggiNonViene', idAppuntamento);
+        commit('oggiNonViene', payload.idAppuntamento);
     },
 
-    async appuntamentoIntervenuto({commit}, idAppuntamento){
-        await axios.get(`${help().linkappuntamentointervenuto}`+'/'+idAppuntamento, {
+    async appuntamentoIntervenuto({commit}, payload){
+        await axios.post(`${help().linkappuntamentointervenuto}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('eliminaAppuntamentoInSospeso', idAppuntamento);
+        commit('eliminaAppuntamentoInSospeso', payload.idAppuntamento);
     },
 
-    async appuntamentoIntervenutoOggi({commit}, idAppuntamento){
-        await axios.get(`${help().linkappuntamentointervenuto}`+'/'+idAppuntamento, {
+    async appuntamentoIntervenutoOggi({commit}, payload){
+        await axios.post(`${help().linkappuntamentointervenuto}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
-        commit('appuntamentoIntervenutoOggi', idAppuntamento);
+        commit('appuntamentoIntervenutoOggi', payload.idAppuntamento);
     },
 
     async fetchAppuntamentoGiornoOra({commit}, payload){

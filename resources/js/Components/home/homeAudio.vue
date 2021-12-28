@@ -487,19 +487,31 @@
             },
 
             nonIntervenutoOggi(idAppuntamento){
-                this.oggiNonViene(idAppuntamento);
+                this.oggiNonViene({
+                    'idAppuntamento':idAppuntamento,
+                    'user_id':this.getIdUser,
+                });
             },
 
             intervenutoOggi(idAppuntamento){
-                this.appuntamentoIntervenutoOggi(idAppuntamento)
+                this.appuntamentoIntervenutoOggi({
+                    'idAppuntamento':idAppuntamento,
+                    'user_id':this.getIdUser,
+                })
             },
 
             nonIntervenuto(idAppuntamento){
-                this.appuntamentoSaltato(idAppuntamento);
+                this.appuntamentoSaltato({
+                    'idAppuntamento':idAppuntamento,
+                    'user_id':this.getIdUser,
+                });
             },
 
             intervenuto(idAppuntamento){
-                this.appuntamentoIntervenuto(idAppuntamento);
+                this.appuntamentoIntervenuto({
+                    'idAppuntamento':idAppuntamento,
+                    'user_id':this.getIdUser,
+                });
             },
 
             chiudiIntervenutoModal(payload){

@@ -236,8 +236,8 @@ Route::group([], function () {
         Route::post('/appuntamentiAnnoMese', [AppuntamentiController::class, 'appuntamentiAnnoMese']);
         Route::post('/intervenutiAnnoMese', [AppuntamentiController::class, 'intervenutiAnnoMese']);
         Route::get('/appuntamentiInSospeso/{idAudio}', [AppuntamentiController::class, 'inSospeso']);
-        Route::get('/appuntamentoSaltato/{idAppuntamento}', [AppuntamentiController::class, 'appuntamentoSaltato']);
-        Route::get('/appuntamentoIntervenuto/{idAppuntamento}', [AppuntamentiController::class, 'appuntamentoIntervenuto']);
+        Route::post('/appuntamentoSaltato', [AppuntamentiController::class, 'appuntamentoSaltato']);
+        Route::post('/appuntamentoIntervenuto', [AppuntamentiController::class, 'appuntamentoIntervenuto']);
         Route::post('/appuntamentogiornoora', [AppuntamentiController::class, 'appuntamentogiornoora']);
         Route::get('/dataDiOggi', [AppuntamentiController::class, 'dataDiOggi']);
         Route::get('/settimanaDelMese/{idAudio}/{direzione?}', [AppuntamentiController::class, 'settimanaDelMese']);

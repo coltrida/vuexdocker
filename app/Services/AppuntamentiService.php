@@ -109,8 +109,7 @@ class AppuntamentiService
         }])->find($idAudio)->appuntamenti;
     }
 
-    public function
-    sabato($idAudio, $direzione)
+    public function sabato($idAudio, $direzione)
     {
         if ($direzione === null || $direzione == 'null'){
             return User::with(['appuntamentiSabato' => function($q){
@@ -344,14 +343,30 @@ class AppuntamentiService
         }])->find($idAudio)->appuntamenti;
     }
 
-    public function appuntamentoSaltato($idAppuntamento)
+    public function appuntamentoSaltato($request)
     {
-        Appuntamento::find($idAppuntamento)->update(['intervenuto' => false]);
+        $appuntamento = Appuntamento::with('client')->find($request->idAppuntamento);
+        $appuntamento->update(['intervenuto' => false]);
+        $utente = User::find($request->user_id);
+        $propieta = 'appuntamento';
+        $testo = $utente->name.' ha selezionato NON INTERVENUTO per '.$appuntamento->client->cognome.' '.$appuntamento->client->nome." per l'appuntamento del ".$appuntamento->giorno;
+
+        $log = new LoggingService();
+        $log->scriviLog($appuntamento->client->cognome.''.$appuntamento->client->nome, $utente, $utente->name, $propieta, $testo);
+
     }
 
-    public function appuntamentoIntervenuto($idAppuntamento)
+    public function appuntamentoIntervenuto($request)
     {
-        Appuntamento::find($idAppuntamento)->update(['intervenuto' => true]);
+        $appuntamento = Appuntamento::with('client')->find($request->idAppuntamento);
+        $appuntamento->update(['intervenuto' => true]);
+        $utente = User::find($request->user_id);
+        $propieta = 'appuntamento';
+        $testo = $utente->name.' ha selezionato INTERVENUTO per '.$appuntamento->client->cognome.' '.$appuntamento->client->nome." per l'appuntamento del ".$appuntamento->giorno;
+
+        $log = new LoggingService();
+        $log->scriviLog($appuntamento->client->cognome.''.$appuntamento->client->nome, $utente, $utente->name, $propieta, $testo);
+
     }
 
     public function appuntamentogiornoora($request)

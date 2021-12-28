@@ -4550,16 +4550,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.prodottiSelezione = [];
     },
     nonIntervenutoOggi: function nonIntervenutoOggi(idAppuntamento) {
-      this.oggiNonViene(idAppuntamento);
+      this.oggiNonViene({
+        'idAppuntamento': idAppuntamento,
+        'user_id': this.getIdUser
+      });
     },
     intervenutoOggi: function intervenutoOggi(idAppuntamento) {
-      this.appuntamentoIntervenutoOggi(idAppuntamento);
+      this.appuntamentoIntervenutoOggi({
+        'idAppuntamento': idAppuntamento,
+        'user_id': this.getIdUser
+      });
     },
     nonIntervenuto: function nonIntervenuto(idAppuntamento) {
-      this.appuntamentoSaltato(idAppuntamento);
+      this.appuntamentoSaltato({
+        'idAppuntamento': idAppuntamento,
+        'user_id': this.getIdUser
+      });
     },
     intervenuto: function intervenuto(idAppuntamento) {
-      this.appuntamentoIntervenuto(idAppuntamento);
+      this.appuntamentoIntervenuto({
+        'idAppuntamento': idAppuntamento,
+        'user_id': this.getIdUser
+      });
     },
     chiudiIntervenutoModal: function chiudiIntervenutoModal(payload) {
       var _this = this;

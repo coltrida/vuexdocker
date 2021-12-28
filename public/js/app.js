@@ -3317,7 +3317,7 @@ var actions = {
       }, _callee30);
     }))();
   },
-  appuntamentoSaltato: function appuntamentoSaltato(_ref31, idAppuntamento) {
+  appuntamentoSaltato: function appuntamentoSaltato(_ref31, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee31() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee31$(_context31) {
@@ -3326,14 +3326,14 @@ var actions = {
             case 0:
               commit = _ref31.commit;
               _context31.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentosaltato) + '/' + idAppuntamento, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentosaltato), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              commit('eliminaAppuntamentoInSospeso', idAppuntamento);
+              commit('eliminaAppuntamentoInSospeso', payload.idAppuntamento);
 
             case 4:
             case "end":
@@ -3343,7 +3343,7 @@ var actions = {
       }, _callee31);
     }))();
   },
-  oggiNonViene: function oggiNonViene(_ref32, idAppuntamento) {
+  oggiNonViene: function oggiNonViene(_ref32, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee32() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee32$(_context32) {
@@ -3352,14 +3352,14 @@ var actions = {
             case 0:
               commit = _ref32.commit;
               _context32.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentosaltato) + '/' + idAppuntamento, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentosaltato), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              commit('oggiNonViene', idAppuntamento);
+              commit('oggiNonViene', payload.idAppuntamento);
 
             case 4:
             case "end":
@@ -3369,7 +3369,7 @@ var actions = {
       }, _callee32);
     }))();
   },
-  appuntamentoIntervenuto: function appuntamentoIntervenuto(_ref33, idAppuntamento) {
+  appuntamentoIntervenuto: function appuntamentoIntervenuto(_ref33, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee33() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee33$(_context33) {
@@ -3378,14 +3378,14 @@ var actions = {
             case 0:
               commit = _ref33.commit;
               _context33.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentointervenuto) + '/' + idAppuntamento, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentointervenuto), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              commit('eliminaAppuntamentoInSospeso', idAppuntamento);
+              commit('eliminaAppuntamentoInSospeso', payload.idAppuntamento);
 
             case 4:
             case "end":
@@ -3395,7 +3395,7 @@ var actions = {
       }, _callee33);
     }))();
   },
-  appuntamentoIntervenutoOggi: function appuntamentoIntervenutoOggi(_ref34, idAppuntamento) {
+  appuntamentoIntervenutoOggi: function appuntamentoIntervenutoOggi(_ref34, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee34() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee34$(_context34) {
@@ -3404,14 +3404,14 @@ var actions = {
             case 0:
               commit = _ref34.commit;
               _context34.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentointervenuto) + '/' + idAppuntamento, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkappuntamentointervenuto), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              commit('appuntamentoIntervenutoOggi', idAppuntamento);
+              commit('appuntamentoIntervenutoOggi', payload.idAppuntamento);
 
             case 4:
             case "end":

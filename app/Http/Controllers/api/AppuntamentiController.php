@@ -125,14 +125,14 @@ class AppuntamentiController extends Controller
         return AppuntamentiSospesiResource::collection($appuntamentiService->inSospeso($idAudio));
     }
 
-    public function appuntamentoSaltato($idAppuntamento, AppuntamentiService $appuntamentiService)
+    public function appuntamentoSaltato(Request $request, AppuntamentiService $appuntamentiService)
     {
-        $appuntamentiService->appuntamentoSaltato($idAppuntamento);
+        $appuntamentiService->appuntamentoSaltato($request);
     }
 
-    public function appuntamentoIntervenuto($idAppuntamento, AppuntamentiService $appuntamentiService)
+    public function appuntamentoIntervenuto(Request $request, AppuntamentiService $appuntamentiService)
     {
-        $appuntamentiService->appuntamentoIntervenuto($idAppuntamento);
+        $appuntamentiService->appuntamentoIntervenuto($request);
     }
 
     public function appuntamentogiornoora(Request $request, AppuntamentiService $appuntamentiService)

@@ -529,23 +529,13 @@ class ClientService
 
         return Client::with('tipologia:id,nome',
             'marketing', 'user:id,name', 'filiale:id,nome', 'recapito:id,nome', 'audiometria', 'prova')
-            ->where($condizioni)->whereNotNull('mail')
+            ->where($condizioni)
+            ->where([['mail', '!=', null], ['mail', '!=', '']])
             ->orderBy('cognome')->get();
     }
 
     public function situazioneAnnoClientiAudio($request)
     {
-        /*return Prova::
-                with('client')
-                ->where([
-                    ['user_id', $request->userId],
-                    ['anno_fine', $request->anno],
-                ])->whereHas('stato', function ($t){
-                    $t->where('nome', 'FATTURA');
-                })
-            ->latest()
-            ->get();*/
-
         return User::with(['prova' => function($p) use($request){
             $p->where('anno_fine', $request->anno)->whereHas('stato', function ($t){
                 $t->where('nome', 'FATTURA');
@@ -567,9 +557,6 @@ class ClientService
                 });
             }])
             ->find($request->userId);
-
-        /*return User::
-            find($request->userId);*/
     }
 
     public function situazioneAnnoResiAudio($request)
