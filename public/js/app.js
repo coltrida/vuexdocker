@@ -3944,13 +3944,17 @@ var state = function state() {
     riepilogo: [],
     listaDoppioni: [],
     daInserire: [],
-    listaSenzaFiliale: []
+    listaSenzaFiliale: [],
+    meta: {}
   };
 };
 
 var getters = {
   getAnni: function getAnni(state) {
     return state.anni;
+  },
+  getMeta: function getMeta(state) {
+    return state.meta;
   },
   getMesi: function getMesi(state) {
     return state.mesi;
@@ -4164,26 +4168,29 @@ var actions = {
       }, _callee6);
     }))();
   },
-  fetchClientsFiliale: function fetchClientsFiliale(_ref7, idFiliale) {
+  fetchClientsFiliale: function fetchClientsFiliale(_ref7, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-      var commit, response;
+      var commit, idFiliale, currentPage, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               commit = _ref7.commit;
-              _context7.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientsfiliale) + '/' + idFiliale, {
+              idFiliale = payload.idFiliale;
+              currentPage = payload.pageNumber;
+              _context7.next = 5;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkclientsfiliale) + '/' + idFiliale + '?page=' + currentPage, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
-            case 3:
+            case 5:
               response = _context7.sent;
               commit('fetchClients', response.data.data);
+              commit('fetchMeta', response.data.meta);
 
-            case 5:
+            case 8:
             case "end":
               return _context7.stop();
           }
@@ -4599,6 +4606,12 @@ var actions = {
 var mutations = {
   fetchClients: function fetchClients(state, payload) {
     state.clients = payload;
+  },
+  fetchMeta: function fetchMeta(state, payload) {
+    state.meta = payload;
+  },
+  setCurrentPage: function setCurrentPage(state, payload) {
+    state.meta.current_page = payload;
   },
   fetchRiepilogo: function fetchRiepilogo(state, payload) {
     state.riepilogo = payload;
@@ -7834,7 +7847,7 @@ var actions = {
       }, _callee16);
     }))();
   },
-  assegnaProdottiMagazzino: function assegnaProdottiMagazzino(_ref17, payload) {
+  eliminaProdotto: function eliminaProdotto(_ref17, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee17() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee17$(_context17) {
@@ -7843,6 +7856,32 @@ var actions = {
             case 0:
               commit = _ref17.commit;
               _context17.next = 3;
+              return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkeliminaprodotto) + '/' + id, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              commit('eliminaProdotto', id);
+
+            case 4:
+            case "end":
+              return _context17.stop();
+          }
+        }
+      }, _callee17);
+    }))();
+  },
+  assegnaProdottiMagazzino: function assegnaProdottiMagazzino(_ref18, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee18() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee18$(_context18) {
+        while (1) {
+          switch (_context18.prev = _context18.next) {
+            case 0:
+              commit = _ref18.commit;
+              _context18.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottimagazzino), {
                 'prodotti': payload
               }, {
@@ -7856,40 +7895,13 @@ var actions = {
 
             case 4:
             case "end":
-              return _context17.stop();
-          }
-        }
-      }, _callee17);
-    }))();
-  },
-  switchArrivato: function switchArrivato(_ref18, id) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee18() {
-      var commit, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee18$(_context18) {
-        while (1) {
-          switch (_context18.prev = _context18.next) {
-            case 0:
-              commit = _ref18.commit;
-              _context18.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitcharrivato) + '/' + id, {
-                headers: {
-                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
-                }
-              });
-
-            case 3:
-              response = _context18.sent;
-              commit('switchArrivato', response.data.data);
-
-            case 5:
-            case "end":
               return _context18.stop();
           }
         }
       }, _callee18);
     }))();
   },
-  fetchServizi: function fetchServizi(_ref19) {
+  switchArrivato: function switchArrivato(_ref19, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee19() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee19$(_context19) {
@@ -7898,7 +7910,7 @@ var actions = {
             case 0:
               commit = _ref19.commit;
               _context19.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkservizi), {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitcharrivato) + '/' + id, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7906,7 +7918,7 @@ var actions = {
 
             case 3:
               response = _context19.sent;
-              commit('fetchInFiliale', response.data.data);
+              commit('switchArrivato', response.data.data);
 
             case 5:
             case "end":
@@ -7916,26 +7928,24 @@ var actions = {
       }, _callee19);
     }))();
   },
-  assegnaProdottiToFiliale: function assegnaProdottiToFiliale(_ref20, payload) {
+  fetchServizi: function fetchServizi(_ref20) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee20() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee20$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
             case 0:
               commit = _ref20.commit;
               _context20.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottitofiliale), payload, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkservizi), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              commit('assegnaProdottiToFiliale', payload);
-              commit('filiali/aggiornaRichiesteFiliali', payload, {
-                root: true
-              });
+              response = _context20.sent;
+              commit('fetchInFiliale', response.data.data);
 
             case 5:
             case "end":
@@ -7945,7 +7955,7 @@ var actions = {
       }, _callee20);
     }))();
   },
-  assegnaProdottiFilialeInAnticipo: function assegnaProdottiFilialeInAnticipo(_ref21, payload) {
+  assegnaProdottiToFiliale: function assegnaProdottiToFiliale(_ref21, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee21() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee21$(_context21) {
@@ -7974,7 +7984,7 @@ var actions = {
       }, _callee21);
     }))();
   },
-  confermaProdottiToFiliale: function confermaProdottiToFiliale(_ref22, payload) {
+  assegnaProdottiFilialeInAnticipo: function assegnaProdottiFilialeInAnticipo(_ref22, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee22() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee22$(_context22) {
@@ -7983,6 +7993,35 @@ var actions = {
             case 0:
               commit = _ref22.commit;
               _context22.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottitofiliale), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              commit('assegnaProdottiToFiliale', payload);
+              commit('filiali/aggiornaRichiesteFiliali', payload, {
+                root: true
+              });
+
+            case 5:
+            case "end":
+              return _context22.stop();
+          }
+        }
+      }, _callee22);
+    }))();
+  },
+  confermaProdottiToFiliale: function confermaProdottiToFiliale(_ref23, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee23() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee23$(_context23) {
+        while (1) {
+          switch (_context23.prev = _context23.next) {
+            case 0:
+              commit = _ref23.commit;
+              _context23.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkconfermaprodottitofiliale), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -7996,10 +8035,10 @@ var actions = {
 
             case 4:
             case "end":
-              return _context22.stop();
+              return _context23.stop();
           }
         }
-      }, _callee22);
+      }, _callee23);
     }))();
   }
 };
@@ -8039,6 +8078,11 @@ var mutations = {
   },
   eliminaRichiesta: function eliminaRichiesta(state, id) {
     state.richiesti = state.richiesti.filter(function (u) {
+      return u.id !== id;
+    });
+  },
+  eliminaProdotto: function eliminaProdotto(state, id) {
+    state.inCentrale = state.inCentrale.filter(function (u) {
       return u.id !== id;
     });
   },
@@ -11286,7 +11330,8 @@ var help = function help() {
     linkdelevento: base + 'eliminaEvento',
     linkeventogiorno: base + 'eventoGiorno',
     linkeventisettimana: base + 'eventiSettimana',
-    linkappuntamentidituttiaudio: base + 'appuntamentiDiTuttiAudio'
+    linkappuntamentidituttiaudio: base + 'appuntamentiDiTuttiAudio',
+    linkeliminaprodotto: base + 'eliminaProduct'
   };
 };
 

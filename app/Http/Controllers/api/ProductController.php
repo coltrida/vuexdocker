@@ -126,4 +126,9 @@ class ProductController extends Controller
     {
         return $productService->richiesteFiliali();
     }
+
+    public function eliminaProduct($id, ProductService $productService)
+    {
+        $productService->eliminaProduct($id);
+    }
 }

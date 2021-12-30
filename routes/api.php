@@ -148,6 +148,7 @@ Route::group([], function () {
         Route::post('/assegnaProdottiToFiliale', [ProductController::class, 'assegnaProdottiToFiliale']);
         Route::post('/confermaProdottiToFiliale', [ProductController::class, 'confermaProdottiToFiliale']);
         Route::get('/richiesteFiliali', [ProductController::class, 'richiesteFiliali']);
+        Route::delete('/eliminaProduct/{id}', [ProductController::class, 'eliminaProduct']);
 
         // ---------------- client -------------------------
         Route::get('/clients', [ClientController::class, 'index']);

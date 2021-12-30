@@ -54,7 +54,8 @@ class ClientService
                 $q->where('nome', '!=', 'DEC');
             })
             ->orderBy('cognome')
-            ->get();
+        //    ->get();
+            ->paginate(10);
     }
 
     public function cliente($id)

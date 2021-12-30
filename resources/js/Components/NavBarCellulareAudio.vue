@@ -87,6 +87,11 @@
                         </v-list-item>
                     </router-link>
                 </div>
+                <router-link :to="{ name: 'magazzinoCentrale'}">
+                    <v-list-item class="blue-grey lighten-4">
+                        <v-list-item-title>CENTRALE</v-list-item-title>
+                    </v-list-item>
+                </router-link>
             </v-list>
         </v-menu>
 

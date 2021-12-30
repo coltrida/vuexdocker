@@ -198,6 +198,7 @@ const help = () => {
         linkeventogiorno: base+'eventoGiorno',
         linkeventisettimana: base+'eventiSettimana',
         linkappuntamentidituttiaudio: base+'appuntamentiDiTuttiAudio',
+        linkeliminaprodotto: base+'eliminaProduct',
     };
 };
 export default help;

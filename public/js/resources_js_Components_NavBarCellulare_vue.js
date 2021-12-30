@@ -483,6 +483,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "NavBarCellulareAudio",
@@ -1829,35 +1834,53 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-list",
-            _vm._l(_vm.getFiliali, function(item, index) {
-              return _c(
-                "div",
-                { key: index },
+            [
+              _vm._l(_vm.getFiliali, function(item, index) {
+                return _c(
+                  "div",
+                  { key: index },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "magazzino",
+                            params: { filialeId: item.id }
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "v-list-item",
+                          [
+                            _c("v-list-item-title", [_vm._v(_vm._s(item.nome))])
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "magazzinoCentrale" } } },
                 [
                   _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        to: {
-                          name: "magazzino",
-                          params: { filialeId: item.id }
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "v-list-item",
-                        [_c("v-list-item-title", [_vm._v(_vm._s(item.nome))])],
-                        1
-                      )
-                    ],
+                    "v-list-item",
+                    { staticClass: "blue-grey lighten-4" },
+                    [_c("v-list-item-title", [_vm._v("CENTRALE")])],
                     1
                   )
                 ],
                 1
               )
-            }),
-            0
+            ],
+            2
           )
         ],
         1

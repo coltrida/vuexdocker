@@ -332,6 +332,11 @@ class ProductService
         }])->get();
     }
 
+    public function eliminaProduct($id)
+    {
+        Product::destroy($id);
+    }
+
     private function aggiornaRichiestaFiliale($idListino, $idFiliale)
     {
         $richiesta = Richiesta::where([

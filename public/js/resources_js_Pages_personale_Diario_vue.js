@@ -289,6 +289,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1317,65 +1343,147 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "v-col",
-            { staticClass: "flex" },
-            [
-              _c(
+          _vm.$vuetify.breakpoint.xs
+            ? _c(
                 "v-col",
                 [
                   _c(
-                    "v-icon",
-                    {
-                      attrs: { large: "", color: "green darken-2" },
-                      on: {
-                        click: function($event) {
-                          return _vm.spostati(-1)
-                        }
-                      }
-                    },
+                    "v-btn",
+                    { attrs: { small: "" } },
                     [
-                      _vm._v(
-                        "\n                    mdi-arrow-left-bold-circle\n                "
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { color: "green darken-2" },
+                          on: {
+                            click: function($event) {
+                              return _vm.spostati(-1)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-arrow-left-bold-circle\n                "
+                          )
+                        ]
                       )
-                    ]
+                    ],
+                    1
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-icon",
-                    {
-                      attrs: { large: "", color: "green darken-2" },
-                      on: {
-                        click: function($event) {
-                          return _vm.spostati(0)
-                        }
-                      }
-                    },
-                    [_vm._v("\n                    mdi-home\n                ")]
+                    "v-btn",
+                    { attrs: { small: "" } },
+                    [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { color: "green darken-2" },
+                          on: {
+                            click: function($event) {
+                              return _vm.spostati(1)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-arrow-right-bold-circle\n                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
                   ),
                   _vm._v(" "),
                   _c(
-                    "v-icon",
-                    {
-                      attrs: { large: "", color: "green darken-2" },
-                      on: {
-                        click: function($event) {
-                          return _vm.spostati(1)
-                        }
-                      }
-                    },
+                    "v-btn",
+                    { staticClass: "ml-6", attrs: { small: "" } },
                     [
-                      _vm._v(
-                        "\n                    mdi-arrow-right-bold-circle\n                "
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { color: "green darken-2" },
+                          on: {
+                            click: function($event) {
+                              return _vm.spostati(0)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-home\n                "
+                          )
+                        ]
                       )
-                    ]
+                    ],
+                    1
                   )
                 ],
                 1
               )
-            ],
-            1
-          )
+            : _c(
+                "v-col",
+                { staticClass: "flex" },
+                [
+                  _c(
+                    "v-col",
+                    [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { large: "", color: "green darken-2" },
+                          on: {
+                            click: function($event) {
+                              return _vm.spostati(-1)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-arrow-left-bold-circle\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { large: "", color: "green darken-2" },
+                          on: {
+                            click: function($event) {
+                              return _vm.spostati(0)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-home\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { large: "", color: "green darken-2" },
+                          on: {
+                            click: function($event) {
+                              return _vm.spostati(1)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-arrow-right-bold-circle\n                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
         ],
         1
       ),

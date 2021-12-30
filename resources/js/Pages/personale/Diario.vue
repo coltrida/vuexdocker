@@ -115,7 +115,33 @@
                     </v-chip>
                 </div>
             </v-col>
-            <v-col class="flex">
+            <v-col v-if="$vuetify.breakpoint.xs">
+                <v-btn small>
+                    <v-icon
+                        color="green darken-2"
+                        @click="spostati(-1)"
+                    >
+                        mdi-arrow-left-bold-circle
+                    </v-icon>
+                </v-btn>
+                <v-btn small>
+                    <v-icon
+                        color="green darken-2"
+                        @click="spostati(1)"
+                    >
+                        mdi-arrow-right-bold-circle
+                    </v-icon>
+                </v-btn>
+                <v-btn small class="ml-6">
+                    <v-icon
+                        color="green darken-2"
+                        @click="spostati(0)"
+                    >
+                        mdi-home
+                    </v-icon>
+                </v-btn>
+            </v-col>
+            <v-col v-else class="flex">
                 <v-col>
                     <v-icon
                         large

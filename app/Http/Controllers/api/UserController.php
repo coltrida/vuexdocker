@@ -65,6 +65,8 @@ class UserController extends Controller
 
     public function userTranfert($id, $idTrasferimento, UserService $userService)
     {
+        ini_set('max_execution_time', 400);
+        ini_set('memory_limit', '-1');
         $userService->userTranfert($id, $idTrasferimento);
     }
 

@@ -18,11 +18,16 @@ const state = () => ({
     listaDoppioni:[],
     daInserire:[],
     listaSenzaFiliale:[],
+    meta:{}
 });
 
 const getters = {
     getAnni(state){
         return state.anni;
+    },
+
+    getMeta(state){
+        return state.meta;
     },
 
     getMesi(state){
@@ -146,13 +151,16 @@ const actions = {
         commit('fetchCompleanni', response.data.data);
     },
 
-    async fetchClientsFiliale({commit}, idFiliale){
-        const response = await axios.get(`${help().linkclientsfiliale}`+'/'+idFiliale, {
+    async fetchClientsFiliale({commit}, payload){
+        let idFiliale = payload.idFiliale;
+        let currentPage = payload.pageNumber;
+        const response = await axios.get(`${help().linkclientsfiliale}`+'/'+idFiliale+'?page=' + currentPage, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }
         });
         commit('fetchClients', response.data.data);
+        commit('fetchMeta', response.data.meta);
     },
 
     async fetchClient({commit}, id){
@@ -311,6 +319,14 @@ const actions = {
 const mutations = {
     fetchClients(state, payload){
         state.clients = payload;
+    },
+
+    fetchMeta(state, payload){
+        state.meta = payload;
+    },
+
+    setCurrentPage(state, payload){
+        state.meta.current_page = payload;
     },
 
     fetchRiepilogo(state, payload){

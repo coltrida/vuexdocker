@@ -34,7 +34,7 @@ class ClientSeeder extends Seeder
             'anno' => 2021,
         ]);
 
-        /*for ($i = 1; $i < 2000; $i++){
+        for ($i = 1; $i < 10000; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'21',
                 'cognome' => 'COGNOME'.$i.'21',
@@ -54,7 +54,7 @@ class ClientSeeder extends Seeder
             ]);
         }
 
-        for ($i = 1; $i < 2000; $i++){
+/*        for ($i = 1; $i < 2000; $i++){
             Client::create([
                 'nome' => 'CLIENTE'.$i.'22',
                 'cognome' => 'COGNOME'.$i.'22',

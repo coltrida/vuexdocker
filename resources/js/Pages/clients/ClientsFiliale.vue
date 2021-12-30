@@ -1,14 +1,13 @@
 <template>
     <div class="pb-10">
         <div class="flex justify-start align-center mt-2">
-            <div v-if="showClients"><h2>Clienti - {{getFilialeById.nome}}</h2></div>
+            <div v-if="showClients"><h2>Clienti - {{getFilialeById.nome}} - <v-chip label v-if="getMeta">Tot. {{getMeta.total}}</v-chip> </h2></div>
 
             <messaggio
                 v-if="getClientMessaggio"
                 :textMessaggio="getClientMessaggio"
                 @cancellaMessaggio = "cancellaMessaggio"
             ></messaggio>
-
             <messaggioelimina
                 v-if="showElimina"
                 :idElimina="idElimina"
@@ -16,63 +15,43 @@
                 :cognomeElimina="cognomeElimina"
                 @cancellaMessaggioElimina = "cancellaMessaggioElimina"
             ></messaggioelimina>
-
-            <!--<v-alert type="info" v-if="getClientMessaggio">
-                <v-row align="center">
-                    <v-col class="grow">
-                        {{ getClientMessaggio }}
-                    </v-col>
-                    <v-col class="shrink">
-                        <v-btn @click="reset">Chiudi</v-btn>
-                    </v-col>
-                </v-row>
-            </v-alert>-->
-
             <audiogramma
                 v-if="showAudiogramma"
                 :audiogrammaClient="audiogrammaClient"
                 @chiudiAudiogramma = "chiudiAudiogramma"
             ></audiogramma>
-
             <appuntamento
                 v-if="showAppuntamento"
                 :appuntamentoClient="appuntamentoClient"
                 @chiudiAppuntamento = "chiudiAppuntamento"
             />
-
             <prove
                 v-if="showProve"
                 :proveClient="proveClient"
                 @chiudiProve = "chiudiProve"
             ></prove>
-
             <documenti
                 v-if="showDocumenti"
                 :documentiClient="documentiClient"
                 @chiudiDocumenti="chiudiDocumenti"
             ></documenti>
-
             <informazioni
                 v-if="showInformazioni"
                 :informazioniClient="informazioniClient"
                 @chiudiInformazioni="chiudiInformazioni"
             ></informazioni>
-
             <recalls
                 v-if="showRecalls"
                 :recallsClient="recallsClient"
                 @chiudiRecalls="chiudiRecalls"
             ></recalls>
-
             <div class="ml-4" v-if="showClients">
                 <router-link :to="{ name: 'clientsInserisci'}">
                     <v-btn dark color="indigo">Inserisci</v-btn>
                 </router-link>
             </div>
         </div>
-
         <div v-if="showClients">
-
             <div class="text-center" v-if="carica">
                 <v-progress-circular
                     indeterminate
@@ -95,6 +74,7 @@
             ></v-text-field>
 
             <v-data-table
+                hide-default-footer
                 height="560"
                 :headers="headers"
                 :items="getClients"
@@ -353,6 +333,10 @@
                 </template>
 
             </v-data-table>
+
+                <paginate
+                    :idFiliale = 'rottaIdFiliale'
+                />
             </div>
         </div>
     </div>
@@ -369,10 +353,13 @@
     import Recalls from "../../Components/btnClients/recalls/Recalls";
     import Appuntamento from "../../Components/btnClients/appuntamento/Appuntamento";
     import Messaggioelimina from "../../Components/btnClients/elimina/Messaggioelimina";
+    import Paginate from "../../Components/Paginate";
 
     export default {
         name: "ClientsFiliale",
-        components: {Messaggioelimina, Prove, Documenti, Audiogramma, Messaggio, Appuntamento, Recalls, Informazioni},
+        components: {
+            Paginate,
+            Messaggioelimina, Prove, Documenti, Audiogramma, Messaggio, Appuntamento, Recalls, Informazioni},
         data() {
             return {
                 carica: false,
@@ -457,7 +444,10 @@
 
                 if(accesso /*&& this.getClients.length == 0*/){
                     this.carica = true;
-                    this.fetchClientsFiliale(this.rottaIdFiliale).then(() => {
+                    this.fetchClientsFiliale({
+                        'idFiliale':this.rottaIdFiliale,
+                        'pageNumber': 0
+                    }).then(() => {
                         this.search = this.cognomeRicerca;
                         this.carica = false;
                     });
@@ -657,6 +647,7 @@
         computed: {
             ...mapGetters('clients', {
                 getClients: 'getClients',
+                getMeta: 'getMeta',
                 getClientMessaggio: 'getClientMessaggio',
             }),
 

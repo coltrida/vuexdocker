@@ -326,7 +326,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addProdottoInCentrale: 'addProdottoInCentrale',
     assegnaProdottiToFiliale: 'assegnaProdottiToFiliale',
     assegnaProdottiFilialeInAnticipo: 'assegnaProdottiFilialeInAnticipo',
-    confermaProdottiToFiliale: 'confermaProdottiToFiliale'
+    confermaProdottiToFiliale: 'confermaProdottiToFiliale',
+    eliminaProdotto: 'eliminaProdotto'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
@@ -394,7 +395,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     elimina: function elimina(id) {
-      this.eliminaRichiesta(id);
+      this.eliminaProdotto(id);
     }
   }),
   computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('product', {

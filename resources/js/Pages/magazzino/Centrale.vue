@@ -256,6 +256,7 @@
                 assegnaProdottiToFiliale:'assegnaProdottiToFiliale',
                 assegnaProdottiFilialeInAnticipo:'assegnaProdottiFilialeInAnticipo',
                 confermaProdottiToFiliale:'confermaProdottiToFiliale',
+                eliminaProdotto:'eliminaProdotto',
             }),
 
             ...mapActions('fornitori', {
@@ -326,7 +327,7 @@
             },
 
             elimina(id){
-                this.eliminaRichiesta(id);
+                this.eliminaProdotto(id);
             },
 
         },

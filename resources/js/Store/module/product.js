@@ -200,6 +200,15 @@ const actions = {
         commit('eliminaRichiesta', id);
     },
 
+    async eliminaProdotto({commit}, id){
+        await axios.delete(`${help().linkeliminaprodotto}`+'/'+id, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('eliminaProdotto', id);
+    },
+
     async assegnaProdottiMagazzino({commit}, payload){
          await axios.post(`${help().linkassegnaprodottimagazzino}`, {
              'prodotti':payload
@@ -306,6 +315,10 @@ const mutations = {
 
     eliminaRichiesta(state, id) {
         state.richiesti = state.richiesti.filter(u => u.id !== id);
+    },
+
+    eliminaProdotto(state, id) {
+        state.inCentrale = state.inCentrale.filter(u => u.id !== id);
     },
 
     assegnaProdottiMagazzino(state) {
