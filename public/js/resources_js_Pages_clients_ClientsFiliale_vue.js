@@ -434,8 +434,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2436,8 +2434,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -2818,8 +2814,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -3814,6 +3808,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_9__.mapActions)('clients', {
     fetchClientsFiliale: 'fetchClientsFiliale',
+    fetchClientsFilialeNoPaginate: 'fetchClientsFilialeNoPaginate',
     addClient: 'addClient'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_9__.mapActions)('filiali', {
     fetchFilialeById: 'fetchFilialeById'
@@ -3833,9 +3828,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       /*&& this.getClients.length == 0*/
       ) {
           this.carica = true;
-          this.fetchClientsFiliale({
-            'idFiliale': this.rottaIdFiliale,
-            'pageNumber': 0
+          /*this.fetchClientsFiliale({
+              'idFiliale':this.rottaIdFiliale,
+              'pageNumber': 0
+          }).then(() => {
+              this.search = this.cognomeRicerca;
+              this.carica = false;
+          });*/
+
+          this.fetchClientsFilialeNoPaginate({
+            'idFiliale': this.rottaIdFiliale
           }).then(function () {
             _this.search = _this.cognomeRicerca;
             _this.carica = false;
@@ -43776,7 +43778,7 @@ var render = function() {
       _c(
         "v-row",
         [
-          _c("v-col", { attrs: { cols: "3" } }, [
+          _c("v-col", { attrs: { cols: "12", md: "3", lg: "3" } }, [
             _c("h2", [
               _vm._v(
                 _vm._s(_vm.appuntamentoClient.nome) +
@@ -43794,7 +43796,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "5" } },
+            { attrs: { cols: "12", md: "5", lg: "5" } },
             [
               !this.appuntamentoClient.mail
                 ? _c(
@@ -43823,35 +43825,31 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3" } },
+            { attrs: { cols: "8", md: "3", lg: "3" } },
             [
-              _c(
-                "v-row",
-                { attrs: { justify: "center" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      items: _vm.getfilialiRecapiti,
-                      "return-object": "",
-                      "item-text": "nome",
-                      label: "Informazioni Strutture"
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.infoStruttura($event)
-                      }
-                    }
-                  })
-                ],
-                1
-              )
+              _c("v-select", {
+                attrs: {
+                  items: _vm.getfilialiRecapiti,
+                  "return-object": "",
+                  "item-text": "nome",
+                  label: "Informazioni Strutture"
+                },
+                on: {
+                  change: function($event) {
+                    return _vm.infoStruttura($event)
+                  }
+                }
+              })
             ],
             1
           ),
           _vm._v(" "),
           _c(
             "v-col",
-            { staticClass: "flex justify-end", attrs: { cols: "1" } },
+            {
+              staticClass: "flex justify-end",
+              attrs: { cols: "4", md: "1", lg: "1" }
+            },
             [
               _c(
                 "v-btn",
@@ -46392,7 +46390,7 @@ var render = function() {
       _c(
         "v-row",
         [
-          _c("v-col", { attrs: { cols: "4" } }, [
+          _c("v-col", { attrs: { cols: "12", md: "4", lg: "4" } }, [
             _c("h2", [
               _vm._v(
                 _vm._s(_vm.proveClient.nome) +
@@ -46404,7 +46402,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "4" } },
+            { attrs: { cols: "12", md: "4", lg: "4" } },
             [
               _vm.datiMancantiPerCopiaCommissione
                 ? _c(
@@ -46462,7 +46460,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "3" } },
+            { attrs: { cols: "8", md: "3", lg: "3" } },
             [
               !_vm.proveClient.codfisc && _vm.getProvePassate.length > 0
                 ? _c(
@@ -46500,7 +46498,10 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { staticClass: "flex justify-end", attrs: { cols: "1" } },
+            {
+              staticClass: "flex justify-end",
+              attrs: { cols: "4", md: "1", lg: "1" }
+            },
             [
               _c(
                 "v-btn",
@@ -46532,122 +46533,126 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.switchInserisci
-        ? _c("v-row", { staticClass: "mb-5" }, [
-            _vm.carica2
-              ? _c(
-                  "div",
-                  { staticClass: "text-center" },
-                  [
-                    _c("v-progress-circular", {
-                      attrs: { indeterminate: "", color: "primary" }
-                    })
-                  ],
-                  1
-                )
-              : _c(
-                  "div",
-                  [
-                    _c(
-                      "v-row",
-                      [
-                        _c(
-                          "v-col",
-                          [
-                            _c("v-select", {
-                              attrs: {
-                                "item-value": "id",
-                                "item-text": "name",
-                                items: _vm.getCanali,
-                                required: "",
-                                hint:
-                                  "Se presente, viene inserito il codice Mkt del Paziente",
-                                "persistent-hint": "",
-                                label: "Canale Mkg*"
-                              },
-                              on: {
-                                change: function($event) {
-                                  return _vm.selezionaMkt($event)
-                                }
-                              },
-                              model: {
-                                value: _vm.prova.marketing_id,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.prova, "marketing_id", $$v)
-                                },
-                                expression: "prova.marketing_id"
+        ? _c(
+            "v-row",
+            { staticClass: "mb-5" },
+            [
+              _vm.carica2
+                ? _c(
+                    "v-row",
+                    { staticClass: "text-center" },
+                    [
+                      _c("v-progress-circular", {
+                        attrs: { indeterminate: "", color: "primary" }
+                      })
+                    ],
+                    1
+                  )
+                : _c(
+                    "v-row",
+                    { staticClass: "pl-7" },
+                    [
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", md: "3", lg: "3" } },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              "item-value": "id",
+                              "item-text": "name",
+                              items: _vm.getCanali,
+                              required: "",
+                              hint:
+                                "Se presente, viene inserito il codice Mkt del Paziente",
+                              "persistent-hint": "",
+                              label: "Canale Mkg*"
+                            },
+                            on: {
+                              change: function($event) {
+                                return _vm.selezionaMkt($event)
                               }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        !_vm.bloccaMedici
-                          ? _c(
-                              "v-col",
-                              [
-                                _c("v-select", {
-                                  attrs: {
-                                    "item-value": "id",
-                                    "item-text": "fullname",
-                                    items: _vm.getMedici,
-                                    label: "Medici"
+                            },
+                            model: {
+                              value: _vm.prova.marketing_id,
+                              callback: function($$v) {
+                                _vm.$set(_vm.prova, "marketing_id", $$v)
+                              },
+                              expression: "prova.marketing_id"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      !_vm.bloccaMedici
+                        ? _c(
+                            "v-col",
+                            { attrs: { cols: "12", md: "3", lg: "3" } },
+                            [
+                              _c("v-select", {
+                                attrs: {
+                                  "item-value": "id",
+                                  "item-text": "fullname",
+                                  items: _vm.getMedici,
+                                  label: "Medici"
+                                },
+                                model: {
+                                  value: _vm.prova.medico_id,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.prova, "medico_id", $$v)
                                   },
-                                  model: {
-                                    value: _vm.prova.medico_id,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.prova, "medico_id", $$v)
-                                    },
-                                    expression: "prova.medico_id"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "v-col",
-                          [
-                            _c("v-select", {
-                              attrs: { items: _vm.mercati, label: "Mercato" },
-                              model: {
-                                value: _vm.prova.mercato,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.prova, "mercato", $$v)
-                                },
-                                expression: "prova.mercato"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-col",
-                          [
-                            _c(
-                              "v-btn",
-                              {
-                                staticClass: "mt-2",
-                                attrs: { disabled: _vm.bloccaProva },
-                                on: { click: _vm.nuovaProvaInCorso }
+                                  expression: "prova.medico_id"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", md: "3", lg: "3" } },
+                        [
+                          _c("v-select", {
+                            attrs: { items: _vm.mercati, label: "Mercato" },
+                            model: {
+                              value: _vm.prova.mercato,
+                              callback: function($$v) {
+                                _vm.$set(_vm.prova, "mercato", $$v)
                               },
-                              [
-                                _vm._v(
-                                  "\n                            Nuova Prova\n                        "
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-          ])
+                              expression: "prova.mercato"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "12", md: "2", lg: "2" } },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "mt-2",
+                              attrs: { disabled: _vm.bloccaProva },
+                              on: { click: _vm.nuovaProvaInCorso }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Nuova Prova\n                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+            ],
+            1
+          )
         : _c(
             "v-row",
             [
@@ -47445,7 +47450,7 @@ var render = function() {
       _c(
         "v-row",
         [
-          _c("v-col", { attrs: { cols: "4" } }, [
+          _c("v-col", { attrs: { cols: "12", md: "4", lg: "4" } }, [
             _c("h2", [
               _vm._v(
                 "\n                " +
@@ -47493,35 +47498,31 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-col",
-            { attrs: { cols: "4" } },
+            { attrs: { cols: "6", md: "4", lg: "4" } },
             [
-              _c(
-                "v-row",
-                { attrs: { justify: "center" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      items: _vm.getfilialiRecapiti,
-                      "return-object": "",
-                      "item-text": "nome",
-                      label: "Informazioni Strutture"
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.infoStruttura($event)
-                      }
-                    }
-                  })
-                ],
-                1
-              )
+              _c("v-select", {
+                attrs: {
+                  items: _vm.getfilialiRecapiti,
+                  "return-object": "",
+                  "item-text": "nome",
+                  label: "Informazioni Strutture"
+                },
+                on: {
+                  change: function($event) {
+                    return _vm.infoStruttura($event)
+                  }
+                }
+              })
             ],
             1
           ),
           _vm._v(" "),
           _c(
             "v-col",
-            { staticClass: "flex justify-end", attrs: { cols: "4" } },
+            {
+              staticClass: "flex justify-end",
+              attrs: { cols: "6", md: "4", lg: "4" }
+            },
             [
               _c(
                 "v-btn",
@@ -48123,20 +48124,9 @@ var render = function() {
       [
         _vm.showClients
           ? _c("div", [
-              _c(
-                "h2",
-                [
-                  _vm._v(
-                    "Clienti - " + _vm._s(_vm.getFilialeById.nome) + " - "
-                  ),
-                  _vm.getMeta
-                    ? _c("v-chip", { attrs: { label: "" } }, [
-                        _vm._v("Tot. " + _vm._s(_vm.getMeta.total))
-                      ])
-                    : _vm._e()
-                ],
-                1
-              )
+              _c("h2", [
+                _vm._v("Clienti - " + _vm._s(_vm.getFilialeById.nome) + " ")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -48279,7 +48269,6 @@ var render = function() {
                   _c("v-data-table", {
                     staticClass: "elevation-1 mt-3",
                     attrs: {
-                      "hide-default-footer": "",
                       height: "560",
                       headers: _vm.headers,
                       items: _vm.getClients,
@@ -49152,9 +49141,7 @@ var render = function() {
                       false,
                       976331337
                     )
-                  }),
-                  _vm._v(" "),
-                  _c("paginate", { attrs: { idFiliale: _vm.rottaIdFiliale } })
+                  })
                 ],
                 1
               )

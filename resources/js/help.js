@@ -40,6 +40,7 @@ const help = () => {
         linkclients: base+'clients',
         linkeliminaclient: base+'eliminaClient',
         linkclientsfiliale: base+'clientsFiliale',
+        linkclientsfilialenopaginate: base+'clientsFilialeNoPaginate',
         linkaddclient: base+'addClient',
         linkmodificaclient: base+'modificaClient',
         linktipologie: base+'tipologie',

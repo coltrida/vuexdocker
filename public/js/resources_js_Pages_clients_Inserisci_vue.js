@@ -518,6 +518,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$refs.form.validate();
       var idFiliale = this.newClient.filiale_id;
+      this.newClient.eseguito_id = parseInt(this.getIdUser);
       this.verificaEsisteDoppione(this.newClient).then(function () {
         if (_this3.nomeBtn === 'Inserisci' && _this3.getListaDoppioni.length > 0 || _this3.nomeBtn === 'Modifica' && _this3.getListaDoppioni.length > 1) {
           _this3.doppioneShow = true;

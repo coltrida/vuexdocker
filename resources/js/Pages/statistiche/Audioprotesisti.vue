@@ -19,7 +19,7 @@
                                 <v-chip
                                     color="primary"
                                     outlined
-                                    pill
+                                    label
                                 >
                                     Fatturato tot. {{getTotFatt.toLocaleString('it')}}
                                 </v-chip>
@@ -27,6 +27,7 @@
                                 <v-chip
                                     color="green"
                                     outlined
+                                    label
                                 >
                                     Bgt Anno. {{totBgt.toLocaleString('it')}}
                                 </v-chip>
@@ -34,6 +35,7 @@
                                 <v-chip
                                     color="deep-purple accent-4"
                                     outlined
+                                    label
                                 >
                                     Bgt Prog. {{getTotBgtProg.toLocaleString('it')}}
                                 </v-chip>
@@ -41,6 +43,7 @@
                                 <v-chip
                                     color="red accent-4"
                                     outlined
+                                    label
                                 >
                                     Fatt. vs Bgt Prog: {{ (((getTotFatt - getTotBgtProg) / getTotBgtProg) * 100).toFixed(0) }} %
                                 </v-chip>
@@ -56,7 +59,7 @@
                             <template v-slot:item="{ item }">
                                 <tr>
                                     <td>{{item.nome}}</td>
-                                    <td>{{riepilogo.indexOf(item) < 2 ? item.budgetAnno.toLocaleString('it') : item.budgetAnno}}</td>
+                                    <td class="yellow lighten-3">{{riepilogo.indexOf(item) < 2 ? item.budgetAnno.toLocaleString('it') : item.budgetAnno}}</td>
                                     <td>{{riepilogo.indexOf(item) < 2 && item.gennaio ? item.gennaio.toLocaleString('it') : item.gennaio}}</td>
                                     <td>{{riepilogo.indexOf(item) < 2 && item.febbraio ? item.febbraio.toLocaleString('it') : item.febbraio}}</td>
                                     <td>{{riepilogo.indexOf(item) < 2 && item.marzo ? item.marzo.toLocaleString('it') : item.marzo}}</td>
@@ -135,7 +138,7 @@
                             <template v-slot:item="{ item }">
                                 <tr>
                                     <td>{{item.nome}}</td>
-                                    <td>{{audio.valori.indexOf(item) < 2 ? item.budgetAnno.toLocaleString('it') : item.budgetAnno}}</td>
+                                    <td class="yellow lighten-3">{{audio.valori.indexOf(item) < 2 ? item.budgetAnno.toLocaleString('it') : item.budgetAnno}}</td>
                                     <td>{{audio.valori.indexOf(item) < 2 && item.gennaio ? item.gennaio.toLocaleString('it') : item.gennaio}}</td>
                                     <td>{{audio.valori.indexOf(item) < 2 && item.febbraio ? item.febbraio.toLocaleString('it') : item.febbraio}}</td>
                                     <td>{{audio.valori.indexOf(item) < 2 && item.marzo ? item.marzo.toLocaleString('it') : item.marzo}}</td>
@@ -203,19 +206,19 @@
                 switch: 0,
                 singleSelect: true,
                 headers: [
-                    { text: 'Nome', align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
-                    { text: 'Anno', sortable: false, value: 'budgetAnno', class: "indigo white--text" },
-                    { text: 'Genn', sortable: false, value: 'gennaio', class: "indigo white--text" },
-                    { text: 'Febb', sortable: false, value: 'febbraio', class: "indigo white--text" },
-                    { text: 'Marzo', sortable: false, value: 'marzo', class: "indigo white--text" },
-                    { text: 'April', sortable: false, value: 'aprile', class: "indigo white--text" },
-                    { text: 'Magg', sortable: false, value: 'maggio', class: "indigo white--text" },
-                    { text: 'Giug', sortable: false, value: 'giugno', class: "indigo white--text" },
-                    { text: 'Lugl', sortable: false, value: 'luglio', class: "indigo white--text" },
-                    { text: 'Agos', sortable: false, value: 'agosto', class: "indigo white--text" },
-                    { text: 'Sett', sortable: false, value: 'settembre', class: "indigo white--text" },
-                    { text: 'Otto', sortable: false, value: 'ottobre', class: "indigo white--text" },
-                    { text: 'Nove', sortable: false, value: 'novembre', class: "indigo white--text" },
+                    { text: 'Nome', width: 100, align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
+                    { text: 'Anno', width: 100, sortable: false, value: 'budgetAnno', class: "yellow lighten-3" },
+                    { text: 'Genn', width: 100,sortable: false, value: 'gennaio', class: "indigo white--text" },
+                    { text: 'Febb', width: 100,sortable: false, value: 'febbraio', class: "indigo white--text" },
+                    { text: 'Marzo', width: 100,sortable: false, value: 'marzo', class: "indigo white--text" },
+                    { text: 'April', width: 100,sortable: false, value: 'aprile', class: "indigo white--text" },
+                    { text: 'Magg', width: 100,sortable: false, value: 'maggio', class: "indigo white--text" },
+                    { text: 'Giug', width: 100,sortable: false, value: 'giugno', class: "indigo white--text" },
+                    { text: 'Lugl', width: 100,sortable: false, value: 'luglio', class: "indigo white--text" },
+                    { text: 'Agos', width: 100,sortable: false, value: 'agosto', class: "indigo white--text" },
+                    { text: 'Sett', width: 100,sortable: false, value: 'settembre', class: "indigo white--text" },
+                    { text: 'Otto', width: 100,sortable: false, value: 'ottobre', class: "indigo white--text" },
+                    { text: 'Nove', width: 100,sortable: false, value: 'novembre', class: "indigo white--text" },
                     { text: 'Dice', sortable: false, value: 'dicembre', class: "indigo white--text" },
                 ],
 

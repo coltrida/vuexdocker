@@ -38,7 +38,7 @@
             </v-card>
         </v-dialog>
         <v-row>
-            <v-col cols="4">
+            <v-col cols="12" md="4" lg="4">
                 <h2>
                     {{recallsClient.nome}} {{recallsClient.cognome}} {{recallsClient.telefono ? ' - '+recallsClient.telefono : null}}
                     {{recallsClient.telefono2 ? ' - '+recallsClient.telefono2 : null}} {{recallsClient.telefono3 ? ' - '+recallsClient.telefono3 : null}}
@@ -46,18 +46,16 @@
                 <h4>{{recallsClient.indirizzo}} - {{recallsClient.citta}} - {{recallsClient.provincia}}</h4>
                 <h4>Dottore di riferimento: {{recallsClient.user}}</h4>
             </v-col>
-            <v-col cols="4">
-                <v-row justify="center">
-                    <v-select
-                        @change="infoStruttura($event)"
-                        :items="getfilialiRecapiti"
-                        return-object
-                        item-text="nome"
-                        label="Informazioni Strutture"
-                    ></v-select>
-                </v-row>
+            <v-col cols="6" md="4" lg="4">
+                <v-select
+                    @change="infoStruttura($event)"
+                    :items="getfilialiRecapiti"
+                    return-object
+                    item-text="nome"
+                    label="Informazioni Strutture"
+                ></v-select>
             </v-col>
-            <v-col cols="4" class="flex justify-end">
+            <v-col cols="6" md="4" lg="4" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">
                     Chiudi
                 </v-btn>

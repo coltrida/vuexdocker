@@ -1,7 +1,7 @@
 import help from "../../help";
 
 const state = () => ({
-    anni:[2021, 2020, 2019],
+    anni:[2022, 2021, 2020, 2019],
     mesi:[1,2,3,4,5,6,7,8,9,10,11,12],
     clients: [],
     ricercaNominativi: [],
@@ -155,6 +155,16 @@ const actions = {
         let idFiliale = payload.idFiliale;
         let currentPage = payload.pageNumber;
         const response = await axios.get(`${help().linkclientsfiliale}`+'/'+idFiliale+'?page=' + currentPage, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchClients', response.data.data);
+        commit('fetchMeta', response.data.meta);
+    },
+
+    async fetchClientsFilialeNoPaginate({commit}, payload){
+        const response = await axios.post(`${help().linkclientsfilialenopaginate}`, payload, {
             headers: {
                 'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
             }

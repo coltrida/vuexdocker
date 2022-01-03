@@ -13,6 +13,8 @@ class ElaborazioneController extends Controller
 {
     public function situazioneAnno(ElaborazioneService $elaborazioneService)
     {
+        ini_set('max_execution_time', 400);
+        ini_set('memory_limit', '-1');
         $elaborazioneService->situazioneAnno();
     }
 

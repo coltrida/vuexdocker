@@ -45,6 +45,11 @@ class ClientController extends Controller
         return ClientResource::collection($clientService->clienteFiliale($idFiliale));
     }
 
+    public function clientsFilialeNoPaginate(Request $request, ClientService $clientService)
+    {
+        return ClientResource::collection($clientService->clientsFilialeNoPaginate($request));
+    }
+
     public function aggiungi(Request $request, ClientService $clientService)
     {
         return new ClientResource($clientService->aggiungi($request));
@@ -53,6 +58,11 @@ class ClientController extends Controller
     public function ricercaNominativi(Request $request, ClientService $clientService)
     {
         return ClientResource::collection($clientService->ricercaNominativi($request));
+    }
+
+    public function filtraCliente(Request $request, ClientService $clientService)
+    {
+        return ClientResource::collection($clientService->filtraCliente($request));
     }
 
     public function ricercaNominativiConMail(Request $request, ClientService $clientService)

@@ -58,6 +58,64 @@ class ClientService
             ->paginate(10);
     }
 
+    public function clientsFilialeNoPaginate($request)
+    {
+        $oggi = Carbon::now()->format('Y-m-d');
+        return Client::with(['tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome',
+            'recapito:id,nome', 'medico:id,nome,cognome', 'audiometria', 'prova' => function($q){
+                $q->with('copiaComm')->first();
+            }])
+            ->withCount(['recalls' => function($r) use($oggi){
+                $r->where([
+                    ['created_at', $oggi],
+                    ['effettuata', 1],
+                ])->orWhere([
+                    ['updated_at', $oggi],
+                    ['effettuata', 1],
+                ]);
+            }])
+            ->where('filiale_id', $request->idFiliale)
+            ->whereHas('tipologia', function($q){
+                $q->where('nome', '!=', 'DEC');
+            })
+            ->orderBy('cognome')
+                ->get();
+    }
+
+    public function filtraCliente($request)
+    {
+        $idFiliale = $request->idFiliale;
+        $testo = $request->testo;
+        $oggi = Carbon::now()->format('Y-m-d');
+        return Client::with(['tipologia:id,nome',
+            'marketing', 'user:id,name', 'filiale:id,nome',
+            'recapito:id,nome', 'medico:id,nome,cognome', 'audiometria', 'prova' => function($q){
+                $q->with('copiaComm')->first();
+            }])
+            ->withCount(['recalls' => function($r) use($oggi){
+                $r->where([
+                    ['created_at', $oggi],
+                    ['effettuata', 1],
+                ])->orWhere([
+                    ['updated_at', $oggi],
+                    ['effettuata', 1],
+                ]);
+            }])
+            ->where('filiale_id', $idFiliale)
+            ->where(function($query) use($testo) {
+                $query->where('nome', 'like', '%'.$testo.'%')
+                        ->orWhere('cognome', 'like', '%'.$testo.'%')
+                        ->orWhere('fullname', 'like', '%'.$testo.'%');
+            })
+            ->whereHas('tipologia', function($q){
+                $q->where('nome', '!=', 'DEC');
+            })
+            ->orderBy('cognome')
+            //    ->get();
+            ->paginate(10);
+    }
+
     public function cliente($id)
     {
         return Client::with('tipologia:id,nome',
@@ -82,7 +140,7 @@ class ClientService
             $this->inserisciRecallAutomatico($client, $client->id);
         }
 
-        $utente = User::find($request->user_id);
+        $utente = User::find($request->eseguito_id);
         $propieta = 'CLIENT';
         $testo = $sonoInModificaUtente ? $utente->name.' ha modificato il nominativo '.$client->cognome.' '.$client->nome :
             $utente->name.' ha inserito il nominativo '.$client->cognome.' '.$client->nome;

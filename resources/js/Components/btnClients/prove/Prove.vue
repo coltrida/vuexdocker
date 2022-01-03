@@ -21,10 +21,10 @@
 
         <!---------- Header --------->
         <v-row>
-            <v-col cols="4">
+            <v-col cols="12" md="4" lg="4">
                 <h2>{{proveClient.nome}} {{proveClient.cognome}}</h2>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="12" md="4" lg="4">
                 <v-alert color="red" elevation="8" dark v-if="datiMancantiPerCopiaCommissione">
                     Attenzione, per la Copia Commissione mancano:
                     <div v-if="!proveClient.datanascita"><b>- Data di Nascita</b></div>
@@ -36,14 +36,14 @@
                     <div class="d-flex justify-end"><v-btn color="primary" small @click="aggiorna">Aggiorna</v-btn></div>
                 </v-alert>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="8" md="3" lg="3">
                 <v-alert color="orange" elevation="8" dark v-if="!proveClient.codfisc && getProvePassate.length > 0">
                     Attenzione, per la Fattura mancano:
                     <div v-if="!proveClient.codfisc"><b>- Codice Fiscale</b></div>
                     <div class="d-flex justify-end"><v-btn color="primary" small @click="aggiorna">Aggiorna</v-btn></div>
                 </v-alert>
             </v-col>
-            <v-col cols="1" class="flex justify-end">
+            <v-col cols="4" md="1" lg="1" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">
                     Chiudi
                 </v-btn>
@@ -64,15 +64,14 @@
 
         <v-row v-if="switchInserisci" class="mb-5">
                 <!---------- Creo nuova prova con pulsante NUOVA PROVA --------->
-                <div class="text-center" v-if="carica2">
+                <v-row class="text-center" v-if="carica2">
                     <v-progress-circular
                         indeterminate
                         color="primary"
                     ></v-progress-circular>
-                </div>
-                <div v-else>
-                    <v-row>
-                        <v-col>
+                </v-row>
+                <v-row v-else class="pl-7">
+                        <v-col cols="12" md="3" lg="3">
                             <v-select
                                 v-model="prova.marketing_id"
                                 @change="selezionaMkt($event)"
@@ -85,7 +84,7 @@
                                 label="Canale Mkg*"
                             ></v-select>
                         </v-col>
-                        <v-col v-if="!bloccaMedici">
+                        <v-col cols="12" md="3" lg="3" v-if="!bloccaMedici">
                             <v-select
                                 v-model="prova.medico_id"
                                 item-value="id"
@@ -94,20 +93,19 @@
                                 label="Medici"
                             ></v-select>
                         </v-col>
-                        <v-col>
+                        <v-col cols="12" md="3" lg="3">
                             <v-select
                                 v-model="prova.mercato"
                                 :items="mercati"
                                 label="Mercato"
                             ></v-select>
                         </v-col>
-                        <v-col>
+                        <v-col cols="12" md="2" lg="2">
                             <v-btn @click="nuovaProvaInCorso" :disabled="bloccaProva" class="mt-2">
                                 Nuova Prova
                             </v-btn>
                         </v-col>
-                    </v-row>
-                </div>
+                </v-row>
         </v-row>
                 <!---------- End Creo nuova prova con pulsante NUOVA PROVA --------->
 

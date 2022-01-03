@@ -189,6 +189,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -228,67 +231,80 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       singleSelect: true,
       headers: [{
         text: 'Nome',
+        width: 100,
         align: 'start',
         sortable: false,
         value: 'nome',
         "class": "indigo white--text"
       }, {
         text: 'Anno',
+        width: 100,
         sortable: false,
         value: 'budgetAnno',
-        "class": "indigo white--text"
+        "class": "yellow lighten-3"
       }, {
         text: 'Genn',
+        width: 100,
         sortable: false,
         value: 'gennaio',
         "class": "indigo white--text"
       }, {
         text: 'Febb',
+        width: 100,
         sortable: false,
         value: 'febbraio',
         "class": "indigo white--text"
       }, {
         text: 'Marzo',
+        width: 100,
         sortable: false,
         value: 'marzo',
         "class": "indigo white--text"
       }, {
         text: 'April',
+        width: 100,
         sortable: false,
         value: 'aprile',
         "class": "indigo white--text"
       }, {
         text: 'Magg',
+        width: 100,
         sortable: false,
         value: 'maggio',
         "class": "indigo white--text"
       }, {
         text: 'Giug',
+        width: 100,
         sortable: false,
         value: 'giugno',
         "class": "indigo white--text"
       }, {
         text: 'Lugl',
+        width: 100,
         sortable: false,
         value: 'luglio',
         "class": "indigo white--text"
       }, {
         text: 'Agos',
+        width: 100,
         sortable: false,
         value: 'agosto',
         "class": "indigo white--text"
       }, {
         text: 'Sett',
+        width: 100,
         sortable: false,
         value: 'settembre',
         "class": "indigo white--text"
       }, {
         text: 'Otto',
+        width: 100,
         sortable: false,
         value: 'ottobre',
         "class": "indigo white--text"
       }, {
         text: 'Nove',
+        width: 100,
         sortable: false,
         value: 'novembre',
         "class": "indigo white--text"
@@ -38810,7 +38826,7 @@ var render = function() {
                               attrs: {
                                 color: "primary",
                                 outlined: "",
-                                pill: ""
+                                label: ""
                               }
                             },
                             [
@@ -38826,7 +38842,9 @@ var render = function() {
                           ),
                           _c(
                             "v-chip",
-                            { attrs: { color: "green", outlined: "" } },
+                            {
+                              attrs: { color: "green", outlined: "", label: "" }
+                            },
                             [
                               _vm._v(
                                 "\n                                Bgt Anno. " +
@@ -38843,7 +38861,8 @@ var render = function() {
                             {
                               attrs: {
                                 color: "deep-purple accent-4",
-                                outlined: ""
+                                outlined: "",
+                                label: ""
                               }
                             },
                             [
@@ -38861,7 +38880,13 @@ var render = function() {
                           ),
                           _c(
                             "v-chip",
-                            { attrs: { color: "red accent-4", outlined: "" } },
+                            {
+                              attrs: {
+                                color: "red accent-4",
+                                outlined: "",
+                                label: ""
+                              }
+                            },
                             [
                               _vm._v(
                                 "\n                                Fatt. vs Bgt Prog: " +
@@ -38898,7 +38923,7 @@ var render = function() {
                             _c("tr", [
                               _c("td", [_vm._v(_vm._s(item.nome))]),
                               _vm._v(" "),
-                              _c("td", [
+                              _c("td", { staticClass: "yellow lighten-3" }, [
                                 _vm._v(
                                   _vm._s(
                                     _vm.riepilogo.indexOf(item) < 2
@@ -39207,15 +39232,21 @@ var render = function() {
                                 _c("tr", [
                                   _c("td", [_vm._v(_vm._s(item.nome))]),
                                   _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(
-                                      _vm._s(
-                                        audio.valori.indexOf(item) < 2
-                                          ? item.budgetAnno.toLocaleString("it")
-                                          : item.budgetAnno
+                                  _c(
+                                    "td",
+                                    { staticClass: "yellow lighten-3" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(
+                                          audio.valori.indexOf(item) < 2
+                                            ? item.budgetAnno.toLocaleString(
+                                                "it"
+                                              )
+                                            : item.budgetAnno
+                                        )
                                       )
-                                    )
-                                  ]),
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c("td", [
                                     _vm._v(

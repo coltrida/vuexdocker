@@ -1,7 +1,7 @@
 <template>
     <div class="pb-10">
         <div class="flex justify-start align-center mt-2">
-            <div v-if="showClients"><h2>Clienti - {{getFilialeById.nome}} <!-- - <v-chip label v-if="getMeta">Tot. {{getMeta.total}}</v-chip>--> </h2></div>
+            <div v-if="showClients"><h2>Clienti - {{getFilialeById.nome}} - <v-chip label v-if="getMeta">Tot. {{getMeta.total}}</v-chip> </h2></div>
 
             <messaggio
                 v-if="getClientMessaggio"
@@ -74,7 +74,7 @@
             ></v-text-field>
 
             <v-data-table
-
+                hide-default-footer
                 height="560"
                 :headers="headers"
                 :items="getClients"
@@ -334,9 +334,9 @@
 
             </v-data-table>
 
-                <!--<paginate
+                <paginate
                     :idFiliale = 'rottaIdFiliale'
-                />-->
+                />
             </div>
         </div>
     </div>
@@ -425,7 +425,6 @@
         methods: {
             ...mapActions('clients', {
                 fetchClientsFiliale: 'fetchClientsFiliale',
-                fetchClientsFilialeNoPaginate: 'fetchClientsFilialeNoPaginate',
                 addClient: 'addClient',
             }),
 
@@ -445,16 +444,9 @@
 
                 if(accesso /*&& this.getClients.length == 0*/){
                     this.carica = true;
-                    /*this.fetchClientsFiliale({
+                    this.fetchClientsFiliale({
                         'idFiliale':this.rottaIdFiliale,
                         'pageNumber': 0
-                    }).then(() => {
-                        this.search = this.cognomeRicerca;
-                        this.carica = false;
-                    });*/
-
-                    this.fetchClientsFilialeNoPaginate({
-                        'idFiliale':this.rottaIdFiliale,
                     }).then(() => {
                         this.search = this.cognomeRicerca;
                         this.carica = false;

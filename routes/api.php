@@ -157,11 +157,13 @@ Route::group([], function () {
         Route::get('/clients/{id}', [ClientController::class, 'cliente']);
         Route::get('/compleanni/{idAudio}', [ClientController::class, 'compleanni']);
         Route::get('/clientsFiliale/{idFiliale}', [ClientController::class, 'clientsFiliale']);
+        Route::post('/clientsFilialeNoPaginate', [ClientController::class, 'clientsFilialeNoPaginate']);
         Route::post('/eliminaClient', [ClientController::class, 'elimina']);
         Route::post('/addClient', [ClientController::class, 'aggiungi']);
         Route::post('/ricercaNominativi', [ClientController::class, 'ricercaNominativi']);
         Route::post('/ricercaNominativiConMail', [ClientController::class, 'ricercaNominativiConMail']);
         Route::post('/modificaClient', [ClientController::class, 'aggiungi']);
+        Route::post('/filtraCliente', [ClientController::class, 'filtraCliente']);
         Route::get('/importClients', [ClientController::class, 'importClients']);
         Route::post('/importClientsFromNoah', [ClientController::class, 'importClientsFromNoah']);
         Route::post('/situazioneAnnoClientiAudio', [ClientController::class, 'situazioneAnnoClientiAudio']);

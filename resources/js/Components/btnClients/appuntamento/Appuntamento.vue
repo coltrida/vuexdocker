@@ -38,11 +38,11 @@
             </v-card>
         </v-dialog>
         <v-row>
-            <v-col cols="3">
+            <v-col cols="12" md="3" lg="3">
                 <h2>{{appuntamentoClient.nome}} {{appuntamentoClient.cognome}}</h2>
                 <h4>Dottore di riferimento: {{appuntamentoClient.user}}</h4>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" md="5" lg="5">
                 <v-alert color="warning" dark elevation="4" v-if="!this.appuntamentoClient.mail">
                     Ricorda di inserire la <u>mail</u>  del paziente, in questo modo gli arriverà un messaggio di remind un giorno prima dell'appuntamento preso
                 </v-alert>
@@ -50,18 +50,16 @@
                     Il paziente riceverà un messaggio di remind tramite e-mail un giorno prima dell'appuntamento fissato
                 </v-alert>
             </v-col>
-            <v-col cols="3">
-                <v-row justify="center">
-                    <v-select
-                        @change="infoStruttura($event)"
-                        :items="getfilialiRecapiti"
-                        return-object
-                        item-text="nome"
-                        label="Informazioni Strutture"
-                    ></v-select>
-                </v-row>
+            <v-col cols="8" md="3" lg="3">
+                <v-select
+                    @change="infoStruttura($event)"
+                    :items="getfilialiRecapiti"
+                    return-object
+                    item-text="nome"
+                    label="Informazioni Strutture"
+                ></v-select>
             </v-col>
-            <v-col cols="1" class="flex justify-end">
+            <v-col cols="4" md="1" lg="1" class="flex justify-end">
                 <v-btn color="primary" dark @click="cancella">
                     Chiudi
                 </v-btn>

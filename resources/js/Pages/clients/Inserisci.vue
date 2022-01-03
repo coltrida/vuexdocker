@@ -366,6 +366,7 @@
             aggiungiModifica(){
                 this.$refs.form.validate();
                 let idFiliale = this.newClient.filiale_id;
+                this.newClient.eseguito_id = parseInt(this.getIdUser);
                 this.verificaEsisteDoppione(this.newClient).then(() => {
                     if (
                         (this.nomeBtn === 'Inserisci' && this.getListaDoppioni.length > 0) ||
