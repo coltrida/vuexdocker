@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DdtResource;
 use App\Http\Resources\ListinoResource;
 use App\Http\Resources\ProdottiInFilialeFornitoreResource;
 use App\Http\Resources\ProductInProvaResource;
@@ -72,6 +73,11 @@ class ProductController extends Controller
         $productService->assegnaProdottiMagazzino($request);
     }
 
+    public function annullaProdottiMagazzino(Request $request, ProductService $productService)
+    {
+        $productService->annullaProdottiMagazzino($request);
+    }
+
     public function switchInProva(Request $request, ProductService $productService)
     {
         $productService->switchInProva($request);
@@ -130,5 +136,10 @@ class ProductController extends Controller
     public function eliminaProduct($id, ProductService $productService)
     {
         $productService->eliminaProduct($id);
+    }
+
+    public function listaDdt(Request $request, ProductService $productService)
+    {
+        return DdtResource::collection($productService->listaDdt($request));
     }
 }

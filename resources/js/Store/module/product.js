@@ -9,12 +9,17 @@ const state = () => ({
     immatricolati:[],
     soglie:[],
     riepilogoMagazzini: [],
-    riepilogoInCentrale: []
+    riepilogoInCentrale: [],
+    listaDdt: []
 });
 
 const getters = {
     getInCentrale(state){
         return state.inCentrale;
+    },
+
+    getListaDdt(state){
+        return state.listaDdt;
     },
 
     getRiepilogoInCentrale(state){
@@ -59,6 +64,15 @@ const actions = {
             }
         });
         commit('fetchInCentrale', response.data.data);
+    },
+
+    async fetchListaDdt({commit}, payload){
+        const response = await axios.post(`${help().linklistaddt}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchListaDdt', response.data.data);
     },
 
     async fetchRiepilogoInCentrale({commit}){
@@ -220,6 +234,15 @@ const actions = {
          commit('assegnaProdottiMagazzino');
     },
 
+    async annullaProdottiMagazzino({commit}, payload){
+        await axios.post(`${help().linkannullaprodottimagazzino}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('annullaProdottiMagazzino', payload.prodotti);
+    },
+
     async switchArrivato({commit}, id){
         const response = await axios.get(`${help().linkswitcharrivato}`+'/'+id, {
             headers: {
@@ -270,11 +293,19 @@ const actions = {
 
 const mutations = {
     fetchInCentrale(state, payload){
-        state.inCentrale= payload;
+        state.inCentrale = payload;
+    },
+
+    fetchListaDdt(state, payload){
+        state.listaDdt = payload;
+    },
+
+    resetListaDdt(state){
+        state.listaDdt = [];
     },
 
     fetchRiepilogoInCentrale(state, payload){
-        state.riepilogoInCentrale= payload;
+        state.riepilogoInCentrale = payload;
     },
 
     addProdottoInCentrale(state, payload){
@@ -341,6 +372,12 @@ const mutations = {
             state.inCentrale = state.inCentrale.filter(u => u.id !== ele.id);
         })
     },
+
+    annullaProdottiMagazzino(state, payload) {
+        payload.forEach(ele => {
+           state.inCentrale.unshift(ele);
+        });
+    }
 
 };
 

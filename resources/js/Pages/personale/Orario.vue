@@ -5,7 +5,7 @@
     <div v-else>
         <v-tooltip bottom v-if="appuntamento.cliente">
             <template v-slot:activator="{ on, attrs }">
-        <span v-bind="attrs" v-on="on">
+        <span v-bind="attrs" v-on="on" style="font-size: 10px">
             <router-link
                 style="color: black"
                 :to="{ name: 'clientsFiliale',

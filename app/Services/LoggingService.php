@@ -101,4 +101,9 @@ class LoggingService
         Storage::disk('log')->delete('/logs/laravel.log');
         Storage::disk('log')->put('/logs/laravel.log', '');
     }
+
+    public function pulisciLoggingFile()
+    {
+        Activitylog::truncate();
+    }
 }

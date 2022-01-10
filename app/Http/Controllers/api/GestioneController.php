@@ -53,6 +53,11 @@ class GestioneController extends Controller
         $loggingService->pulisciLogFile();
     }
 
+    public function pulisciLoggingFile(LoggingService $loggingService)
+    {
+        $loggingService->pulisciLoggingFile();
+    }
+
     public function backup(LoggingService $loggingService)
     {
         return $loggingService->backup();

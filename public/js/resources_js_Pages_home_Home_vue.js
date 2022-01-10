@@ -311,6 +311,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -444,6 +458,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     cancella: function cancella() {
       this.$emit('chiudiAppuntamento');
     },
+    reset: function reset() {
+      this.newAppuntamento.giorno = null;
+      this.newAppuntamento.orario = null;
+      this.newAppuntamento.filiale_id = null;
+      this.newAppuntamento.recapito_id = null;
+      this.newAppuntamento.tipo = null;
+      this.newAppuntamento.nota = null;
+    },
     inserisci: function inserisci() {
       var _this2 = this;
 
@@ -459,12 +481,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this2.caricaAppuntamenti();
 
           _this2.carica2 = false;
-          _this2.newAppuntamento.giorno = null;
-          _this2.newAppuntamento.orario = null;
-          _this2.newAppuntamento.filiale_id = null;
-          _this2.newAppuntamento.recapito_id = null;
-          _this2.newAppuntamento.tipo = null;
-          _this2.newAppuntamento.nota = null;
+
+          _this2.reset();
         });
       } else {
         this.addAppuntamento(this.newAppuntamento).then(function () {
@@ -552,6 +570,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     verificaCampi: function verificaCampi() {
       return this.newAppuntamento.giorno != '' && this.newAppuntamento.giorno != null && this.newAppuntamento.orario != '' && this.newAppuntamento.orario != null && this.newAppuntamento.tipo != '' && this.newAppuntamento.tipo != null && (this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id) ? false : true;
+    },
+    campiVuoti: function campiVuoti() {
+      return this.newAppuntamento.giorno != null || this.newAppuntamento.orario != null || this.newAppuntamento.tipo != null || this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id ? false : true;
     },
     linkFoto: function linkFoto() {
       var base = '';
@@ -2849,6 +2870,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2933,7 +2959,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     inserimentoDataDiOggi: function inserimentoDataDiOggi() {
       var giornoDiOggi = new Date();
       var giorno = parseInt(giornoDiOggi.getDate()) < 10 ? '0' + parseInt(giornoDiOggi.getDate()) : parseInt(giornoDiOggi.getDate());
-      var mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0' + parseInt(giornoDiOggi.getMonth()) + 1 : parseInt(giornoDiOggi.getMonth()) + 1;
+      var mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0' + (parseInt(giornoDiOggi.getMonth()) + 1) : parseInt(giornoDiOggi.getMonth()) + 1;
       var anno = giornoDiOggi.getFullYear();
       this.telefonata.giorno = anno + '-' + mese + '-' + giorno;
     },
@@ -46346,6 +46372,7 @@ var render = function() {
                                   staticClass: "my-2",
                                   attrs: {
                                     color: "primary",
+                                    block: "",
                                     disabled: _vm.verificaCampi
                                   },
                                   on: { click: _vm.inserisci }
@@ -46355,6 +46382,23 @@ var render = function() {
                                     "\n                            " +
                                       _vm._s(_vm.btnName) +
                                       "\n                        "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "red lighten-3",
+                                    block: "",
+                                    disabled: _vm.campiVuoti
+                                  },
+                                  on: { click: _vm.reset }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Reset\n                        "
                                   )
                                 ]
                               )
@@ -49721,7 +49765,7 @@ var render = function() {
                         {
                           attrs: {
                             color: "primary",
-                            block: _vm.$vuetify.breakpoint.xs,
+                            block: "",
                             disabled: _vm.verificaCampi
                           },
                           on: { click: _vm.inserisci }

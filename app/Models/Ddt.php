@@ -45,4 +45,9 @@ class Ddt extends Model
     {
         return $this->belongsTo(Filiale::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Mail\AlarmDatabaseSpace;
+use App\Mail\AlarmRootPrincipale;
 use App\Mail\messaggioCompleanno;
 use App\Mail\RememberAppuntamento;
 use App\Models\Appuntamento;
@@ -29,6 +30,23 @@ class ElaborazioneService
 {
     public function situazioneAnno()
     {
+        //dd($this->controllo()['risultato']);
+        if ($this->controllo()['risultato'] == false){
+            \Mail::to('coltrida@gmail.com')->send(new AlarmRootPrincipale($this->controllo()));
+            //dd('qualcosa non va');
+            //dd(Storage::disk('backup')->files());
+            $fileDaEliminare = Storage::disk('inizio')->files('/');
+            //dd($fileDaEliminare);
+            foreach ($fileDaEliminare as $item){
+                Storage::disk('inizio')->delete($item);
+            }
+            $fileDaReinserire = Storage::disk('backup')->files();
+            //dd($fileDaReinserire);
+            foreach ($fileDaReinserire as $item){
+                Storage::disk('inizio')->copy('vuexdocker/storage/app/backup/'.$item, '/'.$item);
+            }
+        }
+
         $oggi = Carbon::now();
         $ora = $oggi->hour;
         $anno = $oggi->year;
@@ -37,7 +55,7 @@ class ElaborazioneService
         $idStatoFattura = StatoApa::where('nome', 'FATTURA')->first()->id;
 
         // attività svolte a mezzanotte
-        if ($ora < 11 && $ora > 14)
+        if ($ora < 11 || $ora > 14)
      //   if ($ora > 14)
         {
             $users = User::with('budget')->audio(1)->get();
@@ -573,5 +591,32 @@ class ElaborazioneService
             Storage::disk('log')->put('/logs/laravel.log', '');
         }
 
+    }
+
+    public function controllo()
+    {
+        $tuttiFile = Storage::disk('inizio')->files('/');
+        //return Storage::disk('local')->files('/backup/');
+        //return ($tuttiFile);
+        return
+            [
+                'risultato' =>
+                count($tuttiFile) === 7 &&
+                Storage::disk('inizio')->size($tuttiFile[0]) === 603 &&
+                Storage::disk('inizio')->size($tuttiFile[1]) === 211 &&
+                Storage::disk('inizio')->size($tuttiFile[2]) === 0 &&
+                Storage::disk('inizio')->size($tuttiFile[3]) === 1767 &&
+                Storage::disk('inizio')->size($tuttiFile[4]) === 72 &&
+                Storage::disk('inizio')->size($tuttiFile[5]) === 24 &&
+                Storage::disk('inizio')->size($tuttiFile[6]) === 1211,
+                'sommaFile' => count($tuttiFile),
+                $tuttiFile[0] => Storage::disk('inizio')->size($tuttiFile[0]),
+                $tuttiFile[1] => Storage::disk('inizio')->size($tuttiFile[1]),
+                $tuttiFile[2] => Storage::disk('inizio')->size($tuttiFile[2]),
+                $tuttiFile[3] => Storage::disk('inizio')->size($tuttiFile[3]),
+                $tuttiFile[4] => Storage::disk('inizio')->size($tuttiFile[4]),
+                $tuttiFile[5] => Storage::disk('inizio')->size($tuttiFile[5]),
+                $tuttiFile[6] => Storage::disk('inizio')->size($tuttiFile[6])
+            ];
     }
 }

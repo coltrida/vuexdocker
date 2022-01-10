@@ -35,6 +35,16 @@ return [
             'root' => storage_path('/'),
         ],
 
+        'inizio' => [
+            'driver' => 'local',
+            'root' => base_path(),
+        ],
+
+        'backup' => [
+            'driver' => 'local',
+            'root' => storage_path('app/backup'),
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

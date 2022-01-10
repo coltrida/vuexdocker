@@ -1,7 +1,7 @@
 <template>
     <div class="pb-10">
         <div class="flex justify-start align-center mt-2">
-            <div v-if="showClients"><h2>Clienti - {{getFilialeById.nome}} <!-- - <v-chip label v-if="getMeta">Tot. {{getMeta.total}}</v-chip>--> </h2></div>
+            <div v-if="showClients"><h2>Clienti - {{getFilialeById.nome}} </h2></div>
 
             <messaggio
                 v-if="getClientMessaggio"
@@ -331,12 +331,7 @@
                         {{item.fullricerca}}
                     </div>
                 </template>
-
             </v-data-table>
-
-                <!--<paginate
-                    :idFiliale = 'rottaIdFiliale'
-                />-->
             </div>
         </div>
     </div>
@@ -387,7 +382,7 @@
                 listino: {},
                 headers: [
                     {text: '', width: 200, value: 'actions', sortable: false, class: "indigo white--text"},
-                    {text: 'COD', width: 80, value: 'tipologia', class: "indigo white--text"},
+                    {text: 'COD', width: 90, value: 'tipologia', class: "indigo white--text"},
                     {text: 'Cognome', width: 160, align: 'start', value: 'cognome', class: "indigo white--text"},
                     {text: 'Nome', width: 160, value: 'nome', class: "indigo white--text"},
                     {text: 'Indirizzo', width: 250, value: 'indirizzo', class: "indigo white--text"},

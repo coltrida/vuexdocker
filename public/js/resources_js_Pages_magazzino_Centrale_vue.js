@@ -212,6 +212,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
@@ -327,7 +339,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     assegnaProdottiToFiliale: 'assegnaProdottiToFiliale',
     assegnaProdottiFilialeInAnticipo: 'assegnaProdottiFilialeInAnticipo',
     confermaProdottiToFiliale: 'confermaProdottiToFiliale',
-    eliminaProdotto: 'eliminaProdotto'
+    eliminaProdotto: 'eliminaProdotto',
+    annullaProdottiMagazzino: 'annullaProdottiMagazzino'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('fornitori', {
     fetchFornitori: 'fetchFornitori'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('listino', {
@@ -392,6 +405,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.filialeId = '';
         _this5.selected = [];
         _this5.carica2 = false;
+      });
+    },
+    annullaProdotti: function annullaProdotti() {
+      var _this6 = this;
+
+      this.annullaProdottiMagazzino({
+        'prodotti': this.getDaSpedire
+      }).then(function () {
+        _this6.$store.commit('filiali/resetDaSpedire');
+
+        _this6.selected = [];
       });
     },
     elimina: function elimina(id) {
@@ -604,16 +628,14 @@ var render = function() {
               _c(
                 "v-col",
                 {
+                  staticClass: "d-flex justify-space-between",
                   attrs: { cols: "12", md: "12", lg: "3", xs: "12", sm: "12" }
                 },
                 [
                   _c(
                     "v-btn",
                     {
-                      attrs: {
-                        disabled: _vm.verificaCampi,
-                        block: _vm.$vuetify.breakpoint.xs
-                      },
+                      attrs: { disabled: _vm.verificaCampi },
                       on: { click: _vm.inserisciProdotto }
                     },
                     [
@@ -621,6 +643,19 @@ var render = function() {
                         "\n                    Inserisci\n                "
                       )
                     ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "listaDdt" } } },
+                    [
+                      _c("v-btn", { attrs: { color: "orange" } }, [
+                        _vm._v(
+                          "\n                        Lista DDT\n                    "
+                        )
+                      ])
+                    ],
+                    1
                   )
                 ],
                 1
@@ -918,7 +953,7 @@ var render = function() {
                                     "v-row",
                                     [
                                       _c("v-col", [
-                                        _c("h3", { staticClass: "mt-5" }, [
+                                        _c("h4", { staticClass: "mt-5" }, [
                                           _vm._v("Immatricolati:")
                                         ])
                                       ]),
@@ -946,6 +981,25 @@ var render = function() {
                                                 "d-flex align-end justify-end"
                                             },
                                             [
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  attrs: {
+                                                    disabled: _vm.bloccaAssegna,
+                                                    small: "",
+                                                    color: "danger"
+                                                  },
+                                                  on: {
+                                                    click: _vm.annullaProdotti
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                    Annulla\n                                "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
                                               _c(
                                                 "v-btn",
                                                 {

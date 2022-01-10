@@ -17,7 +17,7 @@ class BudgetSeeder extends Seeder
         Budget::insert([
             [
                 'nome' => 'Budget',
-                'anno' => 2021,
+                'anno' => 2022,
                 'user_id' => 2,
                 'budgetAnno' => 200000,
                 'stipendio' => 3000,
@@ -37,7 +37,7 @@ class BudgetSeeder extends Seeder
             ],
             [
                 'nome' => 'Budget',
-                'anno' => 2021,
+                'anno' => 2022,
                 'user_id' => 3,
                 'budgetAnno' => 150000,
                 'stipendio' => 3000,
@@ -58,7 +58,7 @@ class BudgetSeeder extends Seeder
 
             [
                 'nome' => 'Budget',
-                'anno' => 2021,
+                'anno' => 2022,
                 'user_id' => 5,
                 'budgetAnno' => 80000,
                 'stipendio' => 3000,
@@ -78,7 +78,7 @@ class BudgetSeeder extends Seeder
             ],
             [
                 'nome' => 'Budget',
-                'anno' => 2021,
+                'anno' => 2022,
                 'user_id' => 6,
                 'budgetAnno' => 100000,
                 'stipendio' => 1500,
@@ -98,7 +98,7 @@ class BudgetSeeder extends Seeder
             ],
             [
                 'nome' => 'Budget',
-                'anno' => 2021,
+                'anno' => 2022,
                 'user_id' => 9,
                 'budgetAnno' => 150000,
                 'stipendio' => 1500,
@@ -118,7 +118,7 @@ class BudgetSeeder extends Seeder
             ],
             [
                 'nome' => 'Budget',
-                'anno' => 2021,
+                'anno' => 2022,
                 'user_id' => 8,
                 'budgetAnno' => 80000,
                 'stipendio' => 3000,
@@ -138,7 +138,7 @@ class BudgetSeeder extends Seeder
             ],
             [
                 'nome' => 'Budget',
-                'anno' => 2021,
+                'anno' => 2022,
                 'user_id' => 4,
                 'budgetAnno' => 20000,
                 'stipendio' => null,
@@ -158,7 +158,7 @@ class BudgetSeeder extends Seeder
             ],
             [
                 'nome' => 'Budget',
-                'anno' => 2021,
+                'anno' => 2022,
                 'user_id' => 12,
                 'budgetAnno' => 150000,
                 'stipendio' => 3000,

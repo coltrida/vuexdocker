@@ -547,17 +547,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.eventi) {
         if (this.eventi[0]) {
-          if (this.eventi[0].cosa === 'screening') {
+          if (this.eventi[0].cosa === 'SCREENING') {
             return 'orange lighten-3';
-          } else if (this.eventi[0].cosa === 'recapito') {
+          } else if (this.eventi[0].cosa === 'RECAPITO') {
             return 'lime lighten-3';
-          } else if (this.eventi[0].cosa === 'domicilio') {
+          } else if (this.eventi[0].cosa === 'DOMICILIO') {
             return 'brown lighten-3';
-          } else if (this.eventi[0].cosa === 'negozio') {
+          } else if (this.eventi[0].cosa === 'NEGOZIO') {
             return 'teal lighten-4';
-          } else if (this.eventi[0].cosa === 'permesso') {
+          } else if (this.eventi[0].cosa === 'PERMESSO') {
             return 'red lighten-3';
-          } else if (this.eventi[0].cosa === 'festivo') {
+          } else if (this.eventi[0].cosa === 'FESTIVO') {
             return 'red lighten-5';
           }
         }
@@ -580,17 +580,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.eventi) {
         if (this.eventi[1]) {
-          if (this.eventi[1].cosa === 'screening') {
+          if (this.eventi[1].cosa === 'SCREENING') {
             return 'orange lighten-3';
-          } else if (this.eventi[1].cosa === 'recapito') {
+          } else if (this.eventi[1].cosa === 'RECAPITO') {
             return 'lime lighten-3';
-          } else if (this.eventi[1].cosa === 'domicilio') {
+          } else if (this.eventi[1].cosa === 'DOMICILIO') {
             return 'brown lighten-3';
-          } else if (this.eventi[1].cosa === 'negozio') {
+          } else if (this.eventi[1].cosa === 'NEGOZIO') {
             return 'teal lighten-4';
-          } else if (this.eventi[1].cosa === 'permesso') {
+          } else if (this.eventi[1].cosa === 'PERMESSO') {
             return 'red lighten-3';
-          } else if (this.eventi[1].cosa === 'festivo') {
+          } else if (this.eventi[1].cosa === 'FESTIVO') {
             return 'red lighten-5';
           }
         }
@@ -2037,7 +2037,15 @@ var render = function() {
                           return [
                             _c(
                               "span",
-                              _vm._g(_vm._b({}, "span", attrs, false), on),
+                              _vm._g(
+                                _vm._b(
+                                  { staticStyle: { "font-size": "10px" } },
+                                  "span",
+                                  attrs,
+                                  false
+                                ),
+                                on
+                              ),
                               [
                                 _c(
                                   "router-link",
@@ -2072,7 +2080,7 @@ var render = function() {
                     ],
                     null,
                     false,
-                    2492502276
+                    1505989919
                   )
                 },
                 [

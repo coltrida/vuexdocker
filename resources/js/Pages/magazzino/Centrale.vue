@@ -30,12 +30,16 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="12" lg="3" xs="12" sm="12">
-                    <v-btn @click="inserisciProdotto" :disabled="verificaCampi" :block="$vuetify.breakpoint.xs">
+                <v-col cols="12" md="12" lg="3" xs="12" sm="12" class="d-flex justify-space-between">
+                    <v-btn @click="inserisciProdotto" :disabled="verificaCampi">
                         Inserisci
                     </v-btn>
+                    <router-link :to="{ name: 'listaDdt'}">
+                        <v-btn color="orange">
+                            Lista DDT
+                        </v-btn>
+                    </router-link>
                 </v-col>
-
             </v-row>
 
             <div class="text-center" v-if="carica">
@@ -154,7 +158,7 @@
                         <div v-if="getDaSpedire.length > 0" class="mt-10">
                             <v-row>
                                 <v-col>
-                                    <h3 class="mt-5">Immatricolati:</h3>
+                                    <h4 class="mt-5">Immatricolati:</h4>
                                 </v-col>
                                 <v-col v-if="carica2">
                                     <div class="text-center">
@@ -165,6 +169,14 @@
                                     </div>
                                 </v-col>
                                 <v-col class="d-flex align-end justify-end" v-else>
+                                    <v-btn
+                                        @click="annullaProdotti"
+                                        :disabled="bloccaAssegna"
+                                        small
+                                        color="danger"
+                                    >
+                                        Annulla
+                                    </v-btn>
                                     <v-btn
                                         @click="confermaProdotti"
                                         :disabled="bloccaAssegna"
@@ -257,6 +269,7 @@
                 assegnaProdottiFilialeInAnticipo:'assegnaProdottiFilialeInAnticipo',
                 confermaProdottiToFiliale:'confermaProdottiToFiliale',
                 eliminaProdotto:'eliminaProdotto',
+                annullaProdottiMagazzino:'annullaProdottiMagazzino',
             }),
 
             ...mapActions('fornitori', {
@@ -322,8 +335,15 @@
                     this.selected = [];
                     this.carica2 = false;
                 });
+            },
 
-
+            annullaProdotti(){
+                this.annullaProdottiMagazzino({
+                    'prodotti':this.getDaSpedire
+                }).then(() => {
+                    this.$store.commit('filiali/resetDaSpedire');
+                    this.selected = [];
+                });
             },
 
             elimina(id){

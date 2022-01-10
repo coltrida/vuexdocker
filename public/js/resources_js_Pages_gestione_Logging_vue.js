@@ -36,6 +36,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Logging",
@@ -72,9 +76,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.fetchLoggings();
   },
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('logging', {
-    fetchLoggings: 'fetchLoggings'
-  })),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)('logging', {
+    fetchLoggings: 'fetchLoggings',
+    pulisciLoggingFile: 'pulisciLoggingFile'
+  })), {}, {
+    pulisciLogging: function pulisciLogging() {
+      this.pulisciLoggingFile();
+    }
+  }),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('logging', {
     getLogging: 'getLogging'
   }))
@@ -173,7 +182,23 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", [_vm._v("Logging")]),
+      _c(
+        "v-row",
+        [
+          _c("v-col", [_c("h2", [_vm._v("Logging")])]),
+          _vm._v(" "),
+          _c(
+            "v-col",
+            [
+              _c("v-btn", { on: { click: _vm.pulisciLogging } }, [
+                _vm._v("Pulisci")
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-row",

@@ -209,8 +209,22 @@
                             ></v-progress-circular>
                         </v-col>
                         <v-col cols="4" v-else>
-                            <v-btn @click="inserisci" color="primary" class="my-2" :disabled="verificaCampi">
+                            <v-btn
+                                @click="inserisci"
+                                color="primary"
+                                class="my-2"
+                                block
+                                :disabled="verificaCampi"
+                            >
                                 {{btnName}}
+                            </v-btn>
+                            <v-btn
+                                @click="reset"
+                                color="red lighten-3"
+                                block
+                                :disabled="campiVuoti"
+                            >
+                                Reset
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -409,6 +423,15 @@
                 this.$emit('chiudiAppuntamento')
             },
 
+            reset(){
+                this.newAppuntamento.giorno = null;
+                this.newAppuntamento.orario = null;
+                this.newAppuntamento.filiale_id = null;
+                this.newAppuntamento.recapito_id = null;
+                this.newAppuntamento.tipo = null;
+                this.newAppuntamento.nota = null;
+            },
+
             inserisci() {
                 this.$refs.form.validate();
                 this.carica2=true;
@@ -420,12 +443,7 @@
                         this.$refs.form.resetValidation();
                         this.caricaAppuntamenti();
                         this.carica2=false;
-                        this.newAppuntamento.giorno = null;
-                        this.newAppuntamento.orario = null;
-                        this.newAppuntamento.filiale_id = null;
-                        this.newAppuntamento.recapito_id = null;
-                        this.newAppuntamento.tipo = null;
-                        this.newAppuntamento.nota = null;
+                        this.reset();
                     });
                 } else {
                     this.addAppuntamento(this.newAppuntamento).then(() => {
@@ -536,6 +554,13 @@
                 && this.newAppuntamento.orario != '' && this.newAppuntamento.orario != null
                 && this.newAppuntamento.tipo != '' && this.newAppuntamento.tipo != null
                 && (this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id) ? false : true;
+            },
+
+            campiVuoti(){
+                return this.newAppuntamento.giorno != null
+                || this.newAppuntamento.orario != null
+                || this.newAppuntamento.tipo != null
+                || this.newAppuntamento.recapito_id || this.newAppuntamento.filiale_id ? false : true;
             },
 
             linkFoto(){

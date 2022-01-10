@@ -12,6 +12,8 @@ use App\Models\Product;
 use App\Models\Richiesta;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
+use Storage;
 use function array_push;
 use function create_function;
 use function dd;
@@ -201,7 +203,7 @@ class ProductService
 
     public function assegnaProdottiMagazzino($request)
     {
-        $idDDT = $this->creaDDT($request->prodotti[0]);
+        $idDDT = $this->creaDDT($request->prodotti);
 
         foreach ($request->prodotti as $item) {
             $prodotto = Product::find($item['id']);
@@ -212,18 +214,33 @@ class ProductService
         broadcast(new LogisticaEvent($request->prodotti))->toOthers();
     }
 
+    public function annullaProdottiMagazzino($request)
+    {
+        foreach ($request->prodotti as $item){
+            $prodotto = Product::find($item['id']);
+            $prodotto->filiale_id = 0;
+            $prodotto->save();
+        }
+    }
+
     public function creaDDT($request)
     {
+       // dd($request['filiale_id']);
         $filiale = Filiale::find($request['filiale_id']);
 
         $nuovoDDT = Ddt::create([
             'filiale_id' => $request['filiale_id'],
+            'progressivo' => $this->calcolaProgressivoDdt(),
             'nome_destinazione' => 'Centro Udito '.$filiale->citta,
-            'indirizzo_destinazione' => $request['filiale_id'],
+            'indirizzo_destinazione' => $filiale->indirizzo,
             'citta_destinazione' => $filiale->citta,
             'cap_destinazione' => $filiale->cap,
             'provincia_destinazione' => $filiale->provincia,
+            'anno' => Carbon::now()->year,
+            'mese' => Carbon::now()->month,
         ]);
+
+        $this->produciPdfDdt($nuovoDDT, $request);
 
         return $nuovoDDT->id;
     }
@@ -337,6 +354,13 @@ class ProductService
         Product::destroy($id);
     }
 
+    public function listaDdt($request)
+    {
+        return Ddt::where('anno', $request->anno)->with(['products' => function($p){
+            $p->with('listino');
+        }])->latest()->get();
+    }
+
     private function aggiornaRichiestaFiliale($idListino, $idFiliale)
     {
         $richiesta = Richiesta::where([
@@ -350,5 +374,24 @@ class ProductService
                 $richiesta->delete();
             }
         }
+    }
+
+    private function calcolaProgressivoDdt()
+    {
+        $anno = Carbon::now()->year;
+        $ddtAnno = Ddt::where('anno', $anno)->count();
+        return ($ddtAnno + 1);
+    }
+
+    private function produciPdfDdt($nuovoDDT, $request)
+    {
+        $prodotti = $request->prodotti;
+        //dd($prodotti);
+        $pdf = App::make('dompdf.wrapper');
+        if (!Storage::disk('public')->exists('/ddt/')) {
+            Storage::makeDirectory('/ddt/');
+        }
+        $pdf->loadHTML(view('pdf.ddt', compact('nuovoDDT', 'prodotti')))
+            ->save("storage/ddt/".$nuovoDDT->id.'.pdf');
     }
 }

@@ -140,7 +140,12 @@
                     </v-col>
 
                     <v-col cols="12" md="12" lg="4" xs="12" sm="12">
-                        <v-btn color="primary" @click="inserisci" :block="$vuetify.breakpoint.xs" :disabled="verificaCampi">
+                        <v-btn
+                            color="primary"
+                            @click="inserisci"
+                            block
+                            :disabled="verificaCampi"
+                        >
                             Inserisci
                         </v-btn>
                     </v-col>
@@ -314,7 +319,7 @@
             inserimentoDataDiOggi(){
                 let giornoDiOggi = new Date();
                 let giorno = parseInt(giornoDiOggi.getDate()) < 10 ? '0'+parseInt(giornoDiOggi.getDate()) : parseInt(giornoDiOggi.getDate()) ;
-                let mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0'+parseInt(giornoDiOggi.getMonth()) + 1 : parseInt(giornoDiOggi.getMonth()) + 1;
+                let mese = parseInt(giornoDiOggi.getMonth()) + 1 < 10 ? '0'+(parseInt(giornoDiOggi.getMonth()) + 1) : parseInt(giornoDiOggi.getMonth()) + 1;
                 let anno = giornoDiOggi.getFullYear();
                 this.telefonata.giorno = anno+'-'+mese+'-'+giorno;
             },

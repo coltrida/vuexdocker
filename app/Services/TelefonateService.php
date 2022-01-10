@@ -161,7 +161,7 @@ class TelefonateService
             'updated_at' => Carbon::now()->format('Y-m-d'),
         ]);
 
-        $utente = User::find($request->userId);
+        $utente = User::find($request->eseguitaId);
         $log = new LoggingService();
         $propieta = 'recall';
         if($request->esito){

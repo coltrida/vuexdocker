@@ -44,6 +44,15 @@ const actions = {
         commit('pulisciLogFile');
     },
 
+    async pulisciLoggingFile({commit}){
+        await axios.get(`${help().linkpulisciloggingfile}`, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('pulisciLoggingFile');
+    },
+
     async resetDati(){
         await axios.get(`${help().linkresetspecial}`, {
             headers: {
@@ -64,6 +73,10 @@ const mutations = {
 
     pulisciLogFile(state){
         state.logFile = [0, '']
+    },
+
+    pulisciLoggingFile(state){
+        state.loggings = []
     }
 };
 

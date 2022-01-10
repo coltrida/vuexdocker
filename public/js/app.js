@@ -2093,6 +2093,12 @@ var routes = [{
   },
   name: 'magazzinoCentrale'
 }, {
+  path: '/listaDdt',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_Pages_magazzino_ListaDdt_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/magazzino/ListaDdt */ "./resources/js/Pages/magazzino/ListaDdt.vue"));
+  },
+  name: 'listaDdt'
+}, {
   path: '/associaPersonale',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_gestione_AssociaPersonale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/gestione/AssociaPersonale */ "./resources/js/Pages/gestione/AssociaPersonale.vue"));
@@ -5543,6 +5549,9 @@ var mutations = {
   },
   confermaProdottiToFiliale: function confermaProdottiToFiliale(state, payload) {
     state.daSpedire = [];
+  },
+  resetDaSpedire: function resetDaSpedire(state) {
+    state.daSpedire = [];
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6251,13 +6260,39 @@ var actions = {
       }, _callee3);
     }))();
   },
-  resetDati: function resetDati() {
+  pulisciLoggingFile: function pulisciLoggingFile(_ref4) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _context4.next = 2;
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkpulisciloggingfile), {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              commit('pulisciLoggingFile');
+
+            case 4:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  resetDati: function resetDati() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
               return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkresetspecial), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -6266,10 +6301,10 @@ var actions = {
 
             case 2:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   }
 };
@@ -6282,6 +6317,9 @@ var mutations = {
   },
   pulisciLogFile: function pulisciLogFile(state) {
     state.logFile = [0, ''];
+  },
+  pulisciLoggingFile: function pulisciLoggingFile(state) {
+    state.loggings = [];
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7415,13 +7453,17 @@ var state = function state() {
     immatricolati: [],
     soglie: [],
     riepilogoMagazzini: [],
-    riepilogoInCentrale: []
+    riepilogoInCentrale: [],
+    listaDdt: []
   };
 };
 
 var getters = {
   getInCentrale: function getInCentrale(state) {
     return state.inCentrale;
+  },
+  getListaDdt: function getListaDdt(state) {
+    return state.listaDdt;
   },
   getRiepilogoInCentrale: function getRiepilogoInCentrale(state) {
     return state.riepilogoInCentrale;
@@ -7476,7 +7518,7 @@ var actions = {
       }, _callee);
     }))();
   },
-  fetchRiepilogoInCentrale: function fetchRiepilogoInCentrale(_ref2) {
+  fetchListaDdt: function fetchListaDdt(_ref2, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -7485,7 +7527,7 @@ var actions = {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkriepilogoprodottiincentrale), {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linklistaddt), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7493,7 +7535,7 @@ var actions = {
 
             case 3:
               response = _context2.sent;
-              commit('fetchRiepilogoInCentrale', response.data);
+              commit('fetchListaDdt', response.data.data);
 
             case 5:
             case "end":
@@ -7503,7 +7545,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  fetchInFiliale: function fetchInFiliale(_ref3, idFiliale) {
+  fetchRiepilogoInCentrale: function fetchRiepilogoInCentrale(_ref3) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -7512,7 +7554,7 @@ var actions = {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/presenti', {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkriepilogoprodottiincentrale), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7520,7 +7562,7 @@ var actions = {
 
             case 3:
               response = _context3.sent;
-              commit('fetchInFiliale', response.data.data);
+              commit('fetchRiepilogoInCentrale', response.data);
 
             case 5:
             case "end":
@@ -7530,7 +7572,7 @@ var actions = {
       }, _callee3);
     }))();
   },
-  addProdottoInCentrale: function addProdottoInCentrale(_ref4, payload) {
+  fetchInFiliale: function fetchInFiliale(_ref4, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
@@ -7539,7 +7581,7 @@ var actions = {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddprodottoincentrale), payload, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/presenti', {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7547,7 +7589,7 @@ var actions = {
 
             case 3:
               response = _context4.sent;
-              commit('addProdottoInCentrale', response.data.data);
+              commit('fetchInFiliale', response.data.data);
 
             case 5:
             case "end":
@@ -7557,7 +7599,7 @@ var actions = {
       }, _callee4);
     }))();
   },
-  fetchRiepilogoMagazzini: function fetchRiepilogoMagazzini(_ref5) {
+  addProdottoInCentrale: function addProdottoInCentrale(_ref5, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -7566,7 +7608,7 @@ var actions = {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkriepilogoMagazzini), {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkaddprodottoincentrale), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7574,7 +7616,7 @@ var actions = {
 
             case 3:
               response = _context5.sent;
-              commit('fetchRiepilogoMagazzini', response.data);
+              commit('addProdottoInCentrale', response.data.data);
 
             case 5:
             case "end":
@@ -7584,7 +7626,7 @@ var actions = {
       }, _callee5);
     }))();
   },
-  fetchSoglie: function fetchSoglie(_ref6, idFiliale) {
+  fetchRiepilogoMagazzini: function fetchRiepilogoMagazzini(_ref6) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
@@ -7593,7 +7635,7 @@ var actions = {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksoglie) + '/' + idFiliale, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkriepilogoMagazzini), {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7601,7 +7643,7 @@ var actions = {
 
             case 3:
               response = _context6.sent;
-              commit('fetchSoglie', response.data);
+              commit('fetchRiepilogoMagazzini', response.data);
 
             case 5:
             case "end":
@@ -7611,7 +7653,7 @@ var actions = {
       }, _callee6);
     }))();
   },
-  fetchInFilialeFornitore: function fetchInFilialeFornitore(_ref7, payload) {
+  fetchSoglie: function fetchSoglie(_ref7, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
@@ -7620,7 +7662,7 @@ var actions = {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfilialefornitore) + '/' + payload.idFiliale + '/' + payload.idFornitore, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linksoglie) + '/' + idFiliale, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7628,7 +7670,7 @@ var actions = {
 
             case 3:
               response = _context7.sent;
-              commit('fetchInFiliale', response.data.data);
+              commit('fetchSoglie', response.data);
 
             case 5:
             case "end":
@@ -7638,7 +7680,7 @@ var actions = {
       }, _callee7);
     }))();
   },
-  fetchInProva: function fetchInProva(_ref8, idFiliale) {
+  fetchInFilialeFornitore: function fetchInFilialeFornitore(_ref8, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
@@ -7647,7 +7689,7 @@ var actions = {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inProva', {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfilialefornitore) + '/' + payload.idFiliale + '/' + payload.idFornitore, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7655,7 +7697,7 @@ var actions = {
 
             case 3:
               response = _context8.sent;
-              commit('fetchInProva', response.data.data);
+              commit('fetchInFiliale', response.data.data);
 
             case 5:
             case "end":
@@ -7665,7 +7707,7 @@ var actions = {
       }, _callee8);
     }))();
   },
-  fetchRichiesti: function fetchRichiesti(_ref9, idFiliale) {
+  fetchInProva: function fetchInProva(_ref9, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
@@ -7674,7 +7716,7 @@ var actions = {
             case 0:
               commit = _ref9.commit;
               _context9.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/richiesti', {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inProva', {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7682,7 +7724,7 @@ var actions = {
 
             case 3:
               response = _context9.sent;
-              commit('fetchRichiesti', response.data);
+              commit('fetchInProva', response.data.data);
 
             case 5:
             case "end":
@@ -7692,7 +7734,7 @@ var actions = {
       }, _callee9);
     }))();
   },
-  fetchInArrivo: function fetchInArrivo(_ref10, idFiliale) {
+  fetchRichiesti: function fetchRichiesti(_ref10, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
@@ -7701,7 +7743,7 @@ var actions = {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inArrivo', {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/richiesti', {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7709,7 +7751,7 @@ var actions = {
 
             case 3:
               response = _context10.sent;
-              commit('fetchInArrivo', response.data.data);
+              commit('fetchRichiesti', response.data);
 
             case 5:
             case "end":
@@ -7719,7 +7761,7 @@ var actions = {
       }, _callee10);
     }))();
   },
-  fetchImmatricolati: function fetchImmatricolati(_ref11, idFiliale) {
+  fetchInArrivo: function fetchInArrivo(_ref11, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
@@ -7728,7 +7770,7 @@ var actions = {
             case 0:
               commit = _ref11.commit;
               _context11.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimmatricolati) + '/' + idFiliale, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkfiliali) + '/' + idFiliale + '/inArrivo', {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7736,7 +7778,7 @@ var actions = {
 
             case 3:
               response = _context11.sent;
-              commit('fetchImmatricolati', response.data);
+              commit('fetchInArrivo', response.data.data);
 
             case 5:
             case "end":
@@ -7746,7 +7788,7 @@ var actions = {
       }, _callee11);
     }))();
   },
-  richiediProduct: function richiediProduct(_ref12, payload) {
+  fetchImmatricolati: function fetchImmatricolati(_ref12, idFiliale) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee12() {
       var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee12$(_context12) {
@@ -7755,7 +7797,7 @@ var actions = {
             case 0:
               commit = _ref12.commit;
               _context12.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrichiestaprodotti), payload, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkimmatricolati) + '/' + idFiliale, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7763,7 +7805,7 @@ var actions = {
 
             case 3:
               response = _context12.sent;
-              commit('richiediProduct', response.data);
+              commit('fetchImmatricolati', response.data);
 
             case 5:
             case "end":
@@ -7773,26 +7815,26 @@ var actions = {
       }, _callee12);
     }))();
   },
-  switchInProva: function switchInProva(_ref13, payload) {
+  richiediProduct: function richiediProduct(_ref13, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
               commit = _ref13.commit;
               _context13.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchinprova), {
-                'idProduct': payload.idProduct,
-                'user_id': payload.user_id,
-                'client_id': payload.client_id
-              }, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkrichiestaprodotti), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
+              response = _context13.sent;
+              commit('richiediProduct', response.data);
+
+            case 5:
             case "end":
               return _context13.stop();
           }
@@ -7800,7 +7842,7 @@ var actions = {
       }, _callee13);
     }))();
   },
-  switchImmatricolato: function switchImmatricolato(_ref14, payload) {
+  switchInProva: function switchInProva(_ref14, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee14() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee14$(_context14) {
@@ -7809,9 +7851,10 @@ var actions = {
             case 0:
               commit = _ref14.commit;
               _context14.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitchimmatricolato), {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchinprova), {
                 'idProduct': payload.idProduct,
-                'matricola': payload.matricola
+                'user_id': payload.user_id,
+                'client_id': payload.client_id
               }, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -7826,7 +7869,7 @@ var actions = {
       }, _callee14);
     }))();
   },
-  switchRimuoviDallaProva: function switchRimuoviDallaProva(_ref15, id) {
+  switchImmatricolato: function switchImmatricolato(_ref15, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee15() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee15$(_context15) {
@@ -7835,7 +7878,10 @@ var actions = {
             case 0:
               commit = _ref15.commit;
               _context15.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchrimuovidallaprova) + '/' + id, {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitchimmatricolato), {
+                'idProduct': payload.idProduct,
+                'matricola': payload.matricola
+              }, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
@@ -7849,7 +7895,7 @@ var actions = {
       }, _callee15);
     }))();
   },
-  eliminaRichiesta: function eliminaRichiesta(_ref16, id) {
+  switchRimuoviDallaProva: function switchRimuoviDallaProva(_ref16, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee16() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee16$(_context16) {
@@ -7858,6 +7904,29 @@ var actions = {
             case 0:
               commit = _ref16.commit;
               _context16.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductswitchrimuovidallaprova) + '/' + id, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+            case "end":
+              return _context16.stop();
+          }
+        }
+      }, _callee16);
+    }))();
+  },
+  eliminaRichiesta: function eliminaRichiesta(_ref17, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee17() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee17$(_context17) {
+        while (1) {
+          switch (_context17.prev = _context17.next) {
+            case 0:
+              commit = _ref17.commit;
+              _context17.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkproductrimuovirichiesta) + '/' + id, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -7869,21 +7938,21 @@ var actions = {
 
             case 4:
             case "end":
-              return _context16.stop();
+              return _context17.stop();
           }
         }
-      }, _callee16);
+      }, _callee17);
     }))();
   },
-  eliminaProdotto: function eliminaProdotto(_ref17, id) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee17() {
+  eliminaProdotto: function eliminaProdotto(_ref18, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee18() {
       var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee17$(_context17) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee18$(_context18) {
         while (1) {
-          switch (_context17.prev = _context17.next) {
+          switch (_context18.prev = _context18.next) {
             case 0:
-              commit = _ref17.commit;
-              _context17.next = 3;
+              commit = _ref18.commit;
+              _context18.next = 3;
               return axios["delete"]("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkeliminaprodotto) + '/' + id, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -7895,21 +7964,21 @@ var actions = {
 
             case 4:
             case "end":
-              return _context17.stop();
+              return _context18.stop();
           }
         }
-      }, _callee17);
+      }, _callee18);
     }))();
   },
-  assegnaProdottiMagazzino: function assegnaProdottiMagazzino(_ref18, payload) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee18() {
+  assegnaProdottiMagazzino: function assegnaProdottiMagazzino(_ref19, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee19() {
       var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee18$(_context18) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee19$(_context19) {
         while (1) {
-          switch (_context18.prev = _context18.next) {
+          switch (_context19.prev = _context19.next) {
             case 0:
-              commit = _ref18.commit;
-              _context18.next = 3;
+              commit = _ref19.commit;
+              _context19.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottimagazzino), {
                 'prodotti': payload
               }, {
@@ -7923,59 +7992,31 @@ var actions = {
 
             case 4:
             case "end":
-              return _context18.stop();
-          }
-        }
-      }, _callee18);
-    }))();
-  },
-  switchArrivato: function switchArrivato(_ref19, id) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee19() {
-      var commit, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee19$(_context19) {
-        while (1) {
-          switch (_context19.prev = _context19.next) {
-            case 0:
-              commit = _ref19.commit;
-              _context19.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitcharrivato) + '/' + id, {
-                headers: {
-                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
-                }
-              });
-
-            case 3:
-              response = _context19.sent;
-              commit('switchArrivato', response.data.data);
-
-            case 5:
-            case "end":
               return _context19.stop();
           }
         }
       }, _callee19);
     }))();
   },
-  fetchServizi: function fetchServizi(_ref20) {
+  annullaProdottiMagazzino: function annullaProdottiMagazzino(_ref20, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee20() {
-      var commit, response;
+      var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee20$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
             case 0:
               commit = _ref20.commit;
               _context20.next = 3;
-              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkservizi), {
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkannullaprodottimagazzino), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              response = _context20.sent;
-              commit('fetchInFiliale', response.data.data);
+              commit('annullaProdottiMagazzino', payload.prodotti);
 
-            case 5:
+            case 4:
             case "end":
               return _context20.stop();
           }
@@ -7983,26 +8024,24 @@ var actions = {
       }, _callee20);
     }))();
   },
-  assegnaProdottiToFiliale: function assegnaProdottiToFiliale(_ref21, payload) {
+  switchArrivato: function switchArrivato(_ref21, id) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee21() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee21$(_context21) {
         while (1) {
           switch (_context21.prev = _context21.next) {
             case 0:
               commit = _ref21.commit;
               _context21.next = 3;
-              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottitofiliale), payload, {
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkswitcharrivato) + '/' + id, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
                 }
               });
 
             case 3:
-              commit('assegnaProdottiToFiliale', payload);
-              commit('filiali/aggiornaRichiesteFiliali', payload, {
-                root: true
-              });
+              response = _context21.sent;
+              commit('switchArrivato', response.data.data);
 
             case 5:
             case "end":
@@ -8012,15 +8051,42 @@ var actions = {
       }, _callee21);
     }))();
   },
-  assegnaProdottiFilialeInAnticipo: function assegnaProdottiFilialeInAnticipo(_ref22, payload) {
+  fetchServizi: function fetchServizi(_ref22) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee22() {
-      var commit;
+      var commit, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee22$(_context22) {
         while (1) {
           switch (_context22.prev = _context22.next) {
             case 0:
               commit = _ref22.commit;
               _context22.next = 3;
+              return axios.get("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkservizi), {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              response = _context22.sent;
+              commit('fetchInFiliale', response.data.data);
+
+            case 5:
+            case "end":
+              return _context22.stop();
+          }
+        }
+      }, _callee22);
+    }))();
+  },
+  assegnaProdottiToFiliale: function assegnaProdottiToFiliale(_ref23, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee23() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee23$(_context23) {
+        while (1) {
+          switch (_context23.prev = _context23.next) {
+            case 0:
+              commit = _ref23.commit;
+              _context23.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottitofiliale), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -8035,21 +8101,50 @@ var actions = {
 
             case 5:
             case "end":
-              return _context22.stop();
+              return _context23.stop();
           }
         }
-      }, _callee22);
+      }, _callee23);
     }))();
   },
-  confermaProdottiToFiliale: function confermaProdottiToFiliale(_ref23, payload) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee23() {
+  assegnaProdottiFilialeInAnticipo: function assegnaProdottiFilialeInAnticipo(_ref24, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee24() {
       var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee23$(_context23) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee24$(_context24) {
         while (1) {
-          switch (_context23.prev = _context23.next) {
+          switch (_context24.prev = _context24.next) {
             case 0:
-              commit = _ref23.commit;
-              _context23.next = 3;
+              commit = _ref24.commit;
+              _context24.next = 3;
+              return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkassegnaprodottitofiliale), payload, {
+                headers: {
+                  'Authorization': "Bearer " + sessionStorage.getItem('user-token')
+                }
+              });
+
+            case 3:
+              commit('assegnaProdottiToFiliale', payload);
+              commit('filiali/aggiornaRichiesteFiliali', payload, {
+                root: true
+              });
+
+            case 5:
+            case "end":
+              return _context24.stop();
+          }
+        }
+      }, _callee24);
+    }))();
+  },
+  confermaProdottiToFiliale: function confermaProdottiToFiliale(_ref25, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee25() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee25$(_context25) {
+        while (1) {
+          switch (_context25.prev = _context25.next) {
+            case 0:
+              commit = _ref25.commit;
+              _context25.next = 3;
               return axios.post("".concat((0,_help__WEBPACK_IMPORTED_MODULE_1__.default)().linkconfermaprodottitofiliale), payload, {
                 headers: {
                   'Authorization': "Bearer " + sessionStorage.getItem('user-token')
@@ -8063,16 +8158,22 @@ var actions = {
 
             case 4:
             case "end":
-              return _context23.stop();
+              return _context25.stop();
           }
         }
-      }, _callee23);
+      }, _callee25);
     }))();
   }
 };
 var mutations = {
   fetchInCentrale: function fetchInCentrale(state, payload) {
     state.inCentrale = payload;
+  },
+  fetchListaDdt: function fetchListaDdt(state, payload) {
+    state.listaDdt = payload;
+  },
+  resetListaDdt: function resetListaDdt(state) {
+    state.listaDdt = [];
   },
   fetchRiepilogoInCentrale: function fetchRiepilogoInCentrale(state, payload) {
     state.riepilogoInCentrale = payload;
@@ -8132,6 +8233,11 @@ var mutations = {
       state.inCentrale = state.inCentrale.filter(function (u) {
         return u.id !== ele.id;
       });
+    });
+  },
+  annullaProdottiMagazzino: function annullaProdottiMagazzino(state, payload) {
+    payload.forEach(function (ele) {
+      state.inCentrale.unshift(ele);
     });
   }
 };
@@ -11251,6 +11357,7 @@ var help = function help() {
     linkinviasms: base + 'inviaSms',
     linklistarichiestaapparecchi: base + 'listaProdottiRichiesti',
     linkassegnaprodottimagazzino: base + 'assegnaProdottiMagazzino',
+    linkannullaprodottimagazzino: base + 'annullaProdottiMagazzino',
     linkimmatricolati: base + 'prodottiImmatricolati',
     linkswitchimmatricolato: base + 'productSwitchImmatricolato',
     linkswitcharrivato: base + 'productSwitchArrivato',
@@ -11348,6 +11455,7 @@ var help = function help() {
     linksettimanadelmese: base + 'settimanaDelMese',
     linklogfile: base + 'logFile',
     linkpuliscilogfile: base + 'pulisciLogFile',
+    linkpulisciloggingfile: base + 'pulisciLoggingFile',
     linkesistedoppione: base + 'esisteDoppione',
     linkprodottiincentrale: base + 'inCentrale',
     linkriepilogoprodottiincentrale: base + 'riepilogoInCentrale',
@@ -11360,7 +11468,8 @@ var help = function help() {
     linkeventogiorno: base + 'eventoGiorno',
     linkeventisettimana: base + 'eventiSettimana',
     linkappuntamentidituttiaudio: base + 'appuntamentiDiTuttiAudio',
-    linkeliminaprodotto: base + 'eliminaProduct'
+    linkeliminaprodotto: base + 'eliminaProduct',
+    linklistaddt: base + 'listaDdt'
   };
 };
 
@@ -97763,7 +97872,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_marketing_Materiale_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_magazzino_Centrale_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Pages_statistiche_Medici_vue":1,"resources_js_Pages_clients_SituazioneAudio_vue":1,"resources_js_Pages_gestione_Backup_vue":1,"resources_js_Pages_gestione_Restore_vue":1,"resources_js_Pages_clients_Riepilogo_vue":1,"resources_js_Pages_statistiche_Callcenter_vue":1,"resources_js_Pages_gestione_Strumentazione_vue":1,"resources_js_Pages_gestione_Reset_vue":1,"resources_js_Pages_strutture_StruttureAudio_vue":1,"resources_js_Pages_statistiche_MediciMesi_vue":1,"resources_js_Pages_magazzino_Riepilogo_vue":1,"resources_js_Pages_personale_Diario_vue":1,"resources_js_Pages_personale_Diari_vue":1,"resources_js_Pages_gestione_Log_vue":1,"resources_js_Components_NavBarCellulare_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_home_Home_vue":1,"resources_js_Pages_login_Login_vue":1,"resources_js_Pages_login_Register_vue":1,"resources_js_Pages_marketing_Marketing_vue":1,"resources_js_Pages_marketing_Materiale_vue":1,"resources_js_Pages_fornitori_Listino_vue":1,"resources_js_Pages_fornitori_Fornitori_vue":1,"resources_js_Pages_personale_Personale_vue":1,"resources_js_Pages_strutture_Filiali_vue":1,"resources_js_Pages_personale_Agende_vue":1,"resources_js_Pages_personale_Agenda_vue":1,"resources_js_Pages_personale_Settimana_vue":1,"resources_js_Pages_personale_Calendar_vue":1,"resources_js_Pages_strutture_Recapiti_vue":1,"resources_js_Pages_clients_Clients_vue":1,"resources_js_Pages_clients_ClientsFiliale_vue":1,"resources_js_Pages_clients_Inserisci_vue":1,"resources_js_Pages_magazzino_MagazzinoFiliale_vue":1,"resources_js_Pages_magazzino_Centrale_vue":1,"resources_js_Pages_magazzino_ListaDdt_vue":1,"resources_js_Pages_gestione_AssociaPersonale_vue":1,"resources_js_Pages_gestione_TempiRecall_vue":1,"resources_js_Pages_gestione_InvioSms_vue":1,"resources_js_Pages_gestione_AssegnaBudget_vue":1,"resources_js_Pages_statistiche_Audioprotesisti_vue":1,"resources_js_Pages_statistiche_AudioprotesistiDettaglio_vue":1,"resources_js_Pages_statistiche_IngRecapiti_vue":1,"resources_js_Pages_statistiche_FattCanali_vue":1,"resources_js_Pages_clients_Importclients_vue":1,"resources_js_Pages_clients_ImportByFiliale_vue":1,"resources_js_Pages_gestione_Logging_vue":1,"resources_js_Pages_clients_Filtri_vue":1,"resources_js_Pages_clients_RateAudio_vue":1,"resources_js_Pages_clients_SaldatiAdmin_vue":1,"resources_js_Pages_clients_RatealiAdmin_vue":1,"resources_js_Pages_clients_InserisciRata_vue":1,"resources_js_Pages_statistiche_VentaglioProdotti_vue":1,"resources_js_Pages_medici_ListaMedici_vue":1,"resources_js_Pages_medici_OrariMedici_vue":1,"resources_js_Pages_medici_InviiMedici_vue":1,"resources_js_Pages_statistiche_Medici_vue":1,"resources_js_Pages_clients_SituazioneAudio_vue":1,"resources_js_Pages_gestione_Backup_vue":1,"resources_js_Pages_gestione_Restore_vue":1,"resources_js_Pages_clients_Riepilogo_vue":1,"resources_js_Pages_statistiche_Callcenter_vue":1,"resources_js_Pages_gestione_Strumentazione_vue":1,"resources_js_Pages_gestione_Reset_vue":1,"resources_js_Pages_strutture_StruttureAudio_vue":1,"resources_js_Pages_statistiche_MediciMesi_vue":1,"resources_js_Pages_magazzino_Riepilogo_vue":1,"resources_js_Pages_personale_Diario_vue":1,"resources_js_Pages_personale_Diari_vue":1,"resources_js_Pages_gestione_Log_vue":1,"resources_js_Components_NavBarCellulare_vue":1,"resources_js_Components_Navbar_vue":1,"resources_js_Components_Footer_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

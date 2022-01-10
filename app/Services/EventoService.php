@@ -15,8 +15,8 @@ class EventoService
     {
         $idUser = $request->user_id;
         $giorno = $request->giorno;
-        $cosa = $request->cosa;
-        $struttura = $request->evento;
+        $cosa = Str::upper($request->cosa);
+        $struttura = Str::upper($request->evento);
         $quando = $request->quando;
 
         if ($idUser != 0){

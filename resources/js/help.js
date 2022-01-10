@@ -90,6 +90,7 @@ const help = () => {
         linkinviasms: base+'inviaSms',
         linklistarichiestaapparecchi: base+'listaProdottiRichiesti',
         linkassegnaprodottimagazzino: base+'assegnaProdottiMagazzino',
+        linkannullaprodottimagazzino: base+'annullaProdottiMagazzino',
         linkimmatricolati: base+'prodottiImmatricolati',
         linkswitchimmatricolato: base+'productSwitchImmatricolato',
         linkswitcharrivato: base+'productSwitchArrivato',
@@ -187,6 +188,7 @@ const help = () => {
         linksettimanadelmese: base+'settimanaDelMese',
         linklogfile: base+'logFile',
         linkpuliscilogfile: base+'pulisciLogFile',
+        linkpulisciloggingfile: base+'pulisciLoggingFile',
         linkesistedoppione: base+'esisteDoppione',
         linkprodottiincentrale: base+'inCentrale',
         linkriepilogoprodottiincentrale: base+'riepilogoInCentrale',
@@ -200,6 +202,7 @@ const help = () => {
         linkeventisettimana: base+'eventiSettimana',
         linkappuntamentidituttiaudio: base+'appuntamentiDiTuttiAudio',
         linkeliminaprodotto: base+'eliminaProduct',
+        linklistaddt: base+'listaDdt',
     };
 };
 export default help;

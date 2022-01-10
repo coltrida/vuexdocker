@@ -256,6 +256,10 @@ const mutations = {
 
     confermaProdottiToFiliale(state, payload) {
         state.daSpedire = [];
+    },
+
+    resetDaSpedire(state){
+        state.daSpedire = [];
     }
 };
 

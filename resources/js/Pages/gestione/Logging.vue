@@ -1,6 +1,10 @@
 <template>
     <div>
-        <h2>Logging</h2>
+        <v-row>
+            <v-col><h2>Logging</h2></v-col>
+            <v-col><v-btn @click="pulisciLogging">Pulisci</v-btn></v-col>
+        </v-row>
+
             <v-row>
                 <v-col cols="12">
                     <v-data-table
@@ -42,7 +46,12 @@
         methods:{
             ...mapActions('logging', {
                 fetchLoggings:'fetchLoggings',
+                pulisciLoggingFile:'pulisciLoggingFile',
             }),
+
+            pulisciLogging(){
+                this.pulisciLoggingFile();
+            }
 
         },
 

@@ -141,6 +141,7 @@ Route::group([], function () {
         Route::delete('/productRimuoviRichiesta/{idProduct}', [ProductController::class, 'productRimuoviRichiesta']);
         Route::post('/richiestaProdotti', [ProductController::class, 'richiestaProdotti']);
         Route::post('/assegnaProdottiMagazzino', [ProductController::class, 'assegnaProdottiMagazzino']);
+        Route::post('/annullaProdottiMagazzino', [ProductController::class, 'annullaProdottiMagazzino']);
         Route::get('/listaProdottiRichiesti', [ProductController::class, 'listaProdottiRichiesti']);
         Route::get('/prodottiImmatricolati/{idFiliale}', [ProductController::class, 'prodottiImmatricolati']);
         Route::get('/productSwitchArrivato/{id}', [ProductController::class, 'switchArrivato']);
@@ -149,8 +150,9 @@ Route::group([], function () {
         Route::post('/confermaProdottiToFiliale', [ProductController::class, 'confermaProdottiToFiliale']);
         Route::get('/richiesteFiliali', [ProductController::class, 'richiesteFiliali']);
         Route::delete('/eliminaProduct/{id}', [ProductController::class, 'eliminaProduct']);
+        Route::post('/listaDdt', [ProductController::class, 'listaDdt']);
 
-        // ---------------- client -------------------------
+    // ---------------- client -------------------------
         Route::get('/clients', [ClientController::class, 'index']);
         Route::get('/province', [ClientController::class, 'province']);
         Route::get('/cittaByProvincia/{provincia}', [ClientController::class, 'cittaByProvincia']);
@@ -198,6 +200,7 @@ Route::group([], function () {
         Route::get('/logging', [GestioneController::class, 'logging']);
         Route::get('/logFile', [GestioneController::class, 'logFile']);
         Route::get('/pulisciLogFile', [GestioneController::class, 'pulisciLogFile']);
+        Route::get('/pulisciLoggingFile', [GestioneController::class, 'pulisciLoggingFile']);
         Route::post('/inviaSms', [GestioneController::class, 'inviaSms']);
 
         // ---------------- audiometrie -------------------------
