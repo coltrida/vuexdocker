@@ -95,6 +95,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -156,11 +158,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchListaDdt(this.ricerca);
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('product', {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('product', {
     getListaDdt: 'getListaDdt'
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('clients', {
     getAnni: 'getAnni'
-  }))
+  })), {}, {
+    linkBase: function linkBase() {
+      var base = '';
+
+      if (window.location.host === 'vuexdocker.test') {
+        base = 'http://vuexdocker.test';
+      } else {
+        base = 'https://www.centrouditogroup.it';
+      }
+
+      return base;
+    }
+  })
 });
 
 /***/ }),
@@ -176,6 +190,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -522,28 +538,39 @@ var render = function() {
                             var attrs = ref.attrs
                             return [
                               _c(
-                                "v-icon",
-                                _vm._g(
-                                  _vm._b(
-                                    {
-                                      attrs: { color: "green", small: "" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.seleziona(item.products)
-                                        }
-                                      }
-                                    },
-                                    "v-icon",
-                                    attrs,
-                                    false
-                                  ),
-                                  on
-                                ),
+                                "a",
+                                {
+                                  attrs: {
+                                    href:
+                                      _vm.linkBase +
+                                      "/storage/ddt/" +
+                                      item.id +
+                                      ".pdf",
+                                    target: "_blank"
+                                  }
+                                },
                                 [
-                                  _vm._v(
-                                    "\n                        mdi-file-document-outline\n                    "
+                                  _c(
+                                    "v-icon",
+                                    _vm._g(
+                                      _vm._b(
+                                        {
+                                          attrs: { color: "green", small: "" }
+                                        },
+                                        "v-icon",
+                                        attrs,
+                                        false
+                                      ),
+                                      on
+                                    ),
+                                    [
+                                      _vm._v(
+                                        "\n                            mdi-file-document-outline\n                        "
+                                      )
+                                    ]
                                   )
-                                ]
+                                ],
+                                1
                               )
                             ]
                           }
@@ -615,7 +642,9 @@ var render = function() {
                 [
                   _c("v-col", [_c("h3", [_vm._v("Matricola")])]),
                   _vm._v(" "),
-                  _c("v-col", [_c("h3", [_vm._v("Modello")])])
+                  _c("v-col", [_c("h3", [_vm._v("Modello")])]),
+                  _vm._v(" "),
+                  _c("v-col", [_c("h3", [_vm._v("Fornitore")])])
                 ],
                 1
               ),
@@ -627,7 +656,9 @@ var render = function() {
                   [
                     _c("v-col", [_vm._v(_vm._s(item.matricola))]),
                     _vm._v(" "),
-                    _c("v-col", [_vm._v(_vm._s(item.listino.nome))])
+                    _c("v-col", [_vm._v(_vm._s(item.listino.nome))]),
+                    _vm._v(" "),
+                    _c("v-col", [_vm._v(_vm._s(item.fornitore.nome))])
                   ],
                   1
                 )

@@ -56,16 +56,18 @@
 
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-icon
-                            @click="seleziona(item.products)"
-                            color="green"
-                            small
-                            v-bind="attrs"
-                            v-on="on"
+                        <a :href="linkBase+'/storage/ddt/'+item.id+'.pdf'" target="_blank">
+                            <v-icon
+                                color="green"
+                                small
+                                v-bind="attrs"
+                                v-on="on"
 
-                        >
-                            mdi-file-document-outline
-                        </v-icon>
+                            >
+                                mdi-file-document-outline
+                            </v-icon>
+                        </a>
+
                     </template>
                     <span>Documento</span>
                 </v-tooltip>
@@ -129,6 +131,16 @@
             ...mapGetters('clients', {
                 getAnni: 'getAnni',
             }),
+
+            linkBase(){
+                let base = '';
+                if(window.location.host === 'vuexdocker.test'){
+                    base = 'http://vuexdocker.test';
+                } else {
+                    base = 'https://www.centrouditogroup.it';
+                }
+                return base;
+            },
         }
     }
 </script>

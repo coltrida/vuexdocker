@@ -105,6 +105,7 @@
 
                 <v-col cols="6" md="3" lg="3">
                     <v-text-field
+                        :rules="emailRules"
                         v-model="newClient.mail"
                         label="mail"
                     ></v-text-field>
@@ -114,10 +115,9 @@
             <v-row>
                 <v-col cols="12" md="2" lg="2">
                     <v-menu
-                        ref="menu"
                         v-model="menu"
                         :close-on-content-click="false"
-                        :return-value.sync="newClient.datanascita"
+                        :nudge-right="40"
                         transition="scale-transition"
                         offset-y
                         min-width="auto"
@@ -127,30 +127,17 @@
                                 v-model="newClient.datanascita"
                                 label="Data di Nascita"
                                 prepend-icon="mdi-calendar"
+                                readonly
                                 v-bind="attrs"
                                 v-on="on"
                             ></v-text-field>
                         </template>
                         <v-date-picker
+                            first-day-of-week="1"
+                            locale="ITA"
                             v-model="newClient.datanascita"
-                            no-title
-                            scrollable
+                            @input="menu = false"
                         >
-                            <v-spacer></v-spacer>
-                            <v-btn
-                                text
-                                color="primary"
-                                @click="menu = false"
-                            >
-                                Cancel
-                            </v-btn>
-                            <v-btn
-                                text
-                                color="primary"
-                                @click="$refs.menu.save(newClient.datanascita)"
-                            >
-                                OK
-                            </v-btn>
                         </v-date-picker>
                     </v-menu>
                 </v-col>
@@ -266,6 +253,9 @@
                 fonteRules: [ v => !!v || "la fonte è obbligatoria"],
                 filialeRules: [ v => !!v || "la filiale è obbligatoria"],
                 nascitaRules: [ v => !!v || "la data di nascita è obbligatoria"],
+                emailRules: [
+                    v => (!v || /.+@.+\..+/.test(v)) || 'formato E-mail non valido',
+                ],
             }
         },
 

@@ -1960,7 +1960,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
-  mode: 'history',
+  mode: 'abstract',
   routes: _routes__WEBPACK_IMPORTED_MODULE_0__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -2082,6 +2082,7 @@ var routes = [{
   name: 'clientsInserisci'
 }, {
   path: '/magazzino/:filialeId',
+  "abstract": true,
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_Pages_magazzino_MagazzinoFiliale_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/magazzino/MagazzinoFiliale */ "./resources/js/Pages/magazzino/MagazzinoFiliale.vue"));
   },

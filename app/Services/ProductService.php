@@ -357,7 +357,7 @@ class ProductService
     public function listaDdt($request)
     {
         return Ddt::where('anno', $request->anno)->with(['products' => function($p){
-            $p->with('listino');
+            $p->with('listino', 'fornitore');
         }])->latest()->get();
     }
 

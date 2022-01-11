@@ -175,6 +175,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "MagazzinoFiliale",
@@ -607,7 +608,7 @@ var render = function() {
                 },
                 [
                   _c("v-text-field", {
-                    attrs: { label: "quantita" },
+                    attrs: { type: "number", label: "quantita" },
                     model: {
                       value: _vm.productRichiesto.quantita,
                       callback: function($$v) {

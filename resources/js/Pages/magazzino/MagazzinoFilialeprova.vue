@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h2>Magazzino {{getFilialeById.nome}}</h2>
-            <v-row v-if="getRuolo != 'admin'">
+        <h2>Magazzino {{$route.params.filialeId}}</h2>
+            <!--<v-row v-if="getRuolo != 'admin'">
                 <v-col cols="12" md="12" lg="3" xs="12" sm="12">
                     <v-select
                         @change="caricaProdotti()"
@@ -152,7 +152,7 @@
 
 
                 </v-data-table>
-            </div>
+            </div>-->
     </div>
 </template>
 
@@ -160,7 +160,7 @@
     import {mapActions, mapGetters} from "vuex";
     export default {
         name: "MagazzinoFiliale",
-
+/*
         data(){
             return {
                 carica: false,
@@ -175,7 +175,7 @@
                     { text: 'Fornitore', align: 'start', value: 'fornitore', class: "indigo white--text" },
                     { text: 'Nome', value: 'nome', class: "indigo white--text"},
                     { text: 'Categoria', value: 'categoria', class: "indigo white--text" },
-                    /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
+                    /!*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*!/
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
                     { text: 'Giorni x Reso', value: 'giorniRimasti', class: "indigo white--text" },
@@ -187,7 +187,7 @@
                     { text: 'Fornitore', align: 'start', value: 'fornitore', class: "indigo white--text" },
                     { text: 'Nome', value: 'nome', class: "indigo white--text"},
                     { text: 'Categoria', value: 'categoria', class: "indigo white--text" },
-                    /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
+                    /!*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*!/
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
                     { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
@@ -199,7 +199,7 @@
                     { text: 'Fornitore', align: 'start', value: 'fornitore', class: "indigo white--text" },
                     { text: 'Nome', value: 'nome', class: "indigo white--text"},
                     { text: 'Categoria', value: 'categoria', class: "indigo white--text" },
-                    /*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*/
+                    /!*{ text: 'Costo', value: 'costo', class: "indigo white--text" },*!/
                     { text: 'Prezzo', value: 'prezzolistino', class: "indigo white--text" },
                     { text: 'Iva', value: 'iva', class: "indigo white--text" },
                     { text: 'GG reso', value: 'giorniTempoDiReso', class: "indigo white--text" },
@@ -248,10 +248,10 @@
                 });
             }
 
-        },
+        },*/
 
         watch:{
-            rottaIdFiliale(){
+            /*rottaIdFiliale(){
                 this.carica = true;
                 this.fetchInFiliale(this.rottaIdFiliale).then(() => {
                     this.fetchInProva(this.rottaIdFiliale).then(() => {
@@ -266,6 +266,9 @@
                 });
 
                 this.fetchFilialeById(this.rottaIdFiliale);
+            }*/
+            $route(to, from) {
+                // react to route changes...
             }
         },
 

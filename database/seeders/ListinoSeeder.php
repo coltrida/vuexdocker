@@ -19,7 +19,7 @@ class ListinoSeeder extends Seeder
     {
         Listino::insert([
             [
-                'nome' => 'M90',
+                'nome' => 'AUDEO M90',
                 'fornitore_id' => 1,
                 'categoria_id' => 1,
                 'costo' => 945,
@@ -29,7 +29,7 @@ class ListinoSeeder extends Seeder
                 'iva' => 4
             ],
             [
-                'nome' => 'M70',
+                'nome' => 'AUDEO M70',
                 'fornitore_id' => 1,
                 'categoria_id' => 1,
                 'costo' => 708,
@@ -39,7 +39,7 @@ class ListinoSeeder extends Seeder
                 'iva' => 4
             ],
             [
-                'nome' => 'M50',
+                'nome' => 'AUDEO M50',
                 'fornitore_id' => 1,
                 'categoria_id' => 1,
                 'costo' => 573,
@@ -49,7 +49,7 @@ class ListinoSeeder extends Seeder
                 'iva' => 4
             ],
             [
-                'nome' => 'M30',
+                'nome' => 'AUDEO M30',
                 'fornitore_id' => 1,
                 'categoria_id' => 1,
                 'costo' => 445,
@@ -139,8 +139,18 @@ class ListinoSeeder extends Seeder
                 'iva' => 4
             ],
             [
-                'nome' => Str::upper('Charger ricaricabile'),
+                'nome' => Str::upper('Charger Phonak'),
                 'fornitore_id' => 1,
+                'categoria_id' => 2,
+                'costo' => 53,
+                'giorniTempoDiReso' => 90,
+                'prezzolistino' => 55,
+                'scontoMax' => 0,
+                'iva' => 22
+            ],
+            [
+                'nome' => Str::upper('Charger Starkey'),
+                'fornitore_id' => 2,
                 'categoria_id' => 2,
                 'costo' => 53,
                 'giorniTempoDiReso' => 90,
@@ -189,7 +199,7 @@ class ListinoSeeder extends Seeder
                 'iva' => 22
             ],
             [
-                'nome' => Str::upper('TVLink II'),
+                'nome' => Str::upper('TVLINK CONNECTOR'),
                 'fornitore_id' => 1,
                 'categoria_id' => 2,
                 'costo' => 70,

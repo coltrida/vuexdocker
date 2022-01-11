@@ -368,19 +368,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -427,6 +414,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       nascitaRules: [function (v) {
         return !!v || "la data di nascita è obbligatoria";
+      }],
+      emailRules: [function (v) {
+        return !v || /.+@.+\..+/.test(v) || 'formato E-mail non valido';
       }]
     };
   },
@@ -1191,7 +1181,7 @@ var render = function() {
                     { attrs: { cols: "6", md: "3", lg: "3" } },
                     [
                       _c("v-text-field", {
-                        attrs: { label: "mail" },
+                        attrs: { rules: _vm.emailRules, label: "mail" },
                         model: {
                           value: _vm.newClient.mail,
                           callback: function($$v) {
@@ -1217,29 +1207,12 @@ var render = function() {
                       _c(
                         "v-menu",
                         {
-                          ref: "menu",
                           attrs: {
                             "close-on-content-click": false,
-                            "return-value": _vm.newClient.datanascita,
+                            "nudge-right": 40,
                             transition: "scale-transition",
                             "offset-y": "",
                             "min-width": "auto"
-                          },
-                          on: {
-                            "update:returnValue": function($event) {
-                              return _vm.$set(
-                                _vm.newClient,
-                                "datanascita",
-                                $event
-                              )
-                            },
-                            "update:return-value": function($event) {
-                              return _vm.$set(
-                                _vm.newClient,
-                                "datanascita",
-                                $event
-                              )
-                            }
                           },
                           scopedSlots: _vm._u([
                             {
@@ -1255,7 +1228,8 @@ var render = function() {
                                         {
                                           attrs: {
                                             label: "Data di Nascita",
-                                            "prepend-icon": "mdi-calendar"
+                                            "prepend-icon": "mdi-calendar",
+                                            readonly: ""
                                           },
                                           model: {
                                             value: _vm.newClient.datanascita,
@@ -1290,59 +1264,21 @@ var render = function() {
                         },
                         [
                           _vm._v(" "),
-                          _c(
-                            "v-date-picker",
-                            {
-                              attrs: { "no-title": "", scrollable: "" },
-                              model: {
-                                value: _vm.newClient.datanascita,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.newClient, "datanascita", $$v)
-                                },
-                                expression: "newClient.datanascita"
+                          _c("v-date-picker", {
+                            attrs: { "first-day-of-week": "1", locale: "ITA" },
+                            on: {
+                              input: function($event) {
+                                _vm.menu = false
                               }
                             },
-                            [
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { text: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.menu = false
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            Cancel\n                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { text: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$refs.menu.save(
-                                        _vm.newClient.datanascita
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            OK\n                        "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
+                            model: {
+                              value: _vm.newClient.datanascita,
+                              callback: function($$v) {
+                                _vm.$set(_vm.newClient, "datanascita", $$v)
+                              },
+                              expression: "newClient.datanascita"
+                            }
+                          })
                         ],
                         1
                       )
