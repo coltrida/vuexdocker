@@ -17,12 +17,22 @@ const state = () => ({
     intervenutiAnnoMese: [],
     appuntamentiInSospeso: [],
     settimanaDelMese: [],
-    dataDiOggi: ''
+    dataDiOggi: '',
+    statisticheAppuntamenti: [],
+    statisticheAppuntamentiMesi: [],
 });
 
 const getters = {
     getAppuntamentiDiTuttiAudio(state){
         return state.appuntamentiDiTuttiAudio;
+    },
+
+    getStatisticheAppuntamenti(state){
+        return state.statisticheAppuntamenti;
+    },
+
+    getStatisticheAppuntamentiMesi(state){
+        return state.statisticheAppuntamentiMesi;
     },
 
     getAppuntamenti(state){
@@ -99,6 +109,24 @@ const actions = {
             }
         });
          commit('fetchAppuntamentiDiTuttiAudio', response.data);
+    },
+
+    async fetchStatisticheAppuntamenti({commit}, payload){
+        const response = await axios.post(`${help().linkstatisticheappuntamenti}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchStatisticheAppuntamenti', response.data);
+    },
+
+    async fetchStatisticheAppuntamentiMesi({commit}, payload){
+        const response = await axios.post(`${help().linkstatisticheappuntamentimesi}`, payload, {
+            headers: {
+                'Authorization': `Bearer `+ sessionStorage.getItem('user-token')
+            }
+        });
+        commit('fetchStatisticheAppuntamentiMesi', response.data);
     },
 
     async fetchAppuntamenti({commit}, idClient){
@@ -446,6 +474,14 @@ const mutations = {
         state.appuntamentiDiTuttiAudio = payload;
     },
 
+    fetchStatisticheAppuntamenti(state, payload){
+        state.statisticheAppuntamenti = payload;
+    },
+
+    fetchStatisticheAppuntamentiMesi(state, payload){
+        state.statisticheAppuntamentiMesi = payload;
+    },
+
     fetchAppuntamenti(state, payload){
         state.appuntamenti = payload;
     },
@@ -548,6 +584,11 @@ const mutations = {
         state.appMer = [];
         state.appGio = [];
         state.appVen = [];
+    },
+
+    resetStatisticheAppuntamenti(state){
+        state.statisticheAppuntamenti = [];
+        state.statisticheAppuntamentiMesi = [];
     },
 
     setSettimanaDaVisualizzare(state, payload){

@@ -36,6 +36,7 @@
                 { title: 'Ventaglio Prodotti', link: 'ventaglioProdotti' },
                 { title: 'Medici', link: 'statisticheMedici' },
                 { title: 'Call Center', link: 'statisticheCallcenter' },
+                { title: 'Appuntamenti', link: 'statisticheAppuntamenti' },
             ],
         }),
     }

@@ -365,7 +365,7 @@ class AppuntamentiService
         $testo = $utente->name.' ha selezionato INTERVENUTO per '.$appuntamento->client->cognome.' '.$appuntamento->client->nome." per l'appuntamento del ".$appuntamento->giorno;
 
         $log = new LoggingService();
-        $log->scriviLog($appuntamento->client->cognome.''.$appuntamento->client->nome, $utente, $utente->name, $propieta, $testo);
+        $log->scriviLog($appuntamento->client->cognome.' '.$appuntamento->client->nome, $utente, $utente->name, $propieta, $testo);
 
     }
 
@@ -412,5 +412,147 @@ class AppuntamentiService
                 ]);
             }])
             ->get();
+    }
+
+    public function statistiche($request)
+    {
+        return User::audio()
+            ->withCount(['appuntamenti as Assistenza' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['tipo', 'Assistenza']
+                ]);
+            }])
+            ->withCount(['appuntamenti as Consegna' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['tipo', 'Consegna']
+                ]);
+            }])
+            ->withCount(['appuntamenti as ControlloProva' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['tipo', 'Controllo Prova']
+                ]);
+            }])
+            ->withCount(['appuntamenti as EsameAudio' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['tipo', 'Esame Audio']
+                ]);
+            }])
+            ->withCount(['appuntamenti as FineProva' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['tipo', 'Fine prova']
+                ]);
+            }])
+            ->withCount(['appuntamenti as Informazioni' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['tipo', 'Informazioni']
+                ]);
+            }])
+            ->withCount(['appuntamenti as PrimaVisita' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['tipo', 'Prima Visita']
+                ]);
+            }])
+            ->withCount(['appuntamenti as Pulizia' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['tipo', 'Pulizia']
+                ]);
+            }])
+            ->withCount(['appuntamenti as Totale' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                ]);
+            }])
+            ->orderBy('name')->get();
+    }
+
+    public function statisticheMesi($request)
+    {
+        return User::audio()
+            ->withCount(['appuntamenti as gennaio' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 1]
+                ]);
+            }])
+            ->withCount(['appuntamenti as febbraio' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 2]
+                ]);
+            }])
+            ->withCount(['appuntamenti as marzo' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 3]
+                ]);
+            }])
+            ->withCount(['appuntamenti as aprile' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 4]
+                ]);
+            }])
+            ->withCount(['appuntamenti as maggio' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 5]
+                ]);
+            }])
+            ->withCount(['appuntamenti as giugno' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 6]
+                ]);
+            }])
+            ->withCount(['appuntamenti as luglio' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 7]
+                ]);
+            }])
+            ->withCount(['appuntamenti as agosto' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 8]
+                ]);
+            }])
+            ->withCount(['appuntamenti as settembre' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 9]
+                ]);
+            }])
+            ->withCount(['appuntamenti as ottobre' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 10]
+                ]);
+            }])
+            ->withCount(['appuntamenti as novembre' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 11]
+                ]);
+            }])
+            ->withCount(['appuntamenti as dicembre' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                    ['mese', 12]
+                ]);
+            }])
+            ->withCount(['appuntamenti as totale' => function($q) use($request){
+                $q->where([
+                    ['anno', $request->anno],
+                ]);
+            }])
+            ->orderBy('name')->get();
     }
 }

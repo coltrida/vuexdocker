@@ -66,7 +66,12 @@
             ...mapGetters('login', {
                 getMessaggio:'getMessaggio',
                 getLogged:'getLogged',
-            })
+            }),
+
+            csrf_token() {
+                let token = document.head.querySelector('meta[name="csrf-token"]')
+                return token.content
+            }
         },
 
         methods: {

@@ -154,4 +154,14 @@ class AppuntamentiController extends Controller
     {
         return $appuntamentiService->appuntamentiDiTuttiAudio();
     }
+
+    public function statistiche(Request $request, AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->statistiche($request);
+    }
+
+    public function statisticheMesi(Request $request, AppuntamentiService $appuntamentiService)
+    {
+        return $appuntamentiService->statisticheMesi($request);
+    }
 }

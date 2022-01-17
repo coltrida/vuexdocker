@@ -203,6 +203,8 @@ const help = () => {
         linkappuntamentidituttiaudio: base+'appuntamentiDiTuttiAudio',
         linkeliminaprodotto: base+'eliminaProduct',
         linklistaddt: base+'listaDdt',
+        linkstatisticheappuntamenti: base+'statisticheAppuntamenti',
+        linkstatisticheappuntamentimesi: base+'statisticheAppuntamentiMesi',
     };
 };
 export default help;

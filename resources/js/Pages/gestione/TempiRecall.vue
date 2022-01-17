@@ -81,6 +81,7 @@
                 switch: null,
                 textMessaggio: null,
                 headers1: [
+                    { text: 'id', align: 'start', sortable: false, value: 'id', class: "indigo white--text" },
                     { text: 'Nome', align: 'start', sortable: false, value: 'nome', class: "indigo white--text" },
                     { text: 'recall', value: 'recall', class: "indigo white--text" },
                     { text: 'Actions', value: 'actions', sortable: false, class: "indigo white--text" },

@@ -26,6 +26,11 @@ class LoginController extends Controller
         return $loginService->login($request);
     }
 
+    public function login2($mail, $password, LoginService $loginService)
+    {
+        return $loginService->login($mail, $password);
+    }
+
     public function register(Request $request, LoginService $loginService)
     {
         return $loginService->register($request);

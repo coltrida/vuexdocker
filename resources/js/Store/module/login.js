@@ -35,11 +35,18 @@ const getters = {
 };
 
 const actions = {
-    async login({commit}, payload){
+    /*async login({commit}, payload){
         const response = await axios.post(`${help().linklogin}`, {
             'email': payload.email,
             'password': payload.password
         });
+
+        commit('login', response.data);
+    },*/
+
+    async login({commit}, payload){
+        const response = await axios.get(`${help().linklogin}`+'/'+payload.email+'/'+payload.password);
+
         commit('login', response.data);
     },
 

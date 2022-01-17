@@ -523,7 +523,7 @@ class ClientService
         }
 
         $log = new LoggingService();
-        $log->scriviLog('import from Noah', '', User::find($request['idUser'])->name, 'import from Noah', 'import from Noah');
+        $log->scriviLog('import from Noah', '', User::find($request['idUser'])->name, 'import from Noah', 'import from Noah. (Inseriti: '.$tot.')');
 
         return [$res, $tot, $possibiliDoppioni, $originaliDaInserire, $listaSenzaFilialeAssegnata];
     }

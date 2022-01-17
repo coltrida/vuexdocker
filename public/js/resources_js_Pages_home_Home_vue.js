@@ -3838,6 +3838,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "homeAppAdmin",
@@ -50988,7 +50993,33 @@ var render = function() {
                                     _c(
                                       "td",
                                       { staticStyle: { "font-size": "12px" } },
-                                      [_vm._v(_vm._s(item.client.fullname))]
+                                      [
+                                        _c(
+                                          "router-link",
+                                          {
+                                            staticStyle: { color: "black" },
+                                            attrs: {
+                                              to: {
+                                                name: "clientsFiliale",
+                                                params: {
+                                                  filialeId: item.filiale_id,
+                                                  nomRicerca: item.client.nome,
+                                                  cogRicerca:
+                                                    item.client.fullname
+                                                }
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(item.client.fullname) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
                                     ),
                                     _vm._v(" "),
                                     _c(

@@ -542,6 +542,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'Call Center',
         link: 'statisticheCallcenter'
+      }, {
+        title: 'Appuntamenti',
+        link: 'statisticheAppuntamenti'
       }]
     };
   }

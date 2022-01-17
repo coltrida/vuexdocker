@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginService
 {
-    public function login($request)
+    public function login($mail, $password)
     {
-        $user = User::with('ruolo', 'recapito')->where('email', $request->email)->first();
+        $user = User::with('ruolo', 'recapito')->where('email', $mail)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($password, $user->password)) {
             return [
                 'message' => ['Le Credenziali non corrispondono'],
                 'stato' => 'errore'

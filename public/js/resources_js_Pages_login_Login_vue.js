@@ -86,10 +86,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('login', {
     getMessaggio: 'getMessaggio',
     getLogged: 'getLogged'
-  })),
+  })), {}, {
+    csrf_token: function csrf_token() {
+      var token = document.head.querySelector('meta[name="csrf-token"]');
+      return token.content;
+    }
+  }),
   methods: {
     login: function login() {
       var _this = this;

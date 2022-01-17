@@ -157,6 +157,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       "switch": null,
       textMessaggio: null,
       headers1: [{
+        text: 'id',
+        align: 'start',
+        sortable: false,
+        value: 'id',
+        "class": "indigo white--text"
+      }, {
         text: 'Nome',
         align: 'start',
         sortable: false,

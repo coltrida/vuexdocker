@@ -21,7 +21,12 @@
                             <template v-slot:item="{ item }">
                                 <tr>
                                     <td style="font-size: 12px">{{item.orario.substr(0, 5)}}</td>
-                                    <td style="font-size: 12px">{{item.client.fullname}}</td>
+                                    <td style="font-size: 12px">
+                                        <router-link style="color: black" :to="{ name: 'clientsFiliale',
+                                        params: { filialeId: item.filiale_id, nomRicerca:item.client.nome, cogRicerca:item.client.fullname, }}">
+                                            {{item.client.fullname}}
+                                        </router-link>
+                                    </td>
                                     <td style="font-size: 12px">{{item.client.citta}}</td>
                                     <td>
                                         <v-tooltip bottom v-if="item.intervenuto === 1">

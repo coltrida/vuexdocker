@@ -28,6 +28,7 @@ use App\Http\Controllers\api\UserController;
 
 
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('/login/{mail}/{password}', [LoginController::class, 'login2']);
 Route::post('/register', [LoginController::class, 'register']);
 
 
@@ -52,6 +53,10 @@ Route::group([], function () {
 
         Route::get('/migrate', function (){
             Artisan::call('migrate');
+        });
+
+        Route::get('/clear', function (){
+            Artisan::call('cache:clear');
         });
 
         // ---------------- user -------------------------
@@ -268,6 +273,8 @@ Route::group([], function () {
         Route::post('/statisticheTotaleInviiMedici', [DottoreController::class, 'statisticheTotaleInviiMedici']);
         Route::post('/statisticheMensiliMedici', [DottoreController::class, 'statisticheMensiliMedici']);
         Route::post('/statisticheCallcenter', [TelefonateController::class, 'statistiche']);
+        Route::post('/statisticheAppuntamenti', [AppuntamentiController::class, 'statistiche']);
+        Route::post('/statisticheAppuntamentiMesi', [AppuntamentiController::class, 'statisticheMesi']);
         Route::get('/statisticheVenditaApa', [UserController::class, 'statisticheVenditaApa']);
 
         // ----------------- rate -----------------------
