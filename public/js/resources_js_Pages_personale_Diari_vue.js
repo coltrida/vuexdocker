@@ -301,6 +301,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.$store.commit('appuntamenti/resetAppuntamenti');
+    this.$store.commit('appuntamenti/resetGiorni');
     this.fetchAudio().then(function () {
       _this.getAudio.forEach(function (ele) {
         _this.listaAudio.push(ele);

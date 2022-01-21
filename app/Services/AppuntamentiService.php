@@ -224,7 +224,7 @@ class AppuntamentiService
         $utente = User::find($request->telefonista_id);
         $cliente = Client::find($request->client_id);
         $dove = $request->filiale_id ? 'Filiale di '.Filiale::find($request->filiale_id)->nome : 'Recapito '.Recapito::find($request->recapito_id)->nome;
-        $testo = $utente->name.' ha fissato un appuntamento per '.$cliente->cognome.' '.$cliente->nome.' per il giorno '.$dataApppuntamentoFormattata.' alle ore '.$request->orario.' presso '.$dove;
+        $testo = $utente->name." ha modificato l'appuntamento per ".$cliente->cognome.' '.$cliente->nome.' per il giorno '.$dataApppuntamentoFormattata.' alle ore '.$request->orario.' presso '.$dove;
         $informazione->note = $testo;
         $informazione->save();
 

@@ -2519,6 +2519,14 @@ var getters = {
   },
   getSettimanaVisualizzata: function getSettimanaVisualizzata(state) {
     return state.settimanaVisualizzata;
+  },
+  resetGiorni: function resetGiorni(state) {
+    state.appLun = [];
+    state.appMar = [];
+    state.appMer = [];
+    state.appGio = [];
+    state.appVen = [];
+    state.appSab = [];
   }
 };
 var actions = {
@@ -3679,6 +3687,7 @@ var mutations = {
     state.appMer = [];
     state.appGio = [];
     state.appVen = [];
+    state.settimanaDelMese = [];
   },
   resetStatisticheAppuntamenti: function resetStatisticheAppuntamenti(state) {
     state.statisticheAppuntamenti = [];
@@ -4773,6 +4782,8 @@ var mutations = {
   importClientsXml: function importClientsXml(state, payload) {
     if (payload == 1) {
       state.clientMessaggio = 'Importazione effettuata';
+    } else if (payload == 2) {
+      state.clientMessaggio = 'Errore importazione';
     } else {
       state.clientMessaggio = 'Nessuna importazione effettuata';
     }

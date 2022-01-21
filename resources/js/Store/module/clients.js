@@ -386,6 +386,8 @@ const mutations = {
     importClientsXml(state, payload){
         if (payload == 1){
             state.clientMessaggio = 'Importazione effettuata'
+        } else if(payload == 2) {
+            state.clientMessaggio = 'Errore importazione'
         } else {
             state.clientMessaggio = 'Nessuna importazione effettuata'
         }
