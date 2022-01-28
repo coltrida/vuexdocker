@@ -1,5 +1,13 @@
 <template>
-    <v-row class="mt-3 flex-column">
+
+    <appuntamenti-dettagli
+        v-if="showDettagli"
+        :elementi="elementi"
+        :titolo="titolo"
+        @chiudiDettagli = "chiudiDettagli"
+    />
+
+    <v-row class="mt-3 flex-column" v-else>
         <v-row>
             <v-col cols="6">
                 <h2>Statistiche Appuntamenti</h2>
@@ -32,6 +40,21 @@
                     :items="getStatisticheAppuntamenti"
                     class="elevation-1"
                 >
+                    <template v-slot:item="{ item }">
+                        <tr>
+                            <td>{{item.name}}</td>
+                            <td style="cursor: pointer" @click="seleziona('Appuntamenti Assistenze '+ item.name, item.assistenza)">{{item.assistenza.length}}</td>
+                            <td style="cursor: pointer" @click="seleziona('Appuntamenti Consegne '+ item.name, item.consegna)">{{item.consegna.length}}</td>
+                            <td style="cursor: pointer" @click="seleziona('Appuntamenti Controlli Prova '+ item.name, item.controllo_prova)">{{item.controllo_prova.length}}</td>
+                            <td style="cursor: pointer" @click="seleziona('Appuntamenti Esami Audio '+ item.name, item.esame_audio)">{{item.esame_audio.length}}</td>
+                            <td style="cursor: pointer" @click="seleziona('Appuntamenti Fine Prova '+ item.name, item.fine_prova)">{{item.fine_prova.length}}</td>
+                            <td style="cursor: pointer" @click="seleziona('Appuntamenti Informazioni '+ item.name, item.informazioni)">{{item.informazioni.length}}</td>
+                            <td style="cursor: pointer" @click="seleziona('Appuntamenti Prime Visite '+ item.name, item.prima_visita)">{{item.prima_visita.length}}</td>
+                            <td style="cursor: pointer" @click="seleziona('Appuntamenti Pulizie '+ item.name, item.pulizia)">{{item.pulizia.length}}</td>
+                            <td>{{item.Totale}}</td>
+                        </tr>
+                    </template>
+
                 </v-data-table>
             </v-col>
         </v-row>
@@ -42,13 +65,17 @@
 
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import AppuntamentiDettagli from "./AppuntamentiDettagli";
     export default {
         name: "Appuntamenti",
-
+        components: {AppuntamentiDettagli},
         data(){
             return {
                 ricerca:{},
-
+                showAppuntamenti:true,
+                showDettagli: false,
+                titolo:'',
+                elementi: [],
                 header: [
                     { text: 'Audio',  align: 'start', sortable: false, value: 'name', class: "indigo white--text" },
                     { text: 'Assistenza',  align: 'start', sortable: false, value: 'Assistenza', class: "indigo white--text" },
@@ -80,6 +107,20 @@
 
             sumField(key) {
                 return this.getStatisticheAppuntamenti.reduce((a, b) => a + (b[key] || 0), 0)
+            },
+
+            seleziona(titolo, valori){
+                this.titolo = titolo;
+                this.elementi = valori;
+                this.showAppuntamenti = false;
+                this.showDettagli = true;
+            },
+
+            chiudiDettagli(){
+                this.titolo = '';
+                this.elementi = [];
+                this.showAppuntamenti = true;
+                this.showDettagli = false;
             }
 
         },

@@ -738,6 +738,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Orario",
   props: ['titoloOrario', 'valoreOra', 'valoreMinuti', 'appuntamenti'],
@@ -760,6 +782,7 @@ __webpack_require__.r(__webpack_exports__);
           risultato.tipo = ele.tipo;
           risultato.filiale_id = ele.filiale_id;
           risultato.nome = ele.nome;
+          risultato.intervenuto = ele.intervenuto;
         }
       });
       return risultato;
@@ -2036,11 +2059,14 @@ var render = function() {
                           var attrs = ref.attrs
                           return [
                             _c(
-                              "span",
+                              "div",
                               _vm._g(
                                 _vm._b(
-                                  { staticStyle: { "font-size": "10px" } },
-                                  "span",
+                                  {
+                                    staticClass: "d-flex justify-space-between",
+                                    staticStyle: { "font-size": "10px" }
+                                  },
+                                  "div",
                                   attrs,
                                   false
                                 ),
@@ -2048,31 +2074,101 @@ var render = function() {
                               ),
                               [
                                 _c(
-                                  "router-link",
-                                  {
-                                    staticStyle: { color: "black" },
-                                    attrs: {
-                                      to: {
-                                        name: "clientsFiliale",
-                                        params: {
-                                          filialeId:
-                                            _vm.appuntamento.filiale_id,
-                                          nomRicerca: _vm.appuntamento.nome,
-                                          cogRicerca: _vm.appuntamento.cliente
-                                        }
-                                      }
-                                    }
-                                  },
+                                  "div",
                                   [
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(_vm.appuntamento.cliente) +
-                                        "\n        "
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticStyle: { color: "black" },
+                                        attrs: {
+                                          to: {
+                                            name: "clientsFiliale",
+                                            params: {
+                                              filialeId:
+                                                _vm.appuntamento.filiale_id,
+                                              nomRicerca: _vm.appuntamento.nome,
+                                              cogRicerca:
+                                                _vm.appuntamento.cliente
+                                            }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                        " +
+                                            _vm._s(_vm.appuntamento.cliente) +
+                                            "\n                    "
+                                        )
+                                      ]
                                     )
-                                  ]
-                                )
-                              ],
-                              1
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _vm.appuntamento.intervenuto == 1
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "ml-3" },
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          _vm._g(
+                                            _vm._b(
+                                              {
+                                                attrs: {
+                                                  color: "green",
+                                                  small: ""
+                                                }
+                                              },
+                                              "v-icon",
+                                              attrs,
+                                              false
+                                            ),
+                                            on
+                                          ),
+                                          [
+                                            _vm._v(
+                                              "\n                        mdi-calendar-check\n                    "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.appuntamento.intervenuto == 0
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "ml-3" },
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          _vm._g(
+                                            _vm._b(
+                                              {
+                                                attrs: {
+                                                  color: "red",
+                                                  small: ""
+                                                }
+                                              },
+                                              "v-icon",
+                                              attrs,
+                                              false
+                                            ),
+                                            on
+                                          ),
+                                          [
+                                            _vm._v(
+                                              "\n                        mdi-window-close\n                    "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e()
+                              ]
                             )
                           ]
                         }
@@ -2080,7 +2176,7 @@ var render = function() {
                     ],
                     null,
                     false,
-                    1505989919
+                    2508700842
                   )
                 },
                 [

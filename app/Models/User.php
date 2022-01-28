@@ -299,6 +299,46 @@ class User extends Authenticatable
         return $this->hasMany(Appuntamento::class);
     }
 
+    public function Assistenza()
+    {
+        return $this->hasMany(Appuntamento::class)->where('tipo', 'Assistenza')->with('client');
+    }
+
+    public function Consegna()
+    {
+        return $this->hasMany(Appuntamento::class)->where('tipo', 'Consegna')->with('client');
+    }
+
+    public function ControlloProva()
+    {
+        return $this->hasMany(Appuntamento::class)->where('tipo', 'Controllo Prova')->with('client');
+    }
+
+    public function EsameAudio()
+    {
+        return $this->hasMany(Appuntamento::class)->where('tipo', 'Esame Audio')->with('client');
+    }
+
+    public function FineProva()
+    {
+        return $this->hasMany(Appuntamento::class)->where('tipo', 'Fine Prova')->with('client');
+    }
+
+    public function Informazioni()
+    {
+        return $this->hasMany(Appuntamento::class)->where('tipo', 'Informazioni')->with('client');
+    }
+
+    public function PrimaVisita()
+    {
+        return $this->hasMany(Appuntamento::class)->where('tipo', 'Prima Visita')->with('client');
+    }
+
+    public function Pulizia()
+    {
+        return $this->hasMany(Appuntamento::class)->where('tipo', 'Pulizia')->with('client');
+    }
+
     public function appuntamentiOggi()
     {
         $oggi = Carbon::now()->format('Y-m-d');

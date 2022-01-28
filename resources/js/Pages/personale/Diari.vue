@@ -279,7 +279,6 @@
 
         mounted(){
             this.$store.commit('appuntamenti/resetAppuntamenti');
-            this.$store.commit('appuntamenti/resetGiorni');
             this.fetchAudio().then(() => {
                 this.getAudio.forEach(ele => {
                     this.listaAudio.push(ele);

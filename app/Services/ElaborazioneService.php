@@ -31,17 +31,14 @@ class ElaborazioneService
     public function situazioneAnno()
     {
         //dd($this->controllo()['risultato']);
+
         if ($this->controllo()['risultato'] == false){
             \Mail::to('coltrida@gmail.com')->send(new AlarmRootPrincipale($this->controllo()));
-            //dd('qualcosa non va');
-            //dd(Storage::disk('backup')->files());
             $fileDaEliminare = Storage::disk('inizio')->files('/');
-            //dd($fileDaEliminare);
             foreach ($fileDaEliminare as $item){
                 Storage::disk('inizio')->delete($item);
             }
             $fileDaReinserire = Storage::disk('backup')->files();
-            //dd($fileDaReinserire);
             foreach ($fileDaReinserire as $item){
                 Storage::disk('inizio')->copy('vuexdocker/storage/app/backup/'.$item, '/'.$item);
             }
@@ -423,6 +420,10 @@ class ElaborazioneService
             $utentiAppuntamentoDomani = $this->selezionaClientiConAppuntamentiDomaniConEmail($oggi->addDay()->format('Y-m-d'));
             foreach ($utentiAppuntamentoDomani as $utente){
                 \Mail::to($utente->mail)->send(new RememberAppuntamento($utente));
+                $propieta = 'MAIL';
+                $testo = 'Il sistema ha inviato una mail di remind appuntamento per '.$utente->fullname;
+                $log = new LoggingService();
+                $log->scriviLog($utente->cognome.' '.$utente->nome, $utente, $utente->name, $propieta, $testo);
             }
             $compleanni = Client::whereHas('tipologia', function ($t){
                 $t->where('nome', 'CL');
@@ -433,6 +434,10 @@ class ElaborazioneService
                 ])->get();
             foreach ($compleanni as $compleanno){
                 \Mail::to($compleanno->mail)->send(new messaggioCompleanno($compleanno));
+                $propieta = 'MAIL';
+                $testo = 'Il sistema ha inviato una mail di auguri compleanno per '.$compleanno->fullname;
+                $log = new LoggingService();
+                $log->scriviLog($compleanno->cognome.' '.$compleanno->nome, $compleanno, $compleanno->name, $propieta, $testo);
             }
         }
     }

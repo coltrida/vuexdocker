@@ -2519,14 +2519,6 @@ var getters = {
   },
   getSettimanaVisualizzata: function getSettimanaVisualizzata(state) {
     return state.settimanaVisualizzata;
-  },
-  resetGiorni: function resetGiorni(state) {
-    state.appLun = [];
-    state.appMar = [];
-    state.appMer = [];
-    state.appGio = [];
-    state.appVen = [];
-    state.appSab = [];
   }
 };
 var actions = {

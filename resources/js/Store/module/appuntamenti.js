@@ -98,15 +98,6 @@ const getters = {
     getSettimanaVisualizzata(state){
         return state.settimanaVisualizzata;
     },
-
-    resetGiorni(state){
-        state.appLun = [];
-        state.appMar = [];
-        state.appMer = [];
-        state.appGio = [];
-        state.appVen = [];
-        state.appSab = [];
-    }
 };
 
 const actions = {

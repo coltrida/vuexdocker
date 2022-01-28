@@ -417,53 +417,45 @@ class AppuntamentiService
     public function statistiche($request)
     {
         return User::audio()
-            ->withCount(['appuntamenti as Assistenza' => function($q) use($request){
+            ->with(['Assistenza' => function($q) use($request){
                 $q->where([
                     ['anno', $request->anno],
-                    ['tipo', 'Assistenza']
-                ]);
+                ])->orderBy('giorno', 'DESC');
             }])
-            ->withCount(['appuntamenti as Consegna' => function($q) use($request){
+            ->with(['Consegna' => function($q) use($request){
                 $q->where([
                     ['anno', $request->anno],
-                    ['tipo', 'Consegna']
-                ]);
+                ])->orderBy('giorno', 'DESC');
             }])
-            ->withCount(['appuntamenti as ControlloProva' => function($q) use($request){
+            ->with(['ControlloProva' => function($q) use($request){
                 $q->where([
                     ['anno', $request->anno],
-                    ['tipo', 'Controllo Prova']
-                ]);
+                ])->orderBy('giorno', 'DESC');
             }])
-            ->withCount(['appuntamenti as EsameAudio' => function($q) use($request){
+            ->with(['EsameAudio' => function($q) use($request){
                 $q->where([
                     ['anno', $request->anno],
-                    ['tipo', 'Esame Audio']
-                ]);
+                ])->orderBy('giorno', 'DESC');
             }])
-            ->withCount(['appuntamenti as FineProva' => function($q) use($request){
+            ->with(['FineProva' => function($q) use($request){
                 $q->where([
                     ['anno', $request->anno],
-                    ['tipo', 'Fine prova']
-                ]);
+                ])->orderBy('giorno', 'DESC');
             }])
-            ->withCount(['appuntamenti as Informazioni' => function($q) use($request){
+            ->with(['Informazioni' => function($q) use($request){
                 $q->where([
                     ['anno', $request->anno],
-                    ['tipo', 'Informazioni']
-                ]);
+                ])->orderBy('giorno', 'DESC');
             }])
-            ->withCount(['appuntamenti as PrimaVisita' => function($q) use($request){
+            ->with(['PrimaVisita' => function($q) use($request){
                 $q->where([
                     ['anno', $request->anno],
-                    ['tipo', 'Prima Visita']
-                ]);
+                ])->orderBy('giorno', 'DESC');
             }])
-            ->withCount(['appuntamenti as Pulizia' => function($q) use($request){
+            ->with(['Pulizia' => function($q) use($request){
                 $q->where([
                     ['anno', $request->anno],
-                    ['tipo', 'Pulizia']
-                ]);
+                ])->orderBy('giorno', 'DESC');
             }])
             ->withCount(['appuntamenti as Totale' => function($q) use($request){
                 $q->where([
