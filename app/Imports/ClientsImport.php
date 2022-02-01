@@ -30,14 +30,16 @@ class ClientsImport implements ToCollection, WithHeadingRow
         $idSerra = User::where('name', 'Matteo Serra')->first()->id;
         $idAudioFirenze = User::where('name', 'Audio Firenze')->first()->id;
         $idAudioAscoli = User::where('name', 'Audio Ascoli')->first()->id;
-        $idMantovani = User::where('name', 'Marina Mantovani')->first()->id;
+        $idFabietti = User::where('name', 'Carlo Fabietti')->first()->id;
+        $idPaolini = User::where('name', 'Roberto Paolini')->first()->id;
         $idCervone = User::where('name', 'Liliana Cervone')->first()->id;
         $idPapatheodoru = User::where('name', 'Athanasia Papatheodoru')->first()->id;
 
         $idPisa = Filiale::where('nome', 'PISA')->first()->id;
         $idCivitanova = Filiale::where('nome', 'CIVITANOVA')->first()->id;
         $idLucca = Filiale::where('nome', 'LUCCA')->first()->id;
-        $idMacerata = Filiale::where('nome', 'MACERATA')->first()->id;
+        $idAncona = Filiale::where('nome', 'ANCONA')->first()->id;
+        $idCortona = Filiale::where('nome', 'CORTONA')->first()->id;
         $idAscoli = Filiale::where('nome', 'ASCOLI')->first()->id;
         $idViareggio = Filiale::where('nome', 'VIAREGGIO')->first()->id;
         $idFirenze = Filiale::where('nome', 'FIRENZE')->first()->id;
@@ -46,10 +48,11 @@ class ClientsImport implements ToCollection, WithHeadingRow
         {
             //dd($value);
 
-            $inArezzo = (in_array(trim(Str::upper($value['comune'])), config('enum.arezzo')));
-            $inAncona = (in_array(trim(Str::upper($value['comune'])), config('enum.ancona')));
+         //   $inArezzo = (in_array(trim(Str::upper($value['comune'])), config('enum.arezzo')));
+         //   $inAncona = (in_array(trim(Str::upper($value['comune'])), config('enum.ancona')));
 
-            if ($value['cognome'] != null && !$inArezzo && !$inAncona){
+          //  if ($value['cognome'] != null && !$inArezzo && !$inAncona){
+            if ($value['cognome'] != null){
                 $filiale = $idPisa;
                 $user = $idCervone;
                 /*if(in_array(trim(Str::upper($value['comune'])), $ancona)) {
@@ -58,9 +61,12 @@ class ClientsImport implements ToCollection, WithHeadingRow
                 }*/ if (in_array(trim(Str::upper($value['comune'])), config('enum.civitanova'))) {
                     $filiale = $idCivitanova;
                     $user = $idPapatheodoru;
-                } elseif (in_array(trim(Str::upper($value['comune'])), config('enum.macerata'))) {
-                    $filiale = $idMacerata;
-                    $user = $idMantovani;
+                } elseif (in_array(trim(Str::upper($value['comune'])), config('enum.ancona'))) {
+                    $filiale = $idAncona;
+                    $user = $idFabietti;
+                } elseif (in_array(trim(Str::upper($value['comune'])), config('enum.cortona'))) {
+                    $filiale = $idCortona;
+                    $user = $idPaolini ;
                 } elseif (in_array(trim(Str::upper($value['comune'])), config('enum.firenze'))) {
                     $filiale = $idFirenze;
                     $user = $idAudioFirenze;

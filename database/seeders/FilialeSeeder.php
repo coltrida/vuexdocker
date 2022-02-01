@@ -43,12 +43,12 @@ class FilialeSeeder extends Seeder
                 'informazioni' => '..........'
             ],
             [
-                'nome' => 'MACERATA',
+                'nome' => 'ANCONA',
                 'indirizzo' => '........',
-                'citta' => 'MACERATA',
+                'citta' => 'ANCONA',
                 'telefono' => '........',
                 'cap' => '........',
-                'provincia' => 'MC',
+                'provincia' => 'AN',
                 'informazioni' => '..........'
             ],
             [
@@ -76,6 +76,15 @@ class FilialeSeeder extends Seeder
                 'telefono' => '........',
                 'cap' => '........',
                 'provincia' => 'FI',
+                'informazioni' => '..........'
+            ],
+            [
+                'nome' => 'CORTONA',
+                'indirizzo' => '........',
+                'citta' => 'CORTONA',
+                'telefono' => '........',
+                'cap' => '........',
+                'provincia' => 'AR',
                 'informazioni' => '..........'
             ],
         ]);

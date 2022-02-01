@@ -20,7 +20,7 @@ class RecapitoSeeder extends Seeder
         $idCaracciolo = User::where('name', 'Selene Caracciolo')->first()->id;
         $idSerra = User::where('name', 'Matteo Serra')->first()->id;
         $idAudioFirenze = User::where('name', 'Audio Firenze')->first()->id;
-        $idMantovani = User::where('name', 'Marina Mantovani')->first()->id;
+        $idFabietti = User::where('name', 'Carlo Fabietti')->first()->id;
         $idAmmToscana = User::where('name', 'Amm Toscana')->first()->id;
         $idAmmMarche = User::where('name', 'Amm Marche')->first()->id;
         $idCervone = User::where('name', 'Liliana Cervone')->first()->id;
@@ -31,7 +31,7 @@ class RecapitoSeeder extends Seeder
         $idPisa = Filiale::where('nome', 'PISA')->first()->id;
         $idCivitanova = Filiale::where('nome', 'CIVITANOVA')->first()->id;
         $idLucca = Filiale::where('nome', 'LUCCA')->first()->id;
-        $idMacerata = Filiale::where('nome', 'MACERATA')->first()->id;
+        $idAncona = Filiale::where('nome', 'ANCONA')->first()->id;
         $idAscoli = Filiale::where('nome', 'ASCOLI')->first()->id;
         $idViareggio = Filiale::where('nome', 'VIAREGGIO')->first()->id;
         $idFirenze = Filiale::where('nome', 'FIRENZE')->first()->id;
